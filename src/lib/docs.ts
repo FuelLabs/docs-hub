@@ -1,5 +1,4 @@
-import { deepStrictEqual } from "assert";
-import { existsSync, fstat, readFileSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import { globby } from "globby";
 import matter from "gray-matter";
 import { join } from "path";
