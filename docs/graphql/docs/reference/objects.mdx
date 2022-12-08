@@ -1,0 +1,708 @@
+---
+title: Objects
+category: Reference
+---
+
+# Objects
+
+## `Balance`
+
+The balance of a particular asset for a wallet address.
+
+**fields:**
+
+`owner: Address!`:
+An EOA account represented by 32 bytes.
+
+`amount: U64!`:
+The amount of the selected asset id as an unsigned 64 bit number.
+
+`assetId: AssetId!`:
+A 32 byte representation of the asset.
+
+## `BalanceFilterInput`
+
+The filter input type used to filter the `balances` query.
+
+**fields:**
+
+`owner: Address!`:
+The owner address of the balances.
+
+## `Block`
+
+Information about a block in the network.
+
+**fields:**
+
+`id: BlockId!`:
+A unique identifier for the block.
+
+`header: Header!` <sup>_(beta-2 only)_</sup>:
+Metadata about a block.
+
+`transactions: [Transaction!]!`:
+An array of transactions included in the block.
+
+> `height: U64!`<sup>_(beta-1 only)_</sup>:
+> The total number of blocks on the chain.
+
+> `time: DateTime!`<sup>_(beta-1 only)_</sup>:
+> The timestamp when the block was produced.
+
+> `producer: Address!`<sup>_(beta-1 only)_</sup>:
+> The address of the block producer.
+
+## `ChainInfo`
+
+Information about the base chain. At a very high level `chainInfo` helps you understand what Fuel chain you're connected to and the different parameters of this chain.
+
+**fields:**
+
+`name: String!`:
+The human-readable string name of the chain. i.e. beta-2
+
+`latestBlock: Block!`:
+The most recently created block.
+
+`baseChainHeight: U64!`:
+Returns 0 (in development mode, this will change). This should return the height of the chain at start.
+
+`peerCount: Int!`:
+The number of nodes that node is peered with.
+
+`consensusParameters: ConsensusParameters!`:
+The consensus parameters used to validate blocks.
+
+## `ChangeOutput`
+
+A transaction output that changes the unspent coins in a UTXO.
+
+**fields:**
+
+`to: Address!`:
+The recipient address of the coins.
+
+`amount: U64!`:
+The amount of coins.
+
+`assetId: AssetId!`:
+The asset id for the coins.
+
+## `Coin`
+
+Information about a coin.
+
+**fields:**
+
+`utxoId: UtxoId!`:
+A unique 32 byte identifier for a UTXO.
+
+`owner: Address!`:
+The owner address of the coins.
+
+`amount: U64!`:
+The amount of coins.
+
+`assetId: AssetId!`:
+The asset id of the coin.
+
+`maturity: U64!`:
+The UTXO being spent must have been created at least this many blocks ago.
+
+`status: CoinStatus!`:
+The status of the coin, either `SPENT` or `UNSPENT`.
+
+`blockCreated: U64!`:
+The block when the coins were created.
+
+## `CoinOutput`
+
+A type representing a coin output.
+
+**fields:**
+
+`to: Address!`:
+The receiver address of the output coins.
+
+`amount: U64!`:
+The amount of coins in the output.
+
+`assetId: AssetId!`:
+The asset id for the output coins.
+
+## `ConsensusParameters`
+
+The consensus parameters used for validating blocks.
+
+**fields:**
+
+`contractMaxSize: U64!`:
+The maximum contract size, in bytes.
+
+`maxInputs: U64!`:
+The maximum number of inputs.
+
+`maxOutputs: U64!`:
+The maximum number of outputs.
+
+`maxWitnesses: U64!`:
+The maximum number of witnesses.
+
+`maxGasPerTx: U64!`:
+The maximum gas per transaction.
+
+`maxScriptLength: U64!`:
+The maximum length of a script, in instructions.
+
+`maxScriptDataLength: U64!`:
+The maximum length of script data, in bytes.
+
+`maxStorageSlots: U64!`:
+The maximum number of initial storage slots.
+
+`maxPredicateLength: U64!`:
+The maximum length of a predicate, in instructions.
+
+`maxPredicateDataLength: U64!`:
+The maximum length of predicate data, in bytes.
+
+`gasPriceFactor: U64!`:
+A factor to convert between gas and the transaction assets value.
+
+`gasPerByte: U64!`:
+A fixed ratio linking metered bytes to a gas price.
+
+`maxMessageDataLength: U64!`:
+The maximum length of message data, in bytes.
+
+## `Contract`
+
+An object representing a deployed contract.
+
+**fields:**
+
+`id: ContractId!`:
+The contract address.
+
+`bytecode: HexString!`:
+The contract bytecode.
+
+`salt: Salt!`:
+A unique identifier for the contract.
+
+## `ContractBalance`
+
+An object representing the balance of a deployed contract for a certain asset.
+
+**fields:**
+
+`contract: ContractId!`:
+The contract address.
+
+`amount: U64!`:
+The contract balance for the given asset.
+
+`assetId: AssetId!`:
+The asset id for the coins.
+
+## `ContractBalanceFilterInput`
+
+The filter input type for the `contractBalances` query.
+
+**fields:**
+
+`contract: ContractId!`:
+The contract id that the query will return balances for.
+
+## `ContractCreated`
+
+The output type from deploying a contract.
+
+**fields:**
+`contract: Contract!`:
+The contract that was created.
+
+`stateRoot: Bytes32!`:
+The initial state root of contract.
+
+## `ContractOutput`
+
+The output type from a transaction that changed the state of a contract.
+
+**fields:**
+
+`inputIndex: Int!`:
+The index of the input.
+
+`balanceRoot: Bytes32!`:
+The root of amount of coins owned by contract after transaction execution.
+
+`stateRoot: Bytes32!`:
+The state root of contract after transaction execution.
+
+## `FailureStatus`
+
+The status type of a transaction that has failed.
+
+**fields:**
+
+`block: Block!`:
+The block number for the failed transaction.
+
+`time: Tai64Timestamp!`:
+The time the transaction failed. Returns a `DateTime!` for the beta-1 network.
+
+`reason: String!`
+The reason why the transaction failed.
+
+`programState: ProgramState`:
+The state of the program execution.
+
+## `Header`
+
+The header contains metadata about a certain block. Only available for the beta-2 testnet.
+
+`id: BlockId!`:
+The current block id.
+
+`daHeight: U64!`:
+The block height for the data availability layer up to which (inclusive) input messages are processed.
+
+`transactionsCount: U64!`:
+The number of transactions in the block.
+
+`outputMessagesCount: U64!`:
+The number of output messages in the block.
+
+`transactionsRoot: Bytes32!`:
+The merkle root of the transactions in the block.
+
+`outputMessagesRoot: Bytes32!`:
+The merkle root of the output messages in the block.
+
+`height: U64!`:
+The block height.
+
+`prevRoot: Bytes32!`:
+The merkle root of all previous consensus header hashes (not including this block).
+
+`time: Tai64Timestamp!`:
+The timestamp for the block.
+
+`applicationHash: Bytes32!`:
+The hash of the serialized application header for this block.
+
+## `InputCoin`
+
+Information about a coin input.
+
+**fields:**
+
+`utxoId: UtxoId!`:
+A unique 32 byte identifier for the UTXO.
+
+`owner: Address!`:
+The owning address or predicate root.
+
+`amount: U64!`:
+The amount of coins.
+
+`assetId: AssetId!`:
+The asset ID of the coins.
+
+`txPointer: TxPointer!`:
+A pointer to the transaction whose output is being spent.
+
+`witnessIndex: Int!`:
+The index of the witness that authorizes spending the coin.
+
+`maturity: U64!`:
+The UTXO being spent must have been created at least this many blocks ago.
+
+`predicate: HexString!`:
+The predicate bytecode.
+
+`predicateData: HexString!`:
+The predicate input parameters.
+
+## `InputContract`
+
+Information about a contract input.
+
+**fields:**
+
+`utxoId: UtxoId!`:
+A unique 32 byte identifier for the UTXO.
+
+`balanceRoot: Bytes32!`:
+The root of amount of coins owned by contract before transaction execution.
+
+`stateRoot: Bytes32!`:
+The state root of contract before transaction execution.
+
+`txPointer: TxPointer!`:
+A pointer to the TX whose output is being spent.
+
+`contract: Contract!`:
+The input contract.
+
+## `InputMessage`
+
+Information about a message input.
+
+**fields:**
+
+`messageId: MessageId!`:
+A unique id for the message. The ID of a message is computed as the hash of:
+
+- the sender address as byte[32],
+- the recipient address as byte[32],
+- the Message nonce as byte[32],
+- the amount being sent with the message as uint64,
+- the message data as byte[]
+
+`sender: Address!`:
+The sender address of the message.
+
+`recipient: Address!`:
+The recipient address of the message.
+
+`amount: U64!`:
+The amount sent in the message.
+
+`nonce: U64!`:
+A nonce value for the message input, which is determined by the sending system and is published at the time the message is sent.
+
+`witnessIndex: Int!`:
+The index of witness that authorizes spending the coin.
+
+`data: HexString!`:
+The message data.
+
+`predicate: HexString!`:
+The predicate bytecode.
+
+`predicateData: HexString!`:
+The predicate input parameters.
+
+> `owner: Address!`<sup>_(beta-1 only)_</sup>:
+> The owner address of the message.
+
+## `Message`
+
+Contains information about a message.
+
+**fields:**
+
+`messageId: MessageId!`<sup>_(beta-2 only)_</sup>:
+A unique id for the message.
+
+`amount: U64!`:
+The amount of base asset coins sent with the message.
+
+`sender: Address!`:
+The address of the message sender.
+
+`recipient: Address!`:
+The recipient of the message.
+
+`nonce: U64!`:
+The nonce value for the message.
+
+`data: [Int!]!`:
+The vector with the message data.
+
+`daHeight: U64!`:
+The block height of the data availability layer up to which (inclusive) input messages are processed.
+
+`fuelBlockSpend: U64`:
+The block in which the message is spent.
+
+> `owner: Address!`<sup>_(beta-1 only)_</sup>
+> The owner address of the message.
+
+## `MessageOutput`
+
+The output type for a message. When signing a transaction recipient and amount are set to zero. When verifying a predicate or executing a script, recipient and amount are initialized to zero.
+
+**fields:**
+
+`recipient: Address!`:
+The recipient of the message.
+
+`amount: U64!`:
+The amount of base asset coins sent with the message.
+
+## `MessageProof`
+
+Information about the message proof.
+
+`proofSet: [Bytes32!]!`:
+The proof set of the message proof.
+
+`proofIndex: U64!`:
+The index used to generate this proof.
+
+`sender: Address!`:
+The message sender.
+
+`recipient: Address!`:
+The message recipient.
+
+`nonce: Bytes32!`:
+The message nonce.
+
+`amount: U64!`:
+The amount sent in the message.
+
+`data: HexString!`
+The data from the message.
+
+`signature: Signature!`:
+The signature of the Fuel block.
+
+`header: Header!`:
+The Fuel block header that contains the message.
+
+## `NodeInfo`
+
+Information about a node.
+
+**fields:**
+
+`utxoValidation: Boolean!`:
+Whether or not the node is using UTXO validation.
+
+`vmBacktrace: Boolean!`:
+Whether or not logging of backtraces from VM errors is enabled.
+
+`minGasPrice: U64!`:
+The minimum gas price for the node.
+
+`maxTx: U64!`:
+The maximum number of transactions.
+
+`maxDepth: U64!`:
+The maximum number of connected UTXOs allowed, excluding contracts.
+
+`nodeVersion: String!`:
+The node version.
+
+> `predicates: Boolean!`<sup>_(beta-1 only)_</sup>
+> Whether or not predicates are enabled.
+
+## `ProgramState`
+
+An object representing the state of execution of a transaction.
+
+**fields:**
+
+`returnType: ReturnType!`:
+The type of return response for the transaction.
+
+`data: HexString!`:
+The data returned from the transaction.
+
+## `Receipt`
+
+An object representing all possible types of receipts.
+
+`contract: Contract`:
+The contract that produced the receipt.
+
+`pc: U64`:
+The value of the program counter register `$pc`, which is the memory address of the current instruction.
+
+`is: U64`:
+The value of register `$is`, which is the pointer to the start of the currently-executing code.
+
+`to: Contract`:
+The recipient contract.
+
+`toAddress: Address`:
+The recipient address.
+
+`amount: U64`:
+The amount of coins transferred.
+
+`assetId: AssetId`:
+The asset id of the coins transferred.
+
+`gas: U64`:
+The gas used for the transaction.
+
+`param1: U64`:
+The first parameter for a `CALL` receipt type, holds the function selector.
+
+`param2: U64`:
+The second parameter for a `CALL` receipt type, typically used for the user-specified input to the ABI function being selected.
+
+`val: U64`:
+The value of registers at the end of execution, used for debugging.
+
+`ptr: U64`:
+The value of the pointer register, used for debugging.
+
+`digest: Bytes32`:
+A 32-byte hash of `MEM[$rC, $rD]`. The syntax `MEM[x, y]` means the memory range starting at byte `x`, of length `y` bytes.
+
+`reason: U64`:
+The decimal string representation of an 8-bit unsigned integer for the panic reason. Only returned if the receipt type is `PANIC`.
+
+`ra: U64`:
+The value of register `$rA`.
+
+`rb: U64`:
+The value of register `$rB`.
+
+`rc: U64`:
+The value of register `$rC`.
+
+`rd: U64`:
+The value of register `$rD`.
+
+`len: U64`:
+The length of the receipt.
+
+`receiptType: ReceiptType!`:
+The type of receipt.
+
+`rawPayload: HexString!`:
+The raw payload hex string.
+
+`result: U64`:
+`0` if script exited successfully, `any` otherwise.
+
+`gasUsed: U64`:
+The amount of gas consumed by the script.
+
+`data: HexString`:
+The receipt data.
+
+`messageId: MessageId`:
+The message id.
+
+`sender: Address`:
+The address of the message sender.
+
+`recipient: Address`:
+The address of the message recipient.
+
+`nonce: Bytes32`:
+The nonce value for a message.
+
+`contractId: ContractId`<sup>_(beta-2 only)_</sup>:
+The contract id.
+
+## `SpendQueryElementInput`
+
+A type used in the `queryPerAsset` argument for the `resourcesToSpend` query.
+
+`assetId: AssetId!`:
+The asset id for the asset.
+
+`amount: U64!`:
+The amount of coins to send.
+
+`max: U64`<sup>_(beta-2 only)_</sup>:
+The max number of resources in the selection.
+
+## `SubmittedStatus`
+
+The status for a submitted transaction
+
+**fields:**
+
+`time: Tai64Timestamp!`:
+The time a transaction was submitted. Returns a `DateTime` for the beta-1 network.
+
+## `Transaction`
+
+An object containing information about a transaction.
+
+**fields:**
+
+`id: TransactionId!`:
+A unique transaction id.
+
+`inputAssetIds: [AssetId!]`:
+An array of asset ids used for the transaction inputs.
+
+`inputContracts: [Contract!]`:
+An array of contracts used for the transaction inputs.
+
+`gasPrice: U64`:
+The gas price for the transaction.
+
+`gasLimit: U64`:
+The gas limit for the transaction.
+
+`maturity: U64`
+The minimum block height that the transaction can be included at.
+
+`txPointer: TxPointer`<sup>_(beta-2 only)_</sup>:
+The location of the transaction in the block.
+
+`isScript: Boolean!`:
+Whether or not the transaction is a script.
+
+`isCreate: Boolean!`<sup>_(beta-2 only)_</sup>:
+Whether or not the transaction is creating a new contract.
+
+`isMint: Boolean!`<sup>_(beta-2 only)_</sup>:
+Whether or not the transaction is minting new coins.
+
+`inputs: [Input!]`:
+An array of inputs for the transaction.
+
+`outputs: [Output!]!`:
+An array of outputs for the transaction.
+
+`witnesses: [HexString!]`:
+An array of witnesses.
+
+`receiptsRoot: Bytes32`:
+The root of the receipts.
+
+`status: TransactionStatus`:
+The status of the transaction.
+
+`receipts: [Receipt!]`:
+An array of the receipts produced by the transaction.
+
+`script: HexString`:
+The script to execute.
+
+`scriptData: HexString`:
+The script input parameters.
+
+`bytecodeWitnessIndex: Int`:
+The witness index of contract bytecode.
+
+`bytecodeLength: U64`:
+The length of the transaction bytecode.
+
+`salt: Salt`:
+The salt value for the transaction.
+
+`storageSlots: [HexString!]`:
+An array of storage slot.
+
+`rawPayload: HexString!`:
+A hex string of the raw transaction payload.
+
+## `VariableOutput`
+
+The output type for a transaction that outputs an amount that may vary based on transaction execution.
+
+**fields:**
+
+`to: Address`:
+The address the coins were sent to.
+
+`amount: U64`:
+The amount of coins in the output.
+
+`assetId: AssetId`:
+The asset id for the coins sent.

@@ -1,0 +1,61 @@
+---
+title: Unions
+category: Reference
+---
+
+# Union Types
+
+## `Input`
+
+An input type for a transaction.
+
+**Types:**
+
+`InputCoin`:
+An input type for a coin.
+
+`InputContract`:
+An input type for a contract.
+
+`InputMessage`:
+An input type for a message.
+
+## `Output`
+
+An output type for a transaction.
+
+**Types:**
+
+`CoinOutput`:
+Indicates coins were forwarded from one address to another.
+
+`ContractOutput`:
+Indicates the transaction updated the state of a contract.
+
+`MessageOutput`:
+Indicates a message output.
+
+`ChangeOutput`:
+Indicates that the output's amount may vary based on transaction execution, but is otherwise identical to a Coin output. Output changes are always guaranteed to have an amount of zero since they're only set after execution terminates.
+
+`VariableOutput`:
+Similar to `ChangeOutput`, this output type indicates that the output's amount may vary based on transaction execution, but is otherwise identical to a Coin output. On initialization, the amount on variable outputs is zero, but during execution they could be set to a non-zero value.
+
+`ContractCreated`:
+Indicates a contract was deployed.
+
+## `TransactionStatus`
+
+The status type of a transaction.
+
+`SubmitedStatus`:
+The transaction has been submitted.
+
+`SucessStatus`:
+The transaction has succeeded.
+
+`SqueezedOutStatus`<sup>_(beta-2 only)_</sup>:
+The transaction was kicked out of the mempool.
+
+`FailureStatus`:
+The transaction has failed.

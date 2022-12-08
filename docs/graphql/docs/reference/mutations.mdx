@@ -1,0 +1,36 @@
+---
+title: Mutations
+category: Reference
+---
+
+# Mutations
+
+## `dryRun(...): [Receipt!]!`
+
+A mutation that spins up a new temporary node from the current state and emulates a given transaction. It returns an array of receipts for the emulated transaction. You can optionally use UTXO validation.
+
+**args:**
+
+`tx: HexString!`:
+The transaction hex string.
+
+`utxoValidation: Boolean`:
+Whether or not to use UTXO validation.
+
+## `produceBlocks(...): U64!`
+
+A mutation that produces blocks, that can be used for testing that requires block advancement.
+
+**args**
+
+`blocksToProduce: U64!`:
+The number of blocks to produce.
+
+## `submit(...): Transaction!`
+
+A mutation that submits transaction to the transaction pool and returns a transaction.
+
+**args**
+
+`tx: HexString!`:
+The transaction hex string.
