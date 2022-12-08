@@ -1,4 +1,5 @@
-import { getAllDocs, getDocBySlug, getSidebarLinks } from '~/src/lib/api';
+import { getAllDocs, getDocBySlug, getDocLink, getSidebarLinks } from '~/src/lib/api';
+import { joinSlug, splitSlug } from '~/src/lib/docs';
 import { DocScreen } from '~/src/screens/DocPage';
 import type { DocType, SidebarLinkItem } from '~/src/types';
 
@@ -19,13 +20,9 @@ type Params = {
 };
 
 export async function getStaticProps({ params }: Params) {
-  const slug = (params.slug || '')?.join('/');
-  const doc = await getDocBySlug(slug);
+  const doc = await getDocBySlug(joinSlug(params.slug));
   const links = await getSidebarLinks(doc.docsConfig?.menu || []);
-  const docLink = links
-    .flatMap((i) => (i.submenu || i) as SidebarLinkItem | SidebarLinkItem[])
-    .find((i) => i.slug === doc.slug);
-
+  const docLink = getDocLink(links, doc.slug);
   return {
     props: {
       doc,
@@ -34,13 +31,14 @@ export async function getStaticProps({ params }: Params) {
     },
   };
 }
+
 export async function getStaticPaths() {
   const docs = await getAllDocs();
   return {
     paths: docs.map((doc) => {
       return {
         params: {
-          slug: [...(doc.slug || '').split('/')],
+          slug: splitSlug(doc.slug),
         },
       };
     }),

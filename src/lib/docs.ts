@@ -1,6 +1,10 @@
+import { deepStrictEqual } from "assert";
+import { existsSync, fstat, readFileSync } from "fs";
 import { globby } from "globby";
+import matter from "gray-matter";
 import { join } from "path";
 import { DOCS_DIRECTORY } from "../constants";
+import { DocsConfig } from "../types";
 import { removeDocsPath } from "./urls";
 
 type DocPathType = {
@@ -31,6 +35,32 @@ export async function getDocPath({ path }: DocPathType) {
   return join(DOCS_DIRECTORY, path);
 }
 
-export async function getDocConfig(name: string) {
-  return join(DOCS_DIRECTORY, path);
+export async function getDocConfig(name: string): Promise<DocsConfig> {
+  const docConfigPath = join(DOCS_DIRECTORY, name, "docs.json");
+  if (existsSync(docConfigPath)) {
+    return JSON.parse(readFileSync(docConfigPath, "utf8"));
+  } else {
+    throw new Error(`${name} docs.json not found`);
+  }
+}
+
+export async function getDocContent(path: string) {
+  const document = readFileSync(path, "utf8");
+  const { data, content } = matter(document);
+  return {
+    header: data,
+    content,
+  };
+}
+
+export async function getRepositoryLink(config: DocsConfig, doc: DocPathType) {
+  return join(config.repository, "/docs/", doc.path);
+}
+
+export function splitSlug(slug?: string) {
+  return (slug || '').split('/');
+}
+
+export function joinSlug(slugs?: string[]) {
+  return (slugs || []).join('/');
 }

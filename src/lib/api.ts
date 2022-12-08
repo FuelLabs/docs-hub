@@ -1,8 +1,4 @@
-import fs from 'fs';
-import { globby } from 'globby';
-import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
-import { join, relative } from 'path';
 import remarkGfm from 'remark-gfm';
 import remarkSlug from 'remark-slug';
 
@@ -11,46 +7,18 @@ import { rehypeExtractHeadings } from './toc';
 
 import { FIELDS } from '~/src/constants';
 import type { DocType, NodeHeading, SidebarLinkItem } from '~/src/types';
-
-const DOCS_DIRECTORY = join(process.cwd(), './docs');
-
-export async function getDocsSlugs() {
-  const paths = await globby(['./**/*.mdx', './**/**.md'], {
-    cwd: DOCS_DIRECTORY,
-  });
-  return paths.map(path => ({
-    slug: path.replace('docs/', ''),
-    path,
-  }));
-}
-
-export async function getDocSlugPath(slug: string) {
-  const slugs = await getDocsSlugs();
-  const slugPath = slugs.find(({ slug: pathSlug }) => pathSlug.includes(slug));
-  if (!slugPath) {
-    throw new Error(`${slug} not found`);
-  }
-  return slugPath;
-}
-
-export async function getDocFullPath(slugPath: { slug: string; path: string; }) {
-  return join(DOCS_DIRECTORY, slugPath.path);
-}
+import { getDocConfig, getDocContent, getDocFromSlug, getDocPath, getDocs, getRepositoryLink } from './docs';
 
 export async function getDocBySlug(
   slug: string
 ): Promise<DocType> {
-  const realSlug = slug.replace(/\.md?x$/, '');
-  const slugPath = await getDocSlugPath(slug);
-  const fullpath = await getDocFullPath(slugPath);
-  const docsConfig = JSON.parse(fs.readFileSync(join(DOCS_DIRECTORY, 'graphql/docs.json'), 'utf8'));
-  const fileContents = fs.readFileSync(fullpath, 'utf8');
-  const { data, content } = matter(fileContents);
-  const pageLink = join(
-    docsConfig.repository,
-    '/docs/',
-    slugPath.path
-  );
+  const [rootFolder] = slug.split('/');
+  const realSlug = slug.replace(/(\.mdx|\.md)$/, '');
+  const slugPath = await getDocFromSlug(slug);
+  const fullpath = await getDocPath(slugPath);
+  const docsConfig = await getDocConfig(rootFolder);
+  const pageLink = await getRepositoryLink(docsConfig, slugPath);
+  const { header, content } = await getDocContent(fullpath);
   const doc = {
     pageLink,
   };
@@ -58,19 +26,19 @@ export async function getDocBySlug(
   // Ensure only the minimal needed data is exposed
   FIELDS.forEach((field) => {
     if (field === 'slug') {
-      doc[field] = data.slug || realSlug;
+      doc[field] = header.slug || realSlug;
     }
     if (field === 'content') {
       doc[field] = content;
     }
-    if (typeof data[field] !== 'undefined') {
-      doc[field] = data[field];
+    if (typeof header[field] !== 'undefined') {
+      doc[field] = header[field];
     }
   });
 
   const headings: NodeHeading[] = [];
   const source = await serialize(content, {
-    scope: data,
+    scope: header,
     mdxOptions: {
       format: 'mdx',
       remarkPlugins: [
@@ -91,7 +59,7 @@ export async function getDocBySlug(
 }
 
 export async function getAllDocs() {
-  const slugs = await getDocsSlugs();
+  const slugs = await getDocs();
   return Promise.all(slugs.map(({ slug }) => getDocBySlug(slug)));
 }
 
@@ -175,4 +143,10 @@ export async function getSidebarLinks(order: string[]) {
   });
 
   return withNextAndPrev;
+}
+
+export function getDocLink(links: Awaited<ReturnType<typeof getSidebarLinks>>, slug: string) {
+  return links
+    .flatMap((i) => (i.submenu || i) as SidebarLinkItem | SidebarLinkItem[])
+    .find((i) => i.slug === slug);
 }
