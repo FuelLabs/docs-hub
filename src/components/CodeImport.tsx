@@ -18,13 +18,10 @@ export type CodeImportProps = {
 
 export function CodeImport({
   __content: content,
-  __filepath: filePath,
   __filename: filename,
   __language: language,
-  __lineStart: lineStart,
-  __lineEnd: lineEnd,
 }: CodeImportProps) {
-  const lines = `L${lineStart}${lineEnd ? `-L${lineEnd}` : ''}`;
+  // const lines = `L${lineStart}${lineEnd ? `-L${lineEnd}` : ''}`;
   // const link = `${REPO_LINK}/${filePath}#${lines}`;
   const title = (
     <>

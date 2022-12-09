@@ -2,6 +2,7 @@
 title: What is GraphQL?
 category: How To Use GraphQL
 ---
+
 # What is GraphQL?
 
 ### HTTP and APIs Explained
@@ -14,7 +15,7 @@ Read more about HTTP methods, client-server architecture, and why you need APIs 
 
 ### How does GraphQL work?
 
->Note: This section goes over how GraphQL works under the hood, but it is not necessary to know this as a developer building on Fuel. Schema definition, resolver logic, etc. are all written and maintained by the contributors at Fuel Labs.
+> Note: This section goes over how GraphQL works under the hood, but it is not necessary to know this as a developer building on Fuel. Schema definition, resolver logic, etc. are all written and maintained by the contributors at Fuel Labs.
 
 GraphQL is a query language and specification that describes how you can communicate with your API. GraphQL is not constrained by programming languages, backend frameworks, and databases. GraphQL uses the HTTP protocol under the hood, so you can map GraphQL operations back to simple `GET`, `POST`, `PUT`, or `DELETE` operations. You can view the GraphQL documentation here: https://graphql.org/.
 
@@ -24,37 +25,41 @@ For example, as an API developer you could define a type, `Car` and define the p
 
 ```graphql
 type Car {
- id: ID
- color: String
- year: Int
- isNew: Boolean
+  id: ID
+  color: String
+  year: Int
+  isNew: Boolean
 }
 ```
-Fuel Labs created a GraphQL API endpoint for the Fuel Network, allowing developers to make complex queries for data on the blockchain. You can leverage these queries to populate a frontend application with details that your users might be interested in like the history of their transactions, their balance of a specific token, etc. 
+
+Fuel Labs created a GraphQL API endpoint for the Fuel Network, allowing developers to make complex queries for data on the blockchain. You can leverage these queries to populate a frontend application with details that your users might be interested in like the history of their transactions, their balance of a specific token, etc.
 
 ### GraphQL Queries
+
 Queries in GraphQL allow you to read data. GraphQL lets you ask for specific data and returns exactly what you asked for. It also lets you request multiple resources in a single query instead of writing a separate 'GET' request for each resource as with REST APIs.
 
 GraphQL also facilitates more complex queries and operations such as pagination, sort, filter, full-text search, and more.
 
 Sample query:
+
 ```graphql
 query Actor {
-    actor {
-        name {
-            appearIn
-        }
+  actor {
+    name {
+      appearIn
     }
+  }
 }
-
 ```
+
 The above query gives you a response with the name of the actor along with the name of the movie(s) they appear in.
 
 ### GraphQL Mutations
 
-Mutations in GraphQL are write operations that update the chain's state. In addition to being able to traverse objects and their fields, GraphQL gives developers the ability to pass arguments to fields in order to filter out responses. Every field and nested object can have its own set of arguments.  
+Mutations in GraphQL are write operations that update the chain's state. In addition to being able to traverse objects and their fields, GraphQL gives developers the ability to pass arguments to fields in order to filter out responses. Every field and nested object can have its own set of arguments.
 
 Sample mutation:
+
 ```graphql
 mutation CreateReviewForEpisode($ep: Episode!, $review: ReviewInput!) {
   createReview(episode: $ep, review: $review) {

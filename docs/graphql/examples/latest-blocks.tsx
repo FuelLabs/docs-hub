@@ -1,4 +1,4 @@
-import { Query } from "./query";
+import { Query } from './query';
 
 export function LatestBlocks() {
   const query = `query LatestBlocks {

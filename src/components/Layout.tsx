@@ -2,6 +2,7 @@ import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
 import Head from 'next/head';
 import type { ReactNode } from 'react';
+
 import { useDocContext } from '../hooks/useDocContext';
 
 import { Header } from './Header';
@@ -13,16 +14,25 @@ type LayoutProps = {
 
 export function Layout({ title, children }: LayoutProps) {
   const { doc } = useDocContext();
-  const titleText = title ? `${title} | Fuel GraphQL Docs` : 'Fuel GraphQL Docs';
+  const titleText = title
+    ? `${title} | Fuel GraphQL Docs`
+    : 'Fuel GraphQL Docs';
   const docsConfig = doc.docsConfig || {};
 
   return (
     <>
       <Head>
         <title>{titleText}</title>
-        <meta name="description" content={docsConfig?.ogTags?.description} key="desc" />
+        <meta
+          name="description"
+          content={docsConfig?.ogTags?.description}
+          key="desc"
+        />
         <meta property="og:title" content={titleText} />
-        <meta property="og:description" content={docsConfig?.ogTags?.description} />
+        <meta
+          property="og:description"
+          content={docsConfig?.ogTags?.description}
+        />
         <meta property="og:image" content={docsConfig?.ogTags?.image} />
       </Head>
       <Box css={styles.root}>

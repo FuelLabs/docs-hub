@@ -1,7 +1,6 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box, Button, Flex, FuelLogo, Icon } from '@fuel-ui/react';
+import { Box, Flex, FuelLogo, Icon } from '@fuel-ui/react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 import { MobileMenu } from './MobileMenu';
 import { Search } from './Search';

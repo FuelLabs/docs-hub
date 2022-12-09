@@ -34,7 +34,6 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
   ({ item }, ref) => {
     const pathname = usePathname() || '';
     const fullSlug = `/docs/${item.slug}`;
-    console.log(fullSlug);
     const isActive = cx({
       active: pathname.includes(fullSlug),
     });

@@ -1,0 +1,3 @@
+[submodule "docs/sway"]
+	path = docs/sway
+	url = git@github.com:FuelLabs/sway.git

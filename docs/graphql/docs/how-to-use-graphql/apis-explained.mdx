@@ -4,29 +4,34 @@ category: How To Use GraphQL
 ---
 
 # Schema & Type System
+
 Unlike traditional REST APIs, GraphQL comes with a strong type system to describe your API. A GraphQL schema describes the data you can query using the API endpoint by defining a set of types and fields that are mapped to those types.
 
 Read along to learn about various GraphQL types.
 
 ## Object Types
+
 Object types in GraphQL describe an object with underlying fields that can be queried from your API endpoint.
 
 As an example, an object type can be defined as shown below:
+
 ```graphql
 type actors {
-    name: String!
-    appearsIn: [movie!]!
+  name: String!
+  appearsIn: [movie!]!
 }
 ```
+
 Here,`actors` is an object type and `name` and `appearsIn` are fields mapped to type `actors`.
 
 ## Scalar Types
 
->From The GraphQL Documentation: 
+> From The GraphQL Documentation:
 
 In the example for object types above, field `name` is of type `String`. String in GraphQL is by default a scalar type. This means that it resolves to a definite value and cannot have further sub-fields while querying. Scalar types represent the leaves of a query.
 
 GraphQL comes with a set of default scalar types out-of-the-box such as below:
+
 - `Int`: A signed 32‐bit integer.
 - `Float`: A signed double-precision floating-point value.
 - `String`: A UTF‐8 character sequence.
@@ -37,12 +42,11 @@ Fields can also be of types that are not scalar by default, but resolve to scala
 
 ```graphql
 {
- hero {
-   name
-   appearsIn
- }
+  hero {
+    name
+    appearsIn
+  }
 }
-
 ```
 
 This is because in the schema, `name` and `appearIn` do not have further queryable sub-fields as described below:
@@ -64,15 +68,16 @@ This is because in the schema, `name` and `appearIn` do not have further queryab
 
 ## Lists and Non-nulls
 
->From the GraphQL documentation: 
+> From the GraphQL documentation:
 
-Object types, scalars, and enums are the only kinds of types you can define in GraphQL. But when you use the types in other parts of the schema, or in your query variable declarations, you can apply additional type modifiers that affect validation of those values. 
+Object types, scalars, and enums are the only kinds of types you can define in GraphQL. But when you use the types in other parts of the schema, or in your query variable declarations, you can apply additional type modifiers that affect validation of those values.
 
 Let's look at an example:
+
 ```graphql
 type Character {
- name: String!
- appearsIn: [Episode]!
+  name: String!
+  appearsIn: [Episode]!
 }
 ```
 
@@ -122,7 +127,8 @@ myField: ['a', null, 'b'] // error
 ```
 
 ## Union types
-When a query returns a union type, you can use `... on` to specify the query fields for a certain return type. These are also called inline fragments. For example, the `hero` query below returns a union type of either `Droid` or `Human`. 
+
+When a query returns a union type, you can use `... on` to specify the query fields for a certain return type. These are also called inline fragments. For example, the `hero` query below returns a union type of either `Droid` or `Human`.
 
 ```graphql
 query HeroForEpisode($ep: Episode!) {
@@ -139,16 +145,20 @@ query HeroForEpisode($ep: Episode!) {
 ```
 
 ## Connections
+
 Connections are a type of response used whenever you are expecting multiple results that may require pagination. Each query return type that ends in "Connection" will include the following return fields:
+
 ```graphql
 pageInfo: PageInfo!
 edges: [SomethingEdge!]!
 nodes: [Something!]!
 ```
+
 ##### PageInfo
+
 `pageInfo` returns an object that includes information about the returned page of results:
 
-`hasPreviousPage: Boolean!` 
+`hasPreviousPage: Boolean!`
 Whether or not the result has a previous page.
 
 `hasNextPage: Boolean!`
@@ -161,13 +171,15 @@ The starting cursor that identifies the first page.
 The end cursor that identifies the last page.
 
 ##### Edges
+
 `edges` returns an array of edge objects, which includes the cursor and first node for that page. You can use this data to help with pagination.
 
 ##### Nodes
 
-`nodes` returns an array of whichever type you are expecting paginated results for. 
+`nodes` returns an array of whichever type you are expecting paginated results for.
 
 ##### Arguments
+
 Each of these queries also accepts the following arguments:
 `first: Int`
 `after: String`

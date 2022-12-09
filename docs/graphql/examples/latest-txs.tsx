@@ -1,4 +1,4 @@
-import { Query } from "./query";
+import { Query } from './query';
 
 export function LatestTransactions() {
   const query = `query LatestTransactions {

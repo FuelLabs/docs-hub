@@ -3,15 +3,20 @@ import remarkGfm from 'remark-gfm';
 import remarkSlug from 'remark-slug';
 
 import { codeImport } from './code-import';
+import {
+  getDocConfig,
+  getDocContent,
+  getDocFromSlug,
+  getDocPath,
+  getDocs,
+  getRepositoryLink,
+} from './docs';
 import { rehypeExtractHeadings } from './toc';
 
 import { FIELDS } from '~/src/constants';
 import type { DocType, NodeHeading, SidebarLinkItem } from '~/src/types';
-import { getDocConfig, getDocContent, getDocFromSlug, getDocPath, getDocs, getRepositoryLink } from './docs';
 
-export async function getDocBySlug(
-  slug: string
-): Promise<DocType> {
+export async function getDocBySlug(slug: string): Promise<DocType> {
   const [rootFolder] = slug.split('/');
   const realSlug = slug.replace(/(\.mdx|\.md)$/, '');
   const slugPath = await getDocFromSlug(slug);
@@ -145,7 +150,10 @@ export async function getSidebarLinks(order: string[]) {
   return withNextAndPrev;
 }
 
-export function getDocLink(links: Awaited<ReturnType<typeof getSidebarLinks>>, slug: string) {
+export function getDocLink(
+  links: Awaited<ReturnType<typeof getSidebarLinks>>,
+  slug: string
+) {
   return links
     .flatMap((i) => (i.submenu || i) as SidebarLinkItem | SidebarLinkItem[])
     .find((i) => i.slug === slug);

@@ -6,8 +6,7 @@ import { ThemeProvider } from '@fuel-ui/react';
 import { MDXProvider } from '@mdx-js/react';
 import type { ReactNode } from 'react';
 
-import { Examples } from '../importer';
-import { Components } from '../importer';
+import { Examples , Components } from '../importer';
 
 import { Blockquote } from './Blockquote';
 import { Code } from './Code';

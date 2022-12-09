@@ -1,10 +1,12 @@
-import { existsSync, readFileSync } from "fs";
-import { globby } from "globby";
-import matter from "gray-matter";
-import { join } from "path";
-import { DOCS_DIRECTORY } from "../constants";
-import { DocsConfig } from "../types";
-import { removeDocsPath } from "./urls";
+import { existsSync, readFileSync } from 'fs';
+import { globby } from 'globby';
+import matter from 'gray-matter';
+import { join } from 'path';
+
+import { DOCS_DIRECTORY } from '../constants';
+import type { DocsConfig } from '../types';
+
+import { removeDocsPath } from './urls';
 
 type DocPathType = {
   slug: string;
@@ -12,7 +14,7 @@ type DocPathType = {
 };
 
 export async function getDocs(): Promise<DocPathType[]> {
-  const paths = await globby(["./**/*.mdx", "./**/**.md"], {
+  const paths = await globby(['./**/docs/**/*.mdx', './**/docs/**/*.md'], {
     cwd: DOCS_DIRECTORY,
   });
   return paths.map((path) => ({
@@ -35,16 +37,16 @@ export async function getDocPath({ path }: DocPathType) {
 }
 
 export async function getDocConfig(name: string): Promise<DocsConfig> {
-  const docConfigPath = join(DOCS_DIRECTORY, name, "docs.json");
+  const docConfigPath = join(DOCS_DIRECTORY, name, 'docs.json');
   if (existsSync(docConfigPath)) {
-    return JSON.parse(readFileSync(docConfigPath, "utf8"));
-  } else {
+    return JSON.parse(readFileSync(docConfigPath, 'utf8'));
+  } 
     throw new Error(`${name} docs.json not found`);
-  }
+  
 }
 
 export async function getDocContent(path: string) {
-  const document = readFileSync(path, "utf8");
+  const document = readFileSync(path, 'utf8');
   const { data, content } = matter(document);
   return {
     header: data,
@@ -53,7 +55,7 @@ export async function getDocContent(path: string) {
 }
 
 export async function getRepositoryLink(config: DocsConfig, doc: DocPathType) {
-  return join(config.repository, "/docs/", doc.path);
+  return join(config.repository, '/docs/', doc.path);
 }
 
 export function splitSlug(slug?: string) {

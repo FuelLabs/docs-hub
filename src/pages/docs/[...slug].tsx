@@ -1,4 +1,9 @@
-import { getAllDocs, getDocBySlug, getDocLink, getSidebarLinks } from '~/src/lib/api';
+import {
+  getAllDocs,
+  getDocBySlug,
+  getDocLink,
+  getSidebarLinks,
+} from '~/src/lib/api';
 import { joinSlug, splitSlug } from '~/src/lib/docs';
 import { DocScreen } from '~/src/screens/DocPage';
 import type { DocType, SidebarLinkItem } from '~/src/types';

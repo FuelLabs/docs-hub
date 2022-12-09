@@ -10,12 +10,12 @@ export type DocsConfig = {
     docs: string;
     components: string;
     examples: string;
-  },
+  };
   ogTags: {
     image: string;
     description: string;
-  }
-}
+  };
+};
 
 export type DocType = {
   title: string;

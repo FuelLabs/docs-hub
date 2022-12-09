@@ -1,10 +1,11 @@
-import { cssObj } from "@fuel-ui/css";
-import { Box } from "@fuel-ui/react";
-import { Layout } from "../components/Layout";
+import { cssObj } from '@fuel-ui/css';
+import { Box } from '@fuel-ui/react';
 
-export default function Home(props: any) {
+import { Layout } from '../components/Layout';
+
+export default function Home() {
   return (
-    <Layout title={"Documentation Hub"}>
+    <Layout title={'Documentation Hub'}>
       <Box as="section" css={styles.section}>
         <h1>Hi</h1>
       </Box>
