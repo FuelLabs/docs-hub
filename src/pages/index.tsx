@@ -1,40 +1,15 @@
-import { cssObj } from '@fuel-ui/css';
-import { Box } from '@fuel-ui/react';
+/* eslint-disable import/no-named-default */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Layout } from '../components/Layout';
+import {
+  default as DocPage,
+  getStaticProps as docsGetStaticProps,
+} from './docs/[...slug]';
 
-export default function Home() {
-  return (
-    <Layout title={'Documentation Hub'}>
-      <Box as="section" css={styles.section}>
-        <h1>Hi</h1>
-      </Box>
-    </Layout>
-  );
+export default function Home(props: any) {
+  return <DocPage {...props} />;
 }
 
-const styles = {
-  sidebar: cssObj({
-    display: 'none',
-    padding: '$8 $0 $0 $6',
-    position: 'sticky',
-    top: 20,
-
-    '@xl': {
-      display: 'block',
-    },
-  }),
-  section: cssObj({
-    py: '$4',
-    px: '$4',
-
-    '@md': {
-      px: '$10',
-    },
-
-    '@xl': {
-      py: '$8',
-      px: '$0',
-    },
-  }),
-};
+export async function getStaticProps() {
+  return docsGetStaticProps({ params: { slug: ['portal/home'] } });
+}

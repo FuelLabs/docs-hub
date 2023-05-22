@@ -156,5 +156,10 @@ export function getDocLink(
 ) {
   return links
     .flatMap((i) => (i.submenu || i) as SidebarLinkItem | SidebarLinkItem[])
-    .find((i) => i.slug === slug);
+    .find((i) => {
+      if (i.slug?.startsWith('../portal')) {
+        return i.slug === `../${slug}`;
+      }
+      return i.slug === slug;
+    });
 }

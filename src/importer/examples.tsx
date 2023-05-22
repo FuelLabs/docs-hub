@@ -1,1 +1,1 @@
-export * as Examples from '../../docs/graphql/examples';
+// export * as Examples from '../../docs/graphql/examples';

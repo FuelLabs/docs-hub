@@ -1,3 +1,9 @@
 [submodule "docs/sway"]
 	path = docs/sway
 	url = git@github.com:FuelLabs/sway.git
+[submodule "docs/fuels-rs"]
+	path = docs/fuels-rs
+	url = git@github.com:FuelLabs/fuels-rs.git
+[submodule "docs/fuel-graphql-docs"]
+	path = docs/fuel-graphql-docs
+	url = git@github.com:FuelLabs/fuel-graphql-docs.git

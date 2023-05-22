@@ -14,9 +14,15 @@ type DocPathType = {
 };
 
 export async function getDocs(): Promise<DocPathType[]> {
-  const paths = await globby(['./**/docs/**/*.mdx', './**/docs/**/*.md'], {
-    cwd: DOCS_DIRECTORY,
-  });
+  const paths = await globby(
+    [
+      // './fuel-graphql-docs/docs/**/*.mdx',
+      '../portal/*.mdx',
+    ],
+    {
+      cwd: DOCS_DIRECTORY,
+    }
+  );
   return paths.map((path) => ({
     slug: removeDocsPath(path),
     path,
@@ -37,12 +43,11 @@ export async function getDocPath({ path }: DocPathType) {
 }
 
 export async function getDocConfig(name: string): Promise<DocsConfig> {
-  const docConfigPath = join(DOCS_DIRECTORY, name, 'docs.json');
+  const docConfigPath = join(DOCS_DIRECTORY, '../portal/docs.json');
   if (existsSync(docConfigPath)) {
     return JSON.parse(readFileSync(docConfigPath, 'utf8'));
-  } 
-    throw new Error(`${name} docs.json not found`);
-  
+  }
+  throw new Error(`${name} docs.json not found`);
 }
 
 export async function getDocContent(path: string) {
@@ -55,7 +60,9 @@ export async function getDocContent(path: string) {
 }
 
 export async function getRepositoryLink(config: DocsConfig, doc: DocPathType) {
-  return join(config.repository, '/docs/', doc.path);
+  const path = doc.path.split('/')[1];
+  const docConfig = config[path];
+  return join(docConfig.repository, doc.path);
 }
 
 export function splitSlug(slug?: string) {

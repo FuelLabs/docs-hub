@@ -1,0 +1,38 @@
+{
+  "portal": {
+    "title": "Fuel Docs Portal",
+    "slug": "",
+    "paths": {
+      "docs": "",
+      "components": "",
+      "examples": ""
+    },
+    "menu": ["Home", "FAQ"],
+    "repository": "https://github.com/FuelLabs/docs-hub",
+    "ogTags": {
+      "description": "Official documentation for the Fuel Network",
+      "image": ""
+    }
+  },
+  "graphql-docs": {
+    "title": "Fuel GraphQL Docs",
+    "slug": "graphql",
+    "paths": {
+      "docs": "../fuel-graphql-docs/docs",
+      "components": "../fuel-graphql-docs/src/components",
+      "examples": "../fuel-graphql-docs/examples"
+    },
+    "menu": [
+      "Overview",
+      "Querying From A Dapp",
+      "Recipes",
+      "How To Use GraphQL",
+      "Reference"
+    ],
+    "repository": "https://github.com/FuelLabs/fuels-wallet",
+    "ogTags": {
+      "description": "Official documentation for the Fuel GraphQL API",
+      "image": ""
+    }
+  }
+}

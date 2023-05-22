@@ -14,10 +14,8 @@ type LayoutProps = {
 
 export function Layout({ title, children }: LayoutProps) {
   const { doc } = useDocContext();
-  const titleText = title
-    ? `${title} | Fuel GraphQL Docs`
-    : 'Fuel GraphQL Docs';
-  const docsConfig = doc.docsConfig || {};
+  const titleText = title ? `${title} | Fuel Docs` : 'Fuel Docs';
+  // const docsConfig = doc.docsConfig || {};
 
   return (
     <>
@@ -25,18 +23,18 @@ export function Layout({ title, children }: LayoutProps) {
         <title>{titleText}</title>
         <meta
           name="description"
-          content={docsConfig?.ogTags?.description}
+          // content={docsConfig?.ogTags?.description}
           key="desc"
         />
         <meta property="og:title" content={titleText} />
         <meta
           property="og:description"
-          content={docsConfig?.ogTags?.description}
+          // content={docsConfig?.ogTags?.description}
         />
-        <meta property="og:image" content={docsConfig?.ogTags?.image} />
+        {/* <meta property="og:image" content={docsConfig?.ogTags?.image} /> */}
       </Head>
       <Box css={styles.root}>
-        <Header title={doc.docsConfig?.title} />
+        {/* <Header title={doc.docsConfig?.title} /> */}
         {children}
       </Box>
     </>

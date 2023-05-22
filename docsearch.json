@@ -1,5 +1,5 @@
 {
-  "index_name": "fuel_graphql_docs",
+  "index_name": "docs_hub",
   "start_urls": ["/"],
   "selectors": {
     "lvl0": "h1",
