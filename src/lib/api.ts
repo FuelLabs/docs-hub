@@ -14,7 +14,12 @@ import {
 import { rehypeExtractHeadings } from './toc';
 
 import { FIELDS } from '~/src/constants';
-import type { DocType, NodeHeading, SidebarLinkItem } from '~/src/types';
+import type {
+  Config,
+  DocType,
+  NodeHeading,
+  SidebarLinkItem,
+} from '~/src/types';
 
 export async function getDocBySlug(slug: string): Promise<DocType> {
   const [rootFolder] = slug.split('/');
@@ -23,7 +28,7 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
   const fullpath = await getDocPath(slugPath);
   const docsConfig = await getDocConfig(rootFolder);
   const pageLink = await getRepositoryLink(docsConfig, slugPath);
-  const { header, content } = await getDocContent(fullpath);
+  const { data, content } = await getDocContent(fullpath);
   const doc = {
     pageLink,
   };
@@ -31,19 +36,19 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
   // Ensure only the minimal needed data is exposed
   FIELDS.forEach((field) => {
     if (field === 'slug') {
-      doc[field] = header.slug || realSlug;
+      doc[field] = data.slug || realSlug;
     }
     if (field === 'content') {
       doc[field] = content;
     }
-    if (typeof header[field] !== 'undefined') {
-      doc[field] = header[field];
+    if (typeof data[field] !== 'undefined') {
+      doc[field] = data[field];
     }
   });
 
   const headings: NodeHeading[] = [];
   const source = await serialize(content, {
-    scope: header,
+    scope: data,
     mdxOptions: {
       format: 'mdx',
       remarkPlugins: [
@@ -68,22 +73,26 @@ export async function getAllDocs() {
   return Promise.all(slugs.map(({ slug }) => getDocBySlug(slug)));
 }
 
-export async function getSidebarLinks(order: string[]) {
+export async function getSidebarLinks(config: Config) {
   const docs = await getAllDocs();
   const links = docs.reduce((list, doc) => {
     if (!doc.category) {
       return list.concat({ slug: doc.slug, label: doc.title });
     }
 
-    const categoryIdx = list.findIndex((l) => l?.label === doc.category);
+    const categoryIdx = list.findIndex((l) => {
+      return l?.label === doc.category;
+    });
     /** Insert category item based on order prop */
-    if (categoryIdx > 0) {
+    if (categoryIdx >= 0) {
       const submenu = list[categoryIdx]?.submenu || [];
       submenu.push({ slug: doc.slug, label: doc.title });
       return list;
     }
 
-    const categorySlug = doc.slug.split('/')[0];
+    const categorySlug = doc.slug.startsWith('../')
+      ? doc.slug.split('/')[1]
+      : doc.slug.split('/')[0];
     const submenu = [{ slug: doc.slug, label: doc.title }];
     return list.concat({
       subpath: categorySlug,
@@ -93,6 +102,7 @@ export async function getSidebarLinks(order: string[]) {
     /** Insert inside category submenu if category is already on array */
   }, [] as SidebarLinkItem[]);
 
+  const order = config.menu;
   const sortedLinks = links
     /** Sort first level links */
     .sort((a, b) => {
@@ -114,12 +124,12 @@ export async function getSidebarLinks(order: string[]) {
     /** Sort categoried links */
     .map((link) => {
       if (!link.submenu) return link;
-      const catOrder = order.filter((i) => i.startsWith(link.label));
-      const submenu = link.submenu.sort(
-        (a, b) =>
-          catOrder.indexOf(`${link.label}/${a.label}`) -
-          catOrder.indexOf(`${link.label}/${b.label}`)
-      );
+      const catOrder = config[`${link.label}_menu`];
+      const submenu = link.submenu.sort((a, b) => {
+        return (
+          catOrder!.indexOf(`${a.label}`) - catOrder!.indexOf(`${b.label}`)
+        );
+      });
       return { ...link, submenu };
     });
 

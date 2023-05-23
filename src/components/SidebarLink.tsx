@@ -8,7 +8,7 @@ import { forwardRef } from 'react';
 
 import type { SidebarLinkItem } from '~/src/types';
 
-const Link = styled(Box, {
+export const Link = styled(Box, {
   py: '$1',
   px: '$2',
   color: '$gray10',
@@ -33,12 +33,21 @@ export type SidebarLinkProps = {
 export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
   ({ item }, ref) => {
     const pathname = usePathname() || '';
-    const fullSlug = `/docs/${item.slug}`;
+    const slug = item.slug?.startsWith('../')
+      ? item.slug.replace('../', '')
+      : item.slug;
+    const fullSlug = `/docs/${slug}`;
     const isActive = cx({
       active: pathname.includes(fullSlug),
     });
     return (
-      <Link ref={ref} as={NextLink as any} href={fullSlug} className={isActive}>
+      <Link
+        ref={ref}
+        style={{ flexGrow: 1 }}
+        as={NextLink as any}
+        href={fullSlug}
+        className={isActive}
+      >
         {item.label}
       </Link>
     );

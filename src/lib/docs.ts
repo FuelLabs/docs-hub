@@ -18,6 +18,7 @@ export async function getDocs(): Promise<DocPathType[]> {
     [
       // './fuel-graphql-docs/docs/**/*.mdx',
       '../portal/*.mdx',
+      '../portal/**/*.mdx',
     ],
     {
       cwd: DOCS_DIRECTORY,
@@ -54,7 +55,7 @@ export async function getDocContent(path: string) {
   const document = readFileSync(path, 'utf8');
   const { data, content } = matter(document);
   return {
-    header: data,
+    data,
     content,
   };
 }

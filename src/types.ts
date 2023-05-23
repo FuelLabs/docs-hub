@@ -1,6 +1,10 @@
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
+export type MenuKey = string;
+
 export type Config = {
+  [key in MenuKey]?: string[];
+} & {
   title: string;
   slug: string;
   paths: {
@@ -8,12 +12,12 @@ export type Config = {
     components: string;
     examples: string;
   };
-  menu: string[];
   repository: string;
   ogTags: {
     description: string;
     image: string;
   };
+  menu: string[];
 };
 
 type DocsConfig = {

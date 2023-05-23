@@ -1,6 +1,7 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import type { ReactNode } from 'react';
 
 import { useDocContext } from '../hooks/useDocContext';
@@ -14,8 +15,24 @@ type LayoutProps = {
 
 export function Layout({ title, children }: LayoutProps) {
   const { doc } = useDocContext();
+  const router = useRouter();
   const titleText = title ? `${title} | Fuel Docs` : 'Fuel Docs';
-  // const docsConfig = doc.docsConfig || {};
+  const slug = () => {
+    switch (router.asPath) {
+      case '/':
+        return 'portal';
+        break;
+      case '/docs/portal/':
+        return 'portal';
+        break;
+      case '/docs/graphql/':
+        return 'graphql';
+        break;
+      default:
+        return 'portal';
+    }
+  };
+  const docsConfig = doc.docsConfig[slug()] || {};
 
   return (
     <>
@@ -23,18 +40,18 @@ export function Layout({ title, children }: LayoutProps) {
         <title>{titleText}</title>
         <meta
           name="description"
-          // content={docsConfig?.ogTags?.description}
+          content={docsConfig?.ogTags?.description}
           key="desc"
         />
         <meta property="og:title" content={titleText} />
         <meta
           property="og:description"
-          // content={docsConfig?.ogTags?.description}
+          content={docsConfig?.ogTags?.description}
         />
-        {/* <meta property="og:image" content={docsConfig?.ogTags?.image} /> */}
+        <meta property="og:image" content={docsConfig?.ogTags?.image} />
       </Head>
       <Box css={styles.root}>
-        {/* <Header title={doc.docsConfig?.title} /> */}
+        <Header title={docsConfig?.title} />
         {children}
       </Box>
     </>

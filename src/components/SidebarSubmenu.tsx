@@ -22,28 +22,36 @@ export function SidebarSubmenu({
     setIsOpened((s) => !s);
   }
 
+  const slug = `${subpath}/${label.replace(/\s+/g, '-').toLowerCase()}`;
+
   return (
     <Flex css={styles.root}>
-      <Button
-        variant="link"
-        rightIcon={isOpened ? Icon.is('CaretUp') : Icon.is('CaretDown')}
-        onPress={toggle}
-        className={cx({ active: isActive })}
-      >
-        {label}
-      </Button>
+      <Flex justify={'space-between'}>
+        <SidebarLink item={{ label, slug }} />
+        <Button
+          variant="link"
+          rightIcon={isOpened ? Icon.is('CaretUp') : Icon.is('CaretDown')}
+          onPress={toggle}
+          className={cx({ active: isActive })}
+        />
+      </Flex>
       {isOpened && (
         <List>
-          {submenu?.map((item) => (
-            <List.Item
-              key={item.slug}
-              icon={Icon.is('ArrowRight')}
-              iconSize={10}
-              iconColor="gray6"
-            >
-              <SidebarLink item={item} />
-            </List.Item>
-          ))}
+          {submenu?.map((item) => {
+            if (item.label !== label) {
+              return (
+                <List.Item
+                  key={item.slug}
+                  icon={Icon.is('ArrowRight')}
+                  iconSize={10}
+                  iconColor="gray6"
+                >
+                  <SidebarLink item={item} />
+                </List.Item>
+              );
+            }
+            return <div key={item.slug} />;
+          })}
         </List>
       )}
     </Flex>

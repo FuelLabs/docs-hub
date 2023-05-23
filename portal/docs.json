@@ -1,20 +1,21 @@
 {
   "portal": {
     "title": "Fuel Docs Portal",
-    "slug": "",
+    "slug": "portal",
     "paths": {
       "docs": "",
       "components": "",
       "examples": ""
     },
-    "menu": ["Home", "FAQ"],
     "repository": "https://github.com/FuelLabs/docs-hub",
     "ogTags": {
       "description": "Official documentation for the Fuel Network",
       "image": ""
-    }
+    },
+    "menu": ["Home", "FAQ"],
+    "FAQ_menu": ["First", "Third", "Second"]
   },
-  "graphql-docs": {
+  "graphql": {
     "title": "Fuel GraphQL Docs",
     "slug": "graphql",
     "paths": {

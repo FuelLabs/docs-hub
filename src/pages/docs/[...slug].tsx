@@ -29,8 +29,7 @@ export async function getStaticProps({ params }: Params) {
   let slug = params.slug[0].split('/')[0];
   let config = doc.docsConfig;
   const slugConfig = config[slug];
-  let order = slugConfig.menu;
-  const links = await getSidebarLinks(order || []);
+  const links = await getSidebarLinks(slugConfig || []);
   const docLink = getDocLink(links, doc.slug);
   return {
     props: {
