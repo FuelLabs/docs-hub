@@ -8,7 +8,7 @@ import { Search } from './Search';
 export function Header({ title }: { title?: string }) {
   return (
     <Flex as="header" css={styles.root}>
-      <Box css={{ flex: 1 }}>
+      <Box>
         <Link href="/" className="logo">
           <FuelLogo size={40} />
           <Flex css={styles.logoText}>
@@ -16,6 +16,14 @@ export function Header({ title }: { title?: string }) {
           </Flex>
         </Link>
       </Box>
+      <Flex css={{ padding: '0 $10' }} grow={'1'} gap={'$10'}>
+        <Link href="/docs/portal/home" className="logo">
+          Portal
+        </Link>
+        <Link href="/docs/sway/sway-program-types/index" className="logo">
+          Sway
+        </Link>
+      </Flex>
       <Box css={styles.desktop}>
         <Flex css={styles.menu}>
           <a

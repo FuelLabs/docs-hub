@@ -1,3 +1,4 @@
 export function removeDocsPath(path: string) {
-  return path.replace('docs/', '');
+  const newPath = path.replace('docs/', '').replace('/book/src/', '/');
+  return newPath;
 }

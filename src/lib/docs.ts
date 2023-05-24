@@ -25,15 +25,20 @@ export async function getDocs(): Promise<DocPathType[]> {
       cwd: DOCS_DIRECTORY,
     }
   );
-  return paths.map((path) => ({
-    slug: removeDocsPath(path),
-    path,
-  }));
+  return paths.map((path) => {
+    return {
+      slug: removeDocsPath(path),
+      path,
+    };
+  });
 }
 
 export async function getDocFromSlug(slug: string): Promise<DocPathType> {
   const slugs = await getDocs();
-  const slugPath = slugs.find(({ slug: pathSlug }) => pathSlug.includes(slug));
+  const realSlug = slug;
+  const slugPath = slugs.find(({ slug: pathSlug }) =>
+    pathSlug.includes(realSlug)
+  );
   if (!slugPath) {
     throw new Error(`${slug} not found`);
   }
@@ -59,7 +64,6 @@ export async function getDocContent(path: string) {
     const paths = path.split('/');
     const title = paths.pop()?.replace('.md', '').replaceAll('_', ' ');
     data.title = title;
-    // TODO: not working
     const category = paths.pop()?.replaceAll('-', ' ');
     data.category = category;
   }
@@ -72,7 +76,6 @@ export async function getDocContent(path: string) {
 export async function getRepositoryLink(config: DocsConfig, doc: DocPathType) {
   const path = doc.path.split('/')[1];
   const docConfig = config[path];
-  // console.log('DOC CONFIG:', docConfig);
   return join(docConfig.repository, doc.path);
 }
 

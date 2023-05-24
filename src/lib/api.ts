@@ -11,6 +11,7 @@ import {
   getDocs,
   getRepositoryLink,
 } from './docs';
+import { mdBookExampleImport } from './mdbook-example-import';
 import { rehypeExtractHeadings } from './toc';
 
 import { FIELDS } from '~/src/constants';
@@ -55,6 +56,7 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
         remarkSlug,
         remarkGfm,
         [codeImport, { filepath: fullpath }],
+        [mdBookExampleImport, { filepath: fullpath }],
       ],
       rehypePlugins: [[rehypeExtractHeadings, { headings }]],
     },
@@ -70,14 +72,15 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
 
 export async function getAllDocs() {
   const slugs = await getDocs();
-  // console.log('SLUGS:', slugs);
   return Promise.all(slugs.map(({ slug }) => getDocBySlug(slug)));
 }
 
 export async function getSidebarLinks(config: Config) {
   const docs = await getAllDocs();
   const links = docs.reduce((list, doc) => {
-    // console.log('LIST:', list);
+    if (doc.slug.split('/')[1] !== config.slug) {
+      return list;
+    }
     if (!doc.category) {
       return list.concat({ slug: doc.slug, label: doc.title });
     }
@@ -93,10 +96,6 @@ export async function getSidebarLinks(config: Config) {
     }
 
     const subpath = doc.slug.split('/')[1];
-    // console.log('-------------');
-    // console.log('DOC SLUG:', doc.slug);
-    // console.log('Subpath:', subpath);
-    // console.log('-------------');
     const submenu = [{ slug: doc.slug, label: doc.title }];
     return list.concat({
       subpath,
@@ -107,35 +106,40 @@ export async function getSidebarLinks(config: Config) {
   }, [] as SidebarLinkItem[]);
 
   const order = config.menu;
-  const sortedLinks = links
-    /** Sort first level links */
-    .sort((a, b) => {
-      const aIdx = order.indexOf(a.label);
-      const bIdx = order.indexOf(b.label);
-      if (!a.subpath && !b.subpath) {
-        return aIdx - bIdx;
-      }
-      if (a.subpath && b.subpath) {
-        const aFirst = order.filter((i) => i.startsWith(a.label))?.[0];
-        const bFirst = order.filter((i) => i.startsWith(b.label))?.[0];
-        return order.indexOf(aFirst) - order.indexOf(bFirst);
-      }
-      const category = a.subpath ? a.label : b.label;
-      const first = order.filter((i) => i.startsWith(category))?.[0];
-      const idx = order.indexOf(first);
-      return a.subpath ? idx - bIdx : aIdx - idx;
-    })
-    /** Sort categoried links */
-    .map((link) => {
-      if (!link.submenu) return link;
-      const catOrder = config[`${link.label}_menu`];
-      const submenu = link.submenu.sort((a, b) => {
-        return catOrder
-          ? catOrder.indexOf(`${a.label}`) - catOrder.indexOf(`${b.label}`)
-          : 0;
-      });
-      return { ...link, submenu };
-    });
+  const sortedLinks = order
+    ? links
+        /** Sort first level links */
+        .sort((a, b) => {
+          const aIdx = order.indexOf(a.label);
+          const bIdx = order.indexOf(b.label);
+          if (!a.subpath && !b.subpath) {
+            return aIdx - bIdx;
+          }
+          if (a.subpath && b.subpath) {
+            const aFirst = order.filter((i) => i.startsWith(a.label))?.[0];
+            const bFirst = order.filter((i) => i.startsWith(b.label))?.[0];
+            return order.indexOf(aFirst) - order.indexOf(bFirst);
+          }
+          const category = a.subpath ? a.label : b.label;
+          const first = order.filter((i) => i.startsWith(category))?.[0];
+          const idx = order.indexOf(first);
+          return a.subpath ? idx - bIdx : aIdx - idx;
+        })
+        /** Sort categoried links */
+        .map((link) => {
+          if (!link.submenu) return link;
+          const key = `${link.label.replaceAll(' ', '_')}_menu`;
+          let catOrder = config[key];
+          catOrder = catOrder?.map((title) => title.toLowerCase());
+          const submenu = link.submenu.sort((a, b) => {
+            return catOrder
+              ? catOrder.indexOf(`${a.label.toLowerCase()}`) -
+                  catOrder.indexOf(`${b.label.toLowerCase()}`)
+              : 0;
+          });
+          return { ...link, submenu };
+        })
+    : links;
 
   const withNextAndPrev = [...sortedLinks].map((doc, idx) => {
     if (doc.submenu) {

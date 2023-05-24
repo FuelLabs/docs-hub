@@ -29,7 +29,13 @@
       "image": ""
     },
     "menu": ["Program Types"],
-    "Program_Types_menu": ["Contracts", "Libraries", "Scripts", "Predicates"]
+    "sway_program_types_menu": [
+      "Sway Program Types",
+      "Smart Contracts",
+      "Libraries",
+      "Scripts",
+      "Predicates"
+    ]
   },
   "graphql": {
     "title": "Fuel GraphQL Docs",

@@ -43,7 +43,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
     return (
       <Link
         ref={ref}
-        style={{ flexGrow: 1 }}
+        style={{ flexGrow: 1, textTransform: 'capitalize' }}
         as={NextLink as any}
         href={fullSlug}
         className={isActive}

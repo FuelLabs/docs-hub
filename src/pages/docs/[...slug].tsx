@@ -25,10 +25,10 @@ type Params = {
 };
 
 export async function getStaticProps({ params }: Params) {
-  // console.log('PARAMS:', params);
   const doc = await getDocBySlug(joinSlug(params.slug));
   let slug = params.slug[0];
   let config = doc.docsConfig;
+  if (slug === 'portal/home') slug = 'portal';
   const slugConfig = config[slug];
   const links = await getSidebarLinks(slugConfig || []);
   const docLink = getDocLink(links, doc.slug);
