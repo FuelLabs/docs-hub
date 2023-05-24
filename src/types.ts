@@ -20,7 +20,7 @@ export type Config = {
   menu: string[];
 };
 
-type DocsConfig = {
+export type DocsConfig = {
   [key: string]: Config;
 };
 

@@ -25,8 +25,9 @@ type Params = {
 };
 
 export async function getStaticProps({ params }: Params) {
+  // console.log('PARAMS:', params);
   const doc = await getDocBySlug(joinSlug(params.slug));
-  let slug = params.slug[0].split('/')[0];
+  let slug = params.slug[0];
   let config = doc.docsConfig;
   const slugConfig = config[slug];
   const links = await getSidebarLinks(slugConfig || []);
@@ -45,7 +46,7 @@ export async function getStaticPaths() {
   return {
     paths: docs.map((doc) => {
       let arr = (doc.slug || '').split('/');
-      if (arr[0].startsWith('..')) arr.shift();
+      if (arr[0].startsWith('.')) arr.shift();
       return {
         params: {
           slug: [...arr],

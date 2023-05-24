@@ -50,7 +50,7 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
   const source = await serialize(content, {
     scope: data,
     mdxOptions: {
-      format: 'mdx',
+      format: 'md',
       remarkPlugins: [
         remarkSlug,
         remarkGfm,
@@ -70,12 +70,14 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
 
 export async function getAllDocs() {
   const slugs = await getDocs();
+  // console.log('SLUGS:', slugs);
   return Promise.all(slugs.map(({ slug }) => getDocBySlug(slug)));
 }
 
 export async function getSidebarLinks(config: Config) {
   const docs = await getAllDocs();
   const links = docs.reduce((list, doc) => {
+    // console.log('LIST:', list);
     if (!doc.category) {
       return list.concat({ slug: doc.slug, label: doc.title });
     }
@@ -90,12 +92,14 @@ export async function getSidebarLinks(config: Config) {
       return list;
     }
 
-    const categorySlug = doc.slug.startsWith('../')
-      ? doc.slug.split('/')[1]
-      : doc.slug.split('/')[0];
+    const subpath = doc.slug.split('/')[1];
+    // console.log('-------------');
+    // console.log('DOC SLUG:', doc.slug);
+    // console.log('Subpath:', subpath);
+    // console.log('-------------');
     const submenu = [{ slug: doc.slug, label: doc.title }];
     return list.concat({
-      subpath: categorySlug,
+      subpath,
       label: doc.category,
       submenu,
     });
@@ -126,9 +130,9 @@ export async function getSidebarLinks(config: Config) {
       if (!link.submenu) return link;
       const catOrder = config[`${link.label}_menu`];
       const submenu = link.submenu.sort((a, b) => {
-        return (
-          catOrder!.indexOf(`${a.label}`) - catOrder!.indexOf(`${b.label}`)
-        );
+        return catOrder
+          ? catOrder.indexOf(`${a.label}`) - catOrder.indexOf(`${b.label}`)
+          : 0;
       });
       return { ...link, submenu };
     });
@@ -164,7 +168,7 @@ export function getDocLink(
   links: Awaited<ReturnType<typeof getSidebarLinks>>,
   slug: string
 ) {
-  return links
+  links
     .flatMap((i) => (i.submenu || i) as SidebarLinkItem | SidebarLinkItem[])
     .find((i) => {
       if (i.slug?.startsWith('../portal')) {
@@ -172,4 +176,6 @@ export function getDocLink(
       }
       return i.slug === slug;
     });
+
+  return links;
 }

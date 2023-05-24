@@ -15,6 +15,22 @@
     "menu": ["Home", "FAQ"],
     "FAQ_menu": ["First", "Third", "Second"]
   },
+  "sway": {
+    "title": "Sway Docs",
+    "slug": "sway",
+    "paths": {
+      "docs": "TODO: use this",
+      "components": "",
+      "examples": ""
+    },
+    "repository": "https://github.com/FuelLabs/sway",
+    "ogTags": {
+      "description": "Official documentation for the Sway language",
+      "image": ""
+    },
+    "menu": ["Program Types"],
+    "Program_Types_menu": ["Contracts", "Libraries", "Scripts", "Predicates"]
+  },
   "graphql": {
     "title": "Fuel GraphQL Docs",
     "slug": "graphql",
@@ -23,17 +39,17 @@
       "components": "../fuel-graphql-docs/src/components",
       "examples": "../fuel-graphql-docs/examples"
     },
+    "repository": "https://github.com/FuelLabs/fuels-wallet",
+    "ogTags": {
+      "description": "Official documentation for the Fuel GraphQL API",
+      "image": ""
+    },
     "menu": [
       "Overview",
       "Querying From A Dapp",
       "Recipes",
       "How To Use GraphQL",
       "Reference"
-    ],
-    "repository": "https://github.com/FuelLabs/fuels-wallet",
-    "ogTags": {
-      "description": "Official documentation for the Fuel GraphQL API",
-      "image": ""
-    }
+    ]
   }
 }

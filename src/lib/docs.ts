@@ -16,9 +16,10 @@ type DocPathType = {
 export async function getDocs(): Promise<DocPathType[]> {
   const paths = await globby(
     [
-      // './fuel-graphql-docs/docs/**/*.mdx',
+      '../portal/*.md',
       '../portal/*.mdx',
       '../portal/**/*.mdx',
+      './sway/docs/book/src/sway-program-types/*.md',
     ],
     {
       cwd: DOCS_DIRECTORY,
@@ -54,6 +55,14 @@ export async function getDocConfig(name: string): Promise<DocsConfig> {
 export async function getDocContent(path: string) {
   const document = readFileSync(path, 'utf8');
   const { data, content } = matter(document);
+  if (!data.title) {
+    const paths = path.split('/');
+    const title = paths.pop()?.replace('.md', '').replaceAll('_', ' ');
+    data.title = title;
+    // TODO: not working
+    const category = paths.pop()?.replaceAll('-', ' ');
+    data.category = category;
+  }
   return {
     data,
     content,
@@ -63,6 +72,7 @@ export async function getDocContent(path: string) {
 export async function getRepositoryLink(config: DocsConfig, doc: DocPathType) {
   const path = doc.path.split('/')[1];
   const docConfig = config[path];
+  // console.log('DOC CONFIG:', docConfig);
   return join(docConfig.repository, doc.path);
 }
 
