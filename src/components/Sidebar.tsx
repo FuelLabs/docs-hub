@@ -10,11 +10,14 @@ export function Sidebar() {
   const { links } = useDocContext();
   return (
     <Box as="nav" css={styles.root}>
-      {links.map((link) => {
+      {links.map((link, index) => {
         return link.slug ? (
-          <SidebarLink key={link.slug} item={link} />
+          <SidebarLink key={link.slug + index} item={link} />
         ) : (
-          <SidebarSubmenu key={link.subpath} {...link} />
+          <SidebarSubmenu
+            key={link.subpath ? link.subpath + index : index}
+            {...link}
+          />
         );
       })}
     </Box>
