@@ -19,10 +19,6 @@ export function SidebarSubmenu({
   // const index = pathArray?.indexOf(subpath!);
   // const category = pathArray && index ? `/${pathArray[index + 1]}` : '';
   // const isActive = pathname?.startsWith(`/docs/${subpath}${category}/`);
-  // if (isActive) {
-  //   console.log('PATH NAME:', pathname);
-  //   console.log('TARGET:', `/docs/${subpath}${category}`);
-  // }
   // const [isOpened, setIsOpened] = useState(Boolean(isActive));
   const isActive = false;
   const [isOpened, setIsOpened] = useState(Boolean(isActive));

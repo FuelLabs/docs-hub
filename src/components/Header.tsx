@@ -1,11 +1,28 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box, Flex, FuelLogo, Icon } from '@fuel-ui/react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
 
 import { MobileMenu } from './MobileMenu';
 import { Search } from './Search';
 
+type Tabs = 'portal' | 'sway' | 'fuels-rs';
+
 export function Header({ title }: { title?: string }) {
+  const [active, setActive] = useState<Tabs>('portal');
+  const router = useRouter();
+  const activeStyles = { ...styles.topNavLink, ...styles.activeTopNavLink };
+
+  useEffect(() => {
+    const category = router.asPath.split('docs/')[1].split('/')[0];
+    if (isStringInTabs(category)) setActive(category as Tabs);
+  }, [router]);
+
+  function isStringInTabs(str: string): boolean {
+    return str === 'portal' || str === 'sway' || str === 'fuels-rs';
+  }
+
   return (
     <Flex as="header" css={styles.root}>
       <Box>
@@ -17,11 +34,23 @@ export function Header({ title }: { title?: string }) {
         </Link>
       </Box>
       <Flex css={{ padding: '0 $10' }} grow={'1'} gap={'$10'}>
-        <Link href="/docs/portal/home" className="logo">
+        <Link
+          href="/docs/portal/home"
+          style={active === 'portal' ? activeStyles : styles.topNavLink}
+        >
           Portal
         </Link>
-        <Link href="/docs/sway/sway-program-types/index" className="logo">
+        <Link
+          href="/docs/sway/introduction/index"
+          style={active === 'sway' ? activeStyles : styles.topNavLink}
+        >
           Sway
+        </Link>
+        <Link
+          href="/docs/fuels-rs/getting-started/index/"
+          style={active === 'fuels-rs' ? activeStyles : styles.topNavLink}
+        >
+          Rust SDK
         </Link>
       </Flex>
       <Box css={styles.desktop}>
@@ -74,6 +103,7 @@ const styles = {
     flex: 1,
     fontSize: '$lg',
     fontWeight: '$semibold',
+    paddingLeft: '$2',
   }),
   version: cssObj({
     ml: '$2',
@@ -113,4 +143,11 @@ const styles = {
       color: '$accent11',
     },
   }),
+  topNavLink: {
+    padding: '4px 16px',
+    borderRadius: '4px',
+  },
+  activeTopNavLink: {
+    background: 'var(--colors-accent2)',
+  },
 };

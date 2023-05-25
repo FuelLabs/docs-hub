@@ -53,10 +53,10 @@ interface Options {
   filepath: string;
 }
 
-export function mdBookExampleImport(_options: Options = { filepath: '' }) {
+export function mdBookExampleImport(options: Options = { filepath: '' }) {
   const rootDir = process.cwd();
-  // const { filepath } = options;
-  // const dirname = path.relative(rootDir, path.dirname(filepath));
+  const { filepath } = options;
+  const dirname = path.relative(rootDir, path.dirname(filepath));
 
   return function transformer(tree: Root) {
     const nodes: [any, number | null, Parent][] = [];
@@ -84,8 +84,9 @@ export function mdBookExampleImport(_options: Options = { filepath: '' }) {
 
       // for now assuming all examples are in the Sway examples folder
       // TODO: make dynamic for all mdbooks
+      const bookPath = dirname.split('/')[1];
       const fileAbsPath = path.resolve(
-        path.join(rootDir, 'docs/sway/'),
+        path.join(rootDir, `docs/${bookPath}/`),
         filePath
       );
 

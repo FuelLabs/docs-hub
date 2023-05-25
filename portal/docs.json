@@ -100,6 +100,51 @@
       "Contributing To Sway"
     ]
   },
+  "fuels-rs": {
+    "title": "Fuel Rust SDK",
+    "slug": "fuels-rs",
+    "paths": {
+      "docs": "",
+      "components": "",
+      "examples": ""
+    },
+    "repository": "https://github.com/FuelLabs/fuels-rs",
+    "ogTags": {
+      "description": "Official documentation for the Fuels Rust SDK",
+      "image": ""
+    },
+    "menu": [
+      "Getting Started",
+      "Providers",
+      "Accounts",
+      "Wallets",
+      "Abigen",
+      "Contracts",
+      "Calling Contracts",
+      "Running scripts",
+      "Predicates",
+      "Types",
+      "API Reference",
+      "Testing",
+      "Cookbook",
+      "Debugging",
+      "Contributing",
+      "Cli"
+    ],
+    "getting_started_menu": [
+      "Setup",
+      "Terminology",
+      "Connecting",
+      "Account",
+      "Managing Wallets",
+      "Abigen",
+      "API",
+      "Contracts",
+      "Calling Contracts",
+      "Running Scripts",
+      "Predicates"
+    ]
+  },
   "graphql": {
     "title": "Fuel GraphQL Docs",
     "slug": "graphql",

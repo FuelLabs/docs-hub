@@ -29,6 +29,9 @@ export function Layout({ title, children }: LayoutProps) {
       case '/docs/sway/':
         return 'sway';
         break;
+      case '/docs/fuels-rs/':
+        return 'fuels-rs';
+        break;
       case '/docs/graphql/':
         return 'graphql';
         break;

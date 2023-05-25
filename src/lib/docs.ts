@@ -20,6 +20,8 @@ export async function getDocs(): Promise<DocPathType[]> {
       '../portal/*.mdx',
       '../portal/**/*.mdx',
       './sway/docs/book/src/**/*.md',
+      './fuels-rs/docs/src/**/*.md',
+      './fuels-rs/docs/src/*.md',
     ],
     {
       cwd: DOCS_DIRECTORY,
@@ -35,10 +37,7 @@ export async function getDocs(): Promise<DocPathType[]> {
 
 export async function getDocFromSlug(slug: string): Promise<DocPathType> {
   const slugs = await getDocs();
-  const realSlug = slug;
-  const slugPath = slugs.find(({ slug: pathSlug }) =>
-    pathSlug.includes(realSlug)
-  );
+  const slugPath = slugs.find(({ slug: pathSlug }) => pathSlug.includes(slug));
   if (!slugPath) {
     throw new Error(`${slug} not found`);
   }
@@ -62,7 +61,11 @@ export async function getDocContent(path: string) {
   const { data, content } = matter(document);
   if (!data.title) {
     const paths = path.split('/');
-    const title = paths.pop()?.replace('.md', '').replaceAll('_', ' ');
+    const title = paths
+      .pop()
+      ?.replace('.md', '')
+      .replaceAll('_', ' ')
+      .replaceAll('-', ' ');
     data.title = title;
     const category = paths.pop()?.replaceAll('-', ' ');
     data.category = category;
