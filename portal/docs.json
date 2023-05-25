@@ -28,13 +28,76 @@
       "description": "Official documentation for the Sway language",
       "image": ""
     },
-    "menu": ["Program Types"],
+    "menu": [
+      "Introduction",
+      "Examples",
+      "Sway Program Types",
+      "Basics",
+      "Blockchain Development",
+      "Advanced",
+      "Common Collections",
+      "Testing",
+      "Frontend",
+      "Reference",
+      "Forc",
+      "Forc_client",
+      "Commands",
+      "Plugins"
+    ],
+    "introduction_menu": [
+      "Installation",
+      "Sway Quickstart",
+      "Fuel Toolchain",
+      "Forc Project",
+      "Standard Library"
+    ],
+    "examples_menu": [
+      "Counter",
+      "Subcurrency",
+      "FizzBuzz",
+      "Wallet Smart Contract"
+    ],
     "sway_program_types_menu": [
       "Sway Program Types",
       "Smart Contracts",
       "Libraries",
       "Scripts",
       "Predicates"
+    ],
+    "basics_menu": [
+      "Variables",
+      "Built In Types",
+      "Commonly Used Library Types",
+      "Blockchain Types",
+      "Functions",
+      "Structs Tuples And Enums",
+      "Methods and Associated Functions",
+      "Constants",
+      "Comments and Logging",
+      "Control Flow"
+    ],
+    "blockchain_development_menu": [
+      "Hashing and Cryptography",
+      "Built-in Types",
+      "Storage",
+      "Purity",
+      "Identifiers",
+      "Native Assets",
+      "Access Control",
+      "Calling Contracts"
+    ],
+    "advanced_menu": ["Advanced Types", "Generic Types", "Traits", "Assembly"],
+    "common_collections_menu": ["Vec", "Storage Vec", "Storage Map"],
+    "testing_menu": ["Unit Testing", "Testing with Rust"],
+    "frontend_menu": ["TypeScript SDK"],
+    "reference_menu": [
+      "Compiler Intrinsics",
+      "Attributes",
+      "Style Guide",
+      "Known Issues and Workarounds",
+      "Solidity Differences",
+      "Rust Differences",
+      "Contributing To Sway"
     ]
   },
   "graphql": {

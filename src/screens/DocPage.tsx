@@ -62,6 +62,7 @@ const styles = {
     '@xl': {
       py: '$8',
       px: '$0',
+      width: '60vw',
     },
   }),
 };

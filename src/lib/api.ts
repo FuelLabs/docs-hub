@@ -110,15 +110,16 @@ export async function getSidebarLinks(config: Config) {
     ? links
         /** Sort first level links */
         .sort((a, b) => {
-          const aIdx = order.indexOf(a.label);
-          const bIdx = order.indexOf(b.label);
+          const lcOrder = order.map((o) => o.toLowerCase());
+          const aIdx = lcOrder.indexOf(a.label);
+          const bIdx = lcOrder.indexOf(b.label);
           if (!a.subpath && !b.subpath) {
             return aIdx - bIdx;
           }
           if (a.subpath && b.subpath) {
-            const aFirst = order.filter((i) => i.startsWith(a.label))?.[0];
-            const bFirst = order.filter((i) => i.startsWith(b.label))?.[0];
-            return order.indexOf(aFirst) - order.indexOf(bFirst);
+            const aFirst = lcOrder.filter((i) => i.startsWith(a.label))?.[0];
+            const bFirst = lcOrder.filter((i) => i.startsWith(b.label))?.[0];
+            return lcOrder.indexOf(aFirst) - lcOrder.indexOf(bFirst);
           }
           const category = a.subpath ? a.label : b.label;
           const first = order.filter((i) => i.startsWith(category))?.[0];

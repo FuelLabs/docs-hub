@@ -19,7 +19,7 @@ export async function getDocs(): Promise<DocPathType[]> {
       '../portal/*.md',
       '../portal/*.mdx',
       '../portal/**/*.mdx',
-      './sway/docs/book/src/sway-program-types/*.md',
+      './sway/docs/book/src/**/*.md',
     ],
     {
       cwd: DOCS_DIRECTORY,

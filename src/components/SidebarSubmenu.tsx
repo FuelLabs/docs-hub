@@ -1,6 +1,6 @@
 import { cssObj, cx } from '@fuel-ui/css';
 import { Button, Flex, Icon, List } from '@fuel-ui/react';
-import { usePathname } from 'next/navigation';
+// import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 import { SidebarLink } from './SidebarLink';
@@ -14,8 +14,17 @@ export function SidebarSubmenu({
   submenu,
   subpath,
 }: SidebarSubmenuProps) {
-  const pathname = usePathname();
-  const isActive = pathname?.startsWith(`/docs/${subpath}`);
+  // const pathname = usePathname();
+  // const pathArray = submenu![0].slug?.split('/');
+  // const index = pathArray?.indexOf(subpath!);
+  // const category = pathArray && index ? `/${pathArray[index + 1]}` : '';
+  // const isActive = pathname?.startsWith(`/docs/${subpath}${category}/`);
+  // if (isActive) {
+  //   console.log('PATH NAME:', pathname);
+  //   console.log('TARGET:', `/docs/${subpath}${category}`);
+  // }
+  // const [isOpened, setIsOpened] = useState(Boolean(isActive));
+  const isActive = false;
   const [isOpened, setIsOpened] = useState(Boolean(isActive));
 
   function toggle() {
@@ -42,11 +51,11 @@ export function SidebarSubmenu({
       </Flex>
       {isOpened && (
         <List>
-          {submenu?.map((item) => {
+          {submenu?.map((item, index) => {
             if (item.label !== label) {
               return (
                 <List.Item
-                  key={item.slug}
+                  key={index}
                   icon={Icon.is('ArrowRight')}
                   iconSize={10}
                   iconColor="gray6"
@@ -55,7 +64,7 @@ export function SidebarSubmenu({
                 </List.Item>
               );
             }
-            return <div key={item.slug} />;
+            return <div key={index} />;
           })}
         </List>
       )}

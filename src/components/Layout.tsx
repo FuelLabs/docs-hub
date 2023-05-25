@@ -17,6 +17,7 @@ export function Layout({ title, children }: LayoutProps) {
   const { doc } = useDocContext();
   const router = useRouter();
   const titleText = title ? `${title} | Fuel Docs` : 'Fuel Docs';
+  // TODO: make this dynamic using the doc config
   const slug = () => {
     switch (router.asPath) {
       case '/':
@@ -24,6 +25,9 @@ export function Layout({ title, children }: LayoutProps) {
         break;
       case '/docs/portal/':
         return 'portal';
+        break;
+      case '/docs/sway/':
+        return 'sway';
         break;
       case '/docs/graphql/':
         return 'graphql';

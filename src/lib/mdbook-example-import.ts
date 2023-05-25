@@ -19,22 +19,25 @@ function extractCommentBlock(content: string, comment: string | null) {
   let lineEnd = 1;
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i < lines.length; i++) {
-    const start = lines[i] === `// ANCHOR: ${comment}`;
+    const start = lines[i].trimStart() === `// ANCHOR: ${comment}`;
     if (start === true && lineStart === 1) {
       lineStart = i + 1;
     } else {
-      let end = lines[i] === `// ANCHOR_END: ${comment}`;
+      let end = lines[i].trimStart() === `// ANCHOR_END: ${comment}`;
       if (end === false) {
-        end = lines[i] === `// ANCHOR: ${comment}`;
+        end = lines[i].trimStart() === `// ANCHOR: ${comment}`;
       }
       if (end === true) {
         lineEnd = i;
       }
     }
   }
-
-  const linesContent = lines.slice(lineStart, lineEnd).join('\n');
-
+  const newLines = lines.slice(lineStart, lineEnd);
+  // remove any other ANCHOR tags
+  const trimmedLines = newLines.filter((line) => {
+    return line.trimStart().startsWith('// ANCHOR') === false;
+  });
+  const linesContent = trimmedLines.join('\n');
   return linesContent;
 }
 
