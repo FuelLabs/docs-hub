@@ -15,7 +15,10 @@ export function Header({ title }: { title?: string }) {
   const activeStyles = { ...styles.topNavLink, ...styles.activeTopNavLink };
 
   useEffect(() => {
-    const category = router.asPath.split('docs/')[1].split('/')[0];
+    let category = 'portal';
+    if (router.pathname !== '/') {
+      category = router.asPath.split('docs/')[1].split('/')[0];
+    }
     if (isStringInTabs(category)) setActive(category as Tabs);
   }, [router]);
 
