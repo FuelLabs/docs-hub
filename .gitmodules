@@ -7,3 +7,10 @@
 [submodule "docs/fuel-graphql-docs"]
 	path = docs/fuel-graphql-docs
 	url = git@github.com:FuelLabs/fuel-graphql-docs.git
+[submodule "docs/fuels-ts"]
+	path = docs/fuels-ts
+	url = https://github.com/FuelLabs/fuels-ts
+[submodule "docs/builds/sway"]
+	path = docs/builds/sway
+	url = git@github.com:FuelLabs/sway.git
+	branch = gh-pages

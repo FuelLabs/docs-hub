@@ -11,6 +11,7 @@ import {
   getDocs,
   getRepositoryLink,
 } from './docs';
+import { forcGenDocs } from './forc-gen-docs';
 import { mdBookExampleImport } from './mdbook-example-import';
 import { rehypeExtractHeadings } from './toc';
 
@@ -57,6 +58,7 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
         remarkGfm,
         [codeImport, { filepath: fullpath }],
         [mdBookExampleImport, { filepath: fullpath }],
+        [forcGenDocs, { filepath: fullpath }],
       ],
       rehypePlugins: [[rehypeExtractHeadings, { headings }]],
     },

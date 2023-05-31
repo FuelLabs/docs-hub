@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import fs from 'node:fs';
@@ -19,35 +20,51 @@ function extractCommentBlock(content: string, comment: string | null) {
   let lineEnd = 1;
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i < lines.length; i++) {
-    const start = lines[i].trimStart() === `// ANCHOR: ${comment}`;
+    const start =
+      lines[i].trimStart() === `// ANCHOR: ${comment}` ||
+      lines[i].trimStart() === `// #region ${comment}`;
     if (start === true && lineStart === 1) {
       lineStart = i + 1;
     } else {
-      let end = lines[i].trimStart() === `// ANCHOR_END: ${comment}`;
-      if (end === false) {
-        end = lines[i].trimStart() === `// ANCHOR: ${comment}`;
-      }
+      const end =
+        lines[i].trimStart() === `// ANCHOR_END: ${comment}` ||
+        lines[i].trimStart() === `// #endregion ${comment}` ||
+        lines[i].trimStart() === `// ANCHOR: ${comment}`;
+
       if (end === true) {
         lineEnd = i;
       }
     }
   }
   const newLines = lines.slice(lineStart, lineEnd);
-  // remove any other ANCHOR tags
-  const trimmedLines = newLines.filter((line) => {
-    return line.trimStart().startsWith('// ANCHOR') === false;
+
+  // remove any other example tags
+  let trimmedLines = newLines.filter((line) => {
+    const thisLine = line.trimStart();
+    return (
+      thisLine.startsWith('// ANCHOR') === false &&
+      thisLine.startsWith('// #region') === false &&
+      thisLine.startsWith('// #endregion') === false
+    );
+  });
+  trimmedLines = trimmedLines.map((line) => {
+    if (line.trimStart().startsWith('// #context')) {
+      return line.replace('// #context ', '');
+    }
+    return line;
   });
   const linesContent = trimmedLines.join('\n');
   return linesContent;
 }
 
-// const files = new Map<string, string>();
+const files = new Map<string, string>();
+const oldContentMap = new Map<string, string>();
 
-// function getFilesOnCache(filepath: string) {
-//   const oldResults = files.get(filepath);
-//   if (!oldResults) files.set(filepath, String(fs.readFileSync(filepath)));
-//   return files.get(filepath);
-// }
+function getFilesOnCache(filepath: string) {
+  const oldResults = files.get(filepath);
+  if (!oldResults) files.set(filepath, String(fs.readFileSync(filepath)));
+  return files.get(filepath);
+}
 
 interface Options {
   filepath: string;
@@ -62,47 +79,71 @@ export function mdBookExampleImport(options: Options = { filepath: '' }) {
     const nodes: [any, number | null, Parent][] = [];
 
     visit(tree, '', (node: any, idx, parent) => {
-      if (node.type === 'code' && node.value.startsWith('{{#include')) {
+      if (
+        (node.type === 'code' && node.value.startsWith('{{#include')) ||
+        (node.type === 'text' && node.value.startsWith('<<< @'))
+      ) {
         nodes.push([node as any, idx, parent as Parent]);
       }
     });
-    nodes.forEach(([node]) => {
+    nodes.forEach(([node, _, parent]) => {
       let content = '';
 
-      let filePath = node.value
-        .replace('{{#include ', '')
-        .replace('}}', '')
-        .replace(/(\.\.\/)+/g, '');
+      let filePath = node.value.replace(/(\.\.\/)+/g, '');
 
-      const paths = filePath.split(':');
+      let exampleName = null;
+      let paths = [];
 
-      const exampleName = paths.length > 1 ? filePath.split(':').pop() : null;
+      if (node.type === 'code') {
+        // handle mdbook docs example format
+        filePath = filePath.replace('{{#include ', '').replace('}}', '');
+        paths = filePath.split(':');
+        if (paths.length > 1) exampleName = filePath.split(':').pop();
+      } else if (node.type === 'text') {
+        // handle ts-sdk docs example format
+        filePath = filePath.replace('<<< @/', '');
 
+        if (filePath.startsWith('docs-snippets')) {
+          filePath = `apps/${filePath}`;
+        }
+        const pathData = filePath.split('{');
+        filePath = pathData[0];
+
+        paths = filePath.split('#');
+        if (paths.length > 1) exampleName = filePath.split('#').pop();
+      }
+
+      // if there is an example at the end of the url, remove it from the filepath
       if (exampleName) {
         filePath = paths[0];
       }
 
-      // for now assuming all examples are in the Sway examples folder
-      // TODO: make dynamic for all mdbooks
       const bookPath = dirname.split('/')[1];
       const fileAbsPath = path.resolve(
         path.join(rootDir, `docs/${bookPath}/`),
         filePath
       );
 
-      const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
-      // const cachedFile = getFilesOnCache(fileAbsPath);
+      if (node.type === 'text') {
+        node.type = 'code';
+        // TODO: make dynamic for all langs
+        node.lang = 'ts';
+        parent.type = 'root';
+      }
 
-      // /** Return result from cache if file content is the same */
-      // if (fileContent === cachedFile) {
-      //   // eslint-disable-next-line no-param-reassign
-      //   node.value = content;
-      //   return;
-      // }
+      const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
+      const cachedFile = getFilesOnCache(fileAbsPath);
+
+      const oldContent = oldContentMap.get(node.value);
+
+      /** Return result from cache if file content is the same */
+      if (fileContent === cachedFile && oldContent) {
+        node.value = oldContent;
+        return;
+      }
 
       content = extractCommentBlock(fileContent, exampleName);
 
-      // eslint-disable-next-line no-param-reassign
       node.value = content;
     });
   };

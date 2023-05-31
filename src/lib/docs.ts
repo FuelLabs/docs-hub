@@ -22,16 +22,20 @@ export async function getDocs(): Promise<DocPathType[]> {
       './sway/docs/book/src/**/*.md',
       './fuels-rs/docs/src/**/*.md',
       './fuels-rs/docs/src/*.md',
+      './fuels-ts/apps/docs/src/*.md',
+      './fuels-ts/apps/docs/src/**/*.md',
+      './fuels-ts/apps/docs/src/**/*.md',
     ],
     {
       cwd: DOCS_DIRECTORY,
     }
   );
   return paths.map((path) => {
-    return {
+    const finalPaths = {
       slug: removeDocsPath(path),
       path,
     };
+    return finalPaths;
   });
 }
 

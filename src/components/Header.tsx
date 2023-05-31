@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { MobileMenu } from './MobileMenu';
 import { Search } from './Search';
 
-type Tabs = 'portal' | 'sway' | 'fuels-rs';
+type Tabs = 'portal' | 'sway' | 'fuels-rs' | 'fuels-ts';
 
 export function Header({ title }: { title?: string }) {
   const [active, setActive] = useState<Tabs>('portal');
@@ -23,7 +23,12 @@ export function Header({ title }: { title?: string }) {
   }, [router]);
 
   function isStringInTabs(str: string): boolean {
-    return str === 'portal' || str === 'sway' || str === 'fuels-rs';
+    return (
+      str === 'portal' ||
+      str === 'sway' ||
+      str === 'fuels-rs' ||
+      str === 'fuels-ts'
+    );
   }
 
   return (
@@ -54,6 +59,12 @@ export function Header({ title }: { title?: string }) {
           style={active === 'fuels-rs' ? activeStyles : styles.topNavLink}
         >
           Rust SDK
+        </Link>
+        <Link
+          href="/docs/fuels-ts/guide/index/"
+          style={active === 'fuels-ts' ? activeStyles : styles.topNavLink}
+        >
+          TS SDK
         </Link>
       </Flex>
       <Box css={styles.desktop}>
