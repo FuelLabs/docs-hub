@@ -245,5 +245,47 @@
       "How To Use GraphQL",
       "Reference"
     ]
+  },
+  "fuelup": {
+    "title": "Fuelup",
+    "slug": "fuelup",
+    "paths": {
+      "docs": "",
+      "components": "",
+      "examples": ""
+    },
+    "repository": "https://github.com/FuelLabs/fuelup",
+    "ogTags": {
+      "description": "Official documentation for fuelup",
+      "image": ""
+    },
+    "menu": [
+      "Install",
+      "Browser Support",
+      "How To Use",
+      "For Developers",
+      "Contributing"
+    ]
+  },
+  "fuel-indexer": {
+    "title": "Indexer",
+    "slug": "fuel-indexer",
+    "paths": {
+      "docs": "",
+      "components": "",
+      "examples": ""
+    },
+    "repository": "https://github.com/FuelLabs/fuel-indexer",
+    "ogTags": {
+      "description": "Official documentation for the Fuel indexer",
+      "image": ""
+    },
+    "menu": [
+      "Install",
+      "Browser Support",
+      "How To Use",
+      "For Developers",
+      "Contributing"
+    ]
   }
 }

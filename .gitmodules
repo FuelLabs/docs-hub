@@ -17,3 +17,9 @@
 [submodule "docs/fuels-wallet"]
 	path = docs/fuels-wallet
 	url = git@github.com:FuelLabs/fuels-wallet.git
+[submodule "docs/fuelup"]
+	path = docs/fuelup
+	url = git@github.com:FuelLabs/fuelup.git
+[submodule "docs/fuel-indexer"]
+	path = docs/fuel-indexer
+	url = git@github.com:FuelLabs/fuel-indexer.git

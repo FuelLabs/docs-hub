@@ -13,7 +13,9 @@ type Tabs =
   | 'fuels-rs'
   | 'fuels-ts'
   | 'fuels-wallet'
-  | 'fuel-graphql-docs';
+  | 'fuel-graphql-docs'
+  | 'fuelup'
+  | 'fuel-indexer';
 
 export function Header({ title }: { title?: string }) {
   const [active, setActive] = useState<Tabs>('portal');
@@ -35,7 +37,9 @@ export function Header({ title }: { title?: string }) {
       str === 'fuels-rs' ||
       str === 'fuels-ts' ||
       str === 'fuels-wallet' ||
-      str === 'fuel-graphql-docs'
+      str === 'fuel-graphql-docs' ||
+      str === 'fuelup' ||
+      str === 'fuel-indexer'
     );
   }
 
@@ -57,6 +61,12 @@ export function Header({ title }: { title?: string }) {
           Sway
         </Link>
         <Link
+          href="/docs/fuelup/index"
+          style={active === 'fuelup' ? activeStyles : styles.topNavLink}
+        >
+          Fuelup
+        </Link>
+        <Link
           href="/docs/fuels-rs/getting-started/index/"
           style={active === 'fuels-rs' ? activeStyles : styles.topNavLink}
         >
@@ -73,6 +83,12 @@ export function Header({ title }: { title?: string }) {
           style={active === 'fuels-wallet' ? activeStyles : styles.topNavLink}
         >
           Wallet
+        </Link>
+        <Link
+          href="/docs/fuel-indexer/the-fuel-indexer/"
+          style={active === 'fuel-indexer' ? activeStyles : styles.topNavLink}
+        >
+          Indexer
         </Link>
         <Link
           href="/docs/fuel-graphql-docs/overview"

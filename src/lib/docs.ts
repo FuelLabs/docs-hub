@@ -35,6 +35,12 @@ export async function getDocs(): Promise<DocPathType[]> {
       // GRAPHQL DOCS
       './fuel-graphql-docs/docs/*.mdx',
       './fuel-graphql-docs/docs/**/*.mdx',
+      // FUELUP DOCS
+      './fuelup/docs/src/*.md',
+      './fuelup/docs/src/**/*.md',
+      // INDEXER DOCS
+      './fuel-indexer/docs/src/*.md',
+      './fuel-indexer/docs/src/**/*.md',
     ],
     {
       cwd: DOCS_DIRECTORY,
