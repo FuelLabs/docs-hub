@@ -16,6 +16,7 @@ import { mdBookExampleImport } from './plugins/mdbook-example-import';
 import { walletDocs } from './plugins/wallet-docs';
 import { rehypeExtractHeadings } from './toc';
 
+import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
 import { FIELDS } from '~/src/constants';
 import type {
   Config,
@@ -49,10 +50,12 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
     }
   });
 
-  // parse the wallet docs as mdx, otherwise use md
-  const format = fullpath.includes('fuels-wallet/packages/docs/')
-    ? 'mdx'
-    : 'md';
+  // parse the wallet and graphql docs as mdx, otherwise use md
+  const format =
+    fullpath.includes('fuels-wallet/packages/docs/') ||
+    fullpath.includes('fuel-graphql-docs/docs')
+      ? 'mdx'
+      : 'md';
 
   const headings: NodeHeading[] = [];
   const source = await serialize(content, {
@@ -62,14 +65,16 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
       remarkPlugins: [
         remarkSlug,
         remarkGfm,
-        // handle the Code Import component
+        // handle the CodeImport component
         [codeImport, { filepath: fullpath }],
         // handle example code imports in mdbook repos and the TS SDK docs
         [mdBookExampleImport, { filepath: fullpath }],
         // get the generated docs for forc
         [forcGenDocs, { filepath: fullpath }],
-        // provide the root dir to the Wallet Demo component
+        // update the image & video paths in the wallet docs
         [walletDocs, { filepath: fullpath }],
+        // handle the codeExamples component in the graphql docs
+        [codeExamples, { filepath: fullpath }],
       ],
       rehypePlugins: [[rehypeExtractHeadings, { headings }]],
     },

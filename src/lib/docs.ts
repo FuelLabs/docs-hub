@@ -32,6 +32,9 @@ export async function getDocs(): Promise<DocPathType[]> {
       // WALLET DOCS
       './fuels-wallet/packages/docs/docs/**/*.mdx',
       './fuels-wallet/packages/docs/docs/*.mdx',
+      // GRAPHQL DOCS
+      './fuel-graphql-docs/docs/*.mdx',
+      './fuel-graphql-docs/docs/**/*.mdx',
     ],
     {
       cwd: DOCS_DIRECTORY,

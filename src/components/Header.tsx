@@ -7,7 +7,13 @@ import { useState, useEffect } from 'react';
 import { MobileMenu } from './MobileMenu';
 import { Search } from './Search';
 
-type Tabs = 'portal' | 'sway' | 'fuels-rs' | 'fuels-ts' | 'fuels-wallet';
+type Tabs =
+  | 'portal'
+  | 'sway'
+  | 'fuels-rs'
+  | 'fuels-ts'
+  | 'fuels-wallet'
+  | 'fuel-graphql-docs';
 
 export function Header({ title }: { title?: string }) {
   const [active, setActive] = useState<Tabs>('portal');
@@ -28,7 +34,8 @@ export function Header({ title }: { title?: string }) {
       str === 'sway' ||
       str === 'fuels-rs' ||
       str === 'fuels-ts' ||
-      str === 'fuels-wallet'
+      str === 'fuels-wallet' ||
+      str === 'fuel-graphql-docs'
     );
   }
 
@@ -66,6 +73,14 @@ export function Header({ title }: { title?: string }) {
           style={active === 'fuels-wallet' ? activeStyles : styles.topNavLink}
         >
           Wallet
+        </Link>
+        <Link
+          href="/docs/fuel-graphql-docs/overview"
+          style={
+            active === 'fuel-graphql-docs' ? activeStyles : styles.topNavLink
+          }
+        >
+          GQL
         </Link>
       </Flex>
       <Box css={styles.desktop}>

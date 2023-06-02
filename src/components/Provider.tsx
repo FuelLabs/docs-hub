@@ -20,6 +20,8 @@ import { Pre } from './Pre';
 import { Table } from './Table';
 
 // TODO: make these imports dynamic
+import * as GQLExamples from '~/docs/fuel-graphql-docs/examples';
+import { CodeExamples } from '~/docs/fuel-graphql-docs/src/components/CodeExamples';
 import * as Examples from '~/docs/fuels-wallet/packages/docs/examples/';
 import { Demo } from '~/docs/fuels-wallet/packages/docs/src/components/Demo';
 import { DownloadFuelWallet } from '~/docs/fuels-wallet/packages/docs/src/components/DownloadFuelWallet';
@@ -44,6 +46,8 @@ const components = {
   Demo,
   DownloadFuelWallet,
   Examples,
+  GQLExamples,
+  CodeExamples,
 };
 
 type ProviderProps = {

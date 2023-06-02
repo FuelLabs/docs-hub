@@ -225,9 +225,9 @@
       "Linking local dependencies"
     ]
   },
-  "graphql": {
+  "fuel-graphql-docs": {
     "title": "Fuel GraphQL Docs",
-    "slug": "graphql",
+    "slug": "fuel-graphql-docs",
     "paths": {
       "docs": "../fuel-graphql-docs/docs",
       "components": "../fuel-graphql-docs/src/components",
