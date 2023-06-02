@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { MobileMenu } from './MobileMenu';
 import { Search } from './Search';
 
-type Tabs = 'portal' | 'sway' | 'fuels-rs' | 'fuels-ts';
+type Tabs = 'portal' | 'sway' | 'fuels-rs' | 'fuels-ts' | 'fuels-wallet';
 
 export function Header({ title }: { title?: string }) {
   const [active, setActive] = useState<Tabs>('portal');
@@ -27,7 +27,8 @@ export function Header({ title }: { title?: string }) {
       str === 'portal' ||
       str === 'sway' ||
       str === 'fuels-rs' ||
-      str === 'fuels-ts'
+      str === 'fuels-ts' ||
+      str === 'fuels-wallet'
     );
   }
 
@@ -41,13 +42,7 @@ export function Header({ title }: { title?: string }) {
           </Flex>
         </Link>
       </Box>
-      <Flex css={{ padding: '0 $10' }} grow={'1'} gap={'$10'}>
-        <Link
-          href="/docs/portal/home"
-          style={active === 'portal' ? activeStyles : styles.topNavLink}
-        >
-          Portal
-        </Link>
+      <Flex css={{ padding: '0 $10' }} grow={'1'} gap={'$4'}>
         <Link
           href="/docs/sway/introduction/index"
           style={active === 'sway' ? activeStyles : styles.topNavLink}
@@ -65,6 +60,12 @@ export function Header({ title }: { title?: string }) {
           style={active === 'fuels-ts' ? activeStyles : styles.topNavLink}
         >
           TS SDK
+        </Link>
+        <Link
+          href="/docs/fuels-wallet/install/"
+          style={active === 'fuels-wallet' ? activeStyles : styles.topNavLink}
+        >
+          Wallet
         </Link>
       </Flex>
       <Box css={styles.desktop}>

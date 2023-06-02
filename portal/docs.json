@@ -146,7 +146,7 @@
     ]
   },
   "fuels-ts": {
-    "title": "Fuel TSSDK",
+    "title": "Fuel TS SDK",
     "slug": "fuels-ts",
     "paths": {
       "docs": "",
@@ -188,6 +188,41 @@
       "Calling Contracts",
       "Running Scripts",
       "Predicates"
+    ]
+  },
+  "fuels-wallet": {
+    "title": "Fuel Wallet",
+    "slug": "fuels-wallet",
+    "paths": {
+      "docs": "",
+      "components": ["/packages/docs/src/components/Demo.tsx"],
+      "examples": ""
+    },
+    "repository": "https://github.com/FuelLabs/fuels-wallet",
+    "ogTags": {
+      "description": "Official documentation for the Fuel Wallet",
+      "image": ""
+    },
+    "menu": [
+      "Install",
+      "Browser Support",
+      "How To Use",
+      "For Developers",
+      "Contributing"
+    ],
+    "for_developers_menu": [
+      "Getting Started",
+      "Connecting",
+      "Accounts",
+      "Assets",
+      "Networks",
+      "Signing a Message",
+      "Reference"
+    ],
+    "contributing_menu": [
+      "Running locally",
+      "Contributing Guide",
+      "Linking local dependencies"
     ]
   },
   "graphql": {

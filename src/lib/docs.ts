@@ -25,6 +25,8 @@ export async function getDocs(): Promise<DocPathType[]> {
       './fuels-ts/apps/docs/src/*.md',
       './fuels-ts/apps/docs/src/**/*.md',
       './fuels-ts/apps/docs/src/**/*.md',
+      // './fuels-wallet/packages/docs/docs/**/*.mdx',
+      './fuels-wallet/packages/docs/docs/*.mdx',
     ],
     {
       cwd: DOCS_DIRECTORY,
@@ -68,6 +70,7 @@ export async function getDocContent(path: string) {
     const title = paths
       .pop()
       ?.replace('.md', '')
+      .replace('.mdx', '')
       .replaceAll('_', ' ')
       .replaceAll('-', ' ');
     data.title = title;

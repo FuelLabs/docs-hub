@@ -2,7 +2,6 @@ import { serialize } from 'next-mdx-remote/serialize';
 import remarkGfm from 'remark-gfm';
 import remarkSlug from 'remark-slug';
 
-import { codeImport } from './code-import';
 import {
   getDocConfig,
   getDocContent,
@@ -11,8 +10,10 @@ import {
   getDocs,
   getRepositoryLink,
 } from './docs';
-import { forcGenDocs } from './forc-gen-docs';
-import { mdBookExampleImport } from './mdbook-example-import';
+import { codeImport } from './plugins/code-import';
+import { forcGenDocs } from './plugins/forc-gen-docs';
+import { mdBookExampleImport } from './plugins/mdbook-example-import';
+import { walletDemo } from './plugins/wallet-demo';
 import { rehypeExtractHeadings } from './toc';
 
 import { FIELDS } from '~/src/constants';
@@ -48,17 +49,27 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
     }
   });
 
+  // parse the wallet docs as mdx, otherwise use md
+  const format = fullpath.includes('fuels-wallet/packages/docs/')
+    ? 'mdx'
+    : 'md';
+
   const headings: NodeHeading[] = [];
   const source = await serialize(content, {
     scope: data,
     mdxOptions: {
-      format: 'md',
+      format,
       remarkPlugins: [
         remarkSlug,
         remarkGfm,
+        // handle code imports in the portal
         [codeImport, { filepath: fullpath }],
+        // handle example code imports in mdbook repos and the TS SDK docs
         [mdBookExampleImport, { filepath: fullpath }],
+        // get the generated docs for forc
         [forcGenDocs, { filepath: fullpath }],
+        // provide the root dir to the Wallet Demo component
+        [walletDemo, { filepath: fullpath }],
       ],
       rehypePlugins: [[rehypeExtractHeadings, { headings }]],
     },
@@ -113,32 +124,36 @@ export async function getSidebarLinks(config: Config) {
         /** Sort first level links */
         .sort((a, b) => {
           const lcOrder = order.map((o) => o.toLowerCase());
-          const aIdx = lcOrder.indexOf(a.label);
-          const bIdx = lcOrder.indexOf(b.label);
+          const lowerA = a.label.toLowerCase();
+          const lowerB = b.label.toLowerCase();
+          const aIdx = lcOrder.indexOf(lowerA);
+          const bIdx = lcOrder.indexOf(lowerB);
           if (!a.subpath && !b.subpath) {
             return aIdx - bIdx;
           }
           if (a.subpath && b.subpath) {
-            const aFirst = lcOrder.filter((i) => i.startsWith(a.label))?.[0];
-            const bFirst = lcOrder.filter((i) => i.startsWith(b.label))?.[0];
+            const aFirst = lcOrder.filter((i) => i.startsWith(lowerA))?.[0];
+            const bFirst = lcOrder.filter((i) => i.startsWith(lowerB))?.[0];
             return lcOrder.indexOf(aFirst) - lcOrder.indexOf(bFirst);
           }
-          const category = a.subpath ? a.label : b.label;
-          const first = order.filter((i) => i.startsWith(category))?.[0];
-          const idx = order.indexOf(first);
+          const category = a.subpath ? lowerA : lowerB;
+          const first = lcOrder.filter((i) => i.startsWith(category))?.[0];
+          const idx = lcOrder.indexOf(first);
           return a.subpath ? idx - bIdx : aIdx - idx;
         })
         /** Sort categoried links */
         .map((link) => {
           if (!link.submenu) return link;
-          const key = `${link.label.replaceAll(' ', '_')}_menu`;
+          const key = `${link.label.toLowerCase().replaceAll(' ', '_')}_menu`;
           let catOrder = config[key];
           catOrder = catOrder?.map((title) => title.toLowerCase());
           const submenu = link.submenu.sort((a, b) => {
-            return catOrder
-              ? catOrder.indexOf(`${a.label.toLowerCase()}`) -
-                  catOrder.indexOf(`${b.label.toLowerCase()}`)
+            const lowerA = a.label.toLowerCase();
+            const lowerB = b.label.toLowerCase();
+            const result = catOrder
+              ? catOrder.indexOf(`${lowerA}`) - catOrder.indexOf(`${lowerB}`)
               : 0;
+            return result;
           });
           return { ...link, submenu };
         })

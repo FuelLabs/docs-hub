@@ -6,7 +6,7 @@ import { ThemeProvider } from '@fuel-ui/react';
 import { MDXProvider } from '@mdx-js/react';
 import type { ReactNode } from 'react';
 
-import { Examples , Components } from '../importer';
+// import { Examples, Components } from '../importer';
 
 import { Blockquote } from './Blockquote';
 import { Code } from './Code';
@@ -18,6 +18,11 @@ import { Paragraph } from './Paragraph';
 import Player from './Player';
 import { Pre } from './Pre';
 import { Table } from './Table';
+
+// TODO: make these imports dynamic
+import * as Examples from '~/docs/fuels-wallet/packages/docs/examples/';
+import { Demo } from '~/docs/fuels-wallet/packages/docs/src/components/Demo';
+import { DownloadFuelWallet } from '~/docs/fuels-wallet/packages/docs/src/components/DownloadFuelWallet';
 
 const components = {
   a: Link,
@@ -35,8 +40,10 @@ const components = {
   ul: UL,
   CodeImport,
   Player,
-  Examples,
-  Components,
+  // TODO: make these imports dynamic
+  Demo,
+  DownloadFuelWallet,
+  // Examples,
 };
 
 type ProviderProps = {
