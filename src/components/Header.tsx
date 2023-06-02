@@ -1,5 +1,5 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box, Flex, FuelLogo, Icon } from '@fuel-ui/react';
+import { Box, Flex, FuelLogo, Icon, Dropdown, Button } from '@fuel-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
@@ -54,50 +54,140 @@ export function Header({ title }: { title?: string }) {
         </Link>
       </Box>
       <Flex css={{ padding: '0 $10' }} grow={'1'} gap={'$4'}>
-        <Link
-          href="/docs/sway/introduction/index"
-          style={active === 'sway' ? activeStyles : styles.topNavLink}
-        >
-          Sway
-        </Link>
-        <Link
-          href="/docs/fuelup/index"
-          style={active === 'fuelup' ? activeStyles : styles.topNavLink}
-        >
-          Fuelup
-        </Link>
-        <Link
-          href="/docs/fuels-rs/getting-started/index/"
-          style={active === 'fuels-rs' ? activeStyles : styles.topNavLink}
-        >
-          Rust SDK
-        </Link>
-        <Link
-          href="/docs/fuels-ts/guide/index/"
-          style={active === 'fuels-ts' ? activeStyles : styles.topNavLink}
-        >
-          TS SDK
-        </Link>
-        <Link
-          href="/docs/fuels-wallet/install/"
-          style={active === 'fuels-wallet' ? activeStyles : styles.topNavLink}
-        >
-          Wallet
-        </Link>
-        <Link
-          href="/docs/fuel-indexer/the-fuel-indexer/"
-          style={active === 'fuel-indexer' ? activeStyles : styles.topNavLink}
-        >
-          Indexer
-        </Link>
-        <Link
-          href="/docs/fuel-graphql-docs/overview"
-          style={
-            active === 'fuel-graphql-docs' ? activeStyles : styles.topNavLink
-          }
-        >
-          GQL
-        </Link>
+        <Dropdown>
+          <Dropdown.Trigger>
+            <Button variant="outlined">Fuel Network</Button>
+          </Dropdown.Trigger>
+          <Dropdown.Menu
+            autoFocus
+            aria-label="SDKs"
+            onAction={(action) => {
+              let link = '/';
+              switch (action) {
+                case 'graphql':
+                  link = '/docs/fuel-graphql-docs/overview';
+                  router.push(link);
+                  break;
+                case 'faucet':
+                  link = 'https://faucet-beta-3.fuel.network/';
+                  window.open(link);
+                  break;
+                default:
+              }
+            }}
+          >
+            <Dropdown.MenuItem
+              key="graphql"
+              textValue="GraphQL API"
+              css={
+                active === 'fuel-graphql-docs'
+                  ? activeStyles
+                  : styles.topNavLink
+              }
+            >
+              GraphQL API
+            </Dropdown.MenuItem>
+            <Dropdown.MenuItem key="faucet" textValue="Faucet">
+              Faucet
+            </Dropdown.MenuItem>
+          </Dropdown.Menu>
+        </Dropdown>
+
+        <Dropdown>
+          <Dropdown.Trigger>
+            <Button variant="outlined">Build with Sway</Button>
+          </Dropdown.Trigger>
+          <Dropdown.Menu
+            autoFocus
+            aria-label="SDKs"
+            onAction={(action) => {
+              let link = '/';
+              switch (action) {
+                case 'fuelup':
+                  link = '/docs/fuelup/index';
+                  break;
+                case 'sway':
+                  link = '/docs/sway/introduction/index';
+                  break;
+                default:
+              }
+              router.push(link);
+            }}
+          >
+            <Dropdown.MenuItem
+              key="fuelup"
+              textValue="Fuelup"
+              css={active === 'fuelup' ? activeStyles : styles.topNavLink}
+            >
+              Fuelup
+            </Dropdown.MenuItem>
+            <Dropdown.MenuItem
+              key="sway"
+              textValue="Sway"
+              css={active === 'sway' ? activeStyles : styles.topNavLink}
+            >
+              Sway
+            </Dropdown.MenuItem>
+          </Dropdown.Menu>
+        </Dropdown>
+
+        <Dropdown>
+          <Dropdown.Trigger>
+            <Button variant="outlined">SDKs</Button>
+          </Dropdown.Trigger>
+          <Dropdown.Menu
+            autoFocus
+            aria-label="SDKs"
+            onAction={(action) => {
+              let link = '/';
+              switch (action) {
+                case 'rust-sdk':
+                  link = '/docs/fuels-rs/getting-started/index/';
+                  break;
+                case 'ts-sdk':
+                  link = '/docs/fuels-ts/guide/index/';
+                  break;
+                case 'wallet-sdk':
+                  link = '/docs/fuels-wallet/install/';
+                  break;
+                case 'indexer':
+                  link = '/docs/fuel-indexer/the-fuel-indexer/';
+                  break;
+                default:
+              }
+              router.push(link);
+            }}
+          >
+            <Dropdown.MenuItem
+              key="rust-sdk"
+              textValue="Rust SDK"
+              css={active === 'fuels-rs' ? activeStyles : styles.topNavLink}
+            >
+              Rust SDK
+            </Dropdown.MenuItem>
+            <Dropdown.MenuItem
+              key="ts-sdk"
+              textValue="TS SDK"
+              css={active === 'fuels-ts' ? activeStyles : styles.topNavLink}
+            >
+              TypeScript SDK
+            </Dropdown.MenuItem>
+            <Dropdown.MenuItem
+              key="wallet-sdk"
+              textValue="Wallet SDK"
+              css={active === 'fuels-wallet' ? activeStyles : styles.topNavLink}
+            >
+              Wallet
+            </Dropdown.MenuItem>
+            <Dropdown.MenuItem
+              key="indexer"
+              textValue="Indexer"
+              css={active === 'fuel-indexer' ? activeStyles : styles.topNavLink}
+            >
+              Indexer
+            </Dropdown.MenuItem>
+          </Dropdown.Menu>
+        </Dropdown>
       </Flex>
       <Box css={styles.desktop}>
         <Flex css={styles.menu}>
