@@ -8,9 +8,10 @@ import path from 'path';
 import * as prettier from 'prettier';
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
-import type { Parent } from 'unist-util-visit';
 
-const ROOT_DIR = path.resolve(__dirname, '../../../../../../../');
+const PACKAGE_FOLDER = 'packages';
+const COMMENT_BLOCK_START = '/* example:start */';
+const COMMENT_BLOCK_END = '/* example:end */';
 
 function toAST(content: string) {
   return acorn.parse(content, {
@@ -34,7 +35,32 @@ function extractLines(
   } else {
     end = lines.length;
   }
-  return lines.slice(start - 1, end).join('\n');
+  const linesContent = lines.slice(start - 1, end).join('\n');
+  return prettier.format(linesContent, { parser: 'babel-ts' }).trimEnd();
+}
+
+function extractCommentBlock(content: string) {
+  const lines = content.split(EOL);
+  let lineStart = lines.findIndex((l) => l.includes(COMMENT_BLOCK_START)) + 1;
+  let lineEnd = lines.findIndex((l) => l.includes(COMMENT_BLOCK_END));
+
+  if (lineStart < 0) {
+    lineStart = 0;
+  }
+  if (lineEnd < 0) {
+    lineEnd = lines.length;
+  }
+
+  const linesContent = lines.slice(lineStart, lineEnd).join('\n');
+  const contentFormatted = prettier
+    .format(linesContent, { parser: 'babel-ts' })
+    .trimEnd();
+
+  return {
+    content: contentFormatted,
+    lineStart,
+    lineEnd,
+  };
 }
 
 function getLineOffsets(str: string) {
@@ -63,7 +89,7 @@ function extractTestCase(source: string, testCase: string) {
       if (val && val === testCase) {
         const body = args[1]?.body;
         content = chars.slice(body.start, body.end).join('').slice(1, -1);
-        content = prettier.format(content, { parser: 'babel' }).trimEnd();
+        content = prettier.format(content, { parser: 'babel-ts' }).trimEnd();
         charStart = body.start;
         charEnd = body.end;
       }
@@ -99,11 +125,11 @@ export function codeImport(options: Options = { filepath: '' }) {
   const dirname = path.relative(rootDir, path.dirname(filepath));
 
   return function transformer(tree: Root) {
-    const nodes: [any, number | null, Parent][] = [];
+    const nodes: [any, number | null, any][] = [];
 
     visit(tree, 'mdxJsxFlowElement', (node: any, idx, parent) => {
       if (node.name === 'CodeImport') {
-        nodes.push([node as any, idx, parent as Parent]);
+        nodes.push([node as any, idx, parent as any]);
       }
     });
 
@@ -115,11 +141,11 @@ export function codeImport(options: Options = { filepath: '' }) {
         throw new Error('CodeImport need to have properties defined');
       }
 
+      let lineStart = attr.find((i: any) => i.name === 'lineStart')?.value;
+      let lineEnd = attr.find((i: any) => i.name === 'lineEnd')?.value;
       const file = attr.find((i: any) => i.name === 'file')?.value;
-      const lines = attr.find((i: any) => i.name === 'lines')?.value || [];
       const testCase = attr.find((i: any) => i.name === 'testCase')?.value;
       const fileAbsPath = path.resolve(path.join(rootDir, dirname), file);
-      let [lineStart, lineEnd] = lines as any[];
       const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
       const cachedFile = getFilesOnCache(fileAbsPath);
       const attrId = `${fileAbsPath}${testCase || ''}${lineStart || ''}${
@@ -133,7 +159,7 @@ export function codeImport(options: Options = { filepath: '' }) {
         return;
       }
 
-      if (lineStart || lineEnd) {
+      if (lineStart && lineEnd) {
         content = extractLines(fileContent, lineStart, lineEnd);
       }
 
@@ -144,6 +170,16 @@ export function codeImport(options: Options = { filepath: '' }) {
         content = testResult.content;
       }
 
+      if (!testCase && !lineStart && !lineEnd) {
+        const commentResult = extractCommentBlock(fileContent);
+        lineStart = commentResult.lineStart;
+        lineEnd = commentResult.lineEnd;
+        content = commentResult.content;
+      }
+
+      const fullPath = path.resolve(dirname, file);
+      const relativePath = fullPath.slice(fullPath.indexOf(PACKAGE_FOLDER));
+
       const newAttrs = [
         {
           name: '__content',
@@ -153,7 +189,7 @@ export function codeImport(options: Options = { filepath: '' }) {
         {
           name: '__filepath',
           type: 'mdxJsxAttribute',
-          value: path.resolve(dirname, file).replace(`${ROOT_DIR}/`, ''),
+          value: relativePath,
         },
         {
           name: '__filename',

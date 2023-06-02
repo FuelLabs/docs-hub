@@ -62,7 +62,7 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
       remarkPlugins: [
         remarkSlug,
         remarkGfm,
-        // handle code imports in the portal
+        // handle the Code Import component
         [codeImport, { filepath: fullpath }],
         // handle example code imports in mdbook repos and the TS SDK docs
         [mdBookExampleImport, { filepath: fullpath }],

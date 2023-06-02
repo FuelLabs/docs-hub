@@ -16,16 +16,21 @@ type DocPathType = {
 export async function getDocs(): Promise<DocPathType[]> {
   const paths = await globby(
     [
+      // PORTAL DOCS
       '../portal/*.md',
       '../portal/*.mdx',
       '../portal/**/*.mdx',
+      // SWAY DOCS
       './sway/docs/book/src/**/*.md',
+      // RUST SDK DOCS
       './fuels-rs/docs/src/**/*.md',
       './fuels-rs/docs/src/*.md',
+      // TS SDK DOCS
       './fuels-ts/apps/docs/src/*.md',
       './fuels-ts/apps/docs/src/**/*.md',
       './fuels-ts/apps/docs/src/**/*.md',
-      // './fuels-wallet/packages/docs/docs/**/*.mdx',
+      // WALLET DOCS
+      './fuels-wallet/packages/docs/docs/**/*.mdx',
       './fuels-wallet/packages/docs/docs/*.mdx',
     ],
     {

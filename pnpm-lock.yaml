@@ -13,6 +13,9 @@ dependencies:
   '@fuel-ui/react':
     specifier: ^0.13.0
     version: 0.13.0(@babel/core@7.21.8)(@types/node@18.11.11)(@types/react@18.0.26)(csstype@3.1.1)(typescript@4.9.3)
+  '@fuel-wallet/sdk':
+    specifier: ^0.9.3
+    version: 0.9.3(dexie@3.2.4)(fuels@0.22.1)
   '@mdx-js/react':
     specifier: ^2.1.5
     version: 2.1.5(react@18.2.0)
@@ -1330,6 +1333,22 @@ packages:
       - ts-node
       - typescript
       - utf-8-validate
+    dev: false
+
+  /@fuel-wallet/sdk@0.9.3(dexie@3.2.4)(fuels@0.22.1):
+    resolution: {integrity: sha512-YzfR+ZMCy20Xn/XwybR4XWdGNot8p/SPTHX+Xaq25snFKaO9zRCLJtKGisXEY5hCdcjKMUtq/q7e8DPrR6HggQ==}
+    peerDependencies:
+      fuels: '>=0.43.0'
+    dependencies:
+      '@types/chrome': 0.0.212
+      dexie-observable: 4.0.1-beta.13(dexie@3.2.4)
+      events: 3.3.0
+      fuels: 0.22.1
+      json-rpc-2.0: 1.6.0
+      uuid: 9.0.0
+      xstate: 4.37.2
+    transitivePeerDependencies:
+      - dexie
     dev: false
 
   /@graphql-typed-document-node/core@3.1.1(graphql@16.6.0):
@@ -3886,6 +3905,13 @@ packages:
       '@types/har-format': 1.2.10
     dev: true
 
+  /@types/chrome@0.0.212:
+    resolution: {integrity: sha512-O9blKfj6mQyBvkexEa71xcpRfkjAu8izQD3qGYfdwffk+mJhF7eogz628bZr5dETT6Eu7vU0stUGYG/+EQWj9g==}
+    dependencies:
+      '@types/filesystem': 0.0.32
+      '@types/har-format': 1.2.10
+    dev: false
+
   /@types/debug@4.1.7:
     resolution: {integrity: sha512-9AonUzyTjXXhEOa0DnqpzZi6VHlqKMswga9EXjpXnnqxwLtdvPPtlO8evrI5D9S6asFRCQ6v+wpiUKbw+vKqyg==}
     dependencies:
@@ -3924,11 +3950,9 @@ packages:
     resolution: {integrity: sha512-Yuf4jR5YYMR2DVgwuCiP11s0xuVRyPKmz8vo6HBY3CGdeMj8af93CFZX+T82+VD1+UqHOxTq31lO7MI7lepBtQ==}
     dependencies:
       '@types/filewriter': 0.0.29
-    dev: true
 
   /@types/filewriter@0.0.29:
     resolution: {integrity: sha512-BsPXH/irW0ht0Ji6iw/jJaK8Lj3FJemon2gvEqHKpCdDCeemHa+rI3WBGq5z7cDMZgoLjY40oninGxqk+8NzNQ==}
-    dev: true
 
   /@types/graceful-fs@4.1.6:
     resolution: {integrity: sha512-Sig0SNORX9fdW+bQuTEovKj3uHcUL6LQKbCrrqb1X7J6/ReAbhCXRAhc+SMejhLELFj2QcyuxmUooZ4bt5ReSw==}
@@ -3938,7 +3962,6 @@ packages:
 
   /@types/har-format@1.2.10:
     resolution: {integrity: sha512-o0J30wqycjF5miWDKYKKzzOU1ZTLuA42HZ4HE7/zqTOc/jTLdQ5NhYWvsRQo45Nfi1KHoRdNhteSI4BAxTF1Pg==}
-    dev: true
 
   /@types/hast@2.3.4:
     resolution: {integrity: sha512-wLEm0QvaoawEDoTRwzTXp4b4jpwiJDvR5KMnFnVodm3scufTlBOWRD6N1OBf9TZMhjlNsSfcO5V+7AF4+Vy+9g==}
@@ -5161,6 +5184,19 @@ packages:
 
   /detect-node-es@1.1.0:
     resolution: {integrity: sha512-ypdmJU/TbBby2Dxibuv7ZLW3Bs1QEmM7nHjEANfohJLvE0XVujisn1qPJcZxg+qDucsr+bP6fLD1rPS3AhJ7EQ==}
+    dev: false
+
+  /dexie-observable@4.0.1-beta.13(dexie@3.2.4):
+    resolution: {integrity: sha512-axmgPk7yjoPwj+0DdQIE5s1MBXi+6XcIFIjBKdQAmSGpsLQSth/LHvMOQ3q3Wj6pwIE5hqIxg2GL75sVqQbhEw==}
+    peerDependencies:
+      dexie: ^3.0.2 || ^4.0.1-alpha.5
+    dependencies:
+      dexie: 3.2.4
+    dev: false
+
+  /dexie@3.2.4:
+    resolution: {integrity: sha512-VKoTQRSv7+RnffpOJ3Dh6ozknBqzWw/F3iqMdsZg958R0AS8AnY9x9d1lbwENr0gzeGJHXKcGhAMRaqys6SxqA==}
+    engines: {node: '>=6.0'}
     dev: false
 
   /diff-sequences@29.4.3:
@@ -7427,6 +7463,10 @@ packages:
 
   /json-parse-even-better-errors@2.3.1:
     resolution: {integrity: sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==}
+    dev: false
+
+  /json-rpc-2.0@1.6.0:
+    resolution: {integrity: sha512-+pKxaoIqnA5VjXmZiAI1+CkFG7mHLg+dhtliOe/mp1P5Gdn8P5kE/Xxp2CUBwnGL7pfw6gC8zWTWekhSnKzHFA==}
     dev: false
 
   /json-schema-traverse@0.4.1:
@@ -10259,6 +10299,11 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       react: 18.2.0
+    dev: false
+
+  /uuid@9.0.0:
+    resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
+    hasBin: true
     dev: false
 
   /uvu@0.5.6:

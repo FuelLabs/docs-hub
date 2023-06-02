@@ -23,7 +23,8 @@
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "suppressImplicitAnyIndexErrors": true,
-    "target": "es2020"
+    "target": "es2020",
+    "types": ["@fuel-wallet/sdk"]
   },
   "exclude": ["**/dist", "**/build", "node_modules", "**/node_modules"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"]
