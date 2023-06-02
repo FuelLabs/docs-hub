@@ -9,8 +9,7 @@ interface Options {
   filepath: string;
 }
 
-export function walletDemo(options: Options = { filepath: '' }) {
-  // const rootDir = process.cwd();
+export function walletDocs(options: Options = { filepath: '' }) {
   const { filepath } = options;
   return function transformer(tree: Root) {
     const nodes: [any, number | null, Parent][] = [];
@@ -22,9 +21,12 @@ export function walletDemo(options: Options = { filepath: '' }) {
       }
     });
 
-    // get Demo components to add __rootDir prop
+    // get Demo components update src
     visit(tree, 'mdxJsxFlowElement', (node: any, idx, parent) => {
-      if (node.name === 'Demo') {
+      if (
+        node.name === 'Demo' ||
+        (node.name === 'Player' && filepath.includes('/fuels-wallet/'))
+      ) {
         nodes.push([node as any, idx, parent as Parent]);
       }
     });
@@ -91,6 +93,13 @@ export function walletDemo(options: Options = { filepath: '' }) {
         });
 
         node.attributes[0].value.value = old;
+      } else if (node.name === 'Player') {
+        const src = node.attributes.find((i: any) => i.name === 'src')?.value;
+        let paths = src.split('/');
+        paths.shift();
+        paths = paths.join('&&').replace('.mp4', '');
+        const videoPath = `/api/video/${paths}`;
+        node.attributes[0].value = videoPath;
       } else {
         let paths = node.url.split('/');
         paths.shift();

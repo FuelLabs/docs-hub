@@ -8,8 +8,6 @@ import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
 import type { Parent } from 'unist-util-visit';
 
-// const ROOT_DIR = path.resolve(__dirname, '../../../../../../../');
-
 function extractCommentBlock(content: string, comment: string | null) {
   const lines = content.split(EOL);
   if (!comment) {
@@ -21,15 +19,15 @@ function extractCommentBlock(content: string, comment: string | null) {
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i < lines.length; i++) {
     const start =
-      lines[i].trimStart() === `// ANCHOR: ${comment}` ||
+      lines[i].replace(/\s/g, '') === `//ANCHOR:${comment}` ||
       lines[i].trimStart() === `// #region ${comment}`;
     if (start === true && lineStart === 1) {
       lineStart = i + 1;
     } else {
       const end =
-        lines[i].trimStart() === `// ANCHOR_END: ${comment}` ||
+        lines[i].replace(/\s/g, '') === `//ANCHOR_END:${comment}` ||
         lines[i].trimStart() === `// #endregion ${comment}` ||
-        lines[i].trimStart() === `// ANCHOR: ${comment}`;
+        lines[i].replace(/\s/g, '') === `//ANCHOR:${comment}`;
 
       if (end === true) {
         lineEnd = i;

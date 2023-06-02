@@ -13,7 +13,7 @@ import {
 import { codeImport } from './plugins/code-import';
 import { forcGenDocs } from './plugins/forc-gen-docs';
 import { mdBookExampleImport } from './plugins/mdbook-example-import';
-import { walletDemo } from './plugins/wallet-demo';
+import { walletDocs } from './plugins/wallet-docs';
 import { rehypeExtractHeadings } from './toc';
 
 import { FIELDS } from '~/src/constants';
@@ -69,7 +69,7 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
         // get the generated docs for forc
         [forcGenDocs, { filepath: fullpath }],
         // provide the root dir to the Wallet Demo component
-        [walletDemo, { filepath: fullpath }],
+        [walletDocs, { filepath: fullpath }],
       ],
       rehypePlugins: [[rehypeExtractHeadings, { headings }]],
     },

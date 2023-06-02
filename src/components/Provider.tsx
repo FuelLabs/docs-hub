@@ -20,7 +20,7 @@ import { Pre } from './Pre';
 import { Table } from './Table';
 
 // TODO: make these imports dynamic
-import * as Examples from '~/docs/fuels-wallet/packages/docs/examples/';
+// import * as Examples from '~/docs/fuels-wallet/packages/docs/examples/';
 import { Demo } from '~/docs/fuels-wallet/packages/docs/src/components/Demo';
 import { DownloadFuelWallet } from '~/docs/fuels-wallet/packages/docs/src/components/DownloadFuelWallet';
 
