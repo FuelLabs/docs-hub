@@ -4,8 +4,6 @@
 import fs from 'node:fs';
 import { EOL } from 'os';
 import path from 'path';
-import type { Root } from 'remark-gfm';
-import { visit } from 'unist-util-visit';
 import type { Parent } from 'unist-util-visit';
 
 function extractCommentBlock(content: string, comment: string | null) {
@@ -64,85 +62,67 @@ function getFilesOnCache(filepath: string) {
   return files.get(filepath);
 }
 
-interface Options {
-  filepath: string;
-}
+export function handleExampleImports(
+  node: any,
+  dirname: string,
+  rootDir: string,
+  parent: Parent
+) {
+  let content = '';
 
-export function mdBookExampleImport(options: Options = { filepath: '' }) {
-  const rootDir = process.cwd();
-  const { filepath } = options;
-  const dirname = path.relative(rootDir, path.dirname(filepath));
+  let filePath = node.value.replace(/(\.\.\/)+/g, '');
 
-  return function transformer(tree: Root) {
-    const nodes: [any, number | null, Parent][] = [];
+  let exampleName = null;
+  let paths = [];
 
-    visit(tree, '', (node: any, idx, parent) => {
-      if (
-        (node.type === 'code' && node.value.startsWith('{{#include')) ||
-        (node.type === 'text' && node.value.startsWith('<<< @'))
-      ) {
-        nodes.push([node as any, idx, parent as Parent]);
-      }
-    });
-    nodes.forEach(([node, _, parent]) => {
-      let content = '';
+  if (node.type === 'code') {
+    // handle mdbook docs example format
+    filePath = filePath.replace('{{#include ', '').replace('}}', '');
+    paths = filePath.split(':');
+    if (paths.length > 1) exampleName = filePath.split(':').pop();
+  } else if (node.type === 'text') {
+    // handle ts-sdk docs example format
+    filePath = filePath.replace('<<< @/', '');
 
-      let filePath = node.value.replace(/(\.\.\/)+/g, '');
+    if (filePath.startsWith('docs-snippets')) {
+      filePath = `apps/${filePath}`;
+    }
+    const pathData = filePath.split('{');
+    filePath = pathData[0];
 
-      let exampleName = null;
-      let paths = [];
+    paths = filePath.split('#');
+    if (paths.length > 1) exampleName = filePath.split('#').pop();
+  }
 
-      if (node.type === 'code') {
-        // handle mdbook docs example format
-        filePath = filePath.replace('{{#include ', '').replace('}}', '');
-        paths = filePath.split(':');
-        if (paths.length > 1) exampleName = filePath.split(':').pop();
-      } else if (node.type === 'text') {
-        // handle ts-sdk docs example format
-        filePath = filePath.replace('<<< @/', '');
+  // if there is an example at the end of the url, remove it from the filepath
+  if (exampleName) {
+    filePath = paths[0];
+  }
 
-        if (filePath.startsWith('docs-snippets')) {
-          filePath = `apps/${filePath}`;
-        }
-        const pathData = filePath.split('{');
-        filePath = pathData[0];
+  const bookPath = dirname.split('/')[1];
+  const fileAbsPath = path.resolve(
+    path.join(rootDir, `docs/${bookPath}/`),
+    filePath
+  );
 
-        paths = filePath.split('#');
-        if (paths.length > 1) exampleName = filePath.split('#').pop();
-      }
+  if (node.type === 'text') {
+    node.type = 'code';
+    // TODO: make dynamic for all langs
+    node.lang = 'ts';
+    parent.type = 'root';
+  }
 
-      // if there is an example at the end of the url, remove it from the filepath
-      if (exampleName) {
-        filePath = paths[0];
-      }
+  const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
+  const cachedFile = getFilesOnCache(fileAbsPath);
 
-      const bookPath = dirname.split('/')[1];
-      const fileAbsPath = path.resolve(
-        path.join(rootDir, `docs/${bookPath}/`),
-        filePath
-      );
+  const oldContent = oldContentMap.get(node.value);
 
-      if (node.type === 'text') {
-        node.type = 'code';
-        // TODO: make dynamic for all langs
-        node.lang = 'ts';
-        parent.type = 'root';
-      }
+  /** Return result from cache if file content is the same */
+  if (fileContent === cachedFile && oldContent) {
+    return oldContent;
+  }
 
-      const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
-      const cachedFile = getFilesOnCache(fileAbsPath);
+  content = extractCommentBlock(fileContent, exampleName);
 
-      const oldContent = oldContentMap.get(node.value);
-
-      /** Return result from cache if file content is the same */
-      if (fileContent === cachedFile && oldContent) {
-        node.value = oldContent;
-        return;
-      }
-
-      content = extractCommentBlock(fileContent, exampleName);
-
-      node.value = content;
-    });
-  };
+  return content;
 }

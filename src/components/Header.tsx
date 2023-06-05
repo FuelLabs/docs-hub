@@ -20,7 +20,6 @@ type Tabs =
 export function Header({ title }: { title?: string }) {
   const [active, setActive] = useState<Tabs>('portal');
   const router = useRouter();
-  const activeStyles = { ...styles.topNavLink, ...styles.activeTopNavLink };
 
   useEffect(() => {
     let category = 'portal';
@@ -54,9 +53,12 @@ export function Header({ title }: { title?: string }) {
         </Link>
       </Box>
       <Flex css={{ padding: '0 $10' }} grow={'1'} gap={'$4'}>
+        {/* ****** FUEL NETWORK ****** */}
         <Dropdown>
           <Dropdown.Trigger>
-            <Button variant="outlined">Fuel Network</Button>
+            <Button css={styles.navButton} variant="outlined">
+              Fuel Network
+            </Button>
           </Dropdown.Trigger>
           <Dropdown.Menu
             autoFocus
@@ -80,9 +82,7 @@ export function Header({ title }: { title?: string }) {
               key="graphql"
               textValue="GraphQL API"
               css={
-                active === 'fuel-graphql-docs'
-                  ? activeStyles
-                  : styles.topNavLink
+                active === 'fuel-graphql-docs' ? styles.activeTopNavLink : {}
               }
             >
               GraphQL API
@@ -93,12 +93,16 @@ export function Header({ title }: { title?: string }) {
           </Dropdown.Menu>
         </Dropdown>
 
+        {/* ****** TOOLING & SWAY ****** */}
         <Dropdown>
           <Dropdown.Trigger>
-            <Button variant="outlined">Build with Sway</Button>
+            <Button css={styles.navButton} variant="outlined">
+              Build with Sway
+            </Button>
           </Dropdown.Trigger>
           <Dropdown.Menu
             autoFocus
+            disabledKeys={['tooling', 'sway']}
             aria-label="SDKs"
             onAction={(action) => {
               let link = '/';
@@ -106,7 +110,7 @@ export function Header({ title }: { title?: string }) {
                 case 'fuelup':
                   link = '/docs/fuelup/index';
                   break;
-                case 'sway':
+                case 'sway-book':
                   link = '/docs/sway/introduction/index';
                   break;
                 default:
@@ -115,25 +119,61 @@ export function Header({ title }: { title?: string }) {
             }}
           >
             <Dropdown.MenuItem
+              css={styles.breakLine}
+              key="tooling"
+              textValue="Tooling"
+            >
+              Tooling
+            </Dropdown.MenuItem>
+            <Dropdown.MenuItem
               key="fuelup"
               textValue="Fuelup"
-              css={active === 'fuelup' ? activeStyles : styles.topNavLink}
+              css={
+                active === 'fuelup'
+                  ? { ...styles.activeTopNavLink, ...styles.nestedLink }
+                  : styles.nestedLink
+              }
             >
               Fuelup
             </Dropdown.MenuItem>
             <Dropdown.MenuItem
+              key="forc"
+              textValue="Forc"
+              css={styles.nestedLink}
+              // css={
+              //   active === 'forc'
+              //     ? { ...styles.activeTopNavLink, ...styles.nestedLink }
+              //     : styles.nestedLink
+              // }
+            >
+              Forc
+            </Dropdown.MenuItem>
+            <Dropdown.MenuItem
               key="sway"
               textValue="Sway"
-              css={active === 'sway' ? activeStyles : styles.topNavLink}
+              css={styles.breakLine}
             >
               Sway
             </Dropdown.MenuItem>
+            <Dropdown.MenuItem
+              key="sway-book"
+              textValue="Sway Book"
+              css={
+                active === 'sway'
+                  ? { ...styles.activeTopNavLink, ...styles.nestedLink }
+                  : styles.nestedLink
+              }
+            >
+              Sway Book
+            </Dropdown.MenuItem>
           </Dropdown.Menu>
         </Dropdown>
-
+        {/* ****** SDKs & INDEXER ****** */}
         <Dropdown>
           <Dropdown.Trigger>
-            <Button variant="outlined">SDKs</Button>
+            <Button css={styles.navButton} variant="outlined">
+              SDKs
+            </Button>
           </Dropdown.Trigger>
           <Dropdown.Menu
             autoFocus
@@ -161,28 +201,28 @@ export function Header({ title }: { title?: string }) {
             <Dropdown.MenuItem
               key="rust-sdk"
               textValue="Rust SDK"
-              css={active === 'fuels-rs' ? activeStyles : styles.topNavLink}
+              css={active === 'fuels-rs' ? styles.activeTopNavLink : {}}
             >
               Rust SDK
             </Dropdown.MenuItem>
             <Dropdown.MenuItem
               key="ts-sdk"
               textValue="TS SDK"
-              css={active === 'fuels-ts' ? activeStyles : styles.topNavLink}
+              css={active === 'fuels-ts' ? styles.activeTopNavLink : {}}
             >
               TypeScript SDK
             </Dropdown.MenuItem>
             <Dropdown.MenuItem
               key="wallet-sdk"
               textValue="Wallet SDK"
-              css={active === 'fuels-wallet' ? activeStyles : styles.topNavLink}
+              css={active === 'fuels-wallet' ? styles.activeTopNavLink : {}}
             >
               Wallet
             </Dropdown.MenuItem>
             <Dropdown.MenuItem
               key="indexer"
               textValue="Indexer"
-              css={active === 'fuel-indexer' ? activeStyles : styles.topNavLink}
+              css={active === 'fuel-indexer' ? styles.activeTopNavLink : {}}
             >
               Indexer
             </Dropdown.MenuItem>
@@ -279,11 +319,18 @@ const styles = {
       color: '$accent11',
     },
   }),
-  topNavLink: {
+  nestedLink: {
     padding: '4px 16px',
-    borderRadius: '4px',
   },
   activeTopNavLink: {
     background: 'var(--colors-accent2)',
   },
+  breakLine: cssObj({
+    borderBottom: '2px solid $accent10',
+    fontSize: '16px',
+    color: '#86ffcb',
+  }),
+  navButton: cssObj({
+    borderRadius: '8px',
+  }),
 };

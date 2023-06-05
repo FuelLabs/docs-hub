@@ -5,12 +5,8 @@ import { NodeHtmlMarkdown } from 'node-html-markdown';
 import fs from 'node:fs';
 import { EOL } from 'os';
 import path from 'path';
-import type { Root } from 'remark-gfm';
 import remarkParse from 'remark-parse';
 import { unified } from 'unified';
-import { visit } from 'unist-util-visit';
-import type { Parent } from 'unist-util-visit';
-
 // const ROOT_DIR = path.resolve(__dirname, '../../../../../../../');
 
 const files = new Map<string, string>();
@@ -22,45 +18,30 @@ function getFilesOnCache(filepath: string) {
   return files.get(filepath);
 }
 
-interface Options {
-  filepath: string;
-}
-
-const rootDir = process.cwd();
 let thisFilePath = '';
 
 // this only works for the sway generated docs
-export function forcGenDocs(options: Options = { filepath: '' }) {
-  const { filepath } = options;
+export function handleForcGenDocs(
+  node: any,
+  filepath: string,
+  rootDir: string
+) {
   thisFilePath = filepath;
 
-  return function transformer(tree: Root) {
-    const nodes: [any, number | null, Parent][] = [];
-
-    visit(tree, '', (node: any, idx, parent) => {
-      if (
-        tree.children.length === 1 &&
-        node.type === 'root' &&
-        filepath.includes('sway/docs/book/src/forc')
-      ) {
-        nodes.push([node as any, idx, parent as Parent]);
-      }
-    });
-    nodes.forEach(([node, _idx, _parent]) => {
-      const child = node.children[0].children[0];
-      const newTree = transformContent(child);
-      if (newTree === null) return;
-      const slug = child.value.replace(' ', '-');
-      const newTreeChildren = newTree.children.map((n: any) => {
-        n.data = { hProperties: { id: slug }, id: slug };
-        return n;
-      });
-      node.children = newTreeChildren;
-    });
-  };
+  const child = node.children[0].children[0];
+  const newTree = transformContent(child, rootDir);
+  if (newTree === null) {
+    return null;
+  }
+  const slug = child.value.replace(' ', '-');
+  const newTreeChildren = newTree.children.map((n: any) => {
+    n.data = { hProperties: { id: slug }, id: slug };
+    return n;
+  });
+  return newTreeChildren;
 }
 
-function transformContent(node: any) {
+function transformContent(node: any, rootDir: string) {
   const fileName = node.value;
   const filePathName = fileName.replace(' ', '_').concat('.html');
   const swayBuildFilePath = 'docs/builds/sway/master/book/forc';

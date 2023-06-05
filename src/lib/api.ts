@@ -10,10 +10,7 @@ import {
   getDocs,
   getRepositoryLink,
 } from './docs';
-import { codeImport } from './plugins/code-import';
-import { forcGenDocs } from './plugins/forc-gen-docs';
-import { mdBookExampleImport } from './plugins/mdbook-example-import';
-import { walletDocs } from './plugins/wallet-docs';
+import { handlePlugins } from './plugins/plugins';
 import { rehypeExtractHeadings } from './toc';
 
 import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
@@ -65,14 +62,7 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
       remarkPlugins: [
         remarkSlug,
         remarkGfm,
-        // handle the CodeImport component
-        [codeImport, { filepath: fullpath }],
-        // handle example code imports in mdbook repos and the TS SDK docs
-        [mdBookExampleImport, { filepath: fullpath }],
-        // get the generated docs for forc
-        [forcGenDocs, { filepath: fullpath }],
-        // update the image & video paths in the wallet docs
-        [walletDocs, { filepath: fullpath }],
+        [handlePlugins, { filepath: fullpath }],
         // handle the codeExamples component in the graphql docs
         [codeExamples, { filepath: fullpath }],
       ],

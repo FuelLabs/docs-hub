@@ -67,6 +67,9 @@ dependencies:
   react:
     specifier: ^18.2.0
     version: 18.2.0
+  react-aria:
+    specifier: ^3.25.0
+    version: 3.25.0(react-dom@18.2.0)(react@18.2.0)
   react-dom:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
