@@ -15,7 +15,8 @@ type Tabs =
   | 'fuels-wallet'
   | 'fuel-graphql-docs'
   | 'fuelup'
-  | 'fuel-indexer';
+  | 'fuel-indexer'
+  | 'fuel-specs';
 
 export function Header({ title }: { title?: string }) {
   const [active, setActive] = useState<Tabs>('portal');
@@ -38,7 +39,8 @@ export function Header({ title }: { title?: string }) {
       str === 'fuels-wallet' ||
       str === 'fuel-graphql-docs' ||
       str === 'fuelup' ||
-      str === 'fuel-indexer'
+      str === 'fuel-indexer' ||
+      str === 'fuel-specs'
     );
   }
 
@@ -53,46 +55,6 @@ export function Header({ title }: { title?: string }) {
         </Link>
       </Box>
       <Flex css={{ padding: '0 $10' }} grow={'1'} gap={'$4'}>
-        {/* ****** FUEL NETWORK ****** */}
-        <Dropdown>
-          <Dropdown.Trigger>
-            <Button css={styles.navButton} variant="outlined">
-              Fuel Network
-            </Button>
-          </Dropdown.Trigger>
-          <Dropdown.Menu
-            autoFocus
-            aria-label="SDKs"
-            onAction={(action) => {
-              let link = '/';
-              switch (action) {
-                case 'graphql':
-                  link = '/docs/fuel-graphql-docs/overview';
-                  router.push(link);
-                  break;
-                case 'faucet':
-                  link = 'https://faucet-beta-3.fuel.network/';
-                  window.open(link);
-                  break;
-                default:
-              }
-            }}
-          >
-            <Dropdown.MenuItem
-              key="graphql"
-              textValue="GraphQL API"
-              css={
-                active === 'fuel-graphql-docs' ? styles.activeTopNavLink : {}
-              }
-            >
-              GraphQL API
-            </Dropdown.MenuItem>
-            <Dropdown.MenuItem key="faucet" textValue="Faucet">
-              Faucet
-            </Dropdown.MenuItem>
-          </Dropdown.Menu>
-        </Dropdown>
-
         {/* ****** TOOLING & SWAY ****** */}
         <Dropdown>
           <Dropdown.Trigger>
@@ -105,17 +67,23 @@ export function Header({ title }: { title?: string }) {
             disabledKeys={['tooling', 'sway']}
             aria-label="SDKs"
             onAction={(action) => {
-              let link = '/';
+              let link;
               switch (action) {
                 case 'fuelup':
-                  link = '/docs/fuelup/index';
+                  link = '/docs/fuelup';
+                  break;
+                case 'forc':
+                  link = '/docs/sway/forc';
                   break;
                 case 'sway-book':
-                  link = '/docs/sway/introduction/index';
+                  link = '/docs/sway/introduction';
+                  break;
+                case 'sway-apps':
+                  window.open('https://github.com/FuelLabs/sway-applications');
                   break;
                 default:
               }
-              router.push(link);
+              if (link) router.push(link);
             }}
           >
             <Dropdown.MenuItem
@@ -166,6 +134,20 @@ export function Header({ title }: { title?: string }) {
             >
               Sway Book
             </Dropdown.MenuItem>
+            <Dropdown.MenuItem
+              key="std-lib"
+              textValue="Standard Library"
+              css={styles.nestedLink}
+            >
+              Standard Library
+            </Dropdown.MenuItem>
+            <Dropdown.MenuItem
+              key="sway-apps"
+              textValue="Sway Apps"
+              css={styles.nestedLink}
+            >
+              Example Apps
+            </Dropdown.MenuItem>
           </Dropdown.Menu>
         </Dropdown>
         {/* ****** SDKs & INDEXER ****** */}
@@ -182,10 +164,10 @@ export function Header({ title }: { title?: string }) {
               let link = '/';
               switch (action) {
                 case 'rust-sdk':
-                  link = '/docs/fuels-rs/getting-started/index/';
+                  link = '/docs/fuels-rs/getting-started/';
                   break;
                 case 'ts-sdk':
-                  link = '/docs/fuels-ts/guide/index/';
+                  link = '/docs/fuels-ts/guide/';
                   break;
                 case 'wallet-sdk':
                   link = '/docs/fuels-wallet/install/';
@@ -225,6 +207,57 @@ export function Header({ title }: { title?: string }) {
               css={active === 'fuel-indexer' ? styles.activeTopNavLink : {}}
             >
               Indexer
+            </Dropdown.MenuItem>
+          </Dropdown.Menu>
+        </Dropdown>
+
+        {/* ****** FUEL NETWORK ****** */}
+        <Dropdown>
+          <Dropdown.Trigger>
+            <Button css={styles.navButton} variant="outlined">
+              Fuel Network
+            </Button>
+          </Dropdown.Trigger>
+          <Dropdown.Menu
+            autoFocus
+            aria-label="SDKs"
+            onAction={(action) => {
+              let link = '/';
+              switch (action) {
+                case 'graphql':
+                  link = '/docs/fuel-graphql-docs/overview';
+                  router.push(link);
+                  break;
+                case 'fuel-specs':
+                  link = '/docs/fuel-specs/protocol';
+                  router.push(link);
+                  break;
+                case 'faucet':
+                  link = 'https://faucet-beta-3.fuel.network/';
+                  window.open(link);
+                  break;
+                default:
+              }
+            }}
+          >
+            <Dropdown.MenuItem
+              key="graphql"
+              textValue="GraphQL API"
+              css={
+                active === 'fuel-graphql-docs' ? styles.activeTopNavLink : {}
+              }
+            >
+              GraphQL API
+            </Dropdown.MenuItem>
+            <Dropdown.MenuItem
+              key="fuel-specs"
+              textValue="Fuel Specs"
+              css={active === 'fuel-specs' ? styles.activeTopNavLink : {}}
+            >
+              Specs
+            </Dropdown.MenuItem>
+            <Dropdown.MenuItem key="faucet" textValue="Faucet">
+              Faucet
             </Dropdown.MenuItem>
           </Dropdown.Menu>
         </Dropdown>

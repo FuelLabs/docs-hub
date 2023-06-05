@@ -287,5 +287,20 @@
       "For Developers",
       "Contributing"
     ]
+  },
+  "fuel-specs": {
+    "title": "Fuel Specs",
+    "slug": "fuel-specs",
+    "paths": {
+      "docs": "",
+      "components": "",
+      "examples": ""
+    },
+    "repository": "https://github.com/FuelLabs/fuel-specs",
+    "ogTags": {
+      "description": "Official specifications for the Fuel Network",
+      "image": ""
+    },
+    "menu": ["Protocol", "VM", "ABI", "ID", "Tx_format", "Network", "Tests"]
   }
 }

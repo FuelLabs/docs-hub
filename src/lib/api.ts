@@ -93,6 +93,10 @@ export async function getSidebarLinks(config: Config) {
       return list.concat({ slug: doc.slug, label: doc.title });
     }
 
+    if (doc.category === 'src') {
+      return list.concat({ slug: doc.slug, label: doc.slug.replace('./', '') });
+    }
+
     const categoryIdx = list.findIndex((l) => {
       return l?.label === doc.category;
     });

@@ -41,6 +41,11 @@ export async function getDocs(): Promise<DocPathType[]> {
       // INDEXER DOCS
       './fuel-indexer/docs/src/*.md',
       './fuel-indexer/docs/src/**/*.md',
+      // SPECS DOCS
+      './fuel-specs/src/*.md',
+      './fuel-specs/src/**/*.md',
+      // IGNORE ALL SUMMARY PAGES
+      '!**/SUMMARY.md',
     ],
     {
       cwd: DOCS_DIRECTORY,

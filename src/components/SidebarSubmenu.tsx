@@ -29,10 +29,7 @@ export function SidebarSubmenu({
 
   const newLabel = label.replace(/\s+/g, '-').toLowerCase();
 
-  let slug = `${subpath}/${newLabel}`;
-  if (newLabel === slug.split('/').pop() && subpath === 'sway') {
-    slug = slug.concat('/index');
-  }
+  const slug = `${subpath}/${newLabel}`;
 
   return (
     <Flex css={styles.root}>
