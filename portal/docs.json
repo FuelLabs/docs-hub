@@ -260,11 +260,22 @@
       "image": ""
     },
     "menu": [
-      "Install",
-      "Browser Support",
-      "How To Use",
-      "For Developers",
-      "Contributing"
+      "Fuelup",
+      "Installation",
+      "Concepts",
+      "Channels",
+      "Basics",
+      "Overrides",
+      "Configuration",
+      "Examples",
+      "Developer_guide"
+    ],
+    "concepts_menu": [
+      "How fuelup works",
+      "Toolchains",
+      "Components",
+      "Proxies",
+      "Store"
     ]
   },
   "fuel-indexer": {

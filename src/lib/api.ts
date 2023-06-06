@@ -75,7 +75,10 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
     doc.category = 'plugins';
   }
   if (doc.title === 'index') {
-    doc.title = doc.category;
+    doc.title =
+      doc.category === 'src'
+        ? slug.replace('./', '').replace('.md', '')
+        : doc.category;
   }
 
   if (doc.title === 'README') {
