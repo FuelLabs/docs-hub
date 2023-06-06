@@ -29,5 +29,6 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '$1',
+    paddingBottom: '20px',
   }),
 };

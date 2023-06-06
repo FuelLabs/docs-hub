@@ -12,8 +12,8 @@
       "description": "Official documentation for the Fuel Network",
       "image": ""
     },
-    "menu": ["Home", "FAQ"],
-    "FAQ_menu": ["First", "Third", "Second"]
+    "menu": ["Home", "Guides"],
+    "FAQ_menu": ["First", "Second", "Third"]
   },
   "sway": {
     "title": "Sway Docs",
@@ -159,35 +159,20 @@
       "image": ""
     },
     "menu": [
+      "Fuels-Ts",
       "Getting Started",
-      "Providers",
-      "Accounts",
-      "Wallets",
-      "Abigen",
-      "Contracts",
-      "Calling Contracts",
-      "Running scripts",
-      "Predicates",
+      "Glossary",
+      "Guide",
       "Types",
-      "API Reference",
-      "Testing",
-      "Cookbook",
-      "Debugging",
-      "Contributing",
-      "Cli"
-    ],
-    "getting_started_menu": [
-      "Setup",
-      "Terminology",
-      "Connecting",
-      "Account",
-      "Managing Wallets",
-      "Abigen",
-      "API",
+      "Abi Typegen",
+      "Wallets",
+      "Providers",
       "Contracts",
-      "Calling Contracts",
-      "Running Scripts",
-      "Predicates"
+      "Cookbook",
+      "Predicates",
+      "Scripts",
+      "Testing",
+      "Messages"
     ]
   },
   "fuels-wallet": {

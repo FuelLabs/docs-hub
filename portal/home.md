@@ -4,4 +4,4 @@ title: Home
 
 # Home
 
-This is the docs home page
+This is the developers home page

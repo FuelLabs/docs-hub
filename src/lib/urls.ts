@@ -8,7 +8,8 @@ export function removeDocsPath(path: string) {
     .replace('/apps/', '/')
     .replace('/src/', '/')
     .replace('/index.md', '.md')
-    .replace('/README.md', '.md');
+    .replace('/README.md', '.md')
+    .replace('/guide/', '/');
 
   // handle mdbooks folders that use a same name file instead of index.md
   const paths = newPath.split('/');
@@ -25,7 +26,7 @@ export function removeDocsPath(path: string) {
     newPath = newPath.replace('sway/', '');
   }
 
-  // remove subcategory
+  // remove forc_client subcategory in forc docs
   if (path.includes('/forc_client/')) {
     newPath = newPath.replace('/forc_client/', '/');
   }

@@ -33,12 +33,12 @@ export type SidebarLinkProps = {
 export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
   ({ item }, ref) => {
     const pathname = usePathname() || '';
-    const slug = item.slug?.startsWith('../')
-      ? item.slug.replace('../', '')
+    const slug = item.slug?.startsWith('.')
+      ? item.slug.replace('../', '').replace('./', '')
       : item.slug;
-    const fullSlug = `/docs/${slug}`;
+    const fullSlug = `/docs/${slug}${slug?.endsWith('/') ? '' : '/'}`;
     const isActive = cx({
-      active: pathname.includes(fullSlug),
+      active: pathname === fullSlug,
     });
     return (
       <Link

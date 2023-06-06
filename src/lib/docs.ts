@@ -71,7 +71,8 @@ export async function getDocFromSlug(slug: string): Promise<DocPathType> {
       slug === 'forc' ||
       slug === 'forc/commands' ||
       slug === 'forc/plugins' ||
-      slug === 'fuelup'
+      slug === 'fuelup' ||
+      slug === 'fuels-ts'
     ) {
       return pathSlug === `./${slug}.md`;
     }

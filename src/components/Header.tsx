@@ -78,6 +78,9 @@ export function Header({ title }: { title?: string }) {
                 case 'sway-book':
                   link = '/docs/sway/';
                   break;
+                case 'std-lib':
+                  window.open('https://fuellabs.github.io/sway/master/std/');
+                  break;
                 case 'sway-apps':
                   window.open('https://github.com/FuelLabs/sway-applications');
                   break;
@@ -167,13 +170,13 @@ export function Header({ title }: { title?: string }) {
                   link = '/docs/fuels-rs/';
                   break;
                 case 'ts-sdk':
-                  link = '/docs/fuels-ts/guide/';
+                  link = '/docs/fuels-ts/';
                   break;
                 case 'wallet-sdk':
                   link = '/docs/fuels-wallet/install/';
                   break;
                 case 'indexer':
-                  link = '/docs/fuel-indexer/';
+                  link = '/docs/fuel-indexer/the-fuel-indexer/';
                   break;
                 default:
               }

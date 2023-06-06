@@ -1,6 +1,6 @@
 import { cssObj, cx } from '@fuel-ui/css';
 import { Button, Flex, Icon, List } from '@fuel-ui/react';
-// import { usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 import { SidebarLink } from './SidebarLink';
@@ -14,13 +14,11 @@ export function SidebarSubmenu({
   submenu,
   subpath,
 }: SidebarSubmenuProps) {
-  // const pathname = usePathname();
-  // const pathArray = submenu![0].slug?.split('/');
-  // const index = pathArray?.indexOf(subpath!);
-  // const category = pathArray && index ? `/${pathArray[index + 1]}` : '';
-  // const isActive = pathname?.startsWith(`/docs/${subpath}${category}/`);
-  // const [isOpened, setIsOpened] = useState(Boolean(isActive));
-  const isActive = false;
+  const pathname = usePathname();
+  const pathArray = submenu![0].slug?.split('/');
+  const index = pathArray?.indexOf(subpath!);
+  const category = pathArray && index ? `/${pathArray[index + 1]}` : '';
+  const isActive = pathname?.startsWith(`/docs/${subpath}${category}/`);
   const [isOpened, setIsOpened] = useState(Boolean(isActive));
 
   function toggle() {

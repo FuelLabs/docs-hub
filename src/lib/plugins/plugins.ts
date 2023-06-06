@@ -9,6 +9,7 @@ import type { Parent } from 'unist-util-visit';
 import { handleCodeImport } from './code-import';
 import { handleForcGenDocs } from './forc-gen-docs';
 import { handleExampleImports } from './mdbook-example-import';
+import { loadTSVersions } from './ts-versions';
 import {
   handleDemoComp,
   handlePlayerComp,
@@ -49,6 +50,19 @@ const walletComponentsCondition = (node: any, filepath: string) => {
   );
 };
 
+const mdBookLinks = (node: any) => {
+  return node.type === 'link' && node.url.includes('.md');
+};
+
+const tsBookVersions = (node: any) => {
+  return (
+    typeof node.value === 'string' &&
+    (node.value === 'v{{fuels}}' ||
+      node.value === 'v{{fuelCore}}' ||
+      node.value === 'v{{forc}}')
+  );
+};
+
 export function handlePlugins(options: Options = { filepath: '' }) {
   const rootDir = process.cwd();
   const { filepath } = options;
@@ -67,7 +81,11 @@ export function handlePlugins(options: Options = { filepath: '' }) {
         exampleImportCondition(node) ||
         // update the image & video paths in the wallet docs
         walletImagesCondition(node, filepath) ||
-        walletComponentsCondition(node, filepath)
+        walletComponentsCondition(node, filepath) ||
+        // remove .md from mdBook links
+        mdBookLinks(node) ||
+        // handle TS book versions
+        tsBookVersions(node)
       ) {
         nodes.push([node as any, idx, parent as Parent]);
       }
@@ -94,6 +112,17 @@ export function handlePlugins(options: Options = { filepath: '' }) {
           node.attributes[0].value.data.estree.body[0].expression.elements =
             elements;
           node.attributes[0].value.value = value;
+        }
+      } else if (mdBookLinks(node)) {
+        node.url = node.url.replace('.md', '').replace('/index', '');
+      } else if (tsBookVersions(node)) {
+        const versions = loadTSVersions(rootDir);
+        if (node.value === 'v{{forc}}') {
+          node.value = versions.FORC;
+        } else if (node.value === 'v{{fuels}}') {
+          node.value = versions.FUELS;
+        } else {
+          node.value = versions.FUEL_CORE;
         }
       }
     });

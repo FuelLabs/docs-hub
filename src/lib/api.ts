@@ -111,7 +111,12 @@ export async function getSidebarLinks(config: Config) {
       doc.category = 'plugins';
     }
 
-    if (!doc.category || doc.category === 'src' || doc.category === 'forc') {
+    if (
+      !doc.category ||
+      doc.category === 'src' ||
+      doc.category === 'forc' ||
+      (doc.category === 'guide' && doc.title === 'guide')
+    ) {
       let newLabel = doc.title;
       if (doc.title === 'index' || doc.title === 'README') {
         const arr = doc.slug.split('/');
