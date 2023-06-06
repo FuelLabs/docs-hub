@@ -63,7 +63,7 @@ export function Header({ title }: { title?: string }) {
       </Box>
       <Flex css={{ padding: '0 $10' }} grow={'1'} gap={'$4'}>
         <Link href={'/docs/portal/guides/'}>
-          <Button css={styles.navButton} variant="outlined">
+          <Button css={styles.navButton} variant="link">
             Guides
           </Button>
         </Link>
