@@ -277,11 +277,25 @@
       "image": ""
     },
     "menu": [
-      "Install",
-      "Browser Support",
-      "How To Use",
-      "For Developers",
-      "Contributing"
+      "The Fuel Indexer",
+      "Getting Started",
+      "Dependencies",
+      "Quickstart",
+      "Examples",
+      "Components",
+      "Indexing",
+      "Assets",
+      "Receipts",
+      "Data Types",
+      "GraphQL",
+      "Queries",
+      "Database",
+      "Plugins",
+      "Forc Index",
+      "Forc Postgres",
+      "Authentication",
+      "For Contributors",
+      "Glossary"
     ]
   },
   "fuel-specs": {
