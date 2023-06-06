@@ -46,6 +46,10 @@ export async function getDocs(): Promise<DocPathType[]> {
       './fuel-specs/src/**/*.md',
       // IGNORE ALL SUMMARY PAGES
       '!**/SUMMARY.md',
+      // REMOVE UNUSED FILES
+      // TODO: REMOVE FROM SWAY BOOK
+      '!./sway/docs/book/src/forc/commands/forc_deploy.md',
+      '!./sway/docs/book/src/forc/commands/forc_run.md',
     ],
     {
       cwd: DOCS_DIRECTORY,
@@ -62,7 +66,16 @@ export async function getDocs(): Promise<DocPathType[]> {
 
 export async function getDocFromSlug(slug: string): Promise<DocPathType> {
   const slugs = await getDocs();
-  const slugPath = slugs.find(({ slug: pathSlug }) => pathSlug.includes(slug));
+  const slugPath = slugs.find(({ slug: pathSlug }) => {
+    if (
+      slug === 'forc' ||
+      slug === 'forc/commands' ||
+      slug === 'forc/plugins'
+    ) {
+      return pathSlug === `./${slug}.md`;
+    }
+    return pathSlug.includes(slug);
+  });
   if (!slugPath) {
     throw new Error(`${slug} not found`);
   }

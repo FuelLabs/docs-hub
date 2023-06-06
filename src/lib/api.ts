@@ -30,7 +30,8 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
   const docsConfig = await getDocConfig(rootFolder);
   const pageLink = await getRepositoryLink(docsConfig, slugPath);
   const { data, content } = await getDocContent(fullpath);
-  const doc = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const doc: any = {
     pageLink,
   };
 
@@ -70,6 +71,19 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
     },
   });
 
+  if (doc.category === 'forc_client') {
+    doc.category = 'plugins';
+  }
+  if (doc.title === 'index') {
+    doc.title = doc.category;
+  }
+
+  if (doc.title === 'README') {
+    const arr = doc.slug.split('/');
+    const newLabel = arr[arr.length - 1];
+    doc.title = newLabel;
+  }
+
   return {
     ...doc,
     source,
@@ -85,16 +99,22 @@ export async function getAllDocs() {
 
 export async function getSidebarLinks(config: Config) {
   const docs = await getAllDocs();
-  const links = docs.reduce((list, doc) => {
+  const links = docs.reduce((list, thisDoc) => {
+    const doc = thisDoc;
     if (doc.slug.split('/')[1] !== config.slug) {
       return list;
     }
-    if (!doc.category) {
-      return list.concat({ slug: doc.slug, label: doc.title });
+    if (doc.category === 'forc_client') {
+      doc.category = 'plugins';
     }
 
-    if (doc.category === 'src') {
-      return list.concat({ slug: doc.slug, label: doc.slug.replace('./', '') });
+    if (!doc.category || doc.category === 'src' || doc.category === 'forc') {
+      let newLabel = doc.title;
+      if (doc.title === 'index' || doc.title === 'README') {
+        const arr = doc.slug.split('/');
+        newLabel = arr[arr.length - 1];
+      }
+      return list.concat({ slug: doc.slug, label: newLabel });
     }
 
     const categoryIdx = list.findIndex((l) => {
@@ -103,7 +123,15 @@ export async function getSidebarLinks(config: Config) {
     /** Insert category item based on order prop */
     if (categoryIdx >= 0) {
       const submenu = list[categoryIdx]?.submenu || [];
-      submenu.push({ slug: doc.slug, label: doc.title });
+      let newLabel = doc.title;
+      if (doc.title === 'index') {
+        const arr = doc.slug.split('/');
+        newLabel = arr[arr.length - 1];
+      }
+      submenu.push({
+        slug: doc.slug,
+        label: newLabel,
+      });
       return list;
     }
 

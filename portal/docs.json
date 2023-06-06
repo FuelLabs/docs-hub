@@ -302,5 +302,53 @@
       "image": ""
     },
     "menu": ["Protocol", "VM", "ABI", "ID", "Tx_format", "Network", "Tests"]
+  },
+  "forc": {
+    "title": "Forc",
+    "slug": "forc",
+    "paths": {
+      "docs": "",
+      "components": "",
+      "examples": ""
+    },
+    "repository": "https://github.com/FuelLabs/sway",
+    "ogTags": {
+      "description": "Official documentation for the Fuel Orchestrator",
+      "image": ""
+    },
+    "menu": [
+      "Forc",
+      "Manifest Reference",
+      "Workspaces",
+      "Dependencies",
+      "Commands",
+      "Plugins"
+    ],
+    "commands_menu": [
+      "forc addr2line",
+      "forc build",
+      "forc check",
+      "forc clean",
+      "forc completions",
+      "forc contract id",
+      "forc init",
+      "forc new",
+      "forc parse bytecode",
+      "forc plugins",
+      "forc predicate root",
+      "forc test",
+      "forc update",
+      "forc template"
+    ],
+    "plugins_menu": [
+      "forc client",
+      "forc deploy",
+      "forc run",
+      "forc submit",
+      "forc doc",
+      "forc explore",
+      "forc fmt",
+      "forc lsp"
+    ]
   }
 }

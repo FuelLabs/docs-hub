@@ -8,6 +8,7 @@ import { useDocContext } from '~/src/hooks/useDocContext';
 
 export function Sidebar() {
   const { links } = useDocContext();
+  // console.log('LINKS', links);
   return (
     <Box as="nav" css={styles.root}>
       {links.map((link, index) => {

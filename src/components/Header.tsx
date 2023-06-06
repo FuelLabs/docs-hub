@@ -73,10 +73,10 @@ export function Header({ title }: { title?: string }) {
                   link = '/docs/fuelup';
                   break;
                 case 'forc':
-                  link = '/docs/sway/forc';
+                  link = '/docs/forc';
                   break;
                 case 'sway-book':
-                  link = '/docs/sway/introduction';
+                  link = '/docs/sway/';
                   break;
                 case 'sway-apps':
                   window.open('https://github.com/FuelLabs/sway-applications');
@@ -164,7 +164,7 @@ export function Header({ title }: { title?: string }) {
               let link = '/';
               switch (action) {
                 case 'rust-sdk':
-                  link = '/docs/fuels-rs/getting-started/';
+                  link = '/docs/fuels-rs/';
                   break;
                 case 'ts-sdk':
                   link = '/docs/fuels-ts/guide/';
@@ -173,7 +173,7 @@ export function Header({ title }: { title?: string }) {
                   link = '/docs/fuels-wallet/install/';
                   break;
                 case 'indexer':
-                  link = '/docs/fuel-indexer/the-fuel-indexer/';
+                  link = '/docs/fuel-indexer/';
                   break;
                 default:
               }
@@ -229,7 +229,7 @@ export function Header({ title }: { title?: string }) {
                   router.push(link);
                   break;
                 case 'fuel-specs':
-                  link = '/docs/fuel-specs/protocol';
+                  link = '/docs/fuel-specs/';
                   router.push(link);
                   break;
                 case 'faucet':
