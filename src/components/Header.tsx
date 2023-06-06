@@ -1,6 +1,13 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box, Flex, FuelLogo, Icon, Dropdown, Button } from '@fuel-ui/react';
-import Link from 'next/link';
+import {
+  Box,
+  Flex,
+  FuelLogo,
+  Icon,
+  Dropdown,
+  Button,
+  Link,
+} from '@fuel-ui/react';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 
@@ -55,6 +62,12 @@ export function Header({ title }: { title?: string }) {
         </Link>
       </Box>
       <Flex css={{ padding: '0 $10' }} grow={'1'} gap={'$4'}>
+        <Link href={'/docs/portal/guides/'}>
+          <Button css={styles.navButton} variant="outlined">
+            Guides
+          </Button>
+        </Link>
+
         {/* ****** TOOLING & SWAY ****** */}
         <Dropdown>
           <Dropdown.Trigger>
