@@ -23,6 +23,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:eslint-comments/recommended',
     'plugin:react/recommended',
+    'plugin:@next/next/recommended',
     'prettier',
   ],
   settings: {

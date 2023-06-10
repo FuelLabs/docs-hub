@@ -1,10 +1,21 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
+    "plugins": [{ "name": "next" }],
     "allowJs": true,
     "noEmit": true,
     "incremental": true,
     "isolatedModules": true,
-    "jsx": "preserve"
-  }
+    "jsx": "preserve",
+    "paths": {
+      "~/*": ["./*"]
+    }
+  },
+  "exclude": ["./docs"],
+  "include": [
+    "next-env.d.ts",
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    ".next/types/**/*.ts"
+  ]
 }

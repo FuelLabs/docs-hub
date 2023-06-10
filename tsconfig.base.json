@@ -1,9 +1,5 @@
 {
   "compilerOptions": {
-    "plugins": [{ "name": "next" }],
-    "paths": {
-      "~/*": ["./*"]
-    },
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
     "preserveSymlinks": false,
@@ -26,17 +22,5 @@
     "target": "es2020",
     "types": ["@fuel-wallet/sdk"]
   },
-  "exclude": [
-    "**/dist",
-    "**/build",
-    "node_modules",
-    "**/node_modules",
-    "./docs"
-  ],
-  "include": [
-    "next-env.d.ts",
-    "./src/**/*.ts",
-    "./src/**/*.tsx",
-    ".next/types/**/*.ts"
-  ]
+  "exclude": ["**/dist", "**/build", "node_modules", "**/node_modules"]
 }
