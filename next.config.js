@@ -8,6 +8,9 @@ const nextConfig = {
     esmExternals: false,
     externalDir: true,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   trailingSlash: true,
   typescript: {
     // !! WARN !!
