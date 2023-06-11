@@ -14,7 +14,7 @@
     "prettier:format": "prettier --write .",
     "clean:docs:build": "sh ./scripts/clean-build-files.sh",
     "sync:docs": "sh ./scripts/sync-repos.sh",
-    "build:docs": "run-s sync:docs build clean:docs:build"
+    "build:docs": "run-s sync:docs clean:docs:build build"
   },
   "dependencies": {
     "@docsearch/css": "^3.3.0",
