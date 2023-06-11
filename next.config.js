@@ -4,6 +4,7 @@
 
 const nextConfig = {
   basePath: process.env.DOCS_BASE_URL || '',
+  output: 'standalone',
   experimental: {
     esmExternals: false,
     externalDir: true,
