@@ -37,8 +37,11 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
       ? item.slug.replace('../', '').replace('./', '')
       : item.slug;
     const fullSlug = `/docs/${slug}${slug?.endsWith('/') ? '' : '/'}`;
+    const label = item.label.replaceAll(' ', '-');
     const isActive = cx({
-      active: pathname === fullSlug,
+      active:
+        pathname === fullSlug ||
+        (label === slug?.split('/')[1] && pathname.includes(label)),
     });
     return (
       <Link
