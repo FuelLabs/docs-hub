@@ -10,11 +10,13 @@ import {
   Link,
   Text,
 } from '@fuel-ui/react';
+
 import { AnimatePresence, motion } from 'framer-motion';
 import type { AnimationProps } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { LinkObject, NAVIGATION } from '../constants';
 
+import { NAVIGATION } from '../constants';
+import type { LinkObject } from '../constants';
 import { Search } from './Search';
 import { Sidebar } from './Sidebar';
 
@@ -77,13 +79,12 @@ export function MobileMenu() {
           {NAVIGATION.map((item, index) => {
             if (item.type === 'menu') {
               return <MenuButton key={index} item={item} />;
-            } else if (item.type === 'internal-link') {
-              return (
-                <Button key={index} css={styles.navButton} variant={'link'}>
-                  {item.name}
-                </Button>
-              );
             }
+            return (
+              <Button key={index} css={styles.navButton} variant={'link'}>
+                {item.name}
+              </Button>
+            );
           })}
         </Flex>
 
@@ -123,6 +124,7 @@ function MenuButton({ item }: { item: LinkObject }) {
             ) {
               return (
                 <Link
+                  key={menuItem.link}
                   css={styles.menuLink}
                   href={menuItem.link}
                   isExternal={menuItem.type === 'external-link'}
@@ -132,9 +134,12 @@ function MenuButton({ item }: { item: LinkObject }) {
                   </Button>
                 </Link>
               );
-            } else if (menuItem.type === 'category') {
-              return <Text css={{ color: '$accent11' }}>{menuItem.name}</Text>;
             }
+            return (
+              <Text key={menuItem.link} css={{ color: '$accent11' }}>
+                {menuItem.name}
+              </Text>
+            );
           })}
         </Flex>
       )}

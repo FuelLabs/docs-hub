@@ -1,8 +1,10 @@
 import { cssObj } from '@fuel-ui/css';
 import { Dropdown, Button, Link } from '@fuel-ui/react';
+
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { NAVIGATION, Tabs } from '../constants';
+import { NAVIGATION } from '../constants';
+import type { Tabs } from '../constants';
 
 export function Navigation() {
   const [active, setActive] = useState<Tabs>('portal');
@@ -88,15 +90,14 @@ export function Navigation() {
               </Dropdown.Menu>
             </Dropdown>
           );
-        } else if (item.type === 'internal-link') {
-          return (
-            <Link key={index} href={item.link}>
-              <Button css={styles.navButton} variant="link">
-                {item.name}
-              </Button>
-            </Link>
-          );
         }
+        return (
+          <Link key={index} href={item.link}>
+            <Button css={styles.navButton} variant="link">
+              {item.name}
+            </Button>
+          </Link>
+        );
       })}
     </>
   );
