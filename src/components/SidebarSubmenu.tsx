@@ -27,7 +27,20 @@ export function SidebarSubmenu({
 
   const newLabel = label.replace(/\s+/g, '-').toLowerCase();
 
-  const slug = `${subpath}/${newLabel}`;
+  let slug = `${subpath}/${newLabel}`;
+  // TODO: remove once all folders have index files
+  if (
+    submenu &&
+    submenu[0].slug &&
+    (slug === 'fuels-rs/providers' ||
+      slug === 'fuels-rs/wallets' ||
+      slug === 'fuels-rs/predicates' ||
+      slug === 'fuels-rs/calling-contracts' ||
+      slug === 'fuels-rs/contracts' ||
+      slug === 'fuels-rs/abigen')
+  ) {
+    slug = submenu[0].slug;
+  }
 
   return (
     <Flex css={styles.root}>
