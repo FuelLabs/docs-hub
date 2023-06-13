@@ -8,24 +8,29 @@ import { useDocContext } from '~/src/hooks/useDocContext';
 export function DocFooter() {
   const { docLink } = useDocContext();
   const router = useRouter();
+  let prevLink = docLink.prev?.slug;
+  let nextLink = docLink.next?.slug;
+  if (docLink.prev?.slug?.startsWith('../')) {
+    prevLink = docLink.prev.slug.replace('../', '');
+  }
+  if (docLink.next?.slug?.startsWith('../')) {
+    nextLink = docLink.next.slug.replace('../', '');
+  }
+
+  if (router.asPath === '/') nextLink = `docs/${nextLink}`;
+
   return (
     <Box as="footer" css={styles.root}>
       <Box css={{ flex: 1 }}>
-        {docLink.prev && (
-          <Link href={docLink.prev.slug!}>
+        {docLink.prev && prevLink && (
+          <Link href={prevLink}>
             <Icon icon={Icon.is('ArrowLeft')} size={24} /> {docLink.prev.label}
           </Link>
         )}
       </Box>
       <Box>
-        {docLink.next && (
-          <Link
-            href={
-              router.asPath === '/'
-                ? `docs/${docLink.next.slug!}`
-                : docLink.next.slug!
-            }
-          >
+        {docLink.next && nextLink && (
+          <Link href={nextLink}>
             {docLink.next.label} <Icon icon={Icon.is('ArrowRight')} size={24} />
           </Link>
         )}

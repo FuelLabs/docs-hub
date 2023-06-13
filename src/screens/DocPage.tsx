@@ -4,7 +4,7 @@ import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
 import { MDXRemote } from 'next-mdx-remote';
 
-import { Breadcrumb } from '~/src/components/Breadcrumb';
+// import { Breadcrumb } from '~/src/components/Breadcrumb';
 import { DocFooter } from '~/src/components/DocFooter';
 import { Layout } from '~/src/components/Layout';
 import { Sidebar } from '~/src/components/Sidebar';
@@ -30,7 +30,7 @@ export function DocScreen(props: DocPageProps) {
           </Box>
         </Box>
         <Box as="section" css={styles.section}>
-          <Breadcrumb doc={doc} />
+          {/* <Breadcrumb doc={doc} /> */}
           <MDXRemote {...doc.source} scope={doc} />
           <DocFooter />
         </Box>
@@ -62,6 +62,7 @@ const styles = {
     '@xl': {
       py: '$8',
       px: '$0',
+      width: '60vw',
     },
   }),
 };
