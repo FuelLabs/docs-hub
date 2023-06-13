@@ -41,4 +41,4 @@ jobs:
 
       - name: Run lint
         run: |
-          pnpm run lint:check
+          pnpm check
