@@ -10,13 +10,13 @@ import {
   Link,
   Text,
 } from '@fuel-ui/react';
-
 import { AnimatePresence, motion } from 'framer-motion';
 import type { AnimationProps } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 import { NAVIGATION } from '../constants';
 import type { LinkObject } from '../constants';
+
 import { Search } from './Search';
 import { Sidebar } from './Sidebar';
 

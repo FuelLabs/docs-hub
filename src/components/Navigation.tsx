@@ -1,8 +1,8 @@
 import { cssObj } from '@fuel-ui/css';
 import { Dropdown, Button, Link } from '@fuel-ui/react';
-
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
+
 import { NAVIGATION } from '../constants';
 import type { Tabs } from '../constants';
 
