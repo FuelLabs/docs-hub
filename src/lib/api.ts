@@ -2,7 +2,6 @@ import { serialize } from 'next-mdx-remote/serialize';
 import remarkGfm from 'remark-gfm';
 import remarkSlug from 'remark-slug';
 
-import { codeImport } from './code-import';
 import {
   getDocConfig,
   getDocContent,
@@ -11,10 +10,17 @@ import {
   getDocs,
   getRepositoryLink,
 } from './docs';
+import { handlePlugins } from './plugins/plugins';
 import { rehypeExtractHeadings } from './toc';
 
+import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
 import { FIELDS } from '~/src/constants';
-import type { DocType, NodeHeading, SidebarLinkItem } from '~/src/types';
+import type {
+  Config,
+  DocType,
+  NodeHeading,
+  SidebarLinkItem,
+} from '~/src/types';
 
 export async function getDocBySlug(slug: string): Promise<DocType> {
   const [rootFolder] = slug.split('/');
@@ -23,37 +29,63 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
   const fullpath = await getDocPath(slugPath);
   const docsConfig = await getDocConfig(rootFolder);
   const pageLink = await getRepositoryLink(docsConfig, slugPath);
-  const { header, content } = await getDocContent(fullpath);
-  const doc = {
+  const { data, content } = await getDocContent(fullpath);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const doc: any = {
     pageLink,
   };
 
   // Ensure only the minimal needed data is exposed
   FIELDS.forEach((field) => {
     if (field === 'slug') {
-      doc[field] = header.slug || realSlug;
+      doc[field] = data.slug || realSlug;
     }
     if (field === 'content') {
       doc[field] = content;
     }
-    if (typeof header[field] !== 'undefined') {
-      doc[field] = header[field];
+    if (typeof data[field] !== 'undefined') {
+      doc[field] = data[field];
     }
   });
 
+  // parse the wallet and graphql docs as mdx, otherwise use md
+  const format =
+    fullpath.includes('fuels-wallet/packages/docs/') ||
+    fullpath.includes('fuel-graphql-docs/docs')
+      ? 'mdx'
+      : 'md';
+
   const headings: NodeHeading[] = [];
   const source = await serialize(content, {
-    scope: header,
+    scope: data,
     mdxOptions: {
-      format: 'mdx',
+      format,
       remarkPlugins: [
         remarkSlug,
         remarkGfm,
-        [codeImport, { filepath: fullpath }],
+        [handlePlugins, { filepath: fullpath }],
+        // handle the codeExamples component in the graphql docs
+        [codeExamples, { filepath: fullpath }],
       ],
       rehypePlugins: [[rehypeExtractHeadings, { headings }]],
     },
   });
+
+  if (doc.category === 'forc_client') {
+    doc.category = 'plugins';
+  }
+  if (doc.title === 'index') {
+    doc.title =
+      doc.category === 'src'
+        ? slug.replace('./', '').replace('.md', '')
+        : doc.category;
+  }
+
+  if (doc.title === 'README') {
+    const arr = doc.slug.split('/');
+    const newLabel = arr[arr.length - 1];
+    doc.title = newLabel;
+  }
 
   return {
     ...doc,
@@ -68,60 +100,99 @@ export async function getAllDocs() {
   return Promise.all(slugs.map(({ slug }) => getDocBySlug(slug)));
 }
 
-export async function getSidebarLinks(order: string[]) {
+export async function getSidebarLinks(config: Config) {
   const docs = await getAllDocs();
-  const links = docs.reduce((list, doc) => {
-    if (!doc.category) {
-      return list.concat({ slug: doc.slug, label: doc.title });
+  const links = docs.reduce((list, thisDoc) => {
+    const doc = thisDoc;
+    if (doc.slug.split('/')[1] !== config.slug) {
+      return list;
+    }
+    if (doc.category === 'forc_client') {
+      doc.category = 'plugins';
     }
 
-    const categoryIdx = list.findIndex((l) => l?.label === doc.category);
+    if (
+      !doc.category ||
+      doc.category === 'src' ||
+      doc.category === 'forc' ||
+      (doc.category === 'guide' && doc.title === 'guide')
+    ) {
+      let newLabel = doc.title;
+      if (doc.title === 'index' || doc.title === 'README') {
+        const arr = doc.slug.split('/');
+        newLabel = arr[arr.length - 1];
+      }
+      return list.concat({ slug: doc.slug, label: newLabel });
+    }
+
+    const categoryIdx = list.findIndex((l) => {
+      return l?.label === doc.category;
+    });
     /** Insert category item based on order prop */
-    if (categoryIdx > 0) {
+    if (categoryIdx >= 0) {
       const submenu = list[categoryIdx]?.submenu || [];
-      submenu.push({ slug: doc.slug, label: doc.title });
+      let newLabel = doc.title;
+      if (doc.title === 'index') {
+        const arr = doc.slug.split('/');
+        newLabel = arr[arr.length - 1];
+      }
+      submenu.push({
+        slug: doc.slug,
+        label: newLabel,
+      });
       return list;
     }
 
-    const categorySlug = doc.slug.split('/')[0];
+    const subpath = doc.slug.split('/')[1];
     const submenu = [{ slug: doc.slug, label: doc.title }];
     return list.concat({
-      subpath: categorySlug,
+      subpath,
       label: doc.category,
       submenu,
     });
     /** Insert inside category submenu if category is already on array */
   }, [] as SidebarLinkItem[]);
 
-  const sortedLinks = links
-    /** Sort first level links */
-    .sort((a, b) => {
-      const aIdx = order.indexOf(a.label);
-      const bIdx = order.indexOf(b.label);
-      if (!a.subpath && !b.subpath) {
-        return aIdx - bIdx;
-      }
-      if (a.subpath && b.subpath) {
-        const aFirst = order.filter((i) => i.startsWith(a.label))?.[0];
-        const bFirst = order.filter((i) => i.startsWith(b.label))?.[0];
-        return order.indexOf(aFirst) - order.indexOf(bFirst);
-      }
-      const category = a.subpath ? a.label : b.label;
-      const first = order.filter((i) => i.startsWith(category))?.[0];
-      const idx = order.indexOf(first);
-      return a.subpath ? idx - bIdx : aIdx - idx;
-    })
-    /** Sort categoried links */
-    .map((link) => {
-      if (!link.submenu) return link;
-      const catOrder = order.filter((i) => i.startsWith(link.label));
-      const submenu = link.submenu.sort(
-        (a, b) =>
-          catOrder.indexOf(`${link.label}/${a.label}`) -
-          catOrder.indexOf(`${link.label}/${b.label}`)
-      );
-      return { ...link, submenu };
-    });
+  const order = config.menu;
+  const sortedLinks = order
+    ? links
+        /** Sort first level links */
+        .sort((a, b) => {
+          const lcOrder = order.map((o) => o.toLowerCase());
+          const lowerA = a.label.toLowerCase();
+          const lowerB = b.label.toLowerCase();
+          const aIdx = lcOrder.indexOf(lowerA);
+          const bIdx = lcOrder.indexOf(lowerB);
+          if (!a.subpath && !b.subpath) {
+            return aIdx - bIdx;
+          }
+          if (a.subpath && b.subpath) {
+            const aFirst = lcOrder.filter((i) => i.startsWith(lowerA))?.[0];
+            const bFirst = lcOrder.filter((i) => i.startsWith(lowerB))?.[0];
+            return lcOrder.indexOf(aFirst) - lcOrder.indexOf(bFirst);
+          }
+          const category = a.subpath ? lowerA : lowerB;
+          const first = lcOrder.filter((i) => i.startsWith(category))?.[0];
+          const idx = lcOrder.indexOf(first);
+          return a.subpath ? idx - bIdx : aIdx - idx;
+        })
+        /** Sort categoried links */
+        .map((link) => {
+          if (!link.submenu) return link;
+          const key = `${link.label.toLowerCase().replaceAll(' ', '_')}_menu`;
+          let catOrder = config[key];
+          catOrder = catOrder?.map((title) => title.toLowerCase());
+          const submenu = link.submenu.sort((a, b) => {
+            const lowerA = a.label.toLowerCase();
+            const lowerB = b.label.toLowerCase();
+            const result = catOrder
+              ? catOrder.indexOf(`${lowerA}`) - catOrder.indexOf(`${lowerB}`)
+              : 0;
+            return result;
+          });
+          return { ...link, submenu };
+        })
+    : links;
 
   const withNextAndPrev = [...sortedLinks].map((doc, idx) => {
     if (doc.submenu) {
@@ -154,7 +225,14 @@ export function getDocLink(
   links: Awaited<ReturnType<typeof getSidebarLinks>>,
   slug: string
 ) {
-  return links
+  links
     .flatMap((i) => (i.submenu || i) as SidebarLinkItem | SidebarLinkItem[])
-    .find((i) => i.slug === slug);
+    .find((i) => {
+      if (i.slug?.startsWith('../portal')) {
+        return i.slug === `../${slug}`;
+      }
+      return i.slug === slug;
+    });
+
+  return links;
 }

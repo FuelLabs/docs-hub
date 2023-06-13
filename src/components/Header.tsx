@@ -1,14 +1,14 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box, Flex, FuelLogo, Icon } from '@fuel-ui/react';
-import Link from 'next/link';
+import { Box, Flex, FuelLogo, Icon, Link } from '@fuel-ui/react';
 
 import { MobileMenu } from './MobileMenu';
+import { Navigation } from './Navigation';
 import { Search } from './Search';
 
 export function Header({ title }: { title?: string }) {
   return (
     <Flex as="header" css={styles.root}>
-      <Box css={{ flex: 1 }}>
+      <Box css={{ flex: 1, '@xl': { flex: 'inherit' } }}>
         <Link href="/" className="logo">
           <FuelLogo size={40} />
           <Flex css={styles.logoText}>
@@ -16,6 +16,13 @@ export function Header({ title }: { title?: string }) {
           </Flex>
         </Link>
       </Box>
+      <Flex
+        css={{ padding: '0 $8', display: 'none', '@xl': { display: 'flex' } }}
+        grow={'1'}
+        gap={'$4'}
+      >
+        <Navigation />
+      </Flex>
       <Box css={styles.desktop}>
         <Flex css={styles.menu}>
           <a
@@ -66,12 +73,7 @@ const styles = {
     flex: 1,
     fontSize: '$lg',
     fontWeight: '$semibold',
-  }),
-  version: cssObj({
-    ml: '$2',
-    color: '$gray8',
-    fontSize: '$xs',
-    fontStyle: 'italic',
+    paddingLeft: '$2',
   }),
   desktop: cssObj({
     display: 'none',

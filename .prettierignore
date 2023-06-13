@@ -2,10 +2,8 @@
 .github
 CHANGELOG.md
 coverage
-dist
-dist-crx
 node_modules
 pnpm-lock.yaml
 **/*.typegen.ts
 .next
-**/storybook/**/*
+docs

@@ -23,6 +23,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:eslint-comments/recommended',
     'plugin:react/recommended',
+    'plugin:@next/next/recommended',
     'prettier',
   ],
   settings: {
@@ -68,6 +69,7 @@ module.exports = {
     'react/display-name': 'off',
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
+    'no-nested-ternary': 'off',
     '@typescript-eslint/no-unused-vars': [
       'error',
       {
@@ -81,7 +83,7 @@ module.exports = {
   // Disable no-unused-expressions to allow chai 'expect' expressions in testing
   overrides: [
     {
-      files: ['*.test.{ts,tsx}'],
+      files: ['./src/*.test.{ts,tsx}'],
       env: {
         jest: true,
       },

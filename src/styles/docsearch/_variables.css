@@ -1,13 +1,13 @@
 /*! @docsearch/css Variables 3.3.0 | MIT License | © Algolia, Inc. and contributors | https://docsearch.algolia.com */
 :root {
-  --docsearch-primary-color: #03c399;
+  --docsearch-primary-color: var(--colors-accent11);
   --docsearch-text-color: #1c1e21;
   --docsearch-spacing: 12px;
   --docsearch-icon-stroke-width: 1.4;
   --docsearch-highlight-color: var(--docsearch-primary-color);
   --docsearch-muted-color: #969faf;
   --docsearch-container-background: rgba(101, 108, 133, 0.8);
-  --docsearch-logo-color: #03c399;
+  --docsearch-logo-color: var(--colors-accent11);
   --docsearch-modal-width: 560px;
   --docsearch-modal-height: 600px;
   --docsearch-modal-background: #f5f6f7;

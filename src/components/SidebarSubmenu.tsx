@@ -1,7 +1,7 @@
 import { cssObj, cx } from '@fuel-ui/css';
 import { Button, Flex, Icon, List } from '@fuel-ui/react';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { SidebarLink } from './SidebarLink';
 
@@ -15,35 +15,65 @@ export function SidebarSubmenu({
   subpath,
 }: SidebarSubmenuProps) {
   const pathname = usePathname();
-  const isActive = pathname?.startsWith(`/docs/${subpath}`);
-  const [isOpened, setIsOpened] = useState(Boolean(isActive));
+  const [isOpened, setIsOpened] = useState<boolean>();
+  const [isActive, setIsActive] = useState<boolean>();
+  const newLabel = label.replace(/\s+/g, '-').toLowerCase();
+  let slug = `${subpath}/${newLabel}`;
+  useEffect(() => {
+    const pathArray = submenu![0].slug?.split('/');
+    const index = pathArray?.indexOf(subpath!);
+    const category = pathArray && index ? `/${pathArray[index + 1]}` : '';
+    const active = pathname?.startsWith(`/docs/${subpath}${category}/`);
+    setIsActive(active);
+    setIsOpened(active);
+  }, [pathname]);
 
   function toggle() {
     setIsOpened((s) => !s);
   }
 
+  // TODO: remove once all folders have index files
+  if (
+    submenu &&
+    submenu[0].slug &&
+    (slug === 'fuels-rs/providers' ||
+      slug === 'fuels-rs/wallets' ||
+      slug === 'fuels-rs/predicates' ||
+      slug === 'fuels-rs/calling-contracts' ||
+      slug === 'fuels-rs/contracts' ||
+      slug === 'fuels-rs/abigen')
+  ) {
+    slug = submenu[0].slug;
+  }
+
   return (
     <Flex css={styles.root}>
-      <Button
-        variant="link"
-        rightIcon={isOpened ? Icon.is('CaretUp') : Icon.is('CaretDown')}
-        onPress={toggle}
-        className={cx({ active: isActive })}
-      >
-        {label}
-      </Button>
+      <Flex justify={'space-between'}>
+        <SidebarLink item={{ label, slug }} />
+        <Button
+          variant="link"
+          rightIcon={isOpened ? Icon.is('CaretUp') : Icon.is('CaretDown')}
+          onPress={toggle}
+          className={cx({ active: isActive })}
+        />
+      </Flex>
       {isOpened && (
         <List>
-          {submenu?.map((item) => (
-            <List.Item
-              key={item.slug}
-              icon={Icon.is('ArrowRight')}
-              iconSize={10}
-              iconColor="gray6"
-            >
-              <SidebarLink item={item} />
-            </List.Item>
-          ))}
+          {submenu?.map((item, index) => {
+            if (item.label !== label) {
+              return (
+                <List.Item
+                  key={index}
+                  icon={Icon.is('ArrowRight')}
+                  iconSize={10}
+                  iconColor="gray6"
+                >
+                  <SidebarLink item={item} />
+                </List.Item>
+              );
+            }
+            return <div key={index} />;
+          })}
         </List>
       )}
     </Flex>

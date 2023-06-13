@@ -1,3 +1,28 @@
 [submodule "docs/sway"]
 	path = docs/sway
-	url = git@github.com:FuelLabs/sway.git
+	url = https://github.com/FuelLabs/sway.git
+[submodule "docs/fuels-rs"]
+	path = docs/fuels-rs
+	url = https://github.com/FuelLabs/fuels-rs.git
+[submodule "docs/fuel-graphql-docs"]
+	path = docs/fuel-graphql-docs
+	url = https://github.com/FuelLabs/fuel-graphql-docs.git
+[submodule "docs/fuels-ts"]
+	path = docs/fuels-ts
+	url = https://github.com/FuelLabs/fuels-ts
+[submodule "docs/builds/sway"]
+	path = docs/builds/sway
+	url = https://github.com/FuelLabs/sway.git
+	branch = gh-pages
+[submodule "docs/fuels-wallet"]
+	path = docs/fuels-wallet
+	url = https://github.com/FuelLabs/fuels-wallet.git
+[submodule "docs/fuelup"]
+	path = docs/fuelup
+	url = https://github.com/FuelLabs/fuelup.git
+[submodule "docs/fuel-indexer"]
+	path = docs/fuel-indexer
+	url = https://github.com/FuelLabs/fuel-indexer.git
+[submodule "docs/fuel-specs"]
+	path = docs/fuel-specs
+	url = https://github.com/FuelLabs/fuel-specs.git
