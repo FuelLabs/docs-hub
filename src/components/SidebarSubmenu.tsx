@@ -1,7 +1,7 @@
 import { cssObj, cx } from '@fuel-ui/css';
 import { Button, Flex, Icon, List } from '@fuel-ui/react';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { SidebarLink } from './SidebarLink';
 
@@ -15,19 +15,36 @@ export function SidebarSubmenu({
   subpath,
 }: SidebarSubmenuProps) {
   const pathname = usePathname();
-  const pathArray = submenu![0].slug?.split('/');
-  const index = pathArray?.indexOf(subpath!);
-  const category = pathArray && index ? `/${pathArray[index + 1]}` : '';
-  const isActive = pathname?.startsWith(`/docs/${subpath}${category}/`);
-  const [isOpened, setIsOpened] = useState(Boolean(isActive));
+  const [isOpened, setIsOpened] = useState<boolean>();
+  const [isActive, setIsActive] = useState<boolean>();
+  const newLabel = label.replace(/\s+/g, '-').toLowerCase();
+  let slug = `${subpath}/${newLabel}`;
+  useEffect(() => {
+    const pathArray = submenu![0].slug?.split('/');
+    const index = pathArray?.indexOf(subpath!);
+    const category = pathArray && index ? `/${pathArray[index + 1]}` : '';
+    const active = pathname?.startsWith(`/docs/${subpath}${category}/`);
+    setIsActive(active);
+    setIsOpened(active);
+  }, [pathname]);
 
   function toggle() {
     setIsOpened((s) => !s);
   }
 
-  const newLabel = label.replace(/\s+/g, '-').toLowerCase();
-
-  const slug = `${subpath}/${newLabel}`;
+  // TODO: remove once all folders have index files
+  if (
+    submenu &&
+    submenu[0].slug &&
+    (slug === 'fuels-rs/providers' ||
+      slug === 'fuels-rs/wallets' ||
+      slug === 'fuels-rs/predicates' ||
+      slug === 'fuels-rs/calling-contracts' ||
+      slug === 'fuels-rs/contracts' ||
+      slug === 'fuels-rs/abigen')
+  ) {
+    slug = submenu[0].slug;
+  }
 
   return (
     <Flex css={styles.root}>
