@@ -209,10 +209,8 @@ export async function getDocContent(path: string) {
     const paths = path.split('/');
     const title = paths
       .pop()
-      ?.replace('.md', '')
-      .replace('.mdx', '')
-      .replaceAll('_', ' ')
-      .replaceAll('-', ' ');
+      ?.replace(/\.(md|mdx)$/, '')
+      .replaceAll(/[_-]/g, ' ');
     data.title = title;
     const category = paths.pop()?.replaceAll('-', ' ');
     data.category = category;

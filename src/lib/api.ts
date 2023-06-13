@@ -1,3 +1,4 @@
+/* eslint-disable no-continue */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { serialize } from 'next-mdx-remote/serialize';
 import remarkGfm from 'remark-gfm';
@@ -144,10 +145,14 @@ export async function getDocBySlugNoContent(slug: string): Promise<any> {
 
 export async function getSidebarLinks(config: Config) {
   const docs = await getAllDocsNoContent(config);
-  const links = docs.reduce((list, thisDoc) => {
-    const doc = thisDoc;
+  const links: SidebarLinkItem[] = [];
+  const lcOrder = config.menu.map((o) => o.toLowerCase());
+
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < docs.length; i++) {
+    const doc = docs[i];
     if (doc.slug.split('/')[1] !== config.slug) {
-      return list;
+      continue;
     }
     if (doc.category === 'forc_client') {
       doc.category = 'plugins';
@@ -164,15 +169,16 @@ export async function getSidebarLinks(config: Config) {
         const arr = doc.slug.split('/');
         newLabel = arr[arr.length - 1];
       }
-      return list.concat({ slug: doc.slug, label: newLabel });
+      links.push({ slug: doc.slug, label: newLabel });
+      continue;
     }
 
-    const categoryIdx = list.findIndex((l: any) => {
+    const categoryIdx = links.findIndex((l: any) => {
       return l?.label === doc.category;
     });
     /** Insert category item based on order prop */
     if (categoryIdx >= 0) {
-      const submenu = list[categoryIdx]?.submenu || [];
+      const submenu = links[categoryIdx]?.submenu || [];
       let newLabel = doc.title;
       if (doc.title === 'index') {
         const arr = doc.slug.split('/');
@@ -182,25 +188,23 @@ export async function getSidebarLinks(config: Config) {
         slug: doc.slug,
         label: newLabel,
       });
-      return list;
+      continue;
     }
 
     const subpath = doc.slug.split('/')[1];
     const submenu = [{ slug: doc.slug, label: doc.title }];
-    return list.concat({
+    links.push({
       subpath,
       label: doc.category,
       submenu,
     });
     /** Insert inside category submenu if category is already on array */
-  }, [] as SidebarLinkItem[]);
+  }
 
-  const order = config.menu;
-  const sortedLinks = order
+  const sortedLinks = lcOrder
     ? links
         /** Sort first level links */
         .sort((a: any, b: any) => {
-          const lcOrder = order.map((o) => o.toLowerCase());
           const lowerA = a.label.toLowerCase();
           const lowerB = b.label.toLowerCase();
           const aIdx = lcOrder.indexOf(lowerA);
@@ -236,31 +240,33 @@ export async function getSidebarLinks(config: Config) {
         })
     : links;
 
-  const withNextAndPrev = [...sortedLinks].map((doc, idx) => {
-    if (doc.submenu) {
-      return {
-        ...doc,
-        submenu: doc.submenu.map((childDoc: any, cIdx: number) => {
-          const prev = doc.submenu?.[cIdx - 1] ?? sortedLinks[idx - 1] ?? null;
-          const next = doc.submenu?.[cIdx + 1] ?? sortedLinks[idx + 1] ?? null;
-          return {
-            ...childDoc,
-            prev: prev?.submenu ? prev.submenu[prev.submenu.length - 1] : prev,
-            next: next?.submenu ? next.submenu[0] : next,
-          };
-        }),
-      };
-    }
-    const prev = sortedLinks[idx - 1] ?? null;
-    const next = sortedLinks[idx + 1] ?? null;
-    return {
-      ...doc,
-      prev: prev?.submenu ? prev.submenu[prev.submenu.length - 1] : prev,
-      next: next?.submenu ? next.submenu[0] : next,
-    };
-  });
+  // const withNextAndPrev = [...sortedLinks].map((doc, idx) => {
+  //   if (doc.submenu) {
+  //     return {
+  //       ...doc,
+  //       submenu: doc.submenu.map((childDoc: any, cIdx: number) => {
+  //         const prev = doc.submenu?.[cIdx - 1] ?? sortedLinks[idx - 1] ?? null;
+  //         const next = doc.submenu?.[cIdx + 1] ?? sortedLinks[idx + 1] ?? null;
+  //         return {
+  //           ...childDoc,
+  //           prev: prev?.submenu ? prev.submenu[prev.submenu.length - 1] : prev,
+  //           next: next?.submenu ? next.submenu[0] : next,
+  //         };
+  //       }),
+  //     };
+  //   }
+  //   const prev = sortedLinks[idx - 1] ?? null;
+  //   const next = sortedLinks[idx + 1] ?? null;
+  //   return {
+  //     ...doc,
+  //     prev: prev?.submenu ? prev.submenu[prev.submenu.length - 1] : prev,
+  //     next: next?.submenu ? next.submenu[0] : next,
+  //   };
+  // });
 
-  return withNextAndPrev;
+  // return withNextAndPrev;
+
+  return sortedLinks;
 }
 
 // export function getDocLink(
