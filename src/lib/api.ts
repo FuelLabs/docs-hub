@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { serialize } from 'next-mdx-remote/serialize';
 import remarkGfm from 'remark-gfm';
 import remarkSlug from 'remark-slug';
@@ -29,7 +30,6 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
   const fullpath = await getDocPath(slugPath);
   const pageLink = await getRepositoryLink(docsConfig, slugPath);
   const { data, content } = await getDocContent(fullpath);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const doc: any = {
     pageLink,
   };
@@ -90,7 +90,6 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
     ...doc,
     source,
     headings,
-    // change this to just the config, or remove if not using
     docsConfig,
   } as DocType;
 }
@@ -100,8 +99,51 @@ export async function getAllDocs(config: Config) {
   return Promise.all(slugs.map(({ slug }) => getDocBySlug(slug)));
 }
 
+export async function getAllDocsNoContent(config: Config) {
+  const slugs = await getDocs(config);
+  return Promise.all(slugs.map(({ slug }) => getDocBySlugNoContent(slug)));
+}
+
+export async function getDocBySlugNoContent(slug: string): Promise<any> {
+  const realSlug = slug.replace(/(\.mdx|\.md)$/, '');
+  const docsConfig = await getDocConfig(slug);
+  const slugPath = await getDocFromSlug(slug, docsConfig);
+  const fullpath = await getDocPath(slugPath);
+  const { data } = await getDocContent(fullpath);
+
+  const doc: any = {};
+
+  // Ensure only the minimal needed data is exposed
+  FIELDS.forEach((field) => {
+    if (field === 'slug') {
+      doc[field] = data.slug || realSlug;
+    }
+    if (typeof data[field] !== 'undefined') {
+      doc[field] = data[field];
+    }
+  });
+
+  if (doc.category === 'forc_client') {
+    doc.category = 'plugins';
+  }
+  if (doc.title === 'index') {
+    doc.title =
+      doc.category === 'src'
+        ? slug.replace('./', '').replace('.md', '')
+        : doc.category;
+  }
+
+  if (doc.title === 'README') {
+    const arr = doc.slug.split('/');
+    const newLabel = arr[arr.length - 1];
+    doc.title = newLabel;
+  }
+
+  return doc;
+}
+
 export async function getSidebarLinks(config: Config) {
-  const docs = await getAllDocs(config);
+  const docs = await getAllDocsNoContent(config);
   const links = docs.reduce((list, thisDoc) => {
     const doc = thisDoc;
     if (doc.slug.split('/')[1] !== config.slug) {
@@ -125,7 +167,7 @@ export async function getSidebarLinks(config: Config) {
       return list.concat({ slug: doc.slug, label: newLabel });
     }
 
-    const categoryIdx = list.findIndex((l) => {
+    const categoryIdx = list.findIndex((l: any) => {
       return l?.label === doc.category;
     });
     /** Insert category item based on order prop */
@@ -157,7 +199,7 @@ export async function getSidebarLinks(config: Config) {
   const sortedLinks = order
     ? links
         /** Sort first level links */
-        .sort((a, b) => {
+        .sort((a: any, b: any) => {
           const lcOrder = order.map((o) => o.toLowerCase());
           const lowerA = a.label.toLowerCase();
           const lowerB = b.label.toLowerCase();
@@ -177,12 +219,12 @@ export async function getSidebarLinks(config: Config) {
           return a.subpath ? idx - bIdx : aIdx - idx;
         })
         /** Sort categoried links */
-        .map((link) => {
+        .map((link: any) => {
           if (!link.submenu) return link;
           const key = `${link.label.toLowerCase().replaceAll(' ', '_')}_menu`;
           let catOrder = config[key];
           catOrder = catOrder?.map((title) => title.toLowerCase());
-          const submenu = link.submenu.sort((a, b) => {
+          const submenu = link.submenu.sort((a: any, b: any) => {
             const lowerA = a.label.toLowerCase();
             const lowerB = b.label.toLowerCase();
             const result = catOrder
@@ -198,7 +240,7 @@ export async function getSidebarLinks(config: Config) {
     if (doc.submenu) {
       return {
         ...doc,
-        submenu: doc.submenu.map((childDoc, cIdx) => {
+        submenu: doc.submenu.map((childDoc: any, cIdx: number) => {
           const prev = doc.submenu?.[cIdx - 1] ?? sortedLinks[idx - 1] ?? null;
           const next = doc.submenu?.[cIdx + 1] ?? sortedLinks[idx + 1] ?? null;
           return {
