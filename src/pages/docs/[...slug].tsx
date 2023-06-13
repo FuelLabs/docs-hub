@@ -1,10 +1,9 @@
 import {
-  getAllDocs,
   getDocBySlug,
   getDocLink,
   getSidebarLinks,
 } from '~/src/lib/api';
-import { joinSlug, splitSlug } from '~/src/lib/docs';
+import { joinSlug } from '~/src/lib/docs';
 import { DocScreen } from '~/src/screens/DocPage';
 import type { DocType, SidebarLinkItem } from '~/src/types';
 
@@ -24,7 +23,7 @@ type Params = {
   };
 };
 
-export async function getStaticProps({ params }: Params) {
+export async function getServerSideProps({ params }: Params) {
   const doc = await getDocBySlug(joinSlug(params.slug));
   let slug = params.slug[0];
   let config = doc.docsConfig;
@@ -38,21 +37,5 @@ export async function getStaticProps({ params }: Params) {
       docLink,
       links,
     },
-  };
-}
-
-export async function getStaticPaths() {
-  const docs = await getAllDocs();
-  return {
-    paths: docs.map((doc) => {
-      let arr = (doc.slug || '').split('/');
-      if (arr[0].startsWith('.')) arr.shift();
-      return {
-        params: {
-          slug: [...arr],
-        },
-      };
-    }),
-    fallback: false,
   };
 }
