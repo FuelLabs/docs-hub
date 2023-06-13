@@ -5,7 +5,7 @@ import { Box } from '@fuel-ui/react';
 import { MDXRemote } from 'next-mdx-remote';
 
 // import { Breadcrumb } from '~/src/components/Breadcrumb';
-import { DocFooter } from '~/src/components/DocFooter';
+// import { DocFooter } from '~/src/components/DocFooter';
 import { Layout } from '~/src/components/Layout';
 import { Sidebar } from '~/src/components/Sidebar';
 import { TableOfContent } from '~/src/components/TableOfContent';
@@ -32,7 +32,7 @@ export function DocScreen(props: DocPageProps) {
         <Box as="section" css={styles.section}>
           {/* <Breadcrumb doc={doc} /> */}
           <MDXRemote {...doc.source} scope={doc} />
-          <DocFooter />
+          {/* <DocFooter /> */}
         </Box>
         <TableOfContent />
       </Layout>

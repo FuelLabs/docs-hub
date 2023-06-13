@@ -1,10 +1,10 @@
-import { existsSync, readFileSync } from 'fs';
+import { readFileSync } from 'fs';
 import { globby } from 'globby';
 import matter from 'gray-matter';
 import { join } from 'path';
 
 import { DOCS_DIRECTORY } from '../constants';
-import type { DocsConfig } from '../types';
+import type { Config } from '../types';
 
 import { removeDocsPath } from './urls';
 
@@ -13,48 +13,149 @@ type DocPathType = {
   path: string;
 };
 
-export async function getDocs(): Promise<DocPathType[]> {
-  const paths = await globby(
-    [
-      // PORTAL DOCS
-      '../portal/*.md',
-      '../portal/*.mdx',
-      '../portal/**/*.mdx',
-      // SWAY DOCS
-      './sway/docs/book/src/**/*.md',
-      // RUST SDK DOCS
-      './fuels-rs/docs/src/**/*.md',
-      './fuels-rs/docs/src/*.md',
-      // TS SDK DOCS
-      './fuels-ts/apps/docs/src/*.md',
-      './fuels-ts/apps/docs/src/**/*.md',
-      './fuels-ts/apps/docs/src/**/*.md',
-      // WALLET DOCS
-      './fuels-wallet/packages/docs/docs/**/*.mdx',
-      './fuels-wallet/packages/docs/docs/*.mdx',
-      // GRAPHQL DOCS
-      './fuel-graphql-docs/docs/*.mdx',
-      './fuel-graphql-docs/docs/**/*.mdx',
-      // FUELUP DOCS
-      './fuelup/docs/src/*.md',
-      './fuelup/docs/src/**/*.md',
-      // INDEXER DOCS
-      './fuel-indexer/docs/src/*.md',
-      './fuel-indexer/docs/src/**/*.md',
-      // SPECS DOCS
-      './fuel-specs/src/*.md',
-      './fuel-specs/src/**/*.md',
-      // IGNORE ALL SUMMARY PAGES
-      '!**/SUMMARY.md',
-      // REMOVE UNUSED FILES
-      // TODO: REMOVE FROM SWAY BOOK
-      '!./sway/docs/book/src/forc/commands/forc_deploy.md',
-      '!./sway/docs/book/src/forc/commands/forc_run.md',
-    ],
-    {
-      cwd: DOCS_DIRECTORY,
-    }
-  );
+export async function getDocs(config: Config): Promise<DocPathType[]> {
+  let paths: string[] = [];
+  switch (config.slug) {
+    case 'sway':
+      paths = await globby(
+        [
+          // SWAY DOCS
+          './sway/docs/book/src/**/*.md',
+          // IGNORE ALL SUMMARY PAGES
+          '!**/SUMMARY.md',
+          // IGNORE FORC PAGES
+          '!./sway/docs/book/src/forc/*.md',
+          '!./sway/docs/book/src/forc/**/*.md',
+        ],
+        {
+          cwd: DOCS_DIRECTORY,
+        }
+      );
+      break;
+    case 'forc':
+      paths = await globby(
+        [
+          // FORC DOCS
+          './sway/docs/book/src/forc/*.md',
+          './sway/docs/book/src/forc/**/*.md',
+          // REMOVE UNUSED FILES
+          // TODO: REMOVE FROM SWAY BOOK
+          '!./sway/docs/book/src/forc/commands/forc_deploy.md',
+          '!./sway/docs/book/src/forc/commands/forc_run.md',
+        ],
+        {
+          cwd: DOCS_DIRECTORY,
+        }
+      );
+      break;
+    case 'fuels-rs':
+      paths = await globby(
+        [
+          // RUST SDK DOCS
+          './fuels-rs/docs/src/**/*.md',
+          './fuels-rs/docs/src/*.md',
+          // IGNORE ALL SUMMARY PAGES
+          '!**/SUMMARY.md',
+        ],
+        {
+          cwd: DOCS_DIRECTORY,
+        }
+      );
+      break;
+    case 'fuels-ts':
+      paths = await globby(
+        [
+          // TS SDK DOCS
+          './fuels-ts/apps/docs/src/*.md',
+          './fuels-ts/apps/docs/src/**/*.md',
+          './fuels-ts/apps/docs/src/**/*.md',
+        ],
+        {
+          cwd: DOCS_DIRECTORY,
+        }
+      );
+      break;
+    case 'fuels-wallet':
+      paths = await globby(
+        [
+          // WALLET DOCS
+          './fuels-wallet/packages/docs/docs/**/*.mdx',
+          './fuels-wallet/packages/docs/docs/*.mdx',
+        ],
+        {
+          cwd: DOCS_DIRECTORY,
+        }
+      );
+      break;
+    case 'fuel-graphql-docs':
+      paths = await globby(
+        [
+          // GRAPHQL DOCS
+          './fuel-graphql-docs/docs/*.mdx',
+          './fuel-graphql-docs/docs/**/*.mdx',
+        ],
+        {
+          cwd: DOCS_DIRECTORY,
+        }
+      );
+      break;
+    case 'fuelup':
+      paths = await globby(
+        [
+          // FUELUP DOCS
+          './fuelup/docs/src/*.md',
+          './fuelup/docs/src/**/*.md',
+          // IGNORE ALL SUMMARY PAGES
+          '!**/SUMMARY.md',
+        ],
+        {
+          cwd: DOCS_DIRECTORY,
+        }
+      );
+      break;
+    case 'fuel-indexer':
+      paths = await globby(
+        [
+          // INDEXER DOCS
+          './fuel-indexer/docs/src/*.md',
+          './fuel-indexer/docs/src/**/*.md',
+          // IGNORE ALL SUMMARY PAGES
+          '!**/SUMMARY.md',
+        ],
+        {
+          cwd: DOCS_DIRECTORY,
+        }
+      );
+      break;
+    case 'fuel-specs':
+      paths = await globby(
+        [
+          // SPECS DOCS
+          './fuel-specs/src/*.md',
+          './fuel-specs/src/**/*.md',
+          // IGNORE ALL SUMMARY PAGES
+          '!**/SUMMARY.md',
+        ],
+        {
+          cwd: DOCS_DIRECTORY,
+        }
+      );
+      break;
+    default:
+      paths = await globby(
+        [
+          // PORTAL DOCS
+          '../portal/*.md',
+          '../portal/*.mdx',
+          '../portal/**/*.mdx',
+        ],
+        {
+          cwd: DOCS_DIRECTORY,
+        }
+      );
+      break;
+  }
+
   return paths.map((path) => {
     const finalPaths = {
       slug: removeDocsPath(path),
@@ -64,8 +165,11 @@ export async function getDocs(): Promise<DocPathType[]> {
   });
 }
 
-export async function getDocFromSlug(slug: string): Promise<DocPathType> {
-  const slugs = await getDocs();
+export async function getDocFromSlug(
+  slug: string,
+  config: Config
+): Promise<DocPathType> {
+  const slugs = await getDocs(config);
   let slugPath = slugs.find(
     ({ slug: pathSlug }) => pathSlug === `./${slug}.md`
   );
@@ -82,12 +186,20 @@ export async function getDocPath({ path }: DocPathType) {
   return join(DOCS_DIRECTORY, path);
 }
 
-export async function getDocConfig(name: string): Promise<DocsConfig> {
-  const docConfigPath = join(DOCS_DIRECTORY, '../portal/docs.json');
-  if (existsSync(docConfigPath)) {
-    return JSON.parse(readFileSync(docConfigPath, 'utf8'));
+export async function getDocConfig(slug: string): Promise<Config> {
+  try {
+    const docConfigPath = join(DOCS_DIRECTORY, '../portal/docs.json');
+    const config = JSON.parse(readFileSync(docConfigPath, 'utf8'));
+    let book = slug;
+    if (slug.startsWith('.')) {
+      book = slug.split('/')[1].replace('.md', '');
+    } else if (slug.includes('/')) {
+      book = slug.split('/')[0];
+    }
+    return config[book];
+  } catch (e) {
+    throw new Error(`${slug} docs.json not found`);
   }
-  throw new Error(`${name} docs.json not found`);
 }
 
 export async function getDocContent(path: string) {
@@ -111,10 +223,8 @@ export async function getDocContent(path: string) {
   };
 }
 
-export async function getRepositoryLink(config: DocsConfig, doc: DocPathType) {
-  const path = doc.path.split('/')[1];
-  const docConfig = config[path];
-  return join(docConfig.repository, doc.path);
+export async function getRepositoryLink(config: Config, doc: DocPathType) {
+  return join(config.repository, doc.path);
 }
 
 export function splitSlug(slug?: string) {

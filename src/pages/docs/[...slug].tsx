@@ -25,16 +25,13 @@ type Params = {
 
 export async function getServerSideProps({ params }: Params) {
   const doc = await getDocBySlug(joinSlug(params.slug));
-  let slug = params.slug[0];
-  let config = doc.docsConfig;
-  if (slug === 'portal/home') slug = 'portal';
-  const slugConfig = config[slug];
+  const slugConfig = doc.docsConfig;
   const links = await getSidebarLinks(slugConfig || []);
-  const docLink = getDocLink(links, doc.slug);
+  // const docLink = getDocLink(links, doc.slug);
   return {
     props: {
       doc,
-      docLink,
+      // docLink,
       links,
     },
   };

@@ -23,11 +23,10 @@ import type {
 } from '~/src/types';
 
 export async function getDocBySlug(slug: string): Promise<DocType> {
-  const [rootFolder] = slug.split('/');
   const realSlug = slug.replace(/(\.mdx|\.md)$/, '');
-  const slugPath = await getDocFromSlug(slug);
+  const docsConfig = await getDocConfig(slug);
+  const slugPath = await getDocFromSlug(slug, docsConfig);
   const fullpath = await getDocPath(slugPath);
-  const docsConfig = await getDocConfig(rootFolder);
   const pageLink = await getRepositoryLink(docsConfig, slugPath);
   const { data, content } = await getDocContent(fullpath);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -91,17 +90,18 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
     ...doc,
     source,
     headings,
+    // change this to just the config, or remove if not using
     docsConfig,
   } as DocType;
 }
 
-export async function getAllDocs() {
-  const slugs = await getDocs();
+export async function getAllDocs(config: Config) {
+  const slugs = await getDocs(config);
   return Promise.all(slugs.map(({ slug }) => getDocBySlug(slug)));
 }
 
 export async function getSidebarLinks(config: Config) {
-  const docs = await getAllDocs();
+  const docs = await getAllDocs(config);
   const links = docs.reduce((list, thisDoc) => {
     const doc = thisDoc;
     if (doc.slug.split('/')[1] !== config.slug) {
