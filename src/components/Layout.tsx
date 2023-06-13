@@ -16,7 +16,9 @@ type LayoutProps = {
 export function Layout({ title, children }: LayoutProps) {
   const { doc } = useDocContext();
   const router = useRouter();
-  const titleText = title ? `${title} | Fuel Docs` : 'Fuel Docs';
+  const titleText = title
+    ? `${title[0].toUpperCase()}${title.slice(1)} | Fuel Docs`
+    : 'Fuel Docs';
   // TODO: make this dynamic using the doc config
   const slug = () => {
     switch (router.asPath) {
