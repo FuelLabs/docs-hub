@@ -1,6 +1,6 @@
 import {
   getDocBySlug,
-  getDocLink,
+  // getDocLink,
   getSidebarLinks,
 } from '~/src/lib/api';
 import { joinSlug } from '~/src/lib/docs';
@@ -9,7 +9,7 @@ import type { DocType, SidebarLinkItem } from '~/src/types';
 
 type DocPageProps = {
   doc: DocType;
-  docLink: SidebarLinkItem;
+  // docLink: SidebarLinkItem;
   links: SidebarLinkItem[];
 };
 

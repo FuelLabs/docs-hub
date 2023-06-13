@@ -15,7 +15,7 @@ import type { DocType, SidebarLinkItem } from '~/src/types';
 type DocPageProps = {
   doc: DocType;
   links: SidebarLinkItem[];
-  docLink?: SidebarLinkItem;
+  // docLink?: SidebarLinkItem;
 };
 
 export function DocScreen(props: DocPageProps) {

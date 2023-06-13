@@ -221,18 +221,18 @@ export async function getSidebarLinks(config: Config) {
   return withNextAndPrev;
 }
 
-export function getDocLink(
-  links: Awaited<ReturnType<typeof getSidebarLinks>>,
-  slug: string
-) {
-  links
-    .flatMap((i) => (i.submenu || i) as SidebarLinkItem | SidebarLinkItem[])
-    .find((i) => {
-      if (i.slug?.startsWith('../portal')) {
-        return i.slug === `../${slug}`;
-      }
-      return i.slug === slug;
-    });
+// export function getDocLink(
+//   links: Awaited<ReturnType<typeof getSidebarLinks>>,
+//   slug: string
+// ) {
+//   links
+//     .flatMap((i) => (i.submenu || i) as SidebarLinkItem | SidebarLinkItem[])
+//     .find((i) => {
+//       if (i.slug?.startsWith('../portal')) {
+//         return i.slug === `../${slug}`;
+//       }
+//       return i.slug === slug;
+//     });
 
-  return links;
-}
+//   return links;
+// }
