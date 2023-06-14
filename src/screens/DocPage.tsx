@@ -6,6 +6,8 @@ import { MDXRemote } from 'next-mdx-remote';
 
 // import { Breadcrumb } from '~/src/components/Breadcrumb';
 // import { DocFooter } from '~/src/components/DocFooter';
+import { getComponents } from '../imports';
+
 import { Layout } from '~/src/components/Layout';
 import { Sidebar } from '~/src/components/Sidebar';
 import { TableOfContent } from '~/src/components/TableOfContent';
@@ -21,6 +23,8 @@ type DocPageProps = {
 export function DocScreen(props: DocPageProps) {
   const { doc } = props;
 
+  const components = getComponents(doc);
+
   return (
     <DocProvider {...props}>
       <Layout title={doc.title}>
@@ -31,7 +35,7 @@ export function DocScreen(props: DocPageProps) {
         </Box>
         <Box as="section" css={styles.section}>
           {/* <Breadcrumb doc={doc} /> */}
-          <MDXRemote {...doc.source} scope={doc} />
+          <MDXRemote {...doc.source} scope={doc} components={components} />
           {/* <DocFooter /> */}
         </Box>
         <TableOfContent />
