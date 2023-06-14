@@ -13,8 +13,12 @@ type DocPathType = {
   path: string;
 };
 
+const pathsCache = new Map<string, DocPathType[]>();
+
 export async function getDocs(config: Config): Promise<DocPathType[]> {
   let paths: string[] = [];
+  const cache = pathsCache.get(config.slug);
+  if (cache) return cache;
   switch (config.slug) {
     case 'sway':
       paths = await globby(
@@ -156,13 +160,14 @@ export async function getDocs(config: Config): Promise<DocPathType[]> {
       break;
   }
 
-  return paths.map((path) => {
-    const finalPaths = {
+  const final = paths.map((path) => {
+    return {
       slug: removeDocsPath(path),
       path,
     };
-    return finalPaths;
   });
+  pathsCache.set(config.slug, final);
+  return final;
 }
 
 export async function getDocFromSlug(
@@ -186,17 +191,18 @@ export async function getDocPath({ path }: DocPathType) {
   return join(DOCS_DIRECTORY, path);
 }
 
+const docConfigPath = join(DOCS_DIRECTORY, '../portal/docs.json');
+const configFile = JSON.parse(readFileSync(docConfigPath, 'utf8'));
+
 export async function getDocConfig(slug: string): Promise<Config> {
   try {
-    const docConfigPath = join(DOCS_DIRECTORY, '../portal/docs.json');
-    const config = JSON.parse(readFileSync(docConfigPath, 'utf8'));
     let book = slug;
     if (slug.startsWith('.')) {
       book = slug.split('/')[1].replace('.md', '');
     } else if (slug.includes('/')) {
       book = slug.split('/')[0];
     }
-    return config[book];
+    return configFile[book];
   } catch (e) {
     throw new Error(`${slug} docs.json not found`);
   }

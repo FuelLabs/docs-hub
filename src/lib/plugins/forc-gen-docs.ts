@@ -7,7 +7,6 @@ import { EOL } from 'os';
 import path from 'path';
 import remarkParse from 'remark-parse';
 import { unified } from 'unified';
-// const ROOT_DIR = path.resolve(__dirname, '../../../../../../../');
 
 const files = new Map<string, string>();
 const oldContentMap = new Map<string, string>();

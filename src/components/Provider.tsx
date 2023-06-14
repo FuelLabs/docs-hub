@@ -8,7 +8,6 @@ import type { ReactNode } from 'react';
 
 import { Blockquote } from './Blockquote';
 import { Code } from './Code';
-import { CodeImport } from './CodeImport';
 import { Heading } from './Heading';
 import { Link } from './Link';
 import { UL } from './List';
@@ -30,7 +29,6 @@ const components = {
   blockquote: Blockquote,
   table: Table,
   ul: UL,
-  CodeImport,
 };
 
 type ProviderProps = {

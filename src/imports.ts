@@ -8,6 +8,15 @@ export function getComponents(doc: DocType) {
 
   // load the components used in the wallet docs
   if (doc.docsConfig.slug === 'fuels-wallet') {
+    const CodeImport = dynamic(
+      () =>
+        import(
+          '~/docs/fuels-wallet/packages/docs/src/components/CodeImport'
+        ).then((mod) => mod.CodeImport),
+      { ssr: false }
+    );
+    components.CodeImport = CodeImport;
+
     if (doc.slug.includes('fuels-wallet/how-to-use')) {
       const Demo = dynamic(
         () =>

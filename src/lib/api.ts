@@ -25,10 +25,12 @@ import type {
   SidebarLinkItem,
 } from '~/src/types';
 
-export async function getDocBySlug(
-  slug: string,
-  includeContent: boolean
-): Promise<DocType> {
+const docsCache = new Map<string, DocType>();
+
+export async function getDocBySlug(slug: string): Promise<DocType> {
+  const cache = docsCache.get(`${slug}`);
+  if (cache) return cache;
+
   const docsConfig = await getDocConfig(slug);
   const slugPath = await getDocFromSlug(slug, docsConfig);
   const fullpath = await getDocPath(slugPath);
@@ -40,7 +42,7 @@ export async function getDocBySlug(
     if (field === 'slug') {
       doc[field] = data.slug || slug.replace(/(\.mdx|\.md)$/, '');
     }
-    if (field === 'content' && includeContent) {
+    if (field === 'content') {
       doc[field] = content;
     }
     if (typeof data[field] !== 'undefined') {
@@ -50,29 +52,25 @@ export async function getDocBySlug(
   let source: any = '';
   const headings: NodeHeading[] = [];
 
-  if (includeContent) {
-    const pageLink = await getRepositoryLink(docsConfig, slugPath);
-    doc.pageLink = pageLink;
-    const isGraphQLDocs = fullpath.includes('fuel-graphql-docs/docs');
-    // parse the wallet and graphql docs as mdx, otherwise use md
-    const format =
-      fullpath.includes('fuels-wallet/packages/docs/') || isGraphQLDocs
-        ? 'mdx'
-        : 'md';
-    const plugins: Pluggable<any[]>[] = [
-      [handlePlugins, { filepath: fullpath }],
-    ];
-    // handle the codeExamples component in the graphql docs
-    if (isGraphQLDocs) plugins.push([codeExamples, { filepath: fullpath }]);
-    source = await serialize(content, {
-      scope: data,
-      mdxOptions: {
-        format,
-        remarkPlugins: [remarkSlug, remarkGfm, ...plugins],
-        rehypePlugins: [[rehypeExtractHeadings, { headings }]],
-      },
-    });
-  }
+  const pageLink = await getRepositoryLink(docsConfig, slugPath);
+  doc.pageLink = pageLink;
+  const isGraphQLDocs = fullpath.includes('fuel-graphql-docs/docs');
+  // parse the wallet and graphql docs as mdx, otherwise use md
+  const format =
+    fullpath.includes('fuels-wallet/packages/docs/') || isGraphQLDocs
+      ? 'mdx'
+      : 'md';
+  const plugins: Pluggable<any[]>[] = [[handlePlugins, { filepath: fullpath }]];
+  // handle the codeExamples component in the graphql docs
+  if (isGraphQLDocs) plugins.push([codeExamples, { filepath: fullpath }]);
+  source = await serialize(content, {
+    scope: data,
+    mdxOptions: {
+      format,
+      remarkPlugins: [remarkSlug, remarkGfm, ...plugins],
+      rehypePlugins: [[rehypeExtractHeadings, { headings }]],
+    },
+  });
 
   if (doc.category === 'forc_client') {
     doc.category = 'plugins';
@@ -90,20 +88,27 @@ export async function getDocBySlug(
     doc.title = newLabel;
   }
 
-  return {
+  const final = {
     ...doc,
     source,
     headings,
     docsConfig,
   } as DocType;
+  docsCache.set(slug, final);
+  return final;
 }
 
 export async function getAllDocsNoContent(config: Config) {
   const slugs = await getDocs(config);
-  return Promise.all(slugs.map(({ slug }) => getDocBySlug(slug, false)));
+  return Promise.all(slugs.map(({ slug }) => getDocBySlug(slug)));
 }
 
+const sidebarCache = new Map<string, any[]>();
+
 export async function getSidebarLinks(config: Config) {
+  const cache = sidebarCache.get(config.slug);
+  if (cache) return cache;
+
   const docs = await getAllDocsNoContent(config);
   const links: SidebarLinkItem[] = [];
   const lcOrder = config.menu.map((o) => o.toLowerCase());
@@ -225,6 +230,8 @@ export async function getSidebarLinks(config: Config) {
   // });
 
   // return withNextAndPrev;
+
+  sidebarCache.set(config.slug, sortedLinks);
 
   return sortedLinks;
 }

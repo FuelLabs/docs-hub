@@ -4,7 +4,7 @@
 import fs from 'node:fs';
 import { EOL } from 'os';
 import path from 'path';
-import type { Parent } from 'unist-util-visit';
+import type { Parent } from 'unist-util-visit/lib';
 
 function extractCommentBlock(content: string, comment: string | null) {
   const lines = content.split(EOL);
