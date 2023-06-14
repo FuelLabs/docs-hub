@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 
 import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';

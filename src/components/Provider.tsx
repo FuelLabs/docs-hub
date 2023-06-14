@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-'use client';
+// 'use client';
 
 import { ThemeProvider } from '@fuel-ui/react';
 import { MDXProvider } from '@mdx-js/react';
