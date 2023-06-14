@@ -1,7 +1,6 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import type { ReactNode } from 'react';
 
 import { useDocContext } from '../hooks/useDocContext';
@@ -15,33 +14,10 @@ type LayoutProps = {
 
 export function Layout({ title, children }: LayoutProps) {
   const { doc } = useDocContext();
-  const router = useRouter();
   const titleText = title
     ? `${title[0].toUpperCase()}${title.slice(1)} | Fuel Docs`
     : 'Fuel Docs';
-  // TODO: make this dynamic using the doc config
-  const slug = () => {
-    switch (router.asPath) {
-      case '/':
-        return 'portal';
-        break;
-      case '/docs/portal/':
-        return 'portal';
-        break;
-      case '/docs/sway/':
-        return 'sway';
-        break;
-      case '/docs/fuels-rs/':
-        return 'fuels-rs';
-        break;
-      case '/docs/graphql/':
-        return 'graphql';
-        break;
-      default:
-        return 'portal';
-    }
-  };
-  const docsConfig = doc.docsConfig[slug()] || {};
+  const docsConfig = doc.docsConfig;
 
   return (
     <>
