@@ -24,9 +24,8 @@ type Params = {
 };
 
 export async function getServerSideProps({ params }: Params) {
-  const doc = await getDocBySlug(joinSlug(params.slug));
-  const slugConfig = doc.docsConfig;
-  const links = await getSidebarLinks(slugConfig || []);
+  const doc = await getDocBySlug(joinSlug(params.slug), true);
+  const links = await getSidebarLinks(doc.docsConfig);
   // const docLink = getDocLink(links, doc.slug);
   return {
     props: {

@@ -3,6 +3,7 @@
 import { serialize } from 'next-mdx-remote/serialize';
 import remarkGfm from 'remark-gfm';
 import remarkSlug from 'remark-slug';
+import type { Pluggable } from 'unified';
 
 import {
   getDocConfig,
@@ -24,52 +25,54 @@ import type {
   SidebarLinkItem,
 } from '~/src/types';
 
-export async function getDocBySlug(slug: string): Promise<DocType> {
-  const realSlug = slug.replace(/(\.mdx|\.md)$/, '');
+export async function getDocBySlug(
+  slug: string,
+  includeContent: boolean
+): Promise<DocType> {
   const docsConfig = await getDocConfig(slug);
   const slugPath = await getDocFromSlug(slug, docsConfig);
   const fullpath = await getDocPath(slugPath);
-  const pageLink = await getRepositoryLink(docsConfig, slugPath);
   const { data, content } = await getDocContent(fullpath);
-  const doc: any = {
-    pageLink,
-  };
+  const doc: any = {};
 
   // Ensure only the minimal needed data is exposed
   FIELDS.forEach((field) => {
     if (field === 'slug') {
-      doc[field] = data.slug || realSlug;
+      doc[field] = data.slug || slug.replace(/(\.mdx|\.md)$/, '');
     }
-    if (field === 'content') {
+    if (field === 'content' && includeContent) {
       doc[field] = content;
     }
     if (typeof data[field] !== 'undefined') {
       doc[field] = data[field];
     }
   });
-
-  // parse the wallet and graphql docs as mdx, otherwise use md
-  const format =
-    fullpath.includes('fuels-wallet/packages/docs/') ||
-    fullpath.includes('fuel-graphql-docs/docs')
-      ? 'mdx'
-      : 'md';
-
+  let source: any = '';
   const headings: NodeHeading[] = [];
-  const source = await serialize(content, {
-    scope: data,
-    mdxOptions: {
-      format,
-      remarkPlugins: [
-        remarkSlug,
-        remarkGfm,
-        [handlePlugins, { filepath: fullpath }],
-        // handle the codeExamples component in the graphql docs
-        [codeExamples, { filepath: fullpath }],
-      ],
-      rehypePlugins: [[rehypeExtractHeadings, { headings }]],
-    },
-  });
+
+  if (includeContent) {
+    const pageLink = await getRepositoryLink(docsConfig, slugPath);
+    doc.pageLink = pageLink;
+    const isGraphQLDocs = fullpath.includes('fuel-graphql-docs/docs');
+    // parse the wallet and graphql docs as mdx, otherwise use md
+    const format =
+      fullpath.includes('fuels-wallet/packages/docs/') || isGraphQLDocs
+        ? 'mdx'
+        : 'md';
+    const plugins: Pluggable<any[]>[] = [
+      [handlePlugins, { filepath: fullpath }],
+    ];
+    // handle the codeExamples component in the graphql docs
+    if (isGraphQLDocs) plugins.push([codeExamples, { filepath: fullpath }]);
+    source = await serialize(content, {
+      scope: data,
+      mdxOptions: {
+        format,
+        remarkPlugins: [remarkSlug, remarkGfm, ...plugins],
+        rehypePlugins: [[rehypeExtractHeadings, { headings }]],
+      },
+    });
+  }
 
   if (doc.category === 'forc_client') {
     doc.category = 'plugins';
@@ -95,52 +98,9 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
   } as DocType;
 }
 
-export async function getAllDocs(config: Config) {
-  const slugs = await getDocs(config);
-  return Promise.all(slugs.map(({ slug }) => getDocBySlug(slug)));
-}
-
 export async function getAllDocsNoContent(config: Config) {
   const slugs = await getDocs(config);
-  return Promise.all(slugs.map(({ slug }) => getDocBySlugNoContent(slug)));
-}
-
-export async function getDocBySlugNoContent(slug: string): Promise<any> {
-  const realSlug = slug.replace(/(\.mdx|\.md)$/, '');
-  const docsConfig = await getDocConfig(slug);
-  const slugPath = await getDocFromSlug(slug, docsConfig);
-  const fullpath = await getDocPath(slugPath);
-  const { data } = await getDocContent(fullpath);
-
-  const doc: any = {};
-
-  // Ensure only the minimal needed data is exposed
-  FIELDS.forEach((field) => {
-    if (field === 'slug') {
-      doc[field] = data.slug || realSlug;
-    }
-    if (typeof data[field] !== 'undefined') {
-      doc[field] = data[field];
-    }
-  });
-
-  if (doc.category === 'forc_client') {
-    doc.category = 'plugins';
-  }
-  if (doc.title === 'index') {
-    doc.title =
-      doc.category === 'src'
-        ? slug.replace('./', '').replace('.md', '')
-        : doc.category;
-  }
-
-  if (doc.title === 'README') {
-    const arr = doc.slug.split('/');
-    const newLabel = arr[arr.length - 1];
-    doc.title = newLabel;
-  }
-
-  return doc;
+  return Promise.all(slugs.map(({ slug }) => getDocBySlug(slug, false)));
 }
 
 export async function getSidebarLinks(config: Config) {
