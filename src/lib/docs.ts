@@ -129,10 +129,12 @@ export async function getDocFromSlug(
   config: Config
 ): Promise<DocPathType> {
   const slugs = await getDocs(config);
-  const slugPath = slugs.find(({ slug: pathSlug }) => {
-    const realSlug = `./${slug}.md`;
-    return pathSlug === realSlug || pathSlug.includes(slug);
-  });
+  let slugPath = slugs.find(
+    ({ slug: pathSlug }) => pathSlug === `./${slug}.md`
+  );
+  if (!slugPath) {
+    slugPath = slugs.find(({ slug: pathSlug }) => pathSlug.includes(slug));
+  }
   if (!slugPath) {
     throw new Error(`${slug} not found`);
   }
