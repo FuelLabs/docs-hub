@@ -94,6 +94,7 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
   return final;
 }
 
+// FIX THIS
 export async function getAllDocs(config: Config) {
   const slugs = await getDocs(config);
   return Promise.all(slugs.map(({ slug }) => getDocBySlug(slug)));

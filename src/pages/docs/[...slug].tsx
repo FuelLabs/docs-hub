@@ -22,7 +22,8 @@ type Params = {
 
 export async function getServerSideProps({ params }: Params) {
   const doc = await getDocBySlug(params.slug.join('/'));
-  const links = await getSidebarLinks(doc.docsConfig);
+  // const links = await getSidebarLinks(doc.docsConfig);
+  const links: SidebarLinkItem[] = [];
   return {
     props: {
       doc,
