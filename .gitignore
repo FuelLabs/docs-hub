@@ -38,3 +38,6 @@ node_modules
 
 # Project notes
 notes
+
+# Generated files
+src/sidebar-links/
