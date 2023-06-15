@@ -1,15 +1,12 @@
 import {
   getDocBySlug,
-  // getDocLink,
   getSidebarLinks,
 } from '~/src/lib/api';
-import { joinSlug } from '~/src/lib/docs';
 import { DocScreen } from '~/src/screens/DocPage';
 import type { DocType, SidebarLinkItem } from '~/src/types';
 
 type DocPageProps = {
   doc: DocType;
-  // docLink: SidebarLinkItem;
   links: SidebarLinkItem[];
 };
 
@@ -24,13 +21,11 @@ type Params = {
 };
 
 export async function getServerSideProps({ params }: Params) {
-  const doc = await getDocBySlug(joinSlug(params.slug));
+  const doc = await getDocBySlug(params.slug.join('/'));
   const links = await getSidebarLinks(doc.docsConfig);
-  // const docLink = getDocLink(links, doc.slug);
   return {
     props: {
       doc,
-      // docLink,
       links,
     },
   };

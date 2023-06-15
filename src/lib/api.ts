@@ -1,18 +1,14 @@
 /* eslint-disable no-continue */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { serialize } from 'next-mdx-remote/serialize';
+import { join } from 'path';
 import remarkGfm from 'remark-gfm';
 import remarkSlug from 'remark-slug';
 import type { Pluggable } from 'unified';
 
-import {
-  getDocConfig,
-  getDocContent,
-  getDocFromSlug,
-  getDocPath,
-  getDocs,
-  getRepositoryLink,
-} from './docs';
+import { DOCS_DIRECTORY } from '../constants';
+
+import { getDocConfig, getDocContent, getDocFromSlug, getDocs } from './docs';
 import { handlePlugins } from './plugins/plugins';
 import { rehypeExtractHeadings } from './toc';
 
@@ -33,7 +29,7 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
 
   const docsConfig = await getDocConfig(slug);
   const slugPath = await getDocFromSlug(slug, docsConfig);
-  const fullpath = await getDocPath(slugPath);
+  const fullpath = join(DOCS_DIRECTORY, slugPath.path);
   const { data, content } = await getDocContent(fullpath);
   const doc: any = {};
 
@@ -52,7 +48,7 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
   let source: any = '';
   const headings: NodeHeading[] = [];
 
-  const pageLink = await getRepositoryLink(docsConfig, slugPath);
+  const pageLink = join(docsConfig.repository, slugPath.path);
   doc.pageLink = pageLink;
   const isGraphQLDocs = fullpath.includes('fuel-graphql-docs/docs');
   // parse the wallet and graphql docs as mdx, otherwise use md
@@ -98,7 +94,7 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
   return final;
 }
 
-export async function getAllDocsNoContent(config: Config) {
+export async function getAllDocs(config: Config) {
   const slugs = await getDocs(config);
   return Promise.all(slugs.map(({ slug }) => getDocBySlug(slug)));
 }
@@ -109,7 +105,7 @@ export async function getSidebarLinks(config: Config) {
   const cache = sidebarCache.get(config.slug);
   if (cache) return cache;
 
-  const docs = await getAllDocsNoContent(config);
+  const docs = await getAllDocs(config);
   const links: SidebarLinkItem[] = [];
   const lcOrder = config.menu.map((o) => o.toLowerCase());
 

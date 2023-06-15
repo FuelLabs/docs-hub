@@ -1,11 +1,7 @@
-// 'use client';
-
 import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
 import { MDXRemote } from 'next-mdx-remote';
 
-// import { Breadcrumb } from '~/src/components/Breadcrumb';
-// import { DocFooter } from '~/src/components/DocFooter';
 import { getComponents } from '../imports';
 
 import { Layout } from '~/src/components/Layout';
@@ -17,7 +13,6 @@ import type { DocType, SidebarLinkItem } from '~/src/types';
 type DocPageProps = {
   doc: DocType;
   links: SidebarLinkItem[];
-  // docLink?: SidebarLinkItem;
 };
 
 export function DocScreen(props: DocPageProps) {
@@ -34,9 +29,7 @@ export function DocScreen(props: DocPageProps) {
           </Box>
         </Box>
         <Box as="section" css={styles.section}>
-          {/* <Breadcrumb doc={doc} /> */}
           <MDXRemote {...doc.source} scope={doc} components={components} />
-          {/* <DocFooter /> */}
         </Box>
         <TableOfContent />
       </Layout>
