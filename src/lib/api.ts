@@ -8,7 +8,7 @@ import type { Pluggable } from 'unified';
 
 import { DOCS_DIRECTORY } from '../constants';
 
-import { getDocConfig, getDocContent, getDocFromSlug } from './docs';
+import { getDocConfig, getDocContent, getDocFromSlug, getDocs } from './docs';
 import { handlePlugins } from './plugins/plugins';
 import { rehypeExtractHeadings } from './toc';
 
@@ -87,6 +87,11 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
   } as DocType;
   docsCache.set(slug, final);
   return final;
+}
+
+export async function getAllDocs() {
+  const slugs = await getDocs('all');
+  return Promise.all(slugs.map(({ slug }) => getDocBySlug(slug)));
 }
 
 export async function getSidebarLinks(configSlug: string) {

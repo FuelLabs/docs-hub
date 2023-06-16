@@ -15,99 +15,138 @@ type DocPathType = {
 
 const pathsCache = new Map<string, DocPathType[]>();
 
-export async function getDocs(config: Config): Promise<DocPathType[]> {
-  const cache = pathsCache.get(config.slug);
-  if (cache) return cache;
+export async function getDocs(config: Config | 'all'): Promise<DocPathType[]> {
   let paths: string[] = [];
-  switch (config.slug) {
-    case 'sway':
-      paths = [
-        // SWAY DOCS
-        './sway/docs/book/src/**/*.md',
-        // IGNORE ALL SUMMARY PAGES
-        '!**/SUMMARY.md',
-        // IGNORE FORC PAGES
-        '!./sway/docs/book/src/forc/*.md',
-        '!./sway/docs/book/src/forc/**/*.md',
-      ];
-      break;
-    case 'forc':
-      paths = [
-        // FORC DOCS
-        './sway/docs/book/src/forc/*.md',
-        './sway/docs/book/src/forc/**/*.md',
-        // REMOVE UNUSED FILES
-        // TODO: REMOVE FROM SWAY BOOK
-        '!./sway/docs/book/src/forc/commands/forc_deploy.md',
-        '!./sway/docs/book/src/forc/commands/forc_run.md',
-      ];
-      break;
-    case 'fuels-rs':
-      paths = [
-        // RUST SDK DOCS
-        './fuels-rs/docs/src/**/*.md',
-        './fuels-rs/docs/src/*.md',
-        // IGNORE ALL SUMMARY PAGES
-        '!**/SUMMARY.md',
-      ];
-      break;
-    case 'fuels-ts':
-      paths = [
-        // TS SDK DOCS
-        './fuels-ts/apps/docs/src/*.md',
-        './fuels-ts/apps/docs/src/**/*.md',
-        './fuels-ts/apps/docs/src/**/*.md',
-      ];
-      break;
-    case 'fuels-wallet':
-      paths = [
-        // WALLET DOCS
-        './fuels-wallet/packages/docs/docs/**/*.mdx',
-        './fuels-wallet/packages/docs/docs/*.mdx',
-      ];
-      break;
-    case 'fuel-graphql-docs':
-      paths = [
-        // GRAPHQL DOCS
-        './fuel-graphql-docs/docs/*.mdx',
-        './fuel-graphql-docs/docs/**/*.mdx',
-      ];
-      break;
-    case 'fuelup':
-      paths = [
-        // FUELUP DOCS
-        './fuelup/docs/src/*.md',
-        './fuelup/docs/src/**/*.md',
-        // IGNORE ALL SUMMARY PAGES
-        '!**/SUMMARY.md',
-      ];
-      break;
-    case 'fuel-indexer':
-      paths = [
-        // INDEXER DOCS
-        './fuel-indexer/docs/src/*.md',
-        './fuel-indexer/docs/src/**/*.md',
-        // IGNORE ALL SUMMARY PAGES
-        '!**/SUMMARY.md',
-      ];
-      break;
-    case 'fuel-specs':
-      paths = [
-        // SPECS DOCS
-        './fuel-specs/src/*.md',
-        './fuel-specs/src/**/*.md',
-        // IGNORE ALL SUMMARY PAGES
-        '!**/SUMMARY.md',
-      ];
-      break;
-    default:
-      paths = [
-        // PORTAL DOCS
-        '../portal/*.md',
-        '../portal/*.mdx',
-        '../portal/**/*.mdx',
-      ];
-      break;
+  if (config !== 'all') {
+    const cache = pathsCache.get(config.slug);
+    if (cache) return cache;
+    switch (config.slug) {
+      case 'sway':
+        paths = [
+          // SWAY DOCS
+          './sway/docs/book/src/**/*.md',
+          // IGNORE ALL SUMMARY PAGES
+          '!**/SUMMARY.md',
+          // IGNORE FORC PAGES
+          '!./sway/docs/book/src/forc/*.md',
+          '!./sway/docs/book/src/forc/**/*.md',
+        ];
+        break;
+      case 'forc':
+        paths = [
+          // FORC DOCS
+          './sway/docs/book/src/forc/*.md',
+          './sway/docs/book/src/forc/**/*.md',
+          // REMOVE UNUSED FILES
+          // TODO: REMOVE FROM SWAY BOOK
+          '!./sway/docs/book/src/forc/commands/forc_deploy.md',
+          '!./sway/docs/book/src/forc/commands/forc_run.md',
+        ];
+        break;
+      case 'fuels-rs':
+        paths = [
+          // RUST SDK DOCS
+          './fuels-rs/docs/src/**/*.md',
+          './fuels-rs/docs/src/*.md',
+          // IGNORE ALL SUMMARY PAGES
+          '!**/SUMMARY.md',
+        ];
+        break;
+      case 'fuels-ts':
+        paths = [
+          // TS SDK DOCS
+          './fuels-ts/apps/docs/src/*.md',
+          './fuels-ts/apps/docs/src/**/*.md',
+          './fuels-ts/apps/docs/src/**/*.md',
+        ];
+        break;
+      case 'fuels-wallet':
+        paths = [
+          // WALLET DOCS
+          './fuels-wallet/packages/docs/docs/**/*.mdx',
+          './fuels-wallet/packages/docs/docs/*.mdx',
+        ];
+        break;
+      case 'fuel-graphql-docs':
+        paths = [
+          // GRAPHQL DOCS
+          './fuel-graphql-docs/docs/*.mdx',
+          './fuel-graphql-docs/docs/**/*.mdx',
+        ];
+        break;
+      case 'fuelup':
+        paths = [
+          // FUELUP DOCS
+          './fuelup/docs/src/*.md',
+          './fuelup/docs/src/**/*.md',
+          // IGNORE ALL SUMMARY PAGES
+          '!**/SUMMARY.md',
+        ];
+        break;
+      case 'fuel-indexer':
+        paths = [
+          // INDEXER DOCS
+          './fuel-indexer/docs/src/*.md',
+          './fuel-indexer/docs/src/**/*.md',
+          // IGNORE ALL SUMMARY PAGES
+          '!**/SUMMARY.md',
+        ];
+        break;
+      case 'fuel-specs':
+        paths = [
+          // SPECS DOCS
+          './fuel-specs/src/*.md',
+          './fuel-specs/src/**/*.md',
+          // IGNORE ALL SUMMARY PAGES
+          '!**/SUMMARY.md',
+        ];
+        break;
+      default:
+        paths = [
+          // PORTAL DOCS
+          '../portal/*.md',
+          '../portal/*.mdx',
+          '../portal/**/*.mdx',
+        ];
+        break;
+    }
+  } else {
+    paths = [
+      // PORTAL DOCS
+      '../portal/*.md',
+      '../portal/*.mdx',
+      '../portal/**/*.mdx',
+      // SWAY DOCS
+      './sway/docs/book/src/**/*.md',
+      // RUST SDK DOCS
+      './fuels-rs/docs/src/**/*.md',
+      './fuels-rs/docs/src/*.md',
+      // TS SDK DOCS
+      './fuels-ts/apps/docs/src/*.md',
+      './fuels-ts/apps/docs/src/**/*.md',
+      './fuels-ts/apps/docs/src/**/*.md',
+      // WALLET DOCS
+      './fuels-wallet/packages/docs/docs/**/*.mdx',
+      './fuels-wallet/packages/docs/docs/*.mdx',
+      // GRAPHQL DOCS
+      './fuel-graphql-docs/docs/*.mdx',
+      './fuel-graphql-docs/docs/**/*.mdx',
+      // FUELUP DOCS
+      './fuelup/docs/src/*.md',
+      './fuelup/docs/src/**/*.md',
+      // INDEXER DOCS
+      './fuel-indexer/docs/src/*.md',
+      './fuel-indexer/docs/src/**/*.md',
+      // SPECS DOCS
+      './fuel-specs/src/*.md',
+      './fuel-specs/src/**/*.md',
+      // IGNORE ALL SUMMARY PAGES
+      '!**/SUMMARY.md',
+      // REMOVE UNUSED FILES
+      // TODO: REMOVE FROM SWAY BOOK
+      '!./sway/docs/book/src/forc/commands/forc_deploy.md',
+      '!./sway/docs/book/src/forc/commands/forc_run.md',
+    ];
   }
 
   paths = await globby(paths, {
@@ -120,7 +159,7 @@ export async function getDocs(config: Config): Promise<DocPathType[]> {
       path,
     };
   });
-  pathsCache.set(config.slug, final);
+  if (config !== 'all') pathsCache.set(config.slug, final);
   return final;
 }
 
