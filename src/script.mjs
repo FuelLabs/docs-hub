@@ -65,19 +65,26 @@ function getSortedLinks(config, docs) {
         const arr = doc.slug.split("/");
         newLabel = arr[arr.length - 1];
       }
+      if (doc.category === doc.title || doc.title === "index") {
+        links[categoryIdx].hasIndex = true;
+      }
       submenu.push({
         slug: doc.slug,
         label: newLabel,
       });
       continue;
     }
-
+    let hasIndex = false;
+    if (doc.category === doc.title) {
+      hasIndex = true;
+    }
     const subpath = doc.slug.split("/")[1];
     const submenu = [{ slug: doc.slug, label: doc.title }];
     links.push({
       subpath,
       label: doc.category,
       submenu,
+      hasIndex,
     });
     /** Insert inside category submenu if category is already on array */
   }

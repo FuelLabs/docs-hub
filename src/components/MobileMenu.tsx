@@ -78,10 +78,14 @@ export function MobileMenu() {
         <Flex css={styles.nav} direction={'column'}>
           {NAVIGATION.map((item, index) => {
             if (item.type === 'menu') {
-              return <MenuButton key={index} item={item} />;
+              return <MenuButton key={`${item.slug}${index}`} item={item} />;
             }
             return (
-              <Button key={index} css={styles.navButton} variant={'link'}>
+              <Button
+                key={`${item.slug}${index}`}
+                css={styles.navButton}
+                variant={'link'}
+              >
                 {item.name}
               </Button>
             );
@@ -117,14 +121,14 @@ function MenuButton({ item }: { item: LinkObject }) {
       </Button>
       {isOpen && item.menu && (
         <Flex direction={'column'} justify={'flex-start'}>
-          {item.menu.map((menuItem) => {
+          {item.menu.map((menuItem, index) => {
             if (
               menuItem.type === 'internal-link' ||
               menuItem.type === 'external-link'
             ) {
               return (
                 <Link
-                  key={menuItem.link}
+                  key={`${index}${menuItem.slug}`}
                   css={styles.menuLink}
                   href={menuItem.link}
                   isExternal={menuItem.type === 'external-link'}
@@ -136,7 +140,10 @@ function MenuButton({ item }: { item: LinkObject }) {
               );
             }
             return (
-              <Text key={menuItem.link} css={{ color: '$accent11' }}>
+              <Text
+                key={`${index}${menuItem.name}`}
+                css={{ color: '$accent11' }}
+              >
                 {menuItem.name}
               </Text>
             );

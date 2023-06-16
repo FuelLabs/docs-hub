@@ -37,6 +37,7 @@ export type DocType = {
 
 export type SidebarLinkItem = {
   slug?: string;
+  hasIndex?: boolean;
   submenu?: SidebarLinkItem[];
   subpath?: string;
   label: string;
