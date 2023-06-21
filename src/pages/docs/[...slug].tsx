@@ -38,6 +38,7 @@ export async function getServerSideProps({ params }: Params) {
     // RUST SDK DOCS
     './fuels-rs/docs/src/**/*.md',
     './fuels-rs/docs/src/*.md',
+    './fuels-rs/docs/src/README.md',
     // IGNORE ALL SUMMARY PAGES
     '!**/SUMMARY.md',
   ];
@@ -46,6 +47,7 @@ export async function getServerSideProps({ params }: Params) {
     // SWAY DOCS
     './sway/docs/book/src/**/*.md',
     './sway/docs/book/src/*.md',
+    './sway/docs/book/src/README.md',
     // IGNORE ALL SUMMARY PAGES
     '!**/SUMMARY.md',
     // IGNORE FORC PAGES
@@ -59,15 +61,11 @@ export async function getServerSideProps({ params }: Params) {
   const swayPaths = await globby(sway, {
     cwd: DOCS_DIRECTORY,
   });
-  const x = process.cwd();
 
   const extra: any = {};
   extra.slugs = slugs;
-  extra.slug = slug;
   extra.rustPaths = rustPaths;
   extra.swayPaths = swayPaths;
-  extra.x = x;
-  extra.DOCS_DIRECTORY = DOCS_DIRECTORY;
 
   return {
     props: {
