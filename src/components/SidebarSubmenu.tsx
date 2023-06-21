@@ -73,7 +73,6 @@ export function SidebarSubmenu({
 
 const styles = {
   root: cssObj({
-    px: '$2',
     mt: '$2',
     flexDirection: 'column',
 

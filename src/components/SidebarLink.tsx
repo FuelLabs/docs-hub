@@ -51,7 +51,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
         href={fullSlug}
         className={isActive}
       >
-        {item.label}
+        {item.label.replaceAll(/[_-]/g, ' ')}
       </Link>
     );
   }

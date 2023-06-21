@@ -14,22 +14,27 @@ function extractCommentBlock(content: string, comment: string | null) {
 
   let lineStart = 1;
   let lineEnd = 1;
+  let foundStart = false;
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i < lines.length; i++) {
+    const trimmed = lines[i].replace(/\s/g, '');
+
     const start =
-      lines[i].replace(/\s/g, '') === `//ANCHOR:${comment}` ||
-      lines[i].trimStart() === `// #region ${comment}`;
-    if (start === true && lineStart === 1) {
+      trimmed === `//ANCHOR:${comment}` ||
+      lines[i].trimStart() === `// #region ${comment}` ||
+      trimmed === `#ANCHOR:${comment}`;
+    if (start === true && !foundStart) {
       lineStart = i + 1;
+      foundStart = true;
     } else {
       const end =
-        lines[i].replace(/\s/g, '') === `//ANCHOR_END:${comment}` ||
+        trimmed === `//ANCHOR_END:${comment}` ||
         lines[i].trimStart() === `// #endregion ${comment}` ||
-        lines[i].replace(/\s/g, '') === `//ANCHOR:${comment}`;
+        trimmed === `//ANCHOR:${comment}` ||
+        trimmed === `#ANCHOR:${comment}` ||
+        trimmed === `#ANCHOR_END:${comment}`;
 
-      if (end === true) {
-        lineEnd = i;
-      }
+      if (end === true) lineEnd = i;
     }
   }
   const newLines = lines.slice(lineStart, lineEnd);
