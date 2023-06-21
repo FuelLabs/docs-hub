@@ -24,6 +24,7 @@ export async function getDocs(config: Config): Promise<DocPathType[]> {
       paths = [
         // SWAY DOCS
         './sway/docs/book/src/**/*.md',
+        './sway/docs/book/src/*.md',
         // IGNORE ALL SUMMARY PAGES
         '!**/SUMMARY.md',
         // IGNORE FORC PAGES
