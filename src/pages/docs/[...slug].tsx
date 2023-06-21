@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { globby } from 'globby';
+import { DOCS_DIRECTORY } from '~/src/constants';
 import {
   getDocBySlug,
   getSidebarLinks,
@@ -15,23 +17,6 @@ type DocPageProps = {
 
 export default function DocPage(props: DocPageProps) {
   console.log("EXTRA:", props.extra)
-
-  if(props.extra.slug & props.extra.slugs){
-    const slug = props.extra.slug;
-    const slugs = props.extra.slugs;
-    let slugPath = slugs.find(
-      ({ slug: pathSlug }: any) => {
-        console.log("PATH SLUG:", pathSlug)
-        pathSlug === `./${slug}.md`
-      }
-    );
-    if (!slugPath) {
-      slugPath = slugs.find(({ slug: pathSlug }: any) => pathSlug.includes(slug));
-    }
-    if (!slugPath) {
-      throw new Error(`${slug} not found`);
-    }
-  }
   return <DocScreen doc={props.doc} links={props.links}/>;
   // return <DocScreen {...props} />;
 }
@@ -49,9 +34,37 @@ export async function getServerSideProps({ params }: Params) {
   const slug = params.slug.join('/');
   const slugs = await getDocs(doc.docsConfig);
 
+  const rust = [
+    // RUST SDK DOCS
+    './fuels-rs/docs/src/**/*.md',
+    './fuels-rs/docs/src/*.md',
+    // IGNORE ALL SUMMARY PAGES
+    '!**/SUMMARY.md',
+  ];
+
+  const sway = [
+    // SWAY DOCS
+    './sway/docs/book/src/**/*.md',
+    './sway/docs/book/src/*.md',
+    // IGNORE ALL SUMMARY PAGES
+    '!**/SUMMARY.md',
+    // IGNORE FORC PAGES
+    '!./sway/docs/book/src/forc/*.md',
+    '!./sway/docs/book/src/forc/**/*.md',
+  ];
+
+  const rustPaths = await globby(rust, {
+    cwd: DOCS_DIRECTORY,
+  });
+  const swayPaths = await globby(sway, {
+    cwd: DOCS_DIRECTORY,
+  });
+
   const extra: any = {};
   extra.slugs = slugs;
   extra.slug = slug;
+  extra.rustPaths = rustPaths;
+  extra.swayPaths = swayPaths;
 
   return {
     props: {
