@@ -59,12 +59,15 @@ export async function getServerSideProps({ params }: Params) {
   const swayPaths = await globby(sway, {
     cwd: DOCS_DIRECTORY,
   });
+  const x = process.cwd();
 
   const extra: any = {};
   extra.slugs = slugs;
   extra.slug = slug;
   extra.rustPaths = rustPaths;
   extra.swayPaths = swayPaths;
+  extra.x = x;
+  extra.DOCS_DIRECTORY = DOCS_DIRECTORY;
 
   return {
     props: {
