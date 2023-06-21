@@ -37,12 +37,14 @@ export async function getServerSideProps({ params }: Params) {
   const rust = [
     // RUST SDK DOCS
     './fuels-rs/docs/src/*',
+    './fuels-rs/docs/src/**/*.md',
     // IGNORE ALL SUMMARY PAGES
     '!**/SUMMARY.md',
   ];
 
   const sway = [
     // SWAY DOCS
+    './sway/docs/book/src/**/*.md',
     './sway/docs/book/src/*',
     // IGNORE ALL SUMMARY PAGES
     '!**/SUMMARY.md',
