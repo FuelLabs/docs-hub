@@ -36,18 +36,14 @@ export async function getServerSideProps({ params }: Params) {
 
   const rust = [
     // RUST SDK DOCS
-    './fuels-rs/docs/src/**/*.md',
-    './fuels-rs/docs/src/*.md',
-    './fuels-rs/docs/src/README.md',
+    './fuels-rs/docs/src/*',
     // IGNORE ALL SUMMARY PAGES
     '!**/SUMMARY.md',
   ];
 
   const sway = [
     // SWAY DOCS
-    './sway/docs/book/src/**/*.md',
-    './sway/docs/book/src/*.md',
-    './sway/docs/book/src/README.md',
+    './sway/docs/book/src/*',
     // IGNORE ALL SUMMARY PAGES
     '!**/SUMMARY.md',
     // IGNORE FORC PAGES
