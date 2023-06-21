@@ -1,10 +1,9 @@
-import { join } from 'path';
-import { DOCS_DIRECTORY } from '~/src/constants';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   getDocBySlug,
   getSidebarLinks,
 } from '~/src/lib/api';
-import { getDocConfig, getDocFromSlug } from '~/src/lib/docs';
+import { getDocs } from '~/src/lib/docs';
 import { DocScreen } from '~/src/screens/DocPage';
 import type { DocType, SidebarLinkItem } from '~/src/types';
 
@@ -16,6 +15,23 @@ type DocPageProps = {
 
 export default function DocPage(props: DocPageProps) {
   console.log("EXTRA:", props.extra)
+
+  if(props.extra.slug & props.extra.slugs){
+    const slug = props.extra.slug;
+    const slugs = props.extra.slugs;
+    let slugPath = slugs.find(
+      ({ slug: pathSlug }: any) => {
+        console.log("PATH SLUG:", pathSlug)
+        pathSlug === `./${slug}.md`
+      }
+    );
+    if (!slugPath) {
+      slugPath = slugs.find(({ slug: pathSlug }: any) => pathSlug.includes(slug));
+    }
+    if (!slugPath) {
+      throw new Error(`${slug} not found`);
+    }
+  }
   return <DocScreen doc={props.doc} links={props.links}/>;
   // return <DocScreen {...props} />;
 }
@@ -31,13 +47,11 @@ export async function getServerSideProps({ params }: Params) {
   const links = await getSidebarLinks(doc.docsConfig.slug);
 
   const slug = params.slug.join('/');
-  const docsConfig = await getDocConfig(slug);
-  const slugPath = await getDocFromSlug(slug, docsConfig);
-  const fullpath = join(DOCS_DIRECTORY, slugPath.path);
+  const slugs = await getDocs(doc.docsConfig);
+
   const extra: any = {};
-  extra.docsConfig = docsConfig;
-  extra.slugPath = slugPath;
-  extra.fullpath = fullpath;
+  extra.slugs = slugs;
+  extra.slug = slug;
 
   return {
     props: {
