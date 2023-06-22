@@ -20,8 +20,8 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/docs/fuels-wallet/',
-        destination: '/docs/fuels-wallet/install/',
+        source: '/docs/wallet/',
+        destination: '/docs/wallet/install/',
         permanent: true,
       },
       {
