@@ -8,6 +8,7 @@ import type { Parent } from 'unist-util-visit/lib';
 
 import { handleCodeImport } from './code-import';
 import { handleForcGenDocs } from './forc-gen-docs';
+import { handleLinks } from './links';
 import { handleExampleImports } from './mdbook-example-import';
 import { handleScriptLink } from './ts-docs';
 import { loadTSVersions } from './ts-versions';
@@ -104,7 +105,8 @@ export function handlePlugins(options: Options = { filepath: '' }) {
           const content = handleExampleImports(node, dirname, rootDir, parent);
           node.value = content;
         } else if (mdBookLinks(node)) {
-          node.url = node.url.replace('.md', '').replace('/index', '');
+          const newUrl = handleLinks(node, dirname);
+          if (newUrl) node.url = newUrl;
         }
       });
     } else if (filepath.includes('/docs/fuels-wallet/')) {
@@ -162,7 +164,8 @@ export function handlePlugins(options: Options = { filepath: '' }) {
           const content = handleExampleImports(node, dirname, rootDir, parent);
           node.value = content;
         } else if (mdBookLinks(node)) {
-          node.url = node.url.replace('.md', '').replace('/index', '');
+          const newUrl = handleLinks(node, dirname);
+          if (newUrl) node.url = newUrl;
         } else if (tsBookVersions(node)) {
           if (node.value === 'v{{forc}}') {
             node.value = versions.FORC;
@@ -175,10 +178,11 @@ export function handlePlugins(options: Options = { filepath: '' }) {
       });
     }
 
-    // only run for mdbooks + ts sdk
+    // only run for indexer, fuels-rs, specs, fuelup
+    // already handled for sway book & ts sdk above
     if (
-      !filepath.includes(
-        '/portal/' || '/fuels-wallet/' || '/fuel-graphql-docs/'
+      filepath.includes(
+        '/fuel-indexer/' || '/fuelup/' || '/fuels-rs/' || '/fuel-specs/'
       )
     ) {
       visit(tree, '', (node: any, idx, parent) => {
@@ -196,49 +200,8 @@ export function handlePlugins(options: Options = { filepath: '' }) {
           const content = handleExampleImports(node, dirname, rootDir, parent);
           node.value = content;
         } else if (mdBookLinks(node)) {
-          if (!node.url.includes('http')) {
-            let newUrl = node.url
-              .replace('.md', '')
-              .replace('/index', '')
-              .replace('.html', '');
-            const dir = dirname
-              // sway
-              .replace('/docs/book/src', '')
-              // indexer
-              .replace('/fuel-indexer/docs/src', '/fuel-indexer')
-              // fuelup
-              .replace('/fuelup/docs/src', '/fuelup')
-              // rust sdk
-              .replace('/fuels-rs/docs/src', '/fuels-rs')
-              // specs
-              .replace('/fuel-specs/src', '/fuel-specs')
-              // ts sdk
-              .replace('/fuels-ts/apps/docs/src', '/fuels-ts');
-            if (node.url.startsWith('../')) {
-              const folder = dirname.split('/').pop();
-              newUrl = `/${dir.replace(folder!, '')}${newUrl.replace(
-                '../',
-                ''
-              )}`;
-            } else if (
-              node.url.startsWith('./') &&
-              !node.url.includes('index')
-            ) {
-              newUrl = `/${dir.endsWith('/') ? dir : `${dir}/`}${newUrl.replace(
-                './',
-                ''
-              )}`;
-            } else if (/^[a-zA-Z]/.test(node.url)) {
-              newUrl = `/${dir}/${newUrl}`;
-            }
-            newUrl = newUrl.replace('/sway/forc/', '/forc/');
-            node.url = newUrl;
-          } else if (
-            node.url.endsWith('CONTRIBUTING') &&
-            node.url.includes('github.com')
-          ) {
-            node.url = `${node.url}.md`;
-          }
+          const newUrl = handleLinks(node, dirname);
+          if (newUrl) node.url = newUrl;
         }
       });
     }
