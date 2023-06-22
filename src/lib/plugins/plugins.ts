@@ -154,7 +154,8 @@ export function handlePlugins(options: Options = { filepath: '' }) {
           // remove .md from mdBook links
           mdBookLinks(node) ||
           // handle TS book versions
-          tsBookVersions(node)
+          tsBookVersions(node) ||
+          (node.type === 'code' && node.lang === 'ts:line-numbers')
         ) {
           nodes.push([node as any, idx, parent as Parent]);
         }
@@ -174,6 +175,8 @@ export function handlePlugins(options: Options = { filepath: '' }) {
           } else {
             node.value = versions.FUEL_CORE;
           }
+        } else {
+          node.lang = 'ts';
         }
       });
     }
