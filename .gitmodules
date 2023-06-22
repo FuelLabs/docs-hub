@@ -23,6 +23,7 @@
 [submodule "docs/fuel-indexer"]
 	path = docs/fuel-indexer
 	url = https://github.com/FuelLabs/fuel-indexer.git
+	branch = develop
 [submodule "docs/fuel-specs"]
 	path = docs/fuel-specs
 	url = https://github.com/FuelLabs/fuel-specs.git

@@ -3,13 +3,13 @@
 
 import {
   default as DocPage,
-  getStaticProps as docsGetStaticProps,
+  getServerSideProps as docsGetProps,
 } from './docs/[...slug]';
 
 export default function Home(props: any) {
   return <DocPage {...props} />;
 }
 
-export async function getStaticProps() {
-  return docsGetStaticProps({ params: { slug: ['portal/home'] } });
+export async function getServerSideProps() {
+  return docsGetProps({ params: { slug: ['portal/home'] } });
 }

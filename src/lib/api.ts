@@ -1,44 +1,37 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { readFileSync } from 'fs';
 import { serialize } from 'next-mdx-remote/serialize';
+import { join } from 'path';
 import remarkGfm from 'remark-gfm';
 import remarkSlug from 'remark-slug';
+import type { Pluggable } from 'unified';
 
-import {
-  getDocConfig,
-  getDocContent,
-  getDocFromSlug,
-  getDocPath,
-  getDocs,
-  getRepositoryLink,
-} from './docs';
+import { DOCS_DIRECTORY } from '../constants';
+
+import { getDocConfig, getDocContent, getDocFromSlug } from './docs';
 import { handlePlugins } from './plugins/plugins';
 import { rehypeExtractHeadings } from './toc';
 
 import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
 import { FIELDS } from '~/src/constants';
-import type {
-  Config,
-  DocType,
-  NodeHeading,
-  SidebarLinkItem,
-} from '~/src/types';
+import type { DocType, NodeHeading } from '~/src/types';
+
+const docsCache = new Map<string, DocType>();
 
 export async function getDocBySlug(slug: string): Promise<DocType> {
-  const [rootFolder] = slug.split('/');
-  const realSlug = slug.replace(/(\.mdx|\.md)$/, '');
-  const slugPath = await getDocFromSlug(slug);
-  const fullpath = await getDocPath(slugPath);
-  const docsConfig = await getDocConfig(rootFolder);
-  const pageLink = await getRepositoryLink(docsConfig, slugPath);
+  const cache = docsCache.get(`${slug}`);
+  if (cache) return cache;
+
+  const docsConfig = await getDocConfig(slug);
+  const slugPath = await getDocFromSlug(slug, docsConfig);
+  const fullpath = join(DOCS_DIRECTORY, slugPath.path);
   const { data, content } = await getDocContent(fullpath);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const doc: any = {
-    pageLink,
-  };
+  const doc: any = {};
 
   // Ensure only the minimal needed data is exposed
   FIELDS.forEach((field) => {
     if (field === 'slug') {
-      doc[field] = data.slug || realSlug;
+      doc[field] = data.slug || slug.replace(/(\.mdx|\.md)$/, '');
     }
     if (field === 'content') {
       doc[field] = content;
@@ -47,26 +40,25 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
       doc[field] = data[field];
     }
   });
+  let source: any = '';
+  const headings: NodeHeading[] = [];
 
+  const pageLink = join(docsConfig.repository, slugPath.path);
+  doc.pageLink = pageLink;
+  const isGraphQLDocs = fullpath.includes('fuel-graphql-docs/docs');
   // parse the wallet and graphql docs as mdx, otherwise use md
   const format =
-    fullpath.includes('fuels-wallet/packages/docs/') ||
-    fullpath.includes('fuel-graphql-docs/docs')
+    fullpath.includes('fuels-wallet/packages/docs/') || isGraphQLDocs
       ? 'mdx'
       : 'md';
-
-  const headings: NodeHeading[] = [];
-  const source = await serialize(content, {
+  const plugins: Pluggable<any[]>[] = [[handlePlugins, { filepath: fullpath }]];
+  // handle the codeExamples component in the graphql docs
+  if (isGraphQLDocs) plugins.push([codeExamples, { filepath: fullpath }]);
+  source = await serialize(content, {
     scope: data,
     mdxOptions: {
       format,
-      remarkPlugins: [
-        remarkSlug,
-        remarkGfm,
-        [handlePlugins, { filepath: fullpath }],
-        // handle the codeExamples component in the graphql docs
-        [codeExamples, { filepath: fullpath }],
-      ],
+      remarkPlugins: [remarkSlug, remarkGfm, ...plugins],
       rehypePlugins: [[rehypeExtractHeadings, { headings }]],
     },
   });
@@ -87,152 +79,21 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
     doc.title = newLabel;
   }
 
-  return {
+  const final = {
     ...doc,
     source,
     headings,
     docsConfig,
   } as DocType;
+  docsCache.set(slug, final);
+  return final;
 }
 
-export async function getAllDocs() {
-  const slugs = await getDocs();
-  return Promise.all(slugs.map(({ slug }) => getDocBySlug(slug)));
-}
-
-export async function getSidebarLinks(config: Config) {
-  const docs = await getAllDocs();
-  const links = docs.reduce((list, thisDoc) => {
-    const doc = thisDoc;
-    if (doc.slug.split('/')[1] !== config.slug) {
-      return list;
-    }
-    if (doc.category === 'forc_client') {
-      doc.category = 'plugins';
-    }
-
-    if (
-      !doc.category ||
-      doc.category === 'src' ||
-      doc.category === 'forc' ||
-      (doc.category === 'guide' && doc.title === 'guide')
-    ) {
-      let newLabel = doc.title;
-      if (doc.title === 'index' || doc.title === 'README') {
-        const arr = doc.slug.split('/');
-        newLabel = arr[arr.length - 1];
-      }
-      return list.concat({ slug: doc.slug, label: newLabel });
-    }
-
-    const categoryIdx = list.findIndex((l) => {
-      return l?.label === doc.category;
-    });
-    /** Insert category item based on order prop */
-    if (categoryIdx >= 0) {
-      const submenu = list[categoryIdx]?.submenu || [];
-      let newLabel = doc.title;
-      if (doc.title === 'index') {
-        const arr = doc.slug.split('/');
-        newLabel = arr[arr.length - 1];
-      }
-      submenu.push({
-        slug: doc.slug,
-        label: newLabel,
-      });
-      return list;
-    }
-
-    const subpath = doc.slug.split('/')[1];
-    const submenu = [{ slug: doc.slug, label: doc.title }];
-    return list.concat({
-      subpath,
-      label: doc.category,
-      submenu,
-    });
-    /** Insert inside category submenu if category is already on array */
-  }, [] as SidebarLinkItem[]);
-
-  const order = config.menu;
-  const sortedLinks = order
-    ? links
-        /** Sort first level links */
-        .sort((a, b) => {
-          const lcOrder = order.map((o) => o.toLowerCase());
-          const lowerA = a.label.toLowerCase();
-          const lowerB = b.label.toLowerCase();
-          const aIdx = lcOrder.indexOf(lowerA);
-          const bIdx = lcOrder.indexOf(lowerB);
-          if (!a.subpath && !b.subpath) {
-            return aIdx - bIdx;
-          }
-          if (a.subpath && b.subpath) {
-            const aFirst = lcOrder.filter((i) => i.startsWith(lowerA))?.[0];
-            const bFirst = lcOrder.filter((i) => i.startsWith(lowerB))?.[0];
-            return lcOrder.indexOf(aFirst) - lcOrder.indexOf(bFirst);
-          }
-          const category = a.subpath ? lowerA : lowerB;
-          const first = lcOrder.filter((i) => i.startsWith(category))?.[0];
-          const idx = lcOrder.indexOf(first);
-          return a.subpath ? idx - bIdx : aIdx - idx;
-        })
-        /** Sort categoried links */
-        .map((link) => {
-          if (!link.submenu) return link;
-          const key = `${link.label.toLowerCase().replaceAll(' ', '_')}_menu`;
-          let catOrder = config[key];
-          catOrder = catOrder?.map((title) => title.toLowerCase());
-          const submenu = link.submenu.sort((a, b) => {
-            const lowerA = a.label.toLowerCase();
-            const lowerB = b.label.toLowerCase();
-            const result = catOrder
-              ? catOrder.indexOf(`${lowerA}`) - catOrder.indexOf(`${lowerB}`)
-              : 0;
-            return result;
-          });
-          return { ...link, submenu };
-        })
-    : links;
-
-  const withNextAndPrev = [...sortedLinks].map((doc, idx) => {
-    if (doc.submenu) {
-      return {
-        ...doc,
-        submenu: doc.submenu.map((childDoc, cIdx) => {
-          const prev = doc.submenu?.[cIdx - 1] ?? sortedLinks[idx - 1] ?? null;
-          const next = doc.submenu?.[cIdx + 1] ?? sortedLinks[idx + 1] ?? null;
-          return {
-            ...childDoc,
-            prev: prev?.submenu ? prev.submenu[prev.submenu.length - 1] : prev,
-            next: next?.submenu ? next.submenu[0] : next,
-          };
-        }),
-      };
-    }
-    const prev = sortedLinks[idx - 1] ?? null;
-    const next = sortedLinks[idx + 1] ?? null;
-    return {
-      ...doc,
-      prev: prev?.submenu ? prev.submenu[prev.submenu.length - 1] : prev,
-      next: next?.submenu ? next.submenu[0] : next,
-    };
-  });
-
-  return withNextAndPrev;
-}
-
-export function getDocLink(
-  links: Awaited<ReturnType<typeof getSidebarLinks>>,
-  slug: string
-) {
-  links
-    .flatMap((i) => (i.submenu || i) as SidebarLinkItem | SidebarLinkItem[])
-    .find((i) => {
-      if (i.slug?.startsWith('../portal')) {
-        return i.slug === `../${slug}`;
-      }
-      return i.slug === slug;
-    });
-
+export async function getSidebarLinks(configSlug: string) {
+  const linksPath = join(
+    DOCS_DIRECTORY,
+    `../src/sidebar-links/${configSlug}.json`
+  );
+  const links = JSON.parse(readFileSync(linksPath, 'utf8'));
   return links;
 }

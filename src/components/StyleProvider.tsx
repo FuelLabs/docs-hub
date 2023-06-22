@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 
 import { getCssText } from '@fuel-ui/css';
 import { useServerInsertedHTML } from 'next/navigation';

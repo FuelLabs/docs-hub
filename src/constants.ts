@@ -102,7 +102,7 @@ export const NAVIGATION: LinkObject[] = [
       {
         name: 'Indexer',
         type: 'internal-link',
-        link: '/docs/fuel-indexer/the-fuel-indexer/',
+        link: '/docs/fuel-indexer/',
         slug: 'fuel-indexer',
       },
     ],
