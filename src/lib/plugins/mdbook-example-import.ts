@@ -112,8 +112,10 @@ export function handleExampleImports(
 
   if (node.type === 'text') {
     node.type = 'code';
-    // TODO: make dynamic for all langs
-    node.lang = 'ts';
+    const paths = filePath.split('.');
+    let fileType = paths[paths.length - 1];
+    if (fileType === 'sw') fileType = 'rust';
+    node.lang = fileType;
     parent.type = 'root';
   }
 
