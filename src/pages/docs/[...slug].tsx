@@ -31,39 +31,36 @@ export async function getServerSideProps({ params }: Params) {
   const doc = await getDocBySlug(params.slug.join('/'));
   const links = await getSidebarLinks(doc.docsConfig.slug);
 
-  const slug = params.slug.join('/');
-  const slugs = await getDocs(doc.docsConfig);
-
-  const rust = [
-    // RUST SDK DOCS
-    './fuels-rs/docs/src/*',
-    // './fuels-rs/docs/src/**/*.md',
-    // IGNORE ALL SUMMARY PAGES
-    // '!**/SUMMARY.md',
-  ];
-
-  const sway = [
+  const sway1 = [
     // SWAY DOCS
-    // './sway/docs/book/src/**/*.md',
     './sway/docs/book/src/*',
-    // IGNORE ALL SUMMARY PAGES
-    // '!**/SUMMARY.md',
-    // IGNORE FORC PAGES
-    '!./sway/docs/book/src/forc/*.md',
-    '!./sway/docs/book/src/forc/**/*.md',
   ];
 
-  const rustPaths = await globby(rust, {
+  const sway2 = [
+    // SWAY DOCS
+    './sway/docs/book/src/**',
+  ];
+
+  const sway3 = [
+    // SWAY DOCS
+    './sway/docs/book/src/README.md',
+  ];
+
+
+  const swayPaths1 = await globby(sway1, {
     cwd: DOCS_DIRECTORY,
   });
-  const swayPaths = await globby(sway, {
+  const swayPaths2 = await globby(sway2, {
+    cwd: DOCS_DIRECTORY,
+  });
+  const swayPaths3 = await globby(sway3, {
     cwd: DOCS_DIRECTORY,
   });
 
   const extra: any = {};
-  extra.slugs = slugs;
-  extra.rustPaths = rustPaths;
-  extra.swayPaths = swayPaths;
+  extra.swayPaths1 = swayPaths1;
+  extra.swayPaths2 = swayPaths2;
+  extra.swayPaths3 = swayPaths3;
 
   return {
     props: {
