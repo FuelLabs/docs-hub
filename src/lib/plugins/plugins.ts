@@ -75,16 +75,25 @@ export function handlePlugins(options: Options = { filepath: '' }) {
   const rootDir = process.cwd();
   const { filepath } = options;
   const dirname = path.relative(rootDir, path.dirname(filepath));
-
   return function transformer(tree: Root) {
-    if (
-      filepath.includes('/docs/portal/') ||
-      filepath.includes('/docs/fuel-graphql-docs/')
-    )
-      return;
+    if (filepath.includes('/docs/portal/')) return;
     const nodes: [any, number | null, Parent][] = [];
-
-    if (filepath.includes('/docs/sway/')) {
+    if (filepath.includes('/docs/fuel-graphql-docs/')) {
+      visit(tree, '', (node: any, idx, parent) => {
+        if (
+          node.name === 'a' &&
+          node.attributes &&
+          node.attributes[0].value.includes('/docs/')
+        ) {
+          nodes.push([node as any, idx, parent as Parent]);
+        }
+      });
+      nodes.forEach(([node, _idx, _idxparent]) => {
+        let url = node.attributes[0].value;
+        url = url.replace('/docs/', '/docs/graphql/');
+        node.attributes[0].value = url;
+      });
+    } else if (filepath.includes('/docs/sway/')) {
       visit(tree, '', (node: any, idx, parent) => {
         if (
           // get the generated docs for forc
