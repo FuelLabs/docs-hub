@@ -45,6 +45,10 @@ export async function getServerSideProps({ params }: Params) {
     // SWAY DOCS
     './sway/docs/book/src/README.md',
   ];
+  const sway4 = [
+  // SWAY DOCS
+  './sway/docs/book/src/**/*.md',
+  ];
 
 
   const swayPaths1 = await globby(sway1, {
@@ -56,11 +60,15 @@ export async function getServerSideProps({ params }: Params) {
   const swayPaths3 = await globby(sway3, {
     cwd: DOCS_DIRECTORY,
   });
+  const swayPaths4 = await globby(sway4, {
+    cwd: DOCS_DIRECTORY,
+  });
 
   const extra: any = {};
   extra.swayPaths1 = swayPaths1;
   extra.swayPaths2 = swayPaths2;
   extra.swayPaths3 = swayPaths3;
+  extra.swayPaths4 = swayPaths4;
 
   return {
     props: {
