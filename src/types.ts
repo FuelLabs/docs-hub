@@ -32,11 +32,12 @@ export type DocType = {
   headings: NodeHeading[];
   source: MDXRemoteSerializeResult;
   menu: string[];
-  docsConfig: DocsConfig;
+  docsConfig: Config;
 };
 
 export type SidebarLinkItem = {
   slug?: string;
+  hasIndex?: boolean;
   submenu?: SidebarLinkItem[];
   subpath?: string;
   label: string;

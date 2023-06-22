@@ -5,7 +5,7 @@ import type { SidebarLinkItem, DocType } from '~/src/types';
 
 export type DocCtx = {
   doc: DocType;
-  docLink: SidebarLinkItem;
+  // docLink: SidebarLinkItem;
   links: SidebarLinkItem[];
   title: string;
 };

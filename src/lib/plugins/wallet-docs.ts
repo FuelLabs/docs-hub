@@ -1,18 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// import fs from 'node:fs';
 import { EOL } from 'os';
-
-// TODO: add cache
-
-// const files = new Map<string, string>();
-// const oldContentMap = new Map<string, string>();
-
-// function getFilesOnCache(filepath: string) {
-//   const oldResults = files.get(filepath);
-//   if (!oldResults) files.set(filepath, String(fs.readFileSync(filepath)));
-//   return files.get(filepath);
-// }
 
 export function handleDemoComp(node: any) {
   const media = node.attributes.find((i: any) => i.name === 'media')?.value;

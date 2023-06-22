@@ -11,6 +11,7 @@ type SidebarSubmenuProps = SidebarLinkItem;
 
 export function SidebarSubmenu({
   label,
+  hasIndex,
   submenu,
   subpath,
 }: SidebarSubmenuProps) {
@@ -32,17 +33,7 @@ export function SidebarSubmenu({
     setIsOpened((s) => !s);
   }
 
-  // TODO: remove once all folders have index files
-  if (
-    submenu &&
-    submenu[0].slug &&
-    (slug === 'fuels-rs/providers' ||
-      slug === 'fuels-rs/wallets' ||
-      slug === 'fuels-rs/predicates' ||
-      slug === 'fuels-rs/calling-contracts' ||
-      slug === 'fuels-rs/contracts' ||
-      slug === 'fuels-rs/abigen')
-  ) {
+  if (!hasIndex && submenu && submenu[0].slug) {
     slug = submenu[0].slug;
   }
 
@@ -82,7 +73,6 @@ export function SidebarSubmenu({
 
 const styles = {
   root: cssObj({
-    px: '$2',
     mt: '$2',
     flexDirection: 'column',
 

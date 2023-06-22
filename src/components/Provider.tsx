@@ -1,31 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-'use client';
-
 import { ThemeProvider } from '@fuel-ui/react';
 import { MDXProvider } from '@mdx-js/react';
 import type { ReactNode } from 'react';
 
-// import { Examples, Components } from '../importer';
-
 import { Blockquote } from './Blockquote';
 import { Code } from './Code';
-import { CodeImport } from './CodeImport';
 import { Heading } from './Heading';
 import { Link } from './Link';
 import { UL } from './List';
 import { Paragraph } from './Paragraph';
-import Player from './Player';
 import { Pre } from './Pre';
 import { Table } from './Table';
-
-// TODO: make these imports dynamic
-import * as GQLExamples from '~/docs/fuel-graphql-docs/examples';
-import { CodeExamples } from '~/docs/fuel-graphql-docs/src/components/CodeExamples';
-import * as Examples from '~/docs/fuels-wallet/packages/docs/examples/';
-import { ConnectionAlert } from '~/docs/fuels-wallet/packages/docs/src/components/ConnectionAlert';
-import { Demo } from '~/docs/fuels-wallet/packages/docs/src/components/Demo';
-import { DownloadFuelWallet } from '~/docs/fuels-wallet/packages/docs/src/components/DownloadFuelWallet';
 
 const components = {
   a: Link,
@@ -41,15 +27,6 @@ const components = {
   blockquote: Blockquote,
   table: Table,
   ul: UL,
-  CodeImport,
-  Player,
-  // TODO: make these imports dynamic
-  Demo,
-  DownloadFuelWallet,
-  Examples,
-  GQLExamples,
-  CodeExamples,
-  ConnectionAlert,
 };
 
 type ProviderProps = {
