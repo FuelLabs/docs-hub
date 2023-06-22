@@ -37,7 +37,6 @@ export async function getDocs(config: Config): Promise<DocPathType[]> {
         './sway/docs/book/src/forc/*.md',
         './sway/docs/book/src/forc/**/*.md',
         // REMOVE UNUSED FILES
-        // TODO: REMOVE FROM SWAY BOOK
         '!./sway/docs/book/src/forc/commands/forc_deploy.md',
         '!./sway/docs/book/src/forc/commands/forc_run.md',
       ];

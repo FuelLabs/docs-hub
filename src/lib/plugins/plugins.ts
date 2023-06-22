@@ -181,9 +181,10 @@ export function handlePlugins(options: Options = { filepath: '' }) {
     // only run for indexer, fuels-rs, specs, fuelup
     // already handled for sway book & ts sdk above
     if (
-      filepath.includes(
-        '/fuel-indexer/' || '/fuelup/' || '/fuels-rs/' || '/fuel-specs/'
-      )
+      filepath.includes('/fuel-indexer/') ||
+      filepath.includes('/fuelup/') ||
+      filepath.includes('/fuels-rs/') ||
+      filepath.includes('/fuel-specs/')
     ) {
       visit(tree, '', (node: any, idx, parent) => {
         if (
@@ -199,7 +200,7 @@ export function handlePlugins(options: Options = { filepath: '' }) {
         if (exampleImportCondition(node)) {
           const content = handleExampleImports(node, dirname, rootDir, parent);
           node.value = content;
-        } else if (mdBookLinks(node)) {
+        } else {
           const newUrl = handleLinks(node, dirname);
           if (newUrl) node.url = newUrl;
         }
