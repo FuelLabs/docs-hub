@@ -35,6 +35,7 @@ export function handleScriptLink(
             linkStartIndex = idx;
           }
         }
+        break;
       }
       if (paragraphIndex && linkStartIndex) {
         const linkNode =

@@ -12,6 +12,25 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   trailingSlash: true,
+  async redirects() {
+    return [
+      {
+        source: '/docs/',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/docs/fuels-wallet/',
+        destination: '/docs/fuels-wallet/install/',
+        permanent: true,
+      },
+      {
+        source: '/docs/graphql/',
+        destination: '/docs/graphql/overview/',
+        permanent: true,
+      },
+    ];
+  },
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if

@@ -58,14 +58,14 @@ export async function getDocs(config: Config): Promise<DocPathType[]> {
         './fuels-ts/apps/docs/src/**/*.md',
       ];
       break;
-    case 'fuels-wallet':
+    case 'wallet':
       paths = [
         // WALLET DOCS
         './fuels-wallet/packages/docs/docs/**/*.mdx',
         './fuels-wallet/packages/docs/docs/*.mdx',
       ];
       break;
-    case 'fuel-graphql-docs':
+    case 'graphql':
       paths = [
         // GRAPHQL DOCS
         './fuel-graphql-docs/docs/*.mdx',
@@ -81,7 +81,7 @@ export async function getDocs(config: Config): Promise<DocPathType[]> {
         '!**/SUMMARY.md',
       ];
       break;
-    case 'fuel-indexer':
+    case 'indexer':
       paths = [
         // INDEXER DOCS
         './fuel-indexer/docs/src/*.md',
@@ -90,7 +90,7 @@ export async function getDocs(config: Config): Promise<DocPathType[]> {
         '!**/SUMMARY.md',
       ];
       break;
-    case 'fuel-specs':
+    case 'specs':
       paths = [
         // SPECS DOCS
         './fuel-specs/src/*.md',

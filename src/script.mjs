@@ -172,14 +172,14 @@ async function getDocs(config) {
         "./fuels-ts/apps/docs/src/**/*.md",
       ];
       break;
-    case "fuels-wallet":
+    case "wallet":
       paths = [
         // WALLET DOCS
         "./fuels-wallet/packages/docs/docs/**/*.mdx",
         "./fuels-wallet/packages/docs/docs/*.mdx",
       ];
       break;
-    case "fuel-graphql-docs":
+    case "graphql":
       paths = [
         // GRAPHQL DOCS
         "./fuel-graphql-docs/docs/*.mdx",
@@ -195,7 +195,7 @@ async function getDocs(config) {
         "!**/SUMMARY.md",
       ];
       break;
-    case "fuel-indexer":
+    case "indexer":
       paths = [
         // INDEXER DOCS
         "./fuel-indexer/docs/src/*.md",
@@ -204,7 +204,7 @@ async function getDocs(config) {
         "!**/SUMMARY.md",
       ];
       break;
-    case "fuel-specs":
+    case "specs":
       paths = [
         // SPECS DOCS
         "./fuel-specs/src/*.md",
@@ -242,11 +242,14 @@ function removeDocsPath(path) {
     .replace("docs/", "")
     .replace("/book/", "/")
     .replace("/packages/", "/")
-    .replace("/fuels-wallet/docs/", "/fuels-wallet/")
     .replace("/apps/", "/")
     .replace("/src/", "/")
     .replace("/index.md", ".md")
     .replace("/README.md", ".md")
+    .replace("/fuel-graphql-docs/", "/graphql/")
+    .replaceAll("/fuel-specs", "/specs")
+    .replaceAll("/fuel-indexer", "/indexer")
+    .replace("/fuels-wallet/docs/", "/wallet/")
     .replace("/guide/", "/");
 
   // handle mdbooks folders that use a same name file instead of index.md

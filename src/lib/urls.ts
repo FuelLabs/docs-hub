@@ -4,11 +4,14 @@ export function removeDocsPath(path: string) {
     .replace('docs/', '')
     .replace('/book/', '/')
     .replace('/packages/', '/')
-    .replace('/fuels-wallet/docs/', '/fuels-wallet/')
     .replace('/apps/', '/')
     .replace('/src/', '/')
     .replace('/index.md', '.md')
     .replace('/README.md', '.md')
+    .replace('/fuel-graphql-docs/', '/graphql/')
+    .replaceAll('/fuel-specs', '/specs')
+    .replaceAll('/fuel-indexer', '/indexer')
+    .replace('/fuels-wallet/docs/', '/wallet/')
     .replace('/guide/', '/');
 
   // handle mdbooks folders that use a same name file instead of index.md
