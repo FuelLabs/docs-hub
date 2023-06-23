@@ -1,5 +1,5 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box, Flex, FuelLogo, Icon, Link } from '@fuel-ui/react';
+import { Box, FuelLogo, Icon, Link } from '@fuel-ui/react';
 
 import { MobileMenu } from './MobileMenu';
 import { Navigation } from './Navigation';
@@ -7,36 +7,28 @@ import { Search } from './Search';
 
 export function Header({ title }: { title?: string }) {
   return (
-    <Flex as="header" css={styles.root}>
-      <Box css={{ flex: 1, '@xl': { flex: 'inherit' } }}>
-        <Link href="/" className="logo">
-          <FuelLogo size={40} />
-          <Flex css={styles.logoText}>
-            <span>{title}</span>
-          </Flex>
-        </Link>
-      </Box>
-      <Flex
-        css={{ padding: '0 $8', display: 'none', '@xl': { display: 'flex' } }}
-        grow={'1'}
-        gap={'$4'}
-      >
+    <Box.Flex as="header" css={styles.root}>
+      <Link href="/" className="logo">
+        <FuelLogo size={40} />
+        <Box.Flex css={styles.logoText}>{title}</Box.Flex>
+      </Link>
+      <Box.Flex css={styles.navWrapper} grow={'1'} gap={'$4'}>
         <Navigation />
-      </Flex>
+      </Box.Flex>
       <Box css={styles.desktop}>
-        <Flex css={styles.menu}>
+        <Box.Flex css={styles.menu}>
           <a
             href="https://github.com/fuellabs/"
             target="_blank"
             rel="noreferrer"
           >
-            <Icon icon={Icon.is('GithubLogo')} size={24} />
+            <Icon icon={Icon.is('BrandGithub')} size={24} stroke={1} />
           </a>
-        </Flex>
+        </Box.Flex>
         <Search />
       </Box>
       <MobileMenu />
-    </Flex>
+    </Box.Flex>
   );
 }
 
@@ -50,12 +42,17 @@ const styles = {
     py: '$4',
     px: '$4',
     alignItems: 'center',
-    borderBottom: '1px solid $gray2',
+    borderBottom: '1px solid $intentsBase2',
     gridColumn: '1 / 4',
 
     '.logo': {
       display: 'inline-flex',
-      color: '$gray9',
+      color: '$intentsBase9',
+      flex: 1,
+
+      '@xl': {
+        flex: 'none',
+      },
     },
 
     '@md': {
@@ -72,8 +69,16 @@ const styles = {
     alignItems: 'center',
     flex: 1,
     fontSize: '$lg',
-    fontWeight: '$semibold',
-    paddingLeft: '$2',
+    paddingLeft: '$3',
+    letterSpacing: '$tight',
+  }),
+  navWrapper: cssObj({
+    padding: '0 $8',
+    display: 'none',
+
+    '@xl': {
+      display: 'flex',
+    },
   }),
   desktop: cssObj({
     display: 'none',
@@ -86,7 +91,8 @@ const styles = {
   mobile: cssObj({
     display: 'flex',
     alignItems: 'center',
-    '.fuel_button': {
+
+    '.fuel_Button': {
       height: 'auto !important',
       padding: '$0 !important',
     },
@@ -99,12 +105,12 @@ const styles = {
     gap: '$6',
 
     a: {
-      color: '$gray10',
+      color: '$intentsBase10',
       transition: 'all 0.3s',
     },
 
     'a.active, a:hover': {
-      color: '$accent11',
+      color: '$brand',
     },
   }),
 };
