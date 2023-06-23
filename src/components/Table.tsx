@@ -12,8 +12,8 @@ const styles = {
     py: '$3',
     px: '$4',
     mb: '$6',
-    background: '$gray1',
+    background: '$intentsBase1',
     borderRadius: '$lg',
-    border: '1px solid $gray3',
+    border: '1px solid $intentsBase3',
   }),
 };

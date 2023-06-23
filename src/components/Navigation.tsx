@@ -1,5 +1,6 @@
-import { cssObj } from '@fuel-ui/css';
-import { Dropdown, Button, Link } from '@fuel-ui/react';
+import { cssObj, cx } from '@fuel-ui/css';
+import { Dropdown, ButtonLink } from '@fuel-ui/react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 
@@ -37,12 +38,17 @@ export function Navigation() {
     <>
       {NAVIGATION.map((item, index) => {
         if (item.type === 'menu') {
+          const isActive = item.menu?.some((i) => i.slug === active);
           return (
             <Dropdown key={index}>
               <Dropdown.Trigger>
-                <Button css={styles.navButton} variant={'outlined'}>
+                <ButtonLink
+                  css={styles.navButton}
+                  variant="link"
+                  data-active={isActive}
+                >
                   {item.name}
-                </Button>
+                </ButtonLink>
               </Dropdown.Trigger>
               <Dropdown.Menu
                 autoFocus
@@ -66,16 +72,12 @@ export function Navigation() {
                 {item.menu?.map((menuItem) => {
                   return (
                     <Dropdown.MenuItem
-                      css={
-                        menuItem.type === 'category'
-                          ? styles.breakLine
-                          : active === menuItem.slug
-                          ? {
-                              ...styles.activeTopNavLink,
-                              ...styles.nestedLink,
-                            }
-                          : styles.nestedLink
-                      }
+                      data-active={active === menuItem.slug}
+                      css={styles.nestedLink}
+                      className={cx({
+                        active: active === menuItem.slug,
+                        isCategory: menuItem.type === 'category',
+                      })}
                       key={
                         menuItem.type === 'category'
                           ? menuItem.name
@@ -92,30 +94,54 @@ export function Navigation() {
           );
         }
         return (
-          <Link key={index} href={item.link}>
-            <Button css={styles.navButton} variant="link">
-              {item.name}
-            </Button>
-          </Link>
+          <ButtonLink
+            key={index}
+            as={Link}
+            href={item.link}
+            css={styles.navButton}
+            variant="link"
+            data-active={active === 'portal'}
+          >
+            {item.name}
+          </ButtonLink>
         );
       })}
     </>
   );
 }
 
-const styles = {
-  nestedLink: {
-    padding: '4px 16px',
-  },
-  activeTopNavLink: {
-    background: 'var(--colors-accent2)',
-  },
-  breakLine: cssObj({
-    borderBottom: '2px solid $accent10',
-    fontSize: '16px',
-    color: '#86ffcb',
+export const styles = {
+  nestedLink: cssObj({
+    padding: '$0 $4',
+    height: '$7',
+    minHeight: 'auto',
+
+    '&.active': {
+      color: '$brand',
+    },
+    '&.isCategory': {
+      borderBottom: '1px solid $border',
+      mb: '$1',
+    },
   }),
   navButton: cssObj({
-    borderRadius: '8px',
+    color: '$intentsBase10',
+
+    '&:not([aria-disabled="true"]):active, &:not([aria-disabled="true"])[aria-pressed="true"]':
+      {
+        outline: 'none',
+        outlineOffset: 'none',
+        outlineColor: 'transparent',
+        transform: 'none',
+      },
+
+    '&:hover': {
+      textDecoration: 'none',
+      color: '$intentsBase12 !important',
+    },
+
+    '&[data-active="true"], &[data-active="true"]:hover': {
+      color: '$brand !important',
+    },
   }),
 };

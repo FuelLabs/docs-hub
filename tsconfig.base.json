@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "ignoreDeprecations": "5.0",
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
     "preserveSymlinks": false,
@@ -22,5 +23,11 @@
     "target": "es2020",
     "types": ["@fuel-wallet/sdk"]
   },
-  "exclude": ["**/dist", "**/build", "node_modules", "**/node_modules"]
+  "exclude": [
+    "docs/**",
+    "**/dist",
+    "**/build",
+    "node_modules",
+    "**/node_modules"
+  ]
 }

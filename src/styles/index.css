@@ -37,12 +37,12 @@ h6 {
 }
 
 *:focus-visible:not(input) {
-  outline: 2px solid var(--colors-accent11);
+  outline: 2px solid var(--colors-brand);
   border-radius: 5px;
 }
 
 a {
-  color: var(--colors-accent11);
+  color: var(--colors-brand);
   text-decoration: none;
 }
 
