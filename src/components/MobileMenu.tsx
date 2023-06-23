@@ -6,8 +6,8 @@ import {
   Icon,
   FuelLogo,
   Button,
-  Link,
   Text,
+  ButtonLink,
 } from '@fuel-ui/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { AnimationProps } from 'framer-motion';
@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react';
 import { NAVIGATION } from '../constants';
 import type { LinkObject } from '../constants';
 
+import { styles as navStyles } from './Navigation';
 import { Search } from './Search';
 import { Sidebar } from './Sidebar';
 
@@ -61,16 +62,12 @@ export function MobileMenu() {
       transition={SPRING}
     >
       <Box.Flex css={styles.menu}>
-        <Box.Flex>
+        <Box.Flex css={styles.logoWrapper}>
           <FuelLogo size={40} />
-          <a
-            href="https://github.com/fuellabs/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <Icon icon={Icon.is('BrandGithub')} size={24} />
-          </a>
         </Box.Flex>
+        <a href="https://github.com/fuellabs/" target="_blank" rel="noreferrer">
+          <Icon icon={Icon.is('BrandGithub')} size={24} />
+        </a>
         {button}
       </Box.Flex>
       <Box css={styles.navContainer}>
@@ -83,7 +80,7 @@ export function MobileMenu() {
               <Button
                 key={`${item.slug}${index}`}
                 css={styles.navButton}
-                variant={'link'}
+                variant="link"
               >
                 {item.name}
               </Button>
@@ -114,40 +111,37 @@ function MenuButton({ item }: { item: LinkObject }) {
       <Button
         onPress={() => setIsOpen(!isOpen)}
         css={styles.navButton}
-        variant={'outlined'}
+        variant="link"
+        rightIcon={isOpen ? Icon.is('ChevronUp') : Icon.is('ChevronDown')}
       >
         {item.name}
       </Button>
       {isOpen && item.menu && (
-        <Box.Flex direction={'column'} justify={'flex-start'}>
+        <Box.Stack css={styles.navButtonMenu}>
           {item.menu.map((menuItem, index) => {
             if (
               menuItem.type === 'internal-link' ||
               menuItem.type === 'external-link'
             ) {
               return (
-                <Link
-                  key={`${index}${menuItem.slug}`}
+                <ButtonLink
                   css={styles.menuLink}
+                  variant="link"
+                  key={`${index}${menuItem.slug}`}
                   href={menuItem.link}
                   isExternal={menuItem.type === 'external-link'}
                 >
-                  <Button css={styles.menuButton} variant={'link'}>
-                    {menuItem.name}
-                  </Button>
-                </Link>
+                  {menuItem.name}
+                </ButtonLink>
               );
             }
             return (
-              <Text
-                key={`${index}${menuItem.name}`}
-                css={{ color: '$accent11' }}
-              >
+              <Text key={`${index}${menuItem.name}`} css={styles.categoryMenu}>
                 {menuItem.name}
               </Text>
             );
           })}
-        </Box.Flex>
+        </Box.Stack>
       )}
     </>
   );
@@ -162,33 +156,30 @@ const styles = {
     '.mobile-button': {
       height: 'auto !important',
       padding: '$0 !important',
-      color: '$gray8 !important',
+      color: '$intentsBase8 !important',
     },
 
     '@xl': {
       display: 'none',
     },
   }),
+  logoWrapper: cssObj({
+    flex: 1,
+    alignItems: 'center',
+  }),
   menu: cssObj({
     pb: '$4',
-    mb: '$4',
-    borderBottom: '1px solid $gray3',
+    borderBottom: '1px solid $border',
     gap: '$6',
     alignItems: 'center',
-    justifyContent: 'space-between',
 
     a: {
-      color: '$gray10',
+      color: '$intentsBase10',
       transition: 'all 0.3s',
     },
 
     'a.active, a:hover': {
-      color: '$accent11',
-    },
-
-    '& > .fuel_box': {
-      gap: '$4',
-      alignItems: 'center',
+      color: '$brand',
     },
   }),
   overlay: cssObj({
@@ -212,37 +203,52 @@ const styles = {
     width: '100vw',
     height: '100%',
     background: '$bodyColor',
+
     '@sm': {
       width: '400px',
     },
   }),
   navButton: cssObj({
-    borderRadius: '8px',
+    ...navStyles.navButton,
+    justifyContent: 'space-between',
+    padding: '$0',
   }),
-  menuButton: cssObj({
-    color: 'inherit',
-    '&:hover': {
-      textDecoration: 'none !important',
-    },
+  navButtonMenu: cssObj({
+    bg: '$intentsBase1',
+    padding: '$3',
+    borderRadius: '$default',
   }),
   menuLink: cssObj({
-    justifyContent: 'flex-start',
-    paddingLeft: '8px',
-    color: 'var(--colors-gray10)',
+    padding: '$0',
+    justifyContent: 'space-between',
+    color: '$intentsBase10',
+    fontSize: '$sm',
+    height: '$4',
+    minHeight: 'auto',
+
     '&:hover': {
-      background: '$accent2',
-      color: '$accent11',
+      background: '$brand',
+      color: '$brand',
       textDecoration: 'none',
     },
+  }),
+  categoryMenu: cssObj({
+    fontSize: '$sm',
+    color: '$textMuted',
+    borderBottom: '1px solid $border',
+    mb: '$2',
   }),
   navContainer: cssObj({
     overflow: 'auto',
     maxHeight: 'calc(100vh - 100px)',
+
+    '.Sidebar': {
+      borderTop: '1px solid $border',
+      pt: '$4',
+    },
   }),
   nav: cssObj({
-    borderBottom: '2px solid $accent11',
-    paddingBottom: '$2',
-    marginBottom: '$4',
     gap: '$2',
+    py: '$4',
   }),
 };

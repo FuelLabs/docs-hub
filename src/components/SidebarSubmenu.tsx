@@ -1,5 +1,5 @@
-import { cssObj, cx } from '@fuel-ui/css';
-import { Button, Box, Icon, List } from '@fuel-ui/react';
+import { cssObj } from '@fuel-ui/css';
+import { Box, Icon, List } from '@fuel-ui/react';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
@@ -17,21 +17,16 @@ export function SidebarSubmenu({
 }: SidebarSubmenuProps) {
   const pathname = usePathname();
   const [isOpened, setIsOpened] = useState<boolean>();
-  const [isActive, setIsActive] = useState<boolean>();
   const newLabel = label.replace(/\s+/g, '-').toLowerCase();
   let slug = `${subpath}/${newLabel}`;
+
   useEffect(() => {
     const pathArray = submenu![0].slug?.split('/');
     const index = pathArray?.indexOf(subpath!);
     const category = pathArray && index ? `/${pathArray[index + 1]}` : '';
     const active = pathname?.startsWith(`/docs/${subpath}${category}/`);
-    setIsActive(active);
     setIsOpened(active);
   }, [pathname]);
-
-  function toggle() {
-    setIsOpened((s) => !s);
-  }
 
   if (!hasIndex && submenu && submenu[0].slug) {
     slug = submenu[0].slug;
@@ -39,15 +34,10 @@ export function SidebarSubmenu({
 
   return (
     <Box.Flex css={styles.root}>
-      <Box.Flex justify={'space-between'}>
-        <SidebarLink item={{ label, slug }} />
-        <Button
-          variant="link"
-          rightIcon={isOpened ? Icon.is('CaretUp') : Icon.is('CaretDown')}
-          onPress={toggle}
-          className={cx({ active: isActive })}
-        />
-      </Box.Flex>
+      <SidebarLink
+        item={{ label, slug }}
+        rightIcon={isOpened ? Icon.is('ChevronUp') : Icon.is('ChevronDown')}
+      />
       {isOpened && (
         <List>
           {submenu?.map((item, index) => {
@@ -73,37 +63,18 @@ export function SidebarSubmenu({
 
 const styles = {
   root: cssObj({
-    mt: '$2',
     flexDirection: 'column',
 
-    '.fuel_button': {
-      padding: '$0',
-      justifyContent: 'space-between',
-      color: '$gray10',
-      fontWeight: '$normal',
-    },
-    '.fuel_button:focus': {
-      outline: 'none',
-      color: '$gray12',
-    },
-    '.fuel_button.active': {
-      color: '$gray12',
-    },
-    '.fuel_button:hover': {
-      color: '$gray11',
-      textDecoration: 'none',
-    },
-
-    '.fuel_list': {
+    '.fuel_List': {
       display: 'flex',
       flexDirection: 'column',
       gap: '$1',
-      mt: '$2',
+      mt: '$1',
     },
-    '.fuel_list-item': {
+    '.fuel_ListItem': {
       gap: '$2',
     },
-    '.fuel_list-item a': {
+    '.fuel_ListItem a': {
       flex: 1,
     },
   }),

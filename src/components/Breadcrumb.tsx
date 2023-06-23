@@ -30,11 +30,11 @@ const styles = {
     gap: '$2',
 
     span: {
-      color: '$gray8',
+      color: '$intentsBase8',
       fontSize: '$sm',
     },
     '& > span:last-of-type': {
-      color: '$gray10',
+      color: '$intentsBase10',
     },
   }),
 };

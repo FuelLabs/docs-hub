@@ -30,7 +30,7 @@ const styles = {
     gap: '$4',
     padding: '$4',
     borderRadius: '$md',
-    border: '1px dashed $gray3',
+    border: '1px dashed $intentsBase3',
     maxWidth: '90vw',
     overflowWrap: 'break-word',
     '@xl': {
@@ -41,7 +41,7 @@ const styles = {
       alignItems: 'center',
       justifyContent: 'space-between',
       margin: '$0',
-      color: '$gray10',
+      color: '$intentsBase10',
       gap: '$2',
 
       '& .fuel_icon': {
