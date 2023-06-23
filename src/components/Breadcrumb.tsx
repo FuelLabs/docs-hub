@@ -1,5 +1,5 @@
 import { cssObj } from '@fuel-ui/css';
-import { Flex, Icon, Text } from '@fuel-ui/react';
+import { Box, Icon, Text } from '@fuel-ui/react';
 import Link from 'next/link';
 
 import type { DocType } from '~/src/types';
@@ -10,7 +10,7 @@ type BreadcrumbProps = {
 
 export function Breadcrumb({ doc }: BreadcrumbProps) {
   return (
-    <Flex css={styles.root}>
+    <Box.Flex css={styles.root}>
       <Text as="span" rightIcon={Icon.is('CaretRight')}>
         <Link href="/">Docs</Link>
       </Text>
@@ -20,7 +20,7 @@ export function Breadcrumb({ doc }: BreadcrumbProps) {
         </Text>
       )}
       <Text as="span">{doc.title}</Text>
-    </Flex>
+    </Box.Flex>
   );
 }
 
@@ -30,11 +30,11 @@ const styles = {
     gap: '$2',
 
     span: {
-      color: '$gray8',
+      color: '$intentsBase8',
       fontSize: '$sm',
     },
     '& > span:last-of-type': {
-      color: '$gray10',
+      color: '$intentsBase10',
     },
   }),
 };

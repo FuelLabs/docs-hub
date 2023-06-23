@@ -42,7 +42,7 @@ export function TableOfContent() {
   );
 }
 
-const LIST_ITEM = '.fuel_list > .fuel_list-item';
+const LIST_ITEM = '.fuel_List > .fuel_ListItem';
 
 const styles = {
   queries: cssObj({
@@ -60,13 +60,13 @@ const styles = {
 
     h6: {
       mt: 0,
+      mb: '$2',
     },
 
     [LIST_ITEM]: {
       pb: '$2',
       a: {
-        fontWeight: '$semibold',
-        color: '$gray11',
+        color: '$intentsBase11',
       },
     },
     [`${LIST_ITEM} > ${LIST_ITEM}:nth-child(1)`]: {
@@ -75,7 +75,7 @@ const styles = {
     [`${LIST_ITEM} > ${LIST_ITEM}`]: {
       a: {
         fontWeight: '$normal',
-        color: '$gray9',
+        color: '$intentsBase9',
       },
     },
   }),
@@ -83,11 +83,11 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     pt: '$3',
-    borderTop: '1px dashed $gray4',
+    borderTop: '1px dashed $intentsBase4',
     fontSize: '$xs',
 
     'a, a:visited': {
-      color: '$gray10',
+      color: '$intentsBase10',
     },
   }),
 };

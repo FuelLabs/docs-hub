@@ -1,41 +1,25 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-import { cx, styled } from '@fuel-ui/css';
-import { Box } from '@fuel-ui/react';
+import { cssObj, cx } from '@fuel-ui/css';
+import type { ButtonLinkProps } from '@fuel-ui/react';
+import { ButtonLink } from '@fuel-ui/react';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
 import { forwardRef } from 'react';
 
+import { capitalize } from '../lib/str';
+
 import type { SidebarLinkItem } from '~/src/types';
 
-export const Link = styled(Box, {
-  py: '$1',
-  px: '$2',
-  color: '$gray10',
-  borderRadius: '$md',
-  '&:focus, &:hover': {
-    color: '$gray11',
-    background: '$whiteA3',
-  },
-  '&.active': {
-    color: '$accent11',
-    background: '$accent2',
-  },
-  '&:focus': {
-    outline: 'none',
-  },
-});
-
-export type SidebarLinkProps = {
+export type SidebarLinkProps = ButtonLinkProps & {
   item: SidebarLinkItem;
 };
 
 export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
-  ({ item }, ref) => {
+  ({ item, ...props }, ref) => {
     const pathname = usePathname() || '';
     const slug = item.slug?.startsWith('.')
       ? item.slug.replace('../', '').replace('./', '')
       : item.slug;
+
     const fullSlug = `/docs/${slug}${slug?.endsWith('/') ? '' : '/'}`;
     const label = item.label.replaceAll(' ', '-');
     const isActive = cx({
@@ -43,16 +27,44 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
         pathname === fullSlug ||
         (label === slug?.split('/')[1] && pathname.includes(label)),
     });
+
     return (
-      <Link
+      <ButtonLink
+        {...props}
         ref={ref}
-        style={{ flexGrow: 1, textTransform: 'capitalize' }}
-        as={NextLink as any}
+        as={NextLink}
         href={fullSlug}
-        className={isActive}
+        css={styles.root}
+        data-active={Boolean(isActive)}
       >
-        {item.label.replaceAll(/[_-]/g, ' ')}
-      </Link>
+        {capitalize(item.label.replaceAll(/[_-]/g, ' '))}
+      </ButtonLink>
     );
   }
 );
+
+const styles = {
+  root: cssObj({
+    justifyContent: 'space-between',
+    px: '$0',
+    py: '$0',
+
+    '&:not([aria-disabled="true"]):active, &:not([aria-disabled="true"])[aria-pressed="true"]':
+      {
+        outline: 'none',
+        outlineOffset: 'none',
+        outlineColor: 'transparent',
+        transform: 'none',
+      },
+
+    '&[data-active="true"], &[data-active="true"]:hover': {
+      color: '$brand',
+      textDecoration: 'none',
+    },
+
+    '&:not([data-active="true"]):hover': {
+      textDecoration: 'none',
+      color: '$textInverse !important',
+    },
+  }),
+};

@@ -4,6 +4,5 @@
   "compilerOptions": {
     "noEmit": true,
     "allowJs": true
-  },
-  "exclude": ["docs"]
+  }
 }

@@ -9,7 +9,7 @@ import { useDocContext } from '~/src/hooks/useDocContext';
 export function Sidebar() {
   const { links } = useDocContext();
   return (
-    <Box as="nav" css={styles.root}>
+    <Box.Stack as="nav" css={styles.root} className="Sidebar">
       {links.map((link, index) => {
         return link.slug ? (
           <SidebarLink key={link.slug + index} item={link} />
@@ -20,15 +20,13 @@ export function Sidebar() {
           />
         );
       })}
-    </Box>
+    </Box.Stack>
   );
 }
 
 const styles = {
   root: cssObj({
-    display: 'flex',
-    flexDirection: 'column',
     gap: '$1',
-    paddingBottom: '20px',
+    pb: '$4',
   }),
 };

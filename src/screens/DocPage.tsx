@@ -61,5 +61,9 @@ const styles = {
       px: '$0',
       width: '60vw',
     },
+
+    '& .fuel_Heading:first-of-type': {
+      mt: '$0 !important',
+    },
   }),
 };
