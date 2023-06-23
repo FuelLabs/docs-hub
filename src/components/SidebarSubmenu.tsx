@@ -1,5 +1,5 @@
 import { cssObj, cx } from '@fuel-ui/css';
-import { Button, Flex, Icon, List } from '@fuel-ui/react';
+import { Button, Box, Icon, List } from '@fuel-ui/react';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
@@ -38,8 +38,8 @@ export function SidebarSubmenu({
   }
 
   return (
-    <Flex css={styles.root}>
-      <Flex justify={'space-between'}>
+    <Box.Flex css={styles.root}>
+      <Box.Flex justify={'space-between'}>
         <SidebarLink item={{ label, slug }} />
         <Button
           variant="link"
@@ -47,7 +47,7 @@ export function SidebarSubmenu({
           onPress={toggle}
           className={cx({ active: isActive })}
         />
-      </Flex>
+      </Box.Flex>
       {isOpened && (
         <List>
           {submenu?.map((item, index) => {
@@ -57,7 +57,7 @@ export function SidebarSubmenu({
                   key={index}
                   icon={Icon.is('ArrowRight')}
                   iconSize={10}
-                  iconColor="gray6"
+                  iconColor="textIcon"
                 >
                   <SidebarLink item={item} />
                 </List.Item>
@@ -67,7 +67,7 @@ export function SidebarSubmenu({
           })}
         </List>
       )}
-    </Flex>
+    </Box.Flex>
   );
 }
 

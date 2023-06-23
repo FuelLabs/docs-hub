@@ -1,5 +1,5 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box, Flex, FuelLogo, Icon, Link } from '@fuel-ui/react';
+import { Box, FuelLogo, Icon, Link } from '@fuel-ui/react';
 
 import { MobileMenu } from './MobileMenu';
 import { Navigation } from './Navigation';
@@ -7,36 +7,36 @@ import { Search } from './Search';
 
 export function Header({ title }: { title?: string }) {
   return (
-    <Flex as="header" css={styles.root}>
+    <Box.Flex as="header" css={styles.root}>
       <Box css={{ flex: 1, '@xl': { flex: 'inherit' } }}>
         <Link href="/" className="logo">
           <FuelLogo size={40} />
-          <Flex css={styles.logoText}>
+          <Box.Flex css={styles.logoText}>
             <span>{title}</span>
-          </Flex>
+          </Box.Flex>
         </Link>
       </Box>
-      <Flex
+      <Box.Flex
         css={{ padding: '0 $8', display: 'none', '@xl': { display: 'flex' } }}
         grow={'1'}
         gap={'$4'}
       >
         <Navigation />
-      </Flex>
+      </Box.Flex>
       <Box css={styles.desktop}>
-        <Flex css={styles.menu}>
+        <Box.Flex css={styles.menu}>
           <a
             href="https://github.com/fuellabs/"
             target="_blank"
             rel="noreferrer"
           >
-            <Icon icon={Icon.is('GithubLogo')} size={24} />
+            <Icon icon={Icon.is('BrandGithub')} size={24} />
           </a>
-        </Flex>
+        </Box.Flex>
         <Search />
       </Box>
       <MobileMenu />
-    </Flex>
+    </Box.Flex>
   );
 }
 

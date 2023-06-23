@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { cssObj } from '@fuel-ui/css';
-import { Box, Stack, Text } from '@fuel-ui/react';
+import { Box, Text } from '@fuel-ui/react';
 import type { ReactNode } from 'react';
 
 import { Heading } from './Heading';
@@ -13,13 +13,13 @@ export function ExampleBox({
   error?: any;
 }) {
   return (
-    <Stack gap="$4" css={{ mt: '$8' }}>
+    <Box.Stack gap="$4" css={{ mt: '$8' }}>
       <Box css={styles.root}>
         <Heading as="h6">Check it working </Heading>
-        {error && <Text color="red10">{error.message}</Text>}
+        {error && <Text color="intentsError10">{error.message}</Text>}
         {children}
       </Box>
-    </Stack>
+    </Box.Stack>
   );
 }
 

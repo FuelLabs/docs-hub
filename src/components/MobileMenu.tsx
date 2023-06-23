@@ -4,7 +4,6 @@ import {
   Box,
   IconButton,
   Icon,
-  Flex,
   FuelLogo,
   Button,
   Link,
@@ -45,7 +44,7 @@ export function MobileMenu() {
     <IconButton
       className="mobile-button"
       variant="link"
-      color="gray"
+      intent="base"
       icon={showing ? Icon.is('X') : Icon.is('List')}
       iconSize={30}
       aria-label="Menu"
@@ -61,21 +60,21 @@ export function MobileMenu() {
       exit={{ x: '100%' }}
       transition={SPRING}
     >
-      <Flex css={styles.menu}>
-        <Flex>
+      <Box.Flex css={styles.menu}>
+        <Box.Flex>
           <FuelLogo size={40} />
           <a
             href="https://github.com/fuellabs/"
             target="_blank"
             rel="noreferrer"
           >
-            <Icon icon={Icon.is('GithubLogo')} size={24} />
+            <Icon icon={Icon.is('BrandGithub')} size={24} />
           </a>
-        </Flex>
+        </Box.Flex>
         {button}
-      </Flex>
+      </Box.Flex>
       <Box css={styles.navContainer}>
-        <Flex css={styles.nav} direction={'column'}>
+        <Box.Flex css={styles.nav} direction={'column'}>
           {NAVIGATION.map((item, index) => {
             if (item.type === 'menu') {
               return <MenuButton key={`${item.slug}${index}`} item={item} />;
@@ -90,7 +89,7 @@ export function MobileMenu() {
               </Button>
             );
           })}
-        </Flex>
+        </Box.Flex>
 
         <Sidebar />
       </Box>
@@ -120,7 +119,7 @@ function MenuButton({ item }: { item: LinkObject }) {
         {item.name}
       </Button>
       {isOpen && item.menu && (
-        <Flex direction={'column'} justify={'flex-start'}>
+        <Box.Flex direction={'column'} justify={'flex-start'}>
           {item.menu.map((menuItem, index) => {
             if (
               menuItem.type === 'internal-link' ||
@@ -148,7 +147,7 @@ function MenuButton({ item }: { item: LinkObject }) {
               </Text>
             );
           })}
-        </Flex>
+        </Box.Flex>
       )}
     </>
   );
