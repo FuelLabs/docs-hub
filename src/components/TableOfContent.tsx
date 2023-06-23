@@ -42,7 +42,7 @@ export function TableOfContent() {
   );
 }
 
-const LIST_ITEM = '.fuel_list > .fuel_list-item';
+const LIST_ITEM = '.fuel_List > .fuel_ListItem';
 
 const styles = {
   queries: cssObj({
@@ -60,12 +60,12 @@ const styles = {
 
     h6: {
       mt: 0,
+      mb: '$2',
     },
 
     [LIST_ITEM]: {
       pb: '$2',
       a: {
-        fontWeight: '$semibold',
         color: '$intentsBase11',
       },
     },
