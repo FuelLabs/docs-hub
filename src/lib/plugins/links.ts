@@ -10,13 +10,13 @@ export function handleLinks(node: any, dirname: string) {
       // sway
       .replace('/docs/book/src', '')
       // indexer
-      .replace('/fuel-indexer/docs/src', '/fuel-indexer')
+      .replace('/fuel-indexer/docs/src', '/indexer')
       // fuelup
       .replace('/fuelup/docs/src', '/fuelup')
       // rust sdk
       .replace('/fuels-rs/docs/src', '/fuels-rs')
       // specs
-      .replace('/fuel-specs/src', '/fuel-specs')
+      .replace('/fuel-specs/src', '/specs')
       // ts sdk
       .replace('/fuels-ts/apps/docs/src', '/fuels-ts');
     if (node.url.startsWith('../')) {
