@@ -28,9 +28,9 @@ const codeImportCondition = (node: any) => {
 
 const forcGenCondition = (tree: any, node: any, filepath: string) => {
   return (
-    tree.children.length === 1 &&
-    node.type === 'root' &&
-    filepath.includes('sway/docs/book/src/forc')
+    filepath.includes('sway/docs/book/src/forc') &&
+    (tree.children.length === 1 || tree.children.length === 2) &&
+    node.type === 'root'
   );
 };
 
@@ -97,7 +97,17 @@ export function handlePlugins(options: Options = { filepath: '' }) {
       visit(tree, '', (node: any, idx, parent) => {
         if (
           // get the generated docs for forc
-          forcGenCondition(tree, node, filepath) ||
+          forcGenCondition(tree, node, filepath)
+        ) {
+          nodes.push([node as any, idx, parent as Parent]);
+        }
+      });
+      nodes.forEach(([node]) => {
+        const newTreeChildren = handleForcGenDocs(node, filepath, rootDir);
+        if (newTreeChildren) node.children = newTreeChildren;
+      });
+      visit(tree, '', (node: any, idx, parent) => {
+        if (
           // handle example code imports in mdbook repos and the TS SDK docs
           exampleImportCondition(node) ||
           // remove .md from mdBook links
@@ -107,10 +117,7 @@ export function handlePlugins(options: Options = { filepath: '' }) {
         }
       });
       nodes.forEach(([node, _idx, parent]) => {
-        if (forcGenCondition(tree, node, filepath)) {
-          const newTreeChildren = handleForcGenDocs(node, filepath, rootDir);
-          if (newTreeChildren) node.children = newTreeChildren;
-        } else if (exampleImportCondition(node)) {
+        if (exampleImportCondition(node)) {
           const content = handleExampleImports(node, dirname, rootDir, parent);
           node.value = content;
         } else if (mdBookLinks(node)) {
