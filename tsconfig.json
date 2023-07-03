@@ -8,9 +8,10 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "paths": {
-      "~/*": ["./*"]
+      "~/*": ["./*", "./docs/fuels-wallet/packages/docs/*"]
     }
   },
+  "exclude": ["./docs/**.ts", "./docs/**.tsx"],
   "include": [
     "next-env.d.ts",
     "./src/**/*.ts",

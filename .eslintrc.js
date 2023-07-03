@@ -1,6 +1,102 @@
+const nextConfig = require('eslint-config-next');
 const path = require('path');
 
 const resolveRoot = (dir = '') => path.resolve(__dirname, dir);
+
+const plugins = ['@typescript-eslint', 'testing-library', 'jest-dom'];
+const rules = {
+  '@typescript-eslint/no-explicit-any': 'error',
+  '@typescript-eslint/no-shadow': 'off',
+  '@typescript-eslint/no-non-null-assertion': 'off',
+  '@typescript-eslint/no-use-before-define': 'off',
+  '@typescript-eslint/consistent-type-imports': 2,
+  '@typescript-eslint/lines-between-class-members': [
+    'error',
+    'always',
+    { exceptAfterSingleLine: true },
+  ],
+  '@typescript-eslint/no-inferrable-types': 'off',
+  '@typescript-eslint/no-var-requires': 'off',
+  'class-methods-use-this': 'off',
+  'eslint-comments/disable-enable-pair': 'off',
+  'eslint-comments/no-unused-disable': 'off',
+  'import/extensions': 'off',
+  'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+  'import/order': [
+    'error',
+    {
+      groups: [
+        ['builtin', 'external', 'internal'],
+        ['parent'],
+        ['sibling', 'index'],
+      ],
+      'newlines-between': 'always',
+      alphabetize: { order: 'asc' },
+    },
+  ],
+  'import/prefer-default-export': 'off',
+  'arrow-body-style': 'off',
+  'no-await-in-loop': 0,
+  'no-bitwise': 0,
+  'no-underscore-dangle': 'off',
+  'prefer-destructuring': 0,
+  'react/display-name': 'off',
+  'react/prop-types': 'off',
+  'react/react-in-jsx-scope': 'off',
+  'react-hooks/exhaustive-deps': 'off',
+  'no-restricted-syntax': 'off',
+  camelcase: 'off',
+  '@typescript-eslint/naming-convention': [
+    'error',
+    {
+      selector: 'default',
+      format: ['camelCase', 'UPPER_CASE', 'PascalCase'],
+      leadingUnderscore: 'allow',
+    },
+    {
+      selector: 'memberLike',
+      modifiers: ['private'],
+      format: ['camelCase'],
+      leadingUnderscore: 'require',
+    },
+    {
+      selector: 'typeLike',
+      format: ['StrictPascalCase'],
+    },
+    {
+      selector: 'interface',
+      format: ['StrictPascalCase'],
+      custom: {
+        regex: '^I[A-Z]',
+        match: false,
+      },
+    },
+    {
+      selector: [
+        'classProperty',
+        'objectLiteralProperty',
+        'typeProperty',
+        'classMethod',
+        'objectLiteralMethod',
+        'typeMethod',
+        'accessor',
+        'enumMember',
+      ],
+      format: null,
+      modifiers: ['requiresQuotes'],
+    },
+  ],
+  '@typescript-eslint/no-unused-vars': [
+    'error',
+    {
+      vars: 'all',
+      args: 'after-used',
+      ignoreRestSiblings: false,
+      argsIgnorePattern: '^_',
+      varsIgnorePattern: '^_',
+    },
+  ],
+};
 
 module.exports = {
   parser: '@typescript-eslint/parser',
@@ -16,81 +112,35 @@ module.exports = {
       jsx: true,
     },
   },
-  plugins: ['@typescript-eslint', 'testing-library', 'jest-dom'],
-  extends: [
-    'airbnb-base',
-    'airbnb-typescript/base',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:eslint-comments/recommended',
-    'plugin:react/recommended',
-    'plugin:@next/next/recommended',
-    'prettier',
-  ],
   settings: {
     react: {
       version: 'detect',
     },
-  },
-  rules: {
-    '@typescript-eslint/no-shadow': 'off',
-    '@typescript-eslint/no-non-null-assertion': 'off',
-    '@typescript-eslint/no-use-before-define': 'off',
-    '@typescript-eslint/consistent-type-imports': 2,
-    '@typescript-eslint/lines-between-class-members': [
-      'error',
-      'always',
-      { exceptAfterSingleLine: true },
-    ],
-    '@typescript-eslint/no-inferrable-types': 'off',
-    '@typescript-eslint/no-var-requires': 'off',
-    'class-methods-use-this': 'off',
-    'eslint-comments/disable-enable-pair': ['error', { allowWholeFile: true }],
-    'eslint-comments/no-unused-disable': 'error',
-    'import/extensions': 'off',
-    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-    'import/order': [
-      'error',
-      {
-        groups: [
-          ['builtin', 'external', 'internal'],
-          ['parent'],
-          ['sibling', 'index'],
+    'import/ignore': ['/node_modules/'],
+    'import/resolver': {
+      node: true,
+      typescript: {
+        tsconfigRootDir: resolveRoot(),
+        project: [
+          resolveRoot('./tsconfig.eslint.json'),
+          resolveRoot('./**/**/tsconfig.json'),
         ],
-        'newlines-between': 'always',
-        alphabetize: { order: 'asc' },
-      },
-    ],
-    'import/prefer-default-export': 'off',
-    'arrow-body-style': 'off',
-    'no-await-in-loop': 0,
-    'no-bitwise': 0,
-    'no-underscore-dangle': 'off',
-    'prefer-destructuring': 0,
-    'react/display-name': 'off',
-    'react/prop-types': 'off',
-    'react/react-in-jsx-scope': 'off',
-    'no-nested-ternary': 'off',
-    '@typescript-eslint/no-unused-vars': [
-      'error',
-      {
-        vars: 'all',
-        args: 'after-used',
-        ignoreRestSiblings: false,
-        argsIgnorePattern: '^_',
-      },
-    ],
-  },
-  // Disable no-unused-expressions to allow chai 'expect' expressions in testing
-  overrides: [
-    {
-      files: ['./src/*.test.{ts,tsx}'],
-      env: {
-        jest: true,
-      },
-      rules: {
-        '@typescript-eslint/no-unused-expressions': 'off',
-        'import/no-extraneous-dependencies': 'off',
       },
     },
+  },
+  extends: [
+    'eslint:recommended',
+    'plugin:import/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:storybook/recommended',
+    'prettier',
+    'next/core-web-vitals',
   ],
+  plugins: [...plugins, ...nextConfig.plugins.filter((f) => f !== 'import')],
+  rules: {
+    ...rules,
+    ...Object.fromEntries(
+      Object.entries(nextConfig.rules).filter(([key]) => key !== 'import/order')
+    ),
+  },
 };

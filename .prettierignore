@@ -7,3 +7,4 @@ pnpm-lock.yaml
 **/*.typegen.ts
 .next
 docs
+!src/app/docs
