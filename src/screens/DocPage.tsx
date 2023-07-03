@@ -40,8 +40,9 @@ export function DocScreen(props: DocPageProps) {
 const styles = {
   sidebar: cssObj({
     display: 'none',
-    padding: '$8 $0 $0 $6',
+    padding: '$8 $8 $0 $6',
     position: 'sticky',
+    borderRight: '1px solid $border',
     top: 20,
 
     '@xl': {
@@ -57,9 +58,8 @@ const styles = {
     },
 
     '@xl': {
-      py: '$8',
+      py: '$14',
       px: '$0',
-      width: '60vw',
     },
 
     '& .fuel_Heading:first-of-type': {

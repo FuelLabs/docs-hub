@@ -83,7 +83,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     pt: '$3',
-    borderTop: '1px dashed $intentsBase4',
+    borderTop: '1px solid $border',
     fontSize: '$xs',
 
     'a, a:visited': {

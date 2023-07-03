@@ -45,16 +45,17 @@ export function Layout({ title, children }: LayoutProps) {
 
 const styles = {
   root: cssObj({
-    maxW: '100vw',
+    maxWidth: '100vw',
+    width: '100vw',
     height: '100vh',
     display: 'grid',
     gridTemplateColumns: '1fr',
     gridTemplateRows: '80px auto',
 
     '@xl': {
-      gridTemplateColumns: '0.75fr 2.5fr 0.75fr',
+      gridTemplateColumns: '250px auto 220px',
       gridTemplateRows: '80px auto',
-      gridColumnGap: '$14',
+      gridColumnGap: '$24',
     },
   }),
 };

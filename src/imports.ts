@@ -32,15 +32,6 @@ export function getComponents(doc: DocType) {
         { ssr: false }
       );
       components.Player = Player;
-
-      const DownloadFuelWallet = dynamic(
-        () =>
-          import(
-            '~/docs/fuels-wallet/packages/docs/src/components/DownloadFuelWallet'
-          ).then((mod) => mod.DownloadFuelWallet),
-        { ssr: false }
-      );
-      components.DownloadFuelWallet = DownloadFuelWallet;
     } else {
       const Examples: any = { Events: {} };
       if (doc.slug.includes('getting-started')) {

@@ -117,7 +117,7 @@ export const styles = {
     minHeight: 'auto',
 
     '&.active': {
-      color: '$brand',
+      color: '$textLink',
     },
     '&.isCategory': {
       borderBottom: '1px solid $border',
@@ -141,7 +141,7 @@ export const styles = {
     },
 
     '&[data-active="true"], &[data-active="true"]:hover': {
-      color: '$brand !important',
+      color: '$textLink !important',
     },
   }),
 };

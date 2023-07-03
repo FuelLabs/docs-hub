@@ -58,7 +58,7 @@ const styles = {
       },
 
     '&[data-active="true"], &[data-active="true"]:hover': {
-      color: '$brand',
+      color: '$textLink',
       textDecoration: 'none',
     },
 
