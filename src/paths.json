@@ -10,7 +10,7 @@
   "/README.md": ".md",
   "/guide/": "/",
   "/fuel-graphql-docs/": "/graphql/",
-  "/fuel-specs/": "/specs/",
+  "fuel-specs": "specs",
   "/fuel-indexer/": "/indexer/",
   "/fuels-wallet/": "/wallet/"
 }
