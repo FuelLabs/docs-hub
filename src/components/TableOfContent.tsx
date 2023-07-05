@@ -93,7 +93,7 @@ const styles = {
     },
 
     [`${LIST_ITEM}[data-active="true"] a`]: {
-      color: '$brand !important',
+      color: '$intentsPrimary11 !important',
     },
   }),
 };
