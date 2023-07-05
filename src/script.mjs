@@ -172,14 +172,14 @@ async function getDocs(config) {
         "./fuels-ts/apps/docs/src/**/*.md",
       ];
       break;
-    case "fuels-wallet":
+    case "wallet":
       paths = [
         // WALLET DOCS
         "./fuels-wallet/packages/docs/docs/**/*.mdx",
         "./fuels-wallet/packages/docs/docs/*.mdx",
       ];
       break;
-    case "fuel-graphql-docs":
+    case "graphql":
       paths = [
         // GRAPHQL DOCS
         "./fuel-graphql-docs/docs/*.mdx",
@@ -195,7 +195,7 @@ async function getDocs(config) {
         "!**/SUMMARY.md",
       ];
       break;
-    case "fuel-indexer":
+    case "indexer":
       paths = [
         // INDEXER DOCS
         "./fuel-indexer/docs/src/*.md",
@@ -204,7 +204,7 @@ async function getDocs(config) {
         "!**/SUMMARY.md",
       ];
       break;
-    case "fuel-specs":
+    case "specs":
       paths = [
         // SPECS DOCS
         "./fuel-specs/src/*.md",
@@ -238,16 +238,12 @@ async function getDocs(config) {
 
 function removeDocsPath(path) {
   // clean up the url paths
-  let newPath = path
-    .replace("docs/", "")
-    .replace("/book/", "/")
-    .replace("/packages/", "/")
-    .replace("/fuels-wallet/docs/", "/fuels-wallet/")
-    .replace("/apps/", "/")
-    .replace("/src/", "/")
-    .replace("/index.md", ".md")
-    .replace("/README.md", ".md")
-    .replace("/guide/", "/");
+  const configPath = join(DOCS_DIRECTORY, `../src/paths.json`);
+  const pathsConfig = JSON.parse(fs.readFileSync(configPath, "utf8"));
+  let newPath = path;
+  Object.keys(pathsConfig).forEach((key) => {
+    newPath = newPath.replaceAll(key, pathsConfig[key]);
+  });
 
   // handle mdbooks folders that use a same name file instead of index.md
   const paths = newPath.split("/");
@@ -262,11 +258,6 @@ function removeDocsPath(path) {
   // move forc docs to their own section
   if (path.includes("/forc/")) {
     newPath = newPath.replace("sway/", "");
-  }
-
-  // remove forc_client subcategory in forc docs
-  if (path.includes("/forc_client/")) {
-    newPath = newPath.replace("/forc_client/", "/");
   }
 
   return newPath;

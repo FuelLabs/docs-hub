@@ -25,11 +25,11 @@ export function Navigation() {
       str === 'sway' ||
       str === 'fuels-rs' ||
       str === 'fuels-ts' ||
-      str === 'fuels-wallet' ||
-      str === 'fuel-graphql-docs' ||
+      str === 'wallet' ||
+      str === 'graphql' ||
       str === 'fuelup' ||
-      str === 'fuel-indexer' ||
-      str === 'fuel-specs' ||
+      str === 'indexer' ||
+      str === 'specs' ||
       str === 'forc'
     );
   }

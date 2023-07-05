@@ -8,11 +8,11 @@ export type Tabs =
   | 'sway'
   | 'fuels-rs'
   | 'fuels-ts'
-  | 'fuels-wallet'
-  | 'fuel-graphql-docs'
+  | 'wallet'
+  | 'graphql'
   | 'fuelup'
-  | 'fuel-indexer'
-  | 'fuel-specs'
+  | 'indexer'
+  | 'specs'
   | 'forc';
 
 export type LinkType = 'menu' | 'internal-link' | 'external-link' | 'category';
@@ -96,14 +96,14 @@ export const NAVIGATION: LinkObject[] = [
       {
         name: 'Wallet',
         type: 'internal-link',
-        link: '/docs/fuels-wallet/install/',
-        slug: 'fuels-wallet',
+        link: '/docs/wallet/install/',
+        slug: 'wallet',
       },
       {
         name: 'Indexer',
         type: 'internal-link',
-        link: '/docs/fuel-indexer/',
-        slug: 'fuel-indexer',
+        link: '/docs/indexer/',
+        slug: 'indexer',
       },
     ],
   },
@@ -114,14 +114,14 @@ export const NAVIGATION: LinkObject[] = [
       {
         name: 'GraphQL API',
         type: 'internal-link',
-        link: '/docs/fuel-graphql-docs/overview/',
-        slug: 'fuel-graphql-docs',
+        link: '/docs/graphql/overview/',
+        slug: 'graphql',
       },
       {
         name: 'Specs',
         type: 'internal-link',
-        link: '/docs/fuel-specs',
-        slug: 'fuel-specs',
+        link: '/docs/specs',
+        slug: 'specs',
       },
       {
         name: 'Faucet',

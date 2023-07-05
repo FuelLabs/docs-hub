@@ -26,8 +26,13 @@ export function handleForcGenDocs(
   rootDir: string
 ) {
   thisFilePath = filepath;
+  let child;
+  if (thisFilePath.endsWith('commands/index.md')) {
+    child = { value: 'index' };
+  } else {
+    child = node.children[0].children[0];
+  }
 
-  const child = node.children[0].children[0];
   const newTree = transformContent(child, rootDir);
   if (newTree === null) {
     return null;

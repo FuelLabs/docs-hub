@@ -176,9 +176,9 @@
       "Messages"
     ]
   },
-  "fuels-wallet": {
+  "wallet": {
     "title": "Fuel Wallet",
-    "slug": "fuels-wallet",
+    "slug": "wallet",
     "paths": {
       "docs": "",
       "components": ["/packages/docs/src/components/Demo.tsx"],
@@ -211,9 +211,9 @@
       "Linking local dependencies"
     ]
   },
-  "fuel-graphql-docs": {
+  "graphql": {
     "title": "Fuel GraphQL Docs",
-    "slug": "fuel-graphql-docs",
+    "slug": "graphql",
     "paths": {
       "docs": "../fuel-graphql-docs/docs",
       "components": "../fuel-graphql-docs/src/components",
@@ -264,9 +264,9 @@
       "Store"
     ]
   },
-  "fuel-indexer": {
+  "indexer": {
     "title": "Indexer",
-    "slug": "fuel-indexer",
+    "slug": "indexer",
     "paths": {
       "docs": "",
       "components": "",
@@ -299,9 +299,9 @@
       "Glossary"
     ]
   },
-  "fuel-specs": {
+  "specs": {
     "title": "Fuel Specs",
-    "slug": "fuel-specs",
+    "slug": "specs",
     "paths": {
       "docs": "",
       "components": "",
