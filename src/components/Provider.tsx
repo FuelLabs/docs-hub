@@ -8,7 +8,7 @@ import { Blockquote } from './Blockquote';
 import { Code } from './Code';
 import { Heading } from './Heading';
 import { Link } from './Link';
-import { UL } from './List';
+import { UL, OL } from './List';
 import { Paragraph } from './Paragraph';
 import { Pre } from './Pre';
 import { Table } from './Table';
@@ -27,6 +27,7 @@ const components = {
   blockquote: Blockquote,
   table: Table,
   ul: UL,
+  ol: OL,
 };
 
 type ProviderProps = {
@@ -36,7 +37,7 @@ type ProviderProps = {
 export function Provider({ children }: ProviderProps) {
   return (
     <MDXProvider components={components as any}>
-      <ThemeProvider withFonts={false}>{children}</ThemeProvider>
+      <ThemeProvider>{children}</ThemeProvider>
     </MDXProvider>
   );
 }

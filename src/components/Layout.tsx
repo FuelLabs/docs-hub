@@ -17,7 +17,9 @@ export function Layout({ title, children }: LayoutProps) {
   const titleText = title
     ? `${title[0].toUpperCase()}${title.slice(1)} | Fuel Docs`
     : 'Fuel Docs';
+
   const docsConfig = doc.docsConfig;
+  const hasHeadings = Boolean(doc.headings.length);
 
   return (
     <>
@@ -35,7 +37,7 @@ export function Layout({ title, children }: LayoutProps) {
         />
         <meta property="og:image" content={docsConfig?.ogTags?.image} />
       </Head>
-      <Box css={styles.root}>
+      <Box css={styles.root} data-headings={hasHeadings}>
         <Header title={docsConfig?.title} />
         {children}
       </Box>
@@ -53,9 +55,21 @@ const styles = {
     gridTemplateRows: '80px auto',
 
     '@xl': {
-      gridTemplateColumns: '250px auto 220px',
+      gridTemplateColumns: '250px 1fr 220px',
       gridTemplateRows: '80px auto',
       gridColumnGap: '$24',
+
+      '& .Layout--section': {
+        maxWidth: 'calc(100vw - 662px)',
+      },
+
+      '&[data-headings="false"]': {
+        gridTemplateColumns: '250px 1fr',
+
+        '& .Layout--section': {
+          maxWidth: 'calc(100vw - 442px)',
+        },
+      },
     },
   }),
 };
