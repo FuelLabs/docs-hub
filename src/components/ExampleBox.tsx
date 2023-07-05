@@ -33,9 +33,6 @@ const styles = {
     border: '1px dashed $intentsBase3',
     maxWidth: '90vw',
     overflowWrap: 'break-word',
-    '@xl': {
-      maxWidth: '55vw',
-    },
     h6: {
       display: 'flex',
       alignItems: 'center',
