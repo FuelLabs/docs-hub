@@ -86,7 +86,7 @@ const styles = {
       color: '$intentsPrimary11',
     },
     '.label': {
-      fontSize: '$xs',
+      fontSize: '$sm',
       color: '$textMuted',
     },
   }),
@@ -94,7 +94,7 @@ const styles = {
     mt: '$4',
     py: '$4',
     display: 'flex',
-    fontSize: '$xs',
+    fontSize: '$sm',
     justifyContent: 'space-between',
     borderTop: '1px solid $border',
     borderBottom: '1px solid $border',

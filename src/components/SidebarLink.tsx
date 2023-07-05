@@ -47,8 +47,8 @@ const styles = {
     px: '$0',
     py: '$0',
     justifyContent: 'space-between',
-    fontSize: '$xs',
-    height: '$4',
+    fontSize: '$sm',
+    height: '$6',
     position: 'relative',
 
     '&:not([aria-disabled="true"]):active, &:not([aria-disabled="true"])[aria-pressed="true"]':
