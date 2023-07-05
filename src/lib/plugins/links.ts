@@ -1,6 +1,5 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-
 import { DOCS_DIRECTORY } from '~/src/constants';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

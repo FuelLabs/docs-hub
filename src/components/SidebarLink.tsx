@@ -4,10 +4,10 @@ import { ButtonLink } from '@fuel-ui/react';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
 import { forwardRef } from 'react';
+import type { SidebarLinkItem } from '~/src/types';
 
 import { capitalize } from '../lib/str';
 
-import type { SidebarLinkItem } from '~/src/types';
 
 export type SidebarLinkProps = ButtonLinkProps & {
   item: SidebarLinkItem;

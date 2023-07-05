@@ -5,16 +5,14 @@ import { join } from 'path';
 import remarkGfm from 'remark-gfm';
 import remarkSlug from 'remark-slug';
 import type { Pluggable } from 'unified';
-
-import { DOCS_DIRECTORY } from '../constants';
+import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
+import { FIELDS , DOCS_DIRECTORY } from '~/src/constants';
+import type { DocType, NodeHeading, SidebarLinkItem } from '~/src/types';
 
 import { getDocConfig, getDocContent, getDocFromSlug } from './docs';
 import { handlePlugins } from './plugins/plugins';
 import { rehypeExtractHeadings } from './toc';
 
-import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
-import { FIELDS } from '~/src/constants';
-import type { DocType, NodeHeading, SidebarLinkItem } from '~/src/types';
 
 const docsCache = new Map<string, DocType>();
 

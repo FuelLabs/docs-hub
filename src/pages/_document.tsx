@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getCssText } from '@fuel-ui/css';
 import NextDocument, { Head, Html, Main, NextScript } from 'next/document';
 import { Cookies } from 'react-cookie';
@@ -26,6 +27,7 @@ export default class Document extends NextDocument {
         <Head>
           <style
             id="stitches"
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             dangerouslySetInnerHTML={{ __html: getCssText() }}
           />
         </Head>

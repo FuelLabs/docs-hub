@@ -1,15 +1,14 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
 import { MDXRemote } from 'next-mdx-remote';
-
-import { getComponents } from '../imports';
-
 import { Layout } from '~/src/components/Layout';
 import { Sidebar } from '~/src/components/Sidebar';
 import { TableOfContent } from '~/src/components/TableOfContent';
 import { DocProvider } from '~/src/hooks/useDocContext';
 import type { DocType, SidebarLinkItem } from '~/src/types';
+
 import { DocFooter } from '../components/DocFooter';
+import { getComponents } from '../imports';
 
 type DocPageProps = {
   doc: DocType;

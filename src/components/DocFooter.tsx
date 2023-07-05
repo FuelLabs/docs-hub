@@ -1,8 +1,8 @@
 import { cssObj } from '@fuel-ui/css';
 import { Text, Link, Box, Icon } from '@fuel-ui/react';
 import { useRouter } from 'next/router';
-
 import { useDocContext } from '~/src/hooks/useDocContext';
+
 import { capitalize } from '../lib/str';
 
 function parseLink(link?: string) {
@@ -17,7 +17,7 @@ function parseLink(link?: string) {
 export function DocFooter() {
   const { docLink, doc } = useDocContext();
   const router = useRouter();
-  let prevLink = parseLink(docLink.prev?.slug);
+  const prevLink = parseLink(docLink.prev?.slug);
   let nextLink = parseLink(docLink.next?.slug);
 
   if (router.asPath === '/') nextLink = `docs/${nextLink}`;

@@ -4,6 +4,7 @@ import { globby } from "globby";
 import matter from "gray-matter";
 import { join } from "path";
 
+// eslint-disable-next-line no-undef
 const DOCS_DIRECTORY = join(process.cwd(), "./docs");
 const docConfigPath = join(DOCS_DIRECTORY, "../portal/docs.json");
 const configFile = JSON.parse(fs.readFileSync(docConfigPath, "utf8"));

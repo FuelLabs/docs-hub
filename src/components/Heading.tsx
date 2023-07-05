@@ -3,6 +3,7 @@
 import { cssObj } from '@fuel-ui/css';
 import { Heading as FuelHeading, Icon } from '@fuel-ui/react';
 import { useRef, useEffect } from 'react';
+
 import { useDocContext } from '../hooks/useDocContext';
 
 export function Heading({ children, ...props }: any) {

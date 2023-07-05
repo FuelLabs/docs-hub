@@ -132,8 +132,8 @@ module.exports = {
     'eslint:recommended',
     'plugin:import/recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:@next/next/recommended',
     'prettier',
-    'next/core-web-vitals',
   ],
   plugins: [...plugins, ...nextConfig.plugins.filter((f) => f !== 'import')],
   rules: {

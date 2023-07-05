@@ -2,10 +2,10 @@ import { cssObj } from '@fuel-ui/css';
 import { Box, Icon, List } from '@fuel-ui/react';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import type { SidebarLinkItem } from '~/src/types';
 
 import { SidebarLink } from './SidebarLink';
 
-import type { SidebarLinkItem } from '~/src/types';
 
 type SidebarSubmenuProps = SidebarLinkItem;
 
