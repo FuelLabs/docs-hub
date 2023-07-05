@@ -1,18 +1,16 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+import { DOCS_DIRECTORY } from '../constants';
+
 export function removeDocsPath(path: string) {
-  // clean up the url paths
-  let newPath = path
-    .replace('docs/', '')
-    .replace('/book/', '/')
-    .replace('/packages/', '/')
-    .replace('/apps/', '/')
-    .replace('/src/', '/')
-    .replace('/index.md', '.md')
-    .replace('/README.md', '.md')
-    .replace('/fuel-graphql-docs/', '/graphql/')
-    .replaceAll('/fuel-specs', '/specs')
-    .replaceAll('/fuel-indexer', '/indexer')
-    .replace('/fuels-wallet/docs/', '/wallet/')
-    .replace('/guide/', '/');
+  // update paths based on paths.json config
+  const configPath = join(DOCS_DIRECTORY, `../src/paths.json`);
+  const pathsConfig = JSON.parse(readFileSync(configPath, 'utf8'));
+  let newPath = path;
+  Object.keys(pathsConfig).forEach((key) => {
+    newPath = newPath.replaceAll(key, pathsConfig[key]);
+  });
 
   // handle mdbooks folders that use a same name file instead of index.md
   const paths = newPath.split('/');
@@ -27,11 +25,6 @@ export function removeDocsPath(path: string) {
   // move forc docs to their own section
   if (path.includes('/forc/')) {
     newPath = newPath.replace('sway/', '');
-  }
-
-  // remove forc_client subcategory in forc docs
-  if (path.includes('/forc_client/')) {
-    newPath = newPath.replace('/forc_client/', '/');
   }
 
   return newPath;
