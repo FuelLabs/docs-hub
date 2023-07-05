@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable import/no-unresolved */
 import { readFileSync } from 'fs';
 import { serialize } from 'next-mdx-remote/serialize';
 import { join } from 'path';
@@ -6,13 +7,12 @@ import remarkGfm from 'remark-gfm';
 import remarkSlug from 'remark-slug';
 import type { Pluggable } from 'unified';
 import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
-import { FIELDS , DOCS_DIRECTORY } from '~/src/constants';
+import { FIELDS, DOCS_DIRECTORY } from '~/src/constants';
 import type { DocType, NodeHeading, SidebarLinkItem } from '~/src/types';
 
 import { getDocConfig, getDocContent, getDocFromSlug } from './docs';
 import { handlePlugins } from './plugins/plugins';
 import { rehypeExtractHeadings } from './toc';
-
 
 const docsCache = new Map<string, DocType>();
 

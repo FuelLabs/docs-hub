@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable import/no-unresolved */
 import dynamic from 'next/dynamic';
 
 import type { DocType } from './types';

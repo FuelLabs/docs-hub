@@ -9,7 +9,7 @@
     "deps:update": "updates -gu",
     "start": "next start",
     "check": "run-s lint prettier:check",
-    "lint": "next lint",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "prettier:check": "prettier --check .",
     "prettier:format": "prettier --write .",
     "clean:docs:build": "sh ./scripts/clean-build-files.sh",
