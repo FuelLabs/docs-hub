@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable import/no-unresolved */
+/* eslint-disable import/order */
 import { readFileSync } from 'fs';
 import { serialize } from 'next-mdx-remote/serialize';
 import { join } from 'path';
