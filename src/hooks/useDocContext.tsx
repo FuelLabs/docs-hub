@@ -1,14 +1,17 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useState } from 'react';
 import type { ReactNode } from 'react';
 
 import type { SidebarLinkItem, DocType } from '~/src/types';
 
 export type DocCtx = {
   doc: DocType;
-  // docLink: SidebarLinkItem;
+  docLink: SidebarLinkItem;
   links: SidebarLinkItem[];
   title: string;
+  activeHistory?: string[];
+  setActiveHistory: (prev: string) => void;
 };
+
 const ctx = createContext<DocCtx>({} as DocCtx);
 
 export function useDocContext() {
@@ -20,5 +23,17 @@ type DocProviderProps = Partial<DocCtx> & {
 };
 
 export function DocProvider({ children, ...props }: DocProviderProps) {
-  return <ctx.Provider value={props as DocCtx}>{children}</ctx.Provider>;
+  const [activeHistory, setActive] = useState<string[]>([]);
+
+  function setActiveHistory(prev: string) {
+    setActive((s) => s.concat(prev));
+  }
+
+  return (
+    <ctx.Provider
+      value={{ ...props, activeHistory, setActiveHistory } as DocCtx}
+    >
+      {children}
+    </ctx.Provider>
+  );
 }

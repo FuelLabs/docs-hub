@@ -64,6 +64,7 @@ const styles = {
     alignItems: 'center',
     borderBottom: '1px solid $border',
     gridColumn: '1 / 4',
+    bg: '$overlayBg',
 
     '.logo': {
       display: 'inline-flex',

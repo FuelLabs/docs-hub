@@ -16,10 +16,10 @@ type DocPathType = {
 const pathsCache = new Map<string, DocPathType[]>();
 
 export async function getDocs(config: Config): Promise<DocPathType[]> {
-  const cache = pathsCache.get(config.slug);
+  const cache = pathsCache.get(config?.slug);
   if (cache) return cache;
   let paths: string[] = [];
-  switch (config.slug) {
+  switch (config?.slug) {
     case 'sway':
       paths = [
         // SWAY DOCS
@@ -119,7 +119,7 @@ export async function getDocs(config: Config): Promise<DocPathType[]> {
       path,
     };
   });
-  pathsCache.set(config.slug, final);
+  pathsCache.set(config?.slug, final);
   return final;
 }
 
@@ -150,6 +150,8 @@ export async function getDocConfig(slug: string): Promise<Config> {
       book = slug.split('/')[1].replace('.md', '');
     } else if (slug.includes('/')) {
       book = slug.split('/')[0];
+    } else if (slug.startsWith('fuel-')) {
+      book = slug.replace('fuel-', '');
     }
     return configFile[book];
   } catch (e) {

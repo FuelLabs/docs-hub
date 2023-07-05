@@ -31,7 +31,7 @@ h4,
 h5,
 h6 {
   font-weight: 600;
-  letter-spacing: -0.03em !important;
+  letter-spacing: -0.05em !important;
   font-feature-settings: "pnum" on, "onum" on, "ss04" on;
 }
 

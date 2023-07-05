@@ -52,6 +52,7 @@ export function Navigation() {
               </Dropdown.Trigger>
               <Dropdown.Menu
                 autoFocus
+                css={styles.menu}
                 disabledKeys={item.categories}
                 aria-label={item.name}
                 onAction={(action) => {
@@ -111,6 +112,9 @@ export function Navigation() {
 }
 
 export const styles = {
+  menu: cssObj({
+    boxShadow: '$sm',
+  }),
   nestedLink: cssObj({
     padding: '$0 $4',
     height: '$7',

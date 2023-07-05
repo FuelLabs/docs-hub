@@ -56,7 +56,6 @@ const styles = {
   root: cssObj({
     boxSizing: 'border-box',
     position: 'relative',
-    maxWidth: 'calc(100vw - $8)',
 
     pre: {
       pr: '50px',

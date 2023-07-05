@@ -45,9 +45,12 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
 
 const styles = {
   root: cssObj({
-    justifyContent: 'space-between',
     px: '$0',
     py: '$0',
+    justifyContent: 'space-between',
+    fontSize: '$xs',
+    height: '$4',
+    position: 'relative',
 
     '&:not([aria-disabled="true"]):active, &:not([aria-disabled="true"])[aria-pressed="true"]':
       {
@@ -60,6 +63,19 @@ const styles = {
     '&[data-active="true"], &[data-active="true"]:hover': {
       color: '$textLink',
       textDecoration: 'none',
+    },
+
+    '&[data-active="true"]:is([data-submenu="true"])': {
+      '&::before': {
+        position: 'absolute',
+        display: 'block',
+        content: '""',
+        top: 0,
+        left: '-18px',
+        width: '1px',
+        height: '100%',
+        backgroundColor: '$textLink',
+      },
     },
 
     '&:not([data-active="true"]):hover': {

@@ -43,13 +43,8 @@ export function SidebarSubmenu({
           {submenu?.map((item, index) => {
             if (item.label !== label) {
               return (
-                <List.Item
-                  key={index}
-                  icon={Icon.is('ArrowRight')}
-                  iconSize={10}
-                  iconColor="textIcon"
-                >
-                  <SidebarLink item={item} />
+                <List.Item key={index}>
+                  <SidebarLink item={item} data-submenu />
                 </List.Item>
               );
             }
@@ -68,11 +63,14 @@ const styles = {
     '.fuel_List': {
       display: 'flex',
       flexDirection: 'column',
-      gap: '$1',
+      gap: '$0',
       mt: '$1',
+      pl: '$4',
+      ml: '$1',
+      borderLeft: '1px solid $border',
     },
     '.fuel_ListItem': {
-      gap: '$2',
+      gap: '$0',
     },
     '.fuel_ListItem a': {
       flex: 1,
