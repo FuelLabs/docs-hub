@@ -170,6 +170,14 @@ export function getComponents(doc: DocType) {
             ),
           { ssr: false }
         );
+      } else if (doc.slug.includes('connectors')) {
+        Examples.Connectors = dynamic(
+          () =>
+            import('~/docs/fuels-wallet/packages/docs/examples/').then(
+              (mod) => mod.Connectors
+            ),
+          { ssr: false }
+        );
       }
 
       components.Examples = Examples;

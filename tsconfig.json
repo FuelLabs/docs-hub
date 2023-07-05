@@ -8,7 +8,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "paths": {
-      "~/*": ["./*"]
+      "~/*": ["./*", "./docs/fuels-wallet/packages/docs/*"]
     }
   },
   "include": [
