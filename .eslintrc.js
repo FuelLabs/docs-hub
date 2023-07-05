@@ -132,7 +132,6 @@ module.exports = {
     'eslint:recommended',
     'plugin:import/recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:storybook/recommended',
     'prettier',
     'next/core-web-vitals',
   ],
