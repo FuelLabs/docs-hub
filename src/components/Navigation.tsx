@@ -58,7 +58,7 @@ export function Navigation() {
                 onAction={(action) => {
                   if (item.menu) {
                     const menuItem = item.menu.find(
-                      (i) => action === i.name.concat(i.type)
+                      (i) => action === i.name.concat(i.type),
                     );
                     if (menuItem && menuItem.link) {
                       if (menuItem.type === 'internal-link') {

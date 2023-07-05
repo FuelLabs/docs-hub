@@ -8,7 +8,6 @@ import type { SidebarLinkItem } from '~/src/types';
 
 import { capitalize } from '../lib/str';
 
-
 export type SidebarLinkProps = ButtonLinkProps & {
   item: SidebarLinkItem;
 };
@@ -40,7 +39,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
         {capitalize(item.label.replaceAll(/[_-]/g, ' '))}
       </ButtonLink>
     );
-  }
+  },
 );
 
 const styles = {

@@ -139,7 +139,9 @@ module.exports = {
   rules: {
     ...rules,
     ...Object.fromEntries(
-      Object.entries(nextConfig.rules).filter(([key]) => key !== 'import/order')
+      Object.entries(nextConfig.rules).filter(
+        ([key]) => key !== 'import/order',
+      ),
     ),
   },
 };

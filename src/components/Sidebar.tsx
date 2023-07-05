@@ -5,7 +5,6 @@ import { useDocContext } from '~/src/hooks/useDocContext';
 import { SidebarLink } from './SidebarLink';
 import { SidebarSubmenu } from './SidebarSubmenu';
 
-
 export function Sidebar() {
   const { links } = useDocContext();
   return (

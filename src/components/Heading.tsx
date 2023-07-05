@@ -21,7 +21,7 @@ export function Heading({ children, ...props }: any) {
           .sort(
             (a, b) =>
               a.target.getBoundingClientRect().top -
-              b.target.getBoundingClientRect().top
+              b.target.getBoundingClientRect().top,
           )
           .map((entry) => entry.target.getAttribute('id'))
           .filter((id): id is string => id !== null)?.[0];
@@ -30,7 +30,7 @@ export function Heading({ children, ...props }: any) {
           setActiveHistory(iEntries.current);
         }
       },
-      { rootMargin: '0px', threshold: 1.0 }
+      { rootMargin: '0px', threshold: 1.0 },
     );
     watch && observer.observe(watch);
 

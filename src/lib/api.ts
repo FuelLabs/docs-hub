@@ -97,7 +97,7 @@ function parseSlug(slug?: string) {
 
 export function getDocLink(
   links: Awaited<ReturnType<typeof getSidebarLinks>>,
-  slug: string
+  slug: string,
 ) {
   const parsedSlug = parseSlug(slug) as string;
   const flatLinks = links
@@ -119,11 +119,11 @@ export function getDocLink(
 }
 
 export async function getSidebarLinks(
-  configSlug: string
+  configSlug: string,
 ): Promise<SidebarLinkItem[]> {
   const linksPath = join(
     DOCS_DIRECTORY,
-    `../src/sidebar-links/${configSlug}.json`
+    `../src/sidebar-links/${configSlug}.json`,
   );
   const links = JSON.parse(readFileSync(linksPath, 'utf8'));
   return links;

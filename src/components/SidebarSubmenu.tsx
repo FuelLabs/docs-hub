@@ -6,7 +6,6 @@ import type { SidebarLinkItem } from '~/src/types';
 
 import { SidebarLink } from './SidebarLink';
 
-
 type SidebarSubmenuProps = SidebarLinkItem;
 
 export function SidebarSubmenu({
