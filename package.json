@@ -8,7 +8,7 @@
     "export": "DOCS_DIST=${DOCS_DIST:=dist} next export -o $DOCS_DIST",
     "deps:update": "updates -gu",
     "start": "next start",
-    "check": "run-s lint:check prettier:check",
+    "check": "run-s lint prettier:check",
     "lint": "next lint",
     "prettier:check": "prettier --check .",
     "prettier:format": "prettier --write .",
