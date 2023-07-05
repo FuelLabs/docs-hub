@@ -7,7 +7,7 @@ export function getComponents(doc: DocType) {
   const components: any = {};
 
   // load the components used in the wallet docs
-  if (doc.docsConfig.slug === 'fuels-wallet') {
+  if (doc.docsConfig.slug === 'wallet') {
     const CodeImport = dynamic(
       () =>
         import(
@@ -17,7 +17,7 @@ export function getComponents(doc: DocType) {
     );
     components.CodeImport = CodeImport;
 
-    if (doc.slug.includes('fuels-wallet/how-to-use')) {
+    if (doc.slug.includes('how-to-use')) {
       const Demo = dynamic(
         () =>
           import('~/docs/fuels-wallet/packages/docs/src/components/Demo').then(
@@ -175,7 +175,7 @@ export function getComponents(doc: DocType) {
       components.Examples = Examples;
     }
   } else if (
-    doc.docsConfig.slug === 'fuel-graphql-docs' &&
+    doc.docsConfig.slug === 'graphql' &&
     doc.slug.includes('recipes')
   ) {
     const CodeExamples = dynamic(

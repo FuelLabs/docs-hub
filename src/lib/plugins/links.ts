@@ -1,4 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+import { DOCS_DIRECTORY } from '~/src/constants';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function handleLinks(node: any, dirname: string) {
   let newUrl: string | null = null;
   if (!node.url.includes('http')) {
@@ -6,19 +11,15 @@ export function handleLinks(node: any, dirname: string) {
       .replace('.md', '')
       .replace('/index', '')
       .replace('.html', '');
-    const dir = dirname
-      // sway
-      .replace('/docs/book/src', '')
-      // indexer
-      .replace('/fuel-indexer/docs/src', '/fuel-indexer')
-      // fuelup
-      .replace('/fuelup/docs/src', '/fuelup')
-      // rust sdk
-      .replace('/fuels-rs/docs/src', '/fuels-rs')
-      // specs
-      .replace('/fuel-specs/src', '/fuel-specs')
-      // ts sdk
-      .replace('/fuels-ts/apps/docs/src', '/fuels-ts');
+
+    const configPath = join(DOCS_DIRECTORY, `../src/paths.json`);
+    const pathsConfig = JSON.parse(readFileSync(configPath, 'utf8'));
+
+    let dir = dirname;
+    Object.keys(pathsConfig).forEach((key) => {
+      dir = dir.replaceAll(key, pathsConfig[key]);
+    });
+
     if (node.url.startsWith('../')) {
       const folder = dirname.split('/').pop();
       newUrl = `/${dir.replace(folder!, '')}${newUrl!.replace('../', '')}`;

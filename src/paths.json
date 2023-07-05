@@ -1,0 +1,16 @@
+{
+  "/docs/docs/": "/",
+  "/docs/": "/",
+  "/book/": "/",
+  "/packages/": "/",
+  "/apps/": "/",
+  "/src": "",
+  "/guide/": "/",
+  "/forc_client/": "/",
+  "/index.md": ".md",
+  "/README.md": ".md",
+  "/fuel-graphql-docs/": "/graphql/",
+  "/fuel-specs/": "/specs/",
+  "/fuel-indexer/": "/indexer/",
+  "/fuels-wallet/": "/wallet/"
+}
