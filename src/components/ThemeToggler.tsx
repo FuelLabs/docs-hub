@@ -5,6 +5,7 @@ import { useCookies } from 'react-cookie';
 export function ThemeToggler() {
   const { setTheme } = useFuelTheme();
   const [cookie, setCookie] = useCookies(['theme']);
+  const current = cookie.theme || 'dark';
 
   const handleChange = () => {
     const next = cookie.theme === 'dark' ? 'light' : 'dark';
@@ -14,7 +15,7 @@ export function ThemeToggler() {
   };
 
   return (
-    <Box css={styles.root} data-theme={cookie.theme} onClick={handleChange}>
+    <Box css={styles.root} data-theme={current} onClick={handleChange}>
       <Icon icon="SunFilled" size={20} stroke={1.2} />
       <Icon icon="MoonStars" size={20} stroke={1.2} />
     </Box>

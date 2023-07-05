@@ -22,7 +22,7 @@ export default class Document extends NextDocument {
   render() {
     const cookies = (this.props as any).cookies;
     return (
-      <Html lang="en" data-theme={cookies.theme}>
+      <Html lang="en" data-theme={cookies.theme || 'dark'}>
         <Head>
           <style
             id="stitches"
