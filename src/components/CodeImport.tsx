@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { cssObj } from '@fuel-ui/css';
 import { Link } from '@fuel-ui/react';
 

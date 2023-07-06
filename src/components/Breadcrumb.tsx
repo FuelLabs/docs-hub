@@ -1,7 +1,6 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box, Icon, Text } from '@fuel-ui/react';
 import Link from 'next/link';
-
 import type { DocType } from '~/src/types';
 
 type BreadcrumbProps = {

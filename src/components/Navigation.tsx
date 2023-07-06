@@ -52,12 +52,13 @@ export function Navigation() {
               </Dropdown.Trigger>
               <Dropdown.Menu
                 autoFocus
+                css={styles.menu}
                 disabledKeys={item.categories}
                 aria-label={item.name}
                 onAction={(action) => {
                   if (item.menu) {
                     const menuItem = item.menu.find(
-                      (i) => action === i.name.concat(i.type)
+                      (i) => action === i.name.concat(i.type),
                     );
                     if (menuItem && menuItem.link) {
                       if (menuItem.type === 'internal-link') {
@@ -111,13 +112,16 @@ export function Navigation() {
 }
 
 export const styles = {
+  menu: cssObj({
+    boxShadow: '$sm',
+  }),
   nestedLink: cssObj({
     padding: '$0 $4',
     height: '$7',
     minHeight: 'auto',
 
     '&.active': {
-      color: '$brand',
+      color: '$textLink',
     },
     '&.isCategory': {
       borderBottom: '1px solid $border',
@@ -141,7 +145,7 @@ export const styles = {
     },
 
     '&[data-active="true"], &[data-active="true"]:hover': {
-      color: '$brand !important',
+      color: '$textLink !important',
     },
   }),
 };

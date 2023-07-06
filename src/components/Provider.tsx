@@ -8,7 +8,7 @@ import { Blockquote } from './Blockquote';
 import { Code } from './Code';
 import { Heading } from './Heading';
 import { Link } from './Link';
-import { UL } from './List';
+import { UL, OL } from './List';
 import { Paragraph } from './Paragraph';
 import { Pre } from './Pre';
 import { Table } from './Table';
@@ -27,6 +27,7 @@ const components = {
   blockquote: Blockquote,
   table: Table,
   ul: UL,
+  ol: OL,
 };
 
 type ProviderProps = {

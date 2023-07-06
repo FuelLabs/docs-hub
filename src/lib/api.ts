@@ -1,20 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/order */
 import { readFileSync } from 'fs';
 import { serialize } from 'next-mdx-remote/serialize';
 import { join } from 'path';
 import remarkGfm from 'remark-gfm';
 import remarkSlug from 'remark-slug';
 import type { Pluggable } from 'unified';
-
-import { DOCS_DIRECTORY } from '../constants';
+import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
+import { FIELDS, DOCS_DIRECTORY } from '~/src/constants';
+import type { DocType, NodeHeading, SidebarLinkItem } from '~/src/types';
 
 import { getDocConfig, getDocContent, getDocFromSlug } from './docs';
 import { handlePlugins } from './plugins/plugins';
 import { rehypeExtractHeadings } from './toc';
-
-import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
-import { FIELDS } from '~/src/constants';
-import type { DocType, NodeHeading } from '~/src/types';
 
 const docsCache = new Map<string, DocType>();
 
@@ -89,10 +88,42 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
   return final;
 }
 
-export async function getSidebarLinks(configSlug: string) {
+function parseSlug(slug?: string) {
+  if (!slug) return null;
+  slug = slug.replace('../', '');
+  slug = slug.startsWith('./') ? slug.slice(2) : slug;
+  return slug;
+}
+
+export function getDocLink(
+  links: Awaited<ReturnType<typeof getSidebarLinks>>,
+  slug: string,
+) {
+  const parsedSlug = parseSlug(slug) as string;
+  const flatLinks = links
+    .flatMap((i) => (i.submenu || i) as SidebarLinkItem | SidebarLinkItem[])
+    .map((i) => {
+      return { ...i, slug: parseSlug(i.slug) };
+    });
+
+  const idx = flatLinks.findIndex((i) => {
+    if (!i.slug) return false;
+    return i.slug.startsWith(parsedSlug);
+  });
+
+  const prev = flatLinks[idx - 1] ?? null;
+  const next = idx + 1 < flatLinks.length ? flatLinks[idx + 1] ?? null : null;
+  const current = flatLinks[idx];
+  const link = { prev, next, ...current };
+  return link;
+}
+
+export async function getSidebarLinks(
+  configSlug: string,
+): Promise<SidebarLinkItem[]> {
   const linksPath = join(
     DOCS_DIRECTORY,
-    `../src/sidebar-links/${configSlug}.json`
+    `../src/sidebar-links/${configSlug}.json`,
   );
   const links = JSON.parse(readFileSync(linksPath, 'utf8'));
   return links;

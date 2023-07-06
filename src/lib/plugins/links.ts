@@ -1,6 +1,5 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-
 import { DOCS_DIRECTORY } from '~/src/constants';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,7 +25,7 @@ export function handleLinks(node: any, dirname: string) {
     } else if (node.url.startsWith('./') && !node.url.includes('index')) {
       newUrl = `/${dir.endsWith('/') ? dir : `${dir}/`}${newUrl!.replace(
         './',
-        ''
+        '',
       )}`;
     } else if (/^[a-zA-Z]/.test(node.url)) {
       newUrl = `/${dir}/${newUrl}`;

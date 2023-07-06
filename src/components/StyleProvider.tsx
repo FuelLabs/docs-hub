@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 // 'use client';
 
 import { getCssText } from '@fuel-ui/css';
