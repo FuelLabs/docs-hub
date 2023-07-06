@@ -9,13 +9,10 @@ export function Code(props: any) {
 
 const styles = {
   root: cssObj({
-    pt: '2px',
-    pb: '3px',
-    px: '6px',
+    padding: '$0 $1',
     borderRadius: '$md',
     fontFamily: 'monospace',
     background: '$intentsBase3',
-    // color: '$intentsBase10',
-    // fontSize: '0.9rem',
+    lineHeight: 1.3,
   }),
 };

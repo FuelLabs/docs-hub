@@ -179,7 +179,7 @@ const styles = {
     },
 
     'a.active, a:hover': {
-      color: '$brand',
+      color: '$textLink',
     },
   }),
   overlay: cssObj({
@@ -227,8 +227,8 @@ const styles = {
     minHeight: 'auto',
 
     '&:hover': {
-      background: '$brand',
-      color: '$brand',
+      background: '$textLink',
+      color: '$white',
       textDecoration: 'none',
     },
   }),

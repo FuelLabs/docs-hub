@@ -1,5 +1,6 @@
 import {
   getDocBySlug,
+  getDocLink,
   getSidebarLinks,
 } from '~/src/lib/api';
 import { DocScreen } from '~/src/screens/DocPage';
@@ -23,10 +24,12 @@ type Params = {
 export async function getServerSideProps({ params }: Params) {
   const doc = await getDocBySlug(params.slug.join('/'));
   const links = await getSidebarLinks(doc.docsConfig.slug);
+  const docLink = getDocLink(links, doc.slug);
   return {
     props: {
       doc,
       links,
+      docLink
     },
   };
 }

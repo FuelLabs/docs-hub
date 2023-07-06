@@ -56,15 +56,14 @@ const styles = {
   root: cssObj({
     boxSizing: 'border-box',
     position: 'relative',
-    maxWidth: 'calc(100vw - $8)',
 
     pre: {
       pr: '50px',
       mb: '$5 !important',
       padding: '$4 $2 !important',
-      borderRadius: '$lg',
+      borderRadius: '$default',
+      bg: 'hsla(0,0%,8.63%,1) !important',
       fontSize: '14px !important',
-      background: '$intentsBase1 !important',
     },
     'pre[data-title=true]': {
       marginTop: '$0 !important',
@@ -106,12 +105,13 @@ const styles = {
     position: 'absolute',
     right: 0,
     bottom: 0,
-    color: '$intentsBase7 !important',
+    color: '$intentsBase6',
     transition: 'all .3s',
-    background: '$intentsBase1 !important',
+    background: 'transparent',
+    borderColor: 'transparent',
 
     '&:hover': {
-      color: '$intentsBase9 !important',
+      color: '$intentsBase9',
     },
   }),
 };

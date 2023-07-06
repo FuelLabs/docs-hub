@@ -5,6 +5,7 @@ import matter from "gray-matter";
 import { EOL } from "os";
 import { join } from "path";
 
+// eslint-disable-next-line no-undef
 const DOCS_DIRECTORY = join(process.cwd(), "./docs");
 const swaySummaryPath = join(DOCS_DIRECTORY, "./sway/docs/book/src/SUMMARY.md");
 const rustSummaryPath = join(DOCS_DIRECTORY, "./fuels-rs/docs/src/SUMMARY.md");
@@ -48,7 +49,7 @@ async function main() {
         fs.mkdirSync(folderPath);
       }
       fs.writeFileSync(`${folderPath}/${key}.json`, json, "utf-8");
-    })
+    }),
   );
 }
 
@@ -422,7 +423,7 @@ function removeDocsPath(path) {
 
 function getDocBySlug(slug, slugs, docsConfig) {
   let slugPath = slugs.find(
-    ({ slug: pathSlug }) => pathSlug === `./${slug}.md`
+    ({ slug: pathSlug }) => pathSlug === `./${slug}.md`,
   );
   if (!slugPath) {
     slugPath = slugs.find(({ slug: pathSlug }) => pathSlug.includes(slug));

@@ -4,10 +4,9 @@ import { ButtonLink } from '@fuel-ui/react';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
 import { forwardRef } from 'react';
+import type { SidebarLinkItem } from '~/src/types';
 
 import { capitalize } from '../lib/str';
-
-import type { SidebarLinkItem } from '~/src/types';
 
 export type SidebarLinkProps = ButtonLinkProps & {
   item: SidebarLinkItem;
@@ -40,14 +39,17 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
         {capitalize(item.label.replaceAll(/[_-]/g, ' '))}
       </ButtonLink>
     );
-  }
+  },
 );
 
 const styles = {
   root: cssObj({
-    justifyContent: 'space-between',
     px: '$0',
     py: '$0',
+    justifyContent: 'space-between',
+    fontSize: '$sm',
+    height: '$6',
+    position: 'relative',
 
     '&:not([aria-disabled="true"]):active, &:not([aria-disabled="true"])[aria-pressed="true"]':
       {
@@ -58,8 +60,21 @@ const styles = {
       },
 
     '&[data-active="true"], &[data-active="true"]:hover': {
-      color: '$brand',
+      color: '$textLink',
       textDecoration: 'none',
+    },
+
+    '&[data-active="true"]:is([data-submenu="true"])': {
+      '&::before': {
+        position: 'absolute',
+        display: 'block',
+        content: '""',
+        top: 0,
+        left: '-18px',
+        width: '1px',
+        height: '100%',
+        backgroundColor: '$textLink',
+      },
     },
 
     '&:not([data-active="true"]):hover': {

@@ -1,23 +1,38 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box, Heading, Link, List, Text } from '@fuel-ui/react';
-
+import { Box, Heading, Icon, List } from '@fuel-ui/react';
 import { useDocContext } from '~/src/hooks/useDocContext';
 
 export function TableOfContent() {
-  const { doc } = useDocContext();
+  const { doc, activeHistory } = useDocContext();
   const { headings } = doc;
+  const lastActive = activeHistory?.at(activeHistory.length - 1);
+
   return (
     <Box css={styles.queries}>
       <Box css={styles.root}>
-        <Heading as="h6">On this page</Heading>
+        <Heading as="h6">
+          <Icon
+            icon={Icon.is('ListDetails')}
+            size={14}
+            stroke={1}
+            color="textSubtext"
+          />
+          On this page
+        </Heading>
         <List>
           {headings.map((heading) => (
-            <List.Item key={heading.title}>
+            <List.Item
+              key={heading.title}
+              data-active={heading.id === lastActive}
+            >
               <a href={`#${heading.id}`}>{heading.title}</a>
               {heading.children && (
-                <List type="ordered">
+                <List>
                   {heading.children.map((heading) => (
-                    <List.Item key={heading.title}>
+                    <List.Item
+                      key={heading.title}
+                      data-active={heading.id === lastActive}
+                    >
                       <a href={`#${heading.id}`}>{heading.title}</a>
                     </List.Item>
                   ))}
@@ -26,17 +41,6 @@ export function TableOfContent() {
             </List.Item>
           ))}
         </List>
-        <Text as="div" css={styles.feedback}>
-          <Link
-            isExternal
-            href="https://github.com/fuellabs/fuels-wallet/issues/new/choose"
-          >
-            Questions? Give us a feedback
-          </Link>
-          <Link isExternal href={doc.pageLink}>
-            Edit this page
-          </Link>
-        </Text>
       </Box>
     </Box>
   );
@@ -59,35 +63,37 @@ const styles = {
     pr: '$8',
 
     h6: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '$2',
       mt: 0,
-      mb: '$2',
+      mb: '$3',
+    },
+
+    '.fuel_List .fuel_List': {
+      mt: '$2',
+      borderLeft: '1px solid $border',
     },
 
     [LIST_ITEM]: {
-      pb: '$2',
+      mb: '$2',
+      lineHeight: 1.4,
+      fontSize: '$xs',
+
       a: {
         color: '$intentsBase11',
       },
     },
-    [`${LIST_ITEM} > ${LIST_ITEM}:nth-child(1)`]: {
-      pt: '$2',
-    },
     [`${LIST_ITEM} > ${LIST_ITEM}`]: {
+      pl: '$3',
       a: {
         fontWeight: '$normal',
         color: '$intentsBase9',
       },
     },
-  }),
-  feedback: cssObj({
-    display: 'flex',
-    flexDirection: 'column',
-    pt: '$3',
-    borderTop: '1px dashed $intentsBase4',
-    fontSize: '$xs',
 
-    'a, a:visited': {
-      color: '$intentsBase10',
+    [`${LIST_ITEM}[data-active="true"] a`]: {
+      color: '$intentsPrimary11 !important',
     },
   }),
 };
