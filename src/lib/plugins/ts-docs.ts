@@ -9,7 +9,7 @@ export function handleScriptLink(
     FORC: string;
     FUELS: string;
     FUEL_CORE: string;
-  }
+  },
 ) {
   let url = '';
   let paragraphIndex;
@@ -50,7 +50,7 @@ export function handleScriptLink(
         newTree.children[paragraphIndex].children[linkStartIndex] = linkNode;
         newTree.children[paragraphIndex].children.splice(
           linkStartIndex + 1,
-          linkStartIndex + 2
+          linkStartIndex + 2,
         );
       }
     }

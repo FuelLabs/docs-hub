@@ -13,7 +13,7 @@ const styles = {
     px: '$4',
     mb: '$6',
     background: '$intentsBase1',
-    borderRadius: '$lg',
+    borderRadius: '$default',
     border: '1px solid $intentsBase3',
   }),
 };

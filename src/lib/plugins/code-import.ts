@@ -21,7 +21,7 @@ function toAST(content: string) {
 function extractLines(
   content: string,
   fromLine: number | undefined,
-  toLine: number | undefined
+  toLine: number | undefined,
 ) {
   const lines = content.split(EOL);
   const start = fromLine || 1;

@@ -17,7 +17,6 @@ html {
 
 body,
 #__next {
-  background: #090a0a !important;
   min-height: 100vh;
 }
 
@@ -32,8 +31,11 @@ h4,
 h5,
 h6 {
   font-weight: 600;
-  letter-spacing: -0.04em;
-  font-feature-settings: "pnum" on, "onum" on, "ss04" on;
+  letter-spacing: -0.05em !important;
+  font-feature-settings:
+    "pnum" on,
+    "onum" on,
+    "ss04" on;
 }
 
 *:focus-visible:not(input) {
@@ -42,7 +44,6 @@ h6 {
 }
 
 a {
-  color: var(--colors-brand);
   text-decoration: none;
 }
 
@@ -58,9 +59,14 @@ tr > td {
 pre span,
 code {
   font-family: "Calling Code", monospace !important;
-  letter-spacing: -0.02em;
+  font-size: 1rem;
+  letter-spacing: 0;
 }
 
 .fuel_logo {
   width: 40px;
+}
+
+.fuel_Button {
+  letter-spacing: -0.01em;
 }

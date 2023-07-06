@@ -1,71 +1,106 @@
-// import { cssObj } from '@fuel-ui/css';
-// import { Box, Icon } from '@fuel-ui/react';
-// import Link from 'next/link';
-// import { useRouter } from 'next/router';
+import { cssObj } from '@fuel-ui/css';
+import { Text, Link, Box, Icon } from '@fuel-ui/react';
+import { useRouter } from 'next/router';
+import { useDocContext } from '~/src/hooks/useDocContext';
 
-// import { useDocContext } from '~/src/hooks/useDocContext';
+import { capitalize } from '../lib/str';
 
-// export function DocFooter() {
-//   const { docLink } = useDocContext();
-//   const router = useRouter();
-//   let prevLink = docLink.prev?.slug;
-//   let nextLink = docLink.next?.slug;
-//   if (docLink.prev?.slug?.startsWith('../')) {
-//     prevLink = docLink.prev.slug.replace('../', '');
-//   }
-//   if (docLink.next?.slug?.startsWith('../')) {
-//     nextLink = docLink.next.slug.replace('../', '');
-//   }
+function parseLink(link?: string) {
+  if (!link) return;
+  if (link.startsWith('../')) {
+    link = link.replace('../', '');
+  }
+  link = `/docs/${link}`;
+  return link;
+}
 
-//   if (router.asPath === '/') nextLink = `docs/${nextLink}`;
+export function DocFooter() {
+  const { docLink, doc } = useDocContext();
+  const router = useRouter();
+  const prevLink = parseLink(docLink.prev?.slug);
+  let nextLink = parseLink(docLink.next?.slug);
 
-//   return (
-//     <Box as="footer" css={styles.root}>
-//       <Box css={{ flex: 1 }}>
-//         {docLink.prev && prevLink && (
-//           <Link href={prevLink}>
-//             <Icon icon={Icon.is('ArrowLeft')} size={24} /> {docLink.prev.label}
-//           </Link>
-//         )}
-//       </Box>
-//       <Box>
-//         {docLink.next && nextLink && (
-//           <Link href={nextLink}>
-//             {docLink.next.label} <Icon icon={Icon.is('ArrowRight')} size={24} />
-//           </Link>
-//         )}
-//       </Box>
-//     </Box>
-//   );
-// }
+  if (router.asPath === '/') nextLink = `docs/${nextLink}`;
 
-// const styles = {
-//   root: cssObj({
-//     pb: '$4',
-//     pt: '$4',
-//     mt: '$6',
-//     display: 'flex',
-//     borderTop: '1px dashed $intentsBase3',
+  return (
+    <>
+      <Text as="div" css={styles.feedback}>
+        <Link href="https://github.com/fuellabs/fuels-wallet/issues/new/choose">
+          <Icon icon={Icon.is('HelpCircle')} stroke={1} color="textMuted" />
+          Questions? Give us a feedback
+        </Link>
+        <Link href={doc.pageLink}>
+          <Icon icon={Icon.is('Edit')} stroke={1} color="textMuted" />
+          Edit this page
+        </Link>
+      </Text>
 
-//     a: {
-//       display: 'inline-flex',
-//       alignItems: 'center',
-//       gap: '$4',
-//       color: '$intentsBase9',
-//     },
-//     'a:hover': {
-//       color: '$intentsPrimary11',
-//     },
+      <Box as="footer" css={styles.links}>
+        <Box.Stack>
+          {docLink.prev && prevLink && (
+            <>
+              <Box as="span" className="label">
+                Previous:
+              </Box>
+              <Link href={prevLink}>
+                <Icon icon={Icon.is('ArrowLeft')} size={14} />{' '}
+                {capitalize(docLink.prev.label)}
+              </Link>
+            </>
+          )}
+        </Box.Stack>
+        <Box.Stack>
+          {docLink.next && nextLink && (
+            <>
+              <Box as="span" className="label">
+                Next:
+              </Box>
+              <Link href={nextLink}>
+                {capitalize(docLink.next.label)}{' '}
+                <Icon icon={Icon.is('ArrowRight')} size={14} />
+              </Link>
+            </>
+          )}
+        </Box.Stack>
+      </Box>
+    </>
+  );
+}
 
-//     '@xl': {
-//       pt: '$12',
-//       mt: '$14',
-//     },
+const styles = {
+  links: cssObj({
+    pb: '$4',
+    pt: '$4',
+    display: 'flex',
+    fontSize: '$sm',
+    justifyContent: 'space-between',
 
-//     '@md': {
-//       a: {
-//         fontSize: '$xl',
-//       },
-//     },
-//   }),
-// };
+    a: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '$4',
+      color: '$intentsBase9',
+      lineHeight: 1,
+    },
+    'a:hover': {
+      color: '$intentsPrimary11',
+    },
+    '.label': {
+      fontSize: '$sm',
+      color: '$textMuted',
+    },
+  }),
+  feedback: cssObj({
+    mt: '$4',
+    py: '$4',
+    display: 'flex',
+    fontSize: '$sm',
+    justifyContent: 'space-between',
+    borderTop: '1px solid $border',
+    borderBottom: '1px solid $border',
+
+    'a, a:visited': {
+      color: '$intentsBase9',
+    },
+  }),
+};

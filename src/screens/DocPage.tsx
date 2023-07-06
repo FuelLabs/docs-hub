@@ -1,24 +1,25 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
 import { MDXRemote } from 'next-mdx-remote';
-
-import { getComponents } from '../imports';
-
 import { Layout } from '~/src/components/Layout';
 import { Sidebar } from '~/src/components/Sidebar';
 import { TableOfContent } from '~/src/components/TableOfContent';
 import { DocProvider } from '~/src/hooks/useDocContext';
 import type { DocType, SidebarLinkItem } from '~/src/types';
 
+import { DocFooter } from '../components/DocFooter';
+import { getComponents } from '../imports';
+
 type DocPageProps = {
   doc: DocType;
   links: SidebarLinkItem[];
+  docLink?: SidebarLinkItem;
 };
 
 export function DocScreen(props: DocPageProps) {
   const { doc } = props;
-
   const components = getComponents(doc);
+  const hasHeadings = Boolean(doc.headings.length);
 
   return (
     <DocProvider {...props}>
@@ -28,10 +29,13 @@ export function DocScreen(props: DocPageProps) {
             <Sidebar />
           </Box>
         </Box>
-        <Box as="section" css={styles.section}>
-          <MDXRemote {...doc.source} scope={doc} components={components} />
+        <Box as="section" css={styles.section} className="Layout--section">
+          <Box className="Layout--pageContent">
+            <MDXRemote {...doc.source} scope={doc} components={components} />
+          </Box>
+          <DocFooter />
         </Box>
-        <TableOfContent />
+        {hasHeadings && <TableOfContent />}
       </Layout>
     </DocProvider>
   );
@@ -40,8 +44,10 @@ export function DocScreen(props: DocPageProps) {
 const styles = {
   sidebar: cssObj({
     display: 'none',
-    padding: '$8 $0 $0 $6',
+    padding: '$8 $8 $0 $6',
     position: 'sticky',
+    borderRight: '1px solid $border',
+    bg: '$overlayBg',
     top: 20,
 
     '@xl': {
@@ -50,20 +56,25 @@ const styles = {
   }),
   section: cssObj({
     py: '$4',
-    px: '$4',
+    px: '$0',
+    display: 'flex',
+    flexDirection: 'column',
 
     '@md': {
-      px: '$10',
+      px: '$0',
     },
 
     '@xl': {
-      py: '$8',
+      py: '$14',
       px: '$0',
-      width: '60vw',
     },
 
-    '& .fuel_Heading:first-of-type': {
+    '& .fuel_Heading[data-rank="h1"]:first-of-type': {
       mt: '$0 !important',
+    },
+
+    '& .Layout--pageContent': {
+      flex: 1,
     },
   }),
 };
