@@ -5,12 +5,12 @@
   "/packages/": "/",
   "/apps/": "/",
   "/src": "",
-  "/forc_client/": "/",
   "/index.md": ".md",
   "/README.md": ".md",
   "/guide/": "/",
-  "/fuel-graphql-docs/": "/graphql/",
+  "/forc_client/": "/",
+  "fuel-graphql-docs": "graphql",
   "fuel-specs": "specs",
-  "/fuel-indexer/": "/indexer/",
-  "/fuels-wallet/": "/wallet/"
+  "fuel-indexer": "indexer",
+  "fuels-wallet": "wallet"
 }

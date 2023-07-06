@@ -2,224 +2,51 @@
   "portal": {
     "title": "Fuel Docs Portal",
     "slug": "portal",
-    "paths": {
-      "docs": "",
-      "components": "",
-      "examples": ""
-    },
     "repository": "https://github.com/FuelLabs/docs-hub",
     "ogTags": {
       "description": "Official documentation for the Fuel Network",
       "image": ""
-    },
-    "menu": ["Home", "Guides"],
-    "FAQ_menu": ["First", "Second", "Third"]
+    }
   },
   "sway": {
     "title": "Sway Docs",
     "slug": "sway",
-    "paths": {
-      "docs": "TODO: use this",
-      "components": "",
-      "examples": ""
-    },
     "repository": "https://github.com/FuelLabs/sway",
     "ogTags": {
       "description": "Official documentation for the Sway language",
       "image": ""
-    },
-    "menu": [
-      "Introduction",
-      "Examples",
-      "Sway Program Types",
-      "Basics",
-      "Blockchain Development",
-      "Advanced",
-      "Common Collections",
-      "Testing",
-      "Frontend",
-      "Reference",
-      "Forc",
-      "Forc_client",
-      "Commands",
-      "Plugins"
-    ],
-    "introduction_menu": [
-      "Installation",
-      "Sway Quickstart",
-      "Fuel Toolchain",
-      "Forc Project",
-      "Standard Library"
-    ],
-    "examples_menu": [
-      "Counter",
-      "Subcurrency",
-      "FizzBuzz",
-      "Wallet Smart Contract"
-    ],
-    "sway_program_types_menu": [
-      "Sway Program Types",
-      "Smart Contracts",
-      "Libraries",
-      "Scripts",
-      "Predicates"
-    ],
-    "basics_menu": [
-      "Variables",
-      "Built In Types",
-      "Commonly Used Library Types",
-      "Blockchain Types",
-      "Functions",
-      "Structs Tuples And Enums",
-      "Methods and Associated Functions",
-      "Constants",
-      "Comments and Logging",
-      "Control Flow"
-    ],
-    "blockchain_development_menu": [
-      "Hashing and Cryptography",
-      "Built-in Types",
-      "Storage",
-      "Purity",
-      "Identifiers",
-      "Native Assets",
-      "Access Control",
-      "Calling Contracts"
-    ],
-    "advanced_menu": ["Advanced Types", "Generic Types", "Traits", "Assembly"],
-    "common_collections_menu": ["Vec", "Storage Vec", "Storage Map"],
-    "testing_menu": ["Unit Testing", "Testing with Rust"],
-    "frontend_menu": ["TypeScript SDK"],
-    "reference_menu": [
-      "Compiler Intrinsics",
-      "Attributes",
-      "Style Guide",
-      "Known Issues and Workarounds",
-      "Solidity Differences",
-      "Rust Differences",
-      "Contributing To Sway"
-    ]
+    }
   },
   "fuels-rs": {
     "title": "Fuel Rust SDK",
     "slug": "fuels-rs",
-    "paths": {
-      "docs": "",
-      "components": "",
-      "examples": ""
-    },
     "repository": "https://github.com/FuelLabs/fuels-rs",
     "ogTags": {
       "description": "Official documentation for the Fuels Rust SDK",
       "image": ""
-    },
-    "menu": [
-      "Getting Started",
-      "Connecting",
-      "Accounts",
-      "Wallets",
-      "Abigen",
-      "Deploying",
-      "Calling Contracts",
-      "Running scripts",
-      "Predicates",
-      "Types",
-      "Reference",
-      "Testing",
-      "Cookbook",
-      "Debugging",
-      "Contributing",
-      "Glossary",
-      "Cli"
-    ],
-    "getting_started_menu": [
-      "Setup",
-      "Terminology",
-      "Connecting",
-      "Account",
-      "Managing Wallets",
-      "Abigen",
-      "API",
-      "Contracts",
-      "Calling Contracts",
-      "Running Scripts",
-      "Predicates"
-    ]
+    }
   },
   "fuels-ts": {
     "title": "Fuel TS SDK",
     "slug": "fuels-ts",
-    "paths": {
-      "docs": "",
-      "components": "",
-      "examples": ""
-    },
     "repository": "https://github.com/FuelLabs/fuels-ts",
     "ogTags": {
       "description": "Official documentation for the Fuels TypeScript SDK",
       "image": ""
-    },
-    "menu": [
-      "Fuels-Ts",
-      "Getting Started",
-      "Glossary",
-      "Guide",
-      "Types",
-      "Abi Typegen",
-      "Wallets",
-      "Providers",
-      "Contracts",
-      "Cookbook",
-      "Predicates",
-      "Scripts",
-      "Testing",
-      "Messages"
-    ]
+    }
   },
   "wallet": {
     "title": "Fuel Wallet",
     "slug": "wallet",
-    "paths": {
-      "docs": "",
-      "components": ["/packages/docs/src/components/Demo.tsx"],
-      "examples": ""
-    },
     "repository": "https://github.com/FuelLabs/fuels-wallet",
     "ogTags": {
       "description": "Official documentation for the Fuel Wallet",
       "image": ""
-    },
-    "menu": [
-      "Install",
-      "Browser Support",
-      "How To Use",
-      "For Developers",
-      "Contributing"
-    ],
-    "for_developers_menu": [
-      "Getting Started",
-      "Connecting",
-      "Accounts",
-      "Assets",
-      "Networks",
-      "Signing a Message",
-      "Wallet Connectors",
-      "Reference"
-    ],
-    "contributing_menu": [
-      "Running locally",
-      "Contributing Guide",
-      "Linking local dependencies"
-    ]
+    }
   },
   "graphql": {
     "title": "Fuel GraphQL Docs",
     "slug": "graphql",
-    "paths": {
-      "docs": "../fuel-graphql-docs/docs",
-      "components": "../fuel-graphql-docs/src/components",
-      "examples": "../fuel-graphql-docs/examples"
-    },
     "repository": "https://github.com/FuelLabs/fuels-wallet",
     "ogTags": {
       "description": "Official documentation for the Fuel GraphQL API",
@@ -231,136 +58,52 @@
       "Recipes",
       "How To Use GraphQL",
       "Reference"
+    ],
+    "How_To_Use_GraphQL": ["What is GraphQL?", "Schema & Type System"],
+    "Reference": [
+      "Scalars",
+      "Enums",
+      "Unions",
+      "Objects",
+      "Queries",
+      "Mutations",
+      "Subscriptions"
     ]
   },
   "fuelup": {
     "title": "Fuelup",
     "slug": "fuelup",
-    "paths": {
-      "docs": "",
-      "components": "",
-      "examples": ""
-    },
     "repository": "https://github.com/FuelLabs/fuelup",
     "ogTags": {
       "description": "Official documentation for fuelup",
       "image": ""
-    },
-    "menu": [
-      "Fuelup",
-      "Installation",
-      "Concepts",
-      "Channels",
-      "Basics",
-      "Overrides",
-      "Configuration",
-      "Examples",
-      "Developer_guide"
-    ],
-    "concepts_menu": [
-      "How fuelup works",
-      "Toolchains",
-      "Components",
-      "Proxies",
-      "Store"
-    ]
+    }
   },
   "indexer": {
     "title": "Indexer",
     "slug": "indexer",
-    "paths": {
-      "docs": "",
-      "components": "",
-      "examples": ""
-    },
     "repository": "https://github.com/FuelLabs/fuel-indexer",
     "ogTags": {
       "description": "Official documentation for the Fuel indexer",
       "image": ""
-    },
-    "menu": [
-      "The Fuel Indexer",
-      "Getting Started",
-      "Dependencies",
-      "Quickstart",
-      "Examples",
-      "Components",
-      "Indexing",
-      "Assets",
-      "Receipts",
-      "Data Types",
-      "GraphQL",
-      "Queries",
-      "Database",
-      "Plugins",
-      "Forc Index",
-      "Forc Postgres",
-      "Authentication",
-      "For Contributors",
-      "Glossary"
-    ]
+    }
   },
   "specs": {
     "title": "Fuel Specs",
     "slug": "specs",
-    "paths": {
-      "docs": "",
-      "components": "",
-      "examples": ""
-    },
     "repository": "https://github.com/FuelLabs/fuel-specs",
     "ogTags": {
       "description": "Official specifications for the Fuel Network",
       "image": ""
-    },
-    "menu": ["Protocol", "VM", "ABI", "ID", "Tx_format", "Network", "Tests"]
+    }
   },
   "forc": {
     "title": "Forc",
     "slug": "forc",
-    "paths": {
-      "docs": "",
-      "components": "",
-      "examples": ""
-    },
     "repository": "https://github.com/FuelLabs/sway",
     "ogTags": {
       "description": "Official documentation for the Fuel Orchestrator",
       "image": ""
-    },
-    "menu": [
-      "Forc",
-      "Manifest Reference",
-      "Workspaces",
-      "Dependencies",
-      "Commands",
-      "Plugins"
-    ],
-    "commands_menu": [
-      "forc addr2line",
-      "forc build",
-      "forc check",
-      "forc clean",
-      "forc completions",
-      "forc contract id",
-      "forc init",
-      "forc new",
-      "forc parse bytecode",
-      "forc plugins",
-      "forc predicate root",
-      "forc test",
-      "forc update",
-      "forc template"
-    ],
-    "plugins_menu": [
-      "forc client",
-      "forc deploy",
-      "forc run",
-      "forc submit",
-      "forc doc",
-      "forc explore",
-      "forc fmt",
-      "forc lsp"
-    ]
+    }
   }
 }

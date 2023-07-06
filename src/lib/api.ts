@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { readFileSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { serialize } from 'next-mdx-remote/serialize';
 import { join } from 'path';
 import remarkGfm from 'remark-gfm';
@@ -53,6 +53,7 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
   const plugins: Pluggable<any[]>[] = [[handlePlugins, { filepath: fullpath }]];
   // handle the codeExamples component in the graphql docs
   if (isGraphQLDocs) plugins.push([codeExamples, { filepath: fullpath }]);
+  // handle wallet code import component
   if (isWalletDocs) plugins.push([codeImport, { filepath: fullpath }]);
   source = await serialize(content, {
     scope: data,
@@ -90,10 +91,13 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
 }
 
 export async function getSidebarLinks(configSlug: string) {
-  const linksPath = join(
+  let linksPath = join(
     DOCS_DIRECTORY,
-    `../src/sidebar-links/${configSlug}.json`
+    `../src/sidebar-links-new/${configSlug}.json`
   );
+  if (!existsSync(linksPath)) {
+    linksPath = join(DOCS_DIRECTORY, `../src/sidebar-links/${configSlug}.json`);
+  }
   const links = JSON.parse(readFileSync(linksPath, 'utf8'));
   return links;
 }
