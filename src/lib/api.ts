@@ -8,6 +8,7 @@ import remarkGfm from 'remark-gfm';
 import remarkSlug from 'remark-slug';
 import type { Pluggable } from 'unified';
 import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
+import { codeImport } from '~/docs/fuels-wallet/packages/docs/src/lib/code-import';
 import { FIELDS, DOCS_DIRECTORY } from '~/src/constants';
 import type { DocType, NodeHeading, SidebarLinkItem } from '~/src/types';
 
@@ -45,14 +46,14 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
   const pageLink = join(docsConfig.repository, slugPath.path);
   doc.pageLink = pageLink;
   const isGraphQLDocs = fullpath.includes('fuel-graphql-docs/docs');
+  const isWalletDocs = fullpath.includes('fuels-wallet/packages/docs/');
   // parse the wallet and graphql docs as mdx, otherwise use md
-  const format =
-    fullpath.includes('fuels-wallet/packages/docs/') || isGraphQLDocs
-      ? 'mdx'
-      : 'md';
+  const format = isWalletDocs || isGraphQLDocs ? 'mdx' : 'md';
   const plugins: Pluggable<any[]>[] = [[handlePlugins, { filepath: fullpath }]];
   // handle the codeExamples component in the graphql docs
   if (isGraphQLDocs) plugins.push([codeExamples, { filepath: fullpath }]);
+  // handle wallet code import component
+  if (isWalletDocs) plugins.push([codeImport, { filepath: fullpath }]);
   source = await serialize(content, {
     scope: data,
     mdxOptions: {

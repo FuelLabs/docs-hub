@@ -6,7 +6,6 @@ import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
 import type { Parent } from 'unist-util-visit/lib';
 
-import { handleCodeImport } from './code-import';
 import { handleForcGenDocs } from './forc-gen-docs';
 import { handleLinks } from './links';
 import { handleExampleImports } from './mdbook-example-import';
@@ -21,10 +20,6 @@ import {
 interface Options {
   filepath: string;
 }
-
-const codeImportCondition = (node: any) => {
-  return node.name === 'CodeImport';
-};
 
 const forcGenCondition = (tree: any, node: any, filepath: string) => {
   return (
@@ -128,8 +123,6 @@ export function handlePlugins(options: Options = { filepath: '' }) {
     } else if (filepath.includes('/docs/fuels-wallet/')) {
       visit(tree, '', (node: any, idx, parent) => {
         if (
-          // handle the CodeImport component
-          codeImportCondition(node) ||
           // update the image & video paths in the wallet docs
           walletImagesCondition(node, filepath) ||
           walletComponentsCondition(node, filepath)
@@ -139,10 +132,7 @@ export function handlePlugins(options: Options = { filepath: '' }) {
       });
 
       nodes.forEach(([node, _idx, _parent]) => {
-        if (codeImportCondition(node)) {
-          const newAttrs = handleCodeImport(node, rootDir, dirname);
-          node.attributes.push(...newAttrs);
-        } else if (walletImagesCondition(node, filepath)) {
+        if (walletImagesCondition(node, filepath)) {
           const imagePath = handleWalletImages(node);
           node.url = imagePath;
         } else if (walletComponentsCondition(node, filepath)) {

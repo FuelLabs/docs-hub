@@ -2,36 +2,209 @@
 import fs from "fs";
 import { globby } from "globby";
 import matter from "gray-matter";
+import { EOL } from "os";
 import { join } from "path";
 
 // eslint-disable-next-line no-undef
 const DOCS_DIRECTORY = join(process.cwd(), "./docs");
-const docConfigPath = join(DOCS_DIRECTORY, "../portal/docs.json");
-const configFile = JSON.parse(fs.readFileSync(docConfigPath, "utf8"));
+const swaySummaryPath = join(DOCS_DIRECTORY, "./sway/docs/book/src/SUMMARY.md");
+const rustSummaryPath = join(DOCS_DIRECTORY, "./fuels-rs/docs/src/SUMMARY.md");
+const fuelupSummaryPath = join(DOCS_DIRECTORY, "./fuelup/docs/src/SUMMARY.md");
+const indexerSummaryPath = join(
+  DOCS_DIRECTORY,
+  "./fuel-indexer/docs/src/SUMMARY.md"
+);
+const specsSummaryPath = join(DOCS_DIRECTORY, "./fuel-specs/src/SUMMARY.md");
+
+const graphqlOrderPath = join(
+  DOCS_DIRECTORY,
+  "./fuel-graphql-docs/src/nav.json"
+);
+const portalOrderPath = join(DOCS_DIRECTORY, "../portal/nav.json");
+const tsConfigPath = join(
+  DOCS_DIRECTORY,
+  "./fuels-ts/apps/docs/.vitepress/config.ts"
+);
+
+const swaySummaryFile = fs.readFileSync(swaySummaryPath, "utf8");
+const rustSummaryFile = fs.readFileSync(rustSummaryPath, "utf8");
+const fuelupSummaryFile = fs.readFileSync(fuelupSummaryPath, "utf8");
+const indexerSummaryFile = fs.readFileSync(indexerSummaryPath, "utf8");
+const specsSummaryFile = fs.readFileSync(specsSummaryPath, "utf8");
+const graphqlOrderFile = JSON.parse(fs.readFileSync(graphqlOrderPath, "utf8"));
+const portalOrderFile = JSON.parse(fs.readFileSync(portalOrderPath, "utf8"));
+const tsConfigFile = fs.readFileSync(tsConfigPath, "utf8");
+
+const forcLines = [];
 
 // GENERATES SIDEBAR LINKS
 await main();
 
 async function main() {
+  const orders = await getOrders();
+
   await Promise.all(
-    Object.keys(configFile).map(async (key) => {
-      const config = configFile[key];
-      const slugs = await getDocs(config);
-      const final = slugs.map(({ slug }) => getDocBySlug(slug, slugs, config));
-      const sortedLinks = getSortedLinks(config, final);
+    Object.keys(orders).map(async (key) => {
+      const slugs = await getDocs(key);
+      const final = slugs.map(({ slug }) => getDocBySlug(slug, slugs));
+      const sortedLinks = getSortedLinks(orders[key], final);
       const json = JSON.stringify(sortedLinks);
       const folderPath = "src/sidebar-links";
       if (!fs.existsSync(folderPath)) {
         fs.mkdirSync(folderPath);
       }
       fs.writeFileSync(`${folderPath}/${key}.json`, json, "utf-8");
-    }),
+    })
   );
+}
+
+function processVPConfig(lines) {
+  const order = { menu: ["fuels-ts"] };
+  let currentCategory;
+  let foundStart = false;
+  const regex = /'([^']+)'/;
+  lines.forEach((line, index) => {
+    const trimmedLine = line.trimStart();
+    if (foundStart) {
+      if (trimmedLine.includes("collapsed:")) {
+        const matches = regex.exec(lines[index - 2]);
+        currentCategory = matches[1];
+        order.menu.push(currentCategory);
+        order[currentCategory] = [];
+      }
+
+      if (trimmedLine.includes("text")) {
+        if (!lines[index + 2].includes("collapsed:")) {
+          const matches = regex.exec(trimmedLine);
+          if (currentCategory) {
+            order[currentCategory].push(matches[1]);
+          } else {
+            order.menu.push(matches[1]);
+          }
+        }
+      }
+    } else if (trimmedLine === "sidebar: [") {
+      foundStart = true;
+    }
+  });
+
+  return order;
+}
+
+function processSummary(lines, docsName) {
+  const order = { menu: [docsName] };
+  let currentCategory;
+  lines.forEach((line) => {
+    const paths = line.split("/");
+    const newPaths = paths[0].split("(");
+    const thisCat = currentCategory;
+    if (line.includes(".md")) {
+      if (docsName === "sway" && line.includes("/forc/")) {
+        // handle forc docs separately
+        forcLines.push(line);
+      } else if (line[0] === "-") {
+        // handle top-level items
+        if (paths.length > 2) {
+          currentCategory = paths[paths.length - 2];
+          // handle forc nav
+          if (docsName === "forc") {
+            if (
+              paths[paths.length - 2] === "forc" &&
+              paths[paths.length - 1] !== "index.md"
+            ) {
+              currentCategory = paths[paths.length - 1];
+            }
+          }
+        } else if (
+          paths[paths.length - 1].includes("index.md") ||
+          newPaths[newPaths.length - 1].endsWith(".md)")
+        ) {
+          currentCategory = newPaths[newPaths.length - 1];
+        } else {
+          currentCategory = paths[paths.length - 1];
+        }
+        const final = currentCategory.replace(".md)", "");
+        if (thisCat === final) {
+          const fileName = paths[paths.length - 1].replace(".md)", "");
+          if (!order[currentCategory]) order[currentCategory] = [];
+          order[currentCategory].push(fileName);
+        } else if (final !== "index") {
+          order.menu.push(final);
+        }
+      } else if (currentCategory) {
+        // handle sub-paths
+        const fileName = paths[paths.length - 1].replace(".md)", "");
+        if (!order[currentCategory]) order[currentCategory] = [];
+        if (fileName !== "index") order[currentCategory].push(fileName);
+      }
+    }
+  });
+  return order;
+}
+
+async function getOrders() {
+  const orders = {};
+  // SWAY ORDER
+  orders.sway = processSummary(swaySummaryFile.split(EOL), "sway");
+  // FUELS-RS ORDER
+  orders["fuels-rs"] = processSummary(rustSummaryFile.split(EOL), "fuels-rs");
+  // FUELUP ORDER
+  orders.fuelup = processSummary(fuelupSummaryFile.split(EOL), "fuelup");
+  // INDEXER ORDER
+  orders.indexer = processSummary(indexerSummaryFile.split(EOL), "indexer");
+  // SPECS ORDER
+  orders.specs = processSummary(specsSummaryFile.split(EOL), "specs");
+  // GRAPHQL ORDER
+  orders.graphql = graphqlOrderFile;
+
+  // PORTAL ORDER
+  orders.portal = portalOrderFile;
+
+  // WALLET ORDER
+  // replace this with a nav.json file
+  // once wallet npm package is updated to the master version
+  orders.wallet = {
+    menu: [
+      "Install",
+      "Browser Support",
+      "How To Use",
+      "For Developers",
+      "Contributing",
+    ],
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    for_developers: [
+      "Getting Started",
+      "Connecting",
+      "Accounts",
+      "Assets",
+      "Networks",
+      "Signing a Message",
+      "Wallet Connectors",
+      "Reference",
+    ],
+    contributing: [
+      "Running locally",
+      "Contributing Guide",
+      "Linking local dependencies",
+    ],
+  };
+
+  orders["fuels-ts"] = processVPConfig(tsConfigFile.split(EOL));
+
+  // FORC ORDER
+  const newForcLines = forcLines.map((line) =>
+    line.startsWith("-") ? line : line.slice(2, line.length)
+  );
+  orders.forc = processSummary(newForcLines, "forc");
+
+  return orders;
 }
 
 function getSortedLinks(config, docs) {
   const links = [];
-  const lcOrder = config.menu.map((o) => o.toLowerCase());
+  const lcOrder = config.menu.map((o) =>
+    o.toLowerCase().replaceAll("-", "_").replaceAll(" ", "_")
+  );
 
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i < docs.length; i++) {
@@ -94,10 +267,11 @@ function getSortedLinks(config, docs) {
     ? links
         /** Sort first level links */
         .sort((a, b) => {
-          const lowerA = a.label.toLowerCase();
-          const lowerB = b.label.toLowerCase();
+          const lowerA = a.label.toLowerCase().replaceAll(" ", "_");
+          const lowerB = b.label.toLowerCase().replaceAll(" ", "_");
           const aIdx = lcOrder.indexOf(lowerA);
           const bIdx = lcOrder.indexOf(lowerB);
+
           if (!a.subpath && !b.subpath) {
             return aIdx - bIdx;
           }
@@ -114,15 +288,22 @@ function getSortedLinks(config, docs) {
         /** Sort categoried links */
         .map((link) => {
           if (!link.submenu) return link;
-          const key = `${link.label.toLowerCase().replaceAll(" ", "_")}_menu`;
+          const key = link.label
+            .toLowerCase()
+            .replaceAll(" ", "-")
+            .replaceAll("_", "-");
           let catOrder = config[key];
-          catOrder = catOrder?.map((title) => title.toLowerCase());
+          if (!catOrder) catOrder = config[key.replaceAll("-", "_")];
+
+          catOrder = catOrder?.map((title) =>
+            title.toLowerCase().replaceAll("-", "_").replaceAll(" ", "_")
+          );
           const submenu = link.submenu.sort((a, b) => {
-            const lowerA = a.label.toLowerCase();
-            const lowerB = b.label.toLowerCase();
-            const result = catOrder
-              ? catOrder.indexOf(`${lowerA}`) - catOrder.indexOf(`${lowerB}`)
-              : 0;
+            const lowerA = a.label.toLowerCase().replaceAll(" ", "_");
+            const lowerB = b.label.toLowerCase().replaceAll(" ", "_");
+            const aIdx = catOrder ? catOrder.indexOf(lowerA) : 0;
+            const bIdx = catOrder ? catOrder.indexOf(lowerB) : 0;
+            const result = aIdx - bIdx;
             return result;
           });
           return { ...link, submenu };
@@ -132,9 +313,9 @@ function getSortedLinks(config, docs) {
   return sortedLinks;
 }
 
-async function getDocs(config) {
+async function getDocs(key) {
   let paths = [];
-  switch (config.slug) {
+  switch (key) {
     case "sway":
       paths = [
         // SWAY DOCS
@@ -264,9 +445,9 @@ function removeDocsPath(path) {
   return newPath;
 }
 
-function getDocBySlug(slug, slugs, docsConfig) {
+function getDocBySlug(slug, slugs) {
   let slugPath = slugs.find(
-    ({ slug: pathSlug }) => pathSlug === `./${slug}.md`,
+    ({ slug: pathSlug }) => pathSlug === `./${slug}.md`
   );
   if (!slugPath) {
     slugPath = slugs.find(({ slug: pathSlug }) => pathSlug.includes(slug));
@@ -308,6 +489,7 @@ function getDocBySlug(slug, slugs, docsConfig) {
       doc.category === "src"
         ? slug.replace("./", "").replace(".md", "")
         : doc.category;
+    if (slug.endsWith("/forc_client.md")) doc.title = "forc_client";
   }
 
   if (doc.title === "README") {
@@ -318,6 +500,5 @@ function getDocBySlug(slug, slugs, docsConfig) {
 
   return {
     ...doc,
-    docsConfig,
   };
 }
