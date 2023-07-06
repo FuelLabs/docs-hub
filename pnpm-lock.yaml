@@ -36,6 +36,9 @@ dependencies:
   acorn:
     specifier: ^8.10.0
     version: 8.10.0
+  acorn-loose:
+    specifier: ^8.3.0
+    version: 8.3.0
   acorn-walk:
     specifier: ^8.2.0
     version: 8.2.0
@@ -73,8 +76,8 @@ dependencies:
     specifier: ^5.3.0
     version: 5.3.0(plyr@3.7.8)(react@18.2.0)
   prettier:
-    specifier: ^3.0.0
-    version: 3.0.0
+    specifier: ^2.8.8
+    version: 2.8.8
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -175,7 +178,7 @@ devDependencies:
     version: 6.7.1(eslint@8.44.0)
   eslint-plugin-prettier:
     specifier: ^4.2.1
-    version: 4.2.1(eslint-config-prettier@8.8.0)(eslint@8.44.0)(prettier@3.0.0)
+    version: 4.2.1(eslint-config-prettier@8.8.0)(eslint@8.44.0)(prettier@2.8.8)
   eslint-plugin-react:
     specifier: ^7.32.2
     version: 7.32.2(eslint@8.44.0)
@@ -4484,6 +4487,13 @@ packages:
     dependencies:
       acorn: 8.10.0
 
+  /acorn-loose@8.3.0:
+    resolution: {integrity: sha512-75lAs9H19ldmW+fAbyqHdjgdCrz0pWGXKmnqFoh8PyVd1L2RIb4RzYrSjmopeqv3E1G3/Pimu6GgLlrGbrkF7w==}
+    engines: {node: '>=0.4.0'}
+    dependencies:
+      acorn: 8.10.0
+    dev: false
+
   /acorn-walk@8.2.0:
     resolution: {integrity: sha512-k+iyHEuPgSw6SbuDpGQM+06HQUa04DZ3o+F6CSzXMvvI5KMvnaEqXe+YVe555R9nn6GPt404fos4wcgpw12SDA==}
     engines: {node: '>=0.4.0'}
@@ -5847,24 +5857,6 @@ packages:
       eslint-config-prettier: 8.8.0(eslint@8.44.0)
       prettier: 2.8.8
       prettier-linter-helpers: 1.0.0
-    dev: false
-
-  /eslint-plugin-prettier@4.2.1(eslint-config-prettier@8.8.0)(eslint@8.44.0)(prettier@3.0.0):
-    resolution: {integrity: sha512-f/0rXLXUt0oFYs8ra4w49wYZBG5GKZpAYsJSm6rnYL5uVDjd+zowwMwVZHnAjf4edNrKpCDYfXDgmRE/Ak7QyQ==}
-    engines: {node: '>=12.0.0'}
-    peerDependencies:
-      eslint: '>=7.28.0'
-      eslint-config-prettier: '*'
-      prettier: '>=2.0.0'
-    peerDependenciesMeta:
-      eslint-config-prettier:
-        optional: true
-    dependencies:
-      eslint: 8.44.0
-      eslint-config-prettier: 8.8.0(eslint@8.44.0)
-      prettier: 3.0.0
-      prettier-linter-helpers: 1.0.0
-    dev: true
 
   /eslint-plugin-react-hooks@4.6.0(eslint@8.44.0):
     resolution: {integrity: sha512-oFc7Itz9Qxh2x4gNHStv3BqJq54ExXmfC+a1NjAta66IAN87Wu0R/QArgIS9qKzX3dXKPI9H5crl9QchNMY9+g==}
@@ -9044,12 +9036,6 @@ packages:
   /prettier@2.8.8:
     resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
     engines: {node: '>=10.13.0'}
-    hasBin: true
-    dev: false
-
-  /prettier@3.0.0:
-    resolution: {integrity: sha512-zBf5eHpwHOGPC47h0zrPyNn+eAEIdEzfywMoYn2XPi0P44Zp0tSq64rq0xAREh4auw2cJZHo9QUob+NqCQky4g==}
-    engines: {node: '>=14'}
     hasBin: true
 
   /pretty-format@27.5.1:

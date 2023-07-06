@@ -33,6 +33,15 @@ export function getComponents(doc: DocType) {
         { ssr: false },
       );
       components.Player = Player;
+
+      const DownloadFuelWallet = dynamic(
+        () =>
+          import(
+            '~/docs/fuels-wallet/packages/docs/src/components/DownloadFuelWallet'
+          ).then((mod) => mod.DownloadFuelWallet),
+        { ssr: false },
+      );
+      components.DownloadFuelWallet = DownloadFuelWallet;
     } else {
       const Examples: any = { Events: {} };
       if (doc.slug.includes('getting-started')) {
@@ -159,6 +168,14 @@ export function getComponents(doc: DocType) {
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
               (mod) => mod.SignMessage,
+            ),
+          { ssr: false },
+        );
+      } else if (doc.slug.includes('connectors')) {
+        Examples.Connectors = dynamic(
+          () =>
+            import('~/docs/fuels-wallet/packages/docs/examples/').then(
+              (mod) => mod.Connectors,
             ),
           { ssr: false },
         );
