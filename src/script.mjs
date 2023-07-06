@@ -49,7 +49,7 @@ async function main() {
         fs.mkdirSync(folderPath);
       }
       fs.writeFileSync(`${folderPath}/${key}.json`, json, "utf-8");
-    }),
+    })
   );
 }
 
@@ -131,6 +131,7 @@ async function getOrders() {
       "For Developers",
       "Contributing",
     ],
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     for_developers: [
       "Getting Started",
       "Connecting",
@@ -423,7 +424,7 @@ function removeDocsPath(path) {
 
 function getDocBySlug(slug, slugs, docsConfig) {
   let slugPath = slugs.find(
-    ({ slug: pathSlug }) => pathSlug === `./${slug}.md`,
+    ({ slug: pathSlug }) => pathSlug === `./${slug}.md`
   );
   if (!slugPath) {
     slugPath = slugs.find(({ slug: pathSlug }) => pathSlug.includes(slug));
