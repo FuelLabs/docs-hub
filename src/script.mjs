@@ -466,6 +466,7 @@ function getDocBySlug(slug, slugs) {
       doc.category === "src"
         ? slug.replace("./", "").replace(".md", "")
         : doc.category;
+    if (slug.endsWith("/forc_client.md")) doc.title = "forc_client";
   }
 
   if (doc.title === "README") {
