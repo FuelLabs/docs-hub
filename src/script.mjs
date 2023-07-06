@@ -422,7 +422,7 @@ function removeDocsPath(path) {
   return newPath;
 }
 
-function getDocBySlug(slug, slugs, docsConfig) {
+function getDocBySlug(slug, slugs) {
   let slugPath = slugs.find(
     ({ slug: pathSlug }) => pathSlug === `./${slug}.md`
   );
@@ -476,6 +476,5 @@ function getDocBySlug(slug, slugs, docsConfig) {
 
   return {
     ...doc,
-    docsConfig,
   };
 }
