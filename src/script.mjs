@@ -21,6 +21,10 @@ const graphqlOrderPath = join(
   "./fuel-graphql-docs/src/nav.json"
 );
 const portalOrderPath = join(DOCS_DIRECTORY, "../portal/nav.json");
+const tsConfigPath = join(
+  DOCS_DIRECTORY,
+  "./fuels-ts/apps/docs/.vitepress/config.ts"
+);
 
 const swaySummaryFile = fs.readFileSync(swaySummaryPath, "utf8");
 const rustSummaryFile = fs.readFileSync(rustSummaryPath, "utf8");
@@ -29,6 +33,7 @@ const indexerSummaryFile = fs.readFileSync(indexerSummaryPath, "utf8");
 const specsSummaryFile = fs.readFileSync(specsSummaryPath, "utf8");
 const graphqlOrderFile = JSON.parse(fs.readFileSync(graphqlOrderPath, "utf8"));
 const portalOrderFile = JSON.parse(fs.readFileSync(portalOrderPath, "utf8"));
+const tsConfigFile = fs.readFileSync(tsConfigPath, "utf8");
 
 const forcLines = [];
 
@@ -51,6 +56,39 @@ async function main() {
       fs.writeFileSync(`${folderPath}/${key}.json`, json, "utf-8");
     })
   );
+}
+
+function processVPConfig(lines) {
+  const order = { menu: ["fuels-ts"] };
+  let currentCategory;
+  let foundStart = false;
+  const regex = /'([^']+)'/;
+  lines.forEach((line, index) => {
+    const trimmedLine = line.trimStart();
+    if (foundStart) {
+      if (trimmedLine.includes("collapsed:")) {
+        const matches = regex.exec(lines[index - 2]);
+        currentCategory = matches[1];
+        order.menu.push(currentCategory);
+        order[currentCategory] = [];
+      }
+
+      if (trimmedLine.includes("text")) {
+        if (!lines[index + 2].includes("collapsed:")) {
+          const matches = regex.exec(trimmedLine);
+          if (currentCategory) {
+            order[currentCategory].push(matches[1]);
+          } else {
+            order.menu.push(matches[1]);
+          }
+        }
+      }
+    } else if (trimmedLine === "sidebar: [") {
+      foundStart = true;
+    }
+  });
+
+  return order;
 }
 
 function processSummary(lines, docsName) {
@@ -123,6 +161,8 @@ async function getOrders() {
   orders.portal = portalOrderFile;
 
   // WALLET ORDER
+  // replace this with a nav.json file
+  // once wallet npm package is updated to the master version
   orders.wallet = {
     menu: [
       "Install",
@@ -149,24 +189,7 @@ async function getOrders() {
     ],
   };
 
-  orders["fuels-ts"] = {
-    menu: [
-      "Fuels-Ts",
-      "Getting Started",
-      "Glossary",
-      "Guide",
-      "Types",
-      "Abi Typegen",
-      "Wallets",
-      "Providers",
-      "Contracts",
-      "Cookbook",
-      "Predicates",
-      "Scripts",
-      "Testing",
-      "Messages",
-    ],
-  };
+  orders["fuels-ts"] = processVPConfig(tsConfigFile.split(EOL));
 
   // FORC ORDER
   const newForcLines = forcLines.map((line) =>
