@@ -15,11 +15,19 @@ const indexerSummaryPath = join(
 );
 const specsSummaryPath = join(DOCS_DIRECTORY, "./fuel-specs/src/SUMMARY.md");
 
+const graphqlOrderPath = join(
+  DOCS_DIRECTORY,
+  "./fuel-graphql-docs/src/nav.json"
+);
+const portalOrderPath = join(DOCS_DIRECTORY, "../portal/nav.json");
+
 const swaySummaryFile = fs.readFileSync(swaySummaryPath, "utf8");
 const rustSummaryFile = fs.readFileSync(rustSummaryPath, "utf8");
 const fuelupSummaryFile = fs.readFileSync(fuelupSummaryPath, "utf8");
 const indexerSummaryFile = fs.readFileSync(indexerSummaryPath, "utf8");
 const specsSummaryFile = fs.readFileSync(specsSummaryPath, "utf8");
+const graphqlOrderFile = JSON.parse(fs.readFileSync(graphqlOrderPath, "utf8"));
+const portalOrderFile = JSON.parse(fs.readFileSync(portalOrderPath, "utf8"));
 
 const forcLines = [];
 
@@ -35,7 +43,7 @@ async function main() {
       const final = slugs.map(({ slug }) => getDocBySlug(slug, slugs));
       const sortedLinks = getSortedLinks(orders[key], final);
       const json = JSON.stringify(sortedLinks);
-      const folderPath = "src/sidebar-links-new";
+      const folderPath = "src/sidebar-links";
       if (!fs.existsSync(folderPath)) {
         fs.mkdirSync(folderPath);
       }
@@ -107,6 +115,56 @@ async function getOrders() {
   orders.indexer = processSummary(indexerSummaryFile.split(EOL), "indexer");
   // SPECS ORDER
   orders.specs = processSummary(specsSummaryFile.split(EOL), "specs");
+  // GRAPHQL ORDER
+  orders.graphql = graphqlOrderFile;
+
+  // PORTAL ORDER
+  orders.portal = portalOrderFile;
+
+  // WALLET ORDER
+  orders.wallet = {
+    menu: [
+      "Install",
+      "Browser Support",
+      "How To Use",
+      "For Developers",
+      "Contributing",
+    ],
+    for_developers: [
+      "Getting Started",
+      "Connecting",
+      "Accounts",
+      "Assets",
+      "Networks",
+      "Signing a Message",
+      "Wallet Connectors",
+      "Reference",
+    ],
+    contributing: [
+      "Running locally",
+      "Contributing Guide",
+      "Linking local dependencies",
+    ],
+  };
+
+  orders["fuels-ts"] = {
+    menu: [
+      "Fuels-Ts",
+      "Getting Started",
+      "Glossary",
+      "Guide",
+      "Types",
+      "Abi Typegen",
+      "Wallets",
+      "Providers",
+      "Contracts",
+      "Cookbook",
+      "Predicates",
+      "Scripts",
+      "Testing",
+      "Messages",
+    ],
+  };
 
   // FORC ORDER
   const newForcLines = forcLines.map((line) =>
@@ -119,7 +177,9 @@ async function getOrders() {
 
 function getSortedLinks(config, docs) {
   const links = [];
-  const lcOrder = config.menu.map((o) => o.toLowerCase().replaceAll("-", "_"));
+  const lcOrder = config.menu.map((o) =>
+    o.toLowerCase().replaceAll("-", "_").replaceAll(" ", "_")
+  );
 
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i < docs.length; i++) {
@@ -186,6 +246,7 @@ function getSortedLinks(config, docs) {
           const lowerB = b.label.toLowerCase().replaceAll(" ", "_");
           const aIdx = lcOrder.indexOf(lowerA);
           const bIdx = lcOrder.indexOf(lowerB);
+
           if (!a.subpath && !b.subpath) {
             return aIdx - bIdx;
           }
@@ -207,27 +268,17 @@ function getSortedLinks(config, docs) {
             .replaceAll(" ", "-")
             .replaceAll("_", "-");
           let catOrder = config[key];
+          if (!catOrder) catOrder = config[key.replaceAll("-", "_")];
 
           catOrder = catOrder?.map((title) =>
-            title.toLowerCase().replaceAll("-", "_")
+            title.toLowerCase().replaceAll("-", "_").replaceAll(" ", "_")
           );
-          console.log("key", key);
-          // console.log("config", config);
-          console.log("catOrder", catOrder);
-          // console.log("link.submenu", link.submenu);
-
           const submenu = link.submenu.sort((a, b) => {
             const lowerA = a.label.toLowerCase().replaceAll(" ", "_");
             const lowerB = b.label.toLowerCase().replaceAll(" ", "_");
             const aIdx = catOrder ? catOrder.indexOf(lowerA) : 0;
             const bIdx = catOrder ? catOrder.indexOf(lowerB) : 0;
             const result = aIdx - bIdx;
-            // console.log("-------------------");
-            // console.log("LOWER A", lowerA);
-            // console.log("LOWER B", lowerB);
-            // console.log("aIdx", aIdx);
-            // console.log("bIdx", bIdx);
-            // console.log("-------------------");
             return result;
           });
           return { ...link, submenu };

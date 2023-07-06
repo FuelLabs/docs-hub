@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { existsSync, readFileSync } from 'fs';
+import { readFileSync } from 'fs';
 import { serialize } from 'next-mdx-remote/serialize';
 import { join } from 'path';
 import remarkGfm from 'remark-gfm';
@@ -91,13 +91,10 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
 }
 
 export async function getSidebarLinks(configSlug: string) {
-  let linksPath = join(
+  const linksPath = join(
     DOCS_DIRECTORY,
-    `../src/sidebar-links-new/${configSlug}.json`
+    `../src/sidebar-links/${configSlug}.json`
   );
-  if (!existsSync(linksPath)) {
-    linksPath = join(DOCS_DIRECTORY, `../src/sidebar-links/${configSlug}.json`);
-  }
   const links = JSON.parse(readFileSync(linksPath, 'utf8'));
   return links;
 }
