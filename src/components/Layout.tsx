@@ -50,11 +50,10 @@ const styles = {
     maxWidth: '100vw',
     width: '100vw',
     height: '100vh',
-    display: 'grid',
-    gridTemplateColumns: '1fr',
     gridTemplateRows: '80px auto',
 
     '@xl': {
+      display: 'grid',
       gridTemplateColumns: '250px 1fr 220px',
       gridTemplateRows: '80px auto',
       gridColumnGap: '$24',

@@ -64,7 +64,7 @@ tr > td {
 pre span,
 code {
   font-family: "Calling Code", monospace !important;
-  font-size: 1rem;
+  font-size: 1em;
   letter-spacing: 0;
 }
 
