@@ -43,42 +43,68 @@ export function Heading({ children, ...props }: any) {
   return (
     <FuelHeading ref={ref} as={props['data-rank']} {...props} css={styles.root}>
       <Icon icon={Icon.is('Link')} />
-      <a href={`#${props.id}`}>{children}</a>
+      {props.id ? <a href={`#${props.id}`}>{children}</a> : children}
     </FuelHeading>
   );
+}
+
+function head(rank: number[]) {
+  return `&:is(${rank.map((r) => `[data-rank="h${r}"]`).join(', ')})`;
 }
 
 const styles = {
   root: cssObj({
     position: 'relative',
+    fontFamily: '$display',
+    fontWeight: '$medium',
 
-    '&[data-rank=h1]': {
-      mb: '$6',
-      color: '$intentsBase12',
+    [head([1])]: {
+      mb: '$8',
+      position: 'relative',
+      textSize: '5xl',
+
+      '& a': {
+        position: 'relative',
+      },
+
+      '& a:after': {
+        position: 'absolute',
+        content: '""',
+        bottom: '-4px',
+        left: 0,
+        height: '3px',
+        backgroundColor: '$brand',
+        display: 'block',
+        width: '60%',
+      },
     },
-    '&[data-rank=h2]': {
+    [head([2])]: {
       mt: '$12',
       mb: '$5',
       pb: '$2',
-      color: '$intentsBase12',
-      borderBottom: '1px dashed $intentsBase3',
+      borderBottom: '1px solid $border',
     },
-    '&[data-rank=h3]': {
+    [head([3])]: {
       mt: '$8',
       mb: '$4',
-      color: '$intentsBase11',
     },
-    '&[data-rank=h4], &[data-rank=h5], &[data-rank=h6]': {
+    [head([4, 5, 6])]: {
       mt: '$6',
       mb: '$2',
+    },
+
+    [`${head([1, 2])} a, ${head([1, 2])} a:visited`]: {
+      color: '$intentsBase12',
+    },
+    [`${head([3, 4, 5, 6])} a, ${head([3, 4, 5, 6])} a:visited`]: {
       color: '$intentsBase11',
     },
 
     '& a': {
       color: 'currentColor',
     },
-    '& a:hover': {
-      textDecoration: 'underline',
+    '&:is([id]) a:hover': {
+      textDecoration: 'none',
     },
 
     '.fuel_Icon': {
@@ -88,7 +114,7 @@ const styles = {
       left: '-15px',
       transform: 'translateY(-50%)',
     },
-    '&:hover .fuel_Icon': {
+    '&:is([id]):hover .fuel_Icon': {
       visibility: 'visible',
     },
   }),

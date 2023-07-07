@@ -50,6 +50,7 @@ const styles = {
     fontSize: '$sm',
     height: '$6',
     position: 'relative',
+    color: '$textColor',
 
     '&:not([aria-disabled="true"]):active, &:not([aria-disabled="true"])[aria-pressed="true"]':
       {

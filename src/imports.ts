@@ -10,10 +10,7 @@ export function getComponents(doc: DocType) {
   // load the components used in the wallet docs
   if (doc.docsConfig.slug === 'wallet') {
     const CodeImport = dynamic(
-      () =>
-        import(
-          '~/docs/fuels-wallet/packages/docs/src/components/CodeImport'
-        ).then((mod) => mod.CodeImport),
+      () => import('~/src/components/CodeImport').then((mod) => mod.CodeImport),
       { ssr: false },
     );
     components.CodeImport = CodeImport;
@@ -189,8 +186,8 @@ export function getComponents(doc: DocType) {
   ) {
     const CodeExamples = dynamic(
       () =>
-        import('~/docs/fuel-graphql-docs/src/components/CodeExamples').then(
-          (mod) => mod.CodeExamples,
+        import('~/src/components/GraphqlCodeExample').then(
+          (mod) => mod.GraphQLCodeExample,
         ),
       { ssr: false },
     );

@@ -13,9 +13,9 @@ export function ExampleBox({
   error?: any;
 }) {
   return (
-    <Box.Stack gap="$4" css={{ mt: '$8' }}>
-      <Box css={styles.root}>
-        <Heading as="h6">Check it working </Heading>
+    <Box.Stack gap="$2" css={styles.root}>
+      <Heading as="h6">Check it working </Heading>
+      <Box css={styles.content}>
         {error && <Text color="intentsError10">{error.message}</Text>}
         {children}
       </Box>
@@ -25,14 +25,8 @@ export function ExampleBox({
 
 const styles = {
   root: cssObj({
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '$4',
-    padding: '$4',
-    borderRadius: '$md',
-    border: '1px dashed $intentsBase3',
-    maxWidth: '90vw',
-    overflowWrap: 'break-word',
+    mt: '$8',
+
     h6: {
       display: 'flex',
       alignItems: 'center',
@@ -45,6 +39,17 @@ const styles = {
         color: 'currentColor',
       },
     },
+  }),
+  content: cssObj({
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '$4',
+    padding: '$4',
+    bg: '$overlayBg',
+    borderRadius: '$md',
+    border: '1px solid $border',
+    maxWidth: '90vw',
+    overflowWrap: 'break-word',
   }),
   alert: cssObj({
     maxWidth: '100%',
