@@ -5,6 +5,114 @@ import Link from 'next/link';
 import { Heading } from '../components/Heading';
 
 export function HomePage() {
+  const cards = {
+    sway: (
+      <Box css={styles.card}>
+        <Icon icon="Code" size={40} stroke={0.7} />
+        <Box.Stack>
+          <Heading as="h3">Sway Language</Heading>
+          <Text>
+            Based on Rust, and includes syntax to leverage a blockchain VM
+            without needlessly verbose boilerplate.
+          </Text>
+          <List icon="ArrowRight">
+            <List.Item>
+              <Link href="/docs/sway">Sway</Link>
+            </List.Item>
+            <List.Item>
+              <FuelLink
+                href="https://fuellabs.github.io/sway/master/std/"
+                isExternal
+              >
+                Standard Library
+              </FuelLink>
+            </List.Item>
+            <List.Item>
+              <FuelLink
+                href="https://github.com/FuelLabs/sway-applications"
+                isExternal
+              >
+                Examples Apps
+              </FuelLink>
+            </List.Item>
+          </List>
+        </Box.Stack>
+      </Box>
+    ),
+    sdk: (
+      <Box css={styles.card}>
+        <Icon icon="Book" size={40} stroke={0.7} />
+        <Box.Stack>
+          <Heading as="h3">SDKs</Heading>
+          <Text>
+            Our SKDs are the best way to start building in our network. Using
+            Typescript and Rust, you can start building in minutes.
+          </Text>
+          <List icon="ArrowRight">
+            <List.Item>
+              <Link href="/docs/fuels-rs">Rust SDK</Link>
+            </List.Item>
+            <List.Item>
+              <Link href="/docs/fuels-ts">Typescript SDK</Link>
+            </List.Item>
+            <List.Item>
+              <Link href="/docs/wallet">Wallet SDK</Link>
+            </List.Item>
+            <List.Item>
+              <Link href="/docs/indexer">Indexer</Link>
+            </List.Item>
+          </List>
+        </Box.Stack>
+      </Box>
+    ),
+    network: (
+      <Box css={styles.card}>
+        <Icon icon="Bolt" size={40} stroke={0.7} />
+        <Box.Stack>
+          <Heading as="h3">Our network</Heading>
+          <Text>
+            Start to learn right now all specs and definitions about Fuel
+            Network. You'll see why we are the fastest execution and how it
+            works.
+          </Text>
+          <List icon="ArrowRight">
+            <List.Item>
+              <Link href="/docs/graphql">GraphQL API</Link>
+            </List.Item>
+            <List.Item>
+              <Link href="/docs/specs">Specs</Link>
+            </List.Item>
+            <List.Item>
+              <FuelLink href="https://faucet-beta-3.fuel.network/" isExternal>
+                Faucet
+              </FuelLink>
+            </List.Item>
+          </List>
+        </Box.Stack>
+      </Box>
+    ),
+    tooling: (
+      <Box css={styles.card}>
+        <Icon icon="Settings" size={40} stroke={0.7} />
+        <Box.Stack>
+          <Heading as="h3">Tooling</Heading>
+          <Text>
+            We have the best tooling you need to build your next web3 app in the
+            fastest execution layer.
+          </Text>
+          <List icon="ArrowRight">
+            <List.Item>
+              <Link href="/docs/fuelup">Fuelup</Link>
+            </List.Item>
+            <List.Item>
+              <Link href="/docs/forc">Forc</Link>
+            </List.Item>
+          </List>
+        </Box.Stack>
+      </Box>
+    ),
+  };
+
   return (
     <Box css={styles.root}>
       <Heading as="h1" data-rank="h1" id="fuel-docs">
@@ -15,107 +123,10 @@ export function HomePage() {
         way down to the bits and bytes.{' '}
       </Text>
       <Box css={styles.cardList}>
-        {/* Network */}
-        <Box css={styles.card}>
-          <Icon icon="Bolt" size={40} stroke={0.7} />
-          <Box.Stack>
-            <Heading as="h3">Our network</Heading>
-            <Text>
-              Start to learn right now all specs and definitions about Fuel
-              Network. You'll see why we are the fastest execution and how it
-              works.
-            </Text>
-            <List icon="ArrowRight">
-              <List.Item>
-                <Link href="/docs/graphql">GraphQL API</Link>
-              </List.Item>
-              <List.Item>
-                <Link href="/docs/specs">Specs</Link>
-              </List.Item>
-              <List.Item>
-                <FuelLink href="https://faucet-beta-3.fuel.network/" isExternal>
-                  Faucet
-                </FuelLink>
-              </List.Item>
-            </List>
-          </Box.Stack>
-        </Box>
-        {/* Sway */}
-        <Box css={styles.card}>
-          <Icon icon="Code" size={40} stroke={0.7} />
-          <Box.Stack>
-            <Heading as="h3">Sway Language</Heading>
-            <Text>
-              Based on Rust, and includes syntax to leverage a blockchain VM
-              without needlessly verbose boilerplate.
-            </Text>
-            <List icon="ArrowRight">
-              <List.Item>
-                <Link href="/docs/sway">Sway</Link>
-              </List.Item>
-              <List.Item>
-                <FuelLink
-                  href="https://fuellabs.github.io/sway/master/std/"
-                  isExternal
-                >
-                  Standard Library
-                </FuelLink>
-              </List.Item>
-              <List.Item>
-                <FuelLink
-                  href="https://github.com/FuelLabs/sway-applications"
-                  isExternal
-                >
-                  Examples Apps
-                </FuelLink>
-              </List.Item>
-            </List>
-          </Box.Stack>
-        </Box>
-        {/* Tooling */}
-        <Box css={styles.card}>
-          <Icon icon="Settings" size={40} stroke={0.7} />
-          <Box.Stack>
-            <Heading as="h3">Tooling</Heading>
-            <Text>
-              We have the best tooling you need to build your next web3 app in
-              the fastest execution layer.
-            </Text>
-            <List icon="ArrowRight">
-              <List.Item>
-                <Link href="/docs/fuelup">Fuelup</Link>
-              </List.Item>
-              <List.Item>
-                <Link href="/docs/forc">Forc</Link>
-              </List.Item>
-            </List>
-          </Box.Stack>
-        </Box>
-        {/* SDKs */}
-        <Box css={styles.card}>
-          <Icon icon="Book" size={40} stroke={0.7} />
-          <Box.Stack>
-            <Heading as="h3">SDKs</Heading>
-            <Text>
-              Our SKDs are the best way to start building in our network. Using
-              Typescript and Rust, you can start building in minutes.
-            </Text>
-            <List icon="ArrowRight">
-              <List.Item>
-                <Link href="/docs/fuels-rs">Rust SDK</Link>
-              </List.Item>
-              <List.Item>
-                <Link href="/docs/fuels-ts">Typescript SDK</Link>
-              </List.Item>
-              <List.Item>
-                <Link href="/docs/wallet">Wallet SDK</Link>
-              </List.Item>
-              <List.Item>
-                <Link href="/docs/indexer">Indexer</Link>
-              </List.Item>
-            </List>
-          </Box.Stack>
-        </Box>
+        {cards.sway}
+        {cards.sdk}
+        {cards.tooling}
+        {cards.network}
       </Box>
     </Box>
   );
