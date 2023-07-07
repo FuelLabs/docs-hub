@@ -62,17 +62,24 @@ const styles = {
     '.fuel_List': {
       display: 'flex',
       flexDirection: 'column',
-      gap: '$0',
+      gap: '$1',
       mt: '$1',
-      pl: '$4',
+      pl: '$3',
       ml: '$1',
       borderLeft: '1px solid $border',
     },
     '.fuel_ListItem': {
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
       gap: '$0',
     },
     '.fuel_ListItem a': {
-      flex: 1,
+      display: 'block',
+      width: '100%',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
     },
   }),
 };

@@ -71,5 +71,9 @@ const styles = {
         },
       },
     },
+
+    '& .Layout--section a, & .Layout--section a:visited': {
+      color: 'currentColor',
+    },
   }),
 };
