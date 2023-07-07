@@ -70,6 +70,7 @@ const styles = {
       padding: '$2 $2 $3 !important',
       background: 'var(--colors-preBg) !important',
       fontSize: '14px !important',
+      tabSize: '10px !important',
     },
     'pre[data-title=true]': {
       marginTop: '$0 !important',

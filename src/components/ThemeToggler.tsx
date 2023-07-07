@@ -11,7 +11,7 @@ export function ThemeToggler() {
 
   const handleChange = () => {
     const next = current === 'dark' ? 'light' : 'dark';
-    setCookie('theme', next, { path: '/' });
+    setCookie('theme', next);
     setTheme(next);
     document.documentElement.attributes['data-theme'].value = next;
   };

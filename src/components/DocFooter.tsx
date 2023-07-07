@@ -1,5 +1,6 @@
 import { cssObj } from '@fuel-ui/css';
-import { Text, Link, Box, Icon } from '@fuel-ui/react';
+import { Text, Box, Icon } from '@fuel-ui/react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useDocContext } from '~/src/hooks/useDocContext';
 
