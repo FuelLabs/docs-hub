@@ -1,7 +1,9 @@
+import type { GetServerSideProps } from 'next';
+
 import { getSidebarLinks } from '../lib/api';
 import type { SidebarLinkItem } from '../types';
 
-const docSlugs = [
+const DOC_SLUGS = [
   'portal',
   'sway',
   'fuels-rs',
@@ -14,73 +16,64 @@ const docSlugs = [
   'forc',
 ];
 
-function generateSiteMap(links: SidebarLinkItem[][]) {
-  const paths: string[] = [];
-  const baseUrl = 'https://docs-hub.vercel.app/docs/';
+const TO_EXCLUDE = ['portal', 'wallet', 'graphql'];
+const BASE_URL = 'https://docs-hub.vercel.app/docs/';
 
-  docSlugs.forEach((slug) => {
-    if (slug !== 'portal' && slug !== 'wallet' && slug !== 'graphql') {
-      paths.push(`${baseUrl}${slug}`);
-    }
-  });
-
-  links.forEach((menu) => {
-    menu.forEach((item) => {
-      if (item.submenu) {
-        item.submenu.forEach((url) => {
-          paths.push(
-            `${baseUrl}${url.slug?.replace('../', '').replace('./', '')}`,
-          );
-        });
-      } else if (item.slug) {
-        if (item.slug.split('/').length > 2) {
-          paths.push(
-            `${baseUrl}${item.slug?.replace('../', '').replace('./', '')}`,
-          );
-        }
-      }
-    });
-  });
-  return `<?xml version="1.0" encoding="UTF-8"?>
-     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-       ${paths
-         .map((path) => {
-           return `
-         <url>
-             <loc>${`${path}`}</loc>
-         </url>
-       `;
-         })
-         .join('')}
-     </urlset>
-   `;
+function createUrl(slug: string) {
+  return `${BASE_URL}${slug.replace('../', '').replace('./', '')}`;
 }
 
-function SiteMap() {
+function isExcludedSlug(slug: string) {
+  return !TO_EXCLUDE.includes(slug);
+}
+
+function processMenuItems(menu: SidebarLinkItem[]) {
+  return menu.reduce((paths: string[], item: SidebarLinkItem) => {
+    if (item.submenu) {
+      return paths.concat(
+        item.submenu.map((url) => createUrl(url.slug as string)),
+      );
+    }
+    if (item.slug && item.slug.split('/').length > 2) {
+      paths.push(createUrl(item.slug));
+    }
+    return paths;
+  }, []);
+}
+
+function generateSiteMap(links: SidebarLinkItem[][]) {
+  const pathsFromDocSlugs = DOC_SLUGS.filter(isExcludedSlug).map(createUrl);
+  const paths = pathsFromDocSlugs.concat(
+    links.reduce(
+      (paths: string[], menu: SidebarLinkItem[]) =>
+        paths.concat(processMenuItems(menu)),
+      [],
+    ),
+  );
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+      ${paths.map((p) => `<url><loc>${p}</loc></url>`).join('')}
+    </urlset>
+  `;
+}
+
+export default function SiteMap() {
   // see getServerSideProps
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function getServerSideProps({ res }: any) {
-  const allLinks: SidebarLinkItem[][] = [];
-
-  await Promise.all(
-    docSlugs.map(async (slug) => {
-      const links = await getSidebarLinks(slug);
-      allLinks.push(links);
-    }),
+export const getServerSideProps: GetServerSideProps<any> = async ({ res }) => {
+  const allLinks: SidebarLinkItem[][] = await Promise.all(
+    DOC_SLUGS.flatMap(getSidebarLinks),
   );
-
-  const sitemap = generateSiteMap(allLinks);
 
   res.setHeader('Content-Type', 'text/xml');
   // send the XML
-  res.write(sitemap);
+  res.write(generateSiteMap(allLinks));
   res.end();
 
   return {
     props: {},
   };
-}
-
-export default SiteMap;
+};

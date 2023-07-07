@@ -55,13 +55,14 @@ const styles = {
     },
   }),
   section: cssObj({
-    py: '$4',
-    px: '$0',
+    py: '$6',
+    px: '$6',
     display: 'flex',
     flexDirection: 'column',
 
     '@md': {
-      px: '$0',
+      py: '$8',
+      px: '$8',
     },
 
     '@xl': {

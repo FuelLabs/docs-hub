@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import type { ThemeUtilsCSS } from '@fuel-ui/css';
 import { cssObj } from '@fuel-ui/css';
 import { Box, Icon, IconButton, Text } from '@fuel-ui/react';
 import { Children } from 'react';
@@ -10,9 +11,10 @@ import theme from 'react-syntax-highlighter/dist/cjs/styles/prism/night-owl';
 type PreProps = {
   children: ReactNode;
   title?: ReactNode;
+  css?: ThemeUtilsCSS;
 };
 
-export function Pre({ children, title }: PreProps) {
+export function Pre({ css, children, title }: PreProps) {
   const codeEl: any = Children.toArray(children)[0];
   const codeStr = codeEl?.props.children || '';
   const code = codeStr.endsWith('\n') ? codeStr.slice(0, -1) : codeStr;
@@ -21,7 +23,7 @@ export function Pre({ children, title }: PreProps) {
     : 'rust';
 
   return (
-    <Box css={styles.root}>
+    <Box css={{ ...styles.root, ...css }}>
       <IconButton
         size="xs"
         icon={Icon.is('ClipboardText')}
@@ -56,13 +58,17 @@ const styles = {
   root: cssObj({
     boxSizing: 'border-box',
     position: 'relative',
+    maxHeight: '450px',
+    overflow: 'auto',
+    borderRadius: '$default',
+    background: 'var(--colors-preBg) !important',
+    my: '$6',
 
     pre: {
       pr: '50px',
-      mb: '$5 !important',
-      padding: '$4 $2 !important',
-      borderRadius: '$default',
-      bg: 'hsla(0,0%,8.63%,1) !important',
+      mb: '$0 !important',
+      padding: '$2 $2 $3 !important',
+      background: 'var(--colors-preBg) !important',
       fontSize: '14px !important',
     },
     'pre[data-title=true]': {
@@ -104,7 +110,7 @@ const styles = {
   copyIcon: cssObj({
     position: 'absolute',
     right: 0,
-    bottom: 0,
+    top: 0,
     color: '$intentsBase6',
     transition: 'all .3s',
     background: 'transparent',
