@@ -32,6 +32,12 @@ function generateSiteMap(links: SidebarLinkItem[][]) {
             `${baseUrl}${url.slug?.replace('../', '').replace('./', '')}`,
           );
         });
+      } else if (item.slug) {
+        if (item.slug.split('/').length > 2) {
+          paths.push(
+            `${baseUrl}${item.slug?.replace('../', '').replace('./', '')}`,
+          );
+        }
       }
     });
   });
