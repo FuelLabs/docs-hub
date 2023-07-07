@@ -1,5 +1,5 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box, Icon, List, Text } from '@fuel-ui/react';
+import { Link as FuelLink, Box, Icon, List, Text } from '@fuel-ui/react';
 import Link from 'next/link';
 
 import { Heading } from '../components/Heading';
@@ -27,13 +27,15 @@ export function HomePage() {
             </Text>
             <List icon="ArrowRight">
               <List.Item>
-                <Link href="/">GraphQL API</Link>
+                <Link href="/docs/graphql">GraphQL API</Link>
               </List.Item>
               <List.Item>
-                <Link href="/">Specs</Link>
+                <Link href="/docs/specs">Specs</Link>
               </List.Item>
               <List.Item>
-                <Link href="/">Faucet</Link>
+                <FuelLink href="https://faucet-beta-3.fuel.network/" isExternal>
+                  Faucet
+                </FuelLink>
               </List.Item>
             </List>
           </Box.Stack>
@@ -49,13 +51,23 @@ export function HomePage() {
             </Text>
             <List icon="ArrowRight">
               <List.Item>
-                <Link href="/">Sway</Link>
+                <Link href="/docs/sway">Sway</Link>
               </List.Item>
               <List.Item>
-                <Link href="/">Standard Library</Link>
+                <FuelLink
+                  href="https://fuellabs.github.io/sway/master/std/"
+                  isExternal
+                >
+                  Standard Library
+                </FuelLink>
               </List.Item>
               <List.Item>
-                <Link href="/">Examples Apps</Link>
+                <FuelLink
+                  href="https://github.com/FuelLabs/sway-applications"
+                  isExternal
+                >
+                  Examples Apps
+                </FuelLink>
               </List.Item>
             </List>
           </Box.Stack>
@@ -71,10 +83,10 @@ export function HomePage() {
             </Text>
             <List icon="ArrowRight">
               <List.Item>
-                <Link href="/">Fuelup</Link>
+                <Link href="/docs/fuelup">Fuelup</Link>
               </List.Item>
               <List.Item>
-                <Link href="/">Forc</Link>
+                <Link href="/docs/forc">Forc</Link>
               </List.Item>
             </List>
           </Box.Stack>
@@ -90,16 +102,16 @@ export function HomePage() {
             </Text>
             <List icon="ArrowRight">
               <List.Item>
-                <Link href="/">Rust SDK</Link>
+                <Link href="/docs/fuels-rs">Rust SDK</Link>
               </List.Item>
               <List.Item>
-                <Link href="/">Typescript SDK</Link>
+                <Link href="/docs/fuels-ts">Typescript SDK</Link>
               </List.Item>
               <List.Item>
-                <Link href="/">Wallet SDK</Link>
+                <Link href="/docs/wallet">Wallet SDK</Link>
               </List.Item>
               <List.Item>
-                <Link href="/">Indexer</Link>
+                <Link href="/docs/indexer">Indexer</Link>
               </List.Item>
             </List>
           </Box.Stack>
