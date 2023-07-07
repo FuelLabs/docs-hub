@@ -3,23 +3,29 @@ import { Box } from '@fuel-ui/react';
 import Head from 'next/head';
 import type { ReactNode } from 'react';
 
-import { useDocContext } from '../hooks/useDocContext';
+import type { Config } from '../types';
 
 import { Header } from './Header';
 
 type LayoutProps = {
   title?: string;
   children: ReactNode;
+  isClean?: boolean;
+  hasHeadings?: boolean;
+  config?: Config;
+  theme?: string;
 };
 
-export function Layout({ title, children }: LayoutProps) {
-  const { doc } = useDocContext();
+export function Layout({
+  title,
+  children,
+  isClean,
+  hasHeadings,
+  config,
+}: LayoutProps) {
   const titleText = title
     ? `${title[0].toUpperCase()}${title.slice(1)} | Fuel Docs`
     : 'Fuel Docs';
-
-  const docsConfig = doc.docsConfig;
-  const hasHeadings = Boolean(doc.headings.length);
 
   return (
     <>
@@ -27,18 +33,19 @@ export function Layout({ title, children }: LayoutProps) {
         <title>{titleText}</title>
         <meta
           name="description"
-          content={docsConfig?.ogTags?.description}
+          content={config?.ogTags?.description}
           key="desc"
         />
         <meta property="og:title" content={titleText} />
-        <meta
-          property="og:description"
-          content={docsConfig?.ogTags?.description}
-        />
-        <meta property="og:image" content={docsConfig?.ogTags?.image} />
+        <meta property="og:description" content={config?.ogTags?.description} />
+        <meta property="og:image" content={config?.ogTags?.image} />
       </Head>
-      <Box css={styles.root} data-headings={hasHeadings}>
-        <Header title={docsConfig?.title} />
+      <Box
+        css={styles.root}
+        data-headings={hasHeadings}
+        data-clean={Boolean(isClean)}
+      >
+        <Header title={config?.title} />
         {children}
       </Box>
     </>
@@ -54,19 +61,29 @@ const styles = {
 
     '@xl': {
       display: 'grid',
-      gridTemplateColumns: '250px 1fr 220px',
       gridTemplateRows: '80px auto',
-      gridColumnGap: '$24',
 
-      '& .Layout--section': {
-        maxWidth: 'calc(100vw - 662px)',
-      },
-
-      '&[data-headings="false"]': {
-        gridTemplateColumns: '250px 1fr',
+      '&[data-clean="false"]': {
+        gridTemplateColumns: '250px 1fr 220px',
+        gridColumnGap: '$24',
 
         '& .Layout--section': {
-          maxWidth: 'calc(100vw - 442px)',
+          maxWidth: 'calc(100vw - 662px)',
+        },
+
+        '&[data-headings="false"]': {
+          gridTemplateColumns: '250px 1fr',
+
+          '& .Layout--section': {
+            maxWidth: 'calc(100vw - 442px)',
+          },
+        },
+      },
+      '&[data-clean="true"]': {
+        gridTemplateColumns: '1fr',
+
+        '& .Layout--section': {
+          px: '$14',
         },
       },
     },

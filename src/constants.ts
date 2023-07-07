@@ -29,9 +29,9 @@ export type LinkObject = {
 
 export const NAVIGATION: LinkObject[] = [
   {
-    name: 'Guides',
+    name: 'Home',
     type: 'internal-link',
-    link: '/docs/portal/guides/',
+    link: '/',
     slug: 'portal',
   },
   {
