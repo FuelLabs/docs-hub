@@ -17,6 +17,6 @@ export default function Home({ theme }: { theme: string }) {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getServerSideProps: GetServerSideProps<any> = async (ctx) => {
-  const theme = getCookie('theme', ctx);
+  const theme = getCookie('theme', ctx) || 'light';
   return { props: { theme } };
 };

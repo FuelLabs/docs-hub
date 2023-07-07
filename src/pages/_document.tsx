@@ -15,7 +15,7 @@ export default class Document extends NextDocument {
   render() {
     const cookies = (this.props as any).cookies;
     return (
-      <Html lang="en" data-theme={cookies?.theme || 'dark'}>
+      <Html lang="en" data-theme={cookies?.theme || 'light'}>
         <Head>
           <style
             id="stitches"
