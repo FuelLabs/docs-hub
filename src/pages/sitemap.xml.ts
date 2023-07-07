@@ -1,6 +1,7 @@
+import type { GetServerSideProps } from 'next';
+
 import { getSidebarLinks } from '../lib/api';
 import type { SidebarLinkItem } from '../types';
-import type { GetServerSideProps } from 'next';
 
 const DOC_SLUGS = [
   'portal',
@@ -61,7 +62,8 @@ export default function SiteMap() {
   // see getServerSideProps
 }
 
-export const getServerSideProps: GetServerSideProps<{}> = async ({ res }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getServerSideProps: GetServerSideProps<any> = async ({ res }) => {
   const allLinks: SidebarLinkItem[][] = await Promise.all(
     DOC_SLUGS.flatMap(getSidebarLinks),
   );
