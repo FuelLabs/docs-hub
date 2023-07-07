@@ -1,6 +1,6 @@
 {
   "index_name": "docs_hub",
-  "start_urls": ["/"],
+  "sitemaps": ["https://docs-hub.vercel.app/sitemap.xml"],
   "selectors": {
     "lvl0": "h1",
     "lvl1": "h2",
