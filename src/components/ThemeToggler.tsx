@@ -13,8 +13,8 @@ export function ThemeToggler() {
 
   const handleChange = () => {
     const next = current === 'dark' ? 'light' : 'dark';
-    setTheme(next);
     setCookie('theme', next, { path: '/' });
+    setTheme(next);
   };
 
   useEffect(() => {

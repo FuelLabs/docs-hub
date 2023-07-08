@@ -131,3 +131,5 @@ export const NAVIGATION: LinkObject[] = [
     ],
   },
 ];
+
+export const DEFAULT_THEME = 'light';

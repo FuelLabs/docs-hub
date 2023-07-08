@@ -1,5 +1,6 @@
 import { getCookie } from 'cookies-next';
 import { GetServerSideProps } from 'next';
+import { DEFAULT_THEME } from '~/src/constants';
 import {
   getDocBySlug,
   getDocLink,
@@ -24,7 +25,7 @@ export const getServerSideProps: GetServerSideProps<any> = async (ctx) => {
   const doc = await getDocBySlug(slug.join('/'));
   const links = await getSidebarLinks(doc.docsConfig.slug);
   const docLink = getDocLink(links, doc.slug);
-  const theme = getCookie('theme', ctx) || 'dark';
+  const theme = getCookie('theme', ctx) || DEFAULT_THEME
 
   return {
     props: {
