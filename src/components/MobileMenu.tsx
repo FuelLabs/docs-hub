@@ -19,6 +19,7 @@ import type { LinkObject } from '../constants';
 import { styles as navStyles } from './Navigation';
 import { Search } from './Search';
 import { Sidebar } from './Sidebar';
+import { ThemeToggler } from './ThemeToggler';
 
 const MotionBox = motion<any>(Box);
 const SPRING: AnimationProps['transition'] = {
@@ -96,6 +97,7 @@ export function MobileMenu() {
   return (
     <Box css={styles.root}>
       <Search />
+      <ThemeToggler />
       {button}
       <AnimatePresence>
         {showing && <Box css={styles.overlay}>{content}</Box>}

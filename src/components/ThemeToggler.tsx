@@ -1,18 +1,26 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box, Icon, useFuelTheme } from '@fuel-ui/react';
+import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
+
+import { useDocContext } from '../hooks/useDocContext';
 
 export function ThemeToggler() {
   const { setTheme } = useFuelTheme();
+  const { theme } = useDocContext();
   const [cookie, setCookie] = useCookies(['theme']);
-  const current = cookie.theme || 'dark';
+  const current = cookie.theme || theme;
 
   const handleChange = () => {
-    const next = cookie.theme === 'dark' ? 'light' : 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
     setCookie('theme', next, { path: '/' });
     setTheme(next);
-    document.documentElement.attributes['data-theme'].value = next;
   };
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    document.documentElement.attributes['data-theme'].value = current;
+  }, [current]);
 
   return (
     <Box css={styles.root} data-theme={current} onClick={handleChange}>

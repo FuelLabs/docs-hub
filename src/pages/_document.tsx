@@ -3,6 +3,8 @@ import { getCssText } from '@fuel-ui/css';
 import NextDocument, { Head, Html, Main, NextScript } from 'next/document';
 import { Cookies } from 'react-cookie';
 
+import { DEFAULT_THEME } from '../constants';
+
 export default class Document extends NextDocument {
   static async getInitialProps(ctx: any): Promise<any> {
     const originalRenderPage = ctx.renderPage;
@@ -23,7 +25,13 @@ export default class Document extends NextDocument {
   render() {
     const cookies = (this.props as any).cookies;
     return (
-      <Html lang="en" data-theme={cookies.theme || 'dark'}>
+      <Html
+        lang="en"
+        data-theme={cookies.theme || DEFAULT_THEME}
+        className={
+          cookies.theme === 'light' ? 'fuel_light-theme' : 'fuel_dark-theme'
+        }
+      >
         <Head>
           <style
             id="stitches"
