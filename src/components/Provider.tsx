@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { ThemeProvider } from '@fuel-ui/react';
+import { ThemeProvider, darkTheme, lightTheme } from '@fuel-ui/react';
 import { MDXProvider } from '@mdx-js/react';
 import type { ReactNode } from 'react';
 
@@ -32,12 +32,18 @@ const components = {
 
 type ProviderProps = {
   children: ReactNode;
+  theme: string;
 };
 
-export function Provider({ children }: ProviderProps) {
+export function Provider({ children, theme }: ProviderProps) {
   return (
     <MDXProvider components={components as any}>
-      <ThemeProvider>{children}</ThemeProvider>
+      <ThemeProvider
+        themes={{ dark: darkTheme, light: lightTheme }}
+        initialTheme={theme}
+      >
+        {children}
+      </ThemeProvider>
     </MDXProvider>
   );
 }

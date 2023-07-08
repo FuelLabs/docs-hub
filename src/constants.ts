@@ -29,9 +29,9 @@ export type LinkObject = {
 
 export const NAVIGATION: LinkObject[] = [
   {
-    name: 'Guides',
+    name: 'Home',
     type: 'internal-link',
-    link: '/docs/portal/guides/',
+    link: '/',
     slug: 'portal',
   },
   {
@@ -131,3 +131,5 @@ export const NAVIGATION: LinkObject[] = [
     ],
   },
 ];
+
+export const DEFAULT_THEME = 'light';
