@@ -1,4 +1,4 @@
-import { getCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 import { GetServerSideProps } from 'next';
 import { DEFAULT_THEME } from '~/src/constants';
 import {
@@ -27,9 +27,13 @@ export const getServerSideProps: GetServerSideProps<any> = async (ctx) => {
   const docLink = getDocLink(links, doc.slug);
   const theme = getCookie('theme', ctx) || DEFAULT_THEME
 
+  if (!theme) {
+    setCookie('theme', DEFAULT_THEME, ctx);
+  }
+
   return {
     props: {
-      theme,
+      theme: theme || DEFAULT_THEME,
       doc,
       links,
       docLink
