@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const cookies = (Component as any).universalCookies;
   return (
     <CookiesProvider cookies={cookies}>
-      <Provider theme={pageProps.theme}>
+      <Provider theme={pageProps.theme || 'dark'}>
         <style jsx global>{`
           :root {
             --fonts-sans: ${inter.style.fontFamily};

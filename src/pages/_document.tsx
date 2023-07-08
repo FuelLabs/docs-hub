@@ -23,7 +23,13 @@ export default class Document extends NextDocument {
   render() {
     const cookies = (this.props as any).cookies;
     return (
-      <Html lang="en" data-theme={cookies.theme}>
+      <Html
+        lang="en"
+        data-theme={cookies.theme || 'dark'}
+        className={
+          cookies.theme === 'light' ? 'fuel_light-theme' : 'fuel_dark-theme'
+        }
+      >
         <Head>
           <style
             id="stitches"
