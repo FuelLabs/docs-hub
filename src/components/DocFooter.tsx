@@ -103,5 +103,10 @@ const styles = {
     'a, a:visited': {
       color: '$intentsBase9',
     },
+    '& a': {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '$2',
+    },
   }),
 };

@@ -1,23 +1,20 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box, Icon, useFuelTheme } from '@fuel-ui/react';
-import { getCookie, setCookie } from 'cookies-next';
-
-import { useDocContext } from '../hooks/useDocContext';
+import { useCookies } from 'react-cookie';
 
 export function ThemeToggler() {
   const { setTheme } = useFuelTheme();
-  const { theme } = useDocContext();
-  const current = getCookie('theme') || theme;
+  const [cookie, setCookie] = useCookies(['theme']);
 
   const handleChange = () => {
-    const next = current === 'dark' ? 'light' : 'dark';
-    setCookie('theme', next);
+    const next = cookie.theme === 'dark' ? 'light' : 'dark';
     setTheme(next);
+    setCookie('theme', next);
     document.documentElement.attributes['data-theme'].value = next;
   };
 
   return (
-    <Box css={styles.root} data-theme={current} onClick={handleChange}>
+    <Box css={styles.root} data-theme={cookie.theme} onClick={handleChange}>
       <Icon icon="SunFilled" size={20} stroke={1.2} />
       <Icon icon="MoonStars" size={20} stroke={1.2} />
     </Box>

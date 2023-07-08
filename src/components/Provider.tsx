@@ -32,14 +32,15 @@ const components = {
 
 type ProviderProps = {
   children: ReactNode;
+  theme: string;
 };
 
-export function Provider({ children }: ProviderProps) {
+export function Provider({ children, theme }: ProviderProps) {
   return (
     <MDXProvider components={components as any}>
       <ThemeProvider
         themes={{ dark: darkTheme, light: lightTheme }}
-        initialTheme="light"
+        initialTheme={theme}
       >
         {children}
       </ThemeProvider>
