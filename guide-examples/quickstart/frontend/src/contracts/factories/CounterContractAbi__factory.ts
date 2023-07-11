@@ -9,76 +9,78 @@
   Fuel-Core version: 0.17.3
 */
 
-import { Interface, Contract } from "fuels";
-import type { Provider, Account, AbstractAddress } from "fuels";
-import type { CounterContractAbi, CounterContractAbiInterface } from "../CounterContractAbi";
+import { Interface, Contract } from 'fuels';
+import type { Provider, Account, AbstractAddress } from 'fuels';
+import type {
+  CounterContractAbi,
+  CounterContractAbiInterface,
+} from '../CounterContractAbi';
 
 const _abi = {
-  "types": [
+  types: [
     {
-      "typeId": 0,
-      "type": "()",
-      "components": [],
-      "typeParameters": null
+      typeId: 0,
+      type: '()',
+      components: [],
+      typeParameters: null,
     },
     {
-      "typeId": 1,
-      "type": "u64",
-      "components": null,
-      "typeParameters": null
-    }
+      typeId: 1,
+      type: 'u64',
+      components: null,
+      typeParameters: null,
+    },
   ],
-  "functions": [
+  functions: [
     {
-      "inputs": [],
-      "name": "count",
-      "output": {
-        "name": "",
-        "type": 1,
-        "typeArguments": null
+      inputs: [],
+      name: 'count',
+      output: {
+        name: '',
+        type: 1,
+        typeArguments: null,
       },
-      "attributes": [
+      attributes: [
         {
-          "name": "storage",
-          "arguments": [
-            "read"
-          ]
-        }
-      ]
+          name: 'storage',
+          arguments: ['read'],
+        },
+      ],
     },
     {
-      "inputs": [],
-      "name": "increment",
-      "output": {
-        "name": "",
-        "type": 0,
-        "typeArguments": null
+      inputs: [],
+      name: 'increment',
+      output: {
+        name: '',
+        type: 0,
+        typeArguments: null,
       },
-      "attributes": [
+      attributes: [
         {
-          "name": "storage",
-          "arguments": [
-            "read",
-            "write"
-          ]
-        }
-      ]
-    }
+          name: 'storage',
+          arguments: ['read', 'write'],
+        },
+      ],
+    },
   ],
-  "loggedTypes": [],
-  "messagesTypes": [],
-  "configurables": []
-}
+  loggedTypes: [],
+  messagesTypes: [],
+  configurables: [],
+};
 
 export class CounterContractAbi__factory {
-  static readonly abi = _abi
+  static readonly abi = _abi;
   static createInterface(): CounterContractAbiInterface {
-    return new Interface(_abi) as unknown as CounterContractAbiInterface
+    return new Interface(_abi) as unknown as CounterContractAbiInterface;
   }
   static connect(
     id: string | AbstractAddress,
-    accountOrProvider: Account | Provider
+    accountOrProvider: Account | Provider,
   ): CounterContractAbi {
-    return new Contract(id, _abi, accountOrProvider) as unknown as CounterContractAbi
+    return new Contract(
+      id,
+      _abi,
+      accountOrProvider,
+    ) as unknown as CounterContractAbi;
   }
 }

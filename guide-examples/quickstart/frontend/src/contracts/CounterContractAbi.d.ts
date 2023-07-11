@@ -30,7 +30,10 @@ interface CounterContractAbiInterface extends Interface {
   encodeFunctionData(functionFragment: 'increment', values: []): Uint8Array;
 
   decodeFunctionData(functionFragment: 'count', data: BytesLike): DecodedValue;
-  decodeFunctionData(functionFragment: 'increment', data: BytesLike): DecodedValue;
+  decodeFunctionData(
+    functionFragment: 'increment',
+    data: BytesLike,
+  ): DecodedValue;
 }
 
 export class CounterContractAbi extends Contract {
