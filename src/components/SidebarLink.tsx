@@ -19,7 +19,10 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
       ? item.slug.replace('../', '').replace('./', '')
       : item.slug;
 
-    const fullSlug = `/docs/${slug}${slug?.endsWith('/') ? '' : '/'}`;
+    const isGuide = pathname.includes('guides/');
+    const fullSlug = `${
+      isGuide ? slug?.replace('guides/', '') : `/docs/${slug}`
+    }${slug?.endsWith('/') ? '' : '/'}`;
     const label = item.label.replaceAll(' ', '-');
     const isActive = cx({
       active:
@@ -42,7 +45,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
   },
 );
 
-const styles = {
+export const styles = {
   root: cssObj({
     px: '$0',
     py: '$0',

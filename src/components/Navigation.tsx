@@ -8,20 +8,23 @@ import { NAVIGATION } from '../constants';
 import type { Tabs } from '../constants';
 
 export function Navigation() {
-  const [active, setActive] = useState<Tabs>('portal');
+  const [active, setActive] = useState<Tabs>('home');
   const router = useRouter();
 
   useEffect(() => {
-    let category = 'portal';
-    if (router.pathname !== '/') {
+    let category = 'home';
+    if (router.pathname.includes('/docs/')) {
       category = router.asPath.split('/docs/')[1].split('/')[0];
+    } else if (router.pathname !== '/') {
+      category = 'guides';
     }
     if (isStringInTabs(category)) setActive(category as Tabs);
   }, [router]);
 
   function isStringInTabs(str: string): boolean {
     return (
-      str === 'portal' ||
+      str === 'home' ||
+      str === 'guides' ||
       str === 'sway' ||
       str === 'fuels-rs' ||
       str === 'fuels-ts' ||
@@ -101,7 +104,7 @@ export function Navigation() {
             href={item.link}
             css={styles.navButton}
             variant="link"
-            data-active={active === 'portal'}
+            data-active={active === item.name.toLowerCase()}
           >
             {item.name}
           </ButtonLink>

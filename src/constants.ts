@@ -4,7 +4,8 @@ export const DOCS_DIRECTORY = join(process.cwd(), './docs');
 export const FIELDS = ['title', 'slug', 'content', 'category'];
 
 export type Tabs =
-  | 'portal'
+  | 'home'
+  | 'guides'
   | 'sway'
   | 'fuels-rs'
   | 'fuels-ts'
@@ -32,7 +33,13 @@ export const NAVIGATION: LinkObject[] = [
     name: 'Home',
     type: 'internal-link',
     link: '/',
-    slug: 'portal',
+    slug: 'home',
+  },
+  {
+    name: 'Guides',
+    type: 'internal-link',
+    link: '/guides',
+    slug: 'guides',
   },
   {
     name: 'Build with Sway',

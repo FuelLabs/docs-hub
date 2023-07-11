@@ -1,32 +1,22 @@
 import { getCookie, setCookie } from 'cookies-next';
-import { GetServerSideProps } from 'next';
+import type { GetServerSideProps } from 'next';
 import { DEFAULT_THEME } from '~/src/constants';
-import {
-  getDocBySlug,
-  getDocLink,
-  getSidebarLinks,
-} from '~/src/lib/api';
+import { getDocBySlug, getDocLink, getSidebarLinks } from '~/src/lib/api';
 import { DocScreen } from '~/src/screens/DocPage';
-import type { DocType, SidebarLinkItem } from '~/src/types';
 
-export type DocPageProps = {
-  doc: DocType;
-  links: SidebarLinkItem[];
-  docLink?: SidebarLinkItem;
-  theme: string
-};
+import type { DocPageProps } from '../docs/[...slug]';
 
 export default function DocPage(props: DocPageProps) {
   return <DocScreen {...props} />;
 }
 
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getServerSideProps: GetServerSideProps<any> = async (ctx) => {
   const slug = ctx.params?.slug as string[];
-  const doc = await getDocBySlug(slug.join('/'));
-  const links = await getSidebarLinks(doc.docsConfig.slug);
+  const doc = await getDocBySlug(`guides/${slug.join('/')}`);
+  const links = await getSidebarLinks(doc.docsConfig.slug, slug[0]);
   const docLink = getDocLink(links, doc.slug);
-  const theme = getCookie('theme', ctx) || DEFAULT_THEME
+  const theme = getCookie('theme', ctx) || DEFAULT_THEME;
 
   if (!theme) {
     setCookie('theme', DEFAULT_THEME, ctx);
@@ -37,7 +27,7 @@ export const getServerSideProps: GetServerSideProps<any> = async (ctx) => {
       theme: theme || DEFAULT_THEME,
       doc,
       links,
-      docLink
+      docLink,
     },
   };
-}
+};
