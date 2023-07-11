@@ -24,10 +24,12 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
       isGuide ? slug?.replace('guides/', '') : `/docs/${slug}`
     }${slug?.endsWith('/') ? '' : '/'}`;
     const label = item.label.replaceAll(' ', '-');
+    const active = pathname.startsWith('/guides/')
+      ? pathname.replace('/guides/', '') === fullSlug
+      : pathname === fullSlug ||
+        (label === slug?.split('/')[1] && pathname.includes(label));
     const isActive = cx({
-      active:
-        pathname === fullSlug ||
-        (label === slug?.split('/')[1] && pathname.includes(label)),
+      active,
     });
 
     return (
