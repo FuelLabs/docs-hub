@@ -6,7 +6,7 @@ import { join as pathJoin } from 'path';
 import type { Options as RehypeCodeOptions } from 'rehype-pretty-code';
 import rehypeCode from 'rehype-pretty-code';
 import type { Root } from 'remark-gfm';
-import * as shiki from 'shiki';
+import { getHighlighter as shikiGetHighlighter } from 'shiki';
 import type { PluggableList } from 'unified';
 import { visit } from 'unist-util-visit';
 
@@ -34,7 +34,7 @@ const touchShikiPath = (): void => {
 const getHighlighter: RehypeCodeOptions['getHighlighter'] = async (options) => {
   touchShikiPath();
 
-  const highlighter = await shiki.getHighlighter({
+  const highlighter = await shikiGetHighlighter({
     // This is technically not compatible with shiki's interface but
     // necessary for rehype-pretty-code to work
     // - https://rehype-pretty-code.netlify.app/ (see Custom Highlighter)
