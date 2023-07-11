@@ -2,44 +2,31 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ThemeUtilsCSS } from '@fuel-ui/css';
 import { cssObj } from '@fuel-ui/css';
-import { Box, Icon, IconButton, Text } from '@fuel-ui/react';
-import { Children } from 'react';
+import { Box, Icon, IconButton, Text, toast } from '@fuel-ui/react';
 import type { ReactNode } from 'react';
 
 type PreProps = {
   children: ReactNode;
   title?: ReactNode;
   css?: ThemeUtilsCSS;
+  __code?: string;
 };
 
-export function Pre({ css, children, title }: PreProps) {
-  const codeEl: any = Children.toArray(children)[0];
-  const codeStr = codeEl?.props.children || '';
-  const code = codeStr.endsWith('\n') ? codeStr.slice(0, -1) : codeStr;
-  const lang = codeEl?.props.className
-    ? codeEl?.props.className.replace('language-', '')
-    : 'rust';
-
-  let html = '';
-  let raw = '';
-
-  try {
-    // this ~workaround~ solution is to be able to have a copy button
-    const parsed = JSON.parse(code);
-    if (parsed.__isHighlight) {
-      html = parsed.html;
-      raw = parsed.raw;
-    } else {
-      html = code;
-      raw = code;
-    }
-  } catch (e) {
-    html = code;
-    raw = code;
+export function Pre({
+  css,
+  children,
+  title,
+  __code: code,
+  ...props
+}: PreProps) {
+  function handleCopy() {
+    typeof window !== 'undefined' &&
+      code &&
+      navigator.clipboard.writeText(code);
+    toast.success('Copied to clipboard');
   }
-
   return (
-    <Box css={{ ...styles.root, ...css }} data-language={lang}>
+    <Box css={{ ...styles.root, ...css }}>
       <IconButton
         size="xs"
         icon={Icon.is('ClipboardText')}
@@ -47,12 +34,10 @@ export function Pre({ css, children, title }: PreProps) {
         variant="ghost"
         intent="base"
         aria-label="Copy to Clipborad"
-        onPress={() =>
-          typeof window !== 'undefined' && navigator.clipboard.writeText(raw)
-        }
+        onPress={handleCopy}
       />
       {title && <Text as="h6">{title}</Text>}
-      <div dangerouslySetInnerHTML={{ __html: html }} />
+      <pre {...props}>{children}</pre>
     </Box>
   );
 }
@@ -80,6 +65,10 @@ const styles = {
       borderTopRightRadius: '$0',
     },
 
+    'pre code': {
+      all: 'unset',
+    },
+
     h6: {
       display: 'flex',
       alignItems: 'center',
@@ -99,27 +88,38 @@ const styles = {
       },
     },
 
-    '.linenumber': {
-      display: 'inline-flex',
-      width: '20px',
-      mr: '$6',
-      justifyContent: 'flex-end',
-    },
-    '.line.code': {
-      display: 'inline-flex',
+    'span[data-line]': {
+      display: 'inline-block',
+
+      '&:before': {
+        content: 'attr(data-line)',
+        display: 'inline-block',
+        width: '2em',
+        userSelect: 'none',
+        opacity: 0.5,
+        marginRight: '$2',
+        color: '$intentsBase10',
+      },
     },
   }),
   copyIcon: cssObj({
     position: 'absolute',
     right: 0,
     top: 0,
-    color: '$intentsBase6',
     transition: 'all .3s',
     background: 'transparent',
     borderColor: 'transparent',
 
     '&:hover': {
-      color: '$intentsBase9',
+      bg: 'transparent !important',
+      borderColor: 'transparent !important',
+    },
+
+    '& .fuel_Icon': {
+      color: '$textSubtext !important',
+    },
+    '&:hover .fuel_Icon': {
+      color: '$textLink !important',
     },
   }),
 };

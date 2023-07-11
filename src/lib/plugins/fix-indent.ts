@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Root } from 'remark-gfm';
-import type { Highlighter } from 'shiki';
 import { visit } from 'unist-util-visit';
 
 function getLangFromNode(node: any) {
@@ -37,23 +36,7 @@ function setValueOnNode(node: any, cb: (value: string) => string) {
   return;
 }
 
-function addIndexToLines(html: string, idx = 0) {
-  const match = html.matchAll(/<span class="line">(?<inner>.*)<\/span>/g);
-  const m = match.next().value;
-  if (m) {
-    const inner = m.groups?.inner ?? '';
-    const start = m.index ?? 0;
-    const end = start + m[0].length;
-    const line = html.slice(start, end);
-    const lineNum = `<span class="linenumber">${idx + 1}</span>`;
-    const rest = `<span class="line code">${inner}</span>`;
-    html = html.replace(line, `${lineNum}${rest}`);
-    return addIndexToLines(html, idx + 1);
-  }
-  return html;
-}
-
-export function codeHighlight(highlighter: Highlighter, fullpath: string) {
+export function fixIndent(fullpath: string) {
   const isSway = fullpath.includes('sway');
   const isFuelsTs = fullpath.includes('fuels-ts');
   return () =>
@@ -105,19 +88,7 @@ export function codeHighlight(highlighter: Highlighter, fullpath: string) {
               value = newLines;
             }
 
-            let html = '';
-            try {
-              html = highlighter.codeToHtml(value, { lang });
-            } catch (err) {
-              console.log(err);
-              html = value;
-            }
-
-            return JSON.stringify({
-              __isHighlight: true,
-              raw: value,
-              html: addIndexToLines(html),
-            });
+            return value;
           });
         }
       });

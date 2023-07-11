@@ -75,3 +75,7 @@ code {
 .fuel_Button {
   letter-spacing: -0.01em;
 }
+
+.fuel_Toast {
+  border: 1px solid var(--colors-border);
+}

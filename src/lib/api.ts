@@ -15,9 +15,8 @@ import type { DocType, NodeHeading, SidebarLinkItem } from '~/src/types';
 import { getDocConfig, getDocContent, getDocFromSlug } from './docs';
 import { handlePlugins } from './plugins/plugins';
 import { rehypeExtractHeadings } from './toc';
-import { codeGroup } from './plugins/code-group';
-import { codeHighlight } from './plugins/code-highlight';
-import { getHighlighter } from 'shiki';
+import { getMdxCode } from './plugins/rehype-code';
+import { fixIndent } from './plugins/fix-indent';
 
 const docsCache = new Map<string, DocType>();
 
@@ -58,34 +57,12 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
   // handle wallet code import component
   if (isWalletDocs) plugins.push([codeImport, { filepath: fullpath }]);
 
-  const highlighter = await getHighlighter({
-    theme: 'nord',
-    langs: [
-      'rust',
-      'javascript',
-      'typescript',
-      'tsx',
-      'jsx',
-      'bash',
-      'shell',
-      'sh',
-      'json',
-      'toml',
-    ],
-  });
-
   source = await serialize(content, {
     scope: data,
     mdxOptions: {
       format,
-      remarkPlugins: [
-        remarkSlug,
-        remarkGfm,
-        codeGroup,
-        ...plugins,
-        codeHighlight(highlighter, fullpath),
-      ],
-      rehypePlugins: [[rehypeExtractHeadings, { headings }]],
+      remarkPlugins: [remarkSlug, remarkGfm, ...plugins, fixIndent(fullpath)],
+      rehypePlugins: [...getMdxCode(), [rehypeExtractHeadings, { headings }]],
     },
   });
 
