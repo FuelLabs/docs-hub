@@ -7,8 +7,6 @@ export function TableOfContent() {
   const { headings } = doc;
   const lastActive = activeHistory?.at(activeHistory.length - 1);
 
-  console.log(activeHistory);
-
   return (
     <Box css={styles.queries}>
       <Box css={styles.root}>

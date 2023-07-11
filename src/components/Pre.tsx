@@ -1,12 +1,10 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import type { ThemeUtilsCSS } from '@fuel-ui/css';
 import { cssObj } from '@fuel-ui/css';
 import { Box, Icon, IconButton, Text } from '@fuel-ui/react';
 import { Children } from 'react';
 import type { ReactNode } from 'react';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import theme from 'react-syntax-highlighter/dist/cjs/styles/prism/night-owl';
 
 type PreProps = {
   children: ReactNode;
@@ -18,12 +16,30 @@ export function Pre({ css, children, title }: PreProps) {
   const codeEl: any = Children.toArray(children)[0];
   const codeStr = codeEl?.props.children || '';
   const code = codeStr.endsWith('\n') ? codeStr.slice(0, -1) : codeStr;
-  const language = codeEl?.props.className
+  const lang = codeEl?.props.className
     ? codeEl?.props.className.replace('language-', '')
     : 'rust';
 
+  let html = '';
+  let raw = '';
+
+  try {
+    // this ~workaround~ solution is to be able to have a copy button
+    const parsed = JSON.parse(code);
+    if (parsed.__isHighlight) {
+      html = parsed.html;
+      raw = parsed.raw;
+    } else {
+      html = code;
+      raw = code;
+    }
+  } catch (e) {
+    html = code;
+    raw = code;
+  }
+
   return (
-    <Box css={{ ...styles.root, ...css }}>
+    <Box css={{ ...styles.root, ...css }} data-language={lang}>
       <IconButton
         size="xs"
         icon={Icon.is('ClipboardText')}
@@ -32,24 +48,11 @@ export function Pre({ css, children, title }: PreProps) {
         intent="base"
         aria-label="Copy to Clipborad"
         onPress={() =>
-          typeof window !== 'undefined' && navigator.clipboard.writeText(code)
+          typeof window !== 'undefined' && navigator.clipboard.writeText(raw)
         }
       />
       {title && <Text as="h6">{title}</Text>}
-      <SyntaxHighlighter
-        language={
-          language === 'rs' ||
-          language.startsWith('rust') ||
-          language.startsWith('sway')
-            ? 'rust'
-            : language
-        }
-        style={theme}
-        data-title={Boolean(title)}
-        showLineNumbers
-      >
-        {code}
-      </SyntaxHighlighter>
+      <div dangerouslySetInnerHTML={{ __html: html }} />
     </Box>
   );
 }
@@ -65,12 +68,11 @@ const styles = {
     my: '$6',
 
     pre: {
-      pr: '50px',
       mb: '$0 !important',
-      padding: '$2 $2 $3 !important',
+      padding: '$0 $5 $3',
       background: 'var(--colors-preBg) !important',
+      tabSize: '4',
       fontSize: '14px !important',
-      tabSize: '10px !important',
     },
     'pre[data-title=true]': {
       marginTop: '$0 !important',
@@ -97,15 +99,14 @@ const styles = {
       },
     },
 
-    '.token.plain': {
-      color: '$intentsBase11',
-    },
-
     '.linenumber': {
-      boxSizing: 'border-box',
-      minWidth: '30px !important',
-      color: '$intentsBase8 !important',
-      mr: '$1',
+      display: 'inline-flex',
+      width: '20px',
+      mr: '$6',
+      justifyContent: 'flex-end',
+    },
+    '.line.code': {
+      display: 'inline-flex',
     },
   }),
   copyIcon: cssObj({
