@@ -10,6 +10,7 @@ type PreProps = {
   title?: ReactNode;
   css?: ThemeUtilsCSS;
   __code?: string;
+  className?: string;
 };
 
 export function Pre({

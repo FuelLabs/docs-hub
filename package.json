@@ -16,8 +16,7 @@
     "sync:docs": "sh ./scripts/sync-repos.sh",
     "build:docs": "run-s sync:docs clean:docs:build build",
     "ts:check": "tsc --noEmit",
-    "prepare": "husky install",
-    "postinstall": "mkdir -p public/shiki && cp -r node_modules/shiki/{dist,languages,samples,themes} public/shiki/"
+    "prepare": "husky install"
   },
   "dependencies": {
     "@docsearch/css": "^3.5.1",
@@ -56,7 +55,6 @@
     "remark-gfm": "^3.0.1",
     "remark-parse": "^10.0.2",
     "remark-slug": "^7.0.1",
-    "shiki": "^0.14.3",
     "strip-indent": "^4.0.0",
     "unified": "^10.1.2",
     "unist-util-visit": "^5.0.0",
