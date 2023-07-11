@@ -55,7 +55,7 @@
     "pickerGroup.foreground": "#75715E",
     "input.background": "#414339",
     "inputOption.activeBorder": "#75715E",
-    "focusBorder": "#75715E",
+    "focusBorder": "#99947c",
     "editorWidget.background": "#1e1f1c",
     "debugToolBar.background": "#1e1f1c",
     "diffEditor.insertedTextBackground": "#4b661680",
@@ -102,14 +102,14 @@
       }
     },
     {
-      "scope": ["meta.embedded", "source.groovy.embedded"],
+      "scope": ["meta.embedded", "source.groovy.embedded", "string meta.image.inline.markdown"],
       "settings": {
         "foreground": "#F8F8F2"
       }
     },
     {
-      "name": "Comment",
-      "scope": "comment",
+      "name": "Comments",
+      "scope": ["comment", "string.quoted.docstring"],
       "settings": {
         "foreground": "#88846f"
       }
@@ -123,10 +123,7 @@
     },
     {
       "name": "Template Definition",
-      "scope": [
-        "punctuation.definition.template-expression",
-        "punctuation.section.embedded"
-      ],
+      "scope": ["punctuation.definition.template-expression", "punctuation.section.embedded"],
       "settings": {
         "foreground": "#F92672"
       }

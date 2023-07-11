@@ -8,7 +8,7 @@
       }
     },
     {
-      "scope": ["meta.embedded", "source.groovy.embedded"],
+      "scope": ["meta.embedded", "source.groovy.embedded", "string meta.image.inline.markdown"],
       "settings": {
         "foreground": "#D4D4D4"
       }
@@ -32,7 +32,8 @@
       }
     },
     {
-      "scope": "comment",
+      "name": "Comments",
+      "scope": ["comment", "string.quoted.docstring"],
       "settings": {
         "foreground": "#6A9955"
       }
@@ -319,10 +320,7 @@
       }
     },
     {
-      "scope": [
-        "punctuation.section.embedded.begin.php",
-        "punctuation.section.embedded.end.php"
-      ],
+      "scope": ["punctuation.section.embedded.begin.php", "punctuation.section.embedded.end.php"],
       "settings": {
         "foreground": "#569cd6"
       }
@@ -519,7 +517,7 @@
       }
     },
     {
-      "scope": "constant.character",
+      "scope": ["constant.character", "constant.other.option"],
       "settings": {
         "foreground": "#569cd6"
       }
@@ -544,6 +542,7 @@
     "numberLiteral": "#b5cea8"
   },
   "colors": {
+    "checkbox.border": "#6B6B6B",
     "editor.background": "#1E1E1E",
     "editor.foreground": "#D4D4D4",
     "editor.inactiveSelectionBackground": "#3A3D41",
@@ -556,12 +555,16 @@
     "input.placeholderForeground": "#A6A6A6",
     "menu.background": "#252526",
     "menu.foreground": "#CCCCCC",
+    "menu.separatorBackground": "#454545",
+    "menu.border": "#454545",
     "statusBarItem.remoteForeground": "#FFF",
     "statusBarItem.remoteBackground": "#16825D",
     "ports.iconRunningProcessForeground": "#369432",
     "sideBarSectionHeader.background": "#0000",
     "sideBarSectionHeader.border": "#ccc3",
     "tab.lastPinnedBorder": "#ccc3",
-    "list.activeSelectionIconForeground": "#FFF"
+    "list.activeSelectionIconForeground": "#FFF",
+    "terminal.inactiveSelectionBackground": "#3A3D41",
+    "widget.border": "#303031"
   }
 }

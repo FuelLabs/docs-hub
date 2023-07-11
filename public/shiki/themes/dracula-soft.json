@@ -125,7 +125,7 @@
     "editorLineNumber.foreground": "#7b7f8b",
     "editor.selectionBackground": "#44475A",
     "editor.selectionHighlightBackground": "#424450",
-    "editor.foldBackground": "#262626",
+    "editor.foldBackground": "#21222C80",
     "editor.wordHighlightBackground": "#8BE9FD50",
     "editor.wordHighlightStrongBackground": "#50FA7B50",
     "editor.findMatchBackground": "#FFB86C80",
@@ -478,12 +478,7 @@
     },
     {
       "name": "Comments",
-      "scope": [
-        "comment",
-        "punctuation.definition.comment",
-        "unused.comment",
-        "wildcard.comment"
-      ],
+      "scope": ["comment", "punctuation.definition.comment", "unused.comment", "wildcard.comment"],
       "settings": {
         "foreground": "#7b7f8b"
       }
@@ -509,9 +504,7 @@
     },
     {
       "name": "JSDoc-style type brackets",
-      "scope": [
-        "comment.block.documentation entity.name.type punctuation.definition.bracket"
-      ],
+      "scope": ["comment.block.documentation entity.name.type punctuation.definition.bracket"],
       "settings": {
         "foreground": "#97e1f1"
       }
@@ -533,11 +526,7 @@
     },
     {
       "name": "Constant escape sequences",
-      "scope": [
-        "constant.character.escape",
-        "constant.character.string.escape",
-        "constant.regexp"
-      ],
+      "scope": ["constant.character.escape", "constant.character.string.escape", "constant.regexp"],
       "settings": {
         "foreground": "#f286c4"
       }
@@ -644,11 +633,7 @@
     },
     {
       "name": "Built-in magic functions and constants",
-      "scope": [
-        "support.function.magic",
-        "support.variable",
-        "variable.other.predefined"
-      ],
+      "scope": ["support.function.magic", "support.variable", "variable.other.predefined"],
       "settings": {
         "fontStyle": "regular",
         "foreground": "#bf9eee"
@@ -709,6 +694,7 @@
         "punctuation.definition.type.end",
         "punctuation.section.scope.begin",
         "punctuation.section.scope.end",
+        "punctuation.terminator.expression.php",
         "storage.type.generic.java",
         "string.template meta.brace",
         "string.template punctuation.accessor"
@@ -890,10 +876,7 @@
     },
     {
       "name": "String quotes (temporary vscode fix)",
-      "scope": [
-        "punctuation.definition.string.begin",
-        "punctuation.definition.string.end"
-      ],
+      "scope": ["punctuation.definition.string.begin", "punctuation.definition.string.end"],
       "settings": {
         "foreground": "#dee492"
       }
@@ -938,7 +921,6 @@
       "name": "Destructuring / aliasing reference name (LHS)",
       "scope": [
         "meta.import variable.other.readwrite",
-        "meta.object-binding-pattern-variable variable.object.property",
         "meta.variable.assignment.destructured.object.coffee variable"
       ],
       "settings": {

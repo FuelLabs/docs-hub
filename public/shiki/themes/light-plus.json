@@ -8,7 +8,7 @@
       }
     },
     {
-      "scope": ["meta.embedded", "source.groovy.embedded"],
+      "scope": ["meta.embedded", "source.groovy.embedded", "string meta.image.inline.markdown"],
       "settings": {
         "foreground": "#000000ff"
       }
@@ -32,7 +32,8 @@
       }
     },
     {
-      "scope": "comment",
+      "name": "Comments",
+      "scope": ["comment", "string.quoted.docstring"],
       "settings": {
         "foreground": "#008000"
       }
@@ -76,7 +77,7 @@
     {
       "scope": "entity.other.attribute-name",
       "settings": {
-        "foreground": "#ff0000"
+        "foreground": "#e50000"
       }
     },
     {
@@ -290,7 +291,7 @@
         "source.coffee.embedded"
       ],
       "settings": {
-        "foreground": "#ff0000"
+        "foreground": "#e50000"
       }
     },
     {
@@ -341,10 +342,7 @@
       }
     },
     {
-      "scope": [
-        "punctuation.section.embedded.begin.php",
-        "punctuation.section.embedded.end.php"
-      ],
+      "scope": ["punctuation.section.embedded.begin.php", "punctuation.section.embedded.end.php"],
       "settings": {
         "foreground": "#800000"
       }
@@ -541,7 +539,7 @@
       }
     },
     {
-      "scope": "constant.character",
+      "scope": ["constant.character", "constant.other.option"],
       "settings": {
         "foreground": "#0000ff"
       }
@@ -567,6 +565,7 @@
     "numberLiteral": "#098658"
   },
   "colors": {
+    "checkbox.border": "#919191",
     "editor.background": "#FFFFFF",
     "editor.foreground": "#000000",
     "editor.inactiveSelectionBackground": "#E5EBF1",
@@ -577,6 +576,7 @@
     "activityBarBadge.background": "#007ACC",
     "sideBarTitle.foreground": "#6F6F6F",
     "list.hoverBackground": "#E8E8E8",
+    "menu.border": "#D4D4D4",
     "input.placeholderForeground": "#767676",
     "searchEditor.textInputBorder": "#CECECE",
     "settings.textInputBorder": "#CECECE",
@@ -590,6 +590,9 @@
     "notebook.cellBorderColor": "#E8E8E8",
     "notebook.selectedCellBackground": "#c8ddf150",
     "statusBarItem.errorBackground": "#c72e0f",
-    "list.activeSelectionIconForeground": "#FFF"
+    "list.activeSelectionIconForeground": "#FFF",
+    "list.focusAndSelectionOutline": "#90C2F9",
+    "terminal.inactiveSelectionBackground": "#E5EBF1",
+    "widget.border": "#d4d4d4"
   }
 }

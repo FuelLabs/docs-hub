@@ -6,6 +6,9 @@
       "include": "#natspec"
     },
     {
+      "include": "#declaration-userType"
+    },
+    {
       "include": "#comment"
     },
     {
@@ -89,6 +92,12 @@
         },
         {
           "include": "#natspec-tag-return"
+        },
+        {
+          "include": "#natspec-tag-custom"
+        },
+        {
+          "include": "#natspec-tag-inheritdoc"
         }
       ]
     },
@@ -103,6 +112,14 @@
     "natspec-tag-notice": {
       "match": "(@notice)\\b",
       "name": "storage.type.dev.natspec"
+    },
+    "natspec-tag-custom": {
+      "match": "(@custom:\\w*)\\b",
+      "name": "storage.type.dev.natspec"
+    },
+    "natspec-tag-inheritdoc": {
+      "match": "(@inheritdoc)\\b",
+      "name": "storage.type.author.natspec"
     },
     "natspec-tag-dev": {
       "match": "(@dev)\\b",
@@ -120,8 +137,15 @@
       }
     },
     "natspec-tag-return": {
-      "match": "(@return)\\b",
-      "name": "storage.type.return.natspec"
+      "match": "(@return)(\\s+([A-Za-z_]\\w*))?\\b",
+      "captures": {
+        "1": {
+          "name": "storage.type.return.natspec"
+        },
+        "3": {
+          "name": "variable.other.natspec"
+        }
+      }
     },
     "comment": {
       "patterns": [
@@ -177,7 +201,7 @@
       ]
     },
     "operator-logic": {
-      "match": "(==|<(?!<)|<=|>(?!>)|>=|\\&\\&|\\|\\||\\:(?!=)|\\?)",
+      "match": "(==|\\!=|<(?!<)|<=|>(?!>)|>=|\\&\\&|\\|\\||\\:(?!=)|\\?|\\!)",
       "name": "keyword.operator.logic"
     },
     "operator-mapping": {
@@ -224,7 +248,7 @@
     "control-flow": {
       "patterns": [
         {
-          "match": "\\b(if|else|for|while|do|break|continue|try|catch|finally|throw|return)\\b",
+          "match": "\\b(if|else|for|while|do|break|continue|try|catch|finally|throw|return|global)\\b",
           "name": "keyword.control.flow"
         },
         {
@@ -380,17 +404,17 @@
       "name": "constant.numeric.hexadecimal"
     },
     "number-scientific": {
-      "match": "\\b(?:0\\.(?:0[1-9]|[1-9][0-9_]?)|[1-9][0-9_]*(?:\\.\\d{1,2})?)(?:e[+-]?[0-9_]+)?",
+      "match": "\\b(?:0\\.(?:0[0-9]|[0-9][0-9_]?)|[0-9][0-9_]*(?:\\.\\d{1,2})?)(?:e[+-]?[0-9_]+)?",
       "name": "constant.numeric.scientific"
     },
     "string": {
       "patterns": [
         {
-          "match": "\\\".*?\\\"",
+          "match": "\\\"(?:\\\\\"|[^\\\"])*\\\"",
           "name": "string.quoted.double"
         },
         {
-          "match": "\\'.*?\\'",
+          "match": "\\'(?:\\\\'|[^\\'])*\\'",
           "name": "string.quoted.single"
         }
       ]
@@ -569,6 +593,9 @@
           "include": "#declaration-contract"
         },
         {
+          "include": "#declaration-userType"
+        },
+        {
           "include": "#declaration-interface"
         },
         {
@@ -650,19 +677,22 @@
         }
       ]
     },
+    "declaration-userType": {
+      "match": "\\b(type)\\b\\s+(\\w+)\\b\\s+\\b(is)\\b",
+      "captures": {
+        "1": {
+          "name": "storage.type.userType"
+        },
+        "2": {
+          "name": "entity.name.type.userType"
+        },
+        "3": {
+          "name": "storage.modifier.is"
+        }
+      }
+    },
     "declaration-contract": {
       "patterns": [
-        {
-          "match": "\\b(contract)\\b\\s+(\\w+)\\b\\s*(?=\\{)",
-          "captures": {
-            "1": {
-              "name": "storage.type.contract"
-            },
-            "2": {
-              "name": "entity.name.type.contract"
-            }
-          }
-        },
         {
           "begin": "\\b(contract)\\b\\s+(\\w+)\\b\\s+\\b(is)\\b\\s+",
           "end": "(?=\\{)",
@@ -683,22 +713,22 @@
               "name": "entity.name.type.contract.extend"
             }
           ]
+        },
+        {
+          "match": "\\b(contract)(\\s+([A-Za-z_]\\w*))?\\b",
+          "captures": {
+            "1": {
+              "name": "storage.type.contract"
+            },
+            "2": {
+              "name": "entity.name.type.contract"
+            }
+          }
         }
       ]
     },
     "declaration-interface": {
       "patterns": [
-        {
-          "match": "\\b(interface)\\b\\s+(\\w+)\\b\\s*(?=\\{)",
-          "captures": {
-            "1": {
-              "name": "storage.type.interface"
-            },
-            "2": {
-              "name": "entity.name.type.interface"
-            }
-          }
-        },
         {
           "begin": "\\b(interface)\\b\\s+(\\w+)\\b\\s+\\b(is)\\b\\s+",
           "end": "(?=\\{)",
@@ -719,6 +749,17 @@
               "name": "entity.name.type.interface.extend"
             }
           ]
+        },
+        {
+          "match": "\\b(interface)(\\s+([A-Za-z_]\\w*))?\\b",
+          "captures": {
+            "1": {
+              "name": "storage.type.interface"
+            },
+            "2": {
+              "name": "entity.name.type.interface"
+            }
+          }
         }
       ]
     },
@@ -884,6 +925,9 @@
             },
             {
               "include": "#punctuation"
+            },
+            {
+              "include": "#comment"
             }
           ]
         },
