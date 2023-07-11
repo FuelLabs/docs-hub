@@ -67,10 +67,6 @@ function extractCommentBlock(
       : '';
   for (let i = 0; i < lines.length; i++) {
     const g = `${commentType} ANCHOR: ${comment}${endCommentType}`;
-    if (comment === 'all') {
-      console.log('G', g);
-      console.log('lines[i]', lines[i]);
-    }
     const start =
       lines[i] === `${commentType} ${comment}:example:start${endCommentType}` ||
       lines[i] === `${commentType}${comment}:example:start${endCommentType}` ||
@@ -79,10 +75,6 @@ function extractCommentBlock(
       lineStart = i + 1;
     } else {
       const x = `${commentType} ANCHOR_END: ${comment}${endCommentType}`;
-      if (comment === 'all') {
-        console.log('X', x);
-        console.log('lines[i]', lines[i]);
-      }
       const end =
         lines[i] === `${commentType} ${comment}:example:end${endCommentType}` ||
         lines[i] === `${commentType}${comment}:example:end${endCommentType}` ||
@@ -223,13 +215,13 @@ export function codeImport(options: Options = { filepath: '' }) {
         lineStart = commentResult.lineStart;
         lineEnd = commentResult.lineEnd;
         content = commentResult.content;
-      }
-
-      if (testCase) {
+      } else if (testCase) {
         const testResult = extractTestCase(fileContent, testCase);
         lineStart = testResult.lineStart;
         lineEnd = testResult.lineEnd;
         content = testResult.content;
+      } else {
+        content = fileContent;
       }
 
       const newAttrs = [
@@ -252,16 +244,6 @@ export function codeImport(options: Options = { filepath: '' }) {
           name: '__language',
           type: 'mdxJsxAttribute',
           value: lang,
-        },
-        {
-          name: '__lineStart',
-          type: 'mdxJsxAttribute',
-          value: lineStart,
-        },
-        lineEnd && {
-          name: '__lineEnd',
-          type: 'mdxJsxAttribute',
-          value: lineEnd,
         },
       ];
 
