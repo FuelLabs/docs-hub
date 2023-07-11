@@ -7,14 +7,15 @@ import type { DocType } from './types';
 export function getComponents(doc: DocType) {
   const components: any = {};
 
-  // load the components used in the wallet docs
-  if (doc.docsConfig.slug === 'wallet') {
+  if (doc.docsConfig.slug === 'guides' || doc.docsConfig.slug === 'wallet') {
     const CodeImport = dynamic(
       () => import('~/src/components/CodeImport').then((mod) => mod.CodeImport),
       { ssr: false },
     );
     components.CodeImport = CodeImport;
-
+  }
+  if (doc.docsConfig.slug === 'wallet') {
+    // load the components used in the wallet docs
     if (doc.slug.includes('how-to-use')) {
       const Demo = dynamic(
         () =>

@@ -8,7 +8,8 @@ import remarkGfm from 'remark-gfm';
 import remarkSlug from 'remark-slug';
 import type { Pluggable } from 'unified';
 import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
-import { codeImport } from '~/docs/fuels-wallet/packages/docs/src/lib/code-import';
+import { codeImport as walletCodeImport } from '~/docs/fuels-wallet/packages/docs/src/lib/code-import';
+import { codeImport } from './plugins/code-import';
 import { FIELDS, DOCS_DIRECTORY } from '~/src/constants';
 import type { DocType, NodeHeading, SidebarLinkItem } from '~/src/types';
 
@@ -53,11 +54,13 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
   const plugins: Pluggable<any[]>[] = [];
   if (!isGuide) {
     plugins.push([handlePlugins, { filepath: fullpath }]);
+  } else {
+    plugins.push([codeImport, { filepath: fullpath }]);
   }
   // handle the codeExamples component in the graphql docs
   if (isGraphQLDocs) plugins.push([codeExamples, { filepath: fullpath }]);
   // handle wallet code import component
-  if (isWalletDocs) plugins.push([codeImport, { filepath: fullpath }]);
+  if (isWalletDocs) plugins.push([walletCodeImport, { filepath: fullpath }]);
   source = await serialize(content, {
     scope: data,
     mdxOptions: {
