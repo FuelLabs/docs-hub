@@ -123,7 +123,10 @@
     },
     {
       "name": "Template Definition",
-      "scope": ["punctuation.definition.template-expression", "punctuation.section.embedded"],
+      "scope": [
+        "punctuation.definition.template-expression",
+        "punctuation.section.embedded"
+      ],
       "settings": {
         "foreground": "#F92672"
       }

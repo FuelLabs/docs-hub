@@ -17,7 +17,7 @@ import { visit } from 'unist-util-visit';
 // Note that they are only referenced on server side
 // See: https://github.com/shikijs/shiki/issues/138
 const getShikiPath = (): string => {
-  return pathJoin(process.cwd(), 'src/lib/shiki');
+  return pathJoin(process.cwd(), 'public/shiki');
 };
 
 const touched = { current: false };

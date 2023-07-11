@@ -190,7 +190,11 @@
       }
     },
     {
-      "scope": ["entity.name", "meta.export.default", "meta.definition.variable"],
+      "scope": [
+        "entity.name",
+        "meta.export.default",
+        "meta.definition.variable"
+      ],
       "settings": {
         "foreground": "#953800"
       }
@@ -234,7 +238,11 @@
       }
     },
     {
-      "scope": ["storage.modifier.package", "storage.modifier.import", "storage.type.java"],
+      "scope": [
+        "storage.modifier.package",
+        "storage.modifier.import",
+        "storage.type.java"
+      ],
       "settings": {
         "foreground": "#24292f"
       }
@@ -410,14 +418,22 @@
       }
     },
     {
-      "scope": ["markup.deleted", "meta.diff.header.from-file", "punctuation.definition.deleted"],
+      "scope": [
+        "markup.deleted",
+        "meta.diff.header.from-file",
+        "punctuation.definition.deleted"
+      ],
       "settings": {
         "background": "#ffebe9",
         "foreground": "#82071e"
       }
     },
     {
-      "scope": ["markup.inserted", "meta.diff.header.to-file", "punctuation.definition.inserted"],
+      "scope": [
+        "markup.inserted",
+        "meta.diff.header.to-file",
+        "punctuation.definition.inserted"
+      ],
       "settings": {
         "background": "#dafbe1",
         "foreground": "#116329"
