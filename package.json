@@ -16,8 +16,7 @@
     "sync:docs": "sh ./scripts/sync-repos.sh",
     "build:docs": "run-s sync:docs clean:docs:build build",
     "ts:check": "tsc --noEmit",
-    "prepare": "husky install",
-    "postinstall": "sh ./scripts/shiki.sh"
+    "prepare": "husky install"
   },
   "dependencies": {
     "@docsearch/css": "^3.5.1",
