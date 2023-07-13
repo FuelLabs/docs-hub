@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Pre } from './Pre';
-
 export type CodeImportProps = {
   file: string;
   lines?: number[];
@@ -21,9 +19,5 @@ export function CodeImport({
 }: CodeImportProps) {
   // const lines = `L${lineStart}${lineEnd ? `-L${lineEnd}` : ''}`;
   // const link = `${REPO_LINK}/${filePath}#${lines}`;
-  return (
-    <Pre>
-      <code className={`language-${language}`}>{content}</code>
-    </Pre>
-  );
+  return <pre className={`language-${language}`}>{content}</pre>;
 }

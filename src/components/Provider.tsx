@@ -6,6 +6,7 @@ import type { ReactNode } from 'react';
 
 import { Blockquote } from './Blockquote';
 import { Code } from './Code';
+import { Divider } from './Divider';
 import { Heading } from './Heading';
 import { Link } from './Link';
 import { UL, OL } from './List';
@@ -28,6 +29,7 @@ const components = {
   table: Table,
   ul: UL,
   ol: OL,
+  hr: Divider,
 };
 
 type ProviderProps = {

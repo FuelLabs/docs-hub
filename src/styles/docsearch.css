@@ -53,7 +53,7 @@ html[data-theme="dark"] {
   align-items: center;
   background: var(--docsearch-searchbox-background);
   border: 0;
-  border-radius: 40px;
+  border-radius: 6px;
   color: var(--docsearch-muted-color);
   cursor: pointer;
   display: flex;
@@ -101,7 +101,7 @@ html[data-theme="dark"] {
 .DocSearch-Button-Key {
   align-items: center;
   background: var(--docsearch-key-gradient);
-  border-radius: 3px;
+  border-radius: 6px;
   box-shadow: var(--docsearch-key-shadow);
   color: var(--docsearch-muted-color);
   display: flex;
@@ -165,7 +165,7 @@ html[data-theme="dark"] {
 .DocSearch-Form {
   align-items: center;
   background: var(--docsearch-searchbox-focus-background);
-  border-radius: 4px;
+  border-radius: 6px;
   box-shadow: var(--docsearch-searchbox-shadow);
   display: flex;
   height: var(--docsearch-searchbox-height);
@@ -226,7 +226,7 @@ html[data-theme="dark"] {
     appearance: none;
     background: none;
     border: 0;
-    border-radius: 50%;
+    border-radius: 6px;
     color: var(--docsearch-icon-color);
     cursor: pointer;
     right: 0;
@@ -238,7 +238,7 @@ html[data-theme="dark"] {
   appearance: none;
   background: none;
   border: 0;
-  border-radius: 50%;
+  border-radius: 6px;
   color: var(--docsearch-icon-color);
   cursor: pointer;
   padding: 2px;
@@ -284,7 +284,7 @@ html[data-theme="dark"] {
 .DocSearch-Dropdown::-webkit-scrollbar-thumb {
   background-color: var(--docsearch-muted-color);
   border: 3px solid var(--docsearch-modal-background);
-  border-radius: 20px;
+  border-radius: 6px;
 }
 .DocSearch-Dropdown ul {
   list-style: none;
@@ -334,7 +334,7 @@ html[data-theme="dark"] {
   color: inherit;
 }
 .DocSearch-Hit {
-  border-radius: 4px;
+  border-radius: 6px;
   display: flex;
   padding-bottom: 4px;
   position: relative;
@@ -361,7 +361,7 @@ html[data-theme="dark"] {
 }
 .DocSearch-Hit a {
   background: var(--docsearch-hit-background);
-  border-radius: 4px;
+  border-radius: 6px;
   box-shadow: var(--docsearch-hit-shadow);
   display: block;
   padding-left: var(--docsearch-spacing);
@@ -427,7 +427,7 @@ html[data-theme="dark"] {
   appearance: none;
   background: none;
   border: 0;
-  border-radius: 50%;
+  border-radius: 6px;
   color: inherit;
   cursor: pointer;
   padding: 2px;
@@ -520,7 +520,7 @@ svg.DocSearch-Hit-Select-Icon {
   appearance: none;
   background: none;
   border: 0;
-  border-radius: 1em;
+  border-radius: 6px;
   color: var(--docsearch-highlight-color);
   cursor: pointer;
   display: inline-block;
@@ -536,7 +536,7 @@ svg.DocSearch-Hit-Select-Icon {
 .DocSearch-Footer {
   align-items: center;
   background: var(--docsearch-footer-background);
-  border-radius: 0 0 8px 8px;
+  border-radius: 6px;
   box-shadow: var(--docsearch-footer-shadow);
   display: flex;
   flex-direction: row-reverse;
@@ -566,7 +566,7 @@ svg.DocSearch-Hit-Select-Icon {
 .DocSearch-Commands-Key {
   align-items: center;
   background: var(--docsearch-key-gradient);
-  border-radius: 2px;
+  border-radius: 6px;
   box-shadow: var(--docsearch-key-shadow);
   display: flex;
   height: 18px;
@@ -592,7 +592,7 @@ svg.DocSearch-Hit-Select-Icon {
     position: absolute;
   }
   .DocSearch-Footer {
-    border-radius: 0;
+    border-radius: 6px;
     bottom: 0;
     position: absolute;
   }
@@ -602,7 +602,7 @@ svg.DocSearch-Hit-Select-Icon {
     width: 80%;
   }
   .DocSearch-Modal {
-    border-radius: 0;
+    border-radius: 6px;
     box-shadow: none;
     height: 100vh;
     height: -webkit-fill-available;

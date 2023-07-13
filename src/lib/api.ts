@@ -15,6 +15,8 @@ import type { DocType, NodeHeading, SidebarLinkItem } from '~/src/types';
 import { getDocConfig, getDocContent, getDocFromSlug } from './docs';
 import { handlePlugins } from './plugins/plugins';
 import { rehypeExtractHeadings } from './toc';
+import { getMdxCode } from './plugins/rehype-code';
+import { fixIndent } from './plugins/fix-indent';
 
 const docsCache = new Map<string, DocType>();
 
@@ -54,12 +56,13 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
   if (isGraphQLDocs) plugins.push([codeExamples, { filepath: fullpath }]);
   // handle wallet code import component
   if (isWalletDocs) plugins.push([codeImport, { filepath: fullpath }]);
+
   source = await serialize(content, {
     scope: data,
     mdxOptions: {
       format,
-      remarkPlugins: [remarkSlug, remarkGfm, ...plugins],
-      rehypePlugins: [[rehypeExtractHeadings, { headings }]],
+      remarkPlugins: [remarkSlug, remarkGfm, ...plugins, fixIndent(fullpath)],
+      rehypePlugins: [...getMdxCode(), [rehypeExtractHeadings, { headings }]],
     },
   });
 
