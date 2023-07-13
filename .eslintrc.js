@@ -14,4 +14,12 @@ module.exports = {
       Object.entries(nextConfig.rules).filter(([key]) => key !== "import/order")
     ),
   },
+  overrides: [
+    {
+      files: ["src/imports.ts"],
+      rules: {
+        "import/no-unresolved": "off",
+      },
+    },
+  ],
 }
