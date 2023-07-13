@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { ThemeProvider, darkTheme, lightTheme } from '@fuel-ui/react';
-import { MDXProvider } from '@mdx-js/react';
-import type { ReactNode } from 'react';
+import { ThemeProvider, darkTheme, lightTheme } from "@fuel-ui/react"
+import { MDXProvider } from "@mdx-js/react"
+import type { ReactNode } from "react"
 
-import { Blockquote } from './Blockquote';
-import { Code } from './Code';
-import { Divider } from './Divider';
-import { Heading } from './Heading';
-import { Link } from './Link';
-import { UL, OL } from './List';
-import { Paragraph } from './Paragraph';
-import { Pre } from './Pre';
-import { Table } from './Table';
+import { Blockquote } from "./Blockquote"
+import { Code } from "./Code"
+import { Divider } from "./Divider"
+import { Heading } from "./Heading"
+import { Link } from "./Link"
+import { UL, OL } from "./List"
+import { Paragraph } from "./Paragraph"
+import { Pre } from "./Pre"
+import { Table } from "./Table"
 
 const components = {
   a: Link,
@@ -30,12 +30,12 @@ const components = {
   ul: UL,
   ol: OL,
   hr: Divider,
-};
+}
 
 type ProviderProps = {
-  children: ReactNode;
-  theme: string;
-};
+  children: ReactNode
+  theme: string
+}
 
 export function Provider({ children, theme }: ProviderProps) {
   return (
@@ -47,5 +47,5 @@ export function Provider({ children, theme }: ProviderProps) {
         {children}
       </ThemeProvider>
     </MDXProvider>
-  );
+  )
 }

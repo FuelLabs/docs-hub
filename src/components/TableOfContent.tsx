@@ -1,18 +1,18 @@
-import { cssObj } from '@fuel-ui/css';
-import { Box, Heading, Icon, List } from '@fuel-ui/react';
-import { useDocContext } from '~/src/hooks/useDocContext';
+import { cssObj } from "@fuel-ui/css"
+import { Box, Heading, Icon, List } from "@fuel-ui/react"
+import { useDocContext } from "~/src/hooks/useDocContext"
 
 export function TableOfContent() {
-  const { doc, activeHistory } = useDocContext();
-  const { headings } = doc;
-  const lastActive = activeHistory?.at(activeHistory.length - 1);
+  const { doc, activeHistory } = useDocContext()
+  const { headings } = doc
+  const lastActive = activeHistory?.at(activeHistory.length - 1)
 
   return (
     <Box css={styles.queries}>
       <Box css={styles.root}>
         <Heading as="h6">
           <Icon
-            icon={Icon.is('ListDetails')}
+            icon={Icon.is("ListDetails")}
             size={14}
             stroke={1}
             color="textSubtext"
@@ -43,57 +43,57 @@ export function TableOfContent() {
         </List>
       </Box>
     </Box>
-  );
+  )
 }
 
-const LIST_ITEM = '.fuel_List > .fuel_ListItem';
+const LIST_ITEM = ".fuel_List > .fuel_ListItem"
 
 const styles = {
   queries: cssObj({
-    display: 'none',
+    display: "none",
 
-    '@xl': {
-      display: 'block',
+    "@xl": {
+      display: "block",
     },
   }),
   root: cssObj({
-    position: 'sticky',
+    position: "sticky",
     top: 0,
-    py: '$8',
-    pr: '$8',
+    py: "$8",
+    pr: "$8",
 
     h6: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '$2',
+      display: "flex",
+      alignItems: "center",
+      gap: "$2",
       mt: 0,
-      mb: '$3',
+      mb: "$3",
     },
 
-    '.fuel_List .fuel_List': {
-      mt: '$2',
-      borderLeft: '1px solid $border',
+    ".fuel_List .fuel_List": {
+      mt: "$2",
+      borderLeft: "1px solid $border",
     },
 
     [LIST_ITEM]: {
-      mb: '$2',
+      mb: "$2",
       lineHeight: 1.4,
-      fontSize: '$xs',
+      fontSize: "$xs",
 
       a: {
-        color: '$intentsBase11',
+        color: "$intentsBase11",
       },
     },
     [`${LIST_ITEM} > ${LIST_ITEM}`]: {
-      pl: '$3',
+      pl: "$3",
       a: {
-        fontWeight: '$normal',
-        color: '$intentsBase9',
+        fontWeight: "$normal",
+        color: "$intentsBase9",
       },
     },
 
     [`${LIST_ITEM}[data-active="true"] > a`]: {
-      color: '$intentsPrimary11 !important',
+      color: "$intentsPrimary11 !important",
     },
   }),
-};
+}

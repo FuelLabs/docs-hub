@@ -1,8 +1,9 @@
-import { cssObj } from '@fuel-ui/css';
-import { Link as FuelLink, Box, Icon, List, Text } from '@fuel-ui/react';
-import Link from 'next/link';
+/* eslint-disable react/no-unescaped-entities */
+import { cssObj } from "@fuel-ui/css"
+import { Link as FuelLink, Box, Icon, List, Text } from "@fuel-ui/react"
+import Link from "next/link"
 
-import { Heading } from '../components/Heading';
+import { Heading } from "../components/Heading"
 
 export function HomePage() {
   const cards = {
@@ -111,7 +112,7 @@ export function HomePage() {
         </Box.Stack>
       </Box>
     ),
-  };
+  }
 
   return (
     <Box css={styles.root}>
@@ -120,7 +121,7 @@ export function HomePage() {
       </Heading>
       <Text>
         Learn about everything Fuel. From the purpose of the project, all the
-        way down to the bits and bytes.{' '}
+        way down to the bits and bytes.{" "}
       </Text>
       <Box css={styles.cardList}>
         {cards.sway}
@@ -129,51 +130,51 @@ export function HomePage() {
         {cards.network}
       </Box>
     </Box>
-  );
+  )
 }
 
 const styles = {
   root: cssObj({
-    py: '$6',
-    px: '$6',
+    py: "$6",
+    px: "$6",
 
-    '@xl': {
-      px: '$14',
+    "@xl": {
+      px: "$14",
     },
   }),
   cardList: cssObj({
-    display: 'grid',
-    gap: '$6',
-    py: '$8',
+    display: "grid",
+    gap: "$6",
+    py: "$8",
 
-    '@xl': {
-      gridTemplateColumns: 'repeat(2, minmax(300px, 1fr))',
+    "@xl": {
+      gridTemplateColumns: "repeat(2, minmax(300px, 1fr))",
     },
   }),
   card: cssObj({
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: '$6',
-    padding: '$4 $6 $6',
-    border: '1px solid $border',
-    borderRadius: '$md',
+    display: "flex",
+    alignItems: "flex-start",
+    gap: "$6",
+    padding: "$4 $6 $6",
+    border: "1px solid $border",
+    borderRadius: "$md",
 
-    '& > .fuel_Icon': {
-      mt: '3px',
-      color: '$intentsBase8',
+    "& > .fuel_Icon": {
+      mt: "3px",
+      color: "$intentsBase8",
     },
 
     h3: {
-      m: '$0',
-      pt: '$2',
+      m: "$0",
+      pt: "$2",
     },
 
-    '.fuel_List': {
-      mt: '$2',
+    ".fuel_List": {
+      mt: "$2",
     },
 
-    '.fuel_ListItem a': {
-      color: '$textLink',
+    ".fuel_ListItem a": {
+      color: "$textLink",
     },
   }),
-};
+}

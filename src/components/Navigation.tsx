@@ -1,44 +1,44 @@
-import { cssObj, cx } from '@fuel-ui/css';
-import { Dropdown, ButtonLink } from '@fuel-ui/react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { cssObj, cx } from "@fuel-ui/css"
+import { Dropdown, ButtonLink } from "@fuel-ui/react"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import { useState, useEffect } from "react"
 
-import { NAVIGATION } from '../constants';
-import type { Tabs } from '../constants';
+import { NAVIGATION } from "../constants"
+import type { Tabs } from "../constants"
 
 export function Navigation() {
-  const [active, setActive] = useState<Tabs>('portal');
-  const router = useRouter();
+  const [active, setActive] = useState<Tabs>("portal")
+  const router = useRouter()
 
   useEffect(() => {
-    let category = 'portal';
-    if (router.pathname !== '/') {
-      category = router.asPath.split('/docs/')[1].split('/')[0];
+    let category = "portal"
+    if (router.pathname !== "/") {
+      category = router.asPath.split("/docs/")[1].split("/")[0]
     }
-    if (isStringInTabs(category)) setActive(category as Tabs);
-  }, [router]);
+    if (isStringInTabs(category)) setActive(category as Tabs)
+  }, [router])
 
   function isStringInTabs(str: string): boolean {
     return (
-      str === 'portal' ||
-      str === 'sway' ||
-      str === 'fuels-rs' ||
-      str === 'fuels-ts' ||
-      str === 'wallet' ||
-      str === 'graphql' ||
-      str === 'fuelup' ||
-      str === 'indexer' ||
-      str === 'specs' ||
-      str === 'forc'
-    );
+      str === "portal" ||
+      str === "sway" ||
+      str === "fuels-rs" ||
+      str === "fuels-ts" ||
+      str === "wallet" ||
+      str === "graphql" ||
+      str === "fuelup" ||
+      str === "indexer" ||
+      str === "specs" ||
+      str === "forc"
+    )
   }
 
   return (
     <>
       {NAVIGATION.map((item, index) => {
-        if (item.type === 'menu') {
-          const isActive = item.menu?.some((i) => i.slug === active);
+        if (item.type === "menu") {
+          const isActive = item.menu?.some((i) => i.slug === active)
           return (
             <Dropdown key={index}>
               <Dropdown.Trigger>
@@ -51,6 +51,7 @@ export function Navigation() {
                 </ButtonLink>
               </Dropdown.Trigger>
               <Dropdown.Menu
+                // eslint-disable-next-line jsx-a11y/no-autofocus
                 autoFocus
                 css={styles.menu}
                 disabledKeys={item.categories}
@@ -58,13 +59,13 @@ export function Navigation() {
                 onAction={(action) => {
                   if (item.menu) {
                     const menuItem = item.menu.find(
-                      (i) => action === i.name.concat(i.type),
-                    );
+                      (i) => action === i.name.concat(i.type)
+                    )
                     if (menuItem && menuItem.link) {
-                      if (menuItem.type === 'internal-link') {
-                        router.push(menuItem.link);
-                      } else if (menuItem.type === 'external-link') {
-                        window.open(menuItem.link);
+                      if (menuItem.type === "internal-link") {
+                        router.push(menuItem.link)
+                      } else if (menuItem.type === "external-link") {
+                        window.open(menuItem.link)
                       }
                     }
                   }
@@ -77,10 +78,10 @@ export function Navigation() {
                       css={styles.nestedLink}
                       className={cx({
                         active: active === menuItem.slug,
-                        isCategory: menuItem.type === 'category',
+                        isCategory: menuItem.type === "category",
                       })}
                       key={
-                        menuItem.type === 'category'
+                        menuItem.type === "category"
                           ? menuItem.name
                           : menuItem.name.concat(menuItem.type)
                       }
@@ -88,11 +89,11 @@ export function Navigation() {
                     >
                       {menuItem.name}
                     </Dropdown.MenuItem>
-                  );
+                  )
                 })}
               </Dropdown.Menu>
             </Dropdown>
-          );
+          )
         }
         return (
           <ButtonLink
@@ -101,51 +102,51 @@ export function Navigation() {
             href={item.link}
             css={styles.navButton}
             variant="link"
-            data-active={active === 'portal'}
+            data-active={active === "portal"}
           >
             {item.name}
           </ButtonLink>
-        );
+        )
       })}
     </>
-  );
+  )
 }
 
 export const styles = {
   menu: cssObj({
-    boxShadow: '$sm',
+    boxShadow: "$sm",
   }),
   nestedLink: cssObj({
-    padding: '$0 $4',
-    height: '$7',
-    minHeight: 'auto',
+    padding: "$0 $4",
+    height: "$7",
+    minHeight: "auto",
 
-    '&.active': {
-      color: '$textLink',
+    "&.active": {
+      color: "$textLink",
     },
-    '&.isCategory': {
-      borderBottom: '1px solid $border',
-      mb: '$1',
+    "&.isCategory": {
+      borderBottom: "1px solid $border",
+      mb: "$1",
     },
   }),
   navButton: cssObj({
-    color: '$intentsBase10',
+    color: "$intentsBase10",
 
     '&:not([aria-disabled="true"]):active, &:not([aria-disabled="true"])[aria-pressed="true"]':
       {
-        outline: 'none',
-        outlineOffset: 'none',
-        outlineColor: 'transparent',
-        transform: 'none',
+        outline: "none",
+        outlineOffset: "none",
+        outlineColor: "transparent",
+        transform: "none",
       },
 
-    '&:hover': {
-      textDecoration: 'none',
-      color: '$intentsBase12 !important',
+    "&:hover": {
+      textDecoration: "none",
+      color: "$intentsBase12 !important",
     },
 
     '&[data-active="true"], &[data-active="true"]:hover': {
-      color: '$textLink !important',
+      color: "$textLink !important",
     },
   }),
-};
+}

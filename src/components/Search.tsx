@@ -1,5 +1,5 @@
-import { DocSearch } from '@docsearch/react';
-import docsearch from '~/docsearch.json';
+import { DocSearch } from "@docsearch/react"
+import docsearch from "~/docsearch.json"
 
 export function Search() {
   return (
@@ -9,5 +9,5 @@ export function Search() {
       apiKey={process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY!}
       disableUserPersonalization={true}
     />
-  );
+  )
 }
