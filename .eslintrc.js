@@ -16,7 +16,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ["src/imports.ts"],
+      files: ["src/imports.ts", "src/lib/api.ts"],
       rules: {
         "import/no-unresolved": "off",
       },
