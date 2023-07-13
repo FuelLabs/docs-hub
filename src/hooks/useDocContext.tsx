@@ -9,7 +9,7 @@ export type DocCtx = {
   links: SidebarLinkItem[];
   title: string;
   activeHistory?: string[];
-  setActiveHistory: (prev: string) => void;
+  setActiveHistory: (prev: string[]) => void;
 };
 
 const ctx = createContext<DocCtx>({} as DocCtx);
@@ -25,7 +25,7 @@ type DocProviderProps = Partial<DocCtx> & {
 export function DocProvider({ children, ...props }: DocProviderProps) {
   const [activeHistory, setActive] = useState<string[]>([]);
 
-  function setActiveHistory(prev: string) {
+  function setActiveHistory(prev: string[]) {
     setActive((s) => s.concat(prev));
   }
 

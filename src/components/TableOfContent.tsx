@@ -28,12 +28,12 @@ export function TableOfContent() {
               <a href={`#${heading.id}`}>{heading.title}</a>
               {heading.children && (
                 <List>
-                  {heading.children.map((heading) => (
+                  {heading.children.map((subheading) => (
                     <List.Item
-                      key={heading.title}
-                      data-active={heading.id === lastActive}
+                      key={subheading.id}
+                      data-active={subheading.id === lastActive}
                     >
-                      <a href={`#${heading.id}`}>{heading.title}</a>
+                      <a href={`#${subheading.id}`}>{subheading.title}</a>
                     </List.Item>
                   ))}
                 </List>
@@ -92,7 +92,7 @@ const styles = {
       },
     },
 
-    [`${LIST_ITEM}[data-active="true"] a`]: {
+    [`${LIST_ITEM}[data-active="true"] > a`]: {
       color: '$intentsPrimary11 !important',
     },
   }),

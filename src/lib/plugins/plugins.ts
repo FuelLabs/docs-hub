@@ -70,9 +70,11 @@ export function handlePlugins(options: Options = { filepath: '' }) {
   const rootDir = process.cwd();
   const { filepath } = options;
   const dirname = path.relative(rootDir, path.dirname(filepath));
+
   return function transformer(tree: Root) {
     if (filepath.includes('/docs/portal/')) return;
-    const nodes: [any, number | null, Parent][] = [];
+    const nodes: [any, number | null, Parent<any, any>][] = [];
+
     if (filepath.includes('/docs/fuel-graphql-docs/')) {
       visit(tree, '', (node: any, idx, parent) => {
         if (
@@ -80,7 +82,7 @@ export function handlePlugins(options: Options = { filepath: '' }) {
           node.attributes &&
           node.attributes[0].value.includes('/docs/')
         ) {
-          nodes.push([node as any, idx, parent as Parent]);
+          nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
         }
       });
       nodes.forEach(([node, _idx, _idxparent]) => {
@@ -94,7 +96,7 @@ export function handlePlugins(options: Options = { filepath: '' }) {
           // get the generated docs for forc
           forcGenCondition(tree, node, filepath)
         ) {
-          nodes.push([node as any, idx, parent as Parent]);
+          nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
         }
       });
       nodes.forEach(([node]) => {
@@ -108,7 +110,7 @@ export function handlePlugins(options: Options = { filepath: '' }) {
           // remove .md from mdBook links
           mdBookLinks(node)
         ) {
-          nodes.push([node as any, idx, parent as Parent]);
+          nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
         }
       });
       nodes.forEach(([node, _idx, parent]) => {
@@ -127,7 +129,7 @@ export function handlePlugins(options: Options = { filepath: '' }) {
           walletImagesCondition(node, filepath) ||
           walletComponentsCondition(node, filepath)
         ) {
-          nodes.push([node as any, idx, parent as Parent]);
+          nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
         }
       });
 
@@ -163,7 +165,7 @@ export function handlePlugins(options: Options = { filepath: '' }) {
           tsBookVersions(node) ||
           (node.type === 'code' && node.lang === 'ts:line-numbers')
         ) {
-          nodes.push([node as any, idx, parent as Parent]);
+          nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
         }
       });
       nodes.forEach(([node, _idx, parent]) => {
@@ -202,7 +204,7 @@ export function handlePlugins(options: Options = { filepath: '' }) {
           // remove .md from mdBook links
           mdBookLinks(node)
         ) {
-          nodes.push([node as any, idx, parent as Parent]);
+          nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
         }
       });
       nodes.forEach(([node, _idx, parent]) => {
