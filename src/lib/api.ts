@@ -88,6 +88,13 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
     doc.title = newLabel;
   }
 
+  if (isGuide) {
+    doc.parent = {
+      label: 'Guides',
+      link: '/guides',
+    };
+  }
+
   const final = {
     ...doc,
     source,

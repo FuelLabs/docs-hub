@@ -1,26 +1,24 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box, ButtonLink, Icon } from '@fuel-ui/react';
 import NextLink from 'next/link';
-import { usePathname } from 'next/navigation';
 import { useDocContext } from '~/src/hooks/useDocContext';
 
 import { styles as linkStyles, SidebarLink } from './SidebarLink';
 import { SidebarSubmenu } from './SidebarSubmenu';
 
 export function Sidebar() {
-  const { links } = useDocContext();
-  const pathname = usePathname();
+  const { links, doc } = useDocContext();
   return (
     links && (
       <Box.Stack as="nav" css={styles.root} className="Sidebar">
-        {pathname.includes('/guides/') && (
+        {doc.parent && (
           <ButtonLink
             as={NextLink}
-            href={'/guides'}
+            href={doc.parent.link}
             css={{ ...linkStyles.root, justifyContent: 'flex-start' }}
           >
             <Icon icon={Icon.is('ArrowBackUp')} stroke={1} color="textMuted" />
-            Back to Guides
+            Back to {doc.parent.label}
           </ButtonLink>
         )}
         {links.map((link, index) => {
