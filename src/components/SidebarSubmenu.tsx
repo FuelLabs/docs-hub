@@ -25,7 +25,6 @@ export function SidebarSubmenu({
     const category = pathArray && index ? `/${pathArray[index + 1]}` : '';
     const active = pathname?.startsWith(`/docs/${subpath}${category}/`);
     setIsOpened(active);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   if (!hasIndex && submenu && submenu[0].slug) {

@@ -26,7 +26,7 @@
     "@fuel-ui/css": "^0.16.1",
     "@fuel-ui/react": "^0.16.1",
     "@fuel-wallet/sdk": "^0.10.0",
-    "@fuels/eslint-config": "^0.0.2",
+    "@fuels/eslint-plugin": "^0.0.3",
     "@fuels/prettier-config": "^0.0.3",
     "@fuels/ts-config": "^0.0.3",
     "@mdx-js/react": "^2.3.0",

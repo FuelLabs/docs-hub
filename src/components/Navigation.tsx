@@ -51,7 +51,6 @@ export function Navigation() {
                 </ButtonLink>
               </Dropdown.Trigger>
               <Dropdown.Menu
-                // eslint-disable-next-line jsx-a11y/no-autofocus
                 autoFocus
                 css={styles.menu}
                 disabledKeys={item.categories}

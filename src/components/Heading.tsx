@@ -38,7 +38,6 @@ export function Heading({ children, ...props }: any) {
     return () => {
       watch && observer.unobserve(watch);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
