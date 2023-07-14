@@ -172,6 +172,7 @@ export async function getDocContent(path: string) {
       .replaceAll(/[_-]/g, ' ');
     data.category = paths.pop()?.replaceAll('-', ' ');
   }
+
   return {
     data,
     content,

@@ -9,10 +9,10 @@ import { useDocContext } from '../hooks/useDocContext';
 export function Heading({ children, ...props }: any) {
   const ref = useRef<HTMLHeadingElement>(null);
   const { setActiveHistory } = useDocContext();
-  const iEntries = useRef<string | null>();
+  const iEntries = useRef<string[]>([]);
 
   useEffect(() => {
-    if (props['data-rank'] === 'h1') return;
+    if (['h1', 'h4', 'h5', 'h6'].includes(props['data-rank'])) return;
     const watch = ref.current;
     const observer = new IntersectionObserver(
       (entries) => {
@@ -24,9 +24,9 @@ export function Heading({ children, ...props }: any) {
               b.target.getBoundingClientRect().top,
           )
           .map((entry) => entry.target.getAttribute('id'))
-          .filter((id): id is string => id !== null)?.[0];
+          .filter((id): id is string => id !== null);
 
-        if (iEntries.current) {
+        if (iEntries.current.length) {
           setActiveHistory(iEntries.current);
         }
       },
