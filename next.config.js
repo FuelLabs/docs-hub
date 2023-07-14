@@ -3,7 +3,7 @@
  */
 
 const nextConfig = {
-  basePath: process.env.DOCS_BASE_URL || "",
+  basePath: process.env.DOCS_BASE_URL || '',
   experimental: {
     esmExternals: false,
     externalDir: true,
@@ -15,21 +15,21 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: "/docs/",
-        destination: "/",
+        source: '/docs/',
+        destination: '/',
         permanent: true,
       },
       {
-        source: "/docs/wallet/",
-        destination: "/docs/wallet/install/",
+        source: '/docs/wallet/',
+        destination: '/docs/wallet/install/',
         permanent: true,
       },
       {
-        source: "/docs/graphql/",
-        destination: "/docs/graphql/overview/",
+        source: '/docs/graphql/',
+        destination: '/docs/graphql/overview/',
         permanent: true,
       },
-    ]
+    ];
   },
   typescript: {
     // !! WARN !!
@@ -39,6 +39,6 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

@@ -1,20 +1,20 @@
-import { cssObj } from "@fuel-ui/css"
-import { Box } from "@fuel-ui/react"
-import Head from "next/head"
-import type { ReactNode } from "react"
+import { cssObj } from '@fuel-ui/css';
+import { Box } from '@fuel-ui/react';
+import Head from 'next/head';
+import type { ReactNode } from 'react';
 
-import type { Config } from "../types"
+import type { Config } from '../types';
 
-import { Header } from "./Header"
+import { Header } from './Header';
 
 type LayoutProps = {
-  title?: string
-  children: ReactNode
-  isClean?: boolean
-  hasHeadings?: boolean
-  config?: Config
-  theme?: string
-}
+  title?: string;
+  children: ReactNode;
+  isClean?: boolean;
+  hasHeadings?: boolean;
+  config?: Config;
+  theme?: string;
+};
 
 export function Layout({
   title,
@@ -25,7 +25,7 @@ export function Layout({
 }: LayoutProps) {
   const titleText = title
     ? `${title[0].toUpperCase()}${title.slice(1)} | Fuel Docs`
-    : "Fuel Docs"
+    : 'Fuel Docs';
 
   return (
     <>
@@ -49,47 +49,47 @@ export function Layout({
         {children}
       </Box>
     </>
-  )
+  );
 }
 
 const styles = {
   root: cssObj({
-    maxWidth: "100vw",
-    width: "100vw",
-    height: "100vh",
-    gridTemplateRows: "80px auto",
+    maxWidth: '100vw',
+    width: '100vw',
+    height: '100vh',
+    gridTemplateRows: '80px auto',
 
-    "@xl": {
-      display: "grid",
-      gridTemplateRows: "80px auto",
+    '@xl': {
+      display: 'grid',
+      gridTemplateRows: '80px auto',
 
       '&[data-clean="false"]': {
-        gridTemplateColumns: "250px 1fr 220px",
-        gridColumnGap: "$24",
+        gridTemplateColumns: '250px 1fr 220px',
+        gridColumnGap: '$24',
 
-        "& .Layout--section": {
-          maxWidth: "calc(100vw - 662px)",
+        '& .Layout--section': {
+          maxWidth: 'calc(100vw - 662px)',
         },
 
         '&[data-headings="false"]': {
-          gridTemplateColumns: "250px 1fr",
+          gridTemplateColumns: '250px 1fr',
 
-          "& .Layout--section": {
-            maxWidth: "calc(100vw - 442px)",
+          '& .Layout--section': {
+            maxWidth: 'calc(100vw - 442px)',
           },
         },
       },
       '&[data-clean="true"]': {
-        gridTemplateColumns: "1fr",
+        gridTemplateColumns: '1fr',
 
-        "& .Layout--section": {
-          px: "$14",
+        '& .Layout--section': {
+          px: '$14',
         },
       },
     },
 
-    "& .Layout--section a, & .Layout--section a:visited": {
-      color: "currentColor",
+    '& .Layout--section a, & .Layout--section a:visited': {
+      color: 'currentColor',
     },
   }),
-}
+};

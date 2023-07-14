@@ -1,12 +1,12 @@
 @font-face {
-  font-family: "Calling Code";
-  src: url("../../public/fonts/callingcode.woff2") format("woff2");
+  font-family: 'Calling Code';
+  src: url('../../public/fonts/callingcode.woff2') format('woff2');
   font-weight: 300 900;
   font-style: normal;
 }
 @font-face {
-  font-family: "Calling Code";
-  src: url("../../public/fonts/callingcode.woff2") format("woff2");
+  font-family: 'Calling Code';
+  src: url('../../public/fonts/callingcode.woff2') format('woff2');
   font-weight: 300 900;
   font-style: italic;
 }
@@ -36,7 +36,10 @@ h5,
 h6 {
   font-weight: 600;
   letter-spacing: -0.05em !important;
-  font-feature-settings: "pnum" on, "onum" on, "ss04" on;
+  font-feature-settings:
+    'pnum' on,
+    'onum' on,
+    'ss04' on;
 }
 
 *:focus-visible:not(input) {
@@ -63,7 +66,7 @@ tr > td {
 
 pre span,
 code {
-  font-family: "Calling Code", monospace !important;
+  font-family: 'Calling Code', monospace !important;
   font-size: 1em;
   letter-spacing: 0;
 }
