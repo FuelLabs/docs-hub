@@ -30,19 +30,13 @@ export type LinkObject = {
 
 export const NAVIGATION: LinkObject[] = [
   {
-    name: 'Home',
-    type: 'internal-link',
-    link: '/',
-    slug: 'home',
-  },
-  {
     name: 'Guides',
     type: 'internal-link',
     link: '/guides',
     slug: 'guides',
   },
   {
-    name: 'Build with Sway',
+    name: 'Sway',
     type: 'menu',
     categories: ['Tooling', 'Sway'],
     menu: [
@@ -115,7 +109,7 @@ export const NAVIGATION: LinkObject[] = [
     ],
   },
   {
-    name: 'Fuel Network',
+    name: 'Network',
     type: 'menu',
     menu: [
       {

@@ -6,8 +6,7 @@ import type { DocType } from './types';
 
 export function getComponents(doc: DocType) {
   const components: any = {};
-
-  if (doc.docsConfig.slug === 'guides' || doc.docsConfig.slug === 'wallet') {
+  if (['wallet/', 'guides/'].includes(doc.docsConfig.slug)) {
     const CodeImport = dynamic(
       () => import('~/src/components/CodeImport').then((mod) => mod.CodeImport),
       { ssr: false },

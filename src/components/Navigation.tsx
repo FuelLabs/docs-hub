@@ -2,40 +2,11 @@ import { cssObj, cx } from '@fuel-ui/css';
 import { Dropdown, ButtonLink } from '@fuel-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
 
 import { NAVIGATION } from '../constants';
-import type { Tabs } from '../constants';
 
-export function Navigation() {
-  const [active, setActive] = useState<Tabs>('home');
+export function Navigation({ active }: { active: string }) {
   const router = useRouter();
-
-  useEffect(() => {
-    let category = 'home';
-    if (router.pathname.includes('/docs/')) {
-      category = router.asPath.split('/docs/')[1].split('/')[0];
-    } else if (router.pathname !== '/') {
-      category = 'guides';
-    }
-    if (isStringInTabs(category)) setActive(category as Tabs);
-  }, [router]);
-
-  function isStringInTabs(str: string): boolean {
-    return (
-      str === 'home' ||
-      str === 'guides' ||
-      str === 'sway' ||
-      str === 'fuels-rs' ||
-      str === 'fuels-ts' ||
-      str === 'wallet' ||
-      str === 'graphql' ||
-      str === 'fuelup' ||
-      str === 'indexer' ||
-      str === 'specs' ||
-      str === 'forc'
-    );
-  }
 
   return (
     <>

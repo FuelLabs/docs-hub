@@ -19,12 +19,10 @@ function parseLink(link: string, path: string) {
 export function DocFooter() {
   const { docLink, doc } = useDocContext();
   const router = useRouter();
-  const prevLink = docLink.prev?.slug
-    ? parseLink(docLink.prev.slug, router.asPath)
-    : undefined;
-  let nextLink = docLink.next?.slug
-    ? parseLink(docLink.next?.slug, router.asPath)
-    : undefined;
+  const prevLink =
+    docLink.prev?.slug && parseLink(docLink.prev.slug, router.asPath);
+  let nextLink =
+    docLink.next?.slug && parseLink(docLink.next?.slug, router.asPath);
 
   if (router.asPath === '/') nextLink = `docs/${nextLink}`;
 

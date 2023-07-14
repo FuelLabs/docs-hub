@@ -1,6 +1,7 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import type { ReactNode } from 'react';
 
 import type { Config } from '../types';
@@ -14,6 +15,7 @@ type LayoutProps = {
   hasHeadings?: boolean;
   config?: Config;
   theme?: string;
+  category?: string | undefined;
 };
 
 export function Layout({
@@ -23,9 +25,18 @@ export function Layout({
   hasHeadings,
   config,
 }: LayoutProps) {
+  const router = useRouter();
   const titleText = title
     ? `${title[0].toUpperCase()}${title.slice(1)} | Fuel Docs`
     : 'Fuel Docs';
+
+  function getSlug() {
+    if (router.pathname === '/guides') {
+      return 'guides';
+    }
+
+    return '';
+  }
 
   return (
     <>
@@ -45,7 +56,7 @@ export function Layout({
         data-headings={hasHeadings}
         data-clean={Boolean(isClean)}
       >
-        <Header title={config?.title} />
+        <Header active={config?.slug ? config.slug : getSlug()} />
         {children}
       </Box>
     </>
