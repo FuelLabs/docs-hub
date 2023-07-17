@@ -69,7 +69,7 @@ export function HomePage() {
       <Box css={styles.card}>
         <Icon icon="Bolt" size={40} stroke={0.7} />
         <Box.Stack>
-          <Heading as="h3">Network</Heading>
+          <Heading as="h3">Fuel Network</Heading>
           <Text>
             Start to learn right now all specs and definitions about Fuel
             Network. You'll see why we are the fastest execution and how it

@@ -26,16 +26,13 @@ export function Layout({
   config,
 }: LayoutProps) {
   const router = useRouter();
-  const titleText = title
-    ? `${title[0].toUpperCase()}${title.slice(1)} | Fuel Docs`
-    : 'Fuel Docs';
+  const titleText =
+    title && router.pathname !== '/'
+      ? `${title[0].toUpperCase()}${title.slice(1)} | Fuel Docs`
+      : 'Fuel Docs';
 
   function getSlug() {
-    if (router.pathname === '/guides') {
-      return 'guides';
-    }
-
-    return '';
+    return router.pathname === '/guides' ? 'guides' : '';
   }
 
   return (
