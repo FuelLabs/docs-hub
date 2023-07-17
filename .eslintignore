@@ -6,3 +6,5 @@ CHANGELOG.md
 .eslintrc.js
 .next
 docs
+public/shiki
+
