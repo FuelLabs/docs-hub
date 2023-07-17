@@ -50,6 +50,9 @@ const getHighlighter: RehypeCodeOptions['getHighlighter'] = async (options) => {
       'sh',
       'json',
       'toml',
+      'graphql',
+      'console',
+      'ts',
     ],
     paths: {
       languages: `${getShikiPath()}/languages/`,
@@ -63,14 +66,82 @@ const getHighlighter: RehypeCodeOptions['getHighlighter'] = async (options) => {
 function codeImport() {
   return function transformer(tree: Root) {
     visit(tree, 'mdxJsxFlowElement', (node: any) => {
-      if (node.name !== 'CodeImport') return;
-      node.type = 'element';
-      node.tagName = 'pre';
-
-      const lang = node.attributes?.find((a: any) => a.name === '__language');
+      if (node.name !== 'CodeImport' && node.name !== 'CodeExamples') return;
       const content = node.attributes?.find((a: any) => a.name === '__content');
-      const code = h('code', { class: lang?.value }, content?.value);
-      node.children = [code];
+      if (content) {
+        node.type = 'element';
+        node.tagName = 'pre';
+        const lang = node.attributes?.find((a: any) => a.name === '__language');
+        const code = h('code', { class: lang?.value }, content?.value);
+        node.children = [code];
+      } else {
+        const tsContent = node.attributes?.find(
+          (a: any) => a.name === '__ts_content',
+        );
+        const apolloContent = node.attributes?.find(
+          (a: any) => a.name === '__apollo_content',
+        );
+        const urqlContent = node.attributes?.find(
+          (a: any) => a.name === '__urql_content',
+        );
+        const tsCode = h(
+          'code',
+          {
+            className: ['language-typescript'],
+            'data-language': 'typescript',
+            'data-theme': 'default',
+          },
+          tsContent?.value,
+        );
+        const apolloImport = `import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+
+const apolloClient= new ApolloClient({
+  uri: 'https://beta-3.fuel.network/graphql',
+  cache: new InMemoryCache(),
+});
+
+`;
+        const apolloCode = h(
+          'code',
+          {
+            className: ['language-typescript'],
+            'data-language': 'typescript',
+            'data-theme': 'default',
+          },
+          apolloImport + apolloContent?.value,
+        );
+
+        const urqlImport = `import { createClient } from 'urql';
+
+const urqlClient= createClient({
+  url: 'https://beta-3.fuel.network/graphql',
+});
+
+`;
+        const urqlCode = h(
+          'code',
+          {
+            className: ['language-typescript'],
+            'data-language': 'typescript',
+            'data-theme': 'default',
+          },
+          urqlImport + urqlContent?.value,
+        );
+
+        const tsPre = h('element');
+        tsPre.tagName = 'pre';
+        tsPre.children = [tsCode];
+
+        const apolloPre = h('element');
+        apolloPre.tagName = 'pre';
+        apolloPre.children = [apolloCode];
+
+        const urqlPre = h('element');
+        urqlPre.tagName = 'pre';
+        urqlPre.children = [urqlCode];
+
+        node.children = [tsPre, apolloPre, urqlPre];
+      }
     });
   };
 }
@@ -89,7 +160,8 @@ function isCodeEl(node: any, parent: any) {
     (node.tagName === 'code' &&
       isElement(parent) &&
       parent.tagName === 'pre') ||
-    node.tagName === 'inlineCode'
+    node.tagName === 'inlineCode' ||
+    (node.tagName === 'code' && parent.name === 'CodeExamples')
   );
 }
 
