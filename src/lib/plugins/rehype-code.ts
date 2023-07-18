@@ -160,8 +160,7 @@ function isCodeEl(node: any, parent: any) {
     (node.tagName === 'code' &&
       isElement(parent) &&
       parent.tagName === 'pre') ||
-    node.tagName === 'inlineCode' ||
-    (node.tagName === 'code' && parent.name === 'CodeExamples')
+    node.tagName === 'inlineCode'
   );
 }
 
