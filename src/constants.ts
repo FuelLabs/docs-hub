@@ -41,22 +41,6 @@ export const NAVIGATION: LinkObject[] = [
     categories: ['Tooling', 'Sway'],
     menu: [
       {
-        name: 'Tooling',
-        type: 'category',
-      },
-      {
-        name: 'Fuelup',
-        type: 'internal-link',
-        link: '/docs/fuelup',
-        slug: 'fuelup',
-      },
-      {
-        name: 'Forc',
-        type: 'internal-link',
-        link: '/docs/forc',
-        slug: 'forc',
-      },
-      {
         name: 'Sway',
         type: 'category',
       },
@@ -75,6 +59,28 @@ export const NAVIGATION: LinkObject[] = [
         name: 'Example Apps',
         type: 'external-link',
         link: 'https://github.com/FuelLabs/sway-applications',
+      },
+      {
+        name: 'Tooling',
+        type: 'category',
+      },
+      {
+        name: 'Fuelup',
+        type: 'internal-link',
+        link: '/docs/fuelup',
+        slug: 'fuelup',
+      },
+      {
+        name: 'Forc',
+        type: 'internal-link',
+        link: '/docs/forc',
+        slug: 'forc',
+      },
+      {
+        name: 'Indexer',
+        type: 'internal-link',
+        link: '/docs/indexer/',
+        slug: 'indexer',
       },
     ],
   },
@@ -99,12 +105,6 @@ export const NAVIGATION: LinkObject[] = [
         type: 'internal-link',
         link: '/docs/wallet/install/',
         slug: 'wallet',
-      },
-      {
-        name: 'Indexer',
-        type: 'internal-link',
-        link: '/docs/indexer/',
-        slug: 'indexer',
       },
     ],
   },

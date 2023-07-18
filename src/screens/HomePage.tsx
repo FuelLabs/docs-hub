@@ -58,9 +58,6 @@ export function HomePage() {
             <List.Item>
               <Link href="/docs/wallet">Wallet SDK</Link>
             </List.Item>
-            <List.Item>
-              <Link href="/docs/indexer">Indexer</Link>
-            </List.Item>
           </List>
         </Box.Stack>
       </Box>
@@ -106,6 +103,9 @@ export function HomePage() {
             </List.Item>
             <List.Item>
               <Link href="/docs/forc">Forc</Link>
+            </List.Item>
+            <List.Item>
+              <Link href="/docs/indexer">Indexer</Link>
             </List.Item>
           </List>
         </Box.Stack>
