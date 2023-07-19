@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { cssObj } from '@fuel-ui/css';
 import { Tabs, Box, Heading } from '@fuel-ui/react';
 

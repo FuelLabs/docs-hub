@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 export type CodeImportProps = {
   file: string;
   lines?: number[];
