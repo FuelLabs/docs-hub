@@ -22,7 +22,7 @@ function extractLines(
   content: string,
   fromLine: number | undefined,
   toLine: number | undefined,
-  linesIncluded: number[],
+  linesIncluded: number[]
 ) {
   const lines = content.split(EOL);
   const start = fromLine || 1;
@@ -51,7 +51,7 @@ function extractCommentBlock(
   content: string,
   comment: string,
   commentType: CommentTypes,
-  trim: string,
+  trim: string
 ) {
   const lines = content.split(EOL);
   let lineStart = 1;
@@ -184,7 +184,7 @@ export function codeImport(options: Options = { filepath: '' }) {
       let lineEnd = attr.find((i: any) => i.name === 'lineEnd')?.value;
       const comment = attr.find((i: any) => i.name === 'comment')?.value;
       const commentType = attr.find(
-        (i: any) => i.name === 'commentType',
+        (i: any) => i.name === 'commentType'
       )?.value;
       const trim = attr.find((i: any) => i.name === 'trim')?.value;
       let linesIncluded =
@@ -210,7 +210,7 @@ export function codeImport(options: Options = { filepath: '' }) {
           fileContent,
           comment,
           commentType,
-          trim,
+          trim
         );
         lineStart = commentResult.lineStart;
         lineEnd = commentResult.lineEnd;

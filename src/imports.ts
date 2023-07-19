@@ -36,7 +36,7 @@ export function getComponents(doc: DocType) {
           import(
             '~/docs/fuels-wallet/packages/docs/src/components/InstallSection'
           ).then((mod) => mod.InstallSection),
-        { ssr: false },
+        { ssr: false }
       );
       components.InstallSection = InstallSection;
     } else {

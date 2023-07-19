@@ -32,7 +32,7 @@ interface CounterContractAbiInterface extends Interface {
   decodeFunctionData(functionFragment: 'count', data: BytesLike): DecodedValue;
   decodeFunctionData(
     functionFragment: 'increment',
-    data: BytesLike,
+    data: BytesLike
   ): DecodedValue;
 }
 

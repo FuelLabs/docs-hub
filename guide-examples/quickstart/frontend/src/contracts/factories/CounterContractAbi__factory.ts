@@ -75,12 +75,12 @@ export class CounterContractAbi__factory {
   }
   static connect(
     id: string | AbstractAddress,
-    accountOrProvider: Account | Provider,
+    accountOrProvider: Account | Provider
   ): CounterContractAbi {
     return new Contract(
       id,
       _abi,
-      accountOrProvider,
+      accountOrProvider
     ) as unknown as CounterContractAbi;
   }
 }

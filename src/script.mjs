@@ -48,10 +48,10 @@ async function main() {
       const slugs = await getDocs(key);
       const final = slugs.map(({ slug }) => getDocBySlug(slug, slugs));
       let sortedLinks = getSortedLinks(orders[key], final);
-      if (key === "guides") {
+      if (key === 'guides') {
         const newLinks = {};
         sortedLinks.forEach((link) => {
-          newLinks[link.label.toLowerCase().replaceAll(" ", "_")] = link;
+          newLinks[link.label.toLowerCase().replaceAll(' ', '_')] = link;
         });
         sortedLinks = newLinks;
       }
