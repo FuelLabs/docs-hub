@@ -16,7 +16,7 @@ export function Search() {
         for (const subObj of obj.menu) {
           if (
             item.hierarchy.lvl0.includes(
-              subObj.name.replace('TypeScript', 'TS').replace('API', ''),
+              subObj.name.replace('TypeScript', 'TS').replace('API', '')
             ) &&
             subObj.link
           ) {
