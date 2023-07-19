@@ -1,37 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getCssText } from '@fuel-ui/css';
 import NextDocument, { Head, Html, Main, NextScript } from 'next/document';
-import { Cookies } from 'react-cookie';
-
-import { DEFAULT_THEME } from '../constants';
 
 export default class Document extends NextDocument {
-  static async getInitialProps(ctx: any): Promise<any> {
-    const originalRenderPage = ctx.renderPage;
-    const cookies = new Cookies(ctx.req.headers.cookie);
-
-    ctx.renderPage = () =>
-      originalRenderPage({
-        enhanceComponent: (Component: any) => {
-          Component.universalCookies = cookies;
-          return Component;
-        },
-      });
-
-    const props = await NextDocument.getInitialProps(ctx);
-    return { ...props, cookies: cookies.getAll() };
-  }
-
   render() {
-    const cookies = (this.props as any).cookies;
     return (
-      <Html
-        lang="en"
-        data-theme={cookies.theme || DEFAULT_THEME}
-        className={
-          cookies.theme === 'light' ? 'fuel_light-theme' : 'fuel_dark-theme'
-        }
-      >
+      <Html lang="en" data-theme="light" className="fuel_light-theme">
         <Head>
           <style
             id="stitches"

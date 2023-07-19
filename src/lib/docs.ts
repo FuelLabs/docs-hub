@@ -19,106 +19,83 @@ export async function getDocs(config: Config): Promise<DocPathType[]> {
   const cache = pathsCache.get(config?.slug);
   if (cache) return cache;
   let paths: string[] = [];
-  switch (config?.slug) {
-    case 'sway':
-      paths = [
-        // SWAY DOCS
-        './sway/docs/book/src/**/*.md',
-        // IGNORE ALL SUMMARY PAGES
-        '!**/SUMMARY.md',
-        // IGNORE FORC PAGES
-        '!./sway/docs/book/src/forc/*.md',
-        '!./sway/docs/book/src/forc/**/*.md',
-      ];
-      break;
-    case 'forc':
-      paths = [
-        // FORC DOCS
-        './sway/docs/book/src/forc/*.md',
-        './sway/docs/book/src/forc/**/*.md',
-        // REMOVE UNUSED FILES
-        '!./sway/docs/book/src/forc/commands/forc_deploy.md',
-        '!./sway/docs/book/src/forc/commands/forc_run.md',
-      ];
-      break;
-    case 'fuels-rs':
-      paths = [
-        // RUST SDK DOCS
-        './fuels-rs/docs/src/**/*.md',
-        './fuels-rs/docs/src/*.md',
-        // IGNORE ALL SUMMARY PAGES
-        '!**/SUMMARY.md',
-      ];
-      break;
-    case 'fuels-ts':
-      paths = [
-        // TS SDK DOCS
-        './fuels-ts/apps/docs/src/*.md',
-        './fuels-ts/apps/docs/src/**/*.md',
-        './fuels-ts/apps/docs/src/**/*.md',
-      ];
-      break;
-    case 'wallet':
-      paths = [
-        // WALLET DOCS
-        './fuels-wallet/packages/docs/docs/**/*.mdx',
-        './fuels-wallet/packages/docs/docs/*.mdx',
-      ];
-      break;
-    case 'graphql':
-      paths = [
-        // GRAPHQL DOCS
-        './fuel-graphql-docs/docs/*.mdx',
-        './fuel-graphql-docs/docs/**/*.mdx',
-      ];
-      break;
-    case 'fuelup':
-      paths = [
-        // FUELUP DOCS
-        './fuelup/docs/src/*.md',
-        './fuelup/docs/src/**/*.md',
-        // IGNORE ALL SUMMARY PAGES
-        '!**/SUMMARY.md',
-      ];
-      break;
-    case 'indexer':
-      paths = [
-        // INDEXER DOCS
-        './fuel-indexer/docs/src/*.md',
-        './fuel-indexer/docs/src/**/*.md',
-        // IGNORE ALL SUMMARY PAGES
-        '!**/SUMMARY.md',
-      ];
-      break;
-    case 'specs':
-      paths = [
-        // SPECS DOCS
-        './fuel-specs/src/*.md',
-        './fuel-specs/src/**/*.md',
-        // IGNORE ALL SUMMARY PAGES
-        '!**/SUMMARY.md',
-      ];
-      break;
-    default:
-      paths = [
-        // PORTAL DOCS
-        '../portal/*.md',
-        '../portal/*.mdx',
-        '../portal/**/*.mdx',
-      ];
-      break;
-  }
+  paths = paths.concat([
+    // SWAY DOCS
+    './sway/docs/book/src/**/*.md',
+    // IGNORE ALL SUMMARY PAGES
+    '!**/SUMMARY.md',
+    // IGNORE FORC PAGES
+    '!./sway/docs/book/src/forc/*.md',
+    '!./sway/docs/book/src/forc/**/*.md',
+  ]);
+  paths = paths.concat([
+    // FORC DOCS
+    './sway/docs/book/src/forc/*.md',
+    './sway/docs/book/src/forc/**/*.md',
+    // REMOVE UNUSED FILES
+    '!./sway/docs/book/src/forc/commands/forc_deploy.md',
+    '!./sway/docs/book/src/forc/commands/forc_run.md',
+  ]);
+  paths = paths.concat([
+    // RUST SDK DOCS
+    './fuels-rs/docs/src/**/*.md',
+    './fuels-rs/docs/src/*.md',
+    // IGNORE ALL SUMMARY PAGES
+    '!**/SUMMARY.md',
+  ]);
+  paths = paths.concat([
+    // TS SDK DOCS
+    './fuels-ts/apps/docs/src/*.md',
+    './fuels-ts/apps/docs/src/**/*.md',
+    './fuels-ts/apps/docs/src/**/*.md',
+  ]);
+  paths = paths.concat([
+    // WALLET DOCS
+    './fuels-wallet/packages/docs/docs/**/*.mdx',
+    './fuels-wallet/packages/docs/docs/*.mdx',
+  ]);
+  paths = paths.concat([
+    // GRAPHQL DOCS
+    './fuel-graphql-docs/docs/*.mdx',
+    './fuel-graphql-docs/docs/**/*.mdx',
+  ]);
+  paths = paths.concat([
+    // FUELUP DOCS
+    './fuelup/docs/src/*.md',
+    './fuelup/docs/src/**/*.md',
+    // IGNORE ALL SUMMARY PAGES
+    '!**/SUMMARY.md',
+  ]);
+  paths = paths.concat([
+    // INDEXER DOCS
+    './fuel-indexer/docs/src/*.md',
+    './fuel-indexer/docs/src/**/*.md',
+    // IGNORE ALL SUMMARY PAGES
+    '!**/SUMMARY.md',
+  ]);
+  paths = paths.concat([
+    // SPECS DOCS
+    './fuel-specs/src/*.md',
+    './fuel-specs/src/**/*.md',
+    // IGNORE ALL SUMMARY PAGES
+    '!**/SUMMARY.md',
+  ]);
 
   paths = await globby(paths, {
     cwd: DOCS_DIRECTORY,
   });
 
-  const final = paths.map((path) => {
-    return {
-      slug: removeDocsPath(path),
-      path,
-    };
-  });
+  const final = paths
+    .map((path) => {
+      const p = path.replace(/.(mdx?)$/, '');
+      if (p.includes('SUMMARY')) return;
+      return {
+        slug: removeDocsPath(p),
+        path,
+      };
+    })
+    .filter(Boolean) as DocPathType[];
+
   pathsCache.set(config?.slug, final);
   return final;
 }

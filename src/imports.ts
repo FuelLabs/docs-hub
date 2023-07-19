@@ -6,16 +6,17 @@ import type { DocType } from './types';
 
 export function getComponents(doc: DocType) {
   const components: any = {};
+  const slug = doc?.docsConfig?.slug || '/';
 
   // load the components used in the wallet docs
-  if (doc.docsConfig.slug === 'wallet') {
+  if (slug === 'wallet') {
     const CodeImport = dynamic(
       () => import('~/src/components/CodeImport').then((mod) => mod.CodeImport),
       { ssr: false },
     );
     components.CodeImport = CodeImport;
 
-    if (doc.slug.includes('how-to-use')) {
+    if (slug.includes('how-to-use')) {
       const Demo = dynamic(
         () =>
           import('~/docs/fuels-wallet/packages/docs/src/components/Demo').then(
@@ -24,7 +25,7 @@ export function getComponents(doc: DocType) {
         { ssr: false },
       );
       components.Demo = Demo;
-    } else if (doc.slug.includes('/install')) {
+    } else if (slug.includes('/install')) {
       const Player = dynamic(
         () => import('~/docs/fuels-wallet/packages/docs/src/components/Player'),
         { ssr: false },
@@ -41,7 +42,7 @@ export function getComponents(doc: DocType) {
       components.DownloadFuelWallet = DownloadFuelWallet;
     } else {
       const Examples: any = { Events: {} };
-      if (doc.slug.includes('getting-started')) {
+      if (slug.includes('getting-started')) {
         Examples.FuelLoaded = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
@@ -58,7 +59,7 @@ export function getComponents(doc: DocType) {
           { ssr: false },
         );
         components.ConnectionAlert = ConnectionAlert;
-      } else if (doc.slug.includes('connecting')) {
+      } else if (slug.includes('connecting')) {
         Examples.Connect = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
@@ -82,7 +83,7 @@ export function getComponents(doc: DocType) {
             ),
           { ssr: false },
         );
-      } else if (doc.slug.includes('assets')) {
+      } else if (slug.includes('assets')) {
         Examples.AddAssets = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
@@ -113,7 +114,7 @@ export function getComponents(doc: DocType) {
             ),
           { ssr: false },
         );
-      } else if (doc.slug.includes('accounts')) {
+      } else if (slug.includes('accounts')) {
         Examples.CurrentAccount = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
@@ -144,7 +145,7 @@ export function getComponents(doc: DocType) {
             ),
           { ssr: false },
         );
-      } else if (doc.slug.includes('network')) {
+      } else if (slug.includes('network')) {
         Examples.Network = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
@@ -160,7 +161,7 @@ export function getComponents(doc: DocType) {
             ),
           { ssr: false },
         );
-      } else if (doc.slug.includes('signing')) {
+      } else if (slug.includes('signing')) {
         Examples.SignMessage = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
@@ -168,7 +169,7 @@ export function getComponents(doc: DocType) {
             ),
           { ssr: false },
         );
-      } else if (doc.slug.includes('connectors')) {
+      } else if (slug.includes('connectors')) {
         Examples.Connectors = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
@@ -180,10 +181,7 @@ export function getComponents(doc: DocType) {
 
       components.Examples = Examples;
     }
-  } else if (
-    doc.docsConfig.slug === 'graphql' &&
-    doc.slug.includes('recipes')
-  ) {
+  } else if (slug === 'graphql' && slug.includes('recipes')) {
     const CodeExamples = dynamic(
       () =>
         import('~/src/components/GraphqlCodeExample').then(

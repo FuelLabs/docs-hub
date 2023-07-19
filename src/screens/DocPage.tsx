@@ -20,16 +20,16 @@ type DocPageProps = {
 export function DocScreen(props: DocPageProps) {
   const { doc } = props;
   const components = getComponents(doc);
-  const hasHeadings = Boolean(doc.headings.length);
-  const isCleanLayout = doc.source.scope.cleanLayout;
+  const hasHeadings = Boolean(doc?.headings?.length);
+  const isCleanLayout = doc?.source?.scope?.cleanLayout;
 
   return (
     <DocProvider {...props}>
       <Layout
-        title={doc.title}
+        title={doc?.title}
         isClean={Boolean(isCleanLayout)}
         hasHeadings={hasHeadings}
-        config={doc.docsConfig}
+        config={doc?.docsConfig}
       >
         {!isCleanLayout && (
           <Box css={styles.sidebar}>
@@ -40,11 +40,13 @@ export function DocScreen(props: DocPageProps) {
         )}
         <Box as="section" css={styles.section} className="Layout--section">
           <Box className="Layout--pageContent">
-            <MDXRemote {...doc.source} scope={doc} components={components} />
+            {doc && (
+              <MDXRemote {...doc?.source} scope={doc} components={components} />
+            )}
           </Box>
-          {!isCleanLayout && <DocFooter />}
+          {doc && !isCleanLayout && <DocFooter />}
         </Box>
-        {!isCleanLayout && hasHeadings && <TableOfContent />}
+        {doc && !isCleanLayout && hasHeadings && <TableOfContent />}
       </Layout>
     </DocProvider>
   );
