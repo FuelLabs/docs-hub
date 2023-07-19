@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import fs from 'node:fs';
@@ -15,7 +14,7 @@ function extractCommentBlock(content: string, comment: string | null) {
   let lineStart = 1;
   let lineEnd = 1;
   let foundStart = false;
-  // eslint-disable-next-line no-plusplus
+
   for (let i = 0; i < lines.length; i++) {
     const trimmed = lines[i].replace(/\s/g, '');
 
@@ -71,7 +70,7 @@ export function handleExampleImports(
   node: any,
   dirname: string,
   rootDir: string,
-  parent: Parent,
+  parent: Parent<any, any>
 ) {
   let content = '';
 
@@ -107,7 +106,7 @@ export function handleExampleImports(
   const bookPath = dirname.split('/')[1];
   const fileAbsPath = path.resolve(
     path.join(rootDir, `docs/${bookPath}/`),
-    filePath,
+    filePath
   );
 
   if (node.type === 'text') {

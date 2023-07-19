@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { NodeHtmlMarkdown } from 'node-html-markdown';
@@ -23,7 +22,7 @@ let thisFilePath = '';
 export function handleForcGenDocs(
   node: any,
   filepath: string,
-  rootDir: string,
+  rootDir: string
 ) {
   thisFilePath = filepath;
   let child;
@@ -33,12 +32,13 @@ export function handleForcGenDocs(
     child = node.children[0].children[0];
   }
 
-  const newTree = transformContent(child, rootDir);
+  const newTree = transformContent(child, rootDir) as any;
   if (newTree === null) {
     return null;
   }
   const slug = child.value.replace(' ', '-');
-  const newTreeChildren = newTree.children.map((n: any) => {
+  const children = newTree.children as any[];
+  const newTreeChildren = children.map((n: any) => {
     n.data = { hProperties: { id: slug }, id: slug };
     return n;
   });
@@ -61,7 +61,7 @@ function transformContent(node: any, rootDir: string) {
   if (!fs.existsSync(fileAbsPath)) {
     fileAbsPath = path.resolve(
       path.join(rootDir, `${swayBuildFilePath}/plugins/forc_client/`),
-      filePathName,
+      filePathName
     );
   }
   const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
@@ -83,7 +83,7 @@ function getBuildFileAST(content: string) {
   let lineStart = 1;
   let lineEnd = 1;
   // get the content inside the <main> tag
-  // eslint-disable-next-line no-plusplus
+
   for (let i = 0; i < lines.length; i++) {
     const start = lines[i].trimStart() === '<main>';
     if (start === true && lineStart === 1) {
@@ -102,7 +102,7 @@ function getBuildFileAST(content: string) {
     /* html */ newLines.join('\n'),
     /* options (optional) */ {},
     /* customTranslators (optional) */ undefined,
-    /* customCodeBlockTranslators (optional) */ undefined,
+    /* customCodeBlockTranslators (optional) */ undefined
   );
   const processor = unified().use(remarkParse);
 
