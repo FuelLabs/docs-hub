@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import '@fuel-wallet/sdk';
 import './App.css';
 // Import the contract factory -- you can find the name in index.ts.
