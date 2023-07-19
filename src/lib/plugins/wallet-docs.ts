@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { EOL } from 'os';
 
@@ -7,7 +6,7 @@ export function handleDemoComp(node: any) {
   const lines = media.value.split(EOL);
   const oldSrcs: string[] = [];
   const apiPaths: string[] = [];
-  // eslint-disable-next-line no-plusplus
+
   for (let i = 0; i < lines.length; i++) {
     if (lines[i].trimStart().startsWith('src:')) {
       const srcIndex = lines[i].indexOf("src: '");
@@ -43,7 +42,7 @@ export function handleDemoComp(node: any) {
           oldSrcs.forEach((src, i) => {
             property.value.value = property.value.value.replace(
               src,
-              apiPaths[i],
+              apiPaths[i]
             );
             property.value.raw = property.value.raw.replace(src, apiPaths[i]);
           });

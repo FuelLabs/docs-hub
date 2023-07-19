@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
@@ -23,7 +22,7 @@ function getValueFromNode(node: any) {
 function setValueOnNode(node: any, cb: (value: string) => string) {
   if (node.type === 'mdxJsxFlowElement') {
     const idx = node.attributes.findIndex(
-      (attr: any) => attr.name === '__content',
+      (attr: any) => attr.name === '__content'
     );
     if (idx !== -1) {
       const value = node.attributes[idx].value;
