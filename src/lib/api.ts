@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable import/no-unresolved */
+
 /* eslint-disable import/order */
 import { readFileSync } from 'fs';
 import { serialize } from 'next-mdx-remote/serialize';
@@ -114,7 +114,7 @@ function parseSlug(slug?: string) {
 
 export function getDocLink(
   links: Awaited<ReturnType<typeof getSidebarLinks>>,
-  slug: string,
+  slug: string
 ) {
   const parsedSlug = parseSlug(slug) as string;
   const flatLinks = links
@@ -137,11 +137,11 @@ export function getDocLink(
 
 export async function getSidebarLinks(
   configSlug: string,
-  guideName?: string,
+  guideName?: string
 ): Promise<SidebarLinkItem[]> {
   const linksPath = join(
     DOCS_DIRECTORY,
-    `../src/sidebar-links/${configSlug}.json`,
+    `../src/sidebar-links/${configSlug}.json`
   );
   const links = JSON.parse(readFileSync(linksPath, 'utf8'));
   if (configSlug === 'guides' && guideName) {

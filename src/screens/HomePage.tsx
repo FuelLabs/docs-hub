@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { cssObj } from '@fuel-ui/css';
 import { Link as FuelLink, Box, Icon, List, Text } from '@fuel-ui/react';
 import Link from 'next/link';

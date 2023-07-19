@@ -124,7 +124,7 @@ export async function getDocs(config: Config): Promise<DocPathType[]> {
 
 export async function getDocFromSlug(
   slug: string,
-  config: Config,
+  config: Config
 ): Promise<DocPathType> {
   const slugs = await getDocs(config);
   let slugPath = slugs.find(({ slug: pathSlug }) => {

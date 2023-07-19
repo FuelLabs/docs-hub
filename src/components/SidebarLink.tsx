@@ -12,6 +12,7 @@ export type SidebarLinkProps = ButtonLinkProps & {
   item: SidebarLinkItem;
 };
 
+// eslint-disable-next-line react/display-name
 export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
   ({ item, ...props }, ref) => {
     const pathname = usePathname() || '';
@@ -44,7 +45,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
         {capitalize(item.label.replaceAll(/[_-]/g, ' '))}
       </ButtonLink>
     );
-  },
+  }
 );
 
 export const styles = {

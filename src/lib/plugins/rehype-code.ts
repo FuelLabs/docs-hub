@@ -66,7 +66,7 @@ const getHighlighter: RehypeCodeOptions['getHighlighter'] = async (options) => {
 
 function hasCodeGroup(node: any) {
   return node.children?.some((n: any) =>
-    [':::', '::: code-group'].includes(n.value),
+    [':::', '::: code-group'].includes(n.value)
   );
 }
 
@@ -238,7 +238,7 @@ function addLines() {
           }
           return acc.concat(node);
         },
-        [],
+        []
       );
     });
   };

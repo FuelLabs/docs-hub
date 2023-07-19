@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable import/no-unresolved */
+
 import dynamic from 'next/dynamic';
 
 import type { DocType } from './types';
@@ -9,7 +9,7 @@ export function getComponents(doc: DocType) {
   if (['wallet/', 'guides/'].includes(doc.docsConfig.slug)) {
     const CodeImport = dynamic(
       () => import('~/src/components/CodeImport').then((mod) => mod.CodeImport),
-      { ssr: false },
+      { ssr: false }
     );
     components.CodeImport = CodeImport;
   }
@@ -19,15 +19,15 @@ export function getComponents(doc: DocType) {
       const Demo = dynamic(
         () =>
           import('~/docs/fuels-wallet/packages/docs/src/components/Demo').then(
-            (mod) => mod.Demo,
+            (mod) => mod.Demo
           ),
-        { ssr: false },
+        { ssr: false }
       );
       components.Demo = Demo;
     } else if (doc.slug.includes('/install')) {
       const Player = dynamic(
         () => import('~/docs/fuels-wallet/packages/docs/src/components/Player'),
-        { ssr: false },
+        { ssr: false }
       );
       components.Player = Player;
 
@@ -45,9 +45,9 @@ export function getComponents(doc: DocType) {
         Examples.FuelLoaded = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
-              (mod) => mod.FuelLoaded,
+              (mod) => mod.FuelLoaded
             ),
-          { ssr: false },
+          { ssr: false }
         );
 
         const ConnectionAlert = dynamic(
@@ -55,126 +55,126 @@ export function getComponents(doc: DocType) {
             import(
               '~/docs/fuels-wallet/packages/docs/src/components/ConnectionAlert'
             ).then((mod) => mod.ConnectionAlert),
-          { ssr: false },
+          { ssr: false }
         );
         components.ConnectionAlert = ConnectionAlert;
       } else if (doc.slug.includes('connecting')) {
         Examples.Connect = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
-              (mod) => mod.Connect,
+              (mod) => mod.Connect
             ),
-          { ssr: false },
+          { ssr: false }
         );
 
         Examples.Events.Connection = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
-              (mod) => mod.Events.Connection,
+              (mod) => mod.Events.Connection
             ),
-          { ssr: false },
+          { ssr: false }
         );
 
         Examples.IsConnected = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
-              (mod) => mod.IsConnected,
+              (mod) => mod.IsConnected
             ),
-          { ssr: false },
+          { ssr: false }
         );
       } else if (doc.slug.includes('assets')) {
         Examples.AddAssets = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
-              (mod) => mod.AddAssets,
+              (mod) => mod.AddAssets
             ),
-          { ssr: false },
+          { ssr: false }
         );
 
         Examples.Events.Assets = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
-              (mod) => mod.Events.Assets,
+              (mod) => mod.Events.Assets
             ),
-          { ssr: false },
+          { ssr: false }
         );
 
         Examples.ListAssets = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
-              (mod) => mod.ListAssets,
+              (mod) => mod.ListAssets
             ),
-          { ssr: false },
+          { ssr: false }
         );
         Examples.Transfer = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
-              (mod) => mod.Transfer,
+              (mod) => mod.Transfer
             ),
-          { ssr: false },
+          { ssr: false }
         );
       } else if (doc.slug.includes('accounts')) {
         Examples.CurrentAccount = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
-              (mod) => mod.CurrentAccount,
+              (mod) => mod.CurrentAccount
             ),
-          { ssr: false },
+          { ssr: false }
         );
 
         Examples.Events.CurrentAccount = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
-              (mod) => mod.Events.CurrentAccount,
+              (mod) => mod.Events.CurrentAccount
             ),
-          { ssr: false },
+          { ssr: false }
         );
 
         Examples.ListAccounts = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
-              (mod) => mod.ListAccounts,
+              (mod) => mod.ListAccounts
             ),
-          { ssr: false },
+          { ssr: false }
         );
         Examples.Events.Accounts = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
-              (mod) => mod.Events.Accounts,
+              (mod) => mod.Events.Accounts
             ),
-          { ssr: false },
+          { ssr: false }
         );
       } else if (doc.slug.includes('network')) {
         Examples.Network = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
-              (mod) => mod.Network,
+              (mod) => mod.Network
             ),
-          { ssr: false },
+          { ssr: false }
         );
 
         Examples.Events.Network = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
-              (mod) => mod.Events.Network,
+              (mod) => mod.Events.Network
             ),
-          { ssr: false },
+          { ssr: false }
         );
       } else if (doc.slug.includes('signing')) {
         Examples.SignMessage = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
-              (mod) => mod.SignMessage,
+              (mod) => mod.SignMessage
             ),
-          { ssr: false },
+          { ssr: false }
         );
       } else if (doc.slug.includes('connectors')) {
         Examples.Connectors = dynamic(
           () =>
             import('~/docs/fuels-wallet/packages/docs/examples/').then(
-              (mod) => mod.Connectors,
+              (mod) => mod.Connectors
             ),
-          { ssr: false },
+          { ssr: false }
         );
       }
 
@@ -187,9 +187,9 @@ export function getComponents(doc: DocType) {
     const CodeExamples = dynamic(
       () =>
         import('~/src/components/GraphqlCodeExample').then(
-          (mod) => mod.GraphQLCodeExample,
+          (mod) => mod.GraphQLCodeExample
         ),
-      { ssr: false },
+      { ssr: false }
     );
     components.CodeExamples = CodeExamples;
 
@@ -197,61 +197,61 @@ export function getComponents(doc: DocType) {
     GQLExamples.Balance = dynamic(
       () =>
         import('~/docs/fuel-graphql-docs/examples').then((mod) => mod.Balance),
-      { ssr: false },
+      { ssr: false }
     );
     GQLExamples.Balances = dynamic(
       () =>
         import('~/docs/fuel-graphql-docs/examples').then((mod) => mod.Balances),
-      { ssr: false },
+      { ssr: false }
     );
     GQLExamples.BlockByHeight = dynamic(
       () =>
         import('~/docs/fuel-graphql-docs/examples').then(
-          (mod) => mod.BlockByHeight,
+          (mod) => mod.BlockByHeight
         ),
-      { ssr: false },
+      { ssr: false }
     );
     GQLExamples.ContractBalance = dynamic(
       () =>
         import('~/docs/fuel-graphql-docs/examples').then(
-          (mod) => mod.ContractBalance,
+          (mod) => mod.ContractBalance
         ),
-      { ssr: false },
+      { ssr: false }
     );
     GQLExamples.ContractBalances = dynamic(
       () =>
         import('~/docs/fuel-graphql-docs/examples').then(
-          (mod) => mod.ContractBalances,
+          (mod) => mod.ContractBalances
         ),
-      { ssr: false },
+      { ssr: false }
     );
     GQLExamples.LatestBlocks = dynamic(
       () =>
         import('~/docs/fuel-graphql-docs/examples').then(
-          (mod) => mod.LatestBlocks,
+          (mod) => mod.LatestBlocks
         ),
-      { ssr: false },
+      { ssr: false }
     );
     GQLExamples.LatestTransactions = dynamic(
       () =>
         import('~/docs/fuel-graphql-docs/examples').then(
-          (mod) => mod.LatestTransactions,
+          (mod) => mod.LatestTransactions
         ),
-      { ssr: false },
+      { ssr: false }
     );
     GQLExamples.MessageInfo = dynamic(
       () =>
         import('~/docs/fuel-graphql-docs/examples').then(
-          (mod) => mod.MessageInfo,
+          (mod) => mod.MessageInfo
         ),
-      { ssr: false },
+      { ssr: false }
     );
     GQLExamples.Transactions = dynamic(
       () =>
         import('~/docs/fuel-graphql-docs/examples').then(
-          (mod) => mod.Transactions,
+          (mod) => mod.Transactions
         ),
-      { ssr: false },
+      { ssr: false }
     );
     components.GQLExamples = GQLExamples;
   }

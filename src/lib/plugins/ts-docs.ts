@@ -1,4 +1,3 @@
-/* eslint-disable no-plusplus */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { EOL } from 'os';
 import type { Root } from 'remark-gfm';
@@ -9,7 +8,7 @@ export function handleScriptLink(
     FORC: string;
     FUELS: string;
     FUEL_CORE: string;
-  },
+  }
 ) {
   let url = '';
   let paragraphIndex;
@@ -20,7 +19,6 @@ export function handleScriptLink(
   for (let i = 0; i < lines.length; i++) {
     const trimmed = lines[i].trimStart();
     if (trimmed.startsWith('http')) {
-      // eslint-disable-next-line no-template-curly-in-string
       url = trimmed.replace('${forc}', versions.FORC);
     }
   }
@@ -50,7 +48,7 @@ export function handleScriptLink(
         newTree.children[paragraphIndex].children[linkStartIndex] = linkNode;
         newTree.children[paragraphIndex].children.splice(
           linkStartIndex + 1,
-          linkStartIndex + 2,
+          linkStartIndex + 2
         );
       }
     }

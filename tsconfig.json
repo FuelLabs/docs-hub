@@ -1,5 +1,5 @@
 {
-  "extends": "./tsconfig.base.json",
+  "extends": "@fuels/ts-config/base.json",
   "compilerOptions": {
     "plugins": [{ "name": "next" }],
     "allowJs": true,
@@ -11,7 +11,7 @@
       "~/*": ["./*", "./docs/fuels-wallet/packages/docs/*"]
     }
   },
-  "exclude": ["./docs/**.ts", "./docs/**.tsx"],
+  "exclude": ["docs/**/**.ts", "docs/**/**.tsx"],
   "include": [
     "next-env.d.ts",
     "./src/**/*.ts",
