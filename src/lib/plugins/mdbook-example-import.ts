@@ -70,7 +70,7 @@ export function handleExampleImports(
   node: any,
   dirname: string,
   rootDir: string,
-  parent: Parent<any, any>,
+  parent: Parent<any, any>
 ) {
   let content = '';
 
@@ -106,7 +106,7 @@ export function handleExampleImports(
   const bookPath = dirname.split('/')[1];
   const fileAbsPath = path.resolve(
     path.join(rootDir, `docs/${bookPath}/`),
-    filePath,
+    filePath
   );
 
   if (node.type === 'text') {

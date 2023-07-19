@@ -12,18 +12,18 @@ const rustSummaryPath = join(DOCS_DIRECTORY, './fuels-rs/docs/src/SUMMARY.md');
 const fuelupSummaryPath = join(DOCS_DIRECTORY, './fuelup/docs/src/SUMMARY.md');
 const indexerSummaryPath = join(
   DOCS_DIRECTORY,
-  './fuel-indexer/docs/src/SUMMARY.md',
+  './fuel-indexer/docs/src/SUMMARY.md'
 );
 const specsSummaryPath = join(DOCS_DIRECTORY, './fuel-specs/src/SUMMARY.md');
 
 const graphqlOrderPath = join(
   DOCS_DIRECTORY,
-  './fuel-graphql-docs/src/nav.json',
+  './fuel-graphql-docs/src/nav.json'
 );
 const portalOrderPath = join(DOCS_DIRECTORY, '../portal/nav.json');
 const tsConfigPath = join(
   DOCS_DIRECTORY,
-  './fuels-ts/apps/docs/.vitepress/config.ts',
+  './fuels-ts/apps/docs/.vitepress/config.ts'
 );
 
 const swaySummaryFile = fs.readFileSync(swaySummaryPath, 'utf8');
@@ -54,7 +54,7 @@ async function main() {
         fs.mkdirSync(folderPath);
       }
       fs.writeFileSync(`${folderPath}/${key}.json`, json, 'utf-8');
-    }),
+    })
   );
 }
 
@@ -193,7 +193,7 @@ async function getOrders() {
 
   // FORC ORDER
   const newForcLines = forcLines.map((line) =>
-    line.startsWith('-') ? line : line.slice(2, line.length),
+    line.startsWith('-') ? line : line.slice(2, line.length)
   );
   orders.forc = processSummary(newForcLines, 'forc');
 
@@ -203,7 +203,7 @@ async function getOrders() {
 function getSortedLinks(config, docs) {
   const links = [];
   const lcOrder = config.menu.map((o) =>
-    o.toLowerCase().replaceAll('-', '_').replaceAll(' ', '_'),
+    o.toLowerCase().replaceAll('-', '_').replaceAll(' ', '_')
   );
 
   // eslint-disable-next-line no-plusplus
@@ -296,7 +296,7 @@ function getSortedLinks(config, docs) {
           if (!catOrder) catOrder = config[key.replaceAll('-', '_')];
 
           catOrder = catOrder?.map((title) =>
-            title.toLowerCase().replaceAll('-', '_').replaceAll(' ', '_'),
+            title.toLowerCase().replaceAll('-', '_').replaceAll(' ', '_')
           );
           const submenu = link.submenu.sort((a, b) => {
             const lowerA = a.label.toLowerCase().replaceAll(' ', '_');
@@ -447,7 +447,7 @@ function removeDocsPath(path) {
 
 function getDocBySlug(slug, slugs) {
   let slugPath = slugs.find(
-    ({ slug: pathSlug }) => pathSlug === `./${slug}.md`,
+    ({ slug: pathSlug }) => pathSlug === `./${slug}.md`
   );
   if (!slugPath) {
     slugPath = slugs.find(({ slug: pathSlug }) => pathSlug.includes(slug));

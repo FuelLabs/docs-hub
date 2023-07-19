@@ -42,7 +42,7 @@ export function handleDemoComp(node: any) {
           oldSrcs.forEach((src, i) => {
             property.value.value = property.value.value.replace(
               src,
-              apiPaths[i],
+              apiPaths[i]
             );
             property.value.raw = property.value.raw.replace(src, apiPaths[i]);
           });
