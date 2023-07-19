@@ -25,7 +25,7 @@ export function Pre({
     toast.success('Copied to clipboard');
   }
   return (
-    <Box css={{ ...styles.root, ...css }}>
+    <Box css={{ ...styles.root, ...css }} data-name="Pre">
       <IconButton
         size="xs"
         icon={Icon.is('ClipboardText')}

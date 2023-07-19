@@ -1,8 +1,6 @@
 import { cssObj } from '@fuel-ui/css';
 import { Tabs, Box, Heading } from '@fuel-ui/react';
 
-import { Pre } from './Pre';
-
 export type CodeExamplesProps = {
   file: string;
   ts_lines?: number[];
@@ -18,6 +16,8 @@ export type CodeExamplesProps = {
   __apollo_content: string;
   __urql_content: string;
   __ts_language: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  children: any;
   // __filepath: string;
   // __filename: string;
   // __ts_lineStart: number;
@@ -28,29 +28,7 @@ export type CodeExamplesProps = {
   // __urql_lineEnd?: number;
 };
 
-export function GraphQLCodeExample({
-  __ts_content: ts_content,
-  __apollo_content: apollo_content,
-  __urql_content: urql_content,
-  __ts_language: ts_language,
-}: CodeExamplesProps) {
-  const apolloImport = `import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
-
-const apolloClient= new ApolloClient({
-  uri: 'https://beta-3.fuel.network/graphql',
-  cache: new InMemoryCache(),
-});
-
-`;
-
-  const urqlImport = `import { createClient } from 'urql';
-
-const urqlClient= createClient({
-  url: 'https://beta-3.fuel.network/graphql',
-});
-
-`;
-
+export function GraphQLCodeExample(props: CodeExamplesProps) {
   interface TabContentProps {
     value: string;
     content: string;
@@ -59,9 +37,7 @@ const urqlClient= createClient({
   const TabContent = ({ value, content }: TabContentProps) => {
     return (
       <Tabs.Content css={styles.codeContainer} value={value}>
-        <Pre css={{ margin: 0 }}>
-          <code className={`language-${ts_language}`}>{content}</code>
-        </Pre>
+        {content}
       </Tabs.Content>
     );
   };
@@ -83,9 +59,9 @@ const urqlClient= createClient({
             urql
           </Tabs.Trigger>
         </Tabs.List>
-        <TabContent value="ts" content={ts_content} />
-        <TabContent value="apollo" content={apolloImport + apollo_content} />
-        <TabContent value="urql" content={urqlImport + urql_content} />
+        <TabContent value="ts" content={props.children[0]} />
+        <TabContent value="apollo" content={props.children[1]} />
+        <TabContent value="urql" content={props.children[2]} />
       </Tabs>
     </Box.Stack>
   );
@@ -100,6 +76,11 @@ const styles = {
       mb: '$2',
       fontSize: '$md',
       color: '$textSubtext',
+    },
+  }),
+  box: cssObj({
+    'div > div': {
+      padding: '$3 0',
     },
   }),
   tabsTrigger: cssObj({
@@ -134,6 +115,13 @@ const styles = {
   codeContainer: cssObj({
     maxHeight: '500px',
     overflow: 'scroll',
+
+    '& [data-name="Pre"]': {
+      margin: 0,
+    },
+    '& [data-name="Pre"] pre': {
+      py: '$3',
+    },
   }),
   filename: cssObj({
     '&, &:visited': {
