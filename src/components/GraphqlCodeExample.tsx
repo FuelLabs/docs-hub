@@ -38,7 +38,7 @@ export function GraphQLCodeExample(props: CodeExamplesProps) {
   const TabContent = ({ value, content }: TabContentProps) => {
     return (
       <Tabs.Content css={styles.codeContainer} value={value}>
-        <Box css={styles.box}> {content} </Box>
+        {content}
       </Tabs.Content>
     );
   };
@@ -116,6 +116,13 @@ const styles = {
   codeContainer: cssObj({
     maxHeight: '500px',
     overflow: 'scroll',
+
+    '& [data-name="Pre"]': {
+      margin: 0,
+    },
+    '& [data-name="Pre"] pre': {
+      py: '$3',
+    },
   }),
   filename: cssObj({
     '&, &:visited': {
