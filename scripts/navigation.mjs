@@ -1,11 +1,9 @@
-/* eslint-disable no-continue */
 import fs from 'fs';
 import { globby } from 'globby';
 import matter from 'gray-matter';
 import { EOL } from 'os';
 import { join } from 'path';
 
-// eslint-disable-next-line no-undef
 const DOCS_DIRECTORY = join(process.cwd(), './docs');
 const swaySummaryPath = join(DOCS_DIRECTORY, './sway/docs/book/src/SUMMARY.md');
 const rustSummaryPath = join(DOCS_DIRECTORY, './fuels-rs/docs/src/SUMMARY.md');
@@ -171,7 +169,7 @@ async function getOrders() {
       'For Developers',
       'Contributing',
     ],
-    // eslint-disable-next-line @typescript-eslint/naming-convention
+
     for_developers: [
       'Getting Started',
       'Connecting',
@@ -206,7 +204,6 @@ function getSortedLinks(config, docs) {
     o.toLowerCase().replaceAll('-', '_').replaceAll(' ', '_')
   );
 
-  // eslint-disable-next-line no-plusplus
   for (let i = 0; i < docs.length; i++) {
     const doc = docs[i];
     if (doc.category === 'forc_client') {

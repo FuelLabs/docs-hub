@@ -121,6 +121,9 @@ dependencies:
   remark-gfm:
     specifier: ^3.0.1
     version: 3.0.1
+  remark-mdx:
+    specifier: ^2.3.0
+    version: 2.3.0
   remark-parse:
     specifier: ^10.0.2
     version: 10.0.2

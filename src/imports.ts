@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic';
 
+import { COMPONENTS as GQLCOMPONENTS } from './component-exports/graphql';
 import type { DocType } from './types';
 
 export function getComponents(doc: DocType) {
@@ -180,80 +181,25 @@ export function getComponents(doc: DocType) {
 
       components.Examples = Examples;
     }
-  } else if (
-    doc.docsConfig.slug === 'graphql' &&
-    doc.slug.includes('recipes')
-  ) {
-    const CodeExamples = dynamic(
-      () =>
-        import('~/src/components/GraphqlCodeExample').then(
-          (mod) => mod.GraphQLCodeExample
-        ),
-      { ssr: false }
+  } else if (doc.docsConfig.slug === 'graphql') {
+    const CodeExamples = dynamic(() =>
+      import('~/src/components/GraphqlCodeExample').then(
+        (mod) => mod.GraphQLCodeExample
+      )
     );
     components.CodeExamples = CodeExamples;
 
-    const GQLExamples: any = {};
-    GQLExamples.Balance = dynamic(
-      () =>
-        import('~/docs/fuel-graphql-docs/examples').then((mod) => mod.Balance),
-      { ssr: false }
-    );
-    GQLExamples.Balances = dynamic(
-      () =>
-        import('~/docs/fuel-graphql-docs/examples').then((mod) => mod.Balances),
-      { ssr: false }
-    );
-    GQLExamples.BlockByHeight = dynamic(
-      () =>
-        import('~/docs/fuel-graphql-docs/examples').then(
-          (mod) => mod.BlockByHeight
-        ),
-      { ssr: false }
-    );
-    GQLExamples.ContractBalance = dynamic(
-      () =>
-        import('~/docs/fuel-graphql-docs/examples').then(
-          (mod) => mod.ContractBalance
-        ),
-      { ssr: false }
-    );
-    GQLExamples.ContractBalances = dynamic(
-      () =>
-        import('~/docs/fuel-graphql-docs/examples').then(
-          (mod) => mod.ContractBalances
-        ),
-      { ssr: false }
-    );
-    GQLExamples.LatestBlocks = dynamic(
-      () =>
-        import('~/docs/fuel-graphql-docs/examples').then(
-          (mod) => mod.LatestBlocks
-        ),
-      { ssr: false }
-    );
-    GQLExamples.LatestTransactions = dynamic(
-      () =>
-        import('~/docs/fuel-graphql-docs/examples').then(
-          (mod) => mod.LatestTransactions
-        ),
-      { ssr: false }
-    );
-    GQLExamples.MessageInfo = dynamic(
-      () =>
-        import('~/docs/fuel-graphql-docs/examples').then(
-          (mod) => mod.MessageInfo
-        ),
-      { ssr: false }
-    );
-    GQLExamples.Transactions = dynamic(
-      () =>
-        import('~/docs/fuel-graphql-docs/examples').then(
-          (mod) => mod.Transactions
-        ),
-      { ssr: false }
-    );
-    components.GQLExamples = GQLExamples;
+    Object.keys(GQLCOMPONENTS).forEach((page) => {
+      if (doc.slug.includes(page)) {
+        GQLCOMPONENTS[page].forEach((comp) => {
+          if (comp.import) {
+            components[comp.name] = comp.import;
+          } else if (comp.imports) {
+            components[comp.name] = comp.imports;
+          }
+        });
+      }
+    });
   }
 
   return components;

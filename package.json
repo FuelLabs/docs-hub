@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "node src/script.mjs && next dev",
+    "dev": "npm run gen:nav && npm run gen:components && next dev",
     "build": "next build",
     "export": "DOCS_DIST=${DOCS_DIST:=dist} next export -o $DOCS_DIST",
     "deps:update": "updates -gu",
@@ -15,9 +15,11 @@
     "prettier:format": "prettier --write .",
     "clean:docs:build": "sh ./scripts/clean-build-files.sh",
     "sync:docs": "sh ./scripts/sync-repos.sh",
-    "build:docs": "run-s sync:docs clean:docs:build build",
+    "build:docs": "run-s sync:docs clean:docs:build gen:nav gen:components build",
     "ts:check": "tsc --noEmit",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "gen:components": "node scripts/components.mjs",
+    "gen:nav": "node scripts/navigation.mjs"
   },
   "dependencies": {
     "@docsearch/css": "^3.5.1",
@@ -57,6 +59,7 @@
     "rehype-pretty-code": "^0.10.0",
     "remark": "^14.0.3",
     "remark-gfm": "^3.0.1",
+    "remark-mdx": "^2.3.0",
     "remark-parse": "^10.0.2",
     "remark-slug": "^7.0.1",
     "shiki": "^0.14.3",
