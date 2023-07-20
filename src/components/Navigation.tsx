@@ -14,7 +14,7 @@ export function Navigation() {
   useEffect(() => {
     let category = 'portal';
     if (router.pathname !== '/') {
-      category = router.asPath.split('/docs/')[1].split('/')[0];
+      category = router.asPath.split('/docs/')?.[1]?.split('/')[0];
     }
     if (isStringInTabs(category)) setActive(category as Tabs);
   }, [router]);
