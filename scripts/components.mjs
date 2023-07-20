@@ -1,6 +1,8 @@
+import * as acornLoose from 'acorn-loose';
 import fs from 'fs';
 import { globby } from 'globby';
 import path from 'path';
+import * as prettier from 'prettier';
 import remarkMdx from 'remark-mdx';
 import remarkParse from 'remark-parse';
 import { unified } from 'unified';
@@ -10,13 +12,13 @@ const DOCS_DIRECTORY = path.join(process.cwd(), './docs');
 
 const OUTPUT_FOLDER = 'src/component-exports';
 
-// const GRAPHQL_BOOK_NAME = 'fuel-graphql-docs';
-// const GRAPHQL_DIRECTORY = path.join(DOCS_DIRECTORY, `./${GRAPHQL_BOOK_NAME}`);
-// const GRAPHQL_DOCS_DIRECTORY = path.join(GRAPHQL_DIRECTORY, './docs');
-// const GRAPHQL_COMPONENTS_CONFIG_PATH = path.join(
-//   GRAPHQL_DIRECTORY,
-//   './src/components.json'
-// );
+const GRAPHQL_BOOK_NAME = 'fuel-graphql-docs';
+const GRAPHQL_DIRECTORY = path.join(DOCS_DIRECTORY, `./${GRAPHQL_BOOK_NAME}`);
+const GRAPHQL_DOCS_DIRECTORY = path.join(GRAPHQL_DIRECTORY, './docs');
+const GRAPHQL_COMPONENTS_CONFIG_PATH = path.join(
+  GRAPHQL_DIRECTORY,
+  './src/components.json'
+);
 
 const WALLET_BOOK_NAME = 'fuels-wallet';
 const WALLET_BOOK_PATH = `${WALLET_BOOK_NAME}/packages/docs`;
@@ -28,13 +30,13 @@ const WALLET_COMPONENTS_CONFIG_PATH = path.join(
 );
 
 async function main() {
-  //   exportComponents(
-  //     GRAPHQL_DIRECTORY,
-  //     GRAPHQL_DOCS_DIRECTORY,
-  //     GRAPHQL_PATH,
-  //     GRAPHQL_COMPONENTS_CONFIG_PATH,
-  //     'graphql.ts'
-  //   );
+  exportComponents(
+    GRAPHQL_DIRECTORY,
+    GRAPHQL_DOCS_DIRECTORY,
+    GRAPHQL_BOOK_NAME,
+    GRAPHQL_COMPONENTS_CONFIG_PATH,
+    'graphql.ts'
+  );
   await exportComponents(
     WALLET_DIRECTORY,
     WALLET_DOCS_DIRECTORY,
@@ -65,15 +67,10 @@ function getComponents(mdxContent) {
 
 function findComponentsInMDXFiles(files, componentsConfig) {
   const components = {};
-  let componentList = [];
 
   files.forEach((filePath) => {
     const mdxContent = fs.readFileSync(filePath, 'utf-8');
     const comps = getComponents(mdxContent);
-    componentList = [
-      ...componentList,
-      ...comps.map((compName) => compName.split('.').pop()),
-    ];
     if (comps.length > 0) {
       const fileName = filePath.split('/').pop()?.replace('.mdx', '');
       const final = [];
@@ -108,7 +105,7 @@ function findComponentsInMDXFiles(files, componentsConfig) {
       components[fileName] = final;
     }
   });
-  return { components, componentList: Array.from(new Set(componentList)) };
+  return components;
 }
 
 async function exportComponents(
@@ -122,32 +119,14 @@ async function exportComponents(
   const componentsConfig = JSON.parse(componentsConfigFile);
 
   const paths = await getMDXFilesFromFolder(docsDirectory);
-  const { components, componentList } = findComponentsInMDXFiles(
-    paths,
-    componentsConfig
-  );
-  console.log('components', componentList);
+  const components = findComponentsInMDXFiles(paths, componentsConfig);
 
   const completedObjects = [];
   const completedExports = [];
 
-  const componentsString = `/* eslint-disable @typescript-eslint/no-explicit-any */
-  import dynamic from "next/dynamic";
-  import type { ComponentType } from "react";
+  const componentsString = `import dynamic from "next/dynamic";
 
-  export interface ComponentObject {
-    [key: string]: ComponentType<any>;
-  }
-
-  export interface Component {
-    name: string;
-    import?: ComponentType<any>;
-    imports?: ComponentObject;
-  }
-
-  export interface ComponentsList {
-    [key: string]: Component[];
-  }
+  import type { ComponentObject, ComponentsList } from '../types';
 
   ${Object.keys(components)
     .map((page) => {
@@ -158,10 +137,12 @@ async function exportComponents(
             const subComps = comp.subComponents
               .map((subComp) => {
                 let actualCompPath = '';
+                let isDefault = false;
                 for (let i = 0; i < componentsConfig.folders.length; i++) {
                   const path = `${componentsConfig.folders[i]}/${subComp}`;
                   const actualPath = `${directory}${path}.tsx`;
                   if (fs.existsSync(actualPath)) {
+                    isDefault = hasDefaultExport(actualPath);
                     actualCompPath = `../../docs/${dirPath}${path}`;
                     break;
                   }
@@ -173,8 +154,10 @@ async function exportComponents(
                 if (!completedExports.includes(`${comp.name}.${subComp}`)) {
                   completedExports.push(`${comp.name}.${subComp}`);
                   return `${comp.name}.${subComp} = dynamic(
-  () => import("${actualCompPath}").then((mod) => mod.${subComp})
-);\n\n`;
+  () => import("${actualCompPath}")${
+                    isDefault ? '' : `.then((mod) => mod.${subComp})`
+                  })
+;\n\n`;
                 }
               })
               .join('');
@@ -186,10 +169,12 @@ async function exportComponents(
             return subComps;
           } else {
             let actualCompPath = '';
+            let isDefault = false;
             for (let i = 0; i < componentsConfig.folders.length; i++) {
               const path = `${componentsConfig.folders[i]}/${comp.name}`;
               const actualPath = `${directory}${path}.tsx`;
               if (fs.existsSync(actualPath)) {
+                isDefault = hasDefaultExport(actualPath);
                 actualCompPath = `../../docs/${dirPath}${path}`;
                 break;
               }
@@ -199,8 +184,10 @@ async function exportComponents(
             }
             if (!completedExports.includes(comp.name)) {
               return `const ${comp.name} = dynamic(
-  () => import("${actualCompPath}").then((mod) => mod.${comp.name})
-);\n\n`;
+  () => import("${actualCompPath}")${
+                isDefault ? '' : `.then((mod) => mod.${comp.name})`
+              })
+;\n\n`;
             }
           }
         })
@@ -225,5 +212,31 @@ async function exportComponents(
 };
     `;
   const outputPath = path.join(OUTPUT_FOLDER, fileName);
-  fs.writeFileSync(outputPath, componentsString);
+  const formatted = prettier
+    .format(componentsString, { parser: 'babel-ts' })
+    .trimEnd();
+  fs.writeFileSync(outputPath, formatted);
+}
+
+function hasDefaultExport(componentPath) {
+  const fileContent = fs.readFileSync(componentPath, 'utf8');
+
+  const ast = acornLoose.parse(fileContent, {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  });
+  const component = componentPath.split('/').pop();
+  let isDefault = false;
+  visit(ast, '', (node) => {
+    if (component.includes('Player')) {
+      if (node.body) {
+        node.body.forEach((bodyNode) => {
+          if (bodyNode.type === 'ExportDefaultDeclaration') {
+            isDefault = true;
+          }
+        });
+      }
+    }
+  });
+  return isDefault;
 }

@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
+import type { ComponentType } from 'react';
 
 export type MenuKey = string;
 
@@ -38,3 +40,17 @@ export type NodeHeading = {
   id: string;
   children?: NodeHeading[];
 };
+
+export interface ComponentObject {
+  [key: string]: ComponentType<any>;
+}
+
+export interface Component {
+  name: string;
+  import?: ComponentType<any>;
+  imports?: ComponentObject;
+}
+
+export interface ComponentsList {
+  [key: string]: Component[];
+}
