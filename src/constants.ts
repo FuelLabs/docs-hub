@@ -35,7 +35,7 @@ export const NAVIGATION: LinkObject[] = [
     slug: 'portal',
   },
   {
-    name: 'Build with Sway',
+    name: 'Sway',
     type: 'menu',
     categories: ['Tooling', 'Sway'],
     menu: [
@@ -108,7 +108,7 @@ export const NAVIGATION: LinkObject[] = [
     ],
   },
   {
-    name: 'Fuel Network',
+    name: 'Network',
     type: 'menu',
     menu: [
       {

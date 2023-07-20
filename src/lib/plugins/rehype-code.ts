@@ -154,7 +154,6 @@ function getGraphQLCodeTabs(node: any) {
   const codeProps = {
     className: ['language-typescript'],
     'data-language': 'typescript',
-    'data-theme': 'default',
   };
 
   const prettierProps = {
@@ -255,6 +254,19 @@ function addRawCode() {
   };
 }
 
+function addNumberOfLines() {
+  return function transformer(tree: Root) {
+    visit(tree, '', (node: any, _idx: any, parent: any) => {
+      if (!node.properties) node.properties = {};
+      if (!isCodeEl(node, parent)) {
+        const text = toText(node);
+        const lines = text.split('\n').length;
+        node.properties['__lines'] = lines;
+      }
+    });
+  };
+}
+
 const getRehypeCodeOptions = (): Partial<RehypeCodeOptions> => ({
   theme: 'dracula',
   getHighlighter,
@@ -267,4 +279,5 @@ export const getMdxCode = (): PluggableList => [
   [rehypeCode, getRehypeCodeOptions()],
   addLines,
   addRawCode,
+  addNumberOfLines,
 ];
