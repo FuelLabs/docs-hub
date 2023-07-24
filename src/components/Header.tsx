@@ -6,15 +6,14 @@ import { Navigation } from './Navigation';
 import { Search } from './Search';
 import { ThemeToggler } from './ThemeToggler';
 
-export function Header({ title }: { title?: string }) {
+export function Header({ active }: { active: string }) {
   return (
     <Box.Flex as="header" css={styles.root}>
       <Link href="/" className="logo">
         <FuelLogo size={30} />
-        <Box.Flex css={styles.logoText}>{title}</Box.Flex>
       </Link>
       <Box.Flex css={styles.navWrapper} grow={'1'} gap={'$4'}>
-        <Navigation />
+        <Navigation active={active} />
       </Box.Flex>
       <Box css={styles.desktop}>
         <Box.Stack direction="row" gap="$4" css={{ mr: '$4' }}>
@@ -48,7 +47,7 @@ export function Header({ title }: { title?: string }) {
           </a>
         </Box.Flex>
       </Box>
-      <MobileMenu />
+      <MobileMenu active={active} />
     </Box.Flex>
   );
 }

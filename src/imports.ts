@@ -6,15 +6,15 @@ import type { DocType } from './types';
 
 export function getComponents(doc: DocType) {
   const components: any = {};
-
-  // load the components used in the wallet docs
-  if (doc.docsConfig.slug === 'wallet') {
+  if (['wallet/', 'guides/'].includes(doc.docsConfig.slug)) {
     const CodeImport = dynamic(
       () => import('~/src/components/CodeImport').then((mod) => mod.CodeImport),
       { ssr: false }
     );
     components.CodeImport = CodeImport;
-
+  }
+  if (doc.docsConfig.slug === 'wallet') {
+    // load the components used in the wallet docs
     if (doc.slug.includes('how-to-use')) {
       const Demo = dynamic(
         () =>
@@ -31,14 +31,14 @@ export function getComponents(doc: DocType) {
       );
       components.Player = Player;
 
-      const DownloadFuelWallet = dynamic(
+      const InstallSection = dynamic(
         () =>
           import(
-            '~/docs/fuels-wallet/packages/docs/src/components/DownloadFuelWallet'
-          ).then((mod) => mod.DownloadFuelWallet),
+            '~/docs/fuels-wallet/packages/docs/src/components/InstallSection'
+          ).then((mod) => mod.InstallSection),
         { ssr: false }
       );
-      components.DownloadFuelWallet = DownloadFuelWallet;
+      components.InstallSection = InstallSection;
     } else {
       const Examples: any = { Events: {} };
       if (doc.slug.includes('getting-started')) {
