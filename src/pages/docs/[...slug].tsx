@@ -9,9 +9,10 @@ import {
 import { DocScreen } from '~/src/screens/DocPage';
 import type { DocType, SidebarLinkItem } from '~/src/types';
 
-type DocPageProps = {
+export type DocPageProps = {
   doc: DocType;
   links: SidebarLinkItem[];
+  docLink?: SidebarLinkItem;
   theme: string
 };
 

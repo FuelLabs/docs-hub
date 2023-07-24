@@ -1,15 +1,15 @@
 {
-  "portal": {
-    "title": "Fuel Docs Portal",
-    "slug": "portal",
+  "guides": {
+    "title": "Guides",
+    "slug": "guides",
     "repository": "https://github.com/FuelLabs/docs-hub",
     "ogTags": {
-      "description": "Official documentation for the Fuel Network",
+      "description": "Guides for the Fuel Network",
       "image": ""
     }
   },
   "sway": {
-    "title": "Sway Docs",
+    "title": "Sway",
     "slug": "sway",
     "repository": "https://github.com/FuelLabs/sway",
     "ogTags": {
@@ -45,30 +45,13 @@
     }
   },
   "graphql": {
-    "title": "Fuel GraphQL Docs",
+    "title": "Fuel GraphQL API",
     "slug": "graphql",
     "repository": "https://github.com/FuelLabs/fuels-wallet",
     "ogTags": {
       "description": "Official documentation for the Fuel GraphQL API",
       "image": ""
-    },
-    "menu": [
-      "Overview",
-      "Querying From A Dapp",
-      "Recipes",
-      "How To Use GraphQL",
-      "Reference"
-    ],
-    "How_To_Use_GraphQL": ["What is GraphQL?", "Schema & Type System"],
-    "Reference": [
-      "Scalars",
-      "Enums",
-      "Unions",
-      "Objects",
-      "Queries",
-      "Mutations",
-      "Subscriptions"
-    ]
+    }
   },
   "fuelup": {
     "title": "Fuelup",
@@ -80,7 +63,7 @@
     }
   },
   "indexer": {
-    "title": "Indexer",
+    "title": "Fuel Indexer",
     "slug": "indexer",
     "repository": "https://github.com/FuelLabs/fuel-indexer",
     "ogTags": {

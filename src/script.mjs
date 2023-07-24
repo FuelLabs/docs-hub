@@ -20,7 +20,7 @@ const graphqlOrderPath = join(
   DOCS_DIRECTORY,
   './fuel-graphql-docs/src/nav.json'
 );
-const portalOrderPath = join(DOCS_DIRECTORY, '../portal/nav.json');
+const guidesOrderPath = join(DOCS_DIRECTORY, '../guides/nav.json');
 const tsConfigPath = join(
   DOCS_DIRECTORY,
   './fuels-ts/apps/docs/.vitepress/config.ts'
@@ -32,7 +32,7 @@ const fuelupSummaryFile = fs.readFileSync(fuelupSummaryPath, 'utf8');
 const indexerSummaryFile = fs.readFileSync(indexerSummaryPath, 'utf8');
 const specsSummaryFile = fs.readFileSync(specsSummaryPath, 'utf8');
 const graphqlOrderFile = JSON.parse(fs.readFileSync(graphqlOrderPath, 'utf8'));
-const portalOrderFile = JSON.parse(fs.readFileSync(portalOrderPath, 'utf8'));
+const guidesOrderFile = JSON.parse(fs.readFileSync(guidesOrderPath, 'utf8'));
 const tsConfigFile = fs.readFileSync(tsConfigPath, 'utf8');
 
 const forcLines = [];
@@ -47,7 +47,14 @@ async function main() {
     Object.keys(orders).map(async (key) => {
       const slugs = await getDocs(key);
       const final = slugs.map(({ slug }) => getDocBySlug(slug, slugs));
-      const sortedLinks = getSortedLinks(orders[key], final);
+      let sortedLinks = getSortedLinks(orders[key], final);
+      if (key === 'guides') {
+        const newLinks = {};
+        sortedLinks.forEach((link) => {
+          newLinks[link.label.toLowerCase().replaceAll(' ', '_')] = link;
+        });
+        sortedLinks = newLinks;
+      }
       const json = JSON.stringify(sortedLinks);
       const folderPath = 'src/sidebar-links';
       if (!fs.existsSync(folderPath)) {
@@ -157,8 +164,8 @@ async function getOrders() {
   // GRAPHQL ORDER
   orders.graphql = graphqlOrderFile;
 
-  // PORTAL ORDER
-  orders.portal = portalOrderFile;
+  // GUIDES ORDER
+  orders.guides = guidesOrderFile;
 
   // WALLET ORDER
   // replace this with a nav.json file
@@ -397,10 +404,9 @@ async function getDocs(key) {
       break;
     default:
       paths = [
-        // PORTAL DOCS
-        '../portal/*.md',
-        '../portal/*.mdx',
-        '../portal/**/*.mdx',
+        // GUIDES
+        '../guides/*.mdx',
+        '../guides/**/*.mdx',
       ];
       break;
   }

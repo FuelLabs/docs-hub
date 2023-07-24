@@ -101,10 +101,9 @@ export async function getDocs(config: Config): Promise<DocPathType[]> {
       break;
     default:
       paths = [
-        // PORTAL DOCS
-        '../portal/*.md',
-        '../portal/*.mdx',
-        '../portal/**/*.mdx',
+        // GUIDES
+        '../guides/*.mdx',
+        '../guides/**/*.mdx',
       ];
       break;
   }
@@ -128,9 +127,12 @@ export async function getDocFromSlug(
   config: Config
 ): Promise<DocPathType> {
   const slugs = await getDocs(config);
-  let slugPath = slugs.find(
-    ({ slug: pathSlug }) => pathSlug === `./${slug}.md`
-  );
+  let slugPath = slugs.find(({ slug: pathSlug }) => {
+    const realSlug = slug.startsWith('guides/')
+      ? `../${slug}.mdx`
+      : `./${slug}.md`;
+    return pathSlug === realSlug;
+  });
   if (!slugPath) {
     slugPath = slugs.find(({ slug: pathSlug }) => pathSlug.includes(slug));
   }
@@ -140,7 +142,7 @@ export async function getDocFromSlug(
   return slugPath;
 }
 
-const docConfigPath = join(DOCS_DIRECTORY, '../portal/docs.json');
+const docConfigPath = join(DOCS_DIRECTORY, '../src/docs.json');
 const configFile = JSON.parse(readFileSync(docConfigPath, 'utf8'));
 
 export async function getDocConfig(slug: string): Promise<Config> {

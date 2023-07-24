@@ -2,37 +2,11 @@ import { cssObj, cx } from '@fuel-ui/css';
 import { Dropdown, ButtonLink } from '@fuel-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
 
 import { NAVIGATION } from '../constants';
-import type { Tabs } from '../constants';
 
-export function Navigation() {
-  const [active, setActive] = useState<Tabs>('portal');
+export function Navigation({ active }: { active: string }) {
   const router = useRouter();
-
-  useEffect(() => {
-    let category = 'portal';
-    if (router.pathname !== '/') {
-      category = router.asPath.split('/docs/')[1].split('/')[0];
-    }
-    if (isStringInTabs(category)) setActive(category as Tabs);
-  }, [router]);
-
-  function isStringInTabs(str: string): boolean {
-    return (
-      str === 'portal' ||
-      str === 'sway' ||
-      str === 'fuels-rs' ||
-      str === 'fuels-ts' ||
-      str === 'wallet' ||
-      str === 'graphql' ||
-      str === 'fuelup' ||
-      str === 'indexer' ||
-      str === 'specs' ||
-      str === 'forc'
-    );
-  }
 
   return (
     <>
@@ -101,7 +75,7 @@ export function Navigation() {
             href={item.link}
             css={styles.navButton}
             variant="link"
-            data-active={active === 'portal'}
+            data-active={active === item.name.toLowerCase()}
           >
             {item.name}
           </ButtonLink>

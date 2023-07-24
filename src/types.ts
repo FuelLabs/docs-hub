@@ -21,6 +21,7 @@ export type DocType = {
   source: MDXRemoteSerializeResult;
   menu: string[];
   docsConfig: Config;
+  parent?: { label: string; link: string };
 };
 
 export type SidebarLinkItem = {
