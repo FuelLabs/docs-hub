@@ -20,11 +20,15 @@ export function SidebarSubmenu({
   let slug = `${subpath}/${newLabel}`;
 
   useEffect(() => {
-    const pathArray = submenu![0].slug?.split('/');
-    const index = pathArray?.indexOf(subpath!);
-    const category = pathArray && index ? `/${pathArray[index + 1]}` : '';
-    const active = pathname?.startsWith(`/docs/${subpath}${category}/`);
-    setIsOpened(active);
+    if (pathname.includes('/guides/')) {
+      setIsOpened(true);
+    } else {
+      const pathArray = submenu![0].slug?.split('/');
+      const index = pathArray?.indexOf(subpath!);
+      const category = pathArray && index ? `/${pathArray[index + 1]}` : '';
+      const active = pathname?.startsWith(`/docs/${subpath}${category}/`);
+      setIsOpened(active);
+    }
   }, [pathname]);
 
   if (!hasIndex && submenu && submenu[0].slug) {

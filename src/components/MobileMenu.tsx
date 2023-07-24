@@ -8,6 +8,7 @@ import {
   Button,
   Text,
   ButtonLink,
+  Link,
 } from '@fuel-ui/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { AnimationProps } from 'framer-motion';
@@ -27,7 +28,7 @@ const SPRING: AnimationProps['transition'] = {
   duration: '0.1',
 };
 
-export function MobileMenu() {
+export function MobileMenu({ active }: { active: string }) {
   const [showing, setShowing] = useState(false);
 
   function toggle() {
@@ -63,9 +64,9 @@ export function MobileMenu() {
       transition={SPRING}
     >
       <Box.Flex css={styles.menu}>
-        <Box.Flex css={styles.logoWrapper}>
-          <FuelLogo size={40} />
-        </Box.Flex>
+        <Link href="/" css={styles.logoWrapper}>
+          <FuelLogo size={30} />
+        </Link>
         <a href="https://github.com/fuellabs/" target="_blank" rel="noreferrer">
           <Icon icon={Icon.is('BrandGithub')} size={24} />
         </a>
@@ -75,16 +76,25 @@ export function MobileMenu() {
         <Box.Flex css={styles.nav} direction={'column'}>
           {NAVIGATION.map((item, index) => {
             if (item.type === 'menu') {
-              return <MenuButton key={`${item.slug}${index}`} item={item} />;
+              return (
+                <MenuButton
+                  key={`${item.slug}${index}`}
+                  item={item}
+                  active={active}
+                />
+              );
             }
             return (
-              <Button
+              <ButtonLink
                 key={`${item.slug}${index}`}
                 css={styles.navButton}
                 variant="link"
+                href={item.link}
+                isExternal={item.type === 'external-link'}
+                data-active={active === item.slug}
               >
                 {item.name}
-              </Button>
+              </ButtonLink>
             );
           })}
         </Box.Flex>
@@ -106,14 +116,21 @@ export function MobileMenu() {
   );
 }
 
-function MenuButton({ item }: { item: LinkObject }) {
+interface MenuButtonProps {
+  item: LinkObject;
+  active: string;
+}
+
+function MenuButton({ item, active }: MenuButtonProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const isActive = item.menu?.some((i) => i.slug === active);
   return (
     <>
       <Button
         onPress={() => setIsOpen(!isOpen)}
         css={styles.navButton}
         variant="link"
+        data-active={isActive}
         rightIcon={isOpen ? Icon.is('ChevronUp') : Icon.is('ChevronDown')}
       >
         {item.name}
@@ -132,6 +149,7 @@ function MenuButton({ item }: { item: LinkObject }) {
                   key={`${index}${menuItem.slug}`}
                   href={menuItem.link}
                   isExternal={menuItem.type === 'external-link'}
+                  data-active={active === menuItem.slug}
                 >
                   {menuItem.name}
                 </ButtonLink>
@@ -232,6 +250,9 @@ const styles = {
       background: '$textLink',
       color: '$white',
       textDecoration: 'none',
+    },
+    '&[data-active="true"]': {
+      color: '$textLink',
     },
   }),
   categoryMenu: cssObj({

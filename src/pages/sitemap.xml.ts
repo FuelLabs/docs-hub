@@ -4,7 +4,6 @@ import { getSidebarLinks } from '../lib/api';
 import type { SidebarLinkItem } from '../types';
 
 const DOC_SLUGS = [
-  'portal',
   'sway',
   'fuels-rs',
   'fuels-ts',
@@ -16,7 +15,7 @@ const DOC_SLUGS = [
   'forc',
 ];
 
-const TO_EXCLUDE = ['portal', 'wallet', 'graphql'];
+const TO_EXCLUDE = ['wallet', 'graphql'];
 const BASE_URL = 'https://docs-hub.vercel.app/docs/';
 
 function createUrl(slug: string) {
