@@ -63,6 +63,10 @@ code {
   letter-spacing: -0.01em;
 }
 
+img {
+  max-width: 100%;
+}
+
 .fuel_Toast {
   border: 1px solid var(--colors-border);
 }
