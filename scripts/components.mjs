@@ -120,12 +120,6 @@ function findComponentsInMDXFiles(files, componentsConfig) {
         });
       });
 
-      if (final[0] && final[0].subCategories) {
-        console.log('name', final[0].name);
-        console.log('subComponents', final[0].subComponents);
-        console.log('subCategories', final[0].subCategories);
-      }
-
       components[fileName] = final;
     }
   });
@@ -139,17 +133,14 @@ function hasDefaultExport(componentPath) {
     ecmaVersion: 'latest',
     sourceType: 'module',
   });
-  const component = componentPath.split('/').pop();
   let isDefault = false;
   visit(ast, '', (node) => {
-    if (component.includes('Player')) {
-      if (node.body) {
-        node.body.forEach((bodyNode) => {
-          if (bodyNode.type === 'ExportDefaultDeclaration') {
-            isDefault = true;
-          }
-        });
-      }
+    if (node.body) {
+      node.body.forEach((bodyNode) => {
+        if (bodyNode.type === 'ExportDefaultDeclaration') {
+          isDefault = true;
+        }
+      });
     }
   });
   return isDefault;
@@ -265,20 +256,13 @@ async function exportComponents(
               return subComps + subCategories;
             } else {
               // handle component with no subComponents
-              let actualCompPath = '';
-              let isDefault = false;
-              for (let i = 0; i < componentsConfig.folders.length; i++) {
-                const path = `${componentsConfig.folders[i]}/${comp.name}`;
-                const actualPath = `${directory}${path}.tsx`;
-                if (fs.existsSync(actualPath)) {
-                  isDefault = hasDefaultExport(actualPath);
-                  actualCompPath = `../../docs/${dirPath}${path}`;
-                  break;
-                }
-              }
-              if (actualCompPath === '') {
-                throw Error(`Can't find ${comp.name}`);
-              }
+              const { actualCompPath, isDefault } = getPath(
+                comp.name,
+                componentsConfig,
+                directory,
+                dirPath
+              );
+
               if (!completedExports.includes(comp.name)) {
                 return `const ${comp.name} = dynamic(
     () => import("${actualCompPath}")${
