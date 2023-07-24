@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import dynamic from 'next/dynamic';
 
 import { COMPONENTS as GQL_COMPONENTS } from './component-exports/graphql';
@@ -23,11 +22,9 @@ export function getComponents(doc: DocType) {
     });
   }
 
-  // load the components used in the wallet docs
   if (doc.docsConfig.slug === 'wallet') {
-    const CodeImport = dynamic(
-      () => import('~/src/components/CodeImport').then((mod) => mod.CodeImport),
-      { ssr: false }
+    const CodeImport = dynamic(() =>
+      import('~/src/components/CodeImport').then((mod) => mod.CodeImport)
     );
     components.CodeImport = CodeImport;
 

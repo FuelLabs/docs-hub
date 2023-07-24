@@ -30,6 +30,9 @@ const WALLET_COMPONENTS_CONFIG_PATH = path.join(
 );
 
 async function main() {
+  if (!fs.existsSync(path.join(process.cwd(), OUTPUT_FOLDER))) {
+    fs.mkdirSync(path.join(process.cwd(), OUTPUT_FOLDER));
+  }
   exportComponents(
     GRAPHQL_DIRECTORY,
     GRAPHQL_DOCS_DIRECTORY,
@@ -75,16 +78,30 @@ function findComponentsInMDXFiles(files, componentsConfig) {
       const fileName = filePath.split('/').pop()?.replace('.mdx', '');
       const final = [];
       const categories = {};
+      const subcategories = {};
 
       comps.forEach((comp) => {
         if (comp.includes('.')) {
           const split = comp.split('.');
-          const categoryComp = split.pop();
-          const category = split.pop();
-          if (!categories[category]) {
-            categories[category] = [];
+          if (split.length == 2) {
+            const categoryComp = split.pop();
+            const category = split.pop();
+            if (!categories[category]) {
+              categories[category] = [];
+            }
+            categories[category].push(categoryComp);
+          } else if (split.length == 3) {
+            const categoryComp = split.pop();
+            const subCategory = split.pop();
+            const category = split.pop();
+            if (!subcategories[category]) {
+              subcategories[category] = {};
+            }
+            if (!subcategories[category][subCategory]) {
+              subcategories[category][subCategory] = [];
+            }
+            subcategories[category][subCategory].push(categoryComp);
           }
-          categories[category].push(categoryComp);
         } else {
           // ignore components that are replaced in the docs hub
           if (!componentsConfig.ignore.includes(comp)) {
@@ -99,123 +116,20 @@ function findComponentsInMDXFiles(files, componentsConfig) {
         final.push({
           name: cat,
           subComponents: categories[cat],
+          subCategories: subcategories[cat],
         });
       });
+
+      if (final[0] && final[0].subCategories) {
+        console.log('name', final[0].name);
+        console.log('subComponents', final[0].subComponents);
+        console.log('subCategories', final[0].subCategories);
+      }
 
       components[fileName] = final;
     }
   });
   return components;
-}
-
-async function exportComponents(
-  directory,
-  docsDirectory,
-  dirPath,
-  configPath,
-  fileName
-) {
-  const componentsConfigFile = fs.readFileSync(configPath, 'utf8');
-  const componentsConfig = JSON.parse(componentsConfigFile);
-
-  const paths = await getMDXFilesFromFolder(docsDirectory);
-  const components = findComponentsInMDXFiles(paths, componentsConfig);
-
-  const completedObjects = [];
-  const completedExports = [];
-
-  const componentsString = `import dynamic from "next/dynamic";
-
-  import type { ComponentObject, ComponentsList } from '../types';
-
-  ${Object.keys(components)
-    .map((page) => {
-      const pageArray = components[page];
-      return pageArray
-        .map((comp) => {
-          if (comp.subComponents && comp.subComponents.length > 0) {
-            const subComps = comp.subComponents
-              .map((subComp) => {
-                let actualCompPath = '';
-                let isDefault = false;
-                for (let i = 0; i < componentsConfig.folders.length; i++) {
-                  const path = `${componentsConfig.folders[i]}/${subComp}`;
-                  const actualPath = `${directory}${path}.tsx`;
-                  if (fs.existsSync(actualPath)) {
-                    isDefault = hasDefaultExport(actualPath);
-                    actualCompPath = `../../docs/${dirPath}${path}`;
-                    break;
-                  }
-                }
-                if (actualCompPath === '') {
-                  throw Error(`Can't find ${subComp}`);
-                }
-
-                if (!completedExports.includes(`${comp.name}.${subComp}`)) {
-                  completedExports.push(`${comp.name}.${subComp}`);
-                  return `${comp.name}.${subComp} = dynamic(
-  () => import("${actualCompPath}")${
-                    isDefault ? '' : `.then((mod) => mod.${subComp})`
-                  })
-;\n\n`;
-                }
-              })
-              .join('');
-            if (!completedObjects.includes(comp.name)) {
-              const cat = `const ${comp.name}: ComponentObject= {};\n\n`;
-              completedObjects.push(comp.name);
-              return cat + subComps;
-            }
-            return subComps;
-          } else {
-            let actualCompPath = '';
-            let isDefault = false;
-            for (let i = 0; i < componentsConfig.folders.length; i++) {
-              const path = `${componentsConfig.folders[i]}/${comp.name}`;
-              const actualPath = `${directory}${path}.tsx`;
-              if (fs.existsSync(actualPath)) {
-                isDefault = hasDefaultExport(actualPath);
-                actualCompPath = `../../docs/${dirPath}${path}`;
-                break;
-              }
-            }
-            if (actualCompPath === '') {
-              throw Error(`Can't find ${comp.name}`);
-            }
-            if (!completedExports.includes(comp.name)) {
-              return `const ${comp.name} = dynamic(
-  () => import("${actualCompPath}")${
-                isDefault ? '' : `.then((mod) => mod.${comp.name})`
-              })
-;\n\n`;
-            }
-          }
-        })
-        .join('\n');
-    })
-    .join('\n')}
-  export const COMPONENTS: ComponentsList = {
-    ${Object.keys(components)
-      .map((page) => {
-        return `'${page}': [
-    ${components[page]
-      .map((comp) => {
-        return `  {
-  name: "${comp.name}",
-  ${comp.subComponents ? 'imports:' : 'import:'} ${comp.name}
-},`;
-      })
-      .join('\n')}
-],`;
-      })
-      .join('\n')}
-};
-    `;
-  const outputPath = path.join(OUTPUT_FOLDER, fileName);
-  const formatted = prettier
-    .format(componentsString, { parser: 'babel-ts' })
-    .trimEnd();
-  fs.writeFileSync(outputPath, formatted);
 }
 
 function hasDefaultExport(componentPath) {
@@ -239,4 +153,164 @@ function hasDefaultExport(componentPath) {
     }
   });
   return isDefault;
+}
+
+function getPath(compName, componentsConfig, directory, dirPath) {
+  let actualCompPath = '';
+  let isDefault = false;
+  for (let i = 0; i < componentsConfig.folders.length; i++) {
+    const path = `${componentsConfig.folders[i]}/${compName}`;
+    const actualPath = `${directory}${path}.tsx`;
+    if (fs.existsSync(actualPath)) {
+      isDefault = hasDefaultExport(actualPath);
+      actualCompPath = `../../docs/${dirPath}${path}`;
+      break;
+    }
+  }
+  if (actualCompPath === '') {
+    throw Error(`Can't find ${compName}`);
+  }
+
+  return { actualCompPath, isDefault };
+}
+
+async function exportComponents(
+  directory,
+  docsDirectory,
+  dirPath,
+  configPath,
+  fileName
+) {
+  const componentsConfigFile = fs.readFileSync(configPath, 'utf8');
+  const componentsConfig = JSON.parse(componentsConfigFile);
+
+  const paths = await getMDXFilesFromFolder(docsDirectory);
+  const components = findComponentsInMDXFiles(paths, componentsConfig);
+
+  const completedObjects = [];
+  const completedExports = [];
+
+  const componentsString = `import dynamic from "next/dynamic";
+
+    import type { ComponentObject, ComponentsList } from '../types';
+
+    ${Object.keys(components)
+      .map((page) => {
+        const pageArray = components[page];
+        return pageArray
+          .map((comp) => {
+            if (
+              (comp.subComponents && comp.subComponents.length > 0) ||
+              comp.subCategories
+            ) {
+              const subComps = comp.subComponents
+                .map((subComp) => {
+                  const { actualCompPath, isDefault } = getPath(
+                    subComp,
+                    componentsConfig,
+                    directory,
+                    dirPath
+                  );
+
+                  if (!completedExports.includes(`${comp.name}.${subComp}`)) {
+                    completedExports.push(`${comp.name}.${subComp}`);
+                    return `${comp.name}.${subComp} = dynamic(
+    () => import("${actualCompPath}")${
+                      isDefault ? '' : `.then((mod) => mod.${subComp})`
+                    })
+  ;\n\n`;
+                  }
+                })
+                .join('');
+
+              let subCategories = '';
+              if (comp.subCategories) {
+                Object.keys(comp.subCategories).forEach((key) => {
+                  const importName = `${comp.name}.${key}`;
+                  if (!completedObjects.includes(importName)) {
+                    completedObjects.push(importName);
+                    subCategories = subCategories + `${importName} = {};\n\n`;
+                  }
+
+                  const subCatComps = comp.subCategories[key];
+                  subCategories =
+                    subCategories +
+                    subCatComps
+                      .map((subCatComp) => {
+                        const { actualCompPath, isDefault } = getPath(
+                          subCatComp,
+                          componentsConfig,
+                          directory,
+                          dirPath
+                        );
+
+                        const id = `${comp.name}.${key}.${subCatComp}`;
+                        if (!completedExports.includes(id)) {
+                          completedExports.push(id);
+                          return `${id} = dynamic(
+        () => import("${actualCompPath}")${
+                            isDefault ? '' : `.then((mod) => mod.${subCatComp})`
+                          })
+      ;\n\n`;
+                        }
+                      })
+                      .join('\n');
+                });
+              }
+              if (!completedObjects.includes(comp.name)) {
+                const cat = `const ${comp.name}: ComponentObject= {};\n\n`;
+                completedObjects.push(comp.name);
+                return cat + subComps + subCategories;
+              }
+              return subComps + subCategories;
+            } else {
+              // handle component with no subComponents
+              let actualCompPath = '';
+              let isDefault = false;
+              for (let i = 0; i < componentsConfig.folders.length; i++) {
+                const path = `${componentsConfig.folders[i]}/${comp.name}`;
+                const actualPath = `${directory}${path}.tsx`;
+                if (fs.existsSync(actualPath)) {
+                  isDefault = hasDefaultExport(actualPath);
+                  actualCompPath = `../../docs/${dirPath}${path}`;
+                  break;
+                }
+              }
+              if (actualCompPath === '') {
+                throw Error(`Can't find ${comp.name}`);
+              }
+              if (!completedExports.includes(comp.name)) {
+                return `const ${comp.name} = dynamic(
+    () => import("${actualCompPath}")${
+                  isDefault ? '' : `.then((mod) => mod.${comp.name})`
+                })
+  ;\n\n`;
+              }
+            }
+          })
+          .join('\n');
+      })
+      .join('\n')}
+    export const COMPONENTS: ComponentsList = {
+      ${Object.keys(components)
+        .map((page) => {
+          return `'${page}': [
+      ${components[page]
+        .map((comp) => {
+          return `  {
+    name: "${comp.name}",
+    ${comp.subComponents ? 'imports:' : 'import:'} ${comp.name}
+  },`;
+        })
+        .join('\n')}
+  ],`;
+        })
+        .join('\n')}
+  };
+      `;
+  const outputPath = path.join(OUTPUT_FOLDER, fileName);
+  const formatted = prettier
+    .format(componentsString, { parser: 'babel-ts' })
+    .trimEnd();
+  fs.writeFileSync(outputPath, formatted);
 }

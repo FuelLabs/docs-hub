@@ -42,7 +42,7 @@ export type NodeHeading = {
 };
 
 export interface ComponentObject {
-  [key: string]: ComponentType<any>;
+  [key: string]: ComponentType<any> | ComponentObject;
 }
 
 export interface Component {
