@@ -31,14 +31,14 @@ export function getComponents(doc: DocType) {
       );
       components.Player = Player;
 
-      const DownloadFuelWallet = dynamic(
+      const InstallSection = dynamic(
         () =>
           import(
-            '~/docs/fuels-wallet/packages/docs/src/components/DownloadFuelWallet'
-          ).then((mod) => mod.DownloadFuelWallet),
+            '~/docs/fuels-wallet/packages/docs/src/components/InstallSection'
+          ).then((mod) => mod.InstallSection),
         { ssr: false }
       );
-      components.DownloadFuelWallet = DownloadFuelWallet;
+      components.InstallSection = InstallSection;
     } else {
       const Examples: any = { Events: {} };
       if (doc.slug.includes('getting-started')) {
