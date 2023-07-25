@@ -39,7 +39,7 @@ const styles = {
     px: '$2',
     width: '36px',
     height: '36px',
-    borderRadius: '$default',
+    borderRadius: '$full',
 
     '[aria-label*="Icon"]': {
       position: 'absolute',
