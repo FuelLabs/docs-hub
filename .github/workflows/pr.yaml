@@ -42,3 +42,33 @@ jobs:
       - name: Run lint
         run: |
           pnpm check
+
+  build-quickstart-contract-example:
+    name: build-quickstart-contract
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+      - uses: Swatinem/rust-cache@v1
+      - name: Install Fuelup
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh
+      - name: Modify Path
+        run: echo "$HOME/.fuelup/bin:${GITHUB_PATH}" >> $GITHUB_PATH
+      - name: Set Default Beta-3 Toolchain
+        run: fuelup toolchain install beta-3 && fuelup default beta-3
+      - name: Build Contract
+        run: forc build --path ./guide-examples/quickstart/counter-contract
+      - name: Run contract tests
+        uses: actions-rs/cargo@v1
+        with:
+          command: test 
+          args: --manifest-path ./guide-examples/quickstart/counter-contract/Cargo.toml
+      - name: Check Cargo fmt & clippy
+        run: |
+          cd guide-examples/quickstart/counter-contract
+          cargo fmt --all --check
+          cargo clippy --all-targets --all-features

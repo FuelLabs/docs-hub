@@ -3,6 +3,7 @@ import * as fs from 'fs/promises';
 import { toText } from 'hast-util-to-text';
 import { h } from 'hastscript';
 import { join as pathJoin } from 'path';
+import prettier from 'prettier';
 import type { Options as RehypeCodeOptions } from 'rehype-pretty-code';
 import rehypeCode from 'rehype-pretty-code';
 import type { Root } from 'remark-gfm';
@@ -50,6 +51,9 @@ const getHighlighter: RehypeCodeOptions['getHighlighter'] = async (options) => {
       'sh',
       'json',
       'toml',
+      'graphql',
+      'console',
+      'ts',
     ],
     paths: {
       languages: `${getShikiPath()}/languages/`,
@@ -60,24 +64,9 @@ const getHighlighter: RehypeCodeOptions['getHighlighter'] = async (options) => {
   return highlighter;
 };
 
-function codeImport() {
-  return function transformer(tree: Root) {
-    visit(tree, 'mdxJsxFlowElement', (node: any) => {
-      if (node.name !== 'CodeImport') return;
-      node.type = 'element';
-      node.tagName = 'pre';
-
-      const lang = node.attributes?.find((a: any) => a.name === '__language');
-      const content = node.attributes?.find((a: any) => a.name === '__content');
-      const code = h('code', { class: lang?.value }, content?.value);
-      node.children = [code];
-    });
-  };
-}
-
 function hasCodeGroup(node: any) {
   return node.children?.some((n: any) =>
-    [':::', '::: code-group'].includes(n.value),
+    [':::', '::: code-group'].includes(n.value)
   );
 }
 
@@ -154,6 +143,86 @@ function codeLanguage() {
   };
 }
 
+function isGraphQLCodeSamples(node: any) {
+  return (
+    node.name === 'CodeExamples' &&
+    node.attributes?.find((a: any) => a.name === '__ts_content')
+  );
+}
+
+function getGraphQLCodeTabs(node: any) {
+  const codeProps = {
+    className: ['language-typescript'],
+    'data-language': 'typescript',
+  };
+
+  const prettierProps = {
+    parser: 'typescript',
+    semi: true,
+    singleQuote: true,
+  };
+
+  const findProp = (name: string) => (a: any) => a.name === name;
+  const tsContent = node.attributes?.find(findProp('__ts_content'));
+  const apolloContent = node.attributes?.find(findProp('__apollo_content'));
+  const urqlContent = node.attributes?.find(findProp('__urql_content'));
+
+  const tsCodeContent = tsContent?.value ?? '';
+  const tsCodeRaw = prettier.format(tsCodeContent, prettierProps);
+  const tsCode = h('code', codeProps, tsCodeRaw);
+
+  const apolloImport = `import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+  const apolloClient= new ApolloClient({
+  uri: 'https://beta-3.fuel.network/graphql',
+  cache: new InMemoryCache(),
+  });\n\n`;
+  const apolloContentValue = apolloImport + apolloContent?.value ?? '';
+  const apolloRaw = prettier.format(apolloContentValue, prettierProps);
+  const apolloCode = h('code', codeProps, apolloRaw);
+
+  const urlqImport = `import { createClient } from 'urql';
+  const urqlClient= createClient({
+    url: 'https://beta-3.fuel.network/graphql',
+  });\n\n`;
+  const urlQContentValue = urlqImport + urqlContent?.value ?? '';
+  const urlQRaw = prettier.format(urlQContentValue, prettierProps);
+  const urqlCode = h('code', codeProps, urlQRaw);
+  return { tsCode, apolloCode, urqlCode };
+}
+
+function codeImport() {
+  return function transformer(tree: Root) {
+    visit(tree, 'mdxJsxFlowElement', (node: any) => {
+      if (node.name !== 'CodeImport' && node.name !== 'CodeExamples') return;
+      const content = node.attributes?.find((a: any) => a.name === '__content');
+
+      if (isGraphQLCodeSamples(node)) {
+        const { tsCode, apolloCode, urqlCode } = getGraphQLCodeTabs(node);
+        const tsPre = h('element');
+        tsPre.tagName = 'pre';
+        tsPre.children = [tsCode];
+
+        const apolloPre = h('element');
+        apolloPre.tagName = 'pre';
+        apolloPre.children = [apolloCode];
+
+        const urlqPre = h('element');
+        urlqPre.tagName = 'pre';
+        urlqPre.children = [urqlCode];
+
+        node.children = [tsPre, apolloPre, urlqPre];
+        return;
+      }
+
+      node.type = 'element';
+      node.tagName = 'pre';
+      const lang = node.attributes?.find((a: any) => a.name === '__language');
+      const code = h('code', { class: lang?.value }, content?.value);
+      node.children = [code];
+    });
+  };
+}
+
 /**
  * This plugin is used to add line numbers to code blocks.
  */
@@ -168,7 +237,7 @@ function addLines() {
           }
           return acc.concat(node);
         },
-        [],
+        []
       );
     });
   };
@@ -185,6 +254,19 @@ function addRawCode() {
   };
 }
 
+function addNumberOfLines() {
+  return function transformer(tree: Root) {
+    visit(tree, '', (node: any, _idx: any, parent: any) => {
+      if (!node.properties) node.properties = {};
+      if (!isCodeEl(node, parent)) {
+        const text = toText(node);
+        const lines = text.split('\n').length;
+        node.properties['__lines'] = lines;
+      }
+    });
+  };
+}
+
 const getRehypeCodeOptions = (): Partial<RehypeCodeOptions> => ({
   theme: 'dracula',
   getHighlighter,
@@ -197,4 +279,5 @@ export const getMdxCode = (): PluggableList => [
   [rehypeCode, getRehypeCodeOptions()],
   addLines,
   addRawCode,
+  addNumberOfLines,
 ];

@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import path from 'path';
@@ -72,7 +71,6 @@ export function handlePlugins(options: Options = { filepath: '' }) {
   const dirname = path.relative(rootDir, path.dirname(filepath));
 
   return function transformer(tree: Root) {
-    if (filepath.includes('/docs/portal/')) return;
     const nodes: [any, number | null, Parent<any, any>][] = [];
 
     if (filepath.includes('/docs/fuel-graphql-docs/')) {

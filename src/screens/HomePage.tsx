@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { cssObj } from '@fuel-ui/css';
 import { Link as FuelLink, Box, Icon, List, Text } from '@fuel-ui/react';
 import Link from 'next/link';
@@ -58,9 +59,6 @@ export function HomePage() {
             <List.Item>
               <Link href="/docs/wallet">Wallet SDK</Link>
             </List.Item>
-            <List.Item>
-              <Link href="/docs/indexer">Indexer</Link>
-            </List.Item>
           </List>
         </Box.Stack>
       </Box>
@@ -69,7 +67,7 @@ export function HomePage() {
       <Box css={styles.card}>
         <Icon icon="Bolt" size={40} stroke={0.7} />
         <Box.Stack>
-          <Heading as="h3">Our network</Heading>
+          <Heading as="h3">Fuel Network</Heading>
           <Text>
             Start to learn right now all specs and definitions about Fuel
             Network. You'll see why we are the fastest execution and how it
@@ -106,6 +104,9 @@ export function HomePage() {
             </List.Item>
             <List.Item>
               <Link href="/docs/forc">Forc</Link>
+            </List.Item>
+            <List.Item>
+              <Link href="/docs/indexer">Indexer</Link>
             </List.Item>
           </List>
         </Box.Stack>

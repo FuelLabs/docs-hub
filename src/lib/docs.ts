@@ -19,7 +19,7 @@ export async function getDocs(config: Config): Promise<DocPathType[]> {
   const cache = pathsCache.get(config?.slug);
   if (cache) return cache;
   let paths: string[] = [];
-  paths = paths.concat([
+  paths = [
     // SWAY DOCS
     './sway/docs/book/src/**/*.md',
     // IGNORE ALL SUMMARY PAGES
@@ -27,59 +27,64 @@ export async function getDocs(config: Config): Promise<DocPathType[]> {
     // IGNORE FORC PAGES
     '!./sway/docs/book/src/forc/*.md',
     '!./sway/docs/book/src/forc/**/*.md',
-  ]);
-  paths = paths.concat([
+  ];
+  paths = [
     // FORC DOCS
     './sway/docs/book/src/forc/*.md',
     './sway/docs/book/src/forc/**/*.md',
     // REMOVE UNUSED FILES
     '!./sway/docs/book/src/forc/commands/forc_deploy.md',
     '!./sway/docs/book/src/forc/commands/forc_run.md',
-  ]);
-  paths = paths.concat([
+  ];
+  paths = [
     // RUST SDK DOCS
     './fuels-rs/docs/src/**/*.md',
     './fuels-rs/docs/src/*.md',
     // IGNORE ALL SUMMARY PAGES
     '!**/SUMMARY.md',
-  ]);
-  paths = paths.concat([
+  ];
+  paths = [
     // TS SDK DOCS
     './fuels-ts/apps/docs/src/*.md',
     './fuels-ts/apps/docs/src/**/*.md',
     './fuels-ts/apps/docs/src/**/*.md',
-  ]);
-  paths = paths.concat([
+  ];
+  paths = [
     // WALLET DOCS
     './fuels-wallet/packages/docs/docs/**/*.mdx',
     './fuels-wallet/packages/docs/docs/*.mdx',
-  ]);
-  paths = paths.concat([
+  ];
+  paths = [
     // GRAPHQL DOCS
     './fuel-graphql-docs/docs/*.mdx',
     './fuel-graphql-docs/docs/**/*.mdx',
-  ]);
-  paths = paths.concat([
+  ];
+  paths = [
     // FUELUP DOCS
     './fuelup/docs/src/*.md',
     './fuelup/docs/src/**/*.md',
     // IGNORE ALL SUMMARY PAGES
     '!**/SUMMARY.md',
-  ]);
-  paths = paths.concat([
+  ];
+  paths = [
     // INDEXER DOCS
     './fuel-indexer/docs/src/*.md',
     './fuel-indexer/docs/src/**/*.md',
     // IGNORE ALL SUMMARY PAGES
     '!**/SUMMARY.md',
-  ]);
-  paths = paths.concat([
+  ];
+  paths = [
     // SPECS DOCS
     './fuel-specs/src/*.md',
     './fuel-specs/src/**/*.md',
     // IGNORE ALL SUMMARY PAGES
     '!**/SUMMARY.md',
-  ]);
+  ];
+  paths = [
+    // GUIDES
+    '../guides/*.mdx',
+    '../guides/**/*.mdx',
+  ];
 
   paths = await globby(paths, {
     cwd: DOCS_DIRECTORY,
@@ -102,12 +107,15 @@ export async function getDocs(config: Config): Promise<DocPathType[]> {
 
 export async function getDocFromSlug(
   slug: string,
-  config: Config,
+  config: Config
 ): Promise<DocPathType> {
   const slugs = await getDocs(config);
-  let slugPath = slugs.find(
-    ({ slug: pathSlug }) => pathSlug === `./${slug}.md`,
-  );
+  let slugPath = slugs.find(({ slug: pathSlug }) => {
+    const realSlug = slug.startsWith('guides/')
+      ? `../${slug}.mdx`
+      : `./${slug}.md`;
+    return pathSlug === realSlug;
+  });
   if (!slugPath) {
     slugPath = slugs.find(({ slug: pathSlug }) => pathSlug.includes(slug));
   }
@@ -117,7 +125,7 @@ export async function getDocFromSlug(
   return slugPath;
 }
 
-const docConfigPath = join(DOCS_DIRECTORY, '../portal/docs.json');
+const docConfigPath = join(DOCS_DIRECTORY, '../src/docs.json');
 const configFile = JSON.parse(readFileSync(docConfigPath, 'utf8'));
 
 export async function getDocConfig(slug: string): Promise<Config> {

@@ -4,7 +4,6 @@ import { getSidebarLinks } from '../lib/api';
 import type { SidebarLinkItem } from '../types';
 
 const DOC_SLUGS = [
-  'portal',
   'sway',
   'fuels-rs',
   'fuels-ts',
@@ -16,7 +15,7 @@ const DOC_SLUGS = [
   'forc',
 ];
 
-const TO_EXCLUDE = ['portal', 'wallet', 'graphql'];
+const TO_EXCLUDE = ['wallet', 'graphql'];
 const BASE_URL = 'https://docs-hub.vercel.app/docs/';
 
 function createUrl(slug: string) {
@@ -31,7 +30,7 @@ function processMenuItems(menu: SidebarLinkItem[]) {
   return menu.reduce((paths: string[], item: SidebarLinkItem) => {
     if (item.submenu) {
       return paths.concat(
-        item.submenu.map((url) => createUrl(url.slug as string)),
+        item.submenu.map((url) => createUrl(url.slug as string))
       );
     }
     if (item.slug && item.slug.split('/').length > 2) {
@@ -47,8 +46,8 @@ function generateSiteMap(links: SidebarLinkItem[][]) {
     links.reduce(
       (paths: string[], menu: SidebarLinkItem[]) =>
         paths.concat(processMenuItems(menu)),
-      [],
-    ),
+      []
+    )
   );
 
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -65,7 +64,7 @@ export default function SiteMap() {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getServerSideProps: GetServerSideProps<any> = async ({ res }) => {
   const allLinks: SidebarLinkItem[][] = await Promise.all(
-    DOC_SLUGS.flatMap(getSidebarLinks),
+    DOC_SLUGS.flatMap(getSidebarLinks)
   );
 
   res.setHeader('Content-Type', 'text/xml');

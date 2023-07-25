@@ -12,6 +12,7 @@ export type SidebarLinkProps = ButtonLinkProps & {
   item: SidebarLinkItem;
 };
 
+// eslint-disable-next-line react/display-name
 export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
   ({ item, ...props }, ref) => {
     const pathname = usePathname() || '';
@@ -19,12 +20,17 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
       ? item.slug.replace('../', '').replace('./', '')
       : item.slug;
 
-    const fullSlug = `/docs/${slug}${slug?.endsWith('/') ? '' : '/'}`;
+    const isGuide = pathname.includes('guides/');
+    const fullSlug = `${
+      isGuide ? slug?.replace('guides/', '') : `/docs/${slug}`
+    }${slug?.endsWith('/') ? '' : '/'}`;
     const label = item.label.replaceAll(' ', '-');
+    const active = pathname.startsWith('/guides/')
+      ? pathname.replace('/guides/', '') === fullSlug
+      : pathname === fullSlug ||
+        (label === slug?.split('/')[1] && pathname.includes(label));
     const isActive = cx({
-      active:
-        pathname === fullSlug ||
-        (label === slug?.split('/')[1] && pathname.includes(label)),
+      active,
     });
 
     return (
@@ -39,10 +45,10 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
         {capitalize(item.label.replaceAll(/[_-]/g, ' '))}
       </ButtonLink>
     );
-  },
+  }
 );
 
-const styles = {
+export const styles = {
   root: cssObj({
     px: '$0',
     py: '$0',

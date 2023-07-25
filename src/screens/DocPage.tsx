@@ -29,7 +29,8 @@ export function DocScreen(props: DocPageProps) {
         title={doc?.title}
         isClean={Boolean(isCleanLayout)}
         hasHeadings={hasHeadings}
-        config={doc?.docsConfig}
+        config={doc.docsConfig}
+        category={doc.category}
       >
         {!isCleanLayout && (
           <Box css={styles.sidebar}>

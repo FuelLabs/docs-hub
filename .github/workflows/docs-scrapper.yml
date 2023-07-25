@@ -19,7 +19,6 @@ jobs:
 
       - name: Update DocSearch
         run: |
-          cd ./packages/docs
           docker run \
             --env ALGOLIA_APP_ID=${ALGOLIA_APP_ID} \
             --env ALGOLIA_API_KEY=${ALGOLIA_API_KEY} \

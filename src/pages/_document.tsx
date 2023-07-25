@@ -9,7 +9,6 @@ export default class Document extends NextDocument {
         <Head>
           <style
             id="stitches"
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             dangerouslySetInnerHTML={{ __html: getCssText() }}
           />
         </Head>

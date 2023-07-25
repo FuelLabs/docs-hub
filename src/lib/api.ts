@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable import/no-unresolved */
+
 /* eslint-disable import/order */
 import { readFileSync } from 'fs';
 import { serialize } from 'next-mdx-remote/serialize';
@@ -8,7 +8,8 @@ import remarkGfm from 'remark-gfm';
 import remarkSlug from 'remark-slug';
 import type { Pluggable } from 'unified';
 import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
-import { codeImport } from '~/docs/fuels-wallet/packages/docs/src/lib/code-import';
+import { codeImport as walletCodeImport } from '~/docs/fuels-wallet/packages/docs/src/lib/code-import';
+import { codeImport } from './plugins/code-import';
 import { FIELDS, DOCS_DIRECTORY } from '~/src/constants';
 import type { DocType, NodeHeading, SidebarLinkItem } from '~/src/types';
 
@@ -47,16 +48,21 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
 
   const pageLink = join(docsConfig.repository, slugPath.path);
   doc.pageLink = pageLink;
+  const isGuide = slug.startsWith('guides/');
   const isGraphQLDocs = fullpath.includes('fuel-graphql-docs/docs');
   const isWalletDocs = fullpath.includes('fuels-wallet/packages/docs/');
   // parse the wallet and graphql docs as mdx, otherwise use md
-  const format = isWalletDocs || isGraphQLDocs ? 'mdx' : 'md';
-  const plugins: Pluggable<any[]>[] = [[handlePlugins, { filepath: fullpath }]];
+  const format = isWalletDocs || isGraphQLDocs || isGuide ? 'mdx' : 'md';
+  const plugins: Pluggable<any[]>[] = [];
+  if (!isGuide) {
+    plugins.push([handlePlugins, { filepath: fullpath }]);
+  } else {
+    plugins.push([codeImport, { filepath: fullpath }]);
+  }
   // handle the codeExamples component in the graphql docs
   if (isGraphQLDocs) plugins.push([codeExamples, { filepath: fullpath }]);
   // handle wallet code import component
-  if (isWalletDocs) plugins.push([codeImport, { filepath: fullpath }]);
-
+  if (isWalletDocs) plugins.push([walletCodeImport, { filepath: fullpath }]);
   source = await serialize(content, {
     scope: data,
     mdxOptions: {
@@ -82,6 +88,13 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
     doc.title = newLabel;
   }
 
+  if (isGuide) {
+    doc.parent = {
+      label: 'Guides',
+      link: '/guides',
+    };
+  }
+
   const final = {
     ...doc,
     source,
@@ -101,7 +114,7 @@ function parseSlug(slug?: string) {
 
 export function getDocLink(
   links: Awaited<ReturnType<typeof getSidebarLinks>>,
-  slug: string,
+  slug: string
 ) {
   const parsedSlug = parseSlug(slug) as string;
   const flatLinks = links
@@ -124,11 +137,15 @@ export function getDocLink(
 
 export async function getSidebarLinks(
   configSlug: string,
+  guideName?: string
 ): Promise<SidebarLinkItem[]> {
   const linksPath = join(
     DOCS_DIRECTORY,
-    `../src/sidebar-links/${configSlug}.json`,
+    `../src/sidebar-links/${configSlug}.json`
   );
   const links = JSON.parse(readFileSync(linksPath, 'utf8'));
+  if (configSlug === 'guides' && guideName) {
+    return [links[guideName.replaceAll('-', '_')]];
+  }
   return links;
 }
