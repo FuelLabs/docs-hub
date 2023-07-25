@@ -53,7 +53,7 @@ html[data-theme='dark'] {
   align-items: center;
   background: var(--docsearch-searchbox-background);
   border: 0;
-  border-radius: 6px;
+  border-radius: 999px;
   color: var(--docsearch-muted-color);
   cursor: pointer;
   display: flex;
