@@ -4,12 +4,8 @@ import { toString } from 'hast-util-to-string';
 import { visit } from 'unist-util-visit';
 import type { NodeHeading } from '~/src/types';
 
-type Params = {
-  rank: number;
-  headings: NodeHeading[];
-};
-
-export function rehypeExtractHeadings({ headings }: Params) {
+export function rehypeExtractHeadings() {
+  const headings = [] as NodeHeading[];
   return (tree: any) => {
     visit(tree, 'element', (node) => {
       const rank = headingRank(node);

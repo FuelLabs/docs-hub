@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
+import * as url from 'url';
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 function getLangFromNode(node: any) {
   if (node.type === 'mdxJsxFlowElement') {
@@ -35,61 +38,62 @@ function setValueOnNode(node: any, cb: (value: string) => string) {
   return;
 }
 
-export function fixIndent(fullpath: string) {
-  const isSway = fullpath.includes('sway');
-  const isFuelsTs = fullpath.includes('fuels-ts');
-  return () =>
-    function transformer(tree: Root) {
-      visit(tree, '', (node: any) => {
-        if (!node) return;
+export function fixIndent() {
+  return function transformer(tree: Root, file: any) {
+    const fullpath = file.data.rawDocumentData.sourceFilePath;
+    const isSway = fullpath.includes('sway');
+    const isFuelsTs = fullpath.includes('fuels-ts');
 
-        if (['code', 'mdxJsxFlowElement'].includes(node.type)) {
-          const lang = getLangFromNode(node);
-          const value = getValueFromNode(node);
-          if (!value) return;
+    visit(tree, '', (node: any) => {
+      if (!node) return;
 
-          setValueOnNode(node, (value) => {
-            if (
-              node.type === 'code' &&
-              ['rust', 'ts', 'typescript'].includes(lang)
-            ) {
-              const lines = value.split('\n');
-              const newLines = lines
-                // parsing code tabs/spaces in Fuels-TS code blocks
-                .map((line: string) => {
-                  if (isSway) {
-                    return line.replace(/\s{4}/g, '\t');
-                  }
-                  return line;
-                })
-                .map((line: string) => {
-                  if (!isFuelsTs) return line;
-                  return line.replace(/\s{4}/g, '\t').replace(/^\t/g, '');
-                })
-                // parsing code blocks with 8 spaces indentation
-                .map((line: string) => {
-                  if (isSway) return line;
-                  if (line.match(/^\s{8}/)) {
-                    return line.replace(/^\s{8}/, '');
-                  }
-                  return line;
-                })
-                // parsing code blocks with 2 spaces indentation
-                .map((line: string) => {
-                  if (isSway) return line;
-                  if (line.match(/^\s{2}([^\s].*)/)) {
-                    return line.replace(/^\s{2}/, '\t');
-                  }
-                  return line;
-                })
-                .join('\n');
+      if (['code', 'mdxJsxFlowElement'].includes(node.type)) {
+        const lang = getLangFromNode(node);
+        const value = getValueFromNode(node);
+        if (!value) return;
 
-              value = newLines;
-            }
+        setValueOnNode(node, (value) => {
+          if (
+            node.type === 'code' &&
+            ['rust', 'ts', 'typescript'].includes(lang)
+          ) {
+            const lines = value.split('\n');
+            const newLines = lines
+              // parsing code tabs/spaces in Fuels-TS code blocks
+              .map((line: string) => {
+                if (isSway) {
+                  return line.replace(/\s{4}/g, '\t');
+                }
+                return line;
+              })
+              .map((line: string) => {
+                if (!isFuelsTs) return line;
+                return line.replace(/\s{4}/g, '\t').replace(/^\t/g, '');
+              })
+              // parsing code blocks with 8 spaces indentation
+              .map((line: string) => {
+                if (isSway) return line;
+                if (line.match(/^\s{8}/)) {
+                  return line.replace(/^\s{8}/, '');
+                }
+                return line;
+              })
+              // parsing code blocks with 2 spaces indentation
+              .map((line: string) => {
+                if (isSway) return line;
+                if (line.match(/^\s{2}([^\s].*)/)) {
+                  return line.replace(/^\s{2}/, '\t');
+                }
+                return line;
+              })
+              .join('\n');
 
-            return value;
-          });
-        }
-      });
-    };
+            value = newLines;
+          }
+
+          return value;
+        });
+      }
+    });
+  };
 }

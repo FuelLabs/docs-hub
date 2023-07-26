@@ -8,7 +8,9 @@ import path from 'path';
 import * as prettier from 'prettier';
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
+import * as url from 'url';
 
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 const ROOT_DIR = path.resolve(__dirname, '../../../../../../../');
 
 function toAST(content: string) {
@@ -153,16 +155,11 @@ function extractTestCase(source: string, testCase: string) {
   };
 }
 
-interface Options {
-  filepath: string;
-}
-
-export function codeImport(options: Options = { filepath: '' }) {
-  const rootDir = process.cwd();
-  const { filepath } = options;
-  const dirname = path.relative(rootDir, path.dirname(filepath));
-
-  return function transformer(tree: Root) {
+export function codeImport() {
+  return function transformer(tree: Root, file: any) {
+    const rootDir = process.cwd();
+    const filepath = file.data.rawDocumentData?.sourceFilePath;
+    const dirname = path.relative(rootDir, path.dirname(filepath));
     const nodes: [any, number | undefined, any][] = [];
 
     visit(tree, 'mdxJsxFlowElement', (node: any, idx, parent) => {

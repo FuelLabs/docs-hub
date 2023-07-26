@@ -1,6 +1,7 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
-import { MDXRemote } from 'next-mdx-remote';
+import { useMDXComponent } from 'next-contentlayer/hooks';
+import type { MdDoc } from '~/.contentlayer/generated';
 import { Layout } from '~/src/components/Layout';
 import { Sidebar } from '~/src/components/Sidebar';
 import { TableOfContent } from '~/src/components/TableOfContent';
@@ -11,6 +12,7 @@ import { DocFooter } from '../components/DocFooter';
 import { getComponents } from '../imports';
 
 type DocPageProps = {
+  md: MdDoc;
   doc: DocType;
   links: SidebarLinkItem[];
   docLink?: SidebarLinkItem;
@@ -18,10 +20,11 @@ type DocPageProps = {
 };
 
 export function DocScreen(props: DocPageProps) {
-  const { doc } = props;
+  const { doc, md } = props;
   const components = getComponents(doc);
   const hasHeadings = Boolean(doc?.headings?.length);
   const isCleanLayout = doc?.source?.scope?.cleanLayout;
+  const Component = useMDXComponent(md.body.code);
 
   return (
     <DocProvider {...props}>
@@ -40,16 +43,7 @@ export function DocScreen(props: DocPageProps) {
           </Box>
         )}
         <Box as="section" css={styles.section} className="Layout--section">
-          <Box className="Layout--pageContent">
-            {doc && (
-              <MDXRemote
-                {...doc?.source}
-                scope={doc}
-                components={components}
-                lazy
-              />
-            )}
-          </Box>
+          <Box className="Layout--pageContent">{doc && <Component />}</Box>
           {doc && !isCleanLayout && <DocFooter />}
         </Box>
         {doc && !isCleanLayout && hasHeadings && <TableOfContent />}

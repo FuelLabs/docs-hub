@@ -1,10 +1,12 @@
-import { GetStaticPaths, GetStaticProps } from 'next';
-import { getDocBySlug, getDocLink, getSidebarLinks } from '~/src/lib/api';
-import { getDocs } from '~/src/lib/docs';
+import { GetStaticProps } from 'next';
+import { MdDoc } from '~/.contentlayer/generated';
+import { Doc } from '~/src/lib2/Doc';
+import { Docs } from '~/src/lib2/Docs';
 import { DocScreen } from '~/src/screens/DocPage';
 import type { DocType, SidebarLinkItem } from '~/src/types';
 
 export type DocPageProps = {
+  md: MdDoc;
   doc: DocType;
   links: SidebarLinkItem[];
   docLink?: SidebarLinkItem;
@@ -15,41 +17,20 @@ export default function DocPage(props: DocPageProps) {
   return <DocScreen {...props} />;
 }
 
-export const getStaticPaths: GetStaticPaths<any> = async () => {
-  const docs = await getDocs({} as any);
-  const paths = docs.map((doc) => {
-    const slug = doc.slug.slice(2).split('/');
-    const arr = slug
-      .map((word) => (word === 'index' ? null : word))
-      .map((word) => (word === 'README' ? null : word))
-      .filter(Boolean);
+export function getStaticPaths() {
+  const paths = Docs.getAllPaths();
+  return { paths, fallback: false };
+}
 
-    return {
-      params: {
-        slug: arr,
-        path: doc.path,
-      },
-    };
-  });
-
-  return {
-    paths: Array.from(new Set(paths)),
-    fallback: false,
-  };
-};
-
-export const getStaticProps: GetStaticProps<any> = async (ctx) => {
-  const slug = ctx.params?.slug as string[];
-  const doc = await getDocBySlug(slug.join('/'));
-  const links = await getSidebarLinks(doc.docsConfig.slug);
-  const docLink = getDocLink(links, doc.slug);
-
+export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
+  const doc = new Doc(params?.slug as string[]);
   return {
     props: {
+      md: doc.md,
+      doc: doc.item,
+      links: doc.sidebarLinks,
+      docLink: doc.navLinks,
       theme: 'light',
-      doc,
-      links,
-      docLink,
     },
   };
 };

@@ -63,11 +63,12 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
   if (isGraphQLDocs) plugins.push([codeExamples, { filepath: fullpath }]);
   // handle wallet code import component
   if (isWalletDocs) plugins.push([walletCodeImport, { filepath: fullpath }]);
+
   source = await serialize(content, {
     scope: data,
     mdxOptions: {
       format,
-      remarkPlugins: [remarkSlug, remarkGfm, ...plugins, fixIndent(fullpath)],
+      remarkPlugins: [remarkSlug, remarkGfm, ...plugins, fixIndent],
       rehypePlugins: [...getMdxCode(), [rehypeExtractHeadings, { headings }]],
     },
   });

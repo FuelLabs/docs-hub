@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import path from 'path';
+import { join } from 'path';
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
 import type { Parent } from 'unist-util-visit/lib';
@@ -15,10 +15,6 @@ import {
   handlePlayerComp,
   handleWalletImages,
 } from './wallet-docs';
-
-interface Options {
-  filepath: string;
-}
 
 const forcGenCondition = (tree: any, node: any, filepath: string) => {
   return (
@@ -65,12 +61,11 @@ const hasScriptLink = (node: any) => {
   return node.type === 'html' && node.value.includes('const url =');
 };
 
-export function handlePlugins(options: Options = { filepath: '' }) {
-  const rootDir = process.cwd();
-  const { filepath } = options;
-  const dirname = path.relative(rootDir, path.dirname(filepath));
-
-  return function transformer(tree: Root) {
+export function handlePlugins() {
+  return function transformer(tree: Root, file: any) {
+    const rootDir = process.cwd();
+    const filepath = `${file.data.rawDocumentData?.sourceFilePath}`;
+    const dirname = join(rootDir, file.data.rawDocumentData?.sourceFileDir);
     const nodes: [any, number | null, Parent<any, any>][] = [];
 
     if (filepath.includes('/docs/fuel-graphql-docs/')) {
@@ -88,7 +83,7 @@ export function handlePlugins(options: Options = { filepath: '' }) {
         url = url.replace('/docs/', '/docs/graphql/');
         node.attributes[0].value = url;
       });
-    } else if (filepath.includes('/docs/sway/')) {
+    } else if (filepath.includes('docs/sway/')) {
       visit(tree, '', (node: any, idx, parent) => {
         if (
           // get the generated docs for forc

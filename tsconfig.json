@@ -7,8 +7,10 @@
     "incremental": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "baseUrl": ".",
     "paths": {
-      "~/*": ["./*", "./docs/fuels-wallet/packages/docs/*"]
+      "~/*": ["./*", "./docs/fuels-wallet/packages/docs/*"],
+      "contentlayer/generated": ["./.contentlayer/generated"]
     }
   },
   "exclude": ["docs/**/**.ts", "docs/**/**.tsx"],
@@ -16,6 +18,7 @@
     "next-env.d.ts",
     "./src/**/*.ts",
     "./src/**/*.tsx",
+    ".contentlayer/generated",
     ".next/types/**/*.ts"
   ]
 }
