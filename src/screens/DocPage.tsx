@@ -42,7 +42,12 @@ export function DocScreen(props: DocPageProps) {
         <Box as="section" css={styles.section} className="Layout--section">
           <Box className="Layout--pageContent">
             {doc && (
-              <MDXRemote {...doc?.source} scope={doc} components={components} />
+              <MDXRemote
+                {...doc?.source}
+                scope={doc}
+                components={components}
+                lazy
+              />
             )}
           </Box>
           {doc && !isCleanLayout && <DocFooter />}

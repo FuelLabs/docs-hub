@@ -6,7 +6,7 @@ import type { DocType } from './types';
 
 export function getComponents(doc: DocType) {
   const components: any = {};
-  const slug = doc.docsConfig.slug || '';
+  const slug = doc.docsConfig.slug || doc.slug || '';
 
   if (['wallet/', 'guides/'].includes(slug)) {
     const CodeImport = dynamic(
@@ -14,10 +14,9 @@ export function getComponents(doc: DocType) {
       { ssr: false }
     );
     components.CodeImport = CodeImport;
-  }
-  if (slug === 'wallet') {
+
     // load the components used in the wallet docs
-    if (doc.slug.includes('how-to-use')) {
+    if (slug.includes('how-to-use')) {
       const Demo = dynamic(
         () =>
           import('~/docs/fuels-wallet/packages/docs/src/components/Demo').then(
@@ -182,7 +181,9 @@ export function getComponents(doc: DocType) {
 
       components.Examples = Examples;
     }
-  } else if (slug === 'graphql' && slug.includes('recipes')) {
+  }
+
+  if (['graphql', 'recipes'].includes(slug)) {
     const CodeExamples = dynamic(
       () =>
         import('~/src/components/GraphqlCodeExample').then(

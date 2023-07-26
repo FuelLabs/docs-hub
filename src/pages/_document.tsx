@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getCssText } from '@fuel-ui/css';
 import NextDocument, { Head, Html, Main, NextScript } from 'next/document';
 

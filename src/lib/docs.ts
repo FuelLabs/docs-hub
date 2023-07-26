@@ -27,60 +27,42 @@ export async function getDocs(config: Config): Promise<DocPathType[]> {
     // IGNORE FORC PAGES
     '!./sway/docs/book/src/forc/*.md',
     '!./sway/docs/book/src/forc/**/*.md',
-  ];
-  paths = [
     // FORC DOCS
     './sway/docs/book/src/forc/*.md',
     './sway/docs/book/src/forc/**/*.md',
     // REMOVE UNUSED FILES
     '!./sway/docs/book/src/forc/commands/forc_deploy.md',
     '!./sway/docs/book/src/forc/commands/forc_run.md',
-  ];
-  paths = [
     // RUST SDK DOCS
     './fuels-rs/docs/src/**/*.md',
     './fuels-rs/docs/src/*.md',
     // IGNORE ALL SUMMARY PAGES
     '!**/SUMMARY.md',
-  ];
-  paths = [
     // TS SDK DOCS
     './fuels-ts/apps/docs/src/*.md',
     './fuels-ts/apps/docs/src/**/*.md',
     './fuels-ts/apps/docs/src/**/*.md',
-  ];
-  paths = [
     // WALLET DOCS
     './fuels-wallet/packages/docs/docs/**/*.mdx',
     './fuels-wallet/packages/docs/docs/*.mdx',
-  ];
-  paths = [
     // GRAPHQL DOCS
     './fuel-graphql-docs/docs/*.mdx',
     './fuel-graphql-docs/docs/**/*.mdx',
-  ];
-  paths = [
     // FUELUP DOCS
     './fuelup/docs/src/*.md',
     './fuelup/docs/src/**/*.md',
     // IGNORE ALL SUMMARY PAGES
     '!**/SUMMARY.md',
-  ];
-  paths = [
     // INDEXER DOCS
     './fuel-indexer/docs/src/*.md',
     './fuel-indexer/docs/src/**/*.md',
     // IGNORE ALL SUMMARY PAGES
     '!**/SUMMARY.md',
-  ];
-  paths = [
     // SPECS DOCS
     './fuel-specs/src/*.md',
     './fuel-specs/src/**/*.md',
     // IGNORE ALL SUMMARY PAGES
     '!**/SUMMARY.md',
-  ];
-  paths = [
     // GUIDES
     '../guides/*.mdx',
     '../guides/**/*.mdx',
