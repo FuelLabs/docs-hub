@@ -27,10 +27,6 @@ export class Docs {
           slug = slug.slice(0, -1);
         }
 
-        if (path.includes('guide')) {
-          console.log(slug);
-        }
-
         return {
           params: {
             slug,

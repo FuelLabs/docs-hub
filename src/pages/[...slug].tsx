@@ -6,6 +6,8 @@ import { Docs } from '~/src/lib/Docs';
 import { DocScreen } from '~/src/screens/DocPage';
 import type { DocType, SidebarLinkItem } from '~/src/types';
 
+import useTheme from '../hooks/useTheme';
+
 export type DocPageProps = {
   code: string;
   md: MdDoc;
@@ -16,7 +18,8 @@ export type DocPageProps = {
 };
 
 export default function DocPage(props: DocPageProps) {
-  return <DocScreen {...props} />;
+  const { theme } = useTheme();
+  return <DocScreen {...props} theme={theme} />;
 }
 
 export function getStaticPaths() {
@@ -31,7 +34,6 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   return {
     props: {
       code,
-      theme: 'light',
       md: doc.md,
       doc: doc.item,
       links: doc.sidebarLinks,

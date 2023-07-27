@@ -71,7 +71,6 @@ export class Doc {
       if (slug.startsWith('fuel-')) {
         slug = slug.replace('fuel-', '');
       }
-      console.log(slug);
       return configFile[slug];
     } catch (e) {
       throw new Error(`${slug} docs.json not found`);

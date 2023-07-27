@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { runSync } from '@mdx-js/mdx';
 import * as provider from '@mdx-js/react';
-// import * as runtime from 'react/jsx-runtime'; // Production.
 import { useMemo } from 'react';
-import * as runtime from 'react/jsx-dev-runtime'; // Development.
+
+import { runtime } from '../lib/runtime';
 
 import { Blockquote } from './Blockquote';
 import { Code } from './Code';
