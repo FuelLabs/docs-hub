@@ -1,4 +1,3 @@
-
 import fs from 'fs';
 import { globby } from 'globby';
 import matter from 'gray-matter';
@@ -211,7 +210,6 @@ function getSortedLinks(config, docs) {
   const lcOrder = config.menu.map((o) =>
     o.toLowerCase().replaceAll('-', '_').replaceAll(' ', '_')
   );
-
 
   for (let i = 0; i < docs.length; i++) {
     const doc = docs[i];

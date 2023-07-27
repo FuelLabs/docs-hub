@@ -1,5 +1,5 @@
 import { cssObj, cx } from '@fuel-ui/css';
-import { Dropdown, ButtonLink } from '@fuel-ui/react';
+import { Dropdown, ButtonLink, Icon } from '@fuel-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -61,6 +61,9 @@ export function Navigation({ active }: { active: string }) {
                       textValue={menuItem.name}
                     >
                       {menuItem.name}
+                      {menuItem.type === 'external-link' && (
+                        <Icon icon={Icon.is('Link')} size={14} />
+                      )}
                     </Dropdown.MenuItem>
                   );
                 })}

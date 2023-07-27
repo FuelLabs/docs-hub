@@ -9,11 +9,9 @@ import * as prettier from 'prettier';
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
 
-const ROOT_DIR = path.resolve(__dirname, '../../../../../../../');
-
 function toAST(content: string) {
   return acorn.parse(content, {
-    ecmaVersion: 'latest',
+    ecmaVersion: '2020',
     sourceType: 'module',
   });
 }
@@ -153,6 +151,7 @@ function extractTestCase(source: string, testCase: string) {
   };
 }
 
+const ROOT_DIR = path.resolve(__dirname, '../../../../../../../');
 export function codeImport() {
   return function transformer(tree: Root, file: any) {
     const rootDir = process.cwd();
@@ -210,10 +209,14 @@ export function codeImport() {
         lineEnd = commentResult.lineEnd;
         content = commentResult.content;
       } else if (testCase) {
-        const testResult = extractTestCase(fileContent, testCase);
-        lineStart = testResult.lineStart;
-        lineEnd = testResult.lineEnd;
-        content = testResult.content;
+        try {
+          const testResult = extractTestCase(fileContent, testCase);
+          lineStart = testResult.lineStart;
+          lineEnd = testResult.lineEnd;
+          content = testResult.content;
+        } catch (e) {
+          console.log(e);
+        }
       } else {
         content = fileContent;
       }

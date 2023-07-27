@@ -1,3 +1,4 @@
+import type { RawDocumentData } from 'contentlayer/core';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
 export type MenuKey = string;
@@ -22,6 +23,7 @@ export type DocType = {
   menu: string[];
   docsConfig: Config;
   parent?: { label: string; link: string };
+  _raw: RawDocumentData;
 };
 
 export type SidebarLinkItem = {

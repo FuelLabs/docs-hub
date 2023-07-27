@@ -1,11 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { compile } from '@mdx-js/mdx';
+import { addRawDocumentToVFile } from 'contentlayer/core';
 import type { MdDoc } from 'contentlayer/generated';
-import { allMdDocs } from 'contentlayer/generated';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
 import { DOCS_DIRECTORY } from '../constants';
 import type { Config, DocType, SidebarLinkItem } from '../types';
+
+import { Docs } from './Docs';
+import { rehypePlugins, remarkPlugins } from './md-plugins';
+import { rehypeExtractHeadings } from './plugins/toc';
 
 const docConfigPath = join(DOCS_DIRECTORY, '../src/docs.json');
 const configFile = JSON.parse(readFileSync(docConfigPath, 'utf8'));
@@ -15,9 +20,8 @@ export class Doc {
   item: DocType;
   config: Config;
 
-  constructor(slug: string[]) {
-    const path = slug.join('/');
-    const item = allMdDocs.find((doc) => doc.slug === path);
+  constructor(slug: string[], mdDocs: MdDoc[]) {
+    const item = Docs.findDoc(slug, mdDocs);
 
     if (!item) {
       throw new Error(`${slug} not found`);
@@ -26,20 +30,25 @@ export class Doc {
     const config = this.#getConfig(item.slug);
     const pageLink = join(config.repository, item._raw.flattenedPath);
 
+    this.md = item;
+    this.config = config;
+
     const doc = {
-      title: item.title || '',
-      slug: item.slug,
-      category: '',
       pageLink,
-      headings: [],
+      _raw: item._raw,
+      title: this.#getTitle(item.title),
+      slug: item.slug,
+      category: item.category ?? null,
       source: null as any,
+      headings: [],
       menu: [],
-      docsConfig: config,
+      docsConfig: {
+        ...config,
+        slug: item.slug,
+      },
     };
 
-    this.config = config;
     this.item = doc;
-    this.md = item;
   }
 
   #getConfig(slug: string): Config {
@@ -56,6 +65,29 @@ export class Doc {
     } catch (e) {
       throw new Error(`${slug} docs.json not found`);
     }
+  }
+
+  #getTitle(title?: string) {
+    if (title) return title;
+    return this.config.title || '';
+  }
+
+  async getCode() {
+    const doc = this.md;
+    const code = await compile(doc.body.raw, {
+      outputFormat: 'function-body',
+      format: doc._raw.contentType === 'markdown' ? 'md' : 'mdx',
+      providerImportSource: '@mdx-js/react',
+      remarkPlugins: [addRawDocumentToVFile(this.md._raw), ...remarkPlugins],
+      rehypePlugins: [
+        ...rehypePlugins,
+        rehypeExtractHeadings({
+          headings: this.item.headings,
+        }),
+      ],
+    });
+
+    return String(code);
   }
 
   get sidebarLinks() {

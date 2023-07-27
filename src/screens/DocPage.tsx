@@ -1,6 +1,5 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
-import { useMDXComponent } from 'next-contentlayer/hooks';
 import type { MdDoc } from '~/.contentlayer/generated';
 import { Layout } from '~/src/components/Layout';
 import { Sidebar } from '~/src/components/Sidebar';
@@ -9,9 +8,11 @@ import { DocProvider } from '~/src/hooks/useDocContext';
 import type { DocType, SidebarLinkItem } from '~/src/types';
 
 import { DocFooter } from '../components/DocFooter';
+import { MDXRender } from '../components/MDXRender';
 import { getComponents } from '../imports';
 
 type DocPageProps = {
+  code: string;
   md: MdDoc;
   doc: DocType;
   links: SidebarLinkItem[];
@@ -20,11 +21,10 @@ type DocPageProps = {
 };
 
 export function DocScreen(props: DocPageProps) {
-  const { doc, md } = props;
+  const { doc } = props;
   const components = getComponents(doc);
   const hasHeadings = Boolean(doc?.headings?.length);
   const isCleanLayout = doc?.source?.scope?.cleanLayout;
-  const Component = useMDXComponent(md.body.code);
 
   return (
     <DocProvider {...props}>
@@ -43,7 +43,9 @@ export function DocScreen(props: DocPageProps) {
           </Box>
         )}
         <Box as="section" css={styles.section} className="Layout--section">
-          <Box className="Layout--pageContent">{doc && <Component />}</Box>
+          <Box className="Layout--pageContent">
+            {doc && <MDXRender code={props.code} components={components} />}
+          </Box>
           {doc && !isCleanLayout && <DocFooter />}
         </Box>
         {doc && !isCleanLayout && hasHeadings && <TableOfContent />}
