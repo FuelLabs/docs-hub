@@ -24,6 +24,7 @@ export function getStaticPaths() {
   return { paths, fallback: false };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   const doc = new Doc(params?.slug as string[], allMdDocs);
   const code = await doc.getCode();

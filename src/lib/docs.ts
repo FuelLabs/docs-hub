@@ -1,145 +1,169 @@
-import { readFileSync } from 'fs';
-import { globby } from 'globby';
-import matter from 'gray-matter';
-import { join } from 'path';
+import { globbySync } from 'globby';
+import type { MdDoc } from '~/.contentlayer/generated/types';
 
-import { DOCS_DIRECTORY } from '../constants';
-import type { Config } from '../types';
-
-import { removeDocsPath } from './urls';
-
-type DocPathType = {
-  slug: string;
-  path: string;
+const PATHS_REPLACE_MAP = {
+  'docs/sway': 'docs/sway/docs/book/src',
+  'docs/fuelup': 'docs/fuelup/docs/src',
+  'docs/fuels-rs': 'docs/fuels-rs/docs/src',
+  'docs/fuels-ts': 'docs/fuels-ts/apps/docs/src',
+  'docs/fuel-specs': 'docs/fuel-specs/src',
+  'docs/fuel-indexer': 'docs/fuel-indexer/docs/src',
+  'docs/fuels-wallet': 'docs/fuels-wallet/packages/docs/docs',
+  'docs/fuel-graphql-docs': 'docs/fuel-graphql-docs/docs',
+  'docs/guides': 'docs/guides/docs',
 };
 
-const pathsCache = new Map<string, DocPathType[]>();
+export class Docs {
+  static getAllPaths(mdDocs: MdDoc[]) {
+    const paths = mdDocs
+      .map((doc) => {
+        const path = doc.slug;
+        let slug = path.split('/').filter((s) => s.length);
 
-export async function getDocs(config: Config): Promise<DocPathType[]> {
-  const cache = pathsCache.get(config?.slug);
-  if (cache) return cache;
-  let paths: string[] = [];
-  paths = [
-    // SWAY DOCS
-    './sway/docs/book/src/**/*.md',
-    // IGNORE ALL SUMMARY PAGES
-    '!**/SUMMARY.md',
-    // IGNORE FORC PAGES
-    '!./sway/docs/book/src/forc/*.md',
-    '!./sway/docs/book/src/forc/**/*.md',
-    // FORC DOCS
-    './sway/docs/book/src/forc/*.md',
-    './sway/docs/book/src/forc/**/*.md',
-    // REMOVE UNUSED FILES
-    '!./sway/docs/book/src/forc/commands/forc_deploy.md',
-    '!./sway/docs/book/src/forc/commands/forc_run.md',
-    // RUST SDK DOCS
-    './fuels-rs/docs/src/**/*.md',
-    './fuels-rs/docs/src/*.md',
-    // IGNORE ALL SUMMARY PAGES
-    '!**/SUMMARY.md',
-    // TS SDK DOCS
-    './fuels-ts/apps/docs/src/*.md',
-    './fuels-ts/apps/docs/src/**/*.md',
-    './fuels-ts/apps/docs/src/**/*.md',
-    // WALLET DOCS
-    './fuels-wallet/packages/docs/docs/**/*.mdx',
-    './fuels-wallet/packages/docs/docs/*.mdx',
-    // GRAPHQL DOCS
-    './fuel-graphql-docs/docs/*.mdx',
-    './fuel-graphql-docs/docs/**/*.mdx',
-    // FUELUP DOCS
-    './fuelup/docs/src/*.md',
-    './fuelup/docs/src/**/*.md',
-    // IGNORE ALL SUMMARY PAGES
-    '!**/SUMMARY.md',
-    // INDEXER DOCS
-    './fuel-indexer/docs/src/*.md',
-    './fuel-indexer/docs/src/**/*.md',
-    // IGNORE ALL SUMMARY PAGES
-    '!**/SUMMARY.md',
-    // SPECS DOCS
-    './fuel-specs/src/*.md',
-    './fuel-specs/src/**/*.md',
-    // IGNORE ALL SUMMARY PAGES
-    '!**/SUMMARY.md',
-    // GUIDES
-    '../guides/*.mdx',
-    '../guides/**/*.mdx',
-  ];
+        if (slug.length === 1) {
+          return null;
+        }
+        if (slug.slice(-1)[0] === 'index') {
+          slug = slug.slice(0, -1);
+        }
 
-  paths = await globby(paths, {
-    cwd: DOCS_DIRECTORY,
-  });
+        return {
+          params: {
+            slug,
+            path,
+          },
+        };
+      })
+      .filter(Boolean);
 
-  const final = paths
-    .map((path) => {
-      const p = path.replace(/.(mdx?)$/, '');
-      if (p.includes('SUMMARY')) return;
-      return {
-        slug: removeDocsPath(p),
-        path,
-      };
-    })
-    .filter(Boolean) as DocPathType[];
-
-  pathsCache.set(config?.slug, final);
-  return final;
-}
-
-export async function getDocFromSlug(
-  slug: string,
-  config: Config
-): Promise<DocPathType> {
-  const slugs = await getDocs(config);
-  let slugPath = slugs.find(({ slug: pathSlug }) => {
-    const realSlug = slug.startsWith('guides/')
-      ? `../${slug}.mdx`
-      : `./${slug}.md`;
-    return pathSlug === realSlug;
-  });
-  if (!slugPath) {
-    slugPath = slugs.find(({ slug: pathSlug }) => pathSlug.includes(slug));
+    return Array.from(new Set(paths));
   }
-  if (!slugPath) {
-    throw new Error(`${slug} not found`);
-  }
-  return slugPath;
-}
 
-const docConfigPath = join(DOCS_DIRECTORY, '../src/docs.json');
-const configFile = JSON.parse(readFileSync(docConfigPath, 'utf8'));
+  static findDoc(slug: string[], mdDocs: MdDoc[]) {
+    const path = slug.join('/');
+    const item = mdDocs.find((doc) => {
+      return (
+        doc.slug === path ||
+        doc.slug === `${path}/index` ||
+        doc.slug === `${path}/`
+      );
+    });
 
-export async function getDocConfig(slug: string): Promise<Config> {
-  try {
-    let book = slug;
-    if (slug.startsWith('.')) {
-      book = slug.split('/')[1].replace('.md', '');
-    } else if (slug.includes('/')) {
-      book = slug.split('/')[0];
-    } else if (slug.startsWith('fuel-')) {
-      book = slug.replace('fuel-', '');
+    if (!item) {
+      throw new Error(`${slug} not found`);
     }
-    return configFile[book];
-  } catch (e) {
-    throw new Error(`${slug} docs.json not found`);
-  }
-}
 
-export async function getDocContent(path: string) {
-  const document = readFileSync(path, 'utf8');
-  const { data, content } = matter(document);
-  if (!data.title) {
-    const paths = path.split('/');
-    data.title = paths
-      .pop()
-      ?.replace(/\.(md|mdx)$/, '')
-      .replaceAll(/[_-]/g, ' ');
-    data.category = paths.pop()?.replaceAll('-', ' ');
+    return item;
   }
 
-  return {
-    data,
-    content,
-  };
+  static getIncludePaths() {
+    return [
+      'docs/sway',
+      'docs/fuelup',
+      'docs/fuels-rs',
+      'docs/fuels-ts',
+      'docs/fuel-indexer',
+      'docs/fuel-specs',
+      'docs/fuel-graphql-docs/docs',
+      'docs/fuels-wallet/packages/docs/docs',
+      'docs/guides',
+    ];
+  }
+
+  static getDir(path: string) {
+    const opts = { onlyDirectories: true };
+    return globbySync(
+      [
+        `docs/${path}`,
+        `!docs/${path}/docs`,
+        `!docs/${path}/README.md`,
+        ...(path === 'fuels-ts' ? [`!docs/${path}/apps`] : []),
+        ...(path === 'fuel-specs' ? [`!docs/${path}/src`] : []),
+        ...(path === 'fuels-wallet'
+          ? [`!docs/${path}/packages/docs/docs`]
+          : []),
+        ...(path === 'fuel-graphql-docs' ? [`!docs/${path}/docs`] : []),
+      ],
+      opts
+    );
+  }
+
+  static getExcludePaths() {
+    const swayDirs = Docs.getDir('sway').concat(['docs/sway/docs/reference']);
+    const fuelupDir = Docs.getDir('fuelup');
+    const fuelsRsDir = Docs.getDir('fuels-rs');
+    const fuelsTsDir = Docs.getDir('fuels-ts');
+    const fuelSpecs = Docs.getDir('fuel-specs');
+    const fuelIndexer = Docs.getDir('fuel-indexer');
+    const fuelWallet = Docs.getDir('fuels-wallet');
+    const fuelGraphqlDocs = Docs.getDir('fuel-graphql-docs');
+    const guides = Docs.getDir('guides');
+
+    const files = globbySync([
+      '**/*.{json,yaml,yml}',
+      '**/SUMMARY.md',
+      '**/README.md',
+      '**/CHANGELOG.md',
+      '**/CONTRIBUTING.md',
+      '**/PULL_REQUEST_TEMPLATE.md',
+      '**/RELEASE_SCHEDULE.md',
+      '!docs/sway/README.md',
+      '!docs/fuelup/README.md',
+      '!docs/fuels-rs/README.md',
+      '!docs/fuels-ts/README.md',
+      '!docs/fuel-specs/README.md',
+      '!docs/fuel-indexer/README.md',
+    ]);
+
+    const dirs = [
+      ...swayDirs,
+      ...fuelupDir,
+      ...fuelsRsDir,
+      ...fuelsTsDir,
+      ...fuelSpecs,
+      ...fuelIndexer,
+      ...fuelWallet,
+      ...fuelGraphqlDocs,
+      ...guides,
+      ...files,
+    ];
+
+    return dirs;
+  }
+
+  static createSlug(path: string) {
+    let slug = path;
+
+    for (const [key, value] of Object.entries(PATHS_REPLACE_MAP)) {
+      if (path.startsWith(key)) {
+        slug = path.replace(value, key);
+      }
+    }
+
+    // handling edges cases according legacy slugs structure
+    if (slug.includes('docs/fuel-graphql-docs')) {
+      slug = slug.replace('fuel-graphql-docs', 'graphql');
+    }
+    if (slug.startsWith('docs/fuel-')) {
+      slug = slug.replace('fuel-', '');
+    }
+    if (slug.includes('fuels-wallet')) {
+      slug = slug.replace('fuels-wallet', 'wallet');
+    }
+    if (slug.includes('sway/forc')) {
+      slug = slug.replace('sway/', '');
+    }
+    if (slug === 'docs/forc') {
+      slug = 'docs/forc/index';
+    }
+    if (slug.includes('/forc_client/')) {
+      slug = slug.replace('/forc_client/', '/');
+    }
+    if (slug === 'docs/guides/quickstart') {
+      slug = 'docs/guides/quickstart/index';
+    }
+
+    slug = slug.slice(5).replace('README', 'index');
+    return slug;
+  }
 }

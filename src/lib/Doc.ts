@@ -46,7 +46,14 @@ export class Doc {
         ...config,
         slug: item.slug,
       },
-    };
+    } as DocType;
+
+    if (config.slug === 'guides') {
+      doc.parent = {
+        label: 'Guides',
+        link: '/guides',
+      };
+    }
 
     this.item = doc;
   }
@@ -99,7 +106,13 @@ export class Doc {
     );
     const links = JSON.parse(readFileSync(linksPath, 'utf8'));
     if (configSlug === 'guides' && guideName) {
-      return [links[guideName.replaceAll('-', '_')]];
+      const slug = this.item.slug
+        .replace(`${guideName}/`, '')
+        .replace('/index', '');
+
+      const key = slug.split('/')[0].replaceAll('-', '_');
+      const guideLinks = [links[key]];
+      return guideLinks as SidebarLinkItem[];
     }
     return links as SidebarLinkItem[];
   }

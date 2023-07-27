@@ -18,7 +18,7 @@ const graphqlOrderPath = join(
   DOCS_DIRECTORY,
   './fuel-graphql-docs/src/nav.json'
 );
-const guidesOrderPath = join(DOCS_DIRECTORY, '../guides/nav.json');
+const guidesOrderPath = join(DOCS_DIRECTORY, '../docs/guides/docs/nav.json');
 const tsConfigPath = join(
   DOCS_DIRECTORY,
   './fuels-ts/apps/docs/.vitepress/config.ts'
@@ -402,8 +402,7 @@ async function getDocs(key) {
     default:
       paths = [
         // GUIDES
-        '../guides/*.mdx',
-        '../guides/**/*.mdx',
+        './guides/**/*.mdx',
       ];
       break;
   }

@@ -21,9 +21,9 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
       : item.slug;
 
     const isGuide = pathname.includes('guides/');
-    const fullSlug = `${
-      isGuide ? slug?.replace('guides/', '') : `/docs/${slug}`
-    }${slug?.endsWith('/') ? '' : '/'}`;
+    const fullSlug = `${isGuide ? slug : `/docs/${slug}`}${
+      slug?.endsWith('/') ? '' : '/'
+    }`;
     const label = item.label.replaceAll(' ', '-');
     const active = pathname.startsWith('/guides/')
       ? pathname.replace('/guides/', '') === fullSlug

@@ -30,7 +30,7 @@ export default function Guides({ theme, guides }: GuidesProps) {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getServerSideProps: GetServerSideProps<any> = async (ctx) => {
-  const guidesPath = join(DOCS_DIRECTORY, `../guides/guides.json`);
+  const guidesPath = join(DOCS_DIRECTORY, `../docs/guides/docs/guides.json`);
   const guides = JSON.parse(readFileSync(guidesPath, 'utf8'));
 
   const theme = getCookie('theme', ctx);

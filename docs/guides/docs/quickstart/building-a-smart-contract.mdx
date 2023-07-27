@@ -86,7 +86,7 @@ Open your project in a code editor and delete everything in `src/main.sw` apart 
 Every Sway file must start with a declaration of what type of program the file contains; here, we've declared that this file is a contract.
 
 <CodeImport
-  file="../../guide-examples/quickstart/counter-contract/src/main.sw"
+  file="../../examples/quickstart/counter-contract/src/main.sw"
   comment="contract"
   commentType="//"
   lang="sway"
@@ -95,7 +95,7 @@ Every Sway file must start with a declaration of what type of program the file c
 Next, we'll define a storage value. In our case, we have a single counter that we'll call `counter` of type 64-bit unsigned integer and initialize it to 0.
 
 <CodeImport
-  file="../../guide-examples/quickstart/counter-contract/src/main.sw"
+  file="../../examples/quickstart/counter-contract/src/main.sw"
   comment="storage"
   commentType="//"
   lang="sway"
@@ -108,7 +108,7 @@ An ABI defines an interface, and there is no function body in the ABI. A contrac
 For simplicity, we will define the ABI directly in the contract file.
 
 <CodeImport
-  file="../../guide-examples/quickstart/counter-contract/src/main.sw"
+  file="../../examples/quickstart/counter-contract/src/main.sw"
   comment="abi"
   commentType="//"
   lang="sway"
@@ -119,7 +119,7 @@ For simplicity, we will define the ABI directly in the contract file.
 Below your ABI definition, you will write the implementation of the functions defined in your ABI.
 
 <CodeImport
-  file="../../guide-examples/quickstart/counter-contract/src/main.sw"
+  file="../../examples/quickstart/counter-contract/src/main.sw"
   comment="counter-contract"
   commentType="//"
   lang="sway"
@@ -132,7 +132,7 @@ Here's what your code should look like so far:
 File: `./counter-contract/src/main.sw`
 
 <CodeImport
-  file="../../guide-examples/quickstart/counter-contract/src/main.sw"
+  file="../../examples/quickstart/counter-contract/src/main.sw"
   comment="all"
   commentType="/*"
   lang="sway"
@@ -230,7 +230,7 @@ At the bottom of `test/harness.rs`, define the body of `can_get_contract_id()`. 
 File: `tests/harness.rs`
 
 <CodeImport
-  file="../../guide-examples/quickstart/counter-contract/tests/harness.rs"
+  file="../../examples/quickstart/counter-contract/tests/harness.rs"
   comment="contract-test"
   commentType="//"
   lang="rust"

@@ -2,9 +2,6 @@
 import { join } from 'path';
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
-import * as url from 'url';
-
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 function getLangFromNode(node: any) {
   if (node.type === 'mdxJsxFlowElement') {
