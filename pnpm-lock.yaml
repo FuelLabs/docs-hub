@@ -42,12 +42,6 @@ dependencies:
   '@mdx-js/react':
     specifier: ^2.3.0
     version: 2.3.0(react@18.2.0)
-  '@next/mdx':
-    specifier: ^13.4.12
-    version: 13.4.12(@mdx-js/react@2.3.0)
-  '@types/cookie':
-    specifier: ^0.5.1
-    version: 0.5.1
   acorn:
     specifier: ^8.10.0
     version: 8.10.0
@@ -63,9 +57,6 @@ dependencies:
   cookie:
     specifier: ^0.5.0
     version: 0.5.0
-  cookies-next:
-    specifier: ^2.1.2
-    version: 2.1.2
   dotenv:
     specifier: ^16.3.1
     version: 16.3.1
@@ -102,9 +93,6 @@ dependencies:
   next-contentlayer:
     specifier: ^0.3.4
     version: 0.3.4(contentlayer@0.3.4)(esbuild@0.18.16)(next@13.4.12)(react-dom@18.2.0)(react@18.2.0)
-  next-mdx-remote:
-    specifier: ^4.4.1
-    version: 4.4.1(react-dom@18.2.0)(react@18.2.0)
   node-html-markdown:
     specifier: ^1.3.0
     version: 1.3.0
@@ -179,6 +167,9 @@ devDependencies:
   '@types/chrome':
     specifier: ^0.0.242
     version: 0.0.242
+  '@types/cookie':
+    specifier: ^0.5.1
+    version: 0.5.1
   '@types/node':
     specifier: ^20.4.5
     version: 20.4.5
@@ -2345,21 +2336,6 @@ packages:
     resolution: {integrity: sha512-6rhK9CdxEgj/j1qvXIyLTWEaeFv7zOK8yJMulz3Owel0uek0U9MJCGzmKgYxM3aAUBo3gKeywCZKyQnJKto60A==}
     dependencies:
       glob: 7.1.7
-
-  /@next/mdx@13.4.12(@mdx-js/react@2.3.0):
-    resolution: {integrity: sha512-5/MHP/aVBD+wfTRAsZuxWI9h0JOn9n/ygCSy6SBZtaWHT3QZg+r1G4iYj5152uYVMHCD1rk9CfJAvA24LeyT1w==}
-    peerDependencies:
-      '@mdx-js/loader': '>=0.15.0'
-      '@mdx-js/react': '>=0.15.0'
-    peerDependenciesMeta:
-      '@mdx-js/loader':
-        optional: true
-      '@mdx-js/react':
-        optional: true
-    dependencies:
-      '@mdx-js/react': 2.3.0(react@18.2.0)
-      source-map: 0.7.4
-    dev: false
 
   /@next/swc-darwin-arm64@13.4.12:
     resolution: {integrity: sha512-deUrbCXTMZ6ZhbOoloqecnUeNpUOupi8SE2tx4jPfNS9uyUR9zK4iXBvH65opVcA/9F5I/p8vDXSYbUlbmBjZg==}
@@ -4938,13 +4914,9 @@ packages:
     resolution: {integrity: sha512-LKVP3cgXBT9RYj+t+9FDKwS5tdI+rPBXaNSkma7hvqy35lc7mAokC2zsqWJH0LaqIt3B962nuYI77hsJoT1gow==}
     dev: false
 
-  /@types/cookie@0.4.1:
-    resolution: {integrity: sha512-XW/Aa8APYr6jSVVA1y/DEIZX0/GMKLEVekNG727R8cs56ahETkRAy/3DR7+fJyh7oUgGwNQaRfXCun0+KbWY7Q==}
-    dev: false
-
   /@types/cookie@0.5.1:
     resolution: {integrity: sha512-COUnqfB2+ckwXXSFInsFdOAWQzCCx+a5hq2ruyj+Vjund94RJQd4LG2u9hnvJrTgunKAaax7ancBYlDrNYxA0g==}
-    dev: false
+    dev: true
 
   /@types/debug@4.1.8:
     resolution: {integrity: sha512-/vPO1EPOs306Cvhwv7KfVfYvOJqA/S/AXjaHQiJboCZzcNDb+TIJFN9/2C9DZ//ijSKWioNyUxD792QmDJ+HKQ==}
@@ -5019,10 +4991,6 @@ packages:
     resolution: {integrity: sha512-aLkWa0C0vO5b4Sr798E26QgOkss68Un0bLjs7u9qxzPT5CG+8DuNTffWES58YzJs3hrVAOs1wonycqEBqNJubA==}
     dev: false
 
-  /@types/js-yaml@4.0.5:
-    resolution: {integrity: sha512-FhpRzf927MNQdRZP0J5DLIdTXhjLYzeUTmLAu69mnVksLH9CJY3IuSeEgbKUki7GQZm0WqDkGzyxju2EZGD2wA==}
-    dev: false
-
   /@types/jsdom@20.0.1:
     resolution: {integrity: sha512-d0r18sZPmMQr1eG35u12FZfhIXNrnsPU/g5wvRKCUf/tOGilKKwYMYGqh33BNR6ba+2gkHw1EUiHoN3mn7E5IQ==}
     dependencies:
@@ -5053,10 +5021,6 @@ packages:
 
   /@types/ms@0.7.31:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
-    dev: false
-
-  /@types/node@16.18.39:
-    resolution: {integrity: sha512-8q9ZexmdYYyc5/cfujaXb4YOucpQxAV4RMG0himLyDUOEr8Mr79VrqsFI+cQ2M2h89YIuy95lbxuYjxT4Hk4kQ==}
     dev: false
 
   /@types/node@20.4.5:
@@ -6142,14 +6106,6 @@ packages:
   /cookie@0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
-    dev: false
-
-  /cookies-next@2.1.2:
-    resolution: {integrity: sha512-czxcfqVaQlo0Q/3xMgp/2jpspsuLJrIm6D37wlmibP3DAcYT315c8UxQmDMohhAT/GRWpaHzpDEFANBjzTFQGg==}
-    dependencies:
-      '@types/cookie': 0.4.1
-      '@types/node': 16.18.39
-      cookie: 0.4.2
     dev: false
 
   /copy-to-clipboard@3.3.3:
@@ -9957,23 +9913,6 @@ packages:
       - supports-color
     dev: false
 
-  /next-mdx-remote@4.4.1(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-1BvyXaIou6xy3XoNF4yaMZUCb6vD2GTAa5ciOa6WoO+gAUTYsb1K4rI/HSC2ogAWLrb/7VSV52skz07vOzmqIQ==}
-    engines: {node: '>=14', npm: '>=7'}
-    peerDependencies:
-      react: '>=16.x <=18.x'
-      react-dom: '>=16.x <=18.x'
-    dependencies:
-      '@mdx-js/mdx': 2.3.0
-      '@mdx-js/react': 2.3.0(react@18.2.0)
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      vfile: 5.3.7
-      vfile-matter: 3.0.1
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
   /next@13.4.12(@babel/core@7.22.6)(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-eHfnru9x6NRmTMcjQp6Nz0J4XH9OubmzOa7CkWL+AUrUxpibub3vWwttjduu9No16dug1kq04hiUUpo7J3m3Xw==}
     engines: {node: '>=16.8.0'}
@@ -12138,14 +12077,6 @@ packages:
     dependencies:
       '@types/unist': 2.0.6
       vfile: 5.3.7
-    dev: false
-
-  /vfile-matter@3.0.1:
-    resolution: {integrity: sha512-CAAIDwnh6ZdtrqAuxdElUqQRQDQgbbIrYtDYI8gCjXS1qQ+1XdLoK8FIZWxJwn0/I+BkSSZpar3SOgjemQz4fg==}
-    dependencies:
-      '@types/js-yaml': 4.0.5
-      is-buffer: 2.0.5
-      js-yaml: 4.1.0
     dev: false
 
   /vfile-message@3.1.4:

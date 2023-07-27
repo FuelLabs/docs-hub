@@ -1,11 +1,10 @@
-import { getCookie, setCookie } from 'cookies-next';
 import { readFileSync } from 'fs';
-import type { GetServerSideProps } from 'next';
+import type { GetStaticProps } from 'next';
 import { join } from 'path';
 
 import { Layout } from '../components/Layout';
-import { DEFAULT_THEME, DOCS_DIRECTORY } from '../constants';
-import { DocProvider } from '../hooks/useDocContext';
+import { DOCS_DIRECTORY } from '../constants';
+import useTheme from '../hooks/useTheme';
 import { GuidesPage } from '../screens/GuidesPage';
 
 export interface GuideInfo {
@@ -15,28 +14,21 @@ export interface GuideInfo {
 
 interface GuidesProps {
   guides: { [key: string]: GuideInfo };
-  theme: string;
 }
 
-export default function Guides({ theme, guides }: GuidesProps) {
+export default function Guides({ guides }: GuidesProps) {
+  const { theme } = useTheme();
   return (
-    <DocProvider theme={theme}>
-      <Layout title="Fuel Guides" isClean theme={theme}>
-        <GuidesPage guides={guides} />
-      </Layout>
-    </DocProvider>
+    <Layout title="Fuel Guides" isClean theme={theme}>
+      <GuidesPage guides={guides} />
+    </Layout>
   );
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getServerSideProps: GetServerSideProps<any> = async (ctx) => {
+export const getStaticProps: GetStaticProps<any> = async () => {
   const guidesPath = join(DOCS_DIRECTORY, `../docs/guides/docs/guides.json`);
   const guides = JSON.parse(readFileSync(guidesPath, 'utf8'));
 
-  const theme = getCookie('theme', ctx);
-  if (!theme) {
-    setCookie('theme', DEFAULT_THEME, ctx);
-  }
-
-  return { props: { theme: theme || DEFAULT_THEME, guides } };
+  return { props: { guides } };
 };

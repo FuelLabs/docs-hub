@@ -10,7 +10,6 @@ import type { Root } from 'remark-gfm';
 import { getHighlighter as shikiGetHighlighter } from 'shiki';
 import type { PluggableList } from 'unified';
 import { visit } from 'unist-util-visit';
-import { codeImport as walletCodeImport } from '~/docs/fuels-wallet/packages/docs/src/lib/code-import';
 
 // Shiki loads languages and themes using "fs" instead of "import", so Next.js
 // doesn't bundle them into production build. To work around, we manually copy

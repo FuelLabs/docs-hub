@@ -9,3 +9,4 @@ pnpm-lock.yaml
 docs
 !src/pages/docs
 public/shiki
+.contentlayer
