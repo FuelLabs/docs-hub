@@ -27,6 +27,10 @@ export class Docs {
           slug = slug.slice(0, -1);
         }
 
+        if (path.includes('guide')) {
+          console.log(slug);
+        }
+
         return {
           params: {
             slug,
@@ -162,8 +166,11 @@ export class Docs {
     if (slug === 'docs/guides/quickstart') {
       slug = 'docs/guides/quickstart/index';
     }
+    if (slug.startsWith('docs/guides/')) {
+      slug = slug.replace('docs/guides/', 'guides/');
+    }
 
-    slug = slug.slice(5).replace('README', 'index');
+    slug = slug.replace('README', 'index');
     return slug;
   }
 }

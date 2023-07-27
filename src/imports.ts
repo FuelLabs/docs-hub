@@ -7,16 +7,9 @@ import * as FuelExamples from '~/docs/fuels-wallet/packages/docs/examples';
 import type { DocType } from './types';
 
 function loadComponent(imp: any, name?: string) {
-  return dynamic(
-    () => {
-      return imp.then((mod: any) => {
-        return name ? mod[name] : mod;
-      });
-    },
-    {
-      ssr: false,
-    }
-  );
+  return dynamic(() => imp.then((mod: any) => (name ? mod[name] : mod)), {
+    ssr: false,
+  });
 }
 
 export function getComponents(doc: DocType) {

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { compile } from '@mdx-js/mdx';
 import { addRawDocumentToVFile } from 'contentlayer/core';
 import type { MdDoc } from 'contentlayer/generated';
@@ -14,6 +13,7 @@ import { rehypeExtractHeadings } from './plugins/toc';
 
 const docConfigPath = join(DOCS_DIRECTORY, '../src/docs.json');
 const configFile = JSON.parse(readFileSync(docConfigPath, 'utf8'));
+const BASE_URL = 'https://docs-hub.vercel.app/';
 
 export class Doc {
   md: MdDoc;
@@ -39,7 +39,6 @@ export class Doc {
       title: this.#getTitle(item.title),
       slug: item.slug,
       category: item.category ?? null,
-      source: null as any,
       headings: [],
       menu: [],
       docsConfig: {
@@ -60,15 +59,20 @@ export class Doc {
 
   #getConfig(slug: string): Config {
     try {
-      let book = slug;
-      if (slug.startsWith('.')) {
-        book = slug.split('/')[1].replace('.md', '');
-      } else if (slug.includes('/')) {
-        book = slug.split('/')[0];
-      } else if (slug.startsWith('fuel-')) {
-        book = slug.replace('fuel-', '');
+      if (slug.startsWith('docs/')) {
+        slug = slug.replace('docs/', '');
       }
-      return configFile[book];
+      if (slug.startsWith('.')) {
+        slug = slug.split('/')[1].replace('.md', '');
+      }
+      if (slug.includes('/')) {
+        slug = slug.split('/')[0];
+      }
+      if (slug.startsWith('fuel-')) {
+        slug = slug.replace('fuel-', '');
+      }
+      console.log(slug);
+      return configFile[slug];
     } catch (e) {
       throw new Error(`${slug} docs.json not found`);
     }
@@ -95,6 +99,14 @@ export class Doc {
     });
 
     return String(code);
+  }
+
+  slugForSitemap() {
+    let slug = this.item.slug;
+    if (slug.endsWith('/index')) {
+      slug = slug.replace('/index', '');
+    }
+    return this.#createUrl(slug);
   }
 
   get sidebarLinks() {
@@ -141,5 +153,9 @@ export class Doc {
     slug = slug.replace('../', '');
     slug = slug.startsWith('./') ? slug.slice(2) : slug;
     return slug;
+  }
+
+  #createUrl(slug: string) {
+    return `${BASE_URL}${slug.replace('../', '').replace('./', '')}`;
   }
 }
