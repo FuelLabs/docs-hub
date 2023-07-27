@@ -6,7 +6,7 @@ import { VersionPage } from '../screens/VersionsPage';
 type PageProps = VersionsPageProps;
 
 export default function Versions({ versions }: PageProps) {
-  const { theme } = useTheme();
+  const { theme = 'light' } = useTheme();
   return (
     <Layout title="Fuel Docs" isClean theme={theme}>
       <VersionPage versions={versions} />

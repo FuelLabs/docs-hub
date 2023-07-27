@@ -1,6 +1,5 @@
 import { defineDocumentType, makeSource } from 'contentlayer/source-files';
-
-import { Docs } from './src/lib/Docs';
+import { Docs } from '~/src/lib/Docs';
 
 const MdDoc = defineDocumentType(() => ({
   name: 'MdDoc',
