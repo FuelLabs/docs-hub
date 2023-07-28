@@ -18,6 +18,10 @@ function replaceInternalLinks(href: string, base: string) {
       .replace('sway/book/', 'sway/');
     href = `/docs${href}`;
 
+    if (href.includes('fuels-ts/guide/')) {
+      href = href.replace('fuels-ts/guide/', 'fuels-ts/');
+    }
+
     const isSwayVersion = href.match(/sway\/(v.+)\/forc/);
     if (isSwayVersion) {
       const version = isSwayVersion[1];

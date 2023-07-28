@@ -70,8 +70,12 @@ export class DocParser {
       '!docs/fuelup/README.md',
       '!docs/fuels-rs/README.md',
       '!docs/fuels-ts/README.md',
+      '!docs/fuels-ts/CHANGELOG.md',
       '!docs/fuel-specs/README.md',
-      '!docs/fuel-indexer/README.md',
+      '!docs/fuel-indexer/docs/README.md',
+      '!docs/fuels-wallet/README.md',
+      '!docs/fuels-wallet/packages/sdk/CHANGELOG.md',
+      '!docs/fuel-graphql-docs/README.md',
     ]);
 
     const dirs = [
