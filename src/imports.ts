@@ -22,7 +22,7 @@ export function getComponents(doc: DocType) {
     });
   }
 
-  if (['wallet/', 'guides/'].includes(doc.docsConfig.slug)) {
+  if (['wallet', 'guides'].includes(doc.docsConfig.slug)) {
     const CodeImport = dynamic(() =>
       import('~/src/components/CodeImport').then((mod) => mod.CodeImport)
     );

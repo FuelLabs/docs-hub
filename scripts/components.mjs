@@ -41,9 +41,9 @@ async function main() {
     'graphql.ts'
   );
   await exportComponents(
-    WALLET_DIRECTORY,
+    path.join(DOCS_DIRECTORY, WALLET_BOOK_NAME),
     WALLET_DOCS_DIRECTORY,
-    WALLET_BOOK_PATH,
+    WALLET_BOOK_NAME,
     WALLET_COMPONENTS_CONFIG_PATH,
     'wallet.ts'
   );
@@ -150,11 +150,11 @@ function getPath(compName, componentsConfig, directory, dirPath) {
   let actualCompPath = '';
   let isDefault = false;
   for (let i = 0; i < componentsConfig.folders.length; i++) {
-    const path = `${componentsConfig.folders[i]}/${compName}`;
-    const actualPath = `${directory}${path}.tsx`;
+    const thisPath = `${componentsConfig.folders[i]}/${compName}`;
+    const actualPath = `${directory}${thisPath}.tsx`;
     if (fs.existsSync(actualPath)) {
       isDefault = hasDefaultExport(actualPath);
-      actualCompPath = `../../docs/${dirPath}${path}`;
+      actualCompPath = `../../docs/${dirPath}${thisPath}`;
       break;
     }
   }
