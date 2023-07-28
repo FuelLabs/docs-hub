@@ -16,9 +16,8 @@
   },
   "exclude": ["docs/**/**.ts", "docs/**/**.tsx"],
   "include": [
+    "src",
     "next-env.d.ts",
-    "./src/**/*.ts",
-    "./src/**/*.tsx",
     "./contentlayer.config.ts",
     ".contentlayer/generated",
     ".next/types/**/*.ts"
