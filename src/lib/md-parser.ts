@@ -124,6 +124,9 @@ export class DocParser {
     if (slug.startsWith('docs/guides/')) {
       slug = slug.replace('docs/guides/', 'guides/');
     }
+    if (slug.startsWith('docs/fuels-ts/guide/')) {
+      slug = slug.replace('docs/fuels-ts/guide/', 'docs/fuels-ts/');
+    }
 
     slug = slug.replace('README', 'index');
     return slug;
