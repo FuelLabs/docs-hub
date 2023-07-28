@@ -15,8 +15,8 @@ import type { AnimationProps } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 
-import { NAVIGATION } from '../constants';
-import type { LinkObject } from '../constants';
+import { NAVIGATION } from '../config/constants';
+import type { LinkObject } from '../config/constants';
 
 import { styles as navStyles } from './Navigation';
 import { Sidebar } from './Sidebar';

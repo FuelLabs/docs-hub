@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import 'plyr-react/plyr.css';
 import { runSync } from '@mdx-js/mdx';
 import * as provider from '@mdx-js/react';
 import dynamic from 'next/dynamic';

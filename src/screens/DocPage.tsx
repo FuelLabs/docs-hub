@@ -9,7 +9,7 @@ import type { DocType, SidebarLinkItem } from '~/src/types';
 
 import { DocFooter } from '../components/DocFooter';
 import { MDXRender } from '../components/MDXRender';
-import { getComponents } from '../imports';
+import { getComponents } from '../lib/imports';
 
 type DocPageProps = {
   code: string;

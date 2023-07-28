@@ -2,7 +2,7 @@ import { DocSearch } from '@docsearch/react';
 import type { DocSearchHit } from '@docsearch/react/dist/esm/types';
 import docsearch from '~/docsearch.json';
 
-import { NAVIGATION } from '../constants';
+import { NAVIGATION } from '../config/constants';
 
 export default function Search() {
   const transformItems = (items: DocSearchHit[]) =>

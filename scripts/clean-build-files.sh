@@ -5,4 +5,4 @@ rm -rf ./docs/builds/sway/v*
 rm -rf ./docs/builds/sway/latest
 
 # generate sidebar links
-node src/script.mjs
+pnpm generate:links

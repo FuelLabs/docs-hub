@@ -54,7 +54,7 @@ async function main() {
         sortedLinks = newLinks;
       }
       const json = JSON.stringify(sortedLinks);
-      const folderPath = 'src/sidebar-links';
+      const folderPath = 'src/config/sidebar-links';
       if (!fs.existsSync(folderPath)) {
         fs.mkdirSync(folderPath);
       }
@@ -422,7 +422,7 @@ async function getDocs(key) {
 
 function removeDocsPath(path) {
   // clean up the url paths
-  const configPath = join(DOCS_DIRECTORY, `../src/paths.json`);
+  const configPath = join(DOCS_DIRECTORY, `../src/config/paths.json`);
   const pathsConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
   let newPath = path;
   Object.keys(pathsConfig).forEach((key) => {

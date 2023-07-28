@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-import { DOCS_DIRECTORY } from '../../constants';
+import { DOCS_DIRECTORY } from '../../config/constants';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function handleLinks(node: any, dirname: string) {
@@ -13,7 +13,7 @@ export function handleLinks(node: any, dirname: string) {
       .replace('/index', '')
       .replace('.html', '');
 
-    const configPath = join(DOCS_DIRECTORY, `../src/paths.json`);
+    const configPath = join(DOCS_DIRECTORY, `../src/config/paths.json`);
     const pathsConfig = JSON.parse(readFileSync(configPath, 'utf8'));
 
     let dir = dirname;

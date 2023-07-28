@@ -3,7 +3,7 @@ import { Dropdown, ButtonLink, Icon } from '@fuel-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { NAVIGATION } from '../constants';
+import { NAVIGATION } from '../config/constants';
 
 export function Navigation({ active }: { active: string }) {
   const router = useRouter();

@@ -4,14 +4,14 @@ import type { MdDoc } from 'contentlayer/generated';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
-import { DOCS_DIRECTORY } from '../constants';
+import { DOCS_DIRECTORY } from '../config/constants';
 import type { Config, DocType, SidebarLinkItem } from '../types';
 
 import { Docs } from './md-docs';
 import { rehypePlugins, remarkPlugins } from './md-plugins';
 import { rehypeExtractHeadings } from './plugins/toc';
 
-const docConfigPath = join(DOCS_DIRECTORY, '../src/docs.json');
+const docConfigPath = join(DOCS_DIRECTORY, '../src/config/docs.json');
 const configFile = JSON.parse(readFileSync(docConfigPath, 'utf8'));
 const BASE_URL = 'https://docs-hub.vercel.app/';
 
@@ -107,7 +107,7 @@ export class Doc {
     const guideName = this.item.slug.split('/')[0];
     const linksPath = join(
       DOCS_DIRECTORY,
-      `../src/sidebar-links/${configSlug}.json`
+      `../src/config/sidebar-links/${configSlug}.json`
     );
     const links = JSON.parse(readFileSync(linksPath, 'utf8'));
     if (configSlug === 'guides' && guideName) {

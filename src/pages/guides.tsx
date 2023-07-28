@@ -3,7 +3,7 @@ import type { GetStaticProps } from 'next';
 import { join } from 'path';
 
 import { Layout } from '../components/Layout';
-import { DOCS_DIRECTORY } from '../constants';
+import { DOCS_DIRECTORY } from '../config/constants';
 import useTheme from '../hooks/useTheme';
 import { GuidesPage } from '../screens/GuidesPage';
 
