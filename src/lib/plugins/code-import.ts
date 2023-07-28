@@ -157,6 +157,7 @@ export function codeImport() {
     const rootDir = process.cwd();
     const dirname = file.data.rawDocumentData?.sourceFileDir;
     const nodes: [any, number | undefined, any][] = [];
+    if (dirname.startsWith('docs/fuels-wallet')) return;
 
     visit(tree, 'mdxJsxFlowElement', (node: any, idx, parent) => {
       if (node.name === 'CodeImport') {
@@ -209,16 +210,10 @@ export function codeImport() {
         lineEnd = commentResult.lineEnd;
         content = commentResult.content;
       } else if (testCase) {
-        try {
-          const testResult = extractTestCase(fileContent, testCase);
-          lineStart = testResult.lineStart;
-          lineEnd = testResult.lineEnd;
-          content = testResult.content;
-        } catch (e) {
-          if (process.env.NODE_ENV !== 'production') {
-            console.log(e);
-          }
-        }
+        const testResult = extractTestCase(fileContent, testCase);
+        lineStart = testResult.lineStart;
+        lineEnd = testResult.lineEnd;
+        content = testResult.content;
       } else {
         content = fileContent;
       }
