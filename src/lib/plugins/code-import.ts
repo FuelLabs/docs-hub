@@ -215,7 +215,9 @@ export function codeImport() {
           lineEnd = testResult.lineEnd;
           content = testResult.content;
         } catch (e) {
-          console.log(e);
+          if (process.env.NODE_ENV !== 'production') {
+            console.log(e);
+          }
         }
       } else {
         content = fileContent;
