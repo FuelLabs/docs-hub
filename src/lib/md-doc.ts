@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { compile } from '@mdx-js/mdx';
 import { addRawDocumentToVFile } from 'contentlayer/core';
 import type { MdDoc } from 'contentlayer/generated';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
+import { codeImport as walletCodeImport } from '~/docs/fuels-wallet/packages/docs/src/lib/code-import';
 
 import { DOCS_DIRECTORY } from '../config/constants';
 import type { Config, DocType, SidebarLinkItem } from '../types';
@@ -79,7 +82,7 @@ export class Doc {
       outputFormat: 'function-body',
       format: doc._raw.contentType === 'markdown' ? 'md' : 'mdx',
       providerImportSource: '@mdx-js/react',
-      remarkPlugins: [addRawDocumentToVFile(this.md._raw), ...remarkPlugins],
+      remarkPlugins: this.#remarkPlugins(),
       rehypePlugins: [
         ...rehypePlugins,
         rehypeExtractHeadings({
@@ -150,5 +153,19 @@ export class Doc {
 
   #createUrl(slug: string) {
     return `${BASE_URL}${slug.replace('../', '').replace('./', '')}`;
+  }
+
+  #remarkPlugins() {
+    const filepath = this.md._raw.sourceFilePath;
+    let plugins = [addRawDocumentToVFile(this.md._raw), ...remarkPlugins];
+
+    if (this.md.slug.startsWith('docs/wallet/')) {
+      plugins = plugins.concat([[walletCodeImport, { filepath }] as any]);
+    }
+    if (this.md.slug.startsWith('docs/graphql/')) {
+      plugins = plugins.concat([[codeExamples, { filepath }] as any]);
+    }
+
+    return plugins;
   }
 }
