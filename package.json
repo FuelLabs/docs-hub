@@ -9,7 +9,7 @@
     "deps:update": "updates -gu",
     "start": "next start",
     "check": "run-s lint prettier:check",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx -c .eslintrc",
     "lint:fix": "pnpm lint --fix",
     "prettier:check": "prettier --check .",
     "prettier:format": "prettier --write .",

@@ -1,12 +1,12 @@
 import type { GetStaticProps } from 'next';
-import type { MdDoc } from '~/.contentlayer/generated';
-import { allMdDocs } from '~/.contentlayer/generated';
-import { Doc } from '~/src/lib/Doc';
-import { Docs } from '~/src/lib/Docs';
-import { DocScreen } from '~/src/screens/DocPage';
-import type { DocType, SidebarLinkItem } from '~/src/types';
 
+import type { MdDoc } from '../../.contentlayer/generated';
+import { allMdDocs } from '../../.contentlayer/generated';
 import useTheme from '../hooks/useTheme';
+import { Doc } from '../lib/Doc';
+import { Docs } from '../lib/Docs';
+import { DocScreen } from '../screens/DocPage';
+import type { DocType, SidebarLinkItem } from '../types';
 
 export type DocPageProps = {
   code: string;

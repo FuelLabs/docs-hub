@@ -1,4 +1,4 @@
-import type { MdDoc } from '~/.contentlayer/generated/types';
+import type { MdDoc } from '../../.contentlayer/generated/types';
 
 export class Docs {
   static getAllPaths(mdDocs: MdDoc[]) {

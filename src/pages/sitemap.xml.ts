@@ -1,6 +1,6 @@
 import type { GetServerSideProps } from 'next';
-import { allMdDocs } from '~/.contentlayer/generated';
 
+import { allMdDocs } from '../../.contentlayer/generated';
 import { Doc } from '../lib/Doc';
 import { Docs } from '../lib/Docs';
 
