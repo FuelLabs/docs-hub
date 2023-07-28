@@ -3,8 +3,8 @@ import type { GetStaticProps } from 'next';
 import type { MdDoc } from '../../.contentlayer/generated';
 import { allMdDocs } from '../../.contentlayer/generated';
 import useTheme from '../hooks/useTheme';
-import { Doc } from '../lib/Doc';
-import { Docs } from '../lib/Docs';
+import { Doc } from '../lib/md-doc';
+import { Docs } from '../lib/md-docs';
 import { DocScreen } from '../screens/DocPage';
 import type { DocType, SidebarLinkItem } from '../types';
 

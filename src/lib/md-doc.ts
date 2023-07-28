@@ -7,7 +7,7 @@ import { join } from 'path';
 import { DOCS_DIRECTORY } from '../constants';
 import type { Config, DocType, SidebarLinkItem } from '../types';
 
-import { Docs } from './Docs';
+import { Docs } from './md-docs';
 import { rehypePlugins, remarkPlugins } from './md-plugins';
 import { rehypeExtractHeadings } from './plugins/toc';
 

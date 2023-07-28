@@ -1,8 +1,8 @@
 import type { GetServerSideProps } from 'next';
 
 import { allMdDocs } from '../../.contentlayer/generated';
-import { Doc } from '../lib/Doc';
-import { Docs } from '../lib/Docs';
+import { Doc } from '../lib/md-doc';
+import { Docs } from '../lib/md-docs';
 
 function generateSiteMap() {
   const paths = Docs.getAllPaths(allMdDocs).map((p) => {
