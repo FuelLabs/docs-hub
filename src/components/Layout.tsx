@@ -2,7 +2,7 @@ import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import type { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 import type { Config } from '../types';
 
@@ -26,6 +26,7 @@ export function Layout({
   config,
 }: LayoutProps) {
   const router = useRouter();
+
   const titleText =
     title && router.pathname !== '/'
       ? `${title[0].toUpperCase()}${title.slice(1)} | Fuel Docs`

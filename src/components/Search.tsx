@@ -4,7 +4,7 @@ import docsearch from '~/docsearch.json';
 
 import { NAVIGATION } from '../constants';
 
-export function Search() {
+export default function Search() {
   const transformItems = (items: DocSearchHit[]) =>
     filterLevelZeroResults(items);
 

@@ -1,6 +1,5 @@
 import '../styles/index.css';
 import '../styles/docsearch.css';
-import 'plyr-react/plyr.css';
 import type { AppProps } from 'next/app';
 import { Inter, Source_Code_Pro } from 'next/font/google';
 

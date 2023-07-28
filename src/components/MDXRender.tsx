@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { runSync } from '@mdx-js/mdx';
 import * as provider from '@mdx-js/react';
+import dynamic from 'next/dynamic';
 import { useMemo } from 'react';
 
 import { runtime } from '../lib/runtime';
@@ -14,6 +15,10 @@ import { UL, OL } from './List';
 import { Paragraph } from './Paragraph';
 import { Pre } from './Pre';
 import { Table } from './Table';
+
+const Player = dynamic(() => import('./Player'), {
+  ssr: false,
+});
 
 export const mdxComponents = {
   a: Link,
@@ -31,6 +36,7 @@ export const mdxComponents = {
   ul: UL,
   ol: OL,
   hr: Divider,
+  Player,
 } as any;
 
 type MDXRenderProps = {

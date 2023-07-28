@@ -12,15 +12,17 @@ import {
 } from '@fuel-ui/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { AnimationProps } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 
 import { NAVIGATION } from '../constants';
 import type { LinkObject } from '../constants';
 
 import { styles as navStyles } from './Navigation';
-import { Search } from './Search';
 import { Sidebar } from './Sidebar';
-import { ThemeToggler } from './ThemeToggler';
+
+const ThemeToggler = dynamic(() => import('./ThemeToggler'), { ssr: false });
+const Search = dynamic(() => import('./Search'), { ssr: false });
 
 const MotionBox = motion<any>(Box);
 const SPRING: AnimationProps['transition'] = {
