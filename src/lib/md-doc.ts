@@ -36,8 +36,9 @@ export class Doc {
     const doc = {
       pageLink,
       _raw: item._raw,
-      title: this.#getTitle(item.title),
       slug: item.slug,
+      title: this.#getTitle(item.title),
+      parent: item.parent ?? null,
       category: item.category ?? null,
       headings: [],
       menu: [],
@@ -46,13 +47,6 @@ export class Doc {
         slug: item.slug,
       },
     } as DocType;
-
-    if (config.slug === 'guides') {
-      doc.parent = {
-        label: 'Guides',
-        link: '/guides',
-      };
-    }
 
     this.item = doc;
   }

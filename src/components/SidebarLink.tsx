@@ -2,11 +2,18 @@ import { cssObj, cx } from '@fuel-ui/css';
 import type { ButtonLinkProps } from '@fuel-ui/react';
 import { ButtonLink } from '@fuel-ui/react';
 import NextLink from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/router';
 import { forwardRef } from 'react';
 import type { SidebarLinkItem } from '~/src/types';
 
 import { capitalize } from '../lib/str';
+
+function getActive(pathname: string, slug: string) {
+  if (slug.split('/').length > 2 || slug.includes('guides')) {
+    return pathname.includes(slug);
+  }
+  return pathname === `/${slug}` || pathname === `/${slug}/`;
+}
 
 export type SidebarLinkProps = ButtonLinkProps & {
   item: SidebarLinkItem;
@@ -15,20 +22,16 @@ export type SidebarLinkProps = ButtonLinkProps & {
 // eslint-disable-next-line react/display-name
 export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
   ({ item, ...props }, ref) => {
-    const pathname = usePathname() || '';
-    const slug = item.slug?.startsWith('.')
-      ? item.slug.replace('../', '').replace('./', '')
-      : item.slug;
+    const router = useRouter();
+    const pathname = router.asPath;
+    let slug = item.slug?.replace('../', '').replace('./', '') || '';
 
-    const isGuide = pathname.includes('guides/');
-    const fullSlug = `${isGuide ? slug : `/docs/${slug}`}${
-      slug?.endsWith('/') ? '' : '/'
-    }`;
-    const label = item.label.replaceAll(' ', '-');
-    const active = pathname.startsWith('/guides/')
-      ? pathname.replace('/guides/', '') === fullSlug
-      : pathname === fullSlug ||
-        (label === slug?.split('/')[1] && pathname.includes(label));
+    if (!slug.startsWith('guides/')) {
+      slug = `docs/${slug}`;
+    }
+
+    const active = getActive(pathname, slug);
+
     const isActive = cx({
       active,
     });
@@ -38,7 +41,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
         {...props}
         ref={ref}
         as={NextLink}
-        href={fullSlug}
+        href={slug}
         css={styles.root}
         data-active={Boolean(isActive)}
       >

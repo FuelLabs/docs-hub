@@ -180,9 +180,5 @@ const styles = {
         borderColor: '$whiteA9 !important',
       },
     },
-
-    '&[data-expanded=true]': {
-      bottom: '-$4',
-    },
   }),
 };
