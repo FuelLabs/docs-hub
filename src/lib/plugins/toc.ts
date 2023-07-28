@@ -15,6 +15,12 @@ export function rehypeExtractHeadings({
       if (rank) {
         node.properties['data-rank'] = `h${rank}`;
       }
+      if (rank && node?.type === 'element') {
+        const firstChild = node.children?.[0];
+        if (firstChild?.tagName === 'a') {
+          node.children[0] = firstChild.children?.[0];
+        }
+      }
       if (rank === 2 && node?.type === 'element') {
         headings.push({
           title: toString(node),

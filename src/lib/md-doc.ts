@@ -62,9 +62,6 @@ export class Doc {
       if (slug.includes('/')) {
         slug = slug.split('/')[0];
       }
-      if (slug.startsWith('fuel-')) {
-        slug = slug.replace('fuel-', '');
-      }
       return configFile[slug];
     } catch (e) {
       throw new Error(`${slug} docs.json not found`);
@@ -131,7 +128,7 @@ export class Doc {
 
     const idx = flatLinks.findIndex((i) => {
       if (!i.slug) return false;
-      return i.slug.startsWith(slug || '');
+      return `docs/${i.slug}`.startsWith(slug || '');
     });
 
     const prev = flatLinks[idx - 1] ?? null;
@@ -145,6 +142,9 @@ export class Doc {
     if (!slug) return null;
     slug = slug.replace('../', '');
     slug = slug.startsWith('./') ? slug.slice(2) : slug;
+    if (slug.endsWith('/index')) {
+      slug = slug.replace('/index', '');
+    }
     return slug;
   }
 

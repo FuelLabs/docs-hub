@@ -104,7 +104,7 @@ export class DocParser {
       slug = slug.replace('fuel-graphql-docs', 'graphql');
     }
     if (slug.startsWith('docs/fuel-')) {
-      slug = slug.replace('fuel-', '');
+      slug = slug.replace('/fuel-', '/');
     }
     if (slug.includes('fuels-wallet')) {
       slug = slug.replace('fuels-wallet', 'wallet');
