@@ -41,7 +41,7 @@ jobs:
 
       - name: Run lint
         run: |
-          pnpm check
+          pnpm check:prod
 
   build-quickstart-contract-example:
     name: build-quickstart-contract
