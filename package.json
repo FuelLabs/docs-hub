@@ -69,6 +69,7 @@
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.4.10",
+    "@playwright/test": "^1.36.2",
     "@types/chrome": "^0.0.241",
     "@types/node": "^20.4.2",
     "@types/react": "^18.2.15",

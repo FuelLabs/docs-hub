@@ -152,6 +152,9 @@ devDependencies:
   '@next/eslint-plugin-next':
     specifier: ^13.4.10
     version: 13.4.10
+  '@playwright/test':
+    specifier: ^1.36.2
+    version: 1.36.2
   '@types/chrome':
     specifier: ^0.0.241
     version: 0.0.241
@@ -2025,6 +2028,17 @@ packages:
       open: 9.1.0
       picocolors: 1.0.0
       tslib: 2.6.0
+
+  /@playwright/test@1.36.2:
+    resolution: {integrity: sha512-2rVZeyPRjxfPH6J0oGJqE8YxiM1IBRyM8hyrXYK7eSiAqmbNhxwcLa7dZ7fy9Kj26V7FYia5fh9XJRq4Dqme+g==}
+    engines: {node: '>=16'}
+    hasBin: true
+    dependencies:
+      '@types/node': 20.4.2
+      playwright-core: 1.36.2
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
 
   /@radix-ui/colors@0.1.9:
     resolution: {integrity: sha512-Vxq944ErPJsdVepjEUhOLO9ApUVOocA63knc+V2TkJ09D/AVOjiMIgkca/7VoYgODcla0qbSIBjje0SMfZMbAw==}
@@ -6620,7 +6634,6 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
-    dev: false
     optional: true
 
   /fuels@0.47.0:
@@ -9325,6 +9338,12 @@ packages:
     dependencies:
       find-up: 4.1.0
     dev: false
+
+  /playwright-core@1.36.2:
+    resolution: {integrity: sha512-sQYZt31dwkqxOrP7xy2ggDfEzUxM1lodjhsQ3NMMv5uGTRDsLxU0e4xf4wwMkF2gplIxf17QMBCodSFgm6bFVQ==}
+    engines: {node: '>=16'}
+    hasBin: true
+    dev: true
 
   /plyr-react@5.3.0(plyr@3.7.8)(react@18.2.0):
     resolution: {integrity: sha512-m36/HrpHwg1N2rq3E31E8/kpAH55vk6qHUg17MG4uu9jbWYxnkN39lLmZQwxW7/qpDPfW5aGUJ6R3u23V0R3zA==}

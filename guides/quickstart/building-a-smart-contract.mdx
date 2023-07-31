@@ -26,9 +26,10 @@ Then run `fuelup toolchain install beta-3` to install the `beta-3` toolchain.
 
 Finally, set the `beta-3` toolchain as your default distribution with the following command:
 
-```console
-$ fuelup default beta-3
-default toolchain set to 'beta-3-aarch64-apple-darwin'
+<span id="set-default-fuelup-toolchain"></span>
+
+```sh
+fuelup default beta-3
 ```
 
 You can check your current toolchain anytime by running `fuelup show`.
@@ -42,33 +43,28 @@ We'll build a simple counter contract with two functions: one to increment the c
 
 **Start by creating a new, empty folder. We'll call it `fuel-project`.**
 
+<span id="create-project-folder"></span>
+
+```sh
+mkdir fuel-project
+```
+
 ### Writing the Contract
 
 Create a contract project inside of your `fuel-project` folder:
 
+<span id="create-contract"></span>
+
 ```sh
-$ cd fuel-project
-$ forc new counter-contract
-To compile, use `forc build`, and to run tests use `forc test`
-
-----
-
-Read the Docs:
-- Sway Book: https://fuellabs.github.io/sway/latest
-- Rust SDK Book: https://fuellabs.github.io/fuels-rs/latest
-- TypeScript SDK: https://fuellabs.github.io/fuels-ts/
-
-Join the Community:
-- Follow us @SwayLang: https://twitter.com/SwayLang
-- Ask questions on Discourse: https://forum.fuel.network/
-
-Report Bugs:
-- Sway Issues: https://github.com/FuelLabs/sway/issues/new
+cd fuel-project
+forc new counter-contract
 ```
 
 {/* This example should include a tree for a new forc project and explain the boilerplate files */}
 {/* forc_new:example:start */}
 Here is the project that `Forc` has initialized:
+
+<span id="contract-tree"></span>
 
 ```console
 $ tree counter-contract
@@ -85,6 +81,8 @@ Open your project in a code editor and delete everything in `src/main.sw` apart 
 
 Every Sway file must start with a declaration of what type of program the file contains; here, we've declared that this file is a contract.
 
+<span id="contract-1"></span>
+
 <CodeImport
   file="../../guide-examples/quickstart/counter-contract/src/main.sw"
   comment="contract"
@@ -93,6 +91,8 @@ Every Sway file must start with a declaration of what type of program the file c
 />
 
 Next, we'll define a storage value. In our case, we have a single counter that we'll call `counter` of type 64-bit unsigned integer and initialize it to 0.
+
+<span id="contract-2"></span>
 
 <CodeImport
   file="../../guide-examples/quickstart/counter-contract/src/main.sw"
@@ -107,6 +107,8 @@ An ABI defines an interface, and there is no function body in the ABI. A contrac
 
 For simplicity, we will define the ABI directly in the contract file.
 
+<span id="contract-3"></span>
+
 <CodeImport
   file="../../guide-examples/quickstart/counter-contract/src/main.sw"
   comment="abi"
@@ -117,6 +119,8 @@ For simplicity, we will define the ABI directly in the contract file.
 ### Implement ABI
 
 Below your ABI definition, you will write the implementation of the functions defined in your ABI.
+
+<span id="contract-4"></span>
 
 <CodeImport
   file="../../guide-examples/quickstart/counter-contract/src/main.sw"
@@ -131,6 +135,8 @@ Here's what your code should look like so far:
 
 File: `./counter-contract/src/main.sw`
 
+<span id="contract-all"></span>
+
 <CodeImport
   file="../../guide-examples/quickstart/counter-contract/src/main.sw"
   comment="all"
@@ -142,6 +148,8 @@ File: `./counter-contract/src/main.sw`
 
 From inside the `fuel-project/counter-contract` directory, run the following command to build your contract:
 
+<span id="build-contract"></span>
+
 ```console
 $ forc build
   Compiled library "core".
@@ -151,6 +159,8 @@ $ forc build
 ```
 
 Let's have a look at the content of the `counter-contract` folder after building:
+
+<span id="built-contract-tree"></span>
 
 ```console
 $ tree .
@@ -174,32 +184,26 @@ We will start by adding a Rust integration test harness using a Cargo generate t
 
 Navigate to your contract and then run the installation command:
 
-```console
-$ cd counter-contract
-changed directory into `counter-countract`
-$ cargo install cargo-generate
- Updating crates.io index...
- installed package `cargo-generate v0.17.3`
+<span id="install-cargo-generate"></span>
+
+```sh
+cd counter-contract
+cargo install cargo-generate
 ```
 
 > **Note**: You can learn more about cargo generate by visiting [its repository](https://github.com/cargo-generate/cargo-generate).
 
 Now, let's generate the default test harness with the following:
 
-```console
-$ cargo generate --init fuellabs/sway templates/sway-test-rs --name counter-contract
-⚠️   Favorite `fuellabs/sway` not found in config, using it as a git repository: https://github.com/fuellabs/sway
-🤷   Project Name : counter-contract
-🔧   Destination: /home/user/path/to/counter-contract ...
-🔧   Generating template ...
-[1/3]   Done: Cargo.toml
-[2/3]   Done: tests/harness.rs
-[3/3]   Done: tests
-🔧   Moving generated files into: `/home/user/path/to/counter-contract`...
-✨   Done! New project created /home/user/path/to/counter-contract
+<span id="cargo-generate-test"></span>
+
+```sh
+cargo generate --init fuellabs/sway templates/sway-test-rs --name counter-contract
 ```
 
 Let's have a look at the result:
+
+<span id="cargo-test-tree"></span>
 
 ```console
 $ tree .
@@ -229,6 +233,8 @@ At the bottom of `test/harness.rs`, define the body of `can_get_contract_id()`. 
 
 File: `tests/harness.rs`
 
+<span id="test-harness"></span>
+
 <CodeImport
   file="../../guide-examples/quickstart/counter-contract/tests/harness.rs"
   comment="contract-test"
@@ -237,6 +243,8 @@ File: `tests/harness.rs`
 />
 
 Run `cargo test` in the terminal. If all goes well, the output should look as follows:
+
+<span id="run-cargo-test"></span>
 
 ```console
 $ cargo test
