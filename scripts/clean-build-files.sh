@@ -6,3 +6,6 @@ rm -rf ./docs/builds/sway/latest
 
 # generate sidebar links
 pnpm generate:links
+
+# generate components
+pnpm generate:components
