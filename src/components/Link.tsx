@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 function replaceInternalLinks(href: string, base: string) {
   if (
     href.startsWith('https://fuellabs.github.io') &&
+    !href.startsWith('https://fuellabs.github.io/block-explorer-v2/') &&
     !href.includes('LICENSE')
   ) {
     href = href
