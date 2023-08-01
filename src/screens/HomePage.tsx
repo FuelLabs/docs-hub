@@ -14,7 +14,6 @@ export function HomePage() {
           <Text>
             Build powerful programs with a Rust-based DSL, but without
             needlessly verbose boilerplate.
-            {/* Based on Rust, and includes syntax to leverage a blockchain VM without needlessly verbose boilerplate. */}
           </Text>
           <List icon="ArrowRight">
             <List.Item>
