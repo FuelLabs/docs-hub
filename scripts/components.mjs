@@ -83,24 +83,26 @@ function findComponentsInMDXFiles(files, componentsConfig) {
       comps.forEach((comp) => {
         if (comp.includes('.')) {
           const split = comp.split('.');
-          if (split.length == 2) {
-            const categoryComp = split.pop();
-            const category = split.pop();
-            if (!categories[category]) {
-              categories[category] = [];
+          if (!componentsConfig.ignore.includes(split[0])) {
+            if (split.length == 2) {
+              const categoryComp = split.pop();
+              const category = split.pop();
+              if (!categories[category]) {
+                categories[category] = [];
+              }
+              categories[category].push(categoryComp);
+            } else if (split.length == 3) {
+              const categoryComp = split.pop();
+              const subCategory = split.pop();
+              const category = split.pop();
+              if (!subcategories[category]) {
+                subcategories[category] = {};
+              }
+              if (!subcategories[category][subCategory]) {
+                subcategories[category][subCategory] = [];
+              }
+              subcategories[category][subCategory].push(categoryComp);
             }
-            categories[category].push(categoryComp);
-          } else if (split.length == 3) {
-            const categoryComp = split.pop();
-            const subCategory = split.pop();
-            const category = split.pop();
-            if (!subcategories[category]) {
-              subcategories[category] = {};
-            }
-            if (!subcategories[category][subCategory]) {
-              subcategories[category][subCategory] = [];
-            }
-            subcategories[category][subCategory].push(categoryComp);
           }
         } else {
           // ignore components that are replaced in the docs hub
@@ -120,7 +122,9 @@ function findComponentsInMDXFiles(files, componentsConfig) {
         });
       });
 
-      components[fileName] = final;
+      if (final.length > 0) {
+        components[fileName] = final;
+      }
     }
   });
   return components;
