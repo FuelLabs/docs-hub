@@ -46,7 +46,7 @@ export function HomePage() {
         <Box.Stack>
           <Heading as="h3">SDKs</Heading>
           <Text>
-            Our SKDs are the best way to start building in our network. Using
+            Our SDKs are the best way to start building in our network. Using
             Typescript and Rust, you can start building in minutes.
           </Text>
           <List icon="ArrowRight">
