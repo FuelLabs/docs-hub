@@ -4,22 +4,27 @@ import { toString } from 'hast-util-to-string';
 import { visit } from 'unist-util-visit';
 import type { NodeHeading } from '~/src/types';
 
-type Params = {
-  rank: number;
+export function rehypeExtractHeadings({
+  headings,
+}: {
   headings: NodeHeading[];
-};
-
-export function rehypeExtractHeadings({ headings }: Params) {
-  return (tree: any) => {
+}) {
+  return () => (tree: any) => {
     visit(tree, 'element', (node) => {
       const rank = headingRank(node);
       if (rank) {
         node.properties['data-rank'] = `h${rank}`;
       }
+      if (rank && node?.type === 'element') {
+        const firstChild = node.children?.[0];
+        if (firstChild?.tagName === 'a') {
+          node.children[0] = firstChild.children?.[0];
+        }
+      }
       if (rank === 2 && node?.type === 'element') {
         headings.push({
           title: toString(node),
-          id: node.properties.id.toString(),
+          id: node.properties.id?.toString(),
         });
       }
       if (rank === 3 && node?.type === 'element') {

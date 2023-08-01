@@ -71,7 +71,7 @@ const styles = {
     pre: {
       flex: 1,
       mb: '$0 !important',
-      padding: '$0 $5 $3',
+      padding: '$3 $5 $3',
       tabSize: '4',
       fontSize: '14px !important',
       bg: 'transparent !important',
@@ -179,10 +179,6 @@ const styles = {
       '&:hover': {
         borderColor: '$whiteA9 !important',
       },
-    },
-
-    '&[data-expanded=true]': {
-      bottom: '-$4',
     },
   }),
 };

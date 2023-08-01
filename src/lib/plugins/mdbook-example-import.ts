@@ -73,7 +73,6 @@ export function handleExampleImports(
   parent: Parent<any, any>
 ) {
   let content = '';
-
   let filePath = node.value.replace(/(\.\.\/)+/g, '');
 
   let exampleName = null;
@@ -118,17 +117,21 @@ export function handleExampleImports(
     parent.type = 'root';
   }
 
-  const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
-  const cachedFile = getFilesOnCache(fileAbsPath);
+  try {
+    const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
+    const cachedFile = getFilesOnCache(fileAbsPath);
 
-  const oldContent = oldContentMap.get(node.value);
+    const oldContent = oldContentMap.get(node.value);
 
-  /** Return result from cache if file content is the same */
-  if (fileContent === cachedFile && oldContent) {
-    return oldContent;
+    /** Return result from cache if file content is the same */
+    if (fileContent === cachedFile && oldContent) {
+      return oldContent;
+    }
+
+    content = extractCommentBlock(fileContent, exampleName);
+  } catch (err) {
+    // console.error(err);
   }
-
-  content = extractCommentBlock(fileContent, exampleName);
 
   return content;
 }

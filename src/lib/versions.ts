@@ -2,7 +2,7 @@ import { promises as fs } from 'node:fs';
 import { join } from 'node:path';
 import toml from 'toml';
 
-import { DOCS_DIRECTORY } from '../constants';
+import { DOCS_DIRECTORY } from '../config/constants';
 
 async function itemFromPackageJson(filename: string) {
   const file = await fs.readFile(join(DOCS_DIRECTORY, filename), 'utf-8');
