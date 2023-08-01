@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import { cssObj } from '@fuel-ui/css';
 import { Link as FuelLink, Box, Icon, List, Text } from '@fuel-ui/react';
 import Link from 'next/link';
@@ -13,8 +12,9 @@ export function HomePage() {
         <Box.Stack>
           <Heading as="h3">Sway Language</Heading>
           <Text>
-            Based on Rust, and includes syntax to leverage a blockchain VM
-            without needlessly verbose boilerplate.
+            Build powerful programs with a Rust-based DSL, but without
+            needlessly verbose boilerplate.
+            {/* Based on Rust, and includes syntax to leverage a blockchain VM without needlessly verbose boilerplate. */}
           </Text>
           <List icon="ArrowRight">
             <List.Item>
@@ -46,8 +46,7 @@ export function HomePage() {
         <Box.Stack>
           <Heading as="h3">SDKs</Heading>
           <Text>
-            Our SDKs are the best way to start building in our network. Using
-            Typescript and Rust, you can start building in minutes.
+            Integrate Fuel into a Typescript or Rust project in minutes.
           </Text>
           <List icon="ArrowRight">
             <List.Item>
@@ -68,11 +67,7 @@ export function HomePage() {
         <Icon icon="Bolt" size={40} stroke={0.7} />
         <Box.Stack>
           <Heading as="h3">Fuel Network</Heading>
-          <Text>
-            Start to learn right now all specs and definitions about Fuel
-            Network. You'll see why we are the fastest execution and how it
-            works.
-          </Text>
+          <Text>Find network specifications and resources.</Text>
           <List icon="ArrowRight">
             <List.Item>
               <Link href="/docs/graphql">GraphQL API</Link>
@@ -95,7 +90,7 @@ export function HomePage() {
         <Box.Stack>
           <Heading as="h3">Tooling</Heading>
           <Text>
-            We have the best tooling you need to build your next web3 app in the
+            Explore the best tooling you need to build your next web3 app in the
             fastest execution layer.
           </Text>
           <List icon="ArrowRight">
@@ -120,8 +115,7 @@ export function HomePage() {
         Fuel Docs
       </Heading>
       <Text>
-        Learn about everything Fuel. From the purpose of the project, all the
-        way down to the bits and bytes.{' '}
+        Learn about everything Fuel, all the way down to the bits and bytes.{' '}
       </Text>
       <Box css={styles.cardList}>
         {cards.sway}
