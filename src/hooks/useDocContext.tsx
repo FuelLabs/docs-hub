@@ -3,7 +3,6 @@ import type { ReactNode } from 'react';
 import type { SidebarLinkItem, DocType } from '~/src/types';
 
 export type DocCtx = {
-  theme: string;
   doc: DocType;
   docLink: SidebarLinkItem;
   links: SidebarLinkItem[];

@@ -6,23 +6,18 @@ import { useDocContext } from '~/src/hooks/useDocContext';
 
 import { capitalize } from '../lib/str';
 
-function parseLink(link: string, path: string) {
+function parseLink(link: string) {
   if (link.startsWith('../')) {
     link = link.replace('../', '');
   }
-  link = path.startsWith('/guides/')
-    ? link.replace('guides/', '')
-    : `/docs/${link}`;
-  return link;
+  return link.startsWith('guides/') ? link : `docs/${link}`;
 }
 
 export function DocFooter() {
   const { docLink, doc } = useDocContext();
   const router = useRouter();
-  const prevLink =
-    docLink.prev?.slug && parseLink(docLink.prev.slug, router.asPath);
-  let nextLink =
-    docLink.next?.slug && parseLink(docLink.next?.slug, router.asPath);
+  const prevLink = docLink.prev?.slug && parseLink(docLink.prev.slug);
+  let nextLink = docLink.next?.slug && parseLink(docLink.next?.slug);
 
   if (router.asPath === '/') nextLink = `docs/${nextLink}`;
 

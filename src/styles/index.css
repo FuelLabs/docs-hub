@@ -70,3 +70,7 @@ img {
 .fuel_Toast {
   border: 1px solid var(--colors-border);
 }
+
+ul > li > ul {
+  margin: 5px 0 !important;
+}
