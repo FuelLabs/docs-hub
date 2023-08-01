@@ -1,29 +1,28 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box, Icon, useFuelTheme } from '@fuel-ui/react';
-import { useEffect } from 'react';
-import { useCookies } from 'react-cookie';
+import { Box, Icon } from '@fuel-ui/react';
+import type { ElementRef } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 
-import { useDocContext } from '../hooks/useDocContext';
+import useTheme from '../hooks/useTheme';
 
-export function ThemeToggler() {
-  const { setTheme } = useFuelTheme();
-  const { theme } = useDocContext();
-  const [cookie, setCookie] = useCookies(['theme']);
-  const current = cookie.theme || theme;
+export default function ThemeToggler() {
+  const { theme: current, setTheme: setFuelTheme } = useTheme();
+  const [theme, setTheme] = useState(current);
+  const ref = useRef<ElementRef<'div'>>(null);
 
-  const handleChange = () => {
+  const handleChange = async () => {
     const next = current === 'dark' ? 'light' : 'dark';
-    setCookie('theme', next, { path: '/' });
     setTheme(next);
   };
 
-  useEffect(() => {
-    if (typeof document === 'undefined') return;
-    document.documentElement.attributes['data-theme'].value = current;
-  }, [current]);
+  useLayoutEffect(() => {
+    setFuelTheme(theme);
+    document.documentElement.setAttribute('data-theme', theme);
+    ref.current?.setAttribute('data-theme', theme);
+  }, [theme]);
 
   return (
-    <Box css={styles.root} data-theme={current} onClick={handleChange}>
+    <Box ref={ref} data-theme={theme} css={styles.root} onClick={handleChange}>
       <Icon icon="SunFilled" size={20} stroke={1.2} />
       <Icon icon="MoonStars" size={20} stroke={1.2} />
     </Box>
@@ -39,7 +38,7 @@ const styles = {
     px: '$2',
     width: '36px',
     height: '36px',
-    borderRadius: '$default',
+    borderRadius: '$full',
 
     '[aria-label*="Icon"]': {
       position: 'absolute',

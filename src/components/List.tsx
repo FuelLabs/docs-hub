@@ -32,15 +32,19 @@ export function OL({ children, ...props }: any) {
 const styles = {
   root: cssObj({
     my: '$6',
+    pl: '$4',
+
+    '&[class*=unordered]': {
+      listStyle: 'outside',
+    },
 
     li: {
-      pl: '$2',
+      pl: '$1',
       lineHeight: '1.7',
     },
 
-    '& .fuel_List': {
-      my: '$1',
-      ml: '$4',
+    '& li > p': {
+      display: 'inline',
     },
   }),
 };

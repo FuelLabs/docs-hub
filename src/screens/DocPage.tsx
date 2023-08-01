@@ -1,6 +1,6 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
-import { MDXRemote } from 'next-mdx-remote';
+import type { MdDoc } from '~/.contentlayer/generated';
 import { Layout } from '~/src/components/Layout';
 import { Sidebar } from '~/src/components/Sidebar';
 import { TableOfContent } from '~/src/components/TableOfContent';
@@ -8,9 +8,12 @@ import { DocProvider } from '~/src/hooks/useDocContext';
 import type { DocType, SidebarLinkItem } from '~/src/types';
 
 import { DocFooter } from '../components/DocFooter';
-import { getComponents } from '../imports';
+import { MDXRender } from '../components/MDXRender';
+import { getComponents } from '../lib/imports';
 
 type DocPageProps = {
+  code: string;
+  md: MdDoc;
   doc: DocType;
   links: SidebarLinkItem[];
   docLink?: SidebarLinkItem;
@@ -20,32 +23,28 @@ type DocPageProps = {
 export function DocScreen(props: DocPageProps) {
   const { doc } = props;
   const components = getComponents(doc);
-  const hasHeadings = Boolean(doc.headings.length);
-  const isCleanLayout = doc.source.scope.cleanLayout;
+  const hasHeadings = Boolean(doc?.headings?.length);
 
   return (
     <DocProvider {...props}>
       <Layout
-        title={doc.title}
-        isClean={Boolean(isCleanLayout)}
+        title={doc?.title}
         hasHeadings={hasHeadings}
         config={doc.docsConfig}
         category={doc.category}
       >
-        {!isCleanLayout && (
-          <Box css={styles.sidebar}>
-            <Box css={{ position: 'sticky', top: 20 }}>
-              <Sidebar />
-            </Box>
+        <Box css={styles.sidebar}>
+          <Box css={{ position: 'sticky', top: 20 }}>
+            <Sidebar />
           </Box>
-        )}
+        </Box>
         <Box as="section" css={styles.section} className="Layout--section">
           <Box className="Layout--pageContent">
-            <MDXRemote {...doc.source} scope={doc} components={components} />
+            {doc && <MDXRender code={props.code} components={components} />}
           </Box>
-          {!isCleanLayout && <DocFooter />}
+          {doc && <DocFooter />}
         </Box>
-        {!isCleanLayout && hasHeadings && <TableOfContent />}
+        {doc && hasHeadings && <TableOfContent />}
       </Layout>
     </DocProvider>
   );

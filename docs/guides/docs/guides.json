@@ -1,7 +1,7 @@
 {
   "quickstart": {
     "title": "Developer Quickstart",
-    "description": "Get started building with Fuel"
+    "description": "Get started by building a counter dApp in Fuel"
   },
   "running_a_node": {
     "title": "Running a Node",

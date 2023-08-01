@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
+import type { RawDocumentData } from 'contentlayer/core';
 import type { ComponentType } from 'react';
 
 export type MenuKey = string;
@@ -15,12 +15,12 @@ export type Config = {
 };
 
 export type DocType = {
+  _raw: RawDocumentData;
   title: string;
   slug: string;
   category?: string;
   pageLink: string;
   headings: NodeHeading[];
-  source: MDXRemoteSerializeResult;
   menu: string[];
   docsConfig: Config;
   parent?: { label: string; link: string };

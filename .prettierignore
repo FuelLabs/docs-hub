@@ -7,5 +7,6 @@ pnpm-lock.yaml
 **/*.typegen.ts
 .next
 docs
-!src/app/docs
+!src/pages/docs
 public/shiki
+.contentlayer

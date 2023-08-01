@@ -1,5 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# contentlayer
+.contentlayer
+
 # dependencies
 /node_modules
 /.pnp
@@ -40,5 +43,5 @@ node_modules
 notes
 
 # Generated files
-src/sidebar-links/
+src/config/sidebar-links/
 src/component-exports/
