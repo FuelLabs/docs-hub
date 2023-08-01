@@ -230,15 +230,14 @@ function addLines() {
   return function transformer(tree: Root) {
     visit(tree, '', (node: any, _idx: any, parent: any) => {
       if (!isCodeEl(node, parent)) return;
-      node.children = node.children.reduce(
-        (acc: any, node: any, idx: number) => {
-          if (node.properties?.['data-line'] === '') {
-            node.properties['data-line'] = idx + 1;
-          }
-          return acc.concat(node);
-        },
-        []
-      );
+      let counter = 1;
+      node.children = node.children.reduce((acc: any, node: any) => {
+        if (node.properties?.['data-line'] === '') {
+          node.properties['data-line'] = counter;
+          counter = counter + 1;
+        }
+        return acc.concat(node);
+      }, []);
     });
   };
 }
