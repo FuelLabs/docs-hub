@@ -55,7 +55,7 @@ export function Pre({
           icon={<Icon icon={Icon.is('ClipboardText')} size={12} stroke={1} />}
           variant="ghost"
           intent="base"
-          aria-label="Copy to Clipborad"
+          aria-label="Copy to Clipboard"
           onPress={handleCopy}
         />
       </Box>

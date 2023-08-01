@@ -14,7 +14,6 @@ export function GuidesPage({ guides }: GuidesPageProps) {
       <Heading as="h1" data-rank="h1" id="fuel-docs">
         Fuel Guides
       </Heading>
-      <Text>Get started building with Fuel.</Text>
       <Box css={styles.cardList}>
         {Object.keys(guides).map((guideName) => {
           const guideInfo = guides[guideName];

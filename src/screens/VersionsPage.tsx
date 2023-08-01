@@ -26,8 +26,7 @@ export function VersionPage({ versions }: VersionsPageProps) {
         Versions
       </Heading>
       <Text>
-        Here, you will find a comprehensive list of the versions of each tool
-        when we release this docs:
+        Below are the versions of each tool shown in the current documentation:
       </Text>
       <List css={styles.list}>
         {Object.entries(versions).map(([key, value]) => (
