@@ -1,11 +1,9 @@
-/* eslint-disable no-continue */
 import fs from 'fs';
 import { globby } from 'globby';
 import matter from 'gray-matter';
 import { EOL } from 'os';
 import { join } from 'path';
 
-// eslint-disable-next-line no-undef
 const DOCS_DIRECTORY = join(process.cwd(), './docs');
 const swaySummaryPath = join(DOCS_DIRECTORY, './sway/docs/book/src/SUMMARY.md');
 const rustSummaryPath = join(DOCS_DIRECTORY, './fuels-rs/docs/src/SUMMARY.md');
@@ -20,7 +18,7 @@ const graphqlOrderPath = join(
   DOCS_DIRECTORY,
   './fuel-graphql-docs/src/nav.json'
 );
-const guidesOrderPath = join(DOCS_DIRECTORY, '../guides/nav.json');
+const guidesOrderPath = join(DOCS_DIRECTORY, '../docs/guides/docs/nav.json');
 const tsConfigPath = join(
   DOCS_DIRECTORY,
   './fuels-ts/apps/docs/.vitepress/config.ts'
@@ -56,7 +54,7 @@ async function main() {
         sortedLinks = newLinks;
       }
       const json = JSON.stringify(sortedLinks);
-      const folderPath = 'src/sidebar-links';
+      const folderPath = 'src/config/sidebar-links';
       if (!fs.existsSync(folderPath)) {
         fs.mkdirSync(folderPath);
       }
@@ -178,7 +176,7 @@ async function getOrders() {
       'For Developers',
       'Contributing',
     ],
-    // eslint-disable-next-line @typescript-eslint/naming-convention
+
     for_developers: [
       'Getting Started',
       'Connecting',
@@ -213,7 +211,6 @@ function getSortedLinks(config, docs) {
     o.toLowerCase().replaceAll('-', '_').replaceAll(' ', '_')
   );
 
-  // eslint-disable-next-line no-plusplus
   for (let i = 0; i < docs.length; i++) {
     const doc = docs[i];
     if (doc.category === 'forc_client') {
@@ -405,8 +402,7 @@ async function getDocs(key) {
     default:
       paths = [
         // GUIDES
-        '../guides/*.mdx',
-        '../guides/**/*.mdx',
+        './guides/**/*.mdx',
       ];
       break;
   }
@@ -426,7 +422,7 @@ async function getDocs(key) {
 
 function removeDocsPath(path) {
   // clean up the url paths
-  const configPath = join(DOCS_DIRECTORY, `../src/paths.json`);
+  const configPath = join(DOCS_DIRECTORY, `../src/config/paths.json`);
   const pathsConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
   let newPath = path;
   Object.keys(pathsConfig).forEach((key) => {

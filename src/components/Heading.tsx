@@ -58,7 +58,7 @@ const styles = {
     fontFamily: '$display',
     fontWeight: '$medium',
 
-    [head([1])]: {
+    [`${head([1])}:first-of-type`]: {
       mb: '$8',
       position: 'relative',
       textSize: '5xl',
@@ -66,19 +66,8 @@ const styles = {
       '& a': {
         position: 'relative',
       },
-
-      '& a:after': {
-        position: 'absolute',
-        content: '""',
-        bottom: '-4px',
-        left: 0,
-        height: '3px',
-        backgroundColor: '$brand',
-        display: 'block',
-        width: '60%',
-      },
     },
-    [head([2])]: {
+    [head([1, 2])]: {
       mt: '$12',
       mb: '$5',
       pb: '$2',

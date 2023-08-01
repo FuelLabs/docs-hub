@@ -9,8 +9,6 @@ import * as prettier from 'prettier';
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
 
-const ROOT_DIR = path.resolve(__dirname, '../../../../../../../');
-
 function toAST(content: string) {
   return acorn.parse(content, {
     ecmaVersion: 'latest',
@@ -38,7 +36,7 @@ function extractLines(
     const newLines = linesIncluded.map((line) => line - start);
     return lines
       .slice(start - 1, end)
-      .filter((line, index) => newLines.includes(index))
+      .filter((_line, index) => newLines.includes(index))
       .join('\n');
   } else {
     return lines.slice(start - 1, end).join('\n');
@@ -153,17 +151,13 @@ function extractTestCase(source: string, testCase: string) {
   };
 }
 
-interface Options {
-  filepath: string;
-}
-
-export function codeImport(options: Options = { filepath: '' }) {
-  const rootDir = process.cwd();
-  const { filepath } = options;
-  const dirname = path.relative(rootDir, path.dirname(filepath));
-
-  return function transformer(tree: Root) {
+const ROOT_DIR = path.resolve(__dirname, '../../../../../../../');
+export function codeImport() {
+  return function transformer(tree: Root, file: any) {
+    const rootDir = process.cwd();
+    const dirname = file.data.rawDocumentData?.sourceFileDir;
     const nodes: [any, number | undefined, any][] = [];
+    if (dirname.startsWith('docs/fuels-wallet')) return;
 
     visit(tree, 'mdxJsxFlowElement', (node: any, idx, parent) => {
       if (node.name === 'CodeImport') {

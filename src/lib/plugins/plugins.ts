@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import path from 'path';
+import { join } from 'path';
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
 import type { Parent } from 'unist-util-visit/lib';
@@ -15,10 +15,6 @@ import {
   handlePlayerComp,
   handleWalletImages,
 } from './wallet-docs';
-
-interface Options {
-  filepath: string;
-}
 
 const forcGenCondition = (tree: any, node: any, filepath: string) => {
   return (
@@ -65,12 +61,11 @@ const hasScriptLink = (node: any) => {
   return node.type === 'html' && node.value.includes('const url =');
 };
 
-export function handlePlugins(options: Options = { filepath: '' }) {
-  const rootDir = process.cwd();
-  const { filepath } = options;
-  const dirname = path.relative(rootDir, path.dirname(filepath));
-
-  return function transformer(tree: Root) {
+export function handlePlugins() {
+  return function transformer(tree: Root, file: any) {
+    const rootDir = process.cwd();
+    const filepath = join(rootDir, file.data.rawDocumentData?.sourceFilePath);
+    const dirname = file.data.rawDocumentData?.sourceFileDir;
     const nodes: [any, number | null, Parent<any, any>][] = [];
 
     if (filepath.includes('/docs/fuel-graphql-docs/')) {
@@ -88,7 +83,9 @@ export function handlePlugins(options: Options = { filepath: '' }) {
         url = url.replace('/docs/', '/docs/graphql/');
         node.attributes[0].value = url;
       });
-    } else if (filepath.includes('/docs/sway/')) {
+    }
+
+    if (filepath.includes('/docs/sway/')) {
       visit(tree, '', (node: any, idx, parent) => {
         if (
           // get the generated docs for forc
@@ -115,12 +112,15 @@ export function handlePlugins(options: Options = { filepath: '' }) {
         if (exampleImportCondition(node)) {
           const content = handleExampleImports(node, dirname, rootDir, parent);
           node.value = content;
-        } else if (mdBookLinks(node)) {
+        }
+        if (mdBookLinks(node)) {
           const newUrl = handleLinks(node, dirname);
           if (newUrl) node.url = newUrl;
         }
       });
-    } else if (filepath.includes('/docs/fuels-wallet/')) {
+    }
+
+    if (filepath.includes('/docs/fuels-wallet/')) {
       visit(tree, '', (node: any, idx, parent) => {
         if (
           // update the image & video paths in the wallet docs
@@ -147,7 +147,9 @@ export function handlePlugins(options: Options = { filepath: '' }) {
           }
         }
       });
-    } else if (filepath.includes('/fuels-ts/')) {
+    }
+
+    if (filepath.includes('/fuels-ts/')) {
       const versions = loadTSVersions(rootDir);
       // handle injected link urls
       if (hasScriptLink(tree.children[0])) {

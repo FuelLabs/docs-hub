@@ -1,10 +1,12 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box, FuelLogo, Icon, Link } from '@fuel-ui/react';
+import dynamic from 'next/dynamic';
 
 import { MobileMenu } from './MobileMenu';
 import { Navigation } from './Navigation';
-import { Search } from './Search';
-import { ThemeToggler } from './ThemeToggler';
+
+const ThemeToggler = dynamic(() => import('./ThemeToggler'), { ssr: false });
+const Search = dynamic(() => import('./Search'), { ssr: false });
 
 export function Header({ active }: { active: string }) {
   return (
