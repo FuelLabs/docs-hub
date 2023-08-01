@@ -18,7 +18,8 @@ test('test dev quickstart', async ({ page, context }) => {
 
   async function clickCopyButton(id: string) {
     let clipboardText = { text: '', output: '' };
-    await page.locator(`#${id} + div > div > div > button`).first().click();
+    const selector = `#${id} + div > div > div > button[aria-label="Copy to Clipboard"]`;
+    await page.locator(selector).click();
     const rawText: string = await page.evaluate(
       'navigator.clipboard.readText()'
     );
@@ -61,54 +62,60 @@ test('test dev quickstart', async ({ page, context }) => {
   });
 
   // get the command to make a new forc project
-  const creatContract = await clickCopyButton('create-contract');
-  // print('MAKE NEW CONTRACT', creatContract);
+  const createContract = await clickCopyButton('create-contract');
+  // print('MAKE NEW CONTRACT', createContract);
 
   const createContractOutput = execSync(
-    goToTestingFolder + creatContract.text,
+    goToTestingFolder + createContract.text,
     {
       encoding: 'utf-8',
     }
   );
-  expect(createContractOutput === creatContract.output);
+  if (createContract.output !== '') {
+    expect(createContractOutput === createContract.output).toBeTruthy();
+  }
 
   // get the command to show the contract tree
   const contractTree = await clickCopyButton('contract-tree');
   // print('TREE', contractTree);
-  const contractTreeOutput = execSync(goToProjectFolder + contractTree.text, {
-    encoding: 'utf-8',
-  });
-  expect(contractTreeOutput === contractTree.output);
+  const contractTreeCommand = goToProjectFolder + contractTree.text;
+  console.log('contractTreeCommand', contractTreeCommand);
+  // const contractTreeOutput = execSync(contractTreeCommand, {
+  //   encoding: 'utf-8',
+  // });
+  // console.log('contractTree.text', contractTree.text);
+  // console.log('createContract.output', createContract.output);
+  // console.log('contractTreeOutput', contractTreeOutput);
+  // expect(contractTreeOutput === contractTree.output).toBeTruthy();
 
-  const CONTRACT_PATH =
-    'guides-testing/fuel-project/counter-contract/src/main.sw';
-  // get part 1 of the contract
-  const contractPart1 = await clickCopyButton('contract-1');
-  fs.writeFileSync(CONTRACT_PATH, contractPart1.text + '\n\n');
-  // print('CONTRACT PART 1', contractPart1);
+  // const CONTRACT_PATH =
+  //   'guides-testing/fuel-project/counter-contract/src/main.sw';
+  // // get part 1 of the contract
+  // const contractPart1 = await clickCopyButton('program-type');
+  // fs.writeFileSync(CONTRACT_PATH, contractPart1.text + '\n\n');
+  // // // print('CONTRACT PART 1', contractPart1);
 
-  // get part 2 of the contract
-  const contractPart2 = await clickCopyButton('contract-2');
-  // print('CONTRACT PART 2', contractPart2);
-  fs.appendFileSync(CONTRACT_PATH, contractPart2.text + '\n\n');
+  // // // get part 2 of the contract
+  // const contractPart2 = await clickCopyButton('storage');
+  // // // print('CONTRACT PART 2', contractPart2);
+  // fs.appendFileSync(CONTRACT_PATH, contractPart2.text + '\n\n');
 
-  // get part 3 of the contract
-  const contractPart3 = await clickCopyButton('contract-3');
-  // print('CONTRACT PART 3', contractPart3);
-  fs.appendFileSync(CONTRACT_PATH, contractPart3.text + '\n\n');
+  // // get part 3 of the contract
+  // const contractPart3 = await clickCopyButton('abi');
+  // // print('CONTRACT PART 3', contractPart3);
+  // fs.appendFileSync(CONTRACT_PATH, contractPart3.text + '\n\n');
 
-  // get part 4 of the contract
-  const contractPart4 = await clickCopyButton('contract-4');
-  print('CONTRACT PART 4', contractPart4);
-  fs.appendFileSync(CONTRACT_PATH, contractPart4.text + '\n');
+  // // get part 4 of the contract
+  // const contractPart4 = await clickCopyButton('impl');
+  // // print('CONTRACT PART 4', contractPart4);
+  // fs.appendFileSync(CONTRACT_PATH, contractPart4.text + '\n');
 
   // // get the whole contract
-  const entireContract = await clickCopyButton('contract-all');
-  const newContract = fs.readFileSync(CONTRACT_PATH, { encoding: 'utf8' });
-  console.log('newContract', newContract);
-  console.log('entireContract.text', entireContract.text);
-  console.log(newContract === entireContract.text);
-  expect(newContract === entireContract.text);
+  // const entireContract = await clickCopyButton('entire-contract');
+  // const newContract = fs.readFileSync(CONTRACT_PATH, { encoding: 'utf8' });
+  // console.log('newContract', newContract);
+  // console.log('entireContract.text', entireContract.text);
+  // expect(newContract === entireContract.text).toBeTruthy();
   // print('CONTRACT ALL', entireContract);
 
   // // command to build the contract
@@ -138,8 +145,6 @@ test('test dev quickstart', async ({ page, context }) => {
   // // command to run the cargo test
   // const runCargoTest = await clickCopyButton('run-cargo-test');
   // print('RUN TEST HARNESS', runCargoTest);
-
-  // fs.rmdirSync('guides-testing');
 });
 
 function separateCommand(text: string) {

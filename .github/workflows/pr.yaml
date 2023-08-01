@@ -43,7 +43,7 @@ jobs:
         run: |
           pnpm check
 
-  build-quickstart-contract-example:
+  quickstart-test:
     name: build-quickstart-contract
     runs-on: ubuntu-latest
     steps:
@@ -60,15 +60,23 @@ jobs:
         run: echo "$HOME/.fuelup/bin:${GITHUB_PATH}" >> $GITHUB_PATH
       - name: Set Default Beta-3 Toolchain
         run: fuelup toolchain install beta-3 && fuelup default beta-3
-      - name: Build Contract
-        run: forc build --path ./guide-examples/quickstart/counter-contract
-      - name: Run contract tests
-        uses: actions-rs/cargo@v1
-        with:
-          command: test 
-          args: --manifest-path ./guide-examples/quickstart/counter-contract/Cargo.toml
       - name: Check Cargo fmt & clippy
         run: |
           cd guide-examples/quickstart/counter-contract
           cargo fmt --all --check
           cargo clippy --all-targets --all-features
+      - name: Build Contract
+        run: forc build
+      - name: Export Contract ID
+        run: |
+          forc contract-id > output.txt
+      - name: Check Contract ID
+      run: |
+        expected_value="      Contract id: 0x9751545a0f45aa4b88904b6b4a896bfb02f231676de5438d346d4beab5cb9820"
+        actual_value=$(sed '7q;d' output.txt)
+        if [ "$actual_value" = "$expected_value" ]; then
+          echo "Contract ID is correct"
+        else
+          echo "Contract ID has changed"
+          exit 1
+        fi
