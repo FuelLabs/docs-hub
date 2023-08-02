@@ -19,6 +19,10 @@ const graphqlOrderPath = join(
   './fuel-graphql-docs/src/nav.json'
 );
 const guidesOrderPath = join(DOCS_DIRECTORY, '../docs/guides/docs/nav.json');
+const aboutFuelOrderPath = join(
+  DOCS_DIRECTORY,
+  '../docs/about-fuel/docs/nav.json'
+);
 const tsConfigPath = join(
   DOCS_DIRECTORY,
   './fuels-ts/apps/docs/.vitepress/config.ts'
@@ -31,6 +35,9 @@ const indexerSummaryFile = fs.readFileSync(indexerSummaryPath, 'utf8');
 const specsSummaryFile = fs.readFileSync(specsSummaryPath, 'utf8');
 const graphqlOrderFile = JSON.parse(fs.readFileSync(graphqlOrderPath, 'utf8'));
 const guidesOrderFile = JSON.parse(fs.readFileSync(guidesOrderPath, 'utf8'));
+const aboutFuelOrderFile = JSON.parse(
+  fs.readFileSync(aboutFuelOrderPath, 'utf8')
+);
 const tsConfigFile = fs.readFileSync(tsConfigPath, 'utf8');
 
 const forcLines = [];
@@ -164,6 +171,9 @@ async function getOrders() {
 
   // GUIDES ORDER
   orders.guides = guidesOrderFile;
+
+  // ABOUT FUEL ORDER
+  orders['about-fuel'] = aboutFuelOrderFile;
 
   // WALLET ORDER
   // replace this with a nav.json file
@@ -397,6 +407,13 @@ async function getDocs(key) {
         './fuel-specs/src/**/*.md',
         // IGNORE ALL SUMMARY PAGES
         '!**/SUMMARY.md',
+      ];
+      break;
+    case 'about-fuel':
+      paths = [
+        // ABOUT FUEL DOCS
+        './about-fuel/docs/*.md',
+        './about-fuel/docs/**/*.md',
       ];
       break;
     default:

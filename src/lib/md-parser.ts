@@ -10,6 +10,7 @@ const PATHS_REPLACE_MAP = {
   'docs/fuels-wallet': 'docs/fuels-wallet/packages/docs/docs',
   'docs/fuel-graphql-docs': 'docs/fuel-graphql-docs/docs',
   'docs/guides': 'docs/guides/docs',
+  'docs/about-fuel': 'docs/about-fuel/docs',
 };
 
 export class DocParser {
