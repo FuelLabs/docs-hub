@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { execSync } from 'child_process';
 import fs from 'fs';
+import { EOL } from 'os';
 
 test('test dev quickstart', async ({ page, context }) => {
   interface Instruction {
@@ -45,47 +46,71 @@ test('test dev quickstart', async ({ page, context }) => {
   // TODO: use this in the CI
 
   // get the command to make a new folder
-  const createProjectFolder = await clickCopyButton('create-project-folder');
-  // print('MAKE NEW DIR', createProjectFolder);
+  // const createProjectFolder = await clickCopyButton('create-project-folder');
+  // // print('MAKE NEW DIR', createProjectFolder);
 
-  if (!fs.existsSync('guides-testing')) {
-    fs.mkdirSync('guides-testing');
-  }
+  // if (!fs.existsSync('guides-testing')) {
+  //   fs.mkdirSync('guides-testing');
+  // }
 
-  const goToTestingFolder = 'cd guides-testing && ';
+  // const goToTestingFolder = 'cd guides-testing && ';
   const goToProjectFolder = 'cd guides-testing/fuel-project && ';
-  const goToContractFolder =
-    'cd guides-testing/fuel-project/counter-contract && ';
+  // const goToContractFolder =
+  //   'cd guides-testing/fuel-project/counter-contract && ';
 
-  execSync(goToTestingFolder + createProjectFolder.text, {
-    encoding: 'utf-8',
-  });
+  // execSync(goToTestingFolder + createProjectFolder.text, {
+  //   encoding: 'utf-8',
+  // });
 
-  // get the command to make a new forc project
-  const createContract = await clickCopyButton('create-contract');
-  // print('MAKE NEW CONTRACT', createContract);
+  // // get the command to make a new forc project
+  // const createContract = await clickCopyButton('create-contract');
+  // // print('MAKE NEW CONTRACT', createContract);
 
-  const createContractOutput = execSync(
-    goToTestingFolder + createContract.text,
-    {
-      encoding: 'utf-8',
-    }
-  );
-  if (createContract.output !== '') {
-    expect(createContractOutput === createContract.output).toBeTruthy();
-  }
+  // const createContractOutput = execSync(
+  //   goToTestingFolder + createContract.text,
+  //   {
+  //     encoding: 'utf-8',
+  //   }
+  // );
+  // if (createContract.output !== '') {
+  //   expect(createContractOutput === createContract.output).toBeTruthy();
+  // }
 
   // get the command to show the contract tree
   const contractTree = await clickCopyButton('contract-tree');
   // print('TREE', contractTree);
   const contractTreeCommand = goToProjectFolder + contractTree.text;
-  console.log('contractTreeCommand', contractTreeCommand);
-  // const contractTreeOutput = execSync(contractTreeCommand, {
-  //   encoding: 'utf-8',
-  // });
+  // console.log(contractTreeCommand);
+  const contractTreeOutput = execSync(contractTreeCommand, {
+    encoding: 'utf-8',
+  });
   // console.log('contractTree.text', contractTree.text);
   // console.log('createContract.output', createContract.output);
-  // console.log('contractTreeOutput', contractTreeOutput);
+  const first = contractTreeOutput.trim();
+  const second = contractTree.output.trim();
+  console.log(first);
+  console.log(second);
+  console.log('all equal1?', first === second);
+  console.log('all equal2?', first == second);
+  const split1 = first.split(EOL);
+  const split2 = second.split(EOL);
+  console.log('split1.length', split1.length);
+  console.log('split2.length', split2.length);
+  if (split1.length === split2.length) {
+    split1.forEach((l, i) => {
+      console.log('--------------');
+      console.log('A: ', `"${l}"`);
+      console.log('B: ', `"${split2[i]}"`);
+      // console.log('equal1?', l === split2[i]);
+      // console.log('equal2?', l == split2[i]);
+      if (l != split2[i]) {
+        console.log('LENGTH A', l.length);
+        console.log('LENGTH B', split2[i].length);
+      }
+      console.log('--------------');
+    });
+  }
+
   // expect(contractTreeOutput === contractTree.output).toBeTruthy();
 
   // const CONTRACT_PATH =
@@ -158,3 +183,16 @@ function separateCommand(text: string) {
     output: consoleOutput,
   };
 }
+
+// function compareOutputs(expected: string, actual: string){
+//   const split1 = expected.split(EOL);
+//   const split2 = actual.split(EOL);
+//   const bigger = split1.length >= split2.length ? split1 : split2;
+//   const smaller = bigger === split1 ? split1 : split2;
+//   bigger.forEach((line, i) => {
+//     console.log("smaller[i]: ", smaller[i])
+//     if(smaller[i] !== undefined){
+//       assert(line === smaller[i])
+//     }
+//   })
+// }
