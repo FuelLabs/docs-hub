@@ -12,7 +12,7 @@ A modular blockchain architecture does not inherently enable scaling. The proper
 
 ### Security vs. Resource Requirements
 
-![fuel1](../../images/resource-security-1.png)
+![fuel1](/images/resource-security-1.png)
 
 In a monolithic architecture, users must choose between high security and high computational resource usage and trusted security and low computational resource usage. For example, [Ethereum was designed to allow consumer-grade hardware to be able to run a full node](https://ethereum.org/en/run-a-node/), a type of node that offers maximum security by downloading and verifying every single transaction. By running a full node, users don’t have to trust that the chain is valid and can instead verify themselves. However, running a full node requires a lot of disk space and non-negligible CPU allocation and can take days to sync the blockchain from genesis.
 
@@ -26,7 +26,7 @@ By running a full node, you get the maximum security of verifying transactions b
 
 ### Trust-Minimized Light Clients
 
-![graph showing security versus resource requirements on running full node, honest-majority light client, and trust-minimized light client](./images/fuel%20light%20client.png)
+![graph showing security versus resource requirements on running full node, honest-majority light client, and trust-minimized light client](/images/fuel%20light%20client.png)
 
 Fuel’s design lets light clients say that blocks are valid through fraud proofs. This eliminates the need for a trusted party while maintaining low resource requirements and achieving high security. For monolithic chains like Ethereum, there is an ideological incentive to keep the computation requirements for full nodes low to allow users to be truly sovereign.
 

@@ -19,10 +19,7 @@ const graphqlOrderPath = join(
   './fuel-graphql-docs/src/nav.json'
 );
 const guidesOrderPath = join(DOCS_DIRECTORY, '../docs/guides/docs/nav.json');
-const aboutFuelOrderPath = join(
-  DOCS_DIRECTORY,
-  '../docs/about-fuel/docs/nav.json'
-);
+const aboutFuelOrderPath = join(DOCS_DIRECTORY, '../docs/about-fuel/nav.json');
 const tsConfigPath = join(
   DOCS_DIRECTORY,
   './fuels-ts/apps/docs/.vitepress/config.ts'
@@ -227,6 +224,10 @@ function getSortedLinks(config, docs) {
       doc.category = 'plugins';
     }
 
+    if (doc.category === 'about fuel') {
+      doc.category = 'src';
+    }
+
     if (
       !doc.category ||
       doc.category === 'src' ||
@@ -412,8 +413,8 @@ async function getDocs(key) {
     case 'about-fuel':
       paths = [
         // ABOUT FUEL DOCS
-        './about-fuel/docs/*.md',
-        './about-fuel/docs/**/*.md',
+        './about-fuel/*.md',
+        './about-fuel/**/*.md',
       ];
       break;
     default:

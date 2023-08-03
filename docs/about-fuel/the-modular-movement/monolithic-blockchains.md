@@ -9,7 +9,7 @@ Blockchains as we know them have four functions. In no particular order:
 
 Monolithic blockchains are a type of blockchain architecture that handle all four functions, at the same time, on this single layer.
 
-![monolithic](../../images/monolithic.png)
+![monolithic](/images/monolithic.png)
 
 ## Challenges with Monolithic
 
