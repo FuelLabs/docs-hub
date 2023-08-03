@@ -3,6 +3,7 @@ import {
   defineNestedType,
   makeSource,
 } from 'contentlayer/source-files';
+import { globbySync } from 'globby';
 
 import { DocParser } from './src/lib/md-parser';
 
@@ -62,14 +63,20 @@ const includeDirs = [
   'docs/about-fuel',
 ];
 
+const guideExamples = globbySync(['./docs/guides/examples/**']).map((link) =>
+  link.replace('./docs', 'docs')
+);
+
 const excludeDirs = [
   'docs/guides/docs/guides.json',
   'docs/guides/docs/nav.json',
-  'docs/guides/examples/quickstart/frontend/package-lock.json',
-  'docs/guides/examples/quickstart/frontend/package.json',
-  'docs/guides/examples/quickstart/frontend/tsconfig.json',
-  'docs/guides/examples/quickstart/frontend/public/manifest.json',
   'docs/about-fuel/nav.json',
+  'docs/sway/docs/book/src/SUMMARY.md',
+  'docs/fuelup/docs/src/SUMMARY.md',
+  'docs/fuels-rs/docs/src/SUMMARY.md',
+  'docs/fuel-indexer/docs/src/SUMMARY.md',
+  'docs/fuel-specs/src/SUMMARY.md',
+  ...guideExamples,
 ];
 
 export default makeSource({
