@@ -18,7 +18,11 @@ const graphqlOrderPath = join(
   DOCS_DIRECTORY,
   './fuel-graphql-docs/src/nav.json'
 );
-const guidesOrderPath = join(DOCS_DIRECTORY, '../docs/guides/docs/nav.json');
+const guidesOrderPath = join(DOCS_DIRECTORY, './guides/docs/nav.json');
+const walletOrderPath = join(
+  DOCS_DIRECTORY,
+  './fuels-wallet/packages/docs/src/nav.json'
+);
 const tsConfigPath = join(
   DOCS_DIRECTORY,
   './fuels-ts/apps/docs/.vitepress/config.ts'
@@ -31,6 +35,7 @@ const indexerSummaryFile = fs.readFileSync(indexerSummaryPath, 'utf8');
 const specsSummaryFile = fs.readFileSync(specsSummaryPath, 'utf8');
 const graphqlOrderFile = JSON.parse(fs.readFileSync(graphqlOrderPath, 'utf8'));
 const guidesOrderFile = JSON.parse(fs.readFileSync(guidesOrderPath, 'utf8'));
+const walletOrderFile = JSON.parse(fs.readFileSync(walletOrderPath, 'utf8'));
 const tsConfigFile = fs.readFileSync(tsConfigPath, 'utf8');
 
 const forcLines = [];
@@ -166,33 +171,7 @@ async function getOrders() {
   orders.guides = guidesOrderFile;
 
   // WALLET ORDER
-  // replace this with a nav.json file
-  // once wallet npm package is updated to the master version
-  orders.wallet = {
-    menu: [
-      'Install',
-      'Browser Support',
-      'How To Use',
-      'For Developers',
-      'Contributing',
-    ],
-
-    for_developers: [
-      'Getting Started',
-      'Connecting',
-      'Accounts',
-      'Assets',
-      'Networks',
-      'Signing a Message',
-      'Wallet Connectors',
-      'Reference',
-    ],
-    contributing: [
-      'Running locally',
-      'Contributing Guide',
-      'Linking local dependencies',
-    ],
-  };
+  orders.wallet = walletOrderFile;
 
   orders['fuels-ts'] = processVPConfig(tsConfigFile.split(EOL));
 
@@ -292,12 +271,18 @@ function getSortedLinks(config, docs) {
         /** Sort categoried links */
         .map((link) => {
           if (!link.submenu) return link;
-          const key = link.label
+          let key = link.label
             .toLowerCase()
             .replaceAll(' ', '-')
             .replaceAll('_', '-');
           let catOrder = config[key];
           if (!catOrder) catOrder = config[key.replaceAll('-', '_')];
+          if (!catOrder) {
+            const regex = /\/([^/]+)\/[^/]+$/;
+            const match = link.submenu[0].slug.match(regex);
+            key = match[1];
+            catOrder = config[key];
+          }
 
           catOrder = catOrder?.map((title) =>
             title.toLowerCase().replaceAll('-', '_').replaceAll(' ', '_')
