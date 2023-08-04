@@ -69,6 +69,9 @@ export function HomePage() {
           <Text>Find network specifications and resources.</Text>
           <List icon="ArrowRight">
             <List.Item>
+              <Link href="/docs/about-fuel">About Fuel</Link>
+            </List.Item>
+            <List.Item>
               <Link href="/docs/graphql">GraphQL API</Link>
             </List.Item>
             <List.Item>

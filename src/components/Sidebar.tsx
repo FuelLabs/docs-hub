@@ -21,7 +21,8 @@ export function Sidebar() {
             Back to {doc.parent.label}
           </ButtonLink>
         )}
-        {links.map((link, index) => {
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+        {links.map((link: any, index: number) => {
           return link.slug ? (
             <SidebarLink key={link.slug + index} item={link} />
           ) : (
