@@ -1,0 +1,8 @@
+{
+    "menu": ["Why Fuel", "Toolchain", "The Modular Movement", "Configurations", "FuelVM", "Networks", "Glossary"],
+    "the_modular_movement": ["Monolithic Blockchains", "What is a Modular Execution Layer"],
+    "configurations": ["Rollup", "Layer 1", "State Channel", "Sidechain"],
+    "fuelvm": ["VS EVM", "Parallel Transaction Execution", "Fraud Proofs", "Contract and Call Model", "Memory Model"],
+    "networks": ["beta-3", "beta-2"]
+  }
+  
