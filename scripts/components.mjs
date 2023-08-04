@@ -29,6 +29,8 @@ const WALLET_COMPONENTS_CONFIG_PATH = path.join(
   './src/components.json'
 );
 
+const completedExports = [];
+
 async function main() {
   if (!fs.existsSync(path.join(process.cwd(), OUTPUT_FOLDER))) {
     fs.mkdirSync(path.join(process.cwd(), OUTPUT_FOLDER));
@@ -169,6 +171,93 @@ function getPath(compName, componentsConfig, directory, dirPath) {
   return { actualCompPath, isDefault };
 }
 
+function handleSubComponents(comp, componentsConfig, directory, dirPath) {
+  const completedObjects = [];
+
+  function handleSubCategory(key) {
+    const importName = `${comp.name}.${key}`;
+    if (!completedObjects.includes(importName)) {
+      completedObjects.push(importName);
+      subCategories = subCategories + `${importName} = {};\n\n`;
+    }
+
+    const subCatComps = comp.subCategories[key];
+    subCategories =
+      subCategories +
+      subCatComps
+        .map((subCatComp) => {
+          const { actualCompPath, isDefault } = getPath(
+            subCatComp,
+            componentsConfig,
+            directory,
+            dirPath
+          );
+
+          const id = `${comp.name}.${key}.${subCatComp}`;
+          if (!completedExports.includes(id)) {
+            completedExports.push(id);
+            return `${id} = dynamic(
+        () => import("${actualCompPath}")${
+              isDefault ? '' : `.then((mod) => mod.${subCatComp})`
+            })
+      ;\n\n`;
+          }
+        })
+        .join('\n');
+  }
+
+  const subComps = comp.subComponents
+    .map((subComp) => {
+      const { actualCompPath, isDefault } = getPath(
+        subComp,
+        componentsConfig,
+        directory,
+        dirPath
+      );
+
+      if (!completedExports.includes(`${comp.name}.${subComp}`)) {
+        completedExports.push(`${comp.name}.${subComp}`);
+        return `${comp.name}.${subComp} = dynamic(
+    () => import("${actualCompPath}")${
+          isDefault ? '' : `.then((mod) => mod.${subComp})`
+        })
+  ;\n\n`;
+      }
+    })
+    .join('');
+
+  let subCategories = '';
+  if (comp.subCategories) {
+    Object.keys(comp.subCategories).forEach((key) => {
+      handleSubCategory(key);
+    });
+  }
+  if (!completedObjects.includes(comp.name)) {
+    const cat = `const ${comp.name}: ComponentObject= {};\n\n`;
+    completedObjects.push(comp.name);
+    return cat + subComps + subCategories;
+  }
+  return subComps + subCategories;
+}
+
+function handleComponent(comp, componentsConfig, directory, dirPath) {
+  // handle component with no subComponents
+  const { actualCompPath, isDefault } = getPath(
+    comp.name,
+    componentsConfig,
+    directory,
+    dirPath
+  );
+
+  if (!completedExports.includes(comp.name)) {
+    return `const ${comp.name} = dynamic(
+() => import("${actualCompPath}")${
+      isDefault ? '' : `.then((mod) => mod.${comp.name})`
+    })
+;\n\n`;
+  }
+}
+
 async function exportComponents(
   directory,
   docsDirectory,
@@ -181,9 +270,6 @@ async function exportComponents(
 
   const paths = await getMDXFilesFromFolder(docsDirectory);
   const components = findComponentsInMDXFiles(paths, componentsConfig);
-
-  const completedObjects = [];
-  const completedExports = [];
 
   const componentsString = `import dynamic from "next/dynamic";
 
@@ -198,82 +284,19 @@ async function exportComponents(
               (comp.subComponents && comp.subComponents.length > 0) ||
               comp.subCategories
             ) {
-              const subComps = comp.subComponents
-                .map((subComp) => {
-                  const { actualCompPath, isDefault } = getPath(
-                    subComp,
-                    componentsConfig,
-                    directory,
-                    dirPath
-                  );
-
-                  if (!completedExports.includes(`${comp.name}.${subComp}`)) {
-                    completedExports.push(`${comp.name}.${subComp}`);
-                    return `${comp.name}.${subComp} = dynamic(
-    () => import("${actualCompPath}")${
-                      isDefault ? '' : `.then((mod) => mod.${subComp})`
-                    })
-  ;\n\n`;
-                  }
-                })
-                .join('');
-
-              let subCategories = '';
-              if (comp.subCategories) {
-                Object.keys(comp.subCategories).forEach((key) => {
-                  const importName = `${comp.name}.${key}`;
-                  if (!completedObjects.includes(importName)) {
-                    completedObjects.push(importName);
-                    subCategories = subCategories + `${importName} = {};\n\n`;
-                  }
-
-                  const subCatComps = comp.subCategories[key];
-                  subCategories =
-                    subCategories +
-                    subCatComps
-                      .map((subCatComp) => {
-                        const { actualCompPath, isDefault } = getPath(
-                          subCatComp,
-                          componentsConfig,
-                          directory,
-                          dirPath
-                        );
-
-                        const id = `${comp.name}.${key}.${subCatComp}`;
-                        if (!completedExports.includes(id)) {
-                          completedExports.push(id);
-                          return `${id} = dynamic(
-        () => import("${actualCompPath}")${
-                            isDefault ? '' : `.then((mod) => mod.${subCatComp})`
-                          })
-      ;\n\n`;
-                        }
-                      })
-                      .join('\n');
-                });
-              }
-              if (!completedObjects.includes(comp.name)) {
-                const cat = `const ${comp.name}: ComponentObject= {};\n\n`;
-                completedObjects.push(comp.name);
-                return cat + subComps + subCategories;
-              }
-              return subComps + subCategories;
-            } else {
-              // handle component with no subComponents
-              const { actualCompPath, isDefault } = getPath(
-                comp.name,
+              return handleSubComponents(
+                comp,
                 componentsConfig,
                 directory,
                 dirPath
               );
-
-              if (!completedExports.includes(comp.name)) {
-                return `const ${comp.name} = dynamic(
-    () => import("${actualCompPath}")${
-                  isDefault ? '' : `.then((mod) => mod.${comp.name})`
-                })
-  ;\n\n`;
-              }
+            } else {
+              return handleComponent(
+                comp,
+                componentsConfig,
+                directory,
+                dirPath
+              );
             }
           })
           .join('\n');
