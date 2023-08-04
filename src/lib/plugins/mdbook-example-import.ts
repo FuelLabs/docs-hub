@@ -103,7 +103,7 @@ export function handleExampleImports(
   }
 
   const bookPath = dirname.split('/')[1];
-  const fileAbsPath = path.resolve(
+  let fileAbsPath = path.resolve(
     path.join(rootDir, `docs/${bookPath}/`),
     filePath
   );
@@ -118,6 +118,12 @@ export function handleExampleImports(
   }
 
   try {
+    if (fileAbsPath.includes('docs/fuels-ts/demo-typegen/')) {
+      fileAbsPath = fileAbsPath.replace(
+        'fuels-ts/demo-typegen',
+        'fuels-ts/apps/demo-typegen'
+      );
+    }
     const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
     const cachedFile = getFilesOnCache(fileAbsPath);
 
