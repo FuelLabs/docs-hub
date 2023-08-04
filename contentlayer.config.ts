@@ -3,7 +3,6 @@ import {
   defineNestedType,
   makeSource,
 } from 'contentlayer/source-files';
-import { MdDoc } from '~/.contentlayer/generated/types';
 
 import { DocParser } from './src/lib/md-parser';
 
@@ -44,13 +43,35 @@ const MdDoc = defineDocumentType(() => ({
   computedFields: {
     slug: {
       type: 'string',
-      resolve: (doc) => DocParser.createSlug(doc._raw.flattenedPath),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      resolve: (doc: any) => DocParser.createSlug(doc._raw.flattenedPath),
     },
   },
 }));
 
-const includeDirs = DocParser.getIncludePaths();
-const excludeDirs = DocParser.getExcludePaths();
+const includeDirs = [
+  'docs/sway/docs/book/src',
+  'docs/fuelup/docs/src',
+  'docs/fuels-rs/docs/src',
+  'docs/fuels-ts/apps/docs/src',
+  'docs/fuel-indexer/docs/src',
+  'docs/fuel-specs/src',
+  'docs/fuel-graphql-docs/docs',
+  'docs/fuels-wallet/packages/docs/docs',
+  'docs/guides/docs',
+  'docs/about-fuel',
+];
+
+const excludeDirs = [
+  'docs/guides/docs/guides.json',
+  'docs/guides/docs/nav.json',
+  'docs/about-fuel/nav.json',
+  'docs/sway/docs/book/src/SUMMARY.md',
+  'docs/fuelup/docs/src/SUMMARY.md',
+  'docs/fuels-rs/docs/src/SUMMARY.md',
+  'docs/fuel-indexer/docs/src/SUMMARY.md',
+  'docs/fuel-specs/src/SUMMARY.md',
+];
 
 export default makeSource({
   contentDirPath: './',

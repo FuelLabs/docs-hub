@@ -24,7 +24,7 @@ export function DocFooter() {
   return (
     <>
       <Text as="div" css={styles.feedback}>
-        <Link href="https://github.com/fuellabs/fuels-wallet/issues/new/choose">
+        <Link href="https://forum.fuel.network/">
           <Icon icon={Icon.is('HelpCircle')} stroke={1} color="textMuted" />
           Questions? Give us a feedback
         </Link>
