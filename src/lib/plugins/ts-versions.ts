@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 export function loadTSVersions(rootDir: string) {
+  // console.log('HERE', rootDir);
   const versions = {
     FORC: '0.0.0',
     FUELS: '0.0.0',
@@ -9,13 +10,18 @@ export function loadTSVersions(rootDir: string) {
   };
 
   try {
-    const forcBinPath = path.join(
+    // const forcBinPath = path.join(
+    //   rootDir,
+    //   'docs/fuels-ts/packages/forc-bin/package.json'
+    // );
+    // const forcFile = fs.readFileSync(forcBinPath, 'utf8');
+    // const { config } = JSON.parse(forcFile);
+    // ({ forcVersion: versions.FORC } = config);
+    const forcVersionPath = path.join(
       rootDir,
-      'docs/fuels-ts/packages/forc-bin/package.json'
+      'docs/fuels-ts/packages/forc-bin/VERSION'
     );
-    const forcFile = fs.readFileSync(forcBinPath, 'utf8');
-    const { config } = JSON.parse(forcFile);
-    ({ forcVersion: versions.FORC } = config);
+    versions.FORC = fs.readFileSync(forcVersionPath, 'utf8');
 
     const fuelsPath = path.join(
       rootDir,
@@ -32,7 +38,8 @@ export function loadTSVersions(rootDir: string) {
     const regexFuelcore = /FROM ghcr\.io\/fuellabs\/fuel-core:v(\d+\.\d+\.\d+)/;
     const match = dockerfile.match(regexFuelcore);
     versions.FUEL_CORE = match?.[1] || versions.FUEL_CORE;
-  } catch {
+  } catch (err) {
+    // console.log('ERROR: ', err);
     return versions;
   }
   return versions;
