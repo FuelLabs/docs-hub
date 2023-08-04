@@ -8,6 +8,15 @@
       "image": ""
     }
   },
+  "about-fuel": {
+    "title": "About Fuel",
+    "slug": "about-fuel",
+    "repository": "https://github.com/FuelLabs/docs-hub",
+    "ogTags": {
+      "description": "Learn about Fuel Network",
+      "image": ""
+    }
+  },
   "sway": {
     "title": "Sway",
     "slug": "sway",

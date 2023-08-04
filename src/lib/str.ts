@@ -27,6 +27,11 @@ export function capitalize(val: string): string {
     const isPrep = PREPOSITIONS.includes(word.toLowerCase());
     const isLowerCase = word === word.toLowerCase();
     if (isFirstWord || !isPrep || !isLowerCase) {
+      if (word === 'fuelvm') {
+        word = 'fuelVM';
+      } else if (word === 'evm') {
+        word = 'eVM';
+      }
       return word.charAt(0).toUpperCase() + word.slice(1);
     }
     return word;

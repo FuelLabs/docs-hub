@@ -23,6 +23,7 @@ const walletOrderPath = join(
   DOCS_DIRECTORY,
   './fuels-wallet/packages/docs/src/nav.json'
 );
+const aboutFuelOrderPath = join(DOCS_DIRECTORY, '../docs/about-fuel/nav.json');
 const tsConfigPath = join(
   DOCS_DIRECTORY,
   './fuels-ts/apps/docs/.vitepress/config.ts'
@@ -36,6 +37,9 @@ const specsSummaryFile = fs.readFileSync(specsSummaryPath, 'utf8');
 const graphqlOrderFile = JSON.parse(fs.readFileSync(graphqlOrderPath, 'utf8'));
 const guidesOrderFile = JSON.parse(fs.readFileSync(guidesOrderPath, 'utf8'));
 const walletOrderFile = JSON.parse(fs.readFileSync(walletOrderPath, 'utf8'));
+const aboutFuelOrderFile = JSON.parse(
+  fs.readFileSync(aboutFuelOrderPath, 'utf8')
+);
 const tsConfigFile = fs.readFileSync(tsConfigPath, 'utf8');
 
 const forcLines = [];
@@ -170,6 +174,9 @@ async function getOrders() {
   // GUIDES ORDER
   orders.guides = guidesOrderFile;
 
+  // ABOUT FUEL ORDER
+  orders['about-fuel'] = aboutFuelOrderFile;
+
   // WALLET ORDER
   orders.wallet = walletOrderFile;
 
@@ -194,6 +201,10 @@ function getSortedLinks(config, docs) {
     const doc = docs[i];
     if (doc.category === 'forc_client') {
       doc.category = 'plugins';
+    }
+
+    if (doc.category === 'about fuel') {
+      doc.category = 'src';
     }
 
     if (
@@ -382,6 +393,13 @@ async function getDocs(key) {
         './fuel-specs/src/**/*.md',
         // IGNORE ALL SUMMARY PAGES
         '!**/SUMMARY.md',
+      ];
+      break;
+    case 'about-fuel':
+      paths = [
+        // ABOUT FUEL DOCS
+        './about-fuel/*.md',
+        './about-fuel/**/*.md',
       ];
       break;
     default:

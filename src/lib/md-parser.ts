@@ -1,5 +1,3 @@
-import { globbySync } from 'globby';
-
 const PATHS_REPLACE_MAP = {
   'docs/sway': 'docs/sway/docs/book/src',
   'docs/fuelup': 'docs/fuelup/docs/src',
@@ -13,87 +11,6 @@ const PATHS_REPLACE_MAP = {
 };
 
 export class DocParser {
-  static getIncludePaths() {
-    return [
-      'docs/sway',
-      'docs/fuelup',
-      'docs/fuels-rs',
-      'docs/fuels-ts',
-      'docs/fuel-indexer',
-      'docs/fuel-specs',
-      'docs/fuel-graphql-docs/docs',
-      'docs/fuels-wallet/packages/docs/docs',
-      'docs/guides',
-    ];
-  }
-
-  static getDir(path: string) {
-    const opts = { onlyDirectories: true };
-    return globbySync(
-      [
-        `docs/${path}`,
-        `!docs/${path}/docs`,
-        `!docs/${path}/README.md`,
-        ...(path === 'fuels-ts' ? [`!docs/${path}/apps`] : []),
-        ...(path === 'fuel-specs' ? [`!docs/${path}/src`] : []),
-        ...(path === 'fuels-wallet'
-          ? [`!docs/${path}/packages/docs/docs`]
-          : []),
-        ...(path === 'fuel-graphql-docs' ? [`!docs/${path}/docs`] : []),
-      ],
-      opts
-    );
-  }
-
-  static getExcludePaths() {
-    const swayDirs = DocParser.getDir('sway').concat([
-      'docs/sway/docs/reference',
-    ]);
-    const fuelupDir = DocParser.getDir('fuelup');
-    const fuelsRsDir = DocParser.getDir('fuels-rs');
-    const fuelsTsDir = DocParser.getDir('fuels-ts');
-    const fuelSpecs = DocParser.getDir('fuel-specs');
-    const fuelIndexer = DocParser.getDir('fuel-indexer');
-    const fuelWallet = DocParser.getDir('fuels-wallet');
-    const fuelGraphqlDocs = DocParser.getDir('fuel-graphql-docs');
-    const guides = DocParser.getDir('guides');
-
-    const files = globbySync([
-      '**/*.{json,yaml,yml}',
-      '**/SUMMARY.md',
-      '**/README.md',
-      '**/CHANGELOG.md',
-      '**/CONTRIBUTING.md',
-      '**/PULL_REQUEST_TEMPLATE.md',
-      '**/RELEASE_SCHEDULE.md',
-      '!docs/sway/README.md',
-      '!docs/fuelup/README.md',
-      '!docs/fuels-rs/README.md',
-      '!docs/fuels-ts/README.md',
-      '!docs/fuels-ts/CHANGELOG.md',
-      '!docs/fuel-specs/README.md',
-      '!docs/fuel-indexer/docs/README.md',
-      '!docs/fuels-wallet/README.md',
-      '!docs/fuels-wallet/packages/sdk/CHANGELOG.md',
-      '!docs/fuel-graphql-docs/README.md',
-    ]);
-
-    const dirs = [
-      ...swayDirs,
-      ...fuelupDir,
-      ...fuelsRsDir,
-      ...fuelsTsDir,
-      ...fuelSpecs,
-      ...fuelIndexer,
-      ...fuelWallet,
-      ...fuelGraphqlDocs,
-      ...guides,
-      ...files,
-    ];
-
-    return dirs;
-  }
-
   static createSlug(path: string) {
     let slug = path;
 
