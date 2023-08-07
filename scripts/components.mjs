@@ -9,7 +9,6 @@ import { unified } from 'unified';
 import { visit } from 'unist-util-visit';
 
 const DOCS_DIRECTORY = path.join(process.cwd(), './docs');
-
 const OUTPUT_FOLDER = 'src/component-exports';
 
 const GRAPHQL_BOOK_NAME = 'fuel-graphql-docs';
@@ -21,8 +20,10 @@ const GRAPHQL_COMPONENTS_CONFIG_PATH = path.join(
 );
 
 const WALLET_BOOK_NAME = 'fuels-wallet';
-const WALLET_BOOK_PATH = `${WALLET_BOOK_NAME}/packages/docs`;
-const WALLET_DIRECTORY = path.join(DOCS_DIRECTORY, `./${WALLET_BOOK_PATH}`);
+const WALLET_DIRECTORY = path.join(
+  DOCS_DIRECTORY,
+  `./${WALLET_BOOK_NAME}/packages/docs`
+);
 const WALLET_DOCS_DIRECTORY = path.join(WALLET_DIRECTORY, './docs');
 const WALLET_COMPONENTS_CONFIG_PATH = path.join(
   WALLET_DIRECTORY,
@@ -30,6 +31,7 @@ const WALLET_COMPONENTS_CONFIG_PATH = path.join(
 );
 
 const completedExports = [];
+const completedObjects = [];
 
 async function main() {
   if (!fs.existsSync(path.join(process.cwd(), OUTPUT_FOLDER))) {
@@ -86,6 +88,7 @@ function findComponentsInMDXFiles(files, componentsConfig) {
         if (comp.includes('.')) {
           const split = comp.split('.');
           if (!componentsConfig.ignore.includes(split[0])) {
+            // handle nested components
             if (split.length == 2) {
               const categoryComp = split.pop();
               const category = split.pop();
@@ -171,41 +174,49 @@ function getPath(compName, componentsConfig, directory, dirPath) {
   return { actualCompPath, isDefault };
 }
 
-function handleSubComponents(comp, componentsConfig, directory, dirPath) {
-  const completedObjects = [];
-
-  function handleSubCategory(key) {
-    const importName = `${comp.name}.${key}`;
-    if (!completedObjects.includes(importName)) {
-      completedObjects.push(importName);
-      subCategories = subCategories + `${importName} = {};\n\n`;
-    }
-
-    const subCatComps = comp.subCategories[key];
-    subCategories =
-      subCategories +
-      subCatComps
-        .map((subCatComp) => {
-          const { actualCompPath, isDefault } = getPath(
-            subCatComp,
-            componentsConfig,
-            directory,
-            dirPath
-          );
-
-          const id = `${comp.name}.${key}.${subCatComp}`;
-          if (!completedExports.includes(id)) {
-            completedExports.push(id);
-            return `${id} = dynamic(
-        () => import("${actualCompPath}")${
-              isDefault ? '' : `.then((mod) => mod.${subCatComp})`
-            })
-      ;\n\n`;
-          }
-        })
-        .join('\n');
+function handleSubCategory(
+  key,
+  comp,
+  componentsConfig,
+  directory,
+  dirPath,
+  subCategories
+) {
+  const importName = `${comp.name}.${key}`;
+  let categories = subCategories;
+  if (!completedObjects.includes(importName)) {
+    completedObjects.push(importName);
+    categories = categories + `${importName} = {};\n\n`;
   }
 
+  const subCatComps = comp.subCategories[key];
+  categories =
+    categories +
+    subCatComps
+      .map((subCatComp) => {
+        const { actualCompPath, isDefault } = getPath(
+          subCatComp,
+          componentsConfig,
+          directory,
+          dirPath
+        );
+
+        const id = `${comp.name}.${key}.${subCatComp}`;
+        if (!completedExports.includes(id)) {
+          completedExports.push(id);
+          return `${id} = dynamic(
+      () => import("${actualCompPath}")${
+            isDefault ? '' : `.then((mod) => mod.${subCatComp})`
+          })
+    ;\n\n`;
+        }
+      })
+      .join('\n');
+  return categories;
+}
+
+function handleSubComponents(comp, componentsConfig, directory, dirPath) {
+  let subCategories = '';
   const subComps = comp.subComponents
     .map((subComp) => {
       const { actualCompPath, isDefault } = getPath(
@@ -226,10 +237,18 @@ function handleSubComponents(comp, componentsConfig, directory, dirPath) {
     })
     .join('');
 
-  let subCategories = '';
   if (comp.subCategories) {
     Object.keys(comp.subCategories).forEach((key) => {
-      handleSubCategory(key);
+      subCategories =
+        subCategories +
+        handleSubCategory(
+          key,
+          comp,
+          componentsConfig,
+          directory,
+          dirPath,
+          subCategories
+        );
     });
   }
   if (!completedObjects.includes(comp.name)) {
@@ -258,6 +277,38 @@ function handleComponent(comp, componentsConfig, directory, dirPath) {
   }
 }
 
+function getImports(components) {
+  const includesDynamic = `import dynamic from "next/dynamic";
+
+  `;
+  const includesObject = `import type { ComponentObject, ComponentsList } from '../types';`;
+  const noObject = `import type { ComponentsList } from '../types';`;
+  let hasObject = false;
+  let hasDynamic = false;
+
+  const pages = Object.keys(components);
+  if (pages.length > 0) {
+    hasDynamic = true;
+    Object.keys(components).forEach((key) => {
+      if (!hasObject) {
+        const pageArray = components[key];
+        hasObject = pageArray.some(
+          (comp) =>
+            (comp.subComponents && comp.subComponents.length > 0) ||
+            comp.subCategories
+        );
+      }
+    });
+  }
+
+  if (hasObject) {
+    return includesDynamic + includesObject;
+  } else if (hasDynamic) {
+    return includesDynamic + noObject;
+  }
+  return noObject;
+}
+
 async function exportComponents(
   directory,
   docsDirectory,
@@ -271,37 +322,30 @@ async function exportComponents(
   const paths = await getMDXFilesFromFolder(docsDirectory);
   const components = findComponentsInMDXFiles(paths, componentsConfig);
 
-  const componentsString = `import dynamic from "next/dynamic";
-
-    import type { ComponentObject, ComponentsList } from '../types';
-
-    ${Object.keys(components)
-      .map((page) => {
-        const pageArray = components[page];
-        return pageArray
-          .map((comp) => {
-            if (
-              (comp.subComponents && comp.subComponents.length > 0) ||
-              comp.subCategories
-            ) {
-              return handleSubComponents(
-                comp,
-                componentsConfig,
-                directory,
-                dirPath
-              );
-            } else {
-              return handleComponent(
-                comp,
-                componentsConfig,
-                directory,
-                dirPath
-              );
-            }
-          })
-          .join('\n');
-      })
-      .join('\n')}
+  const componentsString = `${getImports(components)}
+  
+  ${Object.keys(components)
+    .map((page) => {
+      const pageArray = components[page];
+      return pageArray
+        .map((comp) => {
+          if (
+            (comp.subComponents && comp.subComponents.length > 0) ||
+            comp.subCategories
+          ) {
+            return handleSubComponents(
+              comp,
+              componentsConfig,
+              directory,
+              dirPath
+            );
+          } else {
+            return handleComponent(comp, componentsConfig, directory, dirPath);
+          }
+        })
+        .join('\n');
+    })
+    .join('\n')}
     export const COMPONENTS: ComponentsList = {
       ${Object.keys(components)
         .map((page) => {
