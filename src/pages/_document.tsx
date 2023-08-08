@@ -1,42 +1,46 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getCssText } from '@fuel-ui/css';
-import NextDocument, { Head, Html, Main, NextScript } from 'next/document';
-import { Cookies } from 'react-cookie';
+import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Script from 'next/script';
 
-import { DEFAULT_THEME } from '../constants';
+const getThemeScript = `
+function getInitialColorMode() {
+  const persistedColorPreference = window.localStorage.getItem('fuel-ui-theme');
+  const hasPersistedPreference = typeof persistedColorPreference === 'string';
 
-export default class Document extends NextDocument {
-  static async getInitialProps(ctx: any): Promise<any> {
-    const originalRenderPage = ctx.renderPage;
-    const cookies = new Cookies(ctx.req.headers.cookie);
-
-    ctx.renderPage = () =>
-      originalRenderPage({
-        enhanceComponent: (Component: any) => {
-          Component.universalCookies = cookies;
-          return Component;
-        },
-      });
-
-    const props = await NextDocument.getInitialProps(ctx);
-    return { ...props, cookies: cookies.getAll() };
+  // If the user has explicitly chosen light or dark,
+  // let's use it. Otherwise, this value will be null.
+  if (hasPersistedPreference) {
+    return persistedColorPreference
   }
 
+  // If they haven't been explicit, let's check the media query
+  const mql = window.matchMedia('(prefers-color-scheme: dark)');
+  const hasMediaQueryPreference = typeof mql.matches === 'boolean';
+  if (hasMediaQueryPreference) {
+    const theme = mql.matches ? 'dark' : 'light';
+    return theme
+  }
+}
+
+;(function() {
+  const theme = getInitialColorMode();
+  window.localStorage.setItem('fuel-ui-theme', theme);
+  window.__FUEL_THEME__ = theme;
+})()
+`;
+
+export default class MyDocument extends Document {
   render() {
-    const cookies = (this.props as any).cookies;
     return (
-      <Html
-        lang="en"
-        data-theme={cookies.theme || DEFAULT_THEME}
-        className={
-          cookies.theme === 'light' ? 'fuel_light-theme' : 'fuel_dark-theme'
-        }
-      >
+      <Html lang="en">
         <Head>
           <style
             id="stitches"
             dangerouslySetInnerHTML={{ __html: getCssText() }}
           />
+          <Script id="theme" strategy="beforeInteractive">
+            {getThemeScript}
+          </Script>
         </Head>
         <body>
           <Main />

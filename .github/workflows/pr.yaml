@@ -41,7 +41,7 @@ jobs:
 
       - name: Run lint
         run: |
-          pnpm check
+          pnpm check:prod
 
   quickstart-test:
     name: build-quickstart-contract
@@ -60,9 +60,16 @@ jobs:
         run: echo "$HOME/.fuelup/bin:${GITHUB_PATH}" >> $GITHUB_PATH
       - name: Set Default Beta-3 Toolchain
         run: fuelup toolchain install beta-3 && fuelup default beta-3
+      - name: Build Contract
+        run: forc build --path ./docs/guides/examples/quickstart/counter-contract
+      - name: Run contract tests
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --manifest-path ./docs/guides/examples/quickstart/counter-contract/Cargo.toml
       - name: Check Cargo fmt & clippy
         run: |
-          cd guide-examples/quickstart/counter-contract
+          cd docs/guides/examples/quickstart/counter-contract
           cargo fmt --all --check
           cargo clippy --all-targets --all-features
       - name: Build Contract
