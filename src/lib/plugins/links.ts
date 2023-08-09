@@ -9,6 +9,7 @@ export function handleLinks(
   node: any,
   dirname: string,
   idx: number | null,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   parent: Parent<any, any>
 ) {
   let newUrl: string | null = null;
