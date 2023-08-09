@@ -44,7 +44,9 @@ const walletComponentsCondition = (node: any, filepath: string) => {
 
 const mdBookLinks = (node: any) => {
   return (
-    (node.type === 'link' || node.type === 'definition') && node.url !== '..'
+    ((node.type === 'link' || node.type === 'definition') &&
+      node.url !== '..') ||
+    (node.type === 'html' && node.value.includes('<a '))
   );
 };
 
@@ -108,13 +110,13 @@ export function handlePlugins() {
           nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
         }
       });
-      nodes.forEach(([node, _idx, parent]) => {
+      nodes.forEach(([node, idx, parent]) => {
         if (exampleImportCondition(node)) {
           const content = handleExampleImports(node, dirname, rootDir, parent);
           node.value = content;
         }
         if (mdBookLinks(node)) {
-          const newUrl = handleLinks(node, dirname);
+          const newUrl = handleLinks(node, dirname, idx, parent);
           if (newUrl) node.url = newUrl;
         }
       });
