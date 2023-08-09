@@ -4,12 +4,12 @@ import { join } from 'path';
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
 import type { Parent } from 'unist-util-visit/lib';
+import { versions } from '~/docs/fuels-ts/packages/versions/src';
 
 import { handleForcGenDocs } from './forc-gen-docs';
 import { handleLinks } from './links';
 import { handleExampleImports } from './mdbook-example-import';
 import { handleScriptLink } from './ts-docs';
-import { loadTSVersions } from './ts-versions';
 import {
   handleDemoComp,
   handlePlayerComp,
@@ -150,7 +150,6 @@ export function handlePlugins() {
     }
 
     if (filepath.includes('/fuels-ts/')) {
-      const versions = loadTSVersions(rootDir);
       // handle injected link urls
       if (hasScriptLink(tree.children[0])) {
         tree = handleScriptLink(tree, versions);
