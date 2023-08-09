@@ -46,13 +46,9 @@ const getHighlighter: RehypeCodeOptions['getHighlighter'] = async (options) => {
       'typescript',
       'tsx',
       'jsx',
-      'bash',
-      'shell',
-      'sh',
       'json',
       'toml',
       'graphql',
-      'console',
       'ts',
     ],
     paths: {
@@ -105,8 +101,7 @@ function codeGroup() {
     const pres = nodes.filter((n: any) => n.tagName === 'pre');
     const group = pres.flatMap((node: any) => node.children);
     const first = pres?.[0] as any;
-    const language =
-      first.children?.[0]?.properties?.className?.[0] ?? 'language-sh';
+    const language = first.children?.[0]?.properties?.className?.[0] ?? '';
     const text = toText({ tagName: 'pre', type: 'element', children: group });
     const children = h('code', { class: language }, text);
     const newNode = h('pre', { 'data-language': language }, [children]);
@@ -124,10 +119,7 @@ function codeLanguage() {
       if (!node.properties) node.properties = {};
       const lang = node.properties?.className?.[0];
 
-      if (!lang) {
-        node.properties.className = ['language-sh'];
-      }
-      if (lang === 'language-rust,ignore') {
+      if (lang?.includes('rust')) {
         node.properties.className[0] = 'language-rust';
       }
       if (lang?.includes('sway')) {
