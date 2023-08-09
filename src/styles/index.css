@@ -74,3 +74,7 @@ img {
 ul > li > ul {
   margin: 5px 0 !important;
 }
+
+textarea {
+  color: inherit !important;
+}
