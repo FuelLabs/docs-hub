@@ -37,7 +37,7 @@ async function main() {
   if (!fs.existsSync(path.join(process.cwd(), OUTPUT_FOLDER))) {
     fs.mkdirSync(path.join(process.cwd(), OUTPUT_FOLDER));
   }
-  exportComponents(
+  await exportComponents(
     GRAPHQL_DIRECTORY,
     GRAPHQL_DOCS_DIRECTORY,
     GRAPHQL_BOOK_NAME,
