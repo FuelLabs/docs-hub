@@ -31,7 +31,11 @@ export class Doc {
     }
 
     const config = this.#getConfig(item.slug);
-    const pageLink = join(config.repository, item._raw.flattenedPath);
+    const splitPath = item._raw.flattenedPath.split('/');
+    splitPath.splice(0, 2);
+    splitPath.pop();
+    const actualPath = 'tree/master/' + splitPath.join('/');
+    const pageLink = join(config.repository, actualPath);
 
     this.md = item;
     this.config = config;

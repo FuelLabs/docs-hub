@@ -50,6 +50,10 @@ export class DocParser {
     }
 
     slug = slug.replace('README', 'index');
+    // TODO: Remove after fixed
+    if (slug === 'docs/fuels-rs/contributing/contributing') {
+      slug = 'docs/fuels-rs/contributing';
+    }
     return slug;
   }
 }
