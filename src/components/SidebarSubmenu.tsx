@@ -38,6 +38,7 @@ export function SidebarSubmenu({
   return (
     <Box.Flex css={styles.root}>
       <SidebarLink
+        intent="base"
         item={{ label, slug }}
         rightIcon={isOpened ? Icon.is('ChevronUp') : Icon.is('ChevronDown')}
       />
