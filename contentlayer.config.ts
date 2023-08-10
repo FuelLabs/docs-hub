@@ -59,13 +59,13 @@ const includeDirs = [
   'docs/fuel-graphql-docs/docs',
   'docs/fuels-wallet/packages/docs/docs',
   'docs/guides/docs',
-  'docs/about-fuel',
+  // 'docs/about-fuel',
 ];
 
 const excludeDirs = [
   'docs/guides/docs/guides.json',
   'docs/guides/docs/nav.json',
-  'docs/about-fuel/nav.json',
+  // 'docs/about-fuel/nav.json',
   'docs/sway/docs/book/src/SUMMARY.md',
   'docs/fuelup/docs/src/SUMMARY.md',
   'docs/fuels-rs/docs/src/SUMMARY.md',

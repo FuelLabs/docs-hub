@@ -14,7 +14,7 @@ export type Tabs =
   | 'fuelup'
   | 'indexer'
   | 'specs'
-  | 'about-fuel'
+  // | 'about-fuel'
   | 'forc';
 
 export type LinkType = 'menu' | 'internal-link' | 'external-link' | 'category';
@@ -28,6 +28,15 @@ export type LinkObject = {
   menu?: LinkObject[];
   slug?: Tabs;
 };
+
+// doc slugs that start with a path in this array
+// won't be capitalized in the navigation sidebar
+export const LOWER_CASE_NAV_PATHS = [
+  'docs/forc/commands/',
+  'docs/forc/plugins/',
+  'docs/indexer/forc-index/',
+  'docs/indexer/forc-postgres/',
+];
 
 export const NAVIGATION: LinkObject[] = [
   {
@@ -113,12 +122,12 @@ export const NAVIGATION: LinkObject[] = [
     name: 'Network',
     type: 'menu',
     menu: [
-      {
-        name: 'About Fuel',
-        type: 'internal-link',
-        link: '/docs/about-fuel/',
-        slug: 'about-fuel',
-      },
+      // {
+      //   name: 'About Fuel',
+      //   type: 'internal-link',
+      //   link: '/docs/about-fuel/',
+      //   slug: 'about-fuel',
+      // },
       {
         name: 'GraphQL API',
         type: 'internal-link',
@@ -137,11 +146,6 @@ export const NAVIGATION: LinkObject[] = [
         link: 'https://faucet-beta-3.fuel.network/',
       },
     ],
-  },
-  {
-    name: 'Versions',
-    type: 'internal-link',
-    link: '/versions',
   },
 ];
 

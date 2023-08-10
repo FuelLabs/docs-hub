@@ -2,6 +2,8 @@ import { createContext, useContext, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { SidebarLinkItem, DocType } from '~/src/types';
 
+import type { Versions } from '../pages/[...slug]';
+
 export type DocCtx = {
   doc: DocType;
   docLink: SidebarLinkItem;
@@ -9,6 +11,7 @@ export type DocCtx = {
   title: string;
   activeHistory?: string[];
   setActiveHistory: (prev: string[]) => void;
+  versions: Versions;
 };
 
 const ctx = createContext<DocCtx>({} as DocCtx);

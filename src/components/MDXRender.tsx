@@ -3,6 +3,7 @@ import 'plyr-react/plyr.css';
 import { runSync } from '@mdx-js/mdx';
 import * as provider from '@mdx-js/react';
 import dynamic from 'next/dynamic';
+import { usePathname } from 'next/navigation';
 import { useMemo } from 'react';
 
 import { runtime } from '../lib/runtime';
@@ -15,7 +16,7 @@ import { Link } from './Link';
 import { UL, OL } from './List';
 import { Paragraph } from './Paragraph';
 import { Pre } from './Pre';
-import { Table } from './Table';
+import { Table, TD, TH } from './Table';
 
 const Player = dynamic(() => import('./Player'), {
   ssr: false,
@@ -46,6 +47,12 @@ type MDXRenderProps = {
 };
 
 export function MDXRender({ code, components }: MDXRenderProps) {
+  const pathname = usePathname();
+  if (pathname.startsWith('/docs/wallet/')) {
+    components.td = TD;
+    components.th = TH;
+  }
+
   const { default: Content } = useMemo(
     () => runSync(code, { ...runtime, ...provider }),
     [code]

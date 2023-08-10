@@ -175,7 +175,7 @@ async function getOrders() {
   orders.guides = guidesOrderFile;
 
   // ABOUT FUEL ORDER
-  orders['about-fuel'] = aboutFuelOrderFile;
+  // orders['about-fuel'] = aboutFuelOrderFile;
 
   // WALLET ORDER
   orders.wallet = walletOrderFile;
@@ -395,13 +395,13 @@ async function getDocs(key) {
         '!**/SUMMARY.md',
       ];
       break;
-    case 'about-fuel':
-      paths = [
-        // ABOUT FUEL DOCS
-        './about-fuel/*.md',
-        './about-fuel/**/*.md',
-      ];
-      break;
+    // case 'about-fuel':
+    //   paths = [
+    //     // ABOUT FUEL DOCS
+    //     './about-fuel/*.md',
+    //     './about-fuel/**/*.md',
+    //   ];
+    //   break;
     default:
       paths = [
         // GUIDES

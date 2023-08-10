@@ -78,7 +78,7 @@ const styles = {
     [LIST_ITEM]: {
       mb: '$2',
       lineHeight: 1.4,
-      fontSize: '$xs',
+      fontSize: '$sm',
 
       a: {
         color: '$intentsBase11',

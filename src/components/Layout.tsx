@@ -42,12 +42,30 @@ export function Layout({
         <title>{titleText}</title>
         <meta
           name="description"
-          content={config?.ogTags?.description}
+          content={
+            config && config?.ogTags?.description !== ''
+              ? config?.ogTags?.description
+              : 'Fuel Network Docs'
+          }
           key="desc"
         />
         <meta property="og:title" content={titleText} />
-        <meta property="og:description" content={config?.ogTags?.description} />
-        <meta property="og:image" content={config?.ogTags?.image} />
+        <meta
+          property="og:description"
+          content={
+            config && config?.ogTags?.description !== ''
+              ? config?.ogTags?.description
+              : 'Official documentation for the Fuel Network'
+          }
+        />
+        <meta
+          property="og:image"
+          content={
+            config && config?.ogTags?.image !== ''
+              ? config?.ogTags?.image
+              : '/images/Fuel_Network.png'
+          }
+        />
       </Head>
       <Box
         css={styles.root}
@@ -66,11 +84,10 @@ const styles = {
     maxWidth: '100vw',
     width: '100vw',
     height: '100vh',
-    gridTemplateRows: '80px auto',
+    gridTemplateRows: '70px auto',
 
     '@xl': {
       display: 'grid',
-      gridTemplateRows: '80px auto',
 
       '&[data-clean="false"]': {
         gridTemplateColumns: '250px 1fr 220px',

@@ -1,24 +1,14 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
-import type { MdDoc } from '~/.contentlayer/generated';
 import { Layout } from '~/src/components/Layout';
 import { Sidebar } from '~/src/components/Sidebar';
 import { TableOfContent } from '~/src/components/TableOfContent';
 import { DocProvider } from '~/src/hooks/useDocContext';
-import type { DocType, SidebarLinkItem } from '~/src/types';
 
 import { DocFooter } from '../components/DocFooter';
 import { MDXRender } from '../components/MDXRender';
 import { getComponents } from '../lib/imports';
-
-type DocPageProps = {
-  code: string;
-  md: MdDoc;
-  doc: DocType;
-  links: SidebarLinkItem[];
-  docLink?: SidebarLinkItem;
-  theme: string;
-};
+import type { DocPageProps } from '../pages/[...slug]';
 
 export function DocScreen(props: DocPageProps) {
   const { doc } = props;

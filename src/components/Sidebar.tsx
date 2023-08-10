@@ -7,7 +7,9 @@ import { styles as linkStyles, SidebarLink } from './SidebarLink';
 import { SidebarSubmenu } from './SidebarSubmenu';
 
 export function Sidebar() {
-  const { links, doc } = useDocContext();
+  const ctx = useDocContext();
+  const { links, doc, versions } = ctx;
+  const version = versions[doc.docsConfig.title]?.version;
   return (
     links && (
       <Box.Stack as="nav" css={styles.root} className="Sidebar">
@@ -32,6 +34,11 @@ export function Sidebar() {
             />
           );
         })}
+        {version && (
+          <Box css={{ fontSize: '$sm', paddingTop: '20px' }}>
+            Version: {version}
+          </Box>
+        )}
       </Box.Stack>
     )
   );
