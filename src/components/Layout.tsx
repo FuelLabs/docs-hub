@@ -43,7 +43,7 @@ export function Layout({
         <meta
           name="description"
           content={
-            config?.ogTags?.description !== ''
+            config && config?.ogTags?.description !== ''
               ? config?.ogTags?.description
               : 'Fuel Network Docs'
           }
@@ -53,15 +53,15 @@ export function Layout({
         <meta
           property="og:description"
           content={
-            config?.ogTags?.description !== ''
+            config && config?.ogTags?.description !== ''
               ? config?.ogTags?.description
-              : 'Fuel Network Docs'
+              : 'Official documentation for the Fuel Network'
           }
         />
         <meta
           property="og:image"
           content={
-            config?.ogTags?.image !== ''
+            config && config?.ogTags?.image !== ''
               ? config?.ogTags?.image
               : '/images/Fuel_Network.png'
           }

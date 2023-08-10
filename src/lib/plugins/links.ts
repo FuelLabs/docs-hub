@@ -18,6 +18,7 @@ export function handleLinks(
     const url = getUrl(node.value);
     if (url && idx) {
       node.type = 'link';
+      // TODO: remove once Sway book is updated
       node.url = url.includes(
         'fuelbook.fuel.network/master/quickstart/developer-quickstart'
       )
