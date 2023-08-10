@@ -66,11 +66,10 @@ const styles = {
     maxWidth: '100vw',
     width: '100vw',
     height: '100vh',
-    gridTemplateRows: '80px auto',
+    gridTemplateRows: '70px auto',
 
     '@xl': {
       display: 'grid',
-      gridTemplateRows: '80px auto',
 
       '&[data-clean="false"]': {
         gridTemplateColumns: '250px 1fr 220px',
