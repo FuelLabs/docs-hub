@@ -31,10 +31,16 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
     }
 
     const active = getActive(pathname, slug);
-
     const isActive = cx({
       active,
     });
+
+    const label = item.label.replaceAll(/[_-]/g, ' ');
+    const shouldBeLowerCase =
+      slug.startsWith('docs/forc/commands/') ||
+      slug.startsWith('docs/forc/plugins/') ||
+      slug.startsWith('docs/indexer/forc-index/') ||
+      slug.startsWith('docs/indexer/forc-postgres/');
 
     return (
       <ButtonLink
@@ -45,7 +51,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
         css={styles.root}
         data-active={Boolean(isActive)}
       >
-        {capitalize(item.label.replaceAll(/[_-]/g, ' '))}
+        {shouldBeLowerCase ? label : capitalize(label)}
       </ButtonLink>
     );
   }
