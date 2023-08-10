@@ -42,12 +42,30 @@ export function Layout({
         <title>{titleText}</title>
         <meta
           name="description"
-          content={config?.ogTags?.description}
+          content={
+            config?.ogTags?.description !== ''
+              ? config?.ogTags?.description
+              : 'Fuel Network Docs'
+          }
           key="desc"
         />
         <meta property="og:title" content={titleText} />
-        <meta property="og:description" content={config?.ogTags?.description} />
-        <meta property="og:image" content={config?.ogTags?.image} />
+        <meta
+          property="og:description"
+          content={
+            config?.ogTags?.description !== ''
+              ? config?.ogTags?.description
+              : 'Fuel Network Docs'
+          }
+        />
+        <meta
+          property="og:image"
+          content={
+            config?.ogTags?.image !== ''
+              ? config?.ogTags?.image
+              : '/images/Fuel_Network.png'
+          }
+        />
       </Head>
       <Box
         css={styles.root}

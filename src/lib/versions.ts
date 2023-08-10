@@ -12,14 +12,12 @@ async function itemFromPackageJson(filename: string) {
 
 async function getWalletVersion() {
   const { homepage } = await itemFromPackageJson('fuels-wallet/package.json');
-  // const json = await itemFromPackageJson(
-  //   'fuels-wallet/packages/sdk/package.json'
-  // );
+  const json = await itemFromPackageJson(
+    'fuels-wallet/packages/sdk/package.json'
+  );
   return {
     name: 'fuels-wallet',
-    version: '0.11.2',
-    // TODO: fix once package.json is updated
-    // version: json.version,
+    version: json.version,
     category: 'Wallet',
     url: homepage,
   };

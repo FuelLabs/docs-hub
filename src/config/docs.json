@@ -50,7 +50,7 @@
     "repository": "https://github.com/FuelLabs/fuels-wallet",
     "ogTags": {
       "description": "Official documentation for the Fuel Wallet",
-      "image": ""
+      "image": "/images/wallet-og-image.png"
     }
   },
   "graphql": {
