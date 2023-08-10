@@ -7,7 +7,22 @@ import { styles as linkStyles, SidebarLink } from './SidebarLink';
 import { SidebarSubmenu } from './SidebarSubmenu';
 
 export function Sidebar() {
-  const { links, doc } = useDocContext();
+  const ctx = useDocContext();
+  const { links, doc, versions } = ctx;
+  let version;
+  if (doc.slug.includes('docs/fuels-rs')) {
+    version = versions.rust.version;
+  } else if (doc.slug.includes('docs/fuels-ts')) {
+    version = versions.tsSDK.version;
+  } else if (doc.slug.includes('docs/sway') || doc.slug.includes('docs/forc')) {
+    version = versions.forc.version;
+  } else if (doc.slug.includes('docs/indexer')) {
+    version = versions.indexer.version;
+  } else if (doc.slug.includes('docs/fuelup')) {
+    version = versions.fuelup.version;
+  } else if (doc.slug.includes('docs/wallet')) {
+    version = versions.wallet.version;
+  }
   return (
     links && (
       <Box.Stack as="nav" css={styles.root} className="Sidebar">
@@ -32,6 +47,11 @@ export function Sidebar() {
             />
           );
         })}
+        {version && (
+          <Box css={{ fontSize: '$sm', paddingTop: '20px' }}>
+            Version: {version}
+          </Box>
+        )}
       </Box.Stack>
     )
   );

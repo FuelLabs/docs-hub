@@ -162,7 +162,7 @@ const styles = {
   }),
   actions: cssObj({
     display: 'flex',
-    zIndex: '$10',
+    zIndex: '$6',
     position: 'absolute',
     bottom: '$2',
     right: '$2',

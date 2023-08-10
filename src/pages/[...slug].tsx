@@ -5,8 +5,25 @@ import { allMdDocs } from '../../.contentlayer/generated';
 import useTheme from '../hooks/useTheme';
 import { Doc } from '../lib/md-doc';
 import { Docs } from '../lib/md-docs';
+import { getVersions } from '../lib/versions';
 import { DocScreen } from '../screens/DocPage';
 import type { DocType, SidebarLinkItem } from '../types';
+
+export type VersionItem = {
+  version: string;
+  name: string;
+  category: string;
+  url: string;
+};
+
+export type Versions = {
+  forc: VersionItem;
+  fuelup: VersionItem;
+  indexer: VersionItem;
+  rust: VersionItem;
+  tsSDK: VersionItem;
+  wallet: VersionItem;
+};
 
 export type DocPageProps = {
   code: string;
@@ -15,6 +32,7 @@ export type DocPageProps = {
   links: SidebarLinkItem[];
   docLink?: SidebarLinkItem;
   theme: string;
+  versions: Versions;
 };
 
 export default function DocPage(props: DocPageProps) {
@@ -31,6 +49,7 @@ export function getStaticPaths() {
 export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   const doc = new Doc(params?.slug as string[], allMdDocs);
   const code = await doc.getCode();
+  const versions = await getVersions();
   return {
     props: {
       code,
@@ -38,6 +57,7 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
       doc: doc.item,
       links: doc.sidebarLinks,
       docLink: doc.navLinks,
+      versions,
     },
   };
 };

@@ -138,11 +138,6 @@ export const NAVIGATION: LinkObject[] = [
       },
     ],
   },
-  {
-    name: 'Versions',
-    type: 'internal-link',
-    link: '/versions',
-  },
 ];
 
 export const DEFAULT_THEME = 'light';
