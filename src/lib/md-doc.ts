@@ -34,8 +34,8 @@ export class Doc {
     const splitPath = item._raw.flattenedPath.split('/');
     splitPath.splice(0, 2);
     splitPath.pop();
-    const actualPath = 'tree/master/' + splitPath.join('/');
-    const pageLink = join(config.repository, actualPath);
+    const actualPath = '/tree/master/' + splitPath.join('/');
+    const pageLink = `${config.repository}${actualPath}`;
 
     this.md = item;
     this.config = config;

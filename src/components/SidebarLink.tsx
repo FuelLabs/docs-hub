@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { forwardRef } from 'react';
 import type { SidebarLinkItem } from '~/src/types';
 
+import { LOWER_CASE_NAV_PATHS } from '../config/constants';
 import { capitalize } from '../lib/str';
 
 function getActive(pathname: string, slug: string) {
@@ -31,10 +32,14 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
     }
 
     const active = getActive(pathname, slug);
-
     const isActive = cx({
       active,
     });
+
+    const label = item.label.replaceAll(/[_-]/g, ' ');
+    const shouldBeLowerCase = LOWER_CASE_NAV_PATHS.some((prefix) =>
+      slug.startsWith(prefix)
+    );
 
     return (
       <ButtonLink
@@ -45,7 +50,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
         css={styles.root}
         data-active={Boolean(isActive)}
       >
-        {capitalize(item.label.replaceAll(/[_-]/g, ' '))}
+        {shouldBeLowerCase ? label : capitalize(label)}
       </ButtonLink>
     );
   }

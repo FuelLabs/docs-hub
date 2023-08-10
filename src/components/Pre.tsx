@@ -21,7 +21,7 @@ export function Pre({
   ...props
 }: PreProps) {
   const [expanded, setExpanded] = useState(false);
-  const needExpand = lines >= 10;
+  const needExpand = lines >= 32;
 
   function handleCopy() {
     typeof window !== 'undefined' &&
@@ -162,7 +162,7 @@ const styles = {
   }),
   actions: cssObj({
     display: 'flex',
-    zIndex: '$10',
+    zIndex: '$6',
     position: 'absolute',
     bottom: '$2',
     right: '$2',
