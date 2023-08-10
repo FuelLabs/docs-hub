@@ -34,6 +34,7 @@ const touchShikiPath = (): void => {
 
 const getHighlighter: RehypeCodeOptions['getHighlighter'] = async (options) => {
   touchShikiPath();
+  const pathFolder = `${getShikiPath()}/languages`;
 
   const highlighter = await shikiGetHighlighter({
     // This is technically not compatible with shiki's interface but
@@ -41,20 +42,64 @@ const getHighlighter: RehypeCodeOptions['getHighlighter'] = async (options) => {
     // - https://rehype-pretty-code.netlify.app/ (see Custom Highlighter)
     ...(options as any),
     langs: [
-      'rust',
-      'javascript',
-      'typescript',
-      'tsx',
-      'jsx',
-      'json',
-      'toml',
-      'graphql',
-      'ts',
+      {
+        id: 'rust',
+        scopeName: 'source.rust',
+        path: `${pathFolder}/rust.tmLanguage.json`,
+        displayName: 'Rust',
+        aliases: ['rs'],
+      },
+      {
+        id: 'javascript',
+        scopeName: 'source.js',
+        path: `${pathFolder}/javascript.tmLanguage.json`,
+        displayName: 'JavaScript',
+        aliases: ['js'],
+      },
+      {
+        id: 'typescript',
+        scopeName: 'source.ts',
+        path: `${pathFolder}/typescript.tmLanguage.json`,
+        displayName: 'TypeScript',
+        aliases: ['ts'],
+      },
+      {
+        id: 'tsx',
+        scopeName: 'source.tsx',
+        path: `${pathFolder}/tsx.tmLanguage.json`,
+        displayName: 'TSX',
+      },
+      {
+        id: 'jsx',
+        scopeName: 'source.js.jsx',
+        path: `${pathFolder}/jsx.tmLanguage.json`,
+        displayName: 'JSX',
+      },
+      {
+        id: 'json',
+        scopeName: 'source.json',
+        path: `${pathFolder}/json.tmLanguage.json`,
+        displayName: 'JSON',
+      },
+      {
+        id: 'toml',
+        scopeName: 'source.toml',
+        path: `${pathFolder}/toml.tmLanguage.json`,
+        displayName: 'TOML',
+      },
+      {
+        id: 'graphql',
+        scopeName: 'source.graphql',
+        path: `${pathFolder}/graphql.tmLanguage.json`,
+        displayName: 'GraphQL',
+        embeddedLangs: ['javascript', 'typescript', 'jsx', 'tsx'],
+      },
+      {
+        id: 'sway',
+        scopeName: 'source.sway',
+        path: `${pathFolder}/sway.tmLanguage.json`,
+      },
     ],
-    paths: {
-      languages: `${getShikiPath()}/languages/`,
-      themes: `${getShikiPath()}/themes/`,
-    },
   });
 
   return highlighter;
@@ -123,7 +168,7 @@ function codeLanguage() {
         node.properties.className[0] = 'language-rust';
       }
       if (lang?.includes('sway')) {
-        node.properties.className[0] = 'language-rust';
+        node.properties.className[0] = 'language-sway';
       }
       if (lang?.includes('ts')) {
         node.properties.className[0] = 'language-typescript';
