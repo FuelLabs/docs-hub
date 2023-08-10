@@ -68,9 +68,9 @@ export function HomePage() {
           <Heading as="h3">Fuel Network</Heading>
           <Text>Find network specifications and resources.</Text>
           <List icon="ArrowRight">
-            <List.Item>
+            {/* <List.Item>
               <Link href="/docs/about-fuel">About Fuel</Link>
-            </List.Item>
+            </List.Item> */}
             <List.Item>
               <Link href="/docs/graphql">GraphQL API</Link>
             </List.Item>

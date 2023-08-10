@@ -14,7 +14,7 @@ export type Tabs =
   | 'fuelup'
   | 'indexer'
   | 'specs'
-  | 'about-fuel'
+  // | 'about-fuel'
   | 'forc';
 
 export type LinkType = 'menu' | 'internal-link' | 'external-link' | 'category';
@@ -113,12 +113,12 @@ export const NAVIGATION: LinkObject[] = [
     name: 'Network',
     type: 'menu',
     menu: [
-      {
-        name: 'About Fuel',
-        type: 'internal-link',
-        link: '/docs/about-fuel/',
-        slug: 'about-fuel',
-      },
+      // {
+      //   name: 'About Fuel',
+      //   type: 'internal-link',
+      //   link: '/docs/about-fuel/',
+      //   slug: 'about-fuel',
+      // },
       {
         name: 'GraphQL API',
         type: 'internal-link',

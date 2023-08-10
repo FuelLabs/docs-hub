@@ -15,7 +15,6 @@ function parseLink(link: string) {
 
 export function DocFooter() {
   const { docLink, doc } = useDocContext();
-  console.log('DOC PAGE LINK', doc.pageLink);
   const router = useRouter();
   const prevLink = docLink.prev?.slug && parseLink(docLink.prev.slug);
   let nextLink = docLink.next?.slug && parseLink(docLink.next?.slug);
