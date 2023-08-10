@@ -17,12 +17,13 @@ export type VersionItem = {
 };
 
 export type Versions = {
-  forc: VersionItem;
-  fuelup: VersionItem;
-  indexer: VersionItem;
-  rust: VersionItem;
-  tsSDK: VersionItem;
-  wallet: VersionItem;
+  Forc: VersionItem;
+  Sway: VersionItem;
+  Fuelup: VersionItem;
+  Indexer: VersionItem;
+  'Fuel Rust SDK': VersionItem;
+  'Fuel TS SDK': VersionItem;
+  'Fuel Wallet': VersionItem;
 };
 
 export type DocPageProps = {

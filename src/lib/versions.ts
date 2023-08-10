@@ -98,11 +98,12 @@ export async function getVersions() {
   const indexer = await getIndexerVersion();
 
   return {
-    forc,
-    fuelup,
-    indexer,
-    rust,
-    tsSDK,
-    wallet,
+    Forc: forc,
+    Sway: forc,
+    Fuelup: fuelup,
+    Indexer: indexer,
+    'Fuel Rust SDK': rust,
+    'Fuel TS SDK': tsSDK,
+    'Fuel Wallet': wallet,
   };
 }

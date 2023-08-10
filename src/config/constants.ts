@@ -29,6 +29,15 @@ export type LinkObject = {
   slug?: Tabs;
 };
 
+// doc slugs that start with a path in this array
+// won't be capitalized in the navigation sidebar
+export const LOWER_CASE_NAV_PATHS = [
+  'docs/forc/commands/',
+  'docs/forc/plugins/',
+  'docs/indexer/forc-index/',
+  'docs/indexer/forc-postgres/',
+];
+
 export const NAVIGATION: LinkObject[] = [
   {
     name: 'Guides',
