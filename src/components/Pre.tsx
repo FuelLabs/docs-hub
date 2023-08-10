@@ -21,7 +21,7 @@ export function Pre({
   ...props
 }: PreProps) {
   const [expanded, setExpanded] = useState(false);
-  const needExpand = lines >= 35;
+  const needExpand = lines >= 32;
 
   function handleCopy() {
     typeof window !== 'undefined' &&
