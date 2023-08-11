@@ -155,12 +155,8 @@ From inside the `fuel-project/counter-contract` directory, run the following com
 
 <span id="build-contract"></span>
 
-```console
-$ forc build
-  Compiled library "core".
-  Compiled library "std".
-  Compiled contract "counter-contract".
-  Bytecode size is 232 bytes.
+```sh
+forc build
 ```
 
 Let's have a look at the content of the `counter-contract` folder after building:
@@ -179,6 +175,8 @@ $ tree .
 │       └── counter-contract.bin
 └── src
     └── main.sw
+
+4 directories, 6 files
 ```
 
 We now have an `out` directory that contains our build artifacts such as the JSON representation of our ABI and the contract bytecode.
