@@ -47,16 +47,16 @@ test('test dev quickstart', async ({ page, context }) => {
 
   // get the command to make a new folder
   // const createProjectFolder = await clickCopyButton('create-project-folder');
-  // // print('MAKE NEW DIR', createProjectFolder);
+  // print('MAKE NEW DIR', createProjectFolder);
 
-  // if (!fs.existsSync('guides-testing')) {
-  //   fs.mkdirSync('guides-testing');
-  // }
+  if (!fs.existsSync('guides-testing')) {
+    fs.mkdirSync('guides-testing');
+  }
 
   // const goToTestingFolder = 'cd guides-testing && ';
   const goToProjectFolder = 'cd guides-testing/fuel-project && ';
-  // const goToContractFolder =
-  //   'cd guides-testing/fuel-project/counter-contract && ';
+  // // const goToContractFolder =
+  // //   'cd guides-testing/fuel-project/counter-contract && ';
 
   // execSync(goToTestingFolder + createProjectFolder.text, {
   //   encoding: 'utf-8',
@@ -84,41 +84,22 @@ test('test dev quickstart', async ({ page, context }) => {
   const contractTreeOutput = execSync(contractTreeCommand, {
     encoding: 'utf-8',
   });
-  // console.log('contractTree.text', contractTree.text);
-  // console.log('createContract.output', createContract.output);
+
   const first = contractTreeOutput.trim();
   const second = contractTree.output.trim();
-  console.log(first);
-  console.log(second);
-  console.log('all equal1?', first === second);
-  console.log('all equal2?', first == second);
   const split1 = first.split(EOL);
   const split2 = second.split(EOL);
-  console.log('split1.length', split1.length);
-  console.log('split2.length', split2.length);
-  if (split1.length === split2.length) {
-    split1.forEach((l, i) => {
-      console.log('--------------');
-      console.log('A: ', `"${l}"`);
-      console.log('B: ', `"${split2[i]}"`);
-      // console.log('equal1?', l === split2[i]);
-      // console.log('equal2?', l == split2[i]);
-      if (l != split2[i]) {
-        console.log('LENGTH A', l.length);
-        console.log('LENGTH B', split2[i].length);
-      }
-      console.log('--------------');
-    });
-  }
+  expect(split1.length === split2.length).toBeTruthy();
+  split1.forEach((l, i) => {
+    expect(l.trim() === split2[i].trim()).toBeTruthy();
+  });
 
-  // expect(contractTreeOutput === contractTree.output).toBeTruthy();
-
-  // const CONTRACT_PATH =
-  //   'guides-testing/fuel-project/counter-contract/src/main.sw';
-  // // get part 1 of the contract
-  // const contractPart1 = await clickCopyButton('program-type');
-  // fs.writeFileSync(CONTRACT_PATH, contractPart1.text + '\n\n');
-  // // // print('CONTRACT PART 1', contractPart1);
+  const CONTRACT_PATH =
+    'guides-testing/fuel-project/counter-contract/src/main.sw';
+  // get part 1 of the contract
+  const contractPart1 = await clickCopyButton('program-type');
+  fs.writeFileSync(CONTRACT_PATH, contractPart1.text + '\n\n');
+  print('CONTRACT PART 1', contractPart1);
 
   // // // get part 2 of the contract
   // const contractPart2 = await clickCopyButton('storage');
