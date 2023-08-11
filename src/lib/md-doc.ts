@@ -111,7 +111,7 @@ export class Doc {
     const guideName = this.item.slug.split('/')[0];
     const linksPath = join(
       DOCS_DIRECTORY,
-      `../src/config/sidebar-links/${configSlug}.json`
+      `../src/generated/sidebar-links/${configSlug}.json`
     );
     const links = JSON.parse(readFileSync(linksPath, 'utf8'));
     if (configSlug === 'guides' && guideName) {
