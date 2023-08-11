@@ -1,6 +1,6 @@
 {
   "index_name": "docs_hub",
-  "sitemap_urls": ["https://docs-o99dw2zew-fuel-labs.vercel.app/sitemap.xml"],
+  "sitemap_urls": ["https://docs.fuel.network/sitemap.xml"],
   "selectors": {
     "lvl0": "#lvl0",
     "lvl1": "h1",

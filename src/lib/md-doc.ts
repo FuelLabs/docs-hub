@@ -16,7 +16,7 @@ import { rehypeExtractHeadings } from './plugins/toc';
 
 const docConfigPath = join(DOCS_DIRECTORY, '../src/config/docs.json');
 const configFile = JSON.parse(readFileSync(docConfigPath, 'utf8'));
-const BASE_URL = 'https://docs-o99dw2zew-fuel-labs.vercel.app/';
+const BASE_URL = 'https://docs.fuel.network/';
 
 export class Doc {
   md: MdDoc;
