@@ -41,10 +41,9 @@ const styles = {
     li: {
       pl: '$1',
       lineHeight: '1.7',
-    },
-
-    '& li > p': {
-      display: 'inline',
+      '&::marker': {
+        color: '$intentsBase10',
+      },
     },
   }),
 };

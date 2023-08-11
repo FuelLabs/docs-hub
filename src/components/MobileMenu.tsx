@@ -132,6 +132,7 @@ function MenuButton({ item, active }: MenuButtonProps) {
         onPress={() => setIsOpen(!isOpen)}
         css={styles.navButton}
         variant="link"
+        intent="base"
         data-active={isActive}
         rightIcon={isOpen ? Icon.is('ChevronUp') : Icon.is('ChevronDown')}
       >

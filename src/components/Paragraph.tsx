@@ -10,7 +10,7 @@ export function Paragraph(props: any) {
 const styles = {
   root: cssObj({
     mt: '$3',
-    mb: '$5',
+    mb: '$3',
     textSize: 'base',
     lineHeight: '1.7',
   }),

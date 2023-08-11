@@ -4,12 +4,12 @@ import { join } from 'path';
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
 import type { Parent } from 'unist-util-visit/lib';
+import { versions } from '~/docs/fuels-ts/packages/versions/src';
 
 import { handleForcGenDocs } from './forc-gen-docs';
 import { handleLinks } from './links';
 import { handleExampleImports } from './mdbook-example-import';
 import { handleScriptLink } from './ts-docs';
-import { loadTSVersions } from './ts-versions';
 import {
   handleDemoComp,
   handlePlayerComp,
@@ -44,7 +44,9 @@ const walletComponentsCondition = (node: any, filepath: string) => {
 
 const mdBookLinks = (node: any) => {
   return (
-    (node.type === 'link' || node.type === 'definition') && node.url !== '..'
+    ((node.type === 'link' || node.type === 'definition') &&
+      node.url !== '..') ||
+    (node.type === 'html' && node.value.includes('<a '))
   );
 };
 
@@ -108,13 +110,13 @@ export function handlePlugins() {
           nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
         }
       });
-      nodes.forEach(([node, _idx, parent]) => {
+      nodes.forEach(([node, idx, parent]) => {
         if (exampleImportCondition(node)) {
           const content = handleExampleImports(node, dirname, rootDir, parent);
           node.value = content;
         }
         if (mdBookLinks(node)) {
-          const newUrl = handleLinks(node, dirname);
+          const newUrl = handleLinks(node, dirname, idx, parent);
           if (newUrl) node.url = newUrl;
         }
       });
@@ -150,7 +152,6 @@ export function handlePlugins() {
     }
 
     if (filepath.includes('/fuels-ts/')) {
-      const versions = loadTSVersions(rootDir);
       // handle injected link urls
       if (hasScriptLink(tree.children[0])) {
         tree = handleScriptLink(tree, versions);

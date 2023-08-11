@@ -51,6 +51,7 @@ export function isStringInTabs(str: string): boolean {
     str === 'fuelup' ||
     str === 'indexer' ||
     str === 'specs' ||
+    // str === 'about-fuel' ||
     str === 'forc'
   );
 }

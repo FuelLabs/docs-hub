@@ -11,7 +11,7 @@ async function itemFromPackageJson(filename: string) {
 }
 
 async function getWalletVersion() {
-  const { homepage } = await itemFromPackageJson('fuels-ts/package.json');
+  const { homepage } = await itemFromPackageJson('fuels-wallet/package.json');
   const json = await itemFromPackageJson(
     'fuels-wallet/packages/sdk/package.json'
   );
@@ -98,11 +98,12 @@ export async function getVersions() {
   const indexer = await getIndexerVersion();
 
   return {
-    forc,
-    fuelup,
-    indexer,
-    rust,
-    tsSDK,
-    wallet,
+    Forc: forc,
+    Sway: forc,
+    Fuelup: fuelup,
+    Indexer: indexer,
+    'Fuel Rust SDK': rust,
+    'Fuel TS SDK': tsSDK,
+    'Fuel Wallet': wallet,
   };
 }
