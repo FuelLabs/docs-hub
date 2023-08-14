@@ -9,13 +9,15 @@ import { SidebarSubmenu } from './SidebarSubmenu';
 export function Sidebar() {
   const ctx = useDocContext();
   const { links, doc, versions } = ctx;
-  const version = versions[doc.docsConfig.title]?.version;
+  const version =
+    doc && doc.docsConfig ? versions[doc.docsConfig.title]?.version : null;
   return (
     links && (
       <Box.Stack as="nav" css={styles.root} className="Sidebar">
         {doc.parent && (
           <ButtonLink
             as={NextLink}
+            intent="base"
             href={doc.parent.link}
             css={{ ...linkStyles.root, justifyContent: 'flex-start' }}
           >
