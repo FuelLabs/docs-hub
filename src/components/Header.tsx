@@ -8,12 +8,15 @@ import { Navigation } from './Navigation';
 const ThemeToggler = dynamic(() => import('./ThemeToggler'), { ssr: false });
 const Search = dynamic(() => import('./Search'), { ssr: false });
 
-export function Header({ active }: { active: string }) {
+export function Header({ active, title }: { active: string; title?: string }) {
   return (
     <Box.Flex as="header" css={styles.root}>
       <Link href="/" className="logo">
         <FuelLogo size={30} />
       </Link>
+      <span id="lvl0" style={{ visibility: 'hidden', width: '0', height: '0' }}>
+        {title}
+      </span>
       <Box.Flex css={styles.navWrapper} grow={'1'} gap={'$4'}>
         <Navigation active={active} />
       </Box.Flex>

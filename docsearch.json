@@ -1,8 +1,8 @@
 {
   "index_name": "docs_hub",
-  "sitemap_urls": ["https://docs-hub.vercel.app/sitemap.xml"],
+  "sitemap_urls": ["https://docs.fuel.network/sitemap.xml"],
   "selectors": {
-    "lvl0": "header a div",
+    "lvl0": "#lvl0",
     "lvl1": "h1",
     "lvl2": "h2",
     "lvl3": "h3",

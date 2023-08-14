@@ -3,9 +3,9 @@
 import dynamic from 'next/dynamic';
 import * as GQLExamples from '~/docs/fuel-graphql-docs/examples';
 import * as FuelExamples from '~/docs/fuels-wallet/packages/docs/examples';
+import { COMPONENTS as GQL_COMPONENTS } from '~/src/generated/components/graphql';
+import { COMPONENTS as WALLET_COMPONENTS } from '~/src/generated/components/wallet';
 
-import { COMPONENTS as GQL_COMPONENTS } from '../component-exports/graphql';
-import { COMPONENTS as WALLET_COMPONENTS } from '../component-exports/wallet';
 import type { DocType, ComponentsList } from '../types';
 
 function loadComponent(imp: any, name?: string) {
