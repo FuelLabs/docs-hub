@@ -37,7 +37,7 @@ export function Sidebar() {
           );
         })}
         {version && (
-          <Box css={{ fontSize: '$sm', paddingTop: '20px' }}>
+          <Box css={{ fontSize: '$sm', padding: '20px 0 60px 0' }}>
             Version: {version}
           </Box>
         )}
