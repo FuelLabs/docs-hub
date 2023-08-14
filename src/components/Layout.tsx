@@ -72,7 +72,10 @@ export function Layout({
         data-headings={hasHeadings}
         data-clean={Boolean(isClean)}
       >
-        <Header active={config?.slug ? config.slug : getSlug()} />
+        <Header
+          active={config?.slug ? config.slug : getSlug()}
+          title={config?.title}
+        />
         {children}
       </Box>
     </>

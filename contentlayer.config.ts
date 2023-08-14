@@ -67,6 +67,8 @@ const excludeDirs = [
   'docs/guides/docs/nav.json',
   // 'docs/about-fuel/nav.json',
   'docs/sway/docs/book/src/SUMMARY.md',
+  'docs/sway/docs/book/src/forc/commands/forc_deploy.md',
+  'docs/sway/docs/book/src/forc/commands/forc_run.md',
   'docs/fuelup/docs/src/SUMMARY.md',
   'docs/fuels-rs/docs/src/SUMMARY.md',
   'docs/fuel-indexer/docs/src/SUMMARY.md',

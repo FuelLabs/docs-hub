@@ -23,7 +23,7 @@ const walletOrderPath = join(
   DOCS_DIRECTORY,
   './fuels-wallet/packages/docs/src/nav.json'
 );
-const aboutFuelOrderPath = join(DOCS_DIRECTORY, '../docs/about-fuel/nav.json');
+// const aboutFuelOrderPath = join(DOCS_DIRECTORY, '../docs/about-fuel/nav.json');
 const tsConfigPath = join(
   DOCS_DIRECTORY,
   './fuels-ts/apps/docs/.vitepress/config.ts'
@@ -37,9 +37,9 @@ const specsSummaryFile = fs.readFileSync(specsSummaryPath, 'utf8');
 const graphqlOrderFile = JSON.parse(fs.readFileSync(graphqlOrderPath, 'utf8'));
 const guidesOrderFile = JSON.parse(fs.readFileSync(guidesOrderPath, 'utf8'));
 const walletOrderFile = JSON.parse(fs.readFileSync(walletOrderPath, 'utf8'));
-const aboutFuelOrderFile = JSON.parse(
-  fs.readFileSync(aboutFuelOrderPath, 'utf8')
-);
+// const aboutFuelOrderFile = JSON.parse(
+//   fs.readFileSync(aboutFuelOrderPath, 'utf8')
+// );
 const tsConfigFile = fs.readFileSync(tsConfigPath, 'utf8');
 
 const forcLines = [];
@@ -63,9 +63,9 @@ async function main() {
         sortedLinks = newLinks;
       }
       const json = JSON.stringify(sortedLinks);
-      const folderPath = 'src/config/sidebar-links';
+      const folderPath = 'src/generated/sidebar-links';
       if (!fs.existsSync(folderPath)) {
-        fs.mkdirSync(folderPath);
+        fs.mkdirSync(folderPath, { recursive: true });
       }
       fs.writeFileSync(`${folderPath}/${key}.json`, json, 'utf-8');
     })
