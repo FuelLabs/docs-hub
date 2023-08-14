@@ -8,6 +8,18 @@ interface Instruction {
   output: string;
 }
 
+const CONTRACT_PATH =
+  'guides-testing/fuel-project/counter-contract/src/main.sw';
+const TEST_CONTRACT_TEST_PATH =
+  'guides-testing/fuel-project/counter-contract/tests/harness.rs';
+const ACTUAL_CONTRACT_TEST_PATH =
+  'docs/guides/examples/quickstart/counter-contract/tests/harness.rs';
+
+const goToTestingFolder = 'cd guides-testing && ';
+const goToProjectFolder = 'cd guides-testing/fuel-project && ';
+const goToContractFolder =
+  'cd guides-testing/fuel-project/counter-contract && ';
+
 test('test dev quickstart', async ({ page, context }) => {
   async function clickCopyButton(id: string) {
     let clipboardText = { text: '', output: '' };
@@ -41,9 +53,31 @@ test('test dev quickstart', async ({ page, context }) => {
     fs.writeFileSync(filePath, content.text + '\n\n');
   }
 
-  async function appendToFile(buttonName: string, filePath: string) {
+  async function modifyFile(
+    buttonName: string,
+    filePath: string,
+    atLine?: number,
+    removeLines?: number[]
+  ) {
     const content = await clickCopyButton(buttonName);
-    fs.appendFileSync(filePath, content.text + '\n\n');
+    if (!atLine && !removeLines) {
+      fs.appendFileSync(filePath, content.text + '\n\n');
+    } else {
+      const lines = fs.readFileSync(filePath, 'utf8').split('\n');
+      if (removeLines) {
+        removeLines.forEach((lineNumber) => {
+          lines[lineNumber - 1] = '~~~REMOVE~~~';
+        });
+      }
+      if (atLine) {
+        lines.splice(atLine - 1, 0, content.text);
+      }
+      const modifiedContent = lines
+        .filter((line) => line !== '~~~REMOVE~~~')
+        .join('\n');
+
+      fs.writeFileSync(filePath, modifiedContent, 'utf8');
+    }
   }
 
   async function compareToFile(buttonName: string, pathName: string) {
@@ -57,24 +91,13 @@ test('test dev quickstart', async ({ page, context }) => {
   );
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
 
-  // TODO: use this in the CI
-  // get the default toolchain command
-  // const setDefaultFuelupToolchain = await clickCopyButton(
-  //   'set-default-fuelup-toolchain'
-  // );
-
   setupFolders();
 
-  // get the command to make a new folder
-  const createProjectFolder = await clickCopyButton('create-project-folder');
-  const goToTestingFolder = 'cd guides-testing && ';
-  const goToProjectFolder = 'cd guides-testing/fuel-project && ';
-  const goToContractFolder =
-    'cd guides-testing/fuel-project/counter-contract && ';
+  // set default toolchain
+  await runCommand('set-default-fuelup-toolchain');
 
-  execSync(goToTestingFolder + createProjectFolder.text, {
-    encoding: 'utf-8',
-  });
+  // get the command to make a new folder
+  await runCommand('create-project-folder', goToTestingFolder);
 
   // get the command to make a new forc project
   await runCommand('create-contract', goToTestingFolder);
@@ -82,46 +105,47 @@ test('test dev quickstart', async ({ page, context }) => {
   // get the command to show the contract tree
   await runCommand('contract-tree', goToProjectFolder);
 
-  const CONTRACT_PATH =
-    'guides-testing/fuel-project/counter-contract/src/main.sw';
-
   // add part 1 to contract
   await writeToFile('program-type', CONTRACT_PATH);
+
   // add part 2 to contract
-  await appendToFile('storage', CONTRACT_PATH);
+  await modifyFile('storage', CONTRACT_PATH);
+
   // add part 3 to contract
-  await appendToFile('abi', CONTRACT_PATH);
+  await modifyFile('abi', CONTRACT_PATH);
+
   //  add part 4 to contract
-  await appendToFile('impl', CONTRACT_PATH);
+  await modifyFile('impl', CONTRACT_PATH);
 
   // check the whole contract
   await compareToFile('entire-contract', CONTRACT_PATH);
 
-  // // build the contract
-  // await runCommand('build-contract', goToContractFolder);
+  // build the contract
+  await runCommand('build-contract', goToContractFolder);
 
-  // // built contract tree
-  // await runCommand('built-contract-tree', goToContractFolder);
+  // built contract tree
+  await runCommand('built-contract-tree', goToContractFolder);
 
-  // // command to show install cargo generate
-  // const installCargoGen = await clickCopyButton('install-cargo-generate');
-  // print('INSTALL CARGO GENERATE', installCargoGen);
+  // // install cargo generate ??
+  // // await runCommand('install-cargo-generate', goToProjectFolder);
 
-  // // command to use cargo generate
-  // const useCargoGen = await clickCopyButton('cargo-generate-test');
-  // print('CARGO GENERATE TEST', useCargoGen);
+  //  use cargo generate
+  await runCommand('cargo-generate-test', goToContractFolder);
 
-  // // command to show the tree after using cargo generate
-  // const cargoTestTree = await clickCopyButton('cargo-test-tree');
-  // print('CARGO GENERATE TREE', cargoTestTree);
+  // show the tree after using cargo generate
+  await runCommand('cargo-test-tree', goToContractFolder);
 
-  // // code for the test harness
-  // const testHarnessCode = await clickCopyButton('test-harness');
-  // print('TEST HARNESS CODE', testHarnessCode);
+  // code for the test harness
+  await modifyFile(
+    'test-harness',
+    TEST_CONTRACT_TEST_PATH,
+    37,
+    [37, 38, 39, 40, 41, 42]
+  );
 
-  // // command to run the cargo test
-  // const runCargoTest = await clickCopyButton('run-cargo-test');
-  // print('RUN TEST HARNESS', runCargoTest);
+  // the test harness is run and checked in the CI already
+  // this will just compare the files to make sure they are the same
+  await compareFiles(TEST_CONTRACT_TEST_PATH, ACTUAL_CONTRACT_TEST_PATH);
 });
 
 function setupFolders() {
@@ -147,7 +171,10 @@ function separateCommand(text: string): Instruction {
 }
 
 function compareOutputs(expected: string, actual: string) {
-  const split1 = expected.trim().split(EOL);
+  const split1 = expected
+    .trim()
+    .split(EOL)
+    .filter((line) => !line.startsWith('// ANCHOR'));
   const split2 = actual.trim().split(EOL);
   expect(split1.length === split2.length).toBeTruthy();
   split1.forEach((line, i) => {
@@ -155,4 +182,10 @@ function compareOutputs(expected: string, actual: string) {
     const trimmedLineB = split2[i].trim().replace(/\u00A0/g, ' ');
     expect(trimmedLineA).toEqual(trimmedLineB);
   });
+}
+
+async function compareFiles(testPathName: string, refPathName: string) {
+  const actual = fs.readFileSync(testPathName, { encoding: 'utf8' });
+  const expected = fs.readFileSync(refPathName, { encoding: 'utf8' });
+  compareOutputs(expected, actual);
 }

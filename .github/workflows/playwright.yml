@@ -13,6 +13,7 @@
 #     - uses: actions/setup-node@v3
 #       with:
 #         node-version: 18
+# INSTALL RUST
 #     - name: Install dependencies
 #       run: pnpm install
 #     - name: Install Playwright Browsers
