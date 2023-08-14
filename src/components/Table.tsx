@@ -6,7 +6,7 @@ import { Box } from '@fuel-ui/react';
 export function Table(props: any) {
   return (
     <Box css={styles.root}>
-      <Box as="table" {...props} css={styles.table} />;
+      <Box as="table" {...props} css={styles.table} />
     </Box>
   );
 }
