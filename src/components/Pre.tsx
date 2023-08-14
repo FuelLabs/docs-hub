@@ -107,8 +107,6 @@ const styles = {
     },
 
     'span[data-line]': {
-      display: 'inline-block',
-
       '&:before': {
         content: 'attr(data-line)',
         display: 'inline-block',
@@ -122,7 +120,6 @@ const styles = {
   }),
   wrapper: cssObj({
     borderRadius: '$default',
-    display: 'flex',
     background: 'var(--colors-preBg)',
 
     '&[data-need-expand=false]': {
