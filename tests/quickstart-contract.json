@@ -1,5 +1,7 @@
 {
-  "start_url": "/guides/quickstart/building-a-smart-contract",
+  "description": "This tests the 'building a smart contract' portion of the developer quickstart . It does not test forc-wallet or the contract deployment.",
+  "start_url": "guides/quickstart/building-a-smart-contract/",
+  "project_folder": "fuel-project",
   "steps": [
     {
       "action": "runCommand",
