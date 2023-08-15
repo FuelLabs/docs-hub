@@ -10,46 +10,53 @@ interface Instruction {
   output: string;
 }
 
-const quickstarTestConfig = JSON.parse(
+const quickstartContractTestConfig = JSON.parse(
   fs.readFileSync(
     join(process.cwd(), '/tests/quickstart-contract.json'),
     'utf8'
   )
 );
 
-let thisPage: Page | null;
+test('test quickstart contract', async ({ page }) => {
+  await runTest(page, quickstartContractTestConfig);
+});
 
-test('test quickstart contract', async ({ page, context }) => {
-  thisPage = page;
-  await page.goto(`http://localhost:3000/${quickstarTestConfig.start_url}`);
-  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
-  await setupFolders(quickstarTestConfig.project_folder);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function runTest(page: Page, config: any) {
+  await page.goto(`http://localhost:3000/${config.start_url}`);
+  await setupFolders(config.project_folder);
 
-  for (const step of quickstarTestConfig.steps) {
+  for (const step of config.steps) {
     switch (step.action) {
       case 'runCommand':
         if (step.inputs.length === 1) {
-          await runCommand(step.inputs[0]);
+          await runCommand(page, step.inputs[0]);
         } else {
-          await runCommand(step.inputs[0], step.inputs[1]);
+          await runCommand(page, step.inputs[0], step.inputs[1]);
         }
         break;
       case 'compareFiles':
         await compareFiles(step.inputs[0], step.inputs[1]);
         break;
       case 'compareToFile':
-        await compareToFile(step.inputs[0], step.inputs[1]);
+        await compareToFile(page, step.inputs[0], step.inputs[1]);
         break;
       case 'writeToFile':
-        await writeToFile(step.inputs[0], step.inputs[1]);
+        await writeToFile(page, step.inputs[0], step.inputs[1]);
         break;
       case 'modifyFile':
         if (step.inputs.length === 2) {
-          await modifyFile(step.inputs[0], step.inputs[1]);
+          await modifyFile(page, step.inputs[0], step.inputs[1]);
         } else if (step.inputs.length === 3) {
-          await modifyFile(step.inputs[0], step.inputs[1], step.inputs[2]);
+          await modifyFile(
+            page,
+            step.inputs[0],
+            step.inputs[1],
+            step.inputs[2]
+          );
         } else {
           await modifyFile(
+            page,
             step.inputs[0],
             step.inputs[1],
             step.inputs[2],
@@ -59,15 +66,13 @@ test('test quickstart contract', async ({ page, context }) => {
         break;
     }
   }
-});
+}
 
-async function clickCopyButton(id: string) {
+async function clickCopyButton(page: Page, id: string) {
   let clipboardText = { text: '', output: '' };
   const selector = `#${id} + div > div > div > button[aria-label="Copy to Clipboard"]`;
-  await thisPage!.locator(selector).click();
-  const rawText: string = await thisPage!.evaluate(
-    'navigator.clipboard.readText()'
-  );
+  await page.locator(selector).click();
+  const rawText: string = await page.evaluate('navigator.clipboard.readText()');
   if (rawText.startsWith('$')) {
     clipboardText = separateCommand(rawText);
   } else {
@@ -77,8 +82,8 @@ async function clickCopyButton(id: string) {
   return clipboardText;
 }
 
-async function runCommand(buttonName: string, goToFolder?: string) {
-  const copied = await clickCopyButton(buttonName);
+async function runCommand(page: Page, buttonName: string, goToFolder?: string) {
+  const copied = await clickCopyButton(page, buttonName);
   const command = goToFolder ? goToFolder + copied.text : copied.text;
   const commandOutput = execSync(command, {
     encoding: 'utf-8',
@@ -88,18 +93,19 @@ async function runCommand(buttonName: string, goToFolder?: string) {
   }
 }
 
-async function writeToFile(buttonName: string, filePath: string) {
-  const content = await clickCopyButton(buttonName);
+async function writeToFile(page: Page, buttonName: string, filePath: string) {
+  const content = await clickCopyButton(page, buttonName);
   fs.writeFileSync(filePath, content.text + '\n\n');
 }
 
 async function modifyFile(
+  page: Page,
   buttonName: string,
   filePath: string,
   atLine?: number,
   removeLines?: number[]
 ) {
-  const content = await clickCopyButton(buttonName);
+  const content = await clickCopyButton(page, buttonName);
   if (!atLine && !removeLines) {
     fs.appendFileSync(filePath, content.text + '\n\n');
   } else {
@@ -120,8 +126,8 @@ async function modifyFile(
   }
 }
 
-async function compareToFile(buttonName: string, pathName: string) {
-  const expected = await clickCopyButton(buttonName);
+async function compareToFile(page: Page, buttonName: string, pathName: string) {
+  const expected = await clickCopyButton(page, buttonName);
   const actual = fs.readFileSync(pathName, { encoding: 'utf8' });
   compareOutputs(expected.text, actual);
 }
