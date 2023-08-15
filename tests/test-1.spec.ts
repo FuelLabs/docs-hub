@@ -17,14 +17,24 @@ const quickstartContractTestConfig = JSON.parse(
   )
 );
 
-test('test quickstart contract', async ({ page }) => {
+const quickstartFrontendTestConfig = JSON.parse(
+  fs.readFileSync(
+    join(process.cwd(), '/tests/quickstart-frontend.json'),
+    'utf8'
+  )
+);
+
+test('test quickstart contract & frontend', async ({ page }) => {
+  await setupFolders(quickstartContractTestConfig.project_folder);
   await runTest(page, quickstartContractTestConfig);
+  await runTest(page, quickstartFrontendTestConfig);
+
+  // TODO: test using the counter dapp with the wallet
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function runTest(page: Page, config: any) {
   await page.goto(`http://localhost:3000/${config.start_url}`);
-  await setupFolders(config.project_folder);
 
   for (const step of config.steps) {
     switch (step.action) {

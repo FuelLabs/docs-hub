@@ -1,0 +1,38 @@
+{
+  "description": "This tests the 'building a frontend' portion of the developer quickstart.",
+  "start_url": "guides/quickstart/building-a-frontend/",
+  "project_folder": "fuel-project",
+  "steps": [
+    {
+      "action": "runCommand",
+      "inputs": ["create-react-app", "cd guides-testing/fuel-project && "]
+    },
+    {
+      "action": "runCommand",
+      "inputs": ["install-deps", "cd guides-testing/fuel-project && "]
+    },
+    {
+      "action": "modifyFile",
+      "inputs": [
+        "config-types",
+        "guides-testing/fuel-project/frontend/tsconfig.json",
+        3
+      ]
+    },
+    {
+      "action": "runCommand",
+      "inputs": ["typegen", "cd guides-testing/fuel-project/frontend && "]
+    },
+    {
+      "action": "writeToFile",
+      "inputs": ["app-code", "guides-testing/fuel-project/frontend/src/App.tsx"]
+    },
+    {
+      "action": "runCommand",
+      "inputs": [
+        "start-app",
+        "cd guides-testing/fuel-project/frontend && PORT=4000 "
+      ]
+    }
+  ]
+}
