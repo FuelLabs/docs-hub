@@ -47,5 +47,4 @@ node_modules
 notes
 
 # Generated files
-src/config/sidebar-links/
-src/component-exports/
+src/generated/
