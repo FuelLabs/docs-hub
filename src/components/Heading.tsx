@@ -71,7 +71,10 @@ const styles = {
       mt: '$12',
       mb: '$5',
       pb: '$2',
-    // borderBottom: '1px solid $border',
+    },
+    [head([2])]: {
+      pt: '20px',
+      borderTop: '1px solid #F1F1F1',
     },
     [head([3])]: {
       mt: '$8',
