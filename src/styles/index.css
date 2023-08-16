@@ -2,10 +2,6 @@
   --colors-preBg: #161616;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body,
 #__next {
   min-height: 100vh;
