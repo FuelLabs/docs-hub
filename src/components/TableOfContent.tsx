@@ -10,15 +10,6 @@ export function TableOfContent() {
   return (
     <Box css={styles.queries}>
       <Box css={styles.root}>
-        <Heading as="h6">
-          <Icon
-            icon={Icon.is('ListDetails')}
-            size={14}
-            stroke={1}
-            color="textSubtext"
-          />
-          On this page
-        </Heading>
         <List>
           {headings.map((heading) => (
             <List.Item
