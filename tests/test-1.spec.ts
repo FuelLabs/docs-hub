@@ -1,9 +1,15 @@
 import type { Page } from '@playwright/test';
-import { test, expect } from '@playwright/test';
 import { execSync } from 'child_process';
 import fs from 'fs';
+// import type { WalletUnlocked } from 'fuels';
+// import { Wallet } from 'fuels';
 import { EOL } from 'os';
 import { join } from 'path';
+
+import { test, expect } from './utils/fixtures';
+// import { FUEL_MNEMONIC } from './utils/mocks';
+// import { reload } from './utils/visit';
+// import { walletSetup, walletConnect, walletApprove } from './utils/wallet';
 
 interface Instruction {
   text: string;
@@ -24,12 +30,44 @@ const quickstartFrontendTestConfig = JSON.parse(
   )
 );
 
-test('test quickstart contract & frontend', async ({ page }) => {
-  await setupFolders(quickstartContractTestConfig.project_folder);
-  await runTest(page, quickstartContractTestConfig);
-  await runTest(page, quickstartFrontendTestConfig);
+test.describe('Guides', () => {
+  // let client: PublicClient;
 
-  // TODO: test using the counter dapp with the wallet
+  // let fuelWallet: WalletUnlocked;
+
+  // test.beforeEach(async ({ context, extensionId, page }) => {
+  //   await walletSetup(context, extensionId, page);
+  //   fuelWallet = Wallet.fromMnemonic(FUEL_MNEMONIC);
+  // });
+
+  test('dev quickstart', async ({ context, page }) => {
+    await setupFolders(quickstartContractTestConfig.project_folder);
+    await runTest(page, quickstartContractTestConfig);
+    await runTest(page, quickstartFrontendTestConfig);
+
+    // // Connect fuel
+    // await page.goto('http://localhost:4000/');
+    // await page.getByRole('button', { name: 'Connect' }).click();
+    // await walletConnect(context);
+    // // wait for page to update
+    // await page.waitForTimeout(2000);
+    // // get initial count
+    // const initialCount = await page.getByTestId('count').allInnerTexts();
+    // // increment the count
+    // await page.getByRole('button', { name: 'Increment' }).click();
+    // await walletApprove(context);
+    // // wait 10 seconds for network
+    // await page.waitForTimeout(10000);
+    // await reload(page);
+    // // get the updated count
+    // const finalCount = await page.getByTestId('count').allInnerTexts();
+    // // check if count is incremented
+    // const isIncremented = checkIfIsIncremented(
+    //   parseInt(initialCount[0]),
+    //   parseInt(finalCount[0])
+    // );
+    // expect(isIncremented).toBeTruthy();
+  });
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -185,4 +223,8 @@ async function compareFiles(testPathName: string, refPathName: string) {
   const actual = fs.readFileSync(testPathName, { encoding: 'utf8' });
   const expected = fs.readFileSync(refPathName, { encoding: 'utf8' });
   compareOutputs(expected, actual);
+}
+
+function checkIfIsIncremented(initial: number, final: number) {
+  return final === initial + 1;
 }

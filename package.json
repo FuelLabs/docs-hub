@@ -38,6 +38,7 @@
     "acorn": "^8.10.0",
     "acorn-loose": "^8.3.0",
     "acorn-walk": "^8.2.0",
+    "adm-zip": "^0.5.10",
     "contentlayer": "^0.3.4",
     "cookie": "^0.5.0",
     "dotenv": "^16.3.1",
