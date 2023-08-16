@@ -71,7 +71,7 @@ const styles = {
       mt: '$12',
       mb: '$5',
       pb: '$2',
-      borderBottom: '1px solid $border',
+    // borderBottom: '1px solid $border',
     },
     [head([3])]: {
       mt: '$8',
