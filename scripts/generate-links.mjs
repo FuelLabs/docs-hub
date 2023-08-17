@@ -367,13 +367,18 @@ function getSortedLinks(config, docs) {
         /** Sort categoried links */
         .map((link) => {
           if (!link.submenu) return link;
-          const key = link.label
+          let key = link.label
             .toLowerCase()
             .replaceAll(' ', '-')
             .replaceAll('_', '-');
           let catOrder = config[key];
           if (!catOrder) catOrder = config[key.replaceAll('-', '_')];
-
+          if (!catOrder) {
+            const regex = /\/([^/]+)\/[^/]+$/;
+            const match = link.submenu[0].slug.match(regex);
+            key = match[1];
+            catOrder = config[key];
+          }
           catOrder = catOrder?.map((title) =>
             title.toLowerCase().replaceAll('-', '_').replaceAll(' ', '_')
           );
