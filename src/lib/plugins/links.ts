@@ -18,12 +18,6 @@ export function handleLinks(
     const url = getUrl(node.value);
     if (url && idx) {
       node.type = 'link';
-      // TODO: remove once Sway book is updated
-      node.url = url.includes(
-        'fuelbook.fuel.network/master/quickstart/developer-quickstart'
-      )
-        ? '/guides/quickstart'
-        : url;
       node.value = null;
       node.children = [];
       node.children.push(parent.children[idx + 1]);
@@ -34,7 +28,8 @@ export function handleLinks(
       newUrl = node.url
         .replace('.md', '')
         .replace('/index', '')
-        .replace('.html', '');
+        .replace('.html', '')
+        .toLowerCase();
 
       const configPath = join(DOCS_DIRECTORY, `../src/config/paths.json`);
       const pathsConfig = JSON.parse(readFileSync(configPath, 'utf8'));
@@ -62,6 +57,9 @@ export function handleLinks(
 
     if (node.url.endsWith('CONTRIBUTING') && node.url.includes('github.com')) {
       newUrl = `${node.url}.md`;
+    }
+    if (newUrl && newUrl.startsWith('/api/')) {
+      newUrl = newUrl.replace('/api/', '/docs/fuels-ts/');
     }
   }
 

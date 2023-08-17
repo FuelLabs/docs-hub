@@ -18,6 +18,7 @@ export function SidebarSubmenu({
   const [isOpened, setIsOpened] = useState<boolean>();
   const newLabel = label.replace(/\s+/g, '-').toLowerCase();
   let slug = `${subpath}/${newLabel}`;
+  const pathnameSegments = pathname?.split('/');
 
   useEffect(() => {
     if (pathname.includes('/guides/')) {
@@ -26,7 +27,24 @@ export function SidebarSubmenu({
       const pathArray = submenu![0].slug?.split('/');
       const index = pathArray?.indexOf(subpath!);
       const category = pathArray && index ? `/${pathArray[index + 1]}` : '';
-      const active = pathname?.startsWith(`/docs/${subpath}${category}/`);
+
+      let active =
+        pathnameSegments &&
+        pathnameSegments[2] === subpath &&
+        `/${pathnameSegments[3]}` === category;
+
+      let foundPathInSubmenu = false;
+
+      if (active && submenu) {
+        for (let i = 0; i < submenu.length; i++) {
+          const thisSlug = `/docs/${submenu[i].slug!.replace('./', '')}/`;
+          if (pathname === thisSlug) {
+            foundPathInSubmenu = true;
+            break;
+          }
+        }
+        if (!foundPathInSubmenu) active = false;
+      }
       setIsOpened(active);
     }
   }, [pathname]);
@@ -40,12 +58,16 @@ export function SidebarSubmenu({
       <SidebarLink
         intent="base"
         item={{ label, slug }}
+        isActiveMenu={isOpened}
         rightIcon={isOpened ? Icon.is('ChevronUp') : Icon.is('ChevronDown')}
       />
       {isOpened && (
         <List>
           {submenu?.map((item, index) => {
-            if (item.label !== label) {
+            if (
+              item.label !== label ||
+              (item.slug && item.slug.split('/').length > 3)
+            ) {
               return (
                 <List.Item key={index}>
                   <SidebarLink item={item} data-submenu />
