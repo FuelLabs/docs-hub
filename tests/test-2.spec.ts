@@ -1,88 +1,98 @@
-import type { Page } from '@playwright/test';
+import type { BrowserContext, Page } from '@playwright/test';
 import { execSync } from 'child_process';
 import fs from 'fs';
-// import type { WalletUnlocked } from 'fuels';
-// import { Wallet } from 'fuels';
+import type { WalletUnlocked } from 'fuels';
+import { Wallet } from 'fuels';
 import { EOL } from 'os';
 import { join } from 'path';
 
 import { test, expect } from './utils/fixtures';
-// import { FUEL_MNEMONIC } from './utils/mocks';
-// import { reload } from './utils/visit';
-// import { walletSetup, walletConnect, walletApprove } from './utils/wallet';
+import { FUEL_MNEMONIC } from './utils/mocks';
+import { visit, reload } from './utils/visit';
+import { walletSetup, walletConnect, walletApprove } from './utils/wallet';
 
-interface Instruction {
-  text: string;
-  output: string;
-}
+// TODO: try having the server running already (not set up with playwright) so can use two terminals
 
-const quickstartContractTestConfig = JSON.parse(
-  fs.readFileSync(
-    join(process.cwd(), '/tests/quickstart-contract.json'),
-    'utf8'
-  )
-);
+// TODO: change test-dataid to id
 
-const quickstartFrontendTestConfig = JSON.parse(
-  fs.readFileSync(
-    join(process.cwd(), '/tests/quickstart-frontend.json'),
-    'utf8'
-  )
+const QUICKSTART_TEST_CONFIG = JSON.parse(
+  fs.readFileSync(join(process.cwd(), '/tests/quickstart.json'), 'utf8')
 );
 
 test.describe('Guides', () => {
-  // let client: PublicClient;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  let fuelWallet: WalletUnlocked;
 
-  // let fuelWallet: WalletUnlocked;
+  async function useFuelWallet(
+    context: BrowserContext,
+    extensionId: string,
+    page: Page
+  ) {
+    await walletSetup(context, extensionId, page);
+    fuelWallet = Wallet.fromMnemonic(FUEL_MNEMONIC);
+  }
 
-  // test.beforeEach(async ({ context, extensionId, page }) => {
-  //   await walletSetup(context, extensionId, page);
-  //   fuelWallet = Wallet.fromMnemonic(FUEL_MNEMONIC);
-  // });
-
-  test('dev quickstart', async ({ context, page }) => {
-    console.log('HI');
-    // await setupFolders(quickstartContractTestConfig.project_folder);
-    // await runTest(page, quickstartContractTestConfig);
-    // await runTest(page, quickstartFrontendTestConfig);
-
-    // // Connect fuel
-    // await page.goto('http://localhost:4000/');
+  test('dev quickstart', async ({ context, extensionId, page }) => {
+    if (QUICKSTART_TEST_CONFIG.needs_wallet) {
+      await useFuelWallet(context, extensionId, page);
+    }
+    // await setupFolders(QUICKSTART_TEST_CONFIG.project_folder);
+    // await runTest(page, QUICKSTART_TEST_CONFIG);
+    console.log('GOING TO RUN TEST');
+    await runTest(page, {
+      start_url: 'guides/quickstart/building-a-frontend/',
+      project_folder: 'fuel-project',
+      steps: [
+        {
+          action: 'runCommand',
+          inputs: [
+            'start-app',
+            'cd guides-testing/fuel-project/frontend && PORT=4000 BROWSER=none ',
+          ],
+        },
+      ],
+    });
+    console.log('DONE RUNNING TEST');
+    // await page.waitForTimeout(10000);
+    // console.log('WAITED FOR 10 SECONDS');
+    // await page.goto('http://127.0.0.1:4000');
+    // await page.waitForTimeout(3000);
+    // console.log('WAITED FOR 3 SECONDS');
     // await page.getByRole('button', { name: 'Connect' }).click();
     // await walletConnect(context);
     // // wait for page to update
     // await page.waitForTimeout(2000);
     // // get initial count
     // const initialCount = await page.getByTestId('count').allInnerTexts();
-    // // increment the count
-    // await page.getByRole('button', { name: 'Increment' }).click();
-    // await walletApprove(context);
-    // // wait 10 seconds for network
-    // await page.waitForTimeout(10000);
-    // await reload(page);
-    // // get the updated count
-    // const finalCount = await page.getByTestId('count').allInnerTexts();
-    // // check if count is incremented
-    // const isIncremented = checkIfIsIncremented(
-    //   parseInt(initialCount[0]),
-    //   parseInt(finalCount[0])
-    // );
-    // expect(isIncremented).toBeTruthy();
+    // console.log('INITIAL COUNT:', initialCount);
   });
 });
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function runTest(page: Page, config: any) {
-  await page.goto(`http://localhost:3000/${config.start_url}`);
+  console.log('GOING TO START URL');
+  await visit(page, config.start_url);
 
+  console.log('LOOPING THROUGH STEPS');
   for (const step of config.steps) {
+    console.log('STEP:', step);
     switch (step.action) {
       case 'runCommand':
         if (step.inputs.length === 1) {
+          console.log('RUNNING COMMAND1');
           await runCommand(page, step.inputs[0]);
+          console.log('DONE RUNNING COMMAND1');
         } else {
+          console.log('RUNNING COMMAND2');
           await runCommand(page, step.inputs[0], step.inputs[1]);
+          console.log('DONE RUNNING COMMAND2');
         }
+        break;
+      case 'wait':
+        console.log('WAITING');
+        await page.waitForTimeout(step.inputs[0]);
+        break;
+      case 'goToUrl':
+        await visit(page, step.inputs[0]);
         break;
       case 'compareFiles':
         await compareFiles(step.inputs[0], step.inputs[1]);
@@ -113,8 +123,11 @@ async function runTest(page: Page, config: any) {
           );
         }
         break;
+      default:
     }
+    console.log('FINISHED SWITCH');
   }
+  console.log('FINISHED LOOP');
 }
 
 async function clickCopyButton(page: Page, id: string) {
@@ -133,11 +146,15 @@ async function clickCopyButton(page: Page, id: string) {
 
 async function runCommand(page: Page, buttonName: string, goToFolder?: string) {
   const copied = await clickCopyButton(page, buttonName);
+  console.log('COPIED', copied.text);
   const command = goToFolder ? goToFolder + copied.text : copied.text;
+  console.log('COMMAND', command);
   const commandOutput = execSync(command, {
     encoding: 'utf-8',
   });
+  console.log('COMMAND OUTPUT', commandOutput);
   if (copied.output !== '') {
+    console.log('COMPARING THE OUTPUT');
     compareOutputs(commandOutput, copied.output);
   }
 }
