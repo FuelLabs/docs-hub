@@ -17,6 +17,13 @@ const PREPOSITIONS = [
   'as',
 ];
 
+const specialCapsWords = [
+  { word: 'fuelvm', newWord: 'FuelVM' },
+  { word: 'evm', newWord: 'EVM' },
+  { word: 'api', newWord: 'API' },
+  { word: 'abi', newWord: 'ABI' },
+];
+
 export function capitalize(val: string): string {
   if (val.length === 0) {
     return val;
@@ -27,11 +34,11 @@ export function capitalize(val: string): string {
     const isPrep = PREPOSITIONS.includes(word.toLowerCase());
     const isLowerCase = word === word.toLowerCase();
     if (isFirstWord || !isPrep || !isLowerCase) {
-      if (word === 'fuelvm') {
-        word = 'fuelVM';
-      } else if (word === 'evm') {
-        word = 'eVM';
-      }
+      specialCapsWords.forEach((item) => {
+        if (word === item.word) {
+          word = item.newWord;
+        }
+      });
       return word.charAt(0).toUpperCase() + word.slice(1);
     }
     return word;
