@@ -55,7 +55,7 @@ Make sure you save this somewhere safe so you don't need to generate a new key p
 
 ## Chain Configuration
 
-To run a local node with persistance, you must configure a `chainConfig.json` file. Here is the [specific configuration](https://github.com/FuelLabs/fuel-core/blob/latest/deployment/scripts/chainspec/beta_chainspec.json) for `beta-4`:
+To run a local node with persistance, you must configure a `chainConfig.json` file. Here is the [specific configuration](https://github.com/FuelLabs/fuel-core/blob/v0.20.4/deployment/scripts/chainspec/beta_chainspec.json) for `beta-4`:
 
 ```
 {
