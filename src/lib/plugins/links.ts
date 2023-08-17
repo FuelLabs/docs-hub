@@ -3,6 +3,8 @@ import { join } from 'node:path';
 import type { Parent } from 'unist-util-visit/lib';
 
 import { DOCS_DIRECTORY } from '../../config/constants';
+import type { DuplicateAPIItem } from '../ts-api';
+import { getTSAPIDuplicates } from '../ts-api';
 
 export function handleLinks(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -57,6 +59,17 @@ export function handleLinks(
 
     if (node.url.endsWith('CONTRIBUTING') && node.url.includes('github.com')) {
       newUrl = `${node.url}.md`;
+    }
+    const duplicates = getTSAPIDuplicates();
+    if (newUrl) {
+      duplicates.forEach((item: DuplicateAPIItem) => {
+        if (newUrl?.startsWith(item.path.toLowerCase())) {
+          newUrl = newUrl.replace(
+            item.originalCategory.toLowerCase(),
+            item.newCategory.toLowerCase()
+          );
+        }
+      });
     }
     if (newUrl && newUrl.startsWith('/api/')) {
       newUrl = newUrl.replace('/api/', '/docs/fuels-ts/');
