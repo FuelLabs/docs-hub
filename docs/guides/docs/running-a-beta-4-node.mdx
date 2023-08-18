@@ -270,17 +270,17 @@ To run a local node with persistance, you must configure a `chainConfig.json` fi
 Finally putting everything together to start the node, run the following command:
 
 ```
-fuel-core \
+fuel-core run \
+--service-name {ANY_SERVICE_NAME} \
+--keypair  {P2P_SECRET} \
+--relayer {RPC_ENDPOINT} \
 --ip 127.0.0.1 --port 4000 --peering_port 30333 \
 --db-path  ~/.fuel_beta4 \
 --chain ./chainConfig.json \
 --utxo-validation --poa-instant false --network beta-4 --enable-p2p \
 --min-gas-price 1 --max_block_size 18874368  --max_transmit_size 18874368 \
---service-name {ANY_SERVICE_NAME} \
---keypair  {P2P_SECRET} \
 --bootstrap_nodes /dns4/ae60114c134c04807a43abf2252f3f8e-50e5c1c899b9686c.elb.us-east-1.amazonaws.com/tcp/30333/p2p/16Uiu2HAmMgJuiYR9ker8QKkZxtxnBnfdgwEztYWNWHB1wNiWio2h \
---sync_max_get_header 100 --sync_max_get_txns 100 --enable-p2p \
---relayer {RPC_ENDPOINT} \
+--sync_max_get_header 100 --sync_max_get_txns 100 \
 --relayer-v2-listening-contracts 0x457A5a9320d06118764c400163c441cb8551cfa2 \
 --relayer-da-deploy-height 3977410
 ```

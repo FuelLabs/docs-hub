@@ -58,7 +58,9 @@ async function main() {
       if (key === 'guides') {
         const newLinks = {};
         sortedLinks.forEach((link) => {
-          newLinks[link.label.toLowerCase().replaceAll(' ', '_')] = link;
+          newLinks[
+            link.label.toLowerCase().replaceAll(' ', '_').replaceAll('-','_')
+          ] = link;
         });
         sortedLinks = newLinks;
       }
