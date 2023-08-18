@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "build:ci": "run-s docs:* typedoc:ts-api generate:* build",
+    "build:ci": "run-s docs:* generate:* build",
     "check": "run-s lint prettier:check",
     "check:prod": "run-s lint:prod prettier:check",
     "docs:sync": "sh ./scripts/sync-repos.sh",
