@@ -1,5 +1,3 @@
-cd docs/fuels-ts
+cd docs/fuels-ts/apps/docs
 NODE_ENV=development pnpm install
 pnpm build
-cd apps/docs
-pnpm run docs
