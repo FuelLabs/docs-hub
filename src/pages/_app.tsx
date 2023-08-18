@@ -1,5 +1,6 @@
 import '../styles/index.css';
 import '../styles/docsearch.css';
+import { Analytics } from '@vercel/analytics/react';
 import type { AppProps } from 'next/app';
 import { Inter, Source_Code_Pro } from 'next/font/google';
 
@@ -22,6 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
         }
       `}</style>
       <Component {...pageProps} />
+      <Analytics />
     </Provider>
   );
 }
