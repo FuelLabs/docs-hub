@@ -59,7 +59,7 @@ async function main() {
         const newLinks = {};
         sortedLinks.forEach((link) => {
           newLinks[
-            link.label.toLowerCase().replaceAll(' ', '_').replaceAll('-','_')
+            link.label.toLowerCase().replaceAll(' ', '_').replaceAll('-', '_')
           ] = link;
         });
         sortedLinks = newLinks;
@@ -301,8 +301,14 @@ function getSortedLinks(config, docs) {
             title.toLowerCase().replaceAll('-', '_').replaceAll(' ', '_')
           );
           const submenu = link.submenu.sort((a, b) => {
-            const lowerA = a.label.toLowerCase().replaceAll(' ', '_');
-            const lowerB = b.label.toLowerCase().replaceAll(' ', '_');
+            const lowerA = a.label
+              .toLowerCase()
+              .replaceAll(' ', '_')
+              .replaceAll('-', '_');
+            const lowerB = b.label
+              .toLowerCase()
+              .replaceAll(' ', '_')
+              .replaceAll('-', '_');
             const aIdx = catOrder ? catOrder.indexOf(lowerA) : 0;
             const bIdx = catOrder ? catOrder.indexOf(lowerB) : 0;
             const result = aIdx - bIdx;

@@ -1,4 +1,5 @@
 {
-  "menu": ["Quickstart", "Running a Node", "Running a Beta-4 Node"],
-  "quickstart": ["Building a Smart Contract", "Building a Frontend"]
+  "menu": ["Quickstart", "Running a Node"],
+  "quickstart": ["Building a Smart Contract", "Building a Frontend"],
+  "running_a_node": ["Running a Local Node", "Running a Beta-4 Node"]
 }
