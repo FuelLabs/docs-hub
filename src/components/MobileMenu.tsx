@@ -101,7 +101,7 @@ export function MobileMenu({ active }: { active: string }) {
           })}
         </Box.Flex>
 
-        <Sidebar />
+        <Sidebar handleClick={() => setShowing(false)} />
       </Box>
     </MotionBox>
   );

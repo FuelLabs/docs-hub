@@ -1,18 +1,22 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box, Icon, List } from '@fuel-ui/react';
+import { Box, Button, Icon, List } from '@fuel-ui/react';
 import { usePathname } from 'next/navigation';
+import type { Dispatch, SetStateAction } from 'react';
 import { useState, useEffect } from 'react';
 import type { SidebarLinkItem } from '~/src/types';
 
 import { SidebarLink } from './SidebarLink';
 
-type SidebarSubmenuProps = SidebarLinkItem;
+interface SidebarSubmenuProps extends SidebarLinkItem {
+  handleClick: Dispatch<SetStateAction<boolean>>;
+}
 
 export function SidebarSubmenu({
   label,
   hasIndex,
   submenu,
   subpath,
+  handleClick,
 }: SidebarSubmenuProps) {
   const pathname = usePathname();
   const [isOpened, setIsOpened] = useState<boolean>();
@@ -37,18 +41,35 @@ export function SidebarSubmenu({
 
   return (
     <Box.Flex css={styles.root}>
-      <SidebarLink
-        intent="base"
-        item={{ label, slug }}
-        rightIcon={isOpened ? Icon.is('ChevronUp') : Icon.is('ChevronDown')}
-      />
+      <Box.Flex justify={'space-between'}>
+        <SidebarLink
+          intent="base"
+          handleClick={handleClick}
+          item={{ label, slug }}
+        />
+        <Button
+          onPress={() => setIsOpened(!isOpened)}
+          css={styles.button}
+          intent="base"
+          size="xs"
+        >
+          <Icon
+            icon={isOpened ? Icon.is('ChevronUp') : Icon.is('ChevronDown')}
+          />
+        </Button>
+      </Box.Flex>
+
       {isOpened && (
         <List>
           {submenu?.map((item, index) => {
             if (item.label !== label) {
               return (
                 <List.Item key={index}>
-                  <SidebarLink item={item} data-submenu />
+                  <SidebarLink
+                    handleClick={handleClick}
+                    item={item}
+                    data-submenu
+                  />
                 </List.Item>
               );
             }
@@ -85,6 +106,15 @@ const styles = {
       whiteSpace: 'nowrap',
       overflow: 'hidden',
       textOverflow: 'ellipsis',
+    },
+  }),
+  button: cssObj({
+    background: 'transparent',
+    '.fuel_Icon': {
+      color: 'var(--colors-semanticLinkBaseIcon)',
+    },
+    '&:hover': {
+      background: 'transparent !important',
     },
   }),
 };
