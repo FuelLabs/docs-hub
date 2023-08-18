@@ -101,7 +101,7 @@ export function MobileMenu({ active }: { active: string }) {
           })}
         </Box.Flex>
 
-        <Sidebar />
+        <Sidebar handleClick={() => setShowing(false)} />
       </Box>
     </MotionBox>
   );
@@ -265,7 +265,8 @@ const styles = {
     mb: '$2',
   }),
   navContainer: cssObj({
-    overflow: 'auto',
+    overflowY: 'auto',
+    overflowX: 'hidden',
     maxHeight: 'calc(100vh - 100px)',
 
     '.Sidebar': {
