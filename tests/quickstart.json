@@ -186,11 +186,5 @@
       "action": "checkIfIsIncremented",
       "inputs": [0, 1]
     }
-  ],
-  "temp-unused": [
-    {
-      "action": "clickByLocator",
-      "inputs": ["#count"]
-    }
   ]
 }

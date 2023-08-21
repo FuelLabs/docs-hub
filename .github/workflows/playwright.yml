@@ -1,28 +1,44 @@
-# name: Playwright Tests
-# on:
-#   push:
-#     branches: [ main, master ]
-#   pull_request:
-#     branches: [ main, master ]
-# jobs:
-#   test:
-#     timeout-minutes: 60
-#     runs-on: ubuntu-latest
-#     steps:
-#     - uses: actions/checkout@v3
-#     - uses: actions/setup-node@v3
-#       with:
-#         node-version: 18
-# INSTALL RUST
-#     - name: Install dependencies
-#       run: pnpm install
-#     - name: Install Playwright Browsers
-#       run: pnpm exec playwright install --with-deps
-#     - name: Run Playwright tests
-#       run: pnpm exec playwright test
-#     - uses: actions/upload-artifact@v3
-#       if: always()
-#       with:
-#         name: playwright-report
-#         path: playwright-report/
-#         retention-days: 30
+name: Playwright Tests
+
+on:
+  pull_request:
+
+jobs:
+  quickstart-test:
+    timeout-minutes: 20
+    name: build-quickstart-contract
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: FuelLabs/github-actions/setups/node@master
+      - uses: actions-rs/toolchain@v1
+        with:
+            profile: minimal
+            toolchain: stable
+      - uses: Swatinem/rust-cache@v1
+      - uses: cargo-generate/cargo-generate-action@v0.18
+      - name: Install Fuelup
+        run: |
+            curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh
+      - name: Modify Path
+        run: echo "$HOME/.fuelup/bin:${GITHUB_PATH}" >> $GITHUB_PATH
+      - name: Set Default Beta-3 Toolchain
+        run: fuelup toolchain install beta-3 && fuelup default beta-3
+      - name: Build Contract
+        run: forc build --path ./docs/guides/examples/quickstart/counter-contract
+      - name: Run contract tests
+        uses: actions-rs/cargo@v1
+        with:
+            command: test
+            args: --manifest-path ./docs/guides/examples/quickstart/counter-contract/Cargo.toml
+      - name: Check Cargo fmt & clippy
+        run: |
+            cd docs/guides/examples/quickstart/counter-contract
+            cargo fmt --all --check
+            cargo clippy --all-targets --all-features
+      - name: Install dependencies
+        run: pnpm install
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+      - name: Run Playwright tests
+        run: pnpm playwright test
