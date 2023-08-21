@@ -16,7 +16,7 @@ jobs:
             profile: minimal
             toolchain: stable
       - uses: Swatinem/rust-cache@v1
-      - uses: cargo-generate/cargo-generate-action@v0.18
+      - uses: cargo-generate/cargo-generate-action@v0.18.3
       - name: Install Fuelup
         run: |
             curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh
