@@ -135,7 +135,9 @@ export class Doc {
 
     const idx = flatLinks.findIndex((i) => {
       if (!i.slug) return false;
-      return `docs/${i.slug}`.startsWith(slug || '');
+      return (
+        `docs/${i.slug}`.startsWith(slug || '') || i.slug.startsWith(slug || '')
+      );
     });
 
     const prev = flatLinks[idx - 1] ?? null;

@@ -3,6 +3,7 @@ import type { ButtonLinkProps } from '@fuel-ui/react';
 import { ButtonLink } from '@fuel-ui/react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import type { Dispatch, SetStateAction } from 'react';
 import { forwardRef } from 'react';
 import type { SidebarLinkItem } from '~/src/types';
 
@@ -18,11 +19,12 @@ function getActive(pathname: string, slug: string) {
 
 export type SidebarLinkProps = ButtonLinkProps & {
   item: SidebarLinkItem;
+  handleClick: Dispatch<SetStateAction<boolean>>;
 };
 
 // eslint-disable-next-line react/display-name
 export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
-  ({ item, ...props }, ref) => {
+  ({ item, handleClick, ...props }, ref) => {
     const router = useRouter();
     const pathname = router.asPath;
     let slug = item.slug?.replace('../', '').replace('./', '') || '';
@@ -54,6 +56,8 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
         href={slug}
         css={styles.root}
         data-active={Boolean(isActive)}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onClick={handleClick as any}
       >
         {shouldBeLowerCase ? label : capitalize(label)}
       </ButtonLink>

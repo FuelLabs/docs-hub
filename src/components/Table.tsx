@@ -4,7 +4,11 @@ import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
 
 export function Table(props: any) {
-  return <Box as="table" {...props} css={styles.root} />;
+  return (
+    <Box css={styles.root}>
+      <Box as="table" {...props} css={styles.table} />
+    </Box>
+  );
 }
 
 export function TD(props: any) {
@@ -29,17 +33,26 @@ export function TH(props: any) {
 
 const styles = {
   root: cssObj({
+    maxWidth: '100%',
+  }),
+  table: cssObj({
     py: '$3',
     px: '$4',
     mb: '$6',
+    tableLayout: 'fixed',
     background: '$intentsBase1',
     borderRadius: '$lg',
+    boxSizing: 'border-box',
     border: '1px solid $intentsBase3',
     width: '100%',
+    td: cssObj({
+      wordWrap: 'break-word',
+    }),
   }),
   td: cssObj({
     py: '$2',
     px: '$3',
+    wordWrap: 'break-word',
   }),
   tdContainer: cssObj({
     display: 'flex',

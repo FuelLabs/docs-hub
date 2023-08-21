@@ -41,6 +41,7 @@ const styles = {
     li: {
       pl: '$1',
       lineHeight: '1.7',
+      wordWrap: 'break-word',
       '&::marker': {
         color: '$intentsBase10',
       },
