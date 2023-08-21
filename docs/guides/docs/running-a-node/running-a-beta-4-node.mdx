@@ -11,7 +11,7 @@ parent:
 ## Installation
 Make sure you have the latest version of fuelup by running the following command:
 
-```
+```sh
 fuelup self update
 ```
 
@@ -19,7 +19,7 @@ Then run `fuelup toolchain install beta-4` to install the `beta-4` toolchain.
 
 Finally, set the `beta-4` toolchain as your default distribution with the following command:
 
-```
+```sh
 $ fuelup default beta-4
 default toolchain set to 'beta-4-aarch64-apple-darwin'
 ```
@@ -27,15 +27,15 @@ default toolchain set to 'beta-4-aarch64-apple-darwin'
 You can check your current toolchain anytime by running `fuelup show` to ensure you have `fuel-core 0.20.4`.
 
 ## Getting a Sepolia (Ethereum Testnet) API Key
-An API key from any RPC provider that supports the Sepolia network will work. We recommend either [Infura](https://www.infura.io/) or [Alchemy](https://www.alchemy.com/) 
+An API key from any RPC provider that supports the Sepolia network will work. Relayers will help listen to events from the Ethereum network. We recommend either [Infura](https://www.infura.io/) or [Alchemy](https://www.alchemy.com/) 
 
 The endpoints should look like the following
 ### Infura
-```
+```sh
 https://sepolia.infura.io/v3/{YOUR_API_KEY}
 ```
 ### Alchemy
-```
+```sh
 https://eth-sepolia.g.alchemy.com/v2/{YOUR_API_KEY}
 ```
 Note that using other network endpoints will result in the relayer failing to start.
@@ -43,7 +43,7 @@ Note that using other network endpoints will result in the relayer failing to st
 ## Generating a P2P Key
 Generate a new P2P key pairing by running the following command: 
 
-```
+```sh
 $ fuel-core-keygen new --key-type peering
 {
   "peer_id":"16Uiu2HAm8kCaJaaKTujrSwdBxyCELTY979KYaP9YBkWVLTGTo7Bf",
@@ -58,7 +58,7 @@ Make sure you save this somewhere safe so you don't need to generate a new key p
 
 To run a local node with persistance, you must configure a `chainConfig.json` file. Here is the [specific configuration](https://github.com/FuelLabs/fuel-core/blob/v0.20.4/deployment/scripts/chainspec/beta_chainspec.json) for `beta-4`:
 
-```
+```json
 {
   "chain_name": "Testnet Beta 4",
   "block_gas_limit": 30000000,
@@ -268,12 +268,12 @@ To run a local node with persistance, you must configure a `chainConfig.json` fi
 
 ## Running a Local Node
 
-Finally putting everything together to start the node, run the following command:
+Finally to put everything together to start the node, run the following command:
 
-```
-fuel-core run \
+```sh
+$ fuel-core run \
 --service-name {ANY_SERVICE_NAME} \
---keypair  {P2P_SECRET} \
+--keypair {P2P_SECRET} \
 --relayer {RPC_ENDPOINT} \
 --ip 127.0.0.1 --port 4000 --peering_port 30333 \
 --db-path  ~/.fuel_beta4 \
@@ -286,7 +286,11 @@ fuel-core run \
 --relayer-da-deploy-height 3977410
 ```
 
-Summary of the flags being used
+For the full description details of each flag above, run:
+
+```sh
+fuel-core run --help
+```
 
 ## Connecting to the local node from a browser wallet
 
