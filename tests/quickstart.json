@@ -131,12 +131,66 @@
       "action": "runCommand",
       "inputs": [
         "start-app",
-        "cd guides-testing/fuel-project/frontend && PORT=4000 "
+        "pnpm pm2 start 'PORT=4000 BROWSER=none <COMMAND>' --name 'react-dapp' --cwd ./guides-testing/fuel-project/frontend"
       ]
     },
     {
       "action": "wait",
       "inputs": [7000]
+    },
+    {
+      "action": "goToUrl",
+      "inputs": ["http://127.0.0.1:4000"]
+    },
+    {
+      "action": "clickByRole",
+      "inputs": ["button", "Connect"]
+    },
+    {
+      "action": "walletApproveConnect",
+      "inputs": []
+    },
+    {
+      "action": "wait",
+      "inputs": [3000]
+    },
+    {
+      "action": "getByLocator-save",
+      "inputs": ["#count"]
+    },
+    {
+      "action": "clickByRole",
+      "inputs": ["button", "Increment"]
+    },
+    {
+      "action": "walletApprove",
+      "inputs": []
+    },
+    {
+      "action": "wait",
+      "inputs": [10000]
+    },
+    {
+      "action": "reload",
+      "inputs": []
+    },
+    {
+      "action": "wait",
+      "inputs": [5000]
+    },
+    {
+      "action": "getByLocator-save",
+      "inputs": ["#count"]
+    },
+    {
+      "action": "checkIfIsIncremented",
+      "inputs": [0, 1]
+    }
+  ],
+  "temp-unused": [
+    {
+      "action": "clickByLocator",
+      "inputs": ["#count"]
     }
   ]
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import type { BrowserContext, Page } from '@playwright/test';
 import { execSync } from 'child_process';
 import fs from 'fs';
@@ -11,13 +12,20 @@ import { FUEL_MNEMONIC } from './utils/mocks';
 import { visit, reload } from './utils/visit';
 import { walletSetup, walletConnect, walletApprove } from './utils/wallet';
 
-// TODO: try having the server running already (not set up with playwright) so can use two terminals
-
-// TODO: change test-dataid to id
+interface Instruction {
+  text: string;
+  output: string;
+}
 
 const QUICKSTART_TEST_CONFIG = JSON.parse(
   fs.readFileSync(join(process.cwd(), '/tests/quickstart.json'), 'utf8')
 );
+
+const START_SERVER_COMMAND = "pnpm pm2 start npm --name 'docs-hub' -- run dev";
+const STOP_SERVERS = 'pnpm pm2 delete all';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let saved: any[] = [];
 
 test.describe('Guides', () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -33,63 +41,49 @@ test.describe('Guides', () => {
   }
 
   test('dev quickstart', async ({ context, extensionId, page }) => {
+    saved = [];
     if (QUICKSTART_TEST_CONFIG.needs_wallet) {
+      console.log('SETTING UP WALLET');
       await useFuelWallet(context, extensionId, page);
     }
-    // await setupFolders(QUICKSTART_TEST_CONFIG.project_folder);
-    // await runTest(page, QUICKSTART_TEST_CONFIG);
-    console.log('GOING TO RUN TEST');
-    await runTest(page, {
-      start_url: 'guides/quickstart/building-a-frontend/',
-      project_folder: 'fuel-project',
-      steps: [
-        {
-          action: 'runCommand',
-          inputs: [
-            'start-app',
-            'cd guides-testing/fuel-project/frontend && PORT=4000 BROWSER=none ',
-          ],
-        },
-      ],
+    console.log('SETTING UP FOLDERS');
+    await setupFolders(QUICKSTART_TEST_CONFIG.project_folder);
+    console.log('STARTING DEV SERVER');
+    execSync(START_SERVER_COMMAND, {
+      encoding: 'utf-8',
     });
+
+    console.log('RUNNING TEST');
+    await runTest(page, QUICKSTART_TEST_CONFIG, context);
     console.log('DONE RUNNING TEST');
-    // await page.waitForTimeout(10000);
-    // console.log('WAITED FOR 10 SECONDS');
-    // await page.goto('http://127.0.0.1:4000');
-    // await page.waitForTimeout(3000);
-    // console.log('WAITED FOR 3 SECONDS');
-    // await page.getByRole('button', { name: 'Connect' }).click();
-    // await walletConnect(context);
-    // // wait for page to update
-    // await page.waitForTimeout(2000);
-    // // get initial count
-    // const initialCount = await page.getByTestId('count').allInnerTexts();
-    // console.log('INITIAL COUNT:', initialCount);
+
+    console.log('STOPPING SERVERS');
+    // stop & delete pm2 servers
+    execSync(STOP_SERVERS, {
+      encoding: 'utf-8',
+    });
+    console.log('DONE STOPPING SERVERS');
   });
 });
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function runTest(page: Page, config: any) {
-  console.log('GOING TO START URL');
+async function runTest(page: Page, config: any, context: BrowserContext) {
   await visit(page, config.start_url);
 
-  console.log('LOOPING THROUGH STEPS');
   for (const step of config.steps) {
     console.log('STEP:', step);
     switch (step.action) {
       case 'runCommand':
         if (step.inputs.length === 1) {
-          console.log('RUNNING COMMAND1');
           await runCommand(page, step.inputs[0]);
-          console.log('DONE RUNNING COMMAND1');
         } else {
-          console.log('RUNNING COMMAND2');
           await runCommand(page, step.inputs[0], step.inputs[1]);
-          console.log('DONE RUNNING COMMAND2');
         }
         break;
       case 'wait':
-        console.log('WAITING');
         await page.waitForTimeout(step.inputs[0]);
+        break;
+      case 'reload':
+        await reload(page);
         break;
       case 'goToUrl':
         await visit(page, step.inputs[0]);
@@ -123,11 +117,31 @@ async function runTest(page: Page, config: any) {
           );
         }
         break;
+      case 'getByLocator-save':
+        const locatorVal = await page.locator(step.inputs[0]).allInnerTexts();
+        saved.push(locatorVal);
+        break;
+      case 'clickByRole':
+        await page.getByRole(step.inputs[0], { name: step.inputs[1] }).click();
+        break;
+      case 'walletApproveConnect':
+        await walletConnect(context);
+        break;
+      case 'walletApprove':
+        await walletApprove(context);
+        break;
+      case 'checkIfIsIncremented':
+        console.log('SAVED:', saved);
+        console.log('INITAL INPUT:', parseInt(step.inputs[0]));
+        console.log('FINAL INPUT:', parseInt(step.inputs[1]));
+        checkIfIsIncremented(
+          parseInt(step.inputs[0]),
+          parseInt(step.inputs[1])
+        );
+        break;
       default:
     }
-    console.log('FINISHED SWITCH');
   }
-  console.log('FINISHED LOOP');
 }
 
 async function clickCopyButton(page: Page, id: string) {
@@ -147,14 +161,20 @@ async function clickCopyButton(page: Page, id: string) {
 async function runCommand(page: Page, buttonName: string, goToFolder?: string) {
   const copied = await clickCopyButton(page, buttonName);
   console.log('COPIED', copied.text);
-  const command = goToFolder ? goToFolder + copied.text : copied.text;
+  let command = copied.text;
+  if (goToFolder) {
+    if (goToFolder.includes('<COMMAND>')) {
+      command = goToFolder.replace('<COMMAND>', copied.text);
+    } else {
+      command = goToFolder + copied.text;
+    }
+  }
   console.log('COMMAND', command);
   const commandOutput = execSync(command, {
     encoding: 'utf-8',
   });
   console.log('COMMAND OUTPUT', commandOutput);
   if (copied.output !== '') {
-    console.log('COMPARING THE OUTPUT');
     compareOutputs(commandOutput, copied.output);
   }
 }
@@ -243,6 +263,11 @@ async function compareFiles(testPathName: string, refPathName: string) {
   compareOutputs(expected, actual);
 }
 
-function checkIfIsIncremented(initial: number, final: number) {
-  return final === initial + 1;
+function checkIfIsIncremented(initialIndex: number, finalIndex: number) {
+  const initial: number = parseInt(saved[initialIndex]);
+  const final: number = parseInt(saved[finalIndex]);
+  console.log('INITIAL:', initial);
+  console.log('FINAL:', final);
+  const isIncremented = final === initial + 1;
+  expect(isIncremented).toBeTruthy();
 }

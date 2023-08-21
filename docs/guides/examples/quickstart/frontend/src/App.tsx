@@ -79,7 +79,7 @@ function App() {
       <div className="App">
         {connected ? (
           <>
-            <h3>Counter: <span data-testid="count">{counter?.toFixed(0)}</span></h3>
+            <h3>Counter: <span id="count">{counter?.toFixed(0)}</span></h3>
             <button style={buttonStyle} onClick={increment}>
               Increment
             </button>
