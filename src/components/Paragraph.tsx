@@ -13,5 +13,6 @@ const styles = {
     mb: '$3',
     textSize: 'base',
     lineHeight: '1.7',
+    wordWrap: 'break-word',
   }),
 };
