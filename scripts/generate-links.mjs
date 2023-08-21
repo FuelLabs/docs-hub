@@ -29,10 +29,10 @@ const tsConfigPath = join(
   './fuels-ts/apps/docs/.vitepress/config.ts'
 );
 
-// const tsAPIOrderPath = join(
-//   DOCS_DIRECTORY,
-//   './fuels-ts/apps/docs/.typedoc/api-links.json'
-// );
+const tsAPIOrderPath = join(
+  DOCS_DIRECTORY,
+  './fuels-ts/apps/docs/.typedoc/api-links.json'
+);
 
 const swaySummaryFile = fs.readFileSync(swaySummaryPath, 'utf8');
 const rustSummaryFile = fs.readFileSync(rustSummaryPath, 'utf8');
@@ -46,7 +46,7 @@ const walletOrderFile = JSON.parse(fs.readFileSync(walletOrderPath, 'utf8'));
 //   fs.readFileSync(aboutFuelOrderPath, 'utf8')
 // );
 const tsConfigFile = fs.readFileSync(tsConfigPath, 'utf8');
-// const tsAPIOrderFile = fs.readFileSync(tsAPIOrderPath, 'utf8');
+const tsAPIOrderFile = fs.readFileSync(tsAPIOrderPath, 'utf8');
 
 const forcLines = [];
 
@@ -137,22 +137,22 @@ function handleVPLine(trimmedLine, lines, index, thisOrder, thisCat) {
       }
     }
   } else if (trimmedLine.startsWith('apiLinks')) {
-    // // handle API order
-    // newVPOrder.menu.push('API');
-    // const apiJSON = JSON.parse(tsAPIOrderFile);
-    // const apiLines = JSON.stringify(apiJSON, null, 2).split(EOL);
-    // apiLines.forEach((apiLine, apiIndex) => {
-    //   const trimmedAPILine = apiLine.trimStart();
-    //   const results = handleVPLine(
-    //     trimmedAPILine,
-    //     apiLines,
-    //     apiIndex,
-    //     newVPOrder,
-    //     category
-    //   );
-    //   category = results.category;
-    //   newVPOrder = results.newVPOrder;
-    // });
+    // handle API order
+    newVPOrder.menu.push('API');
+    const apiJSON = JSON.parse(tsAPIOrderFile);
+    const apiLines = JSON.stringify(apiJSON, null, 2).split(EOL);
+    apiLines.forEach((apiLine, apiIndex) => {
+      const trimmedAPILine = apiLine.trimStart();
+      const results = handleVPLine(
+        trimmedAPILine,
+        apiLines,
+        apiIndex,
+        newVPOrder,
+        category
+      );
+      category = results.category;
+      newVPOrder = results.newVPOrder;
+    });
   }
 
   return { newVPOrder, category };
