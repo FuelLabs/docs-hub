@@ -280,10 +280,12 @@ $ fuel-core run \
 --chain ./chainConfig.json \
 --utxo-validation --poa-instant false --network beta-4 --enable-p2p \
 --min-gas-price 1 --max_block_size 18874368  --max_transmit_size 18874368 \
---bootstrap_nodes /dns4/ae60114c134c04807a43abf2252f3f8e-50e5c1c899b9686c.elb.us-east-1.amazonaws.com/tcp/30333/p2p/16Uiu2HAmMgJuiYR9ker8QKkZxtxnBnfdgwEztYWNWHB1wNiWio2h \
+--bootstrap_nodes /dns4/p2p-beta-4.fuel.network/tcp/30333/p2p/16Uiu2HAm3xjsqASZ68KpaJPkPCMUiMgquhjyDHtxcVxVdFkMgRFf,/dns4/p2p-beta-4.fuel.network/tcp/30334/p2p/16Uiu2HAmJyoJ2HrtPRdBALMT8fs5Q25xVj57gZj5s6G6dzbHypoS \
 --sync_max_get_header 100 --sync_max_get_txns 100 \
---relayer-v2-listening-contracts 0x457A5a9320d06118764c400163c441cb8551cfa2 \
---relayer-da-deploy-height 3977410
+--relayer-v2-listening-contracts 0x03f2901Db5723639978deBed3aBA66d4EA03aF73 \
+--relayer-da-finalization 4 \
+--relayer-da-deploy-height 4111672 \
+--relayer-log-page-size 10000
 ```
 
 For the full description details of each flag above, run:
