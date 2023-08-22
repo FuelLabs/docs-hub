@@ -41,6 +41,7 @@ test.describe('Guides', () => {
   }
 
   test('dev quickstart', async ({ context, extensionId, page }) => {
+    stopServers();
     saved = [];
     if (QUICKSTART_TEST_CONFIG.needs_wallet) {
       console.log('SETTING UP WALLET');
@@ -59,12 +60,7 @@ test.describe('Guides', () => {
     await runTest(page, QUICKSTART_TEST_CONFIG, context);
     console.log('DONE RUNNING TEST');
 
-    console.log('STOPPING SERVERS');
-    // stop & delete pm2 servers
-    execSync(STOP_SERVERS, {
-      encoding: 'utf-8',
-    });
-    console.log('DONE STOPPING SERVERS');
+    stopServers();
   });
 });
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -272,4 +268,13 @@ function checkIfIsIncremented(initialIndex: number, finalIndex: number) {
   console.log('FINAL:', final);
   const isIncremented = final === initial + 1;
   expect(isIncremented).toBeTruthy();
+}
+
+function stopServers() {
+  console.log('STOPPING SERVERS');
+  // stop & delete pm2 servers
+  execSync(STOP_SERVERS, {
+    encoding: 'utf-8',
+  });
+  console.log('DONE STOPPING SERVERS');
 }
