@@ -57,10 +57,10 @@ test.describe('Guides', () => {
       encoding: 'utf-8',
     });
     console.log('START SERVER OUTPUT:', startOutput);
-    await page.waitForTimeout(10000);
-    console.log('WAITED 10 SECONDS');
+    await page.waitForTimeout(12000);
+    console.log('WAITED 12 SECONDS');
     console.log('RUNNING TEST');
-    await runTest(page, QUICKSTART_TEST_CONFIG, context, extensionId);
+    await runTest(page, QUICKSTART_TEST_CONFIG, context);
     console.log('DONE RUNNING TEST');
 
     isRunning = checkIfServersRunning();
@@ -73,8 +73,7 @@ async function runTest(
   page: Page,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   config: any,
-  context: BrowserContext,
-  extensionId: string
+  context: BrowserContext
 ) {
   await visit(page, config.start_url);
 
@@ -134,10 +133,10 @@ async function runTest(
         await page.getByRole(step.inputs[0], { name: step.inputs[1] }).click();
         break;
       case 'walletApproveConnect':
-        await walletConnect(context, extensionId);
+        await walletConnect(context);
         break;
       case 'walletApprove':
-        await walletApprove(context, extensionId);
+        await walletApprove(context);
         break;
       case 'checkIfIsIncremented':
         console.log('SAVED:', saved);

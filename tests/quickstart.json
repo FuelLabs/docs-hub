@@ -152,7 +152,7 @@
     },
     {
       "action": "wait",
-      "inputs": [3000]
+      "inputs": [5000]
     },
     {
       "action": "getByLocator-save",
@@ -168,7 +168,7 @@
     },
     {
       "action": "wait",
-      "inputs": [10000]
+      "inputs": [15000]
     },
     {
       "action": "reload",
@@ -176,7 +176,7 @@
     },
     {
       "action": "wait",
-      "inputs": [5000]
+      "inputs": [7000]
     },
     {
       "action": "getByLocator-save",

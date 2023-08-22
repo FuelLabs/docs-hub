@@ -45,7 +45,7 @@ export const test = base.extend<{
 
     // prepare browser args
     const browserArgs = [
-      '--headless=new',
+      // '--headless=new',
       `--disable-extensions-except=${pathToExtension}`,
       `--load-extension=${pathToExtension}`,
       '--remote-debugging-port=9222',
