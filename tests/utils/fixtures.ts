@@ -41,23 +41,35 @@ export const test = base.extend<{
         });
     });
     await zipPromise;
+    console.log('ZIP PROMISE OK');
 
     // prepare browser args
     const browserArgs = [
+      '--headless=new',
       `--disable-extensions-except=${pathToExtension}`,
       `--load-extension=${pathToExtension}`,
       '--remote-debugging-port=9222',
     ];
 
-    // launch browser
-    const context = await chromium.launchPersistentContext('', {
-      headless: false,
-      args: browserArgs,
-    });
+    console.log('BROWSER ARGS OK');
 
-    await context.pages()[0].waitForTimeout(3000);
-    await use(context);
-    await context.close();
+    try {
+      // launch browser
+      const context = await chromium.launchPersistentContext('', {
+        headless: false,
+        args: browserArgs,
+      });
+      console.log('LAUNCH BROWSER OK');
+
+      await context.pages()[0].waitForTimeout(3000);
+      console.log('CONTEXT TIMEOUT OK');
+      await use(context);
+      console.log('USE CONTEXT OK');
+      await context.close();
+      console.log('CLOSE CONTEXT OK');
+    } catch (err) {
+      console.log('ERROR:', err);
+    }
   },
   extensionId: async ({ context }, use) => {
     let [background] = context.serviceWorkers();

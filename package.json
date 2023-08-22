@@ -21,6 +21,7 @@
     "prettier:check": "prettier --check .",
     "prettier:format": "prettier --write .",
     "start": "next start",
+    "test:guides": "DEBUG=pw:api npx playwright test tests/test.spec.ts",
     "ts:check": "tsc --noEmit"
   },
   "dependencies": {

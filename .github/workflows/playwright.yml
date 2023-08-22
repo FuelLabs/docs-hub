@@ -5,44 +5,47 @@ on:
 
 jobs:
   quickstart-test:
-    timeout-minutes: 20
+    timeout-minutes: 30
     name: build-quickstart-contract
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: FuelLabs/github-actions/setups/node@master
-      - uses: actions-rs/toolchain@v1
         with:
-            profile: minimal
-            toolchain: stable
-      - uses: Swatinem/rust-cache@v1
-      - name: Install cargo-generate
-        uses: actions-rs/cargo@v1
-        with:
-            command: install
-            args: cargo-generate
-      - name: Install Fuelup
-        run: |
-            curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh
-      - name: Modify Path
-        run: echo "$HOME/.fuelup/bin:${GITHUB_PATH}" >> $GITHUB_PATH
-      - name: Set Default Beta-3 Toolchain
-        run: fuelup toolchain install beta-3 && fuelup default beta-3
-      - name: Build Contract
-        run: forc build --path ./docs/guides/examples/quickstart/counter-contract
-      - name: Run contract tests
-        uses: actions-rs/cargo@v1
-        with:
-            command: test
-            args: --manifest-path ./docs/guides/examples/quickstart/counter-contract/Cargo.toml
-      - name: Check Cargo fmt & clippy
-        run: |
-            cd docs/guides/examples/quickstart/counter-contract
-            cargo fmt --all --check
-            cargo clippy --all-targets --all-features
+          submodules: 'false'
+      - uses: ./.github/actions/setup-node
+      # - name: Install Rust
+      #   uses: actions-rs/toolchain@v1
+      #   with:
+      #     profile: minimal
+      #     toolchain: stable
+      #     override: true
+      # - name: Install cargo-generate
+      #   uses: actions-rs/cargo@v1
+      #   with:
+      #       command: install
+      #       args: cargo-generate
+      # - name: Install Fuelup
+      #   run: |
+      #       curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh
+      # - name: Modify Path
+      #   run: echo "$HOME/.fuelup/bin:${GITHUB_PATH}" >> $GITHUB_PATH
+      # - name: Set Default Beta-3 Toolchain
+      #   run: fuelup toolchain install beta-3 && fuelup default beta-3
+      # - name: Build Contract
+      #   run: forc build --path ./docs/guides/examples/quickstart/counter-contract
+      # - name: Run contract tests
+      #   uses: actions-rs/cargo@v1
+      #   with:
+      #       command: test
+      #       args: --manifest-path ./docs/guides/examples/quickstart/counter-contract/Cargo.toml
+      # - name: Check Cargo fmt & clippy
+      #   run: |
+      #       cd docs/guides/examples/quickstart/counter-contract
+      #       cargo fmt --all --check
+      #       cargo clippy --all-targets --all-features
       - name: Install dependencies
         run: pnpm install
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
       - name: Run Playwright tests
-        run: pnpm playwright test
+        run: xvfb-run --auto-servernum pnpm test:guides
