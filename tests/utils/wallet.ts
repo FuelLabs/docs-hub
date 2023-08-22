@@ -89,7 +89,9 @@ export async function walletApprove(
 }
 
 async function getWalletPage(context: BrowserContext, fuelExtensionId: string) {
-  let walletPage = context.pages().find((p) => p.url().includes('/popup?'));
+  let walletPage = context
+    .pages()
+    .find((p) => p.url().includes(fuelExtensionId));
   if (!walletPage) {
     walletPage = await context.waitForEvent('page', {
       predicate: (page) => page.url().includes(fuelExtensionId),

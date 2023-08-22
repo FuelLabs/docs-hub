@@ -51,8 +51,6 @@ export const test = base.extend<{
       '--remote-debugging-port=9222',
     ];
 
-    console.log('BROWSER ARGS OK');
-
     try {
       // launch browser
       const context = await chromium.launchPersistentContext('', {
@@ -62,11 +60,7 @@ export const test = base.extend<{
       console.log('LAUNCH BROWSER OK');
 
       await context.pages()[0].waitForTimeout(3000);
-      console.log('CONTEXT TIMEOUT OK');
       await use(context);
-      console.log('USE CONTEXT OK');
-      await context.close();
-      console.log('CLOSE CONTEXT OK');
     } catch (err) {
       console.log('ERROR:', err);
     }
@@ -77,6 +71,10 @@ export const test = base.extend<{
     const extensionId = background.url().split('/')[2];
     await use(extensionId);
   },
+});
+
+test.afterAll(({ context }) => {
+  context.close();
 });
 
 export const expect = test.expect;
