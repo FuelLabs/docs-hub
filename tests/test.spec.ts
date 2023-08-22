@@ -60,7 +60,7 @@ test.describe('Guides', () => {
     await page.waitForTimeout(10000);
     console.log('WAITED 10 SECONDS');
     console.log('RUNNING TEST');
-    await runTest(page, QUICKSTART_TEST_CONFIG, context);
+    await runTest(page, QUICKSTART_TEST_CONFIG, context, extensionId);
     console.log('DONE RUNNING TEST');
 
     isRunning = checkIfServersRunning();
@@ -69,8 +69,13 @@ test.describe('Guides', () => {
     }
   });
 });
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function runTest(page: Page, config: any, context: BrowserContext) {
+async function runTest(
+  page: Page,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  config: any,
+  context: BrowserContext,
+  extensionId: string
+) {
   await visit(page, config.start_url);
 
   for (const step of config.steps) {
@@ -129,10 +134,10 @@ async function runTest(page: Page, config: any, context: BrowserContext) {
         await page.getByRole(step.inputs[0], { name: step.inputs[1] }).click();
         break;
       case 'walletApproveConnect':
-        await walletConnect(context);
+        await walletConnect(context, extensionId);
         break;
       case 'walletApprove':
-        await walletApprove(context);
+        await walletApprove(context, extensionId);
         break;
       case 'checkIfIsIncremented':
         console.log('SAVED:', saved);

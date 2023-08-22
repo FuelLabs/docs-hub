@@ -66,8 +66,11 @@ export async function walletSetup(
   // await addButton.click({ timeout: 9000 });
 }
 
-export async function walletConnect(context: BrowserContext) {
-  const walletPage = await getWalletPage(context);
+export async function walletConnect(
+  context: BrowserContext,
+  fuelExtensionId: string
+) {
+  const walletPage = await getWalletPage(context, fuelExtensionId);
 
   const nextButton = getButtonByText(walletPage, 'Next');
   await nextButton.click();
@@ -75,18 +78,21 @@ export async function walletConnect(context: BrowserContext) {
   await connectButton.click();
 }
 
-export async function walletApprove(context: BrowserContext) {
-  const walletPage = await getWalletPage(context);
+export async function walletApprove(
+  context: BrowserContext,
+  fuelExtensionId: string
+) {
+  const walletPage = await getWalletPage(context, fuelExtensionId);
 
   const approveButton = walletPage.locator('button').getByText('Approve');
   await approveButton.click();
 }
 
-async function getWalletPage(context: BrowserContext) {
+async function getWalletPage(context: BrowserContext, fuelExtensionId: string) {
   let walletPage = context.pages().find((p) => p.url().includes('/popup?'));
   if (!walletPage) {
     walletPage = await context.waitForEvent('page', {
-      predicate: (page) => page.url().includes('/popup'),
+      predicate: (page) => page.url().includes(fuelExtensionId),
     });
   }
 
