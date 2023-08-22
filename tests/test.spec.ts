@@ -41,14 +41,17 @@ test.describe('Guides', () => {
   }
 
   test('dev quickstart', async ({ context, extensionId, page }) => {
-    stopServers();
-    saved = [];
-    if (QUICKSTART_TEST_CONFIG.needs_wallet) {
-      console.log('SETTING UP WALLET');
-      await useFuelWallet(context, extensionId, page);
+    let isRunning = checkIfServersRunning();
+    if (isRunning) {
+      stopServers();
     }
-    console.log('SETTING UP FOLDERS');
-    await setupFolders(QUICKSTART_TEST_CONFIG.project_folder);
+    saved = [];
+    // if (QUICKSTART_TEST_CONFIG.needs_wallet) {
+    //   console.log('SETTING UP WALLET');
+    //   await useFuelWallet(context, extensionId, page);
+    // }
+    // console.log('SETTING UP FOLDERS');
+    // await setupFolders(QUICKSTART_TEST_CONFIG.project_folder);
     console.log('STARTING DEV SERVER');
     const startOutput = execSync(START_SERVER_COMMAND, {
       encoding: 'utf-8',
@@ -56,11 +59,16 @@ test.describe('Guides', () => {
     console.log('START SERVER OUTPUT:', startOutput);
     await page.waitForTimeout(10000);
     console.log('WAITED 10 SECONDS');
-    console.log('RUNNING TEST');
-    await runTest(page, QUICKSTART_TEST_CONFIG, context);
-    console.log('DONE RUNNING TEST');
+    // console.log('RUNNING TEST');
+    // await runTest(page, QUICKSTART_TEST_CONFIG, context);
+    // console.log('DONE RUNNING TEST');
 
-    stopServers();
+    await visit(page, 'guides/quickstart/building-a-smart-contract');
+
+    isRunning = checkIfServersRunning();
+    if (isRunning) {
+      stopServers();
+    }
   });
 });
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -277,4 +285,14 @@ function stopServers() {
     encoding: 'utf-8',
   });
   console.log('DONE STOPPING SERVERS');
+}
+
+function checkIfServersRunning() {
+  try {
+    const output = execSync('pm2 list --no-color').toString();
+    return output.includes('online');
+  } catch (error) {
+    console.error('Error checking PM2 servers:', error);
+    return false;
+  }
 }

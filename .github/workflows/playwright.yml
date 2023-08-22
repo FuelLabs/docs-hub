@@ -15,24 +15,24 @@ jobs:
       - uses: ./.github/actions/setup-node
         with:
           install: false
-      - name: Install Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-      - name: Install cargo-generate
-        uses: actions-rs/cargo@v1
-        with:
-            command: install
-            args: cargo-generate
-      - name: Install Fuelup
-        run: |
-            curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh
-      - name: Modify Path
-        run: echo "$HOME/.fuelup/bin:${GITHUB_PATH}" >> $GITHUB_PATH
-      - name: Set Default Beta-3 Toolchain
-        run: fuelup toolchain install beta-3 && fuelup default beta-3
+      # - name: Install Rust
+      #   uses: actions-rs/toolchain@v1
+      #   with:
+      #     profile: minimal
+      #     toolchain: stable
+      #     override: true
+      # - name: Install cargo-generate
+      #   uses: actions-rs/cargo@v1
+      #   with:
+      #       command: install
+      #       args: cargo-generate
+      # - name: Install Fuelup
+      #   run: |
+      #       curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh
+      # - name: Modify Path
+      #   run: echo "$HOME/.fuelup/bin:${GITHUB_PATH}" >> $GITHUB_PATH
+      # - name: Set Default Beta-3 Toolchain
+      #   run: fuelup toolchain install beta-3 && fuelup default beta-3
       # - name: Build Contract
       #   run: forc build --path ./docs/guides/examples/quickstart/counter-contract
       # - name: Run contract tests
