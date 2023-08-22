@@ -49,10 +49,12 @@ test.describe('Guides', () => {
     console.log('SETTING UP FOLDERS');
     await setupFolders(QUICKSTART_TEST_CONFIG.project_folder);
     console.log('STARTING DEV SERVER');
-    execSync(START_SERVER_COMMAND, {
+    const startOutput = execSync(START_SERVER_COMMAND, {
       encoding: 'utf-8',
     });
-
+    console.log('START SERVER OUTPUT:', startOutput);
+    await page.waitForTimeout(10000);
+    console.log('WAITED 10 SECONDS');
     console.log('RUNNING TEST');
     await runTest(page, QUICKSTART_TEST_CONFIG, context);
     console.log('DONE RUNNING TEST');
