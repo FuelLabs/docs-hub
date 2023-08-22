@@ -46,7 +46,7 @@ jobs:
       #       cargo fmt --all --check
       #       cargo clippy --all-targets --all-features
       - name: Install dependencies
-        run: pnpm install --no-recursive
+        run: pnpm install
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
       - name: Run Playwright tests
