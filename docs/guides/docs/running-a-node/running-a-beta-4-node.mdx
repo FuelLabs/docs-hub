@@ -9,9 +9,19 @@ parent:
 # Running a local Fuel node connected to Beta-4 using P2P
 
 ## Installation
-Make sure you have the latest version of fuelup by running the following command:
 
-```sh
+{/* This example should include the instructions for installing Rust & Fuelup */}
+{/* installation:example:start */}
+Start by [installing the Rust toolchain](https://www.rust-lang.org/tools/install).
+
+Then, [install the Fuel toolchain](/docs/fuelup/installation).
+{/* installation:example:end */}
+
+{/* This example should include the instructions for installing the latest toolchain */}
+{/* toolchain_installation:example:start */}
+Make sure you have the latest version of `fuelup` by running the following command:
+
+```console
 fuelup self update
 ```
 
@@ -269,6 +279,8 @@ To run a local node with persistance, you must configure a `chainConfig.json` fi
 ## Running a Local Node
 
 Finally to put everything together to start the node, run the following command:
+
+<!-- TODO Add `--enable-relayer` to list of arguments later -->
 
 ```sh
 $ fuel-core run \
