@@ -68,22 +68,30 @@ export async function walletSetup(
 
 export async function walletConnect(context: BrowserContext) {
   const walletPage = await getWalletPage(context);
-
-  const nextButton = getButtonByText(walletPage, 'Next');
+  if (walletPage) console.log('FOUND WALLET PAGE');
+  const nextButton = getButtonByText(walletPage, /next/i);
+  if (nextButton) console.log('FOUND NEXT BUTTON');
+  await nextButton.isEnabled();
+  console.log('NEXT BUTTON IS ENABLED');
   await nextButton.click();
-  const connectButton = getButtonByText(walletPage, 'Connect');
+  console.log('CLICKED NEXT BUTTON');
+  const connectButton = getButtonByText(walletPage, /connect/i);
+  if (connectButton) console.log('FOUND CONNECT BUTTON');
   await connectButton.click();
+  console.log('CLICKED CONNECT BUTTON');
 }
 
 export async function walletApprove(context: BrowserContext) {
   const walletPage = await getWalletPage(context);
-
-  const approveButton = walletPage.locator('button').getByText('Approve');
+  if (walletPage) console.log('FOUND WALLET PAGE');
+  const approveButton = getButtonByText(walletPage, /approve/i);
+  if (approveButton) console.log('FOUND APPROVE BUTTON');
   await approveButton.click();
+  console.log('CLICKED APPROVE BUTTON');
 }
 
 async function getWalletPage(context: BrowserContext) {
-  let walletPage = context.pages().find((p) => p.url().includes('/popup?'));
+  let walletPage = context.pages().find((p) => p.url().includes('/popup'));
   if (!walletPage) {
     walletPage = await context.waitForEvent('page', {
       predicate: (page) => page.url().includes('/popup'),

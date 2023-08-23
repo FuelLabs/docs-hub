@@ -79,6 +79,7 @@ async function runTest(
 
   for (const step of config.steps) {
     console.log('STEP:', step);
+    await page.waitForTimeout(1000);
     switch (step.action) {
       case 'runCommand':
         if (step.inputs.length === 1) {
