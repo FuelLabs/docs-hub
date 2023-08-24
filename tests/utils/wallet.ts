@@ -50,43 +50,21 @@ export async function walletSetup(
     .getByText('Wallet created successfully')
     .waitFor({ state: 'visible', timeout: 9000 });
 
-  await signupPage.goto(
-    `chrome-extension://${fuelExtensionId}/popup.html#/wallet`
-  );
-
-  // // Navigate to add network and add test network
-  // await signupPage.locator('[aria-label="Selected Network"]').click();
-  // await signupPage.locator('button').getByText('Add new network').click();
-  // await signupPage
-  //   .locator('[aria-label="Network URL"]')
-  //   .fill(
-  //     process.env.VITE_FUEL_PROVIDER_URL || 'http://localhost:4000/graphql'
-  //   );
-  // const addButton = getButtonByText(signupPage, 'Add');
-  // await addButton.click({ timeout: 9000 });
+  await signupPage.close();
 }
 
 export async function walletConnect(context: BrowserContext) {
   const walletPage = await getWalletPage(context);
-  if (walletPage) console.log('FOUND WALLET PAGE');
-  const nextButton = getButtonByText(walletPage, /next/i);
-  if (nextButton) console.log('FOUND NEXT BUTTON');
-  await nextButton.isEnabled();
-  console.log('NEXT BUTTON IS ENABLED');
-  await nextButton.click();
+  await walletPage.getByRole('button', { name: 'Next' }).click();
   console.log('CLICKED NEXT BUTTON');
-  const connectButton = getButtonByText(walletPage, /connect/i);
-  if (connectButton) console.log('FOUND CONNECT BUTTON');
-  await connectButton.click();
+  await walletPage.getByRole('button', { name: 'Connect' }).click();
   console.log('CLICKED CONNECT BUTTON');
 }
 
 export async function walletApprove(context: BrowserContext) {
   const walletPage = await getWalletPage(context);
   if (walletPage) console.log('FOUND WALLET PAGE');
-  const approveButton = getButtonByText(walletPage, /approve/i);
-  if (approveButton) console.log('FOUND APPROVE BUTTON');
-  await approveButton.click();
+  await walletPage.getByRole('button', { name: 'Approve' }).click();
   console.log('CLICKED APPROVE BUTTON');
 }
 

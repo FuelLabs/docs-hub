@@ -2,13 +2,10 @@
 import type { BrowserContext, Page } from '@playwright/test';
 import { execSync } from 'child_process';
 import fs from 'fs';
-import type { WalletUnlocked } from 'fuels';
-import { Wallet } from 'fuels';
 import { EOL } from 'os';
 import { join } from 'path';
 
 import { test, expect } from './utils/fixtures';
-import { FUEL_MNEMONIC } from './utils/mocks';
 import { visit, reload } from './utils/visit';
 import { walletSetup, walletConnect, walletApprove } from './utils/wallet';
 
@@ -28,16 +25,12 @@ const STOP_SERVERS = 'pnpm pm2 delete all';
 let saved: any[] = [];
 
 test.describe('Guides', () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let fuelWallet: WalletUnlocked;
-
   async function useFuelWallet(
     context: BrowserContext,
     extensionId: string,
     page: Page
   ) {
     await walletSetup(context, extensionId, page);
-    fuelWallet = Wallet.fromMnemonic(FUEL_MNEMONIC);
   }
 
   test('dev quickstart', async ({ context, extensionId, page }) => {
