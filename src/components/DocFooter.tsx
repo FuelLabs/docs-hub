@@ -6,6 +6,8 @@ import { useDocContext } from '~/src/hooks/useDocContext';
 
 import { capitalize } from '../lib/str';
 
+import { FeedbackForm } from './FeedbackForm';
+
 function parseLink(link: string) {
   if (link.startsWith('../')) {
     link = link.replace('../', '');
@@ -62,6 +64,7 @@ export function DocFooter() {
           )}
         </Box.Stack>
       </Box>
+      <FeedbackForm />
     </>
   );
 }

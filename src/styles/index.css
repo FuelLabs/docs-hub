@@ -78,3 +78,7 @@ ul > li > ul {
 textarea {
   color: inherit !important;
 }
+
+.form-textarea:focus {
+  outline: 1px solid var(--colors-inputBaseBorder) !important;
+}
