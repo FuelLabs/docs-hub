@@ -12,8 +12,6 @@ import {
 import type { FormEvent } from 'react';
 import { useState } from 'react';
 
-import { capitalize } from '../lib/str';
-
 interface FormData {
   helpful: boolean | null;
   feedback?: string;
@@ -26,8 +24,8 @@ type AlertMsg = string | null;
 export function FeedbackForm() {
   const [formData, setFormData] = useState<FormData>({ helpful: null });
   const [status, setStatus] = useState<Status>(null);
-  const [alertMsg, setAlertMsg] = useState<Alert>(null);
-  const [last, setLast] = useState<{ status: Status; alert: Alert }>();
+  const [alertMsg, setAlertMsg] = useState<AlertMsg>(null);
+  const [last, setLast] = useState<{ status: Status; alert: AlertMsg }>();
 
   const triggerAlert = (type: 'success' | 'error', msg: string) => {
     setStatus(type);
