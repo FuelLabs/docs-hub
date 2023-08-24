@@ -136,7 +136,7 @@
     },
     {
       "action": "wait",
-      "inputs": [15000]
+      "inputs": [20000]
     },
     {
       "action": "goToUrl",
