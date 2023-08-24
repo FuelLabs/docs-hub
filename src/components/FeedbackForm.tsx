@@ -1,7 +1,18 @@
 import { cssObj } from '@fuel-ui/css';
-import { Form, Input, Icon, Button, Box, Text, Link } from '@fuel-ui/react';
+import {
+  Form,
+  Input,
+  Icon,
+  Button,
+  Box,
+  Text,
+  Link,
+  Alert,
+} from '@fuel-ui/react';
 import type { FormEvent } from 'react';
 import { useState } from 'react';
+
+import { capitalize } from '../lib/str';
 
 interface FormData {
   helpful: boolean | null;
@@ -9,8 +20,24 @@ interface FormData {
   email?: string;
 }
 
+type Status = 'success' | 'error' | null;
+type AlertMsg = string | null;
+
 export function FeedbackForm() {
   const [formData, setFormData] = useState<FormData>({ helpful: null });
+  const [status, setStatus] = useState<Status>(null);
+  const [alertMsg, setAlertMsg] = useState<Alert>(null);
+  const [last, setLast] = useState<{ status: Status; alert: Alert }>();
+
+  const triggerAlert = (type: 'success' | 'error', msg: string) => {
+    setStatus(type);
+    setAlertMsg(msg);
+    setLast({ status: type, alert: msg });
+    setTimeout(() => {
+      setStatus(null);
+      setAlertMsg(null);
+    }, 3500);
+  };
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -26,18 +53,18 @@ export function FeedbackForm() {
       const data = await res.json();
 
       if (data.success) {
-        alert('Data sent successfully.');
+        triggerAlert('success', 'Sent! We appreciate your feedback.');
       } else {
-        alert('Error sending data.');
+        triggerAlert('error', 'Oops! Something went wrong.');
       }
     } catch (error) {
-      console.error('There was an error sending the data', error);
+      triggerAlert('error', JSON.stringify(error));
     }
   };
 
   return (
     <Box css={styles.formContainer}>
-      <form style={styles.form} onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <Form.Control css={styles.formControl} isRequired>
           <h4>Was this page helpful?</h4>
           <Box.Flex gap={'8px'}>
@@ -113,14 +140,19 @@ export function FeedbackForm() {
                 </Form.Label>
                 <Text>Optional</Text>
               </Box.Flex>
-              <textarea
-                style={styles.textarea}
-                className="form-textarea"
-                id="message"
-                name="message"
-                rows={4}
-                cols={50}
-              />
+              <Box css={{ color: 'var(--colors-inputBaseColor) !important' }}>
+                <textarea
+                  style={styles.textarea}
+                  className="form-textarea"
+                  onChange={(e) =>
+                    setFormData({ ...formData, feedback: e.target.value })
+                  }
+                  id="message"
+                  name="message"
+                  rows={4}
+                  cols={50}
+                />
+              </Box>
             </Form.Control>
 
             <Form.Control css={styles.formControl}>
@@ -152,6 +184,7 @@ export function FeedbackForm() {
                 onPress={() => setFormData({ helpful: null })}
                 variant="outlined"
                 intent="base"
+                size="sm"
                 type="button"
               >
                 Cancel
@@ -160,6 +193,7 @@ export function FeedbackForm() {
                 css={styles.submit}
                 variant="outlined"
                 intent="base"
+                size="sm"
                 type="submit"
               >
                 Send
@@ -168,6 +202,20 @@ export function FeedbackForm() {
           </>
         )}
       </form>
+      <Box
+        css={{
+          ...styles.alertContainer,
+          bottom: status && alertMsg ? '20px' : '-100px',
+        }}
+      >
+        {last && last.status && last.alert && (
+          <Alert status={status ? status : last.status} direction="row">
+            <Alert.Description>
+              {alertMsg ? alertMsg : last.alert}
+            </Alert.Description>
+          </Alert>
+        )}
+      </Box>
     </Box>
   );
 }
@@ -175,18 +223,19 @@ export function FeedbackForm() {
 const styles = {
   formContainer: cssObj({
     padding: '8px 16px',
-    border: '1px solid #ccc',
+    border: '1px solid var(--colors-inputBaseBorder)',
     borderRadius: '6px',
     margin: '10px auto',
     width: '280px',
     '@sm': {
       width: 'auto',
+      maxWidth: '80vw',
     },
   }),
   buttonLabel: cssObj({
     padding: '8px 16px',
     margin: 0,
-    border: '1px solid #ccc',
+    border: '1px solid var(--colors-inputBaseBorder)',
     cursor: 'pointer',
     borderRadius: '6px',
     transition: 'background-color 0.2s',
@@ -220,7 +269,13 @@ const styles = {
     minWidth: '99%',
     backgroundColor: 'var(--colors-inputBaseBg)',
     border: '1px solid var(--colors-inputBaseBorder)',
-    color: 'var(--colors-inputBaseColor)',
     outline: 'none',
+    fontSize: 'var(--fontSizes-base)',
+    fontFamily: 'var(--fonts-display)',
+  }),
+  alertContainer: cssObj({
+    position: 'fixed',
+    right: '20px',
+    transition: 'bottom 0.25s ease',
   }),
 };

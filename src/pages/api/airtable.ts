@@ -8,17 +8,22 @@ export default async function handler(
   if (req.method === 'POST') {
     try {
       const { helpful, feedback, email } = req.body;
-
+      const url = req.headers.referer;
       airtable.configure({
         endpointUrl: 'https://api.airtable.com',
         apiKey: process.env.AIRTABLE_API_KEY,
       });
       const base = airtable.base('appSeuqKIBvc0BON5');
 
+      const isHelpful = helpful ? '👍 Yes' : '👎 No';
+
       base('General User Survey').create([
         {
           fields: {
-            'Helpful?': '👍 Yes',
+            URL: url,
+            'Helpful?': isHelpful,
+            Feedback: feedback,
+            Email: email,
           },
         },
       ]);
