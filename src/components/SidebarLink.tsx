@@ -55,10 +55,15 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
       active,
     });
 
-    const label = item.label.replaceAll(/[_-]/g, ' ');
+    let label = item.label.replaceAll(/[_-]/g, ' ');
     const shouldBeLowerCase = LOWER_CASE_NAV_PATHS.some((prefix) =>
       slug.startsWith(prefix)
     );
+
+    const regex = /(b|B)eta (\d+)/;
+    if (regex.test(label)) {
+      label = label.replace(regex, '$1eta-$2');
+    }
 
     return (
       <ButtonLink
