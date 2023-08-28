@@ -6,5 +6,9 @@
   "running_a_node": {
     "title": "Running a Node",
     "description": "Run a local Fuel node"
+  },
+  "testnet_migration": {
+    "title": "Testnet Migration",
+    "description": "Sway and SDK's breaking change reference"
   }
 }
