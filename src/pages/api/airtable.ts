@@ -15,7 +15,7 @@ export default async function handler(
       });
       const base = airtable.base('appSeuqKIBvc0BON5');
 
-      const isHelpful = helpful ? '👍 Yes' : '👎 No';
+      const isHelpful = helpful === 'true' ? '👍 Yes' : '👎 No';
 
       base('General User Survey').create([
         {

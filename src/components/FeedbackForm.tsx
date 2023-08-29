@@ -7,214 +7,221 @@ import {
   Box,
   Text,
   Link,
+  Dialog,
+  toast,
   Alert,
 } from '@fuel-ui/react';
-import type { FormEvent } from 'react';
-import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import type { SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
-interface FormData {
-  helpful: boolean | null;
-  feedback?: string;
-  email?: string;
-}
-
-type Status = 'success' | 'error' | null;
-type AlertMsg = string | null;
+type FormData = {
+  helpful: 'true' | 'false' | null;
+  feedback: string;
+  email: string;
+};
 
 export function FeedbackForm() {
-  const [formData, setFormData] = useState<FormData>({ helpful: null });
-  const [status, setStatus] = useState<Status>(null);
-  const [alertMsg, setAlertMsg] = useState<AlertMsg>(null);
-  const [last, setLast] = useState<{ status: Status; alert: AlertMsg }>();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>();
+  const isHelpful = watch('helpful');
 
-  const triggerAlert = (type: 'success' | 'error', msg: string) => {
-    setStatus(type);
-    setAlertMsg(msg);
-    setLast({ status: type, alert: msg });
-    setTimeout(() => {
-      setStatus(null);
-      setAlertMsg(null);
-    }, 3500);
+  const submitForm = (data: FormData) => {
+    return fetch('/api/airtable', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
   };
 
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
+  const mutation = useMutation(submitForm, {
+    onSuccess: async () => {
+      toast.success('Submitted! Thank you for your feedback.');
+      reset();
+    },
+    onError: async () => {
+      toast.error('Oops! Something went wrong.');
+    },
+  });
 
-    try {
-      const res = await fetch('/api/airtable', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-
-      if (data.success) {
-        triggerAlert('success', 'Sent! We appreciate your feedback.');
-      } else {
-        triggerAlert('error', 'Oops! Something went wrong.');
-      }
-    } catch (error) {
-      triggerAlert('error', JSON.stringify(error));
-    }
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    mutation.mutate(data);
   };
+
+  function HelpfulButtons() {
+    return (
+      <Form.Control css={styles.formControl} isRequired>
+        <Box.Flex gap={'8px'}>
+          <input
+            type="radio"
+            id="trueButton"
+            value="true"
+            checked={isHelpful === 'true'}
+            {...register('helpful', { required: true })}
+            style={styles.radioButton}
+          />
+          <label
+            style={
+              isHelpful === 'true'
+                ? {
+                    ...styles.buttonLabel,
+                    ...styles.helpful,
+                  }
+                : styles.buttonLabel
+            }
+            htmlFor="trueButton"
+          >
+            <Icon icon="ThumbUp" />
+          </label>
+          <input
+            type="radio"
+            id="falseButton"
+            value="false"
+            checked={isHelpful === 'false'}
+            {...register('helpful', { required: true })}
+            style={styles.radioButton}
+          />
+          <label
+            style={
+              isHelpful === 'false'
+                ? {
+                    ...styles.buttonLabel,
+                    ...styles.notHelpful,
+                  }
+                : styles.buttonLabel
+            }
+            htmlFor="falseButton"
+          >
+            <Icon icon="ThumbDown" />
+          </label>
+        </Box.Flex>
+        {errors.helpful && (
+          <Alert css={styles.alert} direction="row" status="error">
+            <Alert.Description>A rating is required.</Alert.Description>
+          </Alert>
+        )}
+      </Form.Control>
+    );
+  }
+
+  function Feedback() {
+    return (
+      <Form.Control css={styles.formControl}>
+        <Box.Flex
+          css={styles.optional}
+          justify={'space-between'}
+          align={'flex-end'}
+        >
+          <Form.Label htmlFor="feedback">
+            Let us know what we{' '}
+            {isHelpful === 'true' ? 'did well' : 'can do better'}
+          </Form.Label>
+          <Text>Optional</Text>
+        </Box.Flex>
+        <Box css={styles.textareaContainer}>
+          <textarea
+            style={styles.textarea}
+            className="form-textarea"
+            id="message"
+            rows={4}
+            cols={50}
+            {...register('feedback')}
+          />
+        </Box>
+      </Form.Control>
+    );
+  }
+
+  function Email() {
+    return (
+      <Form.Control css={styles.formControl}>
+        <Box.Flex
+          css={styles.optional}
+          justify={'space-between'}
+          align={'flex-end'}
+        >
+          <Form.Label htmlFor="email">
+            If we can contact you with questions, please enter your email
+          </Form.Label>
+          <Text>Optional</Text>
+        </Box.Flex>
+        <Input isFullWidth>
+          <Input.ElementLeft element={<Icon icon="Mail" />} />
+          <Input.Field
+            type="email"
+            id="email"
+            {...register('email')}
+            placeholder="email@example.com"
+          />
+        </Input>
+      </Form.Control>
+    );
+  }
+
+  function Submit() {
+    return (
+      <Box.Flex justify={'flex-end'} gap={'10px'}>
+        <Dialog.Close asChild>
+          <Button variant="outlined" intent="base" size="sm" type="button">
+            Cancel
+          </Button>
+        </Dialog.Close>
+        <Button
+          css={styles.submit}
+          variant="outlined"
+          intent="base"
+          size="sm"
+          type="submit"
+        >
+          Send
+        </Button>
+      </Box.Flex>
+    );
+  }
 
   return (
-    <Box css={styles.formContainer}>
-      <form onSubmit={handleSubmit}>
-        <Form.Control css={styles.formControl} isRequired>
-          <h4>Was this page helpful?</h4>
-          <Box.Flex gap={'8px'}>
-            <input
-              type="radio"
-              id="trueButton"
-              name="trueFalse"
-              value="true"
-              checked={formData.helpful === true}
-              onChange={() => setFormData({ ...formData, helpful: true })}
-              style={styles.radioButton}
-            />
-            <label
-              style={
-                formData.helpful === true
-                  ? {
-                      ...styles.buttonLabel,
-                      ...styles.helpful,
-                    }
-                  : styles.buttonLabel
-              }
-              htmlFor="trueButton"
-            >
-              <Icon icon="ThumbUp" />
-            </label>
-
-            <input
-              type="radio"
-              id="falseButton"
-              name="trueFalse"
-              value="false"
-              checked={formData.helpful === false}
-              onChange={() => setFormData({ ...formData, helpful: false })}
-              style={styles.radioButton}
-            />
-            <label
-              style={
-                formData.helpful === false
-                  ? {
-                      ...styles.buttonLabel,
-                      ...styles.notHelpful,
-                    }
-                  : styles.buttonLabel
-              }
-              htmlFor="falseButton"
-            >
-              <Icon icon="ThumbDown" />
-            </label>
-          </Box.Flex>
-        </Form.Control>
-
-        {formData.helpful !== null && (
-          <>
-            {formData.helpful === false && (
+    <>
+      <Dialog onOpenChange={() => reset()}>
+        <Box.Flex gap={'2px'}>
+          <Icon icon={Icon.is('Message')} stroke={1} color="textMuted" />
+          <Dialog.Trigger>
+            <Button css={styles.trigger} variant="link">
+              Was this page helpful?
+            </Button>
+          </Dialog.Trigger>
+        </Box.Flex>
+        <Dialog.Content>
+          <Dialog.Close />
+          <Dialog.Heading>Was this page helpful?</Dialog.Heading>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <HelpfulButtons />
+            {isHelpful === 'false' && (
               <Form.HelperText css={styles.forum}>
                 If you need support, please create a post in our{' '}
-                <Link isExternal href="https://forum.fuel.network/">
+                <Link
+                  css={styles.forumLink}
+                  isExternal
+                  href="https://forum.fuel.network/"
+                >
                   Forum
                 </Link>
                 .
               </Form.HelperText>
             )}
-
-            <Form.Control css={styles.formControl}>
-              <Box.Flex
-                css={styles.optional}
-                justify={'space-between'}
-                align={'flex-end'}
-              >
-                <Form.Label htmlFor="feedback">
-                  Let us know what we{' '}
-                  {formData.helpful === true ? 'did well' : 'can do better'}
-                </Form.Label>
-                <Text>Optional</Text>
-              </Box.Flex>
-              <Box css={{ color: 'var(--colors-inputBaseColor) !important' }}>
-                <textarea
-                  style={styles.textarea}
-                  className="form-textarea"
-                  onChange={(e) =>
-                    setFormData({ ...formData, feedback: e.target.value })
-                  }
-                  id="message"
-                  name="message"
-                  rows={4}
-                  cols={50}
-                />
-              </Box>
-            </Form.Control>
-
-            <Form.Control css={styles.formControl}>
-              <Box.Flex
-                css={styles.optional}
-                justify={'space-between'}
-                align={'flex-end'}
-              >
-                <Form.Label htmlFor="email">
-                  If we can contact you with questions, please enter your email
-                </Form.Label>
-                <Text>Optional</Text>
-              </Box.Flex>
-              <Input isFullWidth>
-                <Input.ElementLeft element={<Icon icon="Mail" />} />
-                <Input.Field
-                  type="email"
-                  id="email"
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                  name="email"
-                  placeholder="email@example.com"
-                />
-              </Input>
-            </Form.Control>
-            <Box.Flex justify={'flex-end'} gap={'10px'}>
-              <Button
-                onPress={() => setFormData({ helpful: null })}
-                variant="outlined"
-                intent="base"
-                size="sm"
-                type="button"
-              >
-                Cancel
-              </Button>
-              <Button
-                css={styles.submit}
-                variant="outlined"
-                intent="base"
-                size="sm"
-                type="submit"
-              >
-                Send
-              </Button>
-            </Box.Flex>
-          </>
-        )}
-      </form>
-      <Box
-        css={{
-          ...styles.alertContainer,
-          bottom: status && alertMsg ? '20px' : '-100px',
-        }}
-      >
-        {last && last.status && last.alert && (
-          <Alert status={status ? status : last.status} direction="row">
-            <Alert.Description>
-              {alertMsg ? alertMsg : last.alert}
-            </Alert.Description>
-          </Alert>
-        )}
-      </Box>
-    </Box>
+            <Feedback />
+            <Email />
+            <Submit />
+          </form>
+        </Dialog.Content>
+      </Dialog>
+    </>
   );
 }
 
@@ -241,6 +248,12 @@ const styles = {
   radioButton: cssObj({
     display: 'none',
   }),
+  trigger: cssObj({
+    color: 'currentcolor',
+    '&:hover': {
+      color: 'currentcolor !important',
+    },
+  }),
   submit: cssObj({
     '&:hover': {
       backgroundColor: 'var(--colors-semanticSolidInfoBg) !important',
@@ -258,22 +271,28 @@ const styles = {
   optional: cssObj({
     fontSize: '$sm',
   }),
+  alert: cssObj({
+    fontSize: '$sm',
+  }),
   forum: cssObj({
     fontSize: '$sm',
     margin: '10px 0',
   }),
+  forumLink: cssObj({
+    textDecoration: 'underline',
+    color: '$intentsBase11',
+  }),
+  textareaContainer: cssObj({
+    color: '$inputBaseColor !important',
+  }),
   textarea: cssObj({
-    maxWidth: '99%',
-    minWidth: '99%',
+    maxWidth: '95.5%',
+    minWidth: '95.5%',
+    padding: '10px',
     backgroundColor: 'var(--colors-inputBaseBg)',
     border: '1px solid var(--colors-inputBaseBorder)',
     outline: 'none',
     fontSize: 'var(--fontSizes-base)',
     fontFamily: 'var(--fonts-display)',
-  }),
-  alertContainer: cssObj({
-    position: 'fixed',
-    right: '20px',
-    transition: 'bottom 0.25s ease',
   }),
 };
