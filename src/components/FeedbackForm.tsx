@@ -79,7 +79,10 @@ export function FeedbackForm() {
             }
             htmlFor="trueButton"
           >
-            <Icon icon="ThumbUp" />
+            <Icon
+              css={isHelpful === 'true' && styles.selectedThumbIcon}
+              icon="ThumbUp"
+            />
           </label>
           <input
             type="radio"
@@ -100,7 +103,10 @@ export function FeedbackForm() {
             }
             htmlFor="falseButton"
           >
-            <Icon icon="ThumbDown" />
+            <Icon
+              css={isHelpful === 'false' && styles.selectedThumbIcon}
+              icon="ThumbDown"
+            />
           </label>
         </Box.Flex>
         {errors.helpful && (
@@ -289,6 +295,11 @@ const styles = {
   }),
   formControl: cssObj({
     marginBottom: '$3',
+  }),
+  selectedThumbIcon: cssObj({
+    'html[class="fuel_light-theme"] &': {
+      color: '$gray6',
+    },
   }),
   optional: cssObj({
     fontSize: '$sm',
