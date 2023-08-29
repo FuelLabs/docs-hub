@@ -226,17 +226,6 @@ export function FeedbackForm() {
 }
 
 const styles = {
-  formContainer: cssObj({
-    padding: '8px 16px',
-    border: '1px solid var(--colors-inputBaseBorder)',
-    borderRadius: '6px',
-    margin: '10px auto',
-    width: '280px',
-    '@sm': {
-      width: 'auto',
-      maxWidth: '80vw',
-    },
-  }),
   buttonLabel: cssObj({
     padding: '8px 16px',
     margin: 0,
@@ -256,7 +245,7 @@ const styles = {
   }),
   submit: cssObj({
     '&:hover': {
-      backgroundColor: 'var(--colors-semanticSolidInfoBg) !important',
+      backgroundColor: '$semanticSolidInfoBg !important',
     },
   }),
   helpful: cssObj({
@@ -266,7 +255,7 @@ const styles = {
     backgroundColor: 'var(--colors-semanticSolidErrorBg)',
   }),
   formControl: cssObj({
-    marginBottom: '10px',
+    marginBottom: '$3',
   }),
   optional: cssObj({
     fontSize: '$sm',
@@ -276,7 +265,7 @@ const styles = {
   }),
   forum: cssObj({
     fontSize: '$sm',
-    margin: '10px 0',
+    margin: '$2 0',
   }),
   forumLink: cssObj({
     textDecoration: 'underline',
