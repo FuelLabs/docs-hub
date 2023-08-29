@@ -27,6 +27,7 @@ export function FeedbackForm() {
     handleSubmit,
     watch,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<FormData>();
   const isHelpful = watch('helpful');
@@ -188,14 +189,45 @@ export function FeedbackForm() {
 
   return (
     <>
-      <Dialog onOpenChange={() => reset()}>
-        <Box.Flex gap={'2px'}>
-          <Icon icon={Icon.is('Message')} stroke={1} color="textMuted" />
+      <Dialog
+        onOpenChange={(isOpen) => {
+          if (!isOpen) {
+            reset();
+          }
+        }}
+      >
+        <Box.Flex align="center" gap={'6px'}>
           <Dialog.Trigger>
-            <Button css={styles.trigger} variant="link">
-              Was this page helpful?
+            <Button
+              size="sm"
+              intent="base"
+              variant="ghost"
+              css={styles.ratingButton}
+            >
+              <Box
+                css={styles.ratingBox}
+                onClick={() => setValue('helpful', 'true')}
+              >
+                <Icon icon="ThumbUp" />
+              </Box>
             </Button>
           </Dialog.Trigger>
+          <Dialog.Trigger>
+            <Button
+              size="sm"
+              intent="base"
+              variant="ghost"
+              css={styles.ratingButton}
+            >
+              <Box
+                css={styles.ratingBox}
+                onClick={() => setValue('helpful', 'false')}
+              >
+                <Icon icon="ThumbDown" />
+              </Box>
+            </Button>
+          </Dialog.Trigger>
+          <Text>Was this page helpful?</Text>
         </Box.Flex>
         <Dialog.Content>
           <Dialog.Close />
@@ -232,16 +264,17 @@ const styles = {
     border: '1px solid var(--colors-inputBaseBorder)',
     cursor: 'pointer',
     borderRadius: '6px',
-    transition: 'background-color 0.2s',
+  }),
+  ratingButton: cssObj({
+    border: '1px solid $inputBaseBorder',
+    background: 'transparent',
+    padding: 0,
+  }),
+  ratingBox: cssObj({
+    padding: '4px 12px',
   }),
   radioButton: cssObj({
     display: 'none',
-  }),
-  trigger: cssObj({
-    color: 'currentcolor',
-    '&:hover': {
-      color: 'currentcolor !important',
-    },
   }),
   submit: cssObj({
     '&:hover': {
