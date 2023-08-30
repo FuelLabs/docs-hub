@@ -34,7 +34,7 @@ function getActive(pathname: string, slug: string) {
 export type SidebarLinkProps = ButtonLinkProps & {
   item: SidebarLinkItem;
   isActiveMenu?: boolean;
-  handleClick: Dispatch<SetStateAction<boolean>>;
+  handleClick?: Dispatch<SetStateAction<boolean>>;
 };
 
 // eslint-disable-next-line react/display-name
