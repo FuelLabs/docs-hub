@@ -7,6 +7,7 @@ settings:
 overrides:
   semver@<7.5.2: '>=7.5.2'
   word-wrap: npm:@aashutoshrathi/word-wrap
+  '@adobe/css-tools@<4.3.1': '>=4.3.1'
 
 dependencies:
   '@docsearch/css':
