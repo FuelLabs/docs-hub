@@ -9,6 +9,6 @@
   },
   "testnet_migration": {
     "title": "Testnet Migration",
-    "description": "Sway and SDK's breaking change reference"
+    "description": "Sway and SDK's breaking changes reference"
   }
 }

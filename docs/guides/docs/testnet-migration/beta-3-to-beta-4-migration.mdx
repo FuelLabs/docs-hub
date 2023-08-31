@@ -8,84 +8,159 @@ parent:
 
 # Beta 4 Migration
 
-This guide exclusively addresses the transition from the point where tool support for `beta 3` concludes to the adoption of `beta 4`.
+This guide focuses on the transition from the end of tool support for `beta 3` to the start of `beta 4`.
 
 - [Fuelup v0.19.4](https://github.com/FuelLabs/fuelup/releases/tag/v0.19.4)
 - [Sway v0.44.0](https://github.com/FuelLabs/sway/releases/tag/v0.44.0)
 - [TS SDK v0.51.0](https://github.com/FuelLabs/fuels-ts/releases/tag/v0.51.0)
-- [Rust SDK v0.44.0](https://github.com/FuelLabs/fuels-rs/releases/tag/v0.44.0)
+- [Rust SDK v0.47.0](https://github.com/FuelLabs/fuels-rs/releases/tag/v0.46.0)
+- [Wallet SDK v0.44.0](https://github.com/FuelLabs/fuels-rs/releases/tag/v0.44.0)
 
 ## Fuelup Toolchain
-{/* This example should include the instructions for installing the latest toolchain */}
-{/* toolchain_installation:example:start */}
-Make sure you have the latest version of `fuelup` by running the following command:
+
+Update to the latest version of `fuelup`:
 
 ```sh
 fuelup self update
 ```
 
-Then run `fuelup toolchain install beta-4` to install the `beta-4` toolchain.
+Install the `beta-4` toolchain:
 
-Finally, set the `beta-4` toolchain as your default distribution with the following command:
+```sh
+fuelup toolchain install beta-4
+```
+
+Set the `beta-4` toolchain as your default:
 
 ```sh
 $ fuelup default beta-4
 default toolchain set to 'beta-4-aarch64-apple-darwin'
 ```
 
+## Wallet
+
+Fuel wallet version `0.11.0` is not compatible with beta 4. Please download the non backwards compatible Fuel wallet version `0.12.0` for beta-4 from the Chrome store.
+
+
 ## Sway 
-Integer types no longer implicitly cast to each other.
+
+Integer types no longer implicitly cast to each other. Here are some examples of the changes:
+
 ```sway
-/* BEFORE - BETA 3 */
+// BEFORE - BETA 3
 let y1: u16 = 4u8
 
-/* AFTER - BETA 4 */
+// AFTER - BETA 4
 let y1: u16 = 4u8.as_u16()
 ```
 
 ```sway
-/* BEFORE - BETA 3 */
+// BEFORE - BETA 3
 let y3: u16 = 4u32
 
-/* AFTER - BETA 4 */
+// AFTER - BETA 4
 let y3: u16 = 4u32.try_as_u16().unwrap()
+```
+
+The standard library introduced `read()`, `write()`, and `try_read()` methods to contract storage. Use `try_read()` when possible to avoid potential issues with accessing uninitialized storage:
+
+```sway
+// BEFORE - BETA 3
+let owner = storage.owner;
+
+// AFTER - BETA 4
+let owner = storage.owner.try_read().unwrap();
+```
+
+```sway
+// BEFORE - BETA 3
+storage.item_counter += 1;
+
+// AFTER - BETA 4
+storage.item_counter.write(storage.item_counter.read() + 1);
+```
+
+Function signatures in the standard library have changed:
+
+```sway
+// BEFORE - BETA 3
+mint_to(amount: u64, recipient: Address);
+
+// AFTER - BETA 4
+mint_to(sender, ZERO_B256, 1_000_000_000);
+```
+
+```sway
+// BEFORE - BETA 3
+transfer(amount, asset_id, item.owner);
+
+// AFTER - BETA 4
+transfer(item.owner, asset_id, amount);
+```
+
+Multi-token support, akin to Ethereum's ERC-1155, has now been natively introduced. This advancement enables the creation and destruction of unique subsidiary tokens within a single contract. These modifications will be incorporated into the standard library as `std::token`. Actions involving `burning` and `minting` now necessitate the `sub_id` of the token. Function signatures in the standard library have changed:
+
+```rust
+asset_id = sha256(contract_id ++ sub_id)
+```
+
+Additionally, `AssetId` doesn't equate to `ContractId`. Instead, it's calculated in alignment with the aforementioned changes:
+
+```sway
+// BEFORE - BETA 3
+IncorrectAssetId: ContractId;
+
+// AFTER - BETA 4
+IncorrectAssetId: AssetId;
 ```
 
 Changes `disable_panic_on_overflow()` function to return the flags set
 prior to calling the function
 
 ```sway
-/* BEFORE - BETA 3 */
+// BEFORE - BETA 3
 pub fn disable_panic_on_overflow() 
 
-/* AFTER - BETA 4 */
+// AFTER - BETA 4
 pub fn disable_panic_on_overflow() -> u64
 ```
 
 ## TS SDK
+
 The `rawPayload` property has been deprecated from the `Receipt` struct.
 
 For more details on the schema modification, please refer to the schema [here](https://graphql-docs.fuel.network/docs/reference/objects/#receipt).
 
 ```typescript
-/* BEFORE - BETA 3 */
+// BEFORE - BETA 3
 const receipt = new ReceiptCoder().decode(arrayify(gqlReceipt.rawPayload), 0)[0];
 
-/* AFTER - BETA 4 */
+// AFTER - BETA 4
 const receipt = assembleReceiptByType(gqlReceipt);
 ```
 
+`.get()` function has been replaced by `.simulate()` to align with the same function name
+
+```typescript
+// BEFORE - BETA 3
+let { value } = await contract.functions.get_count().get();
+
+// AFTER - BETA 4
+let { value } = await contract.functions.get_count().simulate();
+```
+
 ## Rust SDK
+
 To utilize `append_variable_outputs()` and `append_contract()`, `TxDependencyExtension` now must be within scope.
 
 ```rust
-/* BEFORE - BETA 3 */
+// BEFORE - BETA 3
 pub fn append_variable_outputs(&mut self, num: u64) {
     self.variable_outputs
         .extend(new_variable_outputs(num as usize));
 }
 
-/* AFTER - BETA 4 */
+// AFTER - BETA 4
 use crate::{
     call_utils::{TxDependencyExtension},
 };
@@ -94,4 +169,59 @@ pub fn append_variable_outputs(&mut self, num: u64) {
     self.variable_outputs
         .extend(new_variable_outputs(num as usize));
 }
+```
+
+Contract deployment no longer takes contract binary and deploy configurations as a parameter but is instead loaded in.
+
+```rust
+// BEFORE - BETA 3
+let id = Contract::deploy(
+    "./out/debug/contract.bin",
+    &wallet,
+    DeployConfiguration::default(),
+)
+.await
+.unwrap();
+
+// AFTER - BETA 4
+let storage_config =
+StorageConfiguration::load_from("out/debug/contract-storage_slots.json").unwrap();
+
+let load_config = LoadConfiguration::default().set_storage_configuration(storage_config);
+
+let id = Contract::load_from(
+    "./out/debug/contract.bin", load_config
+)
+.unwrap()
+.deploy(&wallet, TxParameters::default())
+.await
+.unwrap();
+```
+
+`AssetId` and `ContractId` are no longer under the `tx` package and has since been moved to the `prelude`
+
+```rust
+// BEFORE - BETA 3
+use fuels::{prelude::*, tx::AssetId, tx::ContractId};
+
+// AFTER - BETA 4
+use fuels::{prelude::*}
+```
+
+Default parameter functions now start with `with_*` instead of `set_*`
+
+```rust
+/* BEFORE - BETA 3 */
+let call_params = CallParameters::default().set_storage_configuration(price);
+
+/* AFTER - BETA 4 */
+let call_params = CallParameters::default().with_storage_configuration(price);
+```
+
+```rust
+/* BEFORE - BETA 3 */
+let call_params = CallParameters::default().set_amount(price);
+
+/* AFTER - BETA 4 */
+let call_params = CallParameters::default().with_amount(price);
 ```
