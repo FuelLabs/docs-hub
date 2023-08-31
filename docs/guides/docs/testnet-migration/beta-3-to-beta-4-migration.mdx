@@ -84,7 +84,7 @@ Function signatures in the standard library have changed:
 
 ```sway
 // BEFORE - BETA 3
-mint_to(amount: u64, recipient: Address);
+mint_to(amount, recipient);
 
 // AFTER - BETA 4
 mint_to(sender, ZERO_B256, 1_000_000_000);
