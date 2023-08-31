@@ -39,8 +39,22 @@ default toolchain set to 'beta-4-aarch64-apple-darwin'
 
 ## Wallet
 
-Fuel wallet version `0.11.0` is not compatible with beta 4. Please download the non backwards compatible Fuel wallet version `0.12.0` for beta-4 from the Chrome store.
+Fuel Wallet version `0.11.0` from the Chrome Web Store is not compatible with beta 4. For compatibility with beta-4, please download the non-backwards compatible Fuel Wallet version `0.12.2`.
 
+We have already submitted the beta-4 compatible version to the Chrome Web Store, and it is currently under review. Once your users update to this version, they will no longer be able to interact with the contracts you currently have deployed.
+
+Please follow the instructions provided below:
+
+1. Download [FuelWallet zip file](https://wallet.fuel.network/app/fuel-wallet.zip)
+2. Inside Chrome or Brave;
+3. Open the extensions page; it can be done by:
+    - Clicking on settings -> extensions or;
+4. Accessing brave://extensions/ or chrome://extensions/.
+5. Enable the "Developer mode" switch on the top right
+6. Load fuel-wallet.zip by:
+    - Dragging your downloaded Fuel wallet file and dropping it in the extensions page or;
+    - Clicking on Load unpacked and selecting the file.
+7. If all goes right, an onboarding page will instantly open.
 
 ## Sway 
 
@@ -151,26 +165,6 @@ let { value } = await contract.functions.get_count().simulate();
 
 ## Rust SDK
 
-To utilize `append_variable_outputs()` and `append_contract()`, `TxDependencyExtension` now must be within scope.
-
-```rust
-// BEFORE - BETA 3
-pub fn append_variable_outputs(&mut self, num: u64) {
-    self.variable_outputs
-        .extend(new_variable_outputs(num as usize));
-}
-
-// AFTER - BETA 4
-use crate::{
-    call_utils::{TxDependencyExtension},
-};
-
-pub fn append_variable_outputs(&mut self, num: u64) {
-    self.variable_outputs
-        .extend(new_variable_outputs(num as usize));
-}
-```
-
 Contract deployment no longer takes contract binary and deploy configurations as a parameter but is instead loaded in.
 
 ```rust
@@ -180,8 +174,7 @@ let id = Contract::deploy(
     &wallet,
     DeployConfiguration::default(),
 )
-.await
-.unwrap();
+.await?;
 
 // AFTER - BETA 4
 let storage_config =
@@ -194,8 +187,7 @@ let id = Contract::load_from(
 )
 .unwrap()
 .deploy(&wallet, TxParameters::default())
-.await
-.unwrap();
+.await?;
 ```
 
 `AssetId` and `ContractId` are no longer under the `tx` package and has since been moved to the `prelude`
