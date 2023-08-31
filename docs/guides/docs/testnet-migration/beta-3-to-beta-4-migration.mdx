@@ -84,18 +84,18 @@ Function signatures in the standard library have changed:
 
 ```sway
 // BEFORE - BETA 3
-mint_to(amount: u64, recipient: Address);
+mint_to(amount, recipient);
 
 // AFTER - BETA 4
-mint_to(sender, ZERO_B256, 1_000_000_000);
+mint_to(recipient, ZERO_B256, 1_000_000_000);
 ```
 
 ```sway
 // BEFORE - BETA 3
-transfer(amount, asset_id, item.owner);
+transfer(amount, asset_id, recipient);
 
 // AFTER - BETA 4
-transfer(item.owner, asset_id, amount);
+transfer(recipient, asset_id, amount);
 ```
 
 Multi-token support, akin to Ethereum's ERC-1155, has now been natively introduced. This advancement enables the creation and destruction of unique subsidiary tokens within a single contract. These modifications will be incorporated into the standard library as `std::token`. Actions involving `burning` and `minting` now necessitate the `sub_id` of the token. Function signatures in the standard library have changed:
