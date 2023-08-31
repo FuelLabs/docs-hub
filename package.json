@@ -26,7 +26,7 @@
   "dependencies": {
     "@docsearch/css": "^3.5.1",
     "@docsearch/react": "3.5.1",
-    "@fuel-ui/config": "^0.16.1",
+    "@fuel-ui/config": "^0.17.0",
     "@fuel-ui/css": "^0.16.1",
     "@fuel-ui/react": "^0.16.1",
     "@fuel-wallet/sdk": "^0.11.2",
@@ -110,8 +110,7 @@
   "pnpm": {
     "overrides": {
       "semver@<7.5.2": ">=7.5.2",
-      "word-wrap": "npm:@aashutoshrathi/word-wrap",
-      "@adobe/css-tools@<4.3.1": ">=4.3.1"
+      "word-wrap": "npm:@aashutoshrathi/word-wrap"
     }
   }
 }
