@@ -92,7 +92,7 @@ mint_to(recipient, ZERO_B256, 1_000_000_000);
 
 ```sway
 // BEFORE - BETA 3
-transfer(amount, asset_id, item.owner);
+transfer(amount, asset_id, recipient);
 
 // AFTER - BETA 4
 transfer(item.owner, asset_id, amount);
