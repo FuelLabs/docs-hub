@@ -46,30 +46,32 @@ export function handleLinks(
 
       if (newURLs) {
         let newURL = newURLs[url];
-        newURL = newURL.replace('/v${forc}', '').replace('/v${fuels}', '');
-        for (const [key, value] of Object.entries(pathsConfig)) {
-          newURL = newURL.replaceAll(key, value as string);
-        }
-        const value = parent.children[idx + 1].value;
-        parent.children[idx] = {
-          type: 'link',
-          url: newURL,
-          children: [
-            {
-              type: 'text',
-              value: value,
-            },
-          ],
-        };
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        parent.children.forEach((child: any) => {
-          if (child.type === 'html' && child.value === '</a>') {
-            child.type = 'text';
-            child.value = '';
-          } else if (child.value === value) {
-            child.value = '';
+        if (newURL) {
+          newURL = newURL.replace('/v${forc}', '').replace('/v${fuels}', '');
+          for (const [key, value] of Object.entries(pathsConfig)) {
+            newURL = newURL.replaceAll(key, value as string);
           }
-        });
+          const value = parent.children[idx + 1].value;
+          parent.children[idx] = {
+            type: 'link',
+            url: newURL,
+            children: [
+              {
+                type: 'text',
+                value: value,
+              },
+            ],
+          };
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          parent.children.forEach((child: any) => {
+            if (child.type === 'html' && child.value === '</a>') {
+              child.type = 'text';
+              child.value = '';
+            } else if (child.value === value) {
+              child.value = '';
+            }
+          });
+        }
       }
     }
   } else {
