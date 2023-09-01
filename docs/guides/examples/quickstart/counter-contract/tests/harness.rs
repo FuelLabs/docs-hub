@@ -1,4 +1,4 @@
-use fuels::{prelude::*, tx::ContractId};
+use fuels::{prelude::*, types::ContractId};
 
 // Load abi from json
 abigen!(Contract(
@@ -20,18 +20,21 @@ async fn get_contract_instance() -> (MyContract<WalletUnlocked>, ContractId) {
     .await;
     let wallet = wallets.pop().unwrap();
 
-    let id = Contract::deploy(
-        "./out/debug/counter-contract.bin",
-        &wallet,
-        DeployConfiguration::default(),
-    )
-    .await
-    .unwrap();
+    let storage_config =
+        StorageConfiguration::load_from("out/debug/counter-contract-storage_slots.json").unwrap();
+    let load_config = LoadConfiguration::default().with_storage_configuration(storage_config);
+
+    let id = Contract::load_from("./out/debug/counter-contract.bin", load_config)
+        .unwrap()
+        .deploy(&wallet, TxParameters::default())
+        .await
+        .unwrap();
 
     let instance = MyContract::new(id.clone(), wallet);
 
     (instance, id.into())
 }
+
 // ANCHOR: contract-test
 #[tokio::test]
 async fn can_get_contract_id() {

@@ -24,14 +24,15 @@ impl Counter for Contract {
     #[storage(read)]
     // ANCHOR: count
     fn count() -> u64 {
-        storage.counter
+        storage.counter.read()
     }
     // ANCHOR_END: count
 
     #[storage(read, write)]
     // ANCHOR: increment
     fn increment() {
-        storage.counter = storage.counter + 1;
+        let incremented = storage.counter.read() + 1;
+        storage.counter.write(incremented);
     }
     // ANCHOR_END: increment
 }
