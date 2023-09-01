@@ -8,7 +8,7 @@ import { styles as linkStyles, SidebarLink } from './SidebarLink';
 import { SidebarSubmenu } from './SidebarSubmenu';
 
 interface SidebarProps {
-  handleClick: Dispatch<SetStateAction<boolean>>;
+  handleClick?: Dispatch<SetStateAction<boolean>>;
 }
 
 export function Sidebar({ handleClick }: SidebarProps) {
