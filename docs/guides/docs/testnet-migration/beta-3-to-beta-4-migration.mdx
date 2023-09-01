@@ -118,8 +118,10 @@ transfer(recipient, asset_id, amount);
 
 Multi-token support, akin to Ethereum's ERC-1155, has now been natively introduced. This advancement enables the creation and destruction of unique subsidiary tokens within a single contract. These modifications will be incorporated into the standard library as `std::token`. Actions involving `burning` and `minting` now necessitate the `sub_id` of the token. Function signatures in the standard library have changed:
 
-```rust
-asset_id = sha256(contract_id ++ sub_id)
+```sway
+pub fn construct_asset_id(contract_id: ContractId, sub_id: SubId) -> AssetId {
+    sha256((contract_id, sub_id))
+}
 ```
 
 Additionally, `AssetId` doesn't equate to `ContractId`. Instead, it's calculated in alignment with the aforementioned changes:
@@ -157,7 +159,7 @@ const receipt = new ReceiptCoder().decode(arrayify(gqlReceipt.rawPayload), 0)[0]
 const receipt = assembleReceiptByType(gqlReceipt);
 ```
 
-`.get()` function has been replaced by `.simulate()` to align with the same naming convention in the Rust SDK
+In the Rust SDK, the `.get()` function has been superseded by either `.simulate()` or `.call()`. The `.simulate()` method is tailored for read-only calls and testing potential blockchain changes without committing them, while `.call()` should be used for actions that modify the blockchain's state, keeping in mind that state-altering methods using .call() will consume resources.
 
 ```typescript
 // BEFORE - BETA 3
@@ -165,6 +167,8 @@ let { value } = await contract.functions.get_count().get();
 
 // AFTER - BETA 4
 let { value } = await contract.functions.get_count().simulate();
+
+let { value } = await contract.functions.add_count().call();
 ```
 
 ## Rust SDK
