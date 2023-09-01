@@ -26,8 +26,8 @@ dependencies:
     specifier: ^0.16.1
     version: 0.16.1(@babel/core@7.22.11)(@types/node@20.4.5)(@types/react-dom@18.2.7)(@types/react@18.2.16)(csstype@3.1.2)(esbuild@0.19.2)(typescript@5.1.6)
   '@fuel-wallet/sdk':
-    specifier: ^0.12.2
-    version: 0.12.2(dexie@3.2.4)(fuels@0.49.1)
+    specifier: ^0.12.3
+    version: 0.12.3(dexie@3.2.4)(fuels@0.49.1)
   '@fuels/eslint-plugin':
     specifier: ^0.0.3
     version: 0.0.3(@testing-library/dom@9.3.1)(eslint@8.45.0)(typescript@5.1.6)
@@ -547,15 +547,6 @@ packages:
       '@babel/types': 7.22.11
     transitivePeerDependencies:
       - supports-color
-    dev: false
-
-  /@babel/highlight@7.22.13:
-    resolution: {integrity: sha512-C/BaXcnnvBCmHTpz/VGZ8jgtE2aYlW4hxDhseJAWZb7gqGM/qtCK6iZUb0TyKFf7BOUsBH7Q7fkRsDRhg1XklQ==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/helper-validator-identifier': 7.22.5
-      chalk: 2.4.2
-      js-tokens: 4.0.0
     dev: false
 
   /@babel/highlight@7.22.13:
@@ -1826,7 +1817,7 @@ packages:
       '@tabler/icons-react': 2.32.0(react@18.2.0)
       '@xstate/react': 3.2.2(@types/react@18.2.16)(react@18.2.0)(xstate@4.38.2)
       deepmerge-json: 1.5.0
-      framer-motion: 10.16.2(react-dom@18.2.0)(react@18.2.0)
+      framer-motion: 10.13.1(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-aria: 3.26.0(react-dom@18.2.0)(react@18.2.0)
       react-content-loader: 6.2.1(react@18.2.0)
@@ -1894,10 +1885,10 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@fuel-wallet/sdk@0.12.2(dexie@3.2.4)(fuels@0.49.1):
-    resolution: {integrity: sha512-jWVHgBSo8cRbCmOGldABj0LLu72VGD9pFQ1eIIIhwlAnCgIXMtFRllJ1McvQhhFcqEhuS/ASDX2ob4kAHQd2Zw==}
+  /@fuel-wallet/sdk@0.12.3(dexie@3.2.4)(fuels@0.49.1):
+    resolution: {integrity: sha512-E607SDgHUYk4wQ7/O9ZTPe04+e6PbD6kb2yKnHQSZh1nSlgGR42OvMHTtdDfrHUWokHWMqU6umw1Gq7tgVtwfg==}
     peerDependencies:
-      fuels: '>=0.53.0'
+      fuels: '>=0.54.1'
     dependencies:
       '@types/chrome': 0.0.243
       dexie-observable: 4.0.1-beta.13(dexie@3.2.4)
@@ -4954,6 +4945,14 @@ packages:
     dependencies:
       '@types/filesystem': 0.0.32
       '@types/har-format': 1.2.12
+    dev: true
+
+  /@types/chrome@0.0.243:
+    resolution: {integrity: sha512-4PHv0kxxxpZFHWPBiJJ9TWH8kbx0567j1b2djnhpJjpiSGNI7UKkz7dSEECBtQ0B3N5nQTMwSB/5IopkWGAbEA==}
+    dependencies:
+      '@types/filesystem': 0.0.32
+      '@types/har-format': 1.2.12
+    dev: false
 
   /@types/cookie@0.3.3:
     resolution: {integrity: sha512-LKVP3cgXBT9RYj+t+9FDKwS5tdI+rPBXaNSkma7hvqy35lc7mAokC2zsqWJH0LaqIt3B962nuYI77hsJoT1gow==}
@@ -5909,8 +5908,8 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  /caniuse-lite@1.0.30001512:
-    resolution: {integrity: sha512-2S9nK0G/mE+jasCUsMPlARhRCts1ebcp2Ji8Y8PWi4NDE1iRdLCnEPHkEfeBrGC45L4isBx5ur3IQ6yTE2mRZw==}
+  /caniuse-lite@1.0.30001525:
+    resolution: {integrity: sha512-/3z+wB4icFt3r0USMwxujAqRvaD/B7rvGTsKhbhSQErVrJvkZCLhgNLJxU8MevahQVH6hCU9FsHdNUFbiwmE7Q==}
     dev: false
 
   /ccount@2.0.1:
@@ -7505,24 +7504,6 @@ packages:
 
   /framer-motion@10.13.1(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-uiKsaLEoySeln3eOPy8wUB3FkNtRRiVga5xJOkgs7C0sHVyvpJajXJFSoabt+emBojgnMQY0epnjl0ppoYPxkQ==}
-    peerDependencies:
-      react: ^18.0.0
-      react-dom: ^18.0.0
-    peerDependenciesMeta:
-      react:
-        optional: true
-      react-dom:
-        optional: true
-    dependencies:
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      tslib: 2.6.2
-    optionalDependencies:
-      '@emotion/is-prop-valid': 0.8.8
-    dev: false
-
-  /framer-motion@10.16.2(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-aY6L9YMvqMWtfOQptaUvvr8dp97jskXY5UYLQM0vOPxKeERrG/Z034EIQZ/52u7MeCT0HlCQy3/l0HdUZCB9Tw==}
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0
