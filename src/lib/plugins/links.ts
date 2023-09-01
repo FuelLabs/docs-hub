@@ -23,27 +23,53 @@ export function handleLinks(
 
   if (node.type === 'html') {
     const url = getUrl(node.value);
-    if (url !== 'url' && (idx || idx === 0)) {
+    if (
+      url &&
+      !node.value.includes(':href') &&
+      idx !== undefined &&
+      idx !== null
+    ) {
       node.type = 'link';
       node.value = null;
       node.children = [];
       node.children.push(parent.children[idx + 1]);
       parent.children.splice(idx + 1, 2);
-    } else if (url === 'url' && (idx || idx === 0)) {
+    } else if (
+      url &&
+      node.value.includes(':href') &&
+      idx !== undefined &&
+      idx !== null
+    ) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const scriptString = tree?.children[0] as any;
-      let newURL = getTSUrl(scriptString.value);
-      if (newURL) {
+      const newURLs = getTSUrl(scriptString.value);
+
+      if (newURLs) {
+        let newURL = newURLs[url];
         newURL = newURL.replace('/v${forc}', '').replace('/v${fuels}', '');
         for (const [key, value] of Object.entries(pathsConfig)) {
           newURL = newURL.replaceAll(key, value as string);
         }
-        node.type = 'link';
-        node.value = null;
-        node.url = newURL;
-        node.children = [];
-        node.children.push(parent.children[idx + 1]);
-        parent.children.splice(idx + 1, 2);
+        const value = parent.children[idx + 1].value;
+        parent.children[idx] = {
+          type: 'link',
+          url: newURL,
+          children: [
+            {
+              type: 'text',
+              value: value,
+            },
+          ],
+        };
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        parent.children.forEach((child: any) => {
+          if (child.type === 'html' && child.value === '</a>') {
+            child.type = 'text';
+            child.value = '';
+          } else if (child.value === value) {
+            child.value = '';
+          }
+        });
       }
     }
   } else {
@@ -111,8 +137,14 @@ function getUrl(html: string): string | null {
   return null;
 }
 
-function getTSUrl(input: string): string | null {
-  const regex = /https?:\/\/[^\s'"`]+/g;
-  const matches = input.match(regex);
-  return matches ? matches[0] : null;
+function getTSUrl(input: string): { [key: string]: string } {
+  const regex = /const (\w+) = `\s*([\s\S]+?)\s*`/g;
+  const matches = [...input.matchAll(regex)];
+  const result: { [key: string]: string } = {};
+  for (const match of matches) {
+    const key = match[1];
+    const url = match[2];
+    result[key] = url;
+  }
+  return result;
 }
