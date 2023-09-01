@@ -169,12 +169,12 @@ export function handlePlugins() {
           nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
         }
       });
-      nodes.forEach(([node, _idx, parent]) => {
+      nodes.forEach(([node, idx, parent]) => {
         if (exampleImportCondition(node)) {
           const content = handleExampleImports(node, dirname, rootDir, parent);
           node.value = content;
         } else if (mdBookLinks(node)) {
-          const newUrl = handleLinks(node, dirname);
+          const newUrl = handleLinks(node, dirname, idx, parent, tree);
           if (newUrl) node.url = newUrl;
         } else if (tsBookVersions(node)) {
           if (node.value === 'v{{forc}}') {

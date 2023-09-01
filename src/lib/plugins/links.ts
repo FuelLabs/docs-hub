@@ -1,29 +1,50 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import type { Root } from 'remark-gfm';
 import type { Parent } from 'unist-util-visit/lib';
 
 import { DOCS_DIRECTORY } from '../../config/constants';
 import type { DuplicateAPIItem } from '../ts-api';
 import { getTSAPIDuplicates } from '../ts-api';
 
+const configPath = join(DOCS_DIRECTORY, `../src/config/paths.json`);
+const pathsConfig = JSON.parse(readFileSync(configPath, 'utf8'));
+
 export function handleLinks(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   node: any,
   dirname: string,
-  idx: number | null,
+  idx?: number | null,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  parent: Parent<any, any>
+  parent?: Parent<any, any>,
+  tree?: Root
 ) {
   let newUrl: string | null = null;
 
   if (node.type === 'html') {
     const url = getUrl(node.value);
-    if (url && idx) {
+    if (url !== 'url' && (idx || idx === 0)) {
       node.type = 'link';
       node.value = null;
       node.children = [];
       node.children.push(parent.children[idx + 1]);
       parent.children.splice(idx + 1, 2);
+    } else if (url === 'url' && (idx || idx === 0)) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const scriptString = tree?.children[0] as any;
+      let newURL = getTSUrl(scriptString.value);
+      if (newURL) {
+        newURL = newURL.replace('/v${forc}', '').replace('/v${fuels}', '');
+        for (const [key, value] of Object.entries(pathsConfig)) {
+          newURL = newURL.replaceAll(key, value as string);
+        }
+        node.type = 'link';
+        node.value = null;
+        node.url = newURL;
+        node.children = [];
+        node.children.push(parent.children[idx + 1]);
+        parent.children.splice(idx + 1, 2);
+      }
     }
   } else {
     if (!node.url.includes('http')) {
@@ -88,4 +109,10 @@ function getUrl(html: string): string | null {
   }
 
   return null;
+}
+
+function getTSUrl(input: string): string | null {
+  const regex = /https?:\/\/[^\s'"`]+/g;
+  const matches = input.match(regex);
+  return matches ? matches[0] : null;
 }
