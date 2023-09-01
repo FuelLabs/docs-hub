@@ -101,7 +101,7 @@ export async function getVersions() {
     Forc: forc,
     Sway: forc,
     Fuelup: fuelup,
-    Indexer: indexer,
+    'Fuel Indexer': indexer,
     'Fuel Rust SDK': rust,
     'Fuel TS SDK': tsSDK,
     'Fuel Wallet': wallet,

@@ -11,20 +11,35 @@ import { LOWER_CASE_NAV_PATHS } from '../config/constants';
 import { capitalize } from '../lib/str';
 
 function getActive(pathname: string, slug: string) {
-  if (slug.split('/').length > 2 || slug.includes('guides')) {
+  const split = slug.split('/');
+  const pathnameSegments = pathname.split('/');
+  if (slug.includes('guides')) {
     return pathname.includes(slug);
+  } else if (split.length > 2) {
+    const category = pathnameSegments[3];
+    let active = category === split[2];
+    if (active) {
+      if (pathnameSegments.length === 5) {
+        active = split.length === 3;
+      } else if (pathnameSegments.length === 6) {
+        const pageName = pathnameSegments[4];
+        active = split.length > 3 && pageName === split[3];
+      }
+    }
+    return active;
   }
   return pathname === `/${slug}` || pathname === `/${slug}/`;
 }
 
 export type SidebarLinkProps = ButtonLinkProps & {
   item: SidebarLinkItem;
-  handleClick: Dispatch<SetStateAction<boolean>>;
+  isActiveMenu?: boolean;
+  handleClick?: Dispatch<SetStateAction<boolean>>;
 };
 
 // eslint-disable-next-line react/display-name
 export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
-  ({ item, handleClick, ...props }, ref) => {
+  ({ item, isActiveMenu, handleClick, ...props }, ref) => {
     const router = useRouter();
     const pathname = router.asPath;
     let slug = item.slug?.replace('../', '').replace('./', '') || '';
@@ -32,8 +47,10 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
     if (!slug.startsWith('guides/')) {
       slug = `docs/${slug}`;
     }
-
-    const active = getActive(pathname, slug);
+    let active = isActiveMenu;
+    if (!active) {
+      active = getActive(pathname, slug);
+    }
     const isActive = cx({
       active,
     });

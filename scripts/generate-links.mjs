@@ -29,6 +29,11 @@ const tsConfigPath = join(
   './fuels-ts/apps/docs/.vitepress/config.ts'
 );
 
+const tsAPIOrderPath = join(
+  DOCS_DIRECTORY,
+  './fuels-ts/apps/docs/.typedoc/api-links.json'
+);
+
 const swaySummaryFile = fs.readFileSync(swaySummaryPath, 'utf8');
 const rustSummaryFile = fs.readFileSync(rustSummaryPath, 'utf8');
 const fuelupSummaryFile = fs.readFileSync(fuelupSummaryPath, 'utf8');
@@ -41,6 +46,7 @@ const walletOrderFile = JSON.parse(fs.readFileSync(walletOrderPath, 'utf8'));
 //   fs.readFileSync(aboutFuelOrderPath, 'utf8')
 // );
 const tsConfigFile = fs.readFileSync(tsConfigPath, 'utf8');
+const tsAPIOrderFile = fs.readFileSync(tsAPIOrderPath, 'utf8');
 
 const forcLines = [];
 
@@ -52,7 +58,7 @@ async function main() {
 
   await Promise.all(
     Object.keys(orders).map(async (key) => {
-      const slugs = await getDocs(key);
+      const slugs = await getDocs(key, orders[key]);
       const final = slugs.map(({ slug }) => getDocBySlug(slug, slugs));
       let sortedLinks = getSortedLinks(orders[key], final);
       if (key === 'guides') {
@@ -73,38 +79,109 @@ async function main() {
     })
   );
 }
+function extractData(inputString) {
+  // used for api.json order
+  const regex = /"([^"]+)":\s*"([^"]+)"/g;
+  let match = regex.exec(inputString);
+  if (match !== null) {
+    return match[2];
+  }
+  return null;
+}
+
+function handleVPLine(trimmedLine, lines, index, thisOrder, thisCat) {
+  const regex = /'([^']+)'/;
+  // Create a shallow copy
+  let newVPOrder = JSON.parse(JSON.stringify(thisOrder));
+  let category = thisCat;
+  if (
+    trimmedLine.includes('collapsed:') ||
+    trimmedLine.includes('"collapsed":')
+  ) {
+    // handle categories
+    if (trimmedLine.includes('collapsed:')) {
+      const matches = regex.exec(lines[index - 2]);
+      category = matches[1];
+    } else {
+      category = extractData(lines[index - 2]);
+    }
+    if (newVPOrder.menu.includes(category)) {
+      category = `API-${category}`;
+    }
+    newVPOrder.menu.push(category);
+    newVPOrder[category] = [];
+  } else if (
+    // handle items
+    trimmedLine.includes('text') &&
+    !lines[index + 2].includes('collapsed:') &&
+    !lines[index + 2].includes('"collapsed":')
+  ) {
+    const matches = regex.exec(trimmedLine);
+    let linkMatches = regex.exec(lines[index + 1].trimStart());
+    let link;
+    let linkName;
+    if (linkMatches && matches) {
+      link = linkMatches[1];
+      linkName = matches[1];
+    } else {
+      linkName = extractData(trimmedLine);
+      link = extractData(lines[index + 1].trimStart());
+    }
+    if (link && linkName) {
+      if (link.startsWith('/')) {
+        link = link.replace('/', '');
+      }
+      const split = link.split('/');
+      if (category && split.length !== 2 && split[1] !== '') {
+        newVPOrder[category].push(linkName);
+      } else {
+        newVPOrder.menu.push(linkName);
+      }
+    }
+  } else if (trimmedLine.startsWith('apiLinks')) {
+    // handle API order
+    newVPOrder.menu.push('API');
+    const apiJSON = JSON.parse(tsAPIOrderFile);
+    const apiLines = JSON.stringify(apiJSON, null, 2).split(EOL);
+    apiLines.forEach((apiLine, apiIndex) => {
+      const trimmedAPILine = apiLine.trimStart();
+      const results = handleVPLine(
+        trimmedAPILine,
+        apiLines,
+        apiIndex,
+        newVPOrder,
+        category
+      );
+      category = results.category;
+      newVPOrder = results.newVPOrder;
+    });
+  }
+
+  return { newVPOrder, category };
+}
 
 function processVPConfig(lines) {
-  const order = { menu: ['fuels-ts'] };
+  let tsOrder = { menu: ['fuels-ts'] };
   let currentCategory;
   let foundStart = false;
-  const regex = /'([^']+)'/;
   lines.forEach((line, index) => {
     const trimmedLine = line.trimStart();
     if (foundStart) {
-      if (trimmedLine.includes('collapsed:')) {
-        const matches = regex.exec(lines[index - 2]);
-        currentCategory = matches[1];
-        order.menu.push(currentCategory);
-        order[currentCategory] = [];
-      }
-
-      if (trimmedLine.includes('text')) {
-        if (!lines[index + 2].includes('collapsed:')) {
-          const matches = regex.exec(trimmedLine);
-          if (currentCategory) {
-            order[currentCategory].push(matches[1]);
-          } else {
-            order.menu.push(matches[1]);
-          }
-        }
-      }
+      const { newVPOrder, category } = handleVPLine(
+        trimmedLine,
+        lines,
+        index,
+        tsOrder,
+        currentCategory
+      );
+      tsOrder = newVPOrder;
+      currentCategory = category;
     } else if (trimmedLine === 'sidebar: [') {
       foundStart = true;
     }
   });
 
-  return order;
+  return tsOrder;
 }
 
 function processSummary(lines, docsName) {
@@ -182,13 +259,13 @@ async function getOrders() {
   // WALLET ORDER
   orders.wallet = walletOrderFile;
 
-  orders['fuels-ts'] = processVPConfig(tsConfigFile.split(EOL));
-
   // FORC ORDER
   const newForcLines = forcLines.map((line) =>
     line.startsWith('-') ? line : line.slice(2, line.length)
   );
   orders.forc = processSummary(newForcLines, 'forc');
+
+  orders['fuels-ts'] = processVPConfig(tsConfigFile.split(EOL));
 
   return orders;
 }
@@ -213,7 +290,8 @@ function getSortedLinks(config, docs) {
       !doc.category ||
       doc.category === 'src' ||
       doc.category === 'forc' ||
-      (doc.category === 'guide' && doc.title === 'guide')
+      (doc.category === 'guide' && doc.title === 'guide') ||
+      (doc.category === 'api' && doc.title === 'api')
     ) {
       let newLabel = doc.title;
       if (doc.title === 'index' || doc.title === 'README') {
@@ -239,7 +317,7 @@ function getSortedLinks(config, docs) {
         links[categoryIdx].hasIndex = true;
       }
       submenu.push({
-        slug: doc.slug,
+        slug: doc.slug.toLowerCase(),
         label: newLabel,
       });
       continue;
@@ -249,7 +327,7 @@ function getSortedLinks(config, docs) {
       hasIndex = true;
     }
     const subpath = doc.slug.split('/')[1];
-    const submenu = [{ slug: doc.slug, label: doc.title }];
+    const submenu = [{ slug: doc.slug.toLowerCase(), label: doc.title }];
     links.push({
       subpath,
       label: doc.category,
@@ -263,8 +341,14 @@ function getSortedLinks(config, docs) {
     ? links
         /** Sort first level links */
         .sort((a, b) => {
-          const lowerA = a.label.toLowerCase().replaceAll(' ', '_');
-          const lowerB = b.label.toLowerCase().replaceAll(' ', '_');
+          const lowerA = a.label
+            .toLowerCase()
+            .replaceAll(' ', '_')
+            .replaceAll('-', '_');
+          const lowerB = b.label
+            .toLowerCase()
+            .replaceAll(' ', '_')
+            .replaceAll('-', '_');
           const aIdx = lcOrder.indexOf(lowerA);
           const bIdx = lcOrder.indexOf(lowerB);
 
@@ -272,12 +356,13 @@ function getSortedLinks(config, docs) {
             return aIdx - bIdx;
           }
           if (a.subpath && b.subpath) {
-            const aFirst = lcOrder.filter((i) => i.startsWith(lowerA))?.[0];
-            const bFirst = lcOrder.filter((i) => i.startsWith(lowerB))?.[0];
+            const aFirst = lcOrder.filter((i) => i === lowerA)?.[0];
+            const bFirst = lcOrder.filter((i) => i === lowerB)?.[0];
             return lcOrder.indexOf(aFirst) - lcOrder.indexOf(bFirst);
           }
-          const category = a.subpath ? lowerA : lowerB;
-          const first = lcOrder.filter((i) => i.startsWith(category))?.[0];
+          let category = a.subpath ? lowerA : lowerB;
+          category = category.replace('-', '_');
+          const first = lcOrder.filter((i) => i === category)?.[0];
           const idx = lcOrder.indexOf(first);
           return a.subpath ? idx - bIdx : aIdx - idx;
         })
@@ -296,7 +381,6 @@ function getSortedLinks(config, docs) {
             key = match[1];
             catOrder = config[key];
           }
-
           catOrder = catOrder?.map((title) =>
             title.toLowerCase().replaceAll('-', '_').replaceAll(' ', '_')
           );
@@ -321,7 +405,7 @@ function getSortedLinks(config, docs) {
   return sortedLinks;
 }
 
-async function getDocs(key) {
+async function getDocs(key, order) {
   let paths = [];
   switch (key) {
     case 'sway':
@@ -422,37 +506,64 @@ async function getDocs(key) {
     cwd: DOCS_DIRECTORY,
   });
 
+  const duplicateAPIItems = [];
+  const duplicateAPICategories = [];
+  order.menu.forEach((item) => {
+    if (item.startsWith('API-')) {
+      duplicateAPIItems.push(item);
+    }
+  });
+
+  duplicateAPIItems.forEach((item) => {
+    const split = item.split('-');
+    split.shift();
+    const category = split.join('-');
+    duplicateAPICategories.push(category);
+  });
+
   const final = paths.map((path) => {
     return {
-      slug: removeDocsPath(path),
+      slug: removeDocsPath(path, duplicateAPICategories),
       path,
     };
   });
   return final;
 }
 
-function removeDocsPath(path) {
+function removeDocsPath(path, duplicateAPICategories) {
   // clean up the url paths
   const configPath = join(DOCS_DIRECTORY, `../src/config/paths.json`);
   const pathsConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
   let newPath = path;
+  duplicateAPICategories.forEach((category) => {
+    const cat = category.replace(' ', '-');
+    const apiPath = `/api/${cat}`;
+    if (path.includes(apiPath)) {
+      newPath = path.replace(category, `API-${category}`);
+    }
+  });
+
   Object.keys(pathsConfig).forEach((key) => {
     newPath = newPath.replaceAll(key, pathsConfig[key]);
   });
 
   // handle mdbooks folders that use a same name file instead of index.md
-  const paths = newPath.split('/');
-  const length = paths.length - 1;
-  const last = paths[length].split('.')[0];
-  const cat = paths[length - 1];
-  if (last === cat) {
-    paths.pop();
-    newPath = `${paths.join('/')}/`;
-  }
-
-  // move forc docs to their own section
-  if (path.includes('/forc/')) {
-    newPath = newPath.replace('sway/', '');
+  if (
+    newPath.includes('/sway/') ||
+    newPath.includes('/fuels-rs/') ||
+    newPath.includes('/forc/') ||
+    newPath.includes('/indexer/') ||
+    newPath.includes('/fuelup/') ||
+    newPath.includes('/specs/')
+  ) {
+    const paths = newPath.split('/');
+    const length = paths.length - 1;
+    const last = paths[length].split('.')[0];
+    const cat = paths[length - 1];
+    if (last === cat) {
+      paths.pop();
+      newPath = `${paths.join('/')}/`;
+    }
   }
 
   return newPath;
@@ -509,6 +620,10 @@ function getDocBySlug(slug, slugs) {
     const arr = doc.slug.split('/');
     const newLabel = arr[arr.length - 1];
     doc.title = newLabel;
+  }
+
+  if (doc.slug.includes('fuels-ts/API-')) {
+    doc.category = `API-${doc.category}`;
   }
 
   return {
