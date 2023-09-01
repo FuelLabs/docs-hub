@@ -12,6 +12,7 @@ import {
   Alert,
 } from '@fuel-ui/react';
 import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
@@ -22,6 +23,7 @@ type FormData = {
 };
 
 export function FeedbackForm() {
+  const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
@@ -31,6 +33,11 @@ export function FeedbackForm() {
     formState: { errors },
   } = useForm<FormData>();
   const isHelpful = watch('helpful');
+
+  function closeForm() {
+    setDialogIsOpen(false);
+    reset();
+  }
 
   const submitForm = (data: FormData) => {
     return fetch('/api/airtable', {
@@ -45,7 +52,7 @@ export function FeedbackForm() {
   const mutation = useMutation(submitForm, {
     onSuccess: async () => {
       toast.success('Submitted! Thank you for your feedback.');
-      reset();
+      closeForm();
     },
     onError: async () => {
       toast.error('Oops! Something went wrong.');
@@ -175,11 +182,15 @@ export function FeedbackForm() {
   function Submit() {
     return (
       <Box.Flex justify={'flex-end'} gap={'10px'}>
-        <Dialog.Close asChild>
-          <Button variant="outlined" intent="base" size="sm" type="button">
-            Cancel
-          </Button>
-        </Dialog.Close>
+        <Button
+          variant="outlined"
+          intent="base"
+          size="sm"
+          type="button"
+          onPress={() => closeForm()}
+        >
+          Cancel
+        </Button>
         <Button
           css={styles.submit}
           variant="outlined"
@@ -195,48 +206,36 @@ export function FeedbackForm() {
 
   return (
     <>
-      <Dialog
-        onOpenChange={(isOpen) => {
-          if (!isOpen) {
-            reset();
-          }
-        }}
-      >
+      <Dialog isOpen={dialogIsOpen}>
         <Box.Flex align="center" gap={'6px'}>
-          <Dialog.Trigger>
-            <Button
-              size="sm"
-              intent="base"
-              variant="ghost"
-              css={styles.ratingButton}
-            >
-              <Box
-                css={styles.ratingBox}
-                onClick={() => setValue('helpful', 'true')}
-              >
-                <Icon icon="ThumbUp" />
-              </Box>
-            </Button>
-          </Dialog.Trigger>
-          <Dialog.Trigger>
-            <Button
-              size="sm"
-              intent="base"
-              variant="ghost"
-              css={styles.ratingButton}
-            >
-              <Box
-                css={styles.ratingBox}
-                onClick={() => setValue('helpful', 'false')}
-              >
-                <Icon icon="ThumbDown" />
-              </Box>
-            </Button>
-          </Dialog.Trigger>
+          <Button
+            size="sm"
+            intent="base"
+            variant="ghost"
+            css={styles.ratingButton}
+            onPress={() => {
+              setDialogIsOpen(true);
+              setValue('helpful', 'true');
+            }}
+          >
+            <Icon icon="ThumbUp" />
+          </Button>
+          <Button
+            size="sm"
+            intent="base"
+            variant="ghost"
+            css={styles.ratingButton}
+            onPress={() => {
+              setDialogIsOpen(true);
+              setValue('helpful', 'false');
+            }}
+          >
+            <Icon icon="ThumbDown" />
+          </Button>
           <Text>Was this page helpful?</Text>
         </Box.Flex>
         <Dialog.Content>
-          <Dialog.Close />
+          <Dialog.Close onClick={() => closeForm()} />
           <Dialog.Heading>Was this page helpful?</Dialog.Heading>
           <form onSubmit={handleSubmit(onSubmit)}>
             <HelpfulButtons />
@@ -274,10 +273,6 @@ const styles = {
   ratingButton: cssObj({
     border: '1px solid $inputBaseBorder',
     background: 'transparent',
-    padding: 0,
-  }),
-  ratingBox: cssObj({
-    padding: '4px 12px',
   }),
   radioButton: cssObj({
     display: 'none',
