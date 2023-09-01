@@ -149,6 +149,7 @@ function MenuButton({ item, active }: MenuButtonProps) {
                 <ButtonLink
                   css={styles.menuLink}
                   variant="link"
+                  intent="base"
                   key={`${index}${menuItem.slug}`}
                   href={menuItem.link}
                   isExternal={menuItem.type === 'external-link'}
