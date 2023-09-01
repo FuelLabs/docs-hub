@@ -24,7 +24,7 @@ export function DocScreen(props: DocPageProps) {
         category={doc.category}
       >
         <Box css={styles.sidebar}>
-          <Box css={{ position: 'sticky', top: 20 }}>
+          <Box css={styles.sidebarContainer}>
             <Sidebar />
           </Box>
         </Box>
@@ -51,6 +51,15 @@ const styles = {
 
     '@xl': {
       display: 'block',
+    },
+  }),
+  sidebarContainer: cssObj({
+    position: 'sticky',
+    top: 20,
+    maxHeight: 'calc(100vh - 40px)',
+    overflowX: 'auto',
+    '&::-webkit-scrollbar': {
+      display: 'none',
     },
   }),
   section: cssObj({
