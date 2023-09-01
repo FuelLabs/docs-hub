@@ -12,8 +12,8 @@ export function HomePage() {
         <Box.Stack>
           <Heading as="h3">Sway Language</Heading>
           <Text>
-            Build powerful programs with a Rust-based DSL, but without
-            needlessly verbose boilerplate.
+            Build powerful programs with a Rust-based DSL, without needlessly
+            verbose boilerplate.
           </Text>
           <List icon="ArrowRight">
             <List.Item>
@@ -33,6 +33,14 @@ export function HomePage() {
                 isExternal
               >
                 Examples Apps
+              </FuelLink>
+            </List.Item>
+            <List.Item>
+              <FuelLink
+                href="https://fuellabs.github.io/sway/master/core"
+                isExternal
+              >
+                Sway Core
               </FuelLink>
             </List.Item>
           </List>
@@ -154,6 +162,7 @@ const styles = {
     padding: '$4 $6 $6',
     border: '1px solid $border',
     borderRadius: '$md',
+    minHeight: '210px',
 
     '& > .fuel_Icon': {
       mt: '3px',
