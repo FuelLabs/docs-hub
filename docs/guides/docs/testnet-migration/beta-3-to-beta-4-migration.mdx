@@ -171,7 +171,74 @@ let { value } = await contract.functions.get_count().simulate();
 
 ## Rust SDK
 
-Contract deployment no longer takes contract binary and deploy configurations as a parameter but is instead loaded in.
+When providing contract IDs or addresses to contract functions, `.into()` is not longer needed:
+
+```rust
+// BEFORE - BETA 3
+let response = contract_methods
+    .transfer_coins_to_output(1_000_000, contract_id.into(), address.into())
+    .append_variable_outputs(1)
+    .call()
+    .await?;
+
+// AFTER - BETA 4
+let response = contract_methods
+    .transfer_coins_to_output(1_000_000, contract_id, address)
+    .append_variable_outputs(1)
+    .call()
+    .await?;
+```
+
+`setup_contract_test` has been changed to `setup_program_test`. The command to generate bindings with Abigen has been modified; previously, it was `Abigen(name="...")`, but now it requires the program type and should be written as `Abigen(Program_Type(name="..."))`:
+
+```rust
+// BEFORE - BETA 3
+setup_contract_test!(
+    Wallets("wallet"),
+    Abigen(
+        name="MyContract", 
+        abi="some_folder"
+    )
+);
+
+// AFTER - BETA 4
+setup_program_test!(
+    Wallets("wallet"),
+    Abigen(
+        Contract(
+            name = "MyContract",
+            project = "some_folder"
+        ),
+        // Other Program Types 
+        /* 
+        Script(
+            name = "MyScript",
+            project = "some_folder"
+        ),
+        Predicate(
+            name = "MyPredicate",
+            project = "some_folder"
+        ),
+        */
+    )
+);
+```
+
+Now supporting String types, there have been slight modifications if you directly use ParamTypes:
+
+```rust
+// BEFORE - BETA 3
+ParamType::String(len) => Self::decode_string_array(bytes, *len),
+
+ParamType::StdString => Self::decode_std_string(bytes),
+
+// AFTER - BETA 4
+ParamType::StringArray(len) => Self::decode_string_array(bytes, *len),
+
+ParamType::String => Self::decode_std_string(bytes),
+```
+
+Contract deployment no longer takes contract binary and deploy configurations as a parameter but is instead loaded in:
 
 ```rust
 // BEFORE - BETA 3
@@ -193,6 +260,30 @@ let id = Contract::load_from(
 )?
 .deploy(&wallet, TxParameters::default())
 .await?;
+```
+
+Now, `send_transaction(&tx)` immediately returns the transaction ID, which is used to retrieve the receipts:
+
+```rust
+// BEFORE - BETA 3
+let receipts = self.try_provider()?.send_transaction(&tx).await?;
+
+// AFTER - BETA 4
+let tx_id = self.try_provider()?.send_transaction(&tx).await?;
+let receipts = provider.get_receipts(&tx_id).await?;
+```
+
+The `produce_blocks` function has been updated to no longer need time parameters:
+
+```rust
+// BEFORE - BETA 3
+provider
+    .produce_blocks(100, Some(Utc.timestamp_opt(100, 0).unwrap()))
+    .await?;
+
+// AFTER - BETA 4
+provider
+    .produce_blocks(blocks_to_produce.into(), None)
 ```
 
 `AssetId` and `ContractId` are no longer under the `tx` package and has since been moved to the `prelude`:
