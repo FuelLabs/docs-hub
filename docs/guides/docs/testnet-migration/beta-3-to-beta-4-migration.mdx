@@ -159,7 +159,7 @@ const receipt = new ReceiptCoder().decode(arrayify(gqlReceipt.rawPayload), 0)[0]
 const receipt = assembleReceiptByType(gqlReceipt);
 ```
 
-The `.simulate()` method replacing `.get()` is tailored for read-only calls and testing potential blockchain changes without committing them, while `.call()` should be used for actions that modify the blockchain's state, keeping in mind that state-altering methods using .call() will consume resources.
+The `.simulate()` method replacing `.get()` is tailored for read-only calls and testing potential blockchain changes without committing them, while `.call()` should be used for actions that modify the blockchain's state, keeping in mind that state-altering methods using .call() will consume resources:
 
 ```typescript
 // BEFORE - BETA 3
@@ -189,7 +189,9 @@ let response = contract_methods
     .await?;
 ```
 
-`setup_contract_test` has been changed to `setup_program_test`. The command to generate bindings with Abigen has been modified; previously, it was `Abigen(name="...")`, but now it requires the program type and should be written as `Abigen(Program_Type(name="..."))`:
+`setup_contract_test` has been changed to `setup_program_test`. 
+
+The command to generate bindings with Abigen has been modified; previously, it was `Abigen(name="...")`, but now it requires the program type and should be written as `Abigen(Program_Type(name="..."))`:
 
 ```rust
 // BEFORE - BETA 3
@@ -203,8 +205,8 @@ setup_program_test!(
     Wallets("wallet"),
     Abigen(Contract(name = "MyContract", project = "some_folder")
         // Other Program Types 
-        // Script(name = "MyScript", project = "some_folder")
-        // Predicate(name = "MyPredicate", project = "some_folder")
+        // Abigen(Script(name = "MyScript", project = "some_folder"))
+        // Abigen(Predicate(name = "MyPredicate", project = "some_folder"))
     )
 );
 ```
@@ -287,14 +289,10 @@ Default parameter functions now start with `with_*` instead of `set_*`:
 /* BEFORE - BETA 3 */
 let call_params = CallParameters::default().set_storage_configuration(price);
 
-/* AFTER - BETA 4 */
-let call_params = CallParameters::default().with_storage_configuration(price);
-```
-
-```rust
-/* BEFORE - BETA 3 */
 let call_params = CallParameters::default().set_amount(price);
 
 /* AFTER - BETA 4 */
+let call_params = CallParameters::default().with_storage_configuration(price);
+
 let call_params = CallParameters::default().with_amount(price);
 ```
