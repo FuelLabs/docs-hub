@@ -190,8 +190,7 @@ let load_config = LoadConfiguration::default().set_storage_configuration(storage
 
 let id = Contract::load_from(
     "./out/debug/contract.bin", load_config
-)
-.unwrap()
+)?
 .deploy(&wallet, TxParameters::default())
 .await?;
 ```
