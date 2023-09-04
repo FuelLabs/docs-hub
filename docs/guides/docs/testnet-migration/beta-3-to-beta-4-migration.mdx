@@ -195,31 +195,16 @@ let response = contract_methods
 // BEFORE - BETA 3
 setup_contract_test!(
     Wallets("wallet"),
-    Abigen(
-        name="MyContract", 
-        abi="some_folder"
-    )
+    Abigen(name="MyContract", abi="some_folder")
 );
 
 // AFTER - BETA 4
 setup_program_test!(
     Wallets("wallet"),
-    Abigen(
-        Contract(
-            name = "MyContract",
-            project = "some_folder"
-        ),
+    Abigen(Contract(name = "MyContract", project = "some_folder")
         // Other Program Types 
-        /* 
-        Script(
-            name = "MyScript",
-            project = "some_folder"
-        ),
-        Predicate(
-            name = "MyPredicate",
-            project = "some_folder"
-        ),
-        */
+        // Script(name = "MyScript", project = "some_folder")
+        // Predicate(name = "MyPredicate", project = "some_folder")
     )
 );
 ```
