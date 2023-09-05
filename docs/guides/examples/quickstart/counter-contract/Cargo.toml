@@ -3,7 +3,7 @@ name = "counter-contract"
 description = "A cargo-generate template for Rust + Sway integration testing."
 version = "0.1.0"
 edition = "2021"
-authors = ["cold-briu <andresf.xyz@gmail.com>"]
+authors = ["Fuel Labs <contact@fuel.sh"]
 license = "Apache-2.0"
 
 [dev-dependencies]

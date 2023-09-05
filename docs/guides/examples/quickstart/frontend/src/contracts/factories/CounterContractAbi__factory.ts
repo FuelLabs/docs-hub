@@ -4,13 +4,13 @@
 /* eslint-disable */
 
 /*
-  Fuels version: 0.49.1
-  Forc version: 0.40.1
-  Fuel-Core version: 0.19.1
+  Fuels version: 0.55.0
+  Forc version: 0.44.0
+  Fuel-Core version: 0.20.4
 */
 
-import { Interface, Contract } from "fuels";
-import type { Provider, Account, AbstractAddress } from "fuels";
+import { Interface, Contract, ContractFactory } from "fuels";
+import type { Provider, Account, AbstractAddress, BytesLike, DeployContractOptions } from "fuels";
 import type { CounterContractAbi, CounterContractAbiInterface } from "../CounterContractAbi";
 
 const _abi = {
@@ -80,5 +80,14 @@ export class CounterContractAbi__factory {
     accountOrProvider: Account | Provider
   ): CounterContractAbi {
     return new Contract(id, _abi, accountOrProvider) as unknown as CounterContractAbi
+  }
+  static async deployContract(
+    bytecode: BytesLike,
+    wallet: Account,
+    options: DeployContractOptions = {}
+  ): Promise<CounterContractAbi> {
+    const factory = new ContractFactory(bytecode, _abi, wallet);
+    const contract = await factory.deployContract(options);
+    return contract as unknown as CounterContractAbi;
   }
 }
