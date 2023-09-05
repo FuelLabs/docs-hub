@@ -86,7 +86,7 @@ export function HomePage() {
               <Link href="/docs/specs">Specs</Link>
             </List.Item>
             <List.Item>
-              <FuelLink href="https://faucet-beta-3.fuel.network/" isExternal>
+              <FuelLink href="https://faucet-beta-4.fuel.network/" isExternal>
                 Faucet
               </FuelLink>
             </List.Item>

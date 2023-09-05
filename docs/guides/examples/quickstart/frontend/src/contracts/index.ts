@@ -4,9 +4,9 @@
 /* eslint-disable */
 
 /*
-  Fuels version: 0.38.1
-  Forc version: 0.35.5
-  Fuel-Core version: 0.17.3
+  Fuels version: 0.55.0
+  Forc version: 0.44.0
+  Fuel-Core version: 0.20.4
 */
 
 export type { CounterContractAbi } from './CounterContractAbi';

@@ -4,9 +4,9 @@
 /* eslint-disable */
 
 /*
-  Fuels version: 0.38.1
-  Forc version: 0.35.5
-  Fuel-Core version: 0.17.3
+  Fuels version: 0.55.0
+  Forc version: 0.44.0
+  Fuel-Core version: 0.20.4
 */
 
 import type {
@@ -30,10 +30,7 @@ interface CounterContractAbiInterface extends Interface {
   encodeFunctionData(functionFragment: 'increment', values: []): Uint8Array;
 
   decodeFunctionData(functionFragment: 'count', data: BytesLike): DecodedValue;
-  decodeFunctionData(
-    functionFragment: 'increment',
-    data: BytesLike
-  ): DecodedValue;
+  decodeFunctionData(functionFragment: 'increment', data: BytesLike): DecodedValue;
 }
 
 export class CounterContractAbi extends Contract {

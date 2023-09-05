@@ -148,7 +148,7 @@ export const NAVIGATION: LinkObject[] = [
       {
         name: 'Faucet',
         type: 'external-link',
-        link: 'https://faucet-beta-3.fuel.network/',
+        link: 'https://faucet-beta-4.fuel.network/',
       },
     ],
   },
