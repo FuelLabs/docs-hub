@@ -6,7 +6,7 @@ import { CounterContractAbi__factory } from "./contracts";
 
 // The address of the contract deployed the Fuel testnet
 const CONTRACT_ID =
-  "0xa0f2b97f32300d7360b5632e682c1508b326da9a00fbe755646d3809aec90672";
+  "0x...";
 
 function App() {
   const [connected, setConnected] = useState<boolean>(false);

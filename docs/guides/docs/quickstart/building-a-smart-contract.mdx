@@ -32,7 +32,11 @@ Unpacking and moving fuelup to /var/folders/tp/0l8zdx9j4s9_n609ykwxl0qw0000gn/T/
 Moving /var/folders/tp/0l8zdx9j4s9_n609ykwxl0qw0000gn/T/.tmpiNJQHt/fuelup to /Users/.fuelup/bin/fuelup
 ```
 
-Then run `fuelup toolchain install beta-4` to install the `beta-4` toolchain.
+Next, install the `beta-4` toolchain with:
+
+```console
+fuelup toolchain install beta-4
+```
 
 Finally, set the `beta-4` toolchain as your default distribution with the following command:
 
@@ -54,6 +58,10 @@ You can check your current toolchain anytime by running `fuelup show`.
 We'll build a simple counter contract with two functions: one to increment the counter, and one to return the value of the counter.
 
 **Start by creating a new, empty folder. We'll call it `fuel-project`.**
+
+```sh
+mkdir fuel-project
+```
 
 ### Writing the Contract
 
@@ -261,13 +269,22 @@ We have two new files!
 
 Now that we have our default test harness, let's add some useful tests to it.
 
-At the bottom of `test/harness.rs`, define the body of `can_get_contract_id()`. Here is what your code should look like to verify that the value of the counter did get incremented:
-
-File: `tests/harness.rs`
+At the bottom of `test/harness.rs` below the `can_get_contract_id()` test, add the `test_increment` test function below to verify that the value of the counter gets incremented:
 
 <CodeImport
   file="../../examples/quickstart/counter-contract/tests/harness.rs"
   comment="contract-test"
+  commentType="//"
+  lang="rust"
+/>
+
+Here is what your file should look like:
+
+File: `./counter-contract/tests/harness.rs`
+
+<CodeImport
+  file="../../examples/quickstart/counter-contract/tests/harness.rs"
+  comment="contract-test-all"
   commentType="//"
   lang="rust"
 />
@@ -282,9 +299,10 @@ If all goes well, the output should look as follows:
 
 ```console
   ...
-  running 1 test
+  running 2 tests
   test can_get_contract_id ... ok
-  test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+  test test_increment ... ok
+  test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s
 ```
 
 ## Deploy the Contract

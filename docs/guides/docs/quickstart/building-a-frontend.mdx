@@ -132,7 +132,6 @@ Now you should be able to find a new folder `fuel-project/frontend/src/contracts
 ### Modify the App
 
 Inside the `frontend/src` folder let's add code that interacts with our contract.
-Read the comments to help you understand the App parts.
 Change the file `fuel-project/frontend/src/App.tsx` to:
 
 File: `./frontend/src/App.tsx`
@@ -142,9 +141,9 @@ File: `./frontend/src/App.tsx`
   lang="tsx"
 />
 
-### Run your project
+Finally, replace the value of the `CONTRACT_ID` variable in `App.tsx` with the address of the contract you just deployed.
 
-Now it's time to have fun, run the project in your browser.
+### Run your project
 
 Inside the `fuel-project/frontend` directory run:
 
@@ -179,7 +178,6 @@ If you make changes to your contract, here are the steps you should take to get 
 - In your contract directory, run `forc build`
 - In your contract directory, redeploy the contract by running this command and following the same steps as above to sign the transaction with your wallet: `forc deploy --testnet`
 - In your frontend directory, re-run this command: `npx fuels typegen -i ../counter-contract/out/debug/*-abi.json -o ./src/contracts`
-
 - In your `fuel-project/frontend` directory, update the contract ID in your `App.tsx` file
 
 ## Need Help?
