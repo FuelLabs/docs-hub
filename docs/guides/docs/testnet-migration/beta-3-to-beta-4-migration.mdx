@@ -159,7 +159,7 @@ const receipt = new ReceiptCoder().decode(arrayify(gqlReceipt.rawPayload), 0)[0]
 const receipt = assembleReceiptByType(gqlReceipt);
 ```
 
-The `.simulate()` method replacing `.get()` is tailored for read-only calls and testing potential blockchain changes without committing them, while `.call()` should be used for actions that modify the blockchain's state, keeping in mind that state-altering methods using .call() will consume resources:
+The `.simulate()` method replacing `.get()` is tailored for read-only calls and testing potential blockchain changes without committing them, while `.call()` should be used for actions that modify the blockchain's state, keeping in mind that state-altering methods using `.call()` will consume resources.
 
 ```typescript
 // BEFORE - BETA 3
