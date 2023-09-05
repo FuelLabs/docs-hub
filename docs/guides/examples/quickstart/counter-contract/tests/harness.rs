@@ -27,10 +27,10 @@ async fn get_contract_instance() -> (MyContract<WalletUnlocked>, ContractId) {
     let load_config = LoadConfiguration::default().with_storage_configuration(storage_config);
 
     let id = Contract::load_from("./out/debug/counter-contract.bin", load_config)
-    .unwrap()
-    .deploy(&wallet, TxParameters::default())
-    .await
-    .unwrap();
+        .unwrap()
+        .deploy(&wallet, TxParameters::default())
+        .await
+        .unwrap();
 
     let instance = MyContract::new(id.clone(), wallet);
 
