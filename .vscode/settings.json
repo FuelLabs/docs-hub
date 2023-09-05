@@ -10,6 +10,13 @@
   "search.exclude": {
     "**/node_modules": true,
     "**/.git": true,
-    "docs": true
+    "docs/sway": true,
+    "docs/builds": true,
+    "docs/fuel-graphql-docs": true,
+    "docs/fuel-indexer": true,
+    "docs/fuel-specs": true,
+    "docs/fuels-rs": true,
+    "docs/fuels-wallet": true,
+    "docs/fuelup": true
   }
 }
