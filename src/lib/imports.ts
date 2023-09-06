@@ -9,7 +9,6 @@ import type { DocType, ComponentsList } from '../types';
 import { COMPONENTS as GQL_COMPONENTS } from '~/src/generated/components/graphql';
 import { COMPONENTS as WALLET_COMPONENTS } from '~/src/generated/components/wallet';
 
-
 function loadComponent(imp: any, name?: string) {
   return dynamic(() => imp.then((mod: any) => (name ? mod[name] : mod)), {
     ssr: false,
