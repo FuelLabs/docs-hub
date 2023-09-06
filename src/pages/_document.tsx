@@ -1,4 +1,3 @@
-import { getCssText } from '@fuel-ui/css';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import Script from 'next/script';
 
@@ -38,10 +37,6 @@ export default class MyDocument extends Document {
           <Script id="theme" strategy="beforeInteractive">
             {getThemeScript}
           </Script>
-          <style
-            id="stitches"
-            dangerouslySetInnerHTML={{ __html: getCssText() }}
-          />
         </Head>
         <body>
           <Main />

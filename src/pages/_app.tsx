@@ -1,5 +1,6 @@
 import '../styles/index.css';
 import '../styles/docsearch.css';
+import { getCssText } from '@fuel-ui/css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Analytics } from '@vercel/analytics/react';
 import type { AppProps } from 'next/app';
@@ -27,6 +28,9 @@ export default function App({ Component, pageProps }: AppProps) {
               --fonts-display: ${inter.style.fontFamily};
               --fonts-mono: ${inconsolata.style.fontFamily};
             }
+          `}</style>
+          <style id="stitches" global jsx>{`
+            ${getCssText()}
           `}</style>
           <Component {...pageProps} />
           <Analytics />
