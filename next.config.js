@@ -33,8 +33,9 @@ const depsLinkOpts = {
 const nextConfig = {
   basePath: process.env.DOCS_BASE_URL || '',
   experimental: {
-    esmExternals: true,
+    esmExternals: false,
     externalDir: true,
+    swcMinify: true,
   },
   eslint: {
     ignoreDuringBuilds: true,

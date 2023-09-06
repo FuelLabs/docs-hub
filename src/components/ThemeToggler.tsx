@@ -1,28 +1,36 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box, Icon } from '@fuel-ui/react';
 import type { ElementRef } from 'react';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { useCookies } from 'react-cookie';
 
 import useTheme from '../hooks/useTheme';
 
 export default function ThemeToggler() {
   const { theme: current, setTheme: setFuelTheme } = useTheme();
-  const [theme, setTheme] = useState(current);
   const ref = useRef<ElementRef<'div'>>(null);
+  const [, setCookie] = useCookies(['theme']);
 
   const handleChange = async () => {
     const next = current === 'dark' ? 'light' : 'dark';
-    setTheme(next);
+    setFuelTheme(next);
+    setCookie('theme', next, { path: '/' });
+    document.documentElement.setAttribute('data-theme', next);
+    ref.current?.setAttribute('data-theme', next);
   };
 
-  useLayoutEffect(() => {
-    setFuelTheme(theme);
-    document.documentElement.setAttribute('data-theme', theme);
-    ref.current?.setAttribute('data-theme', theme);
-  }, [theme]);
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', current);
+    ref.current?.setAttribute('data-theme', current);
+  }, []);
 
   return (
-    <Box ref={ref} data-theme={theme} css={styles.root} onClick={handleChange}>
+    <Box
+      ref={ref}
+      data-theme={current}
+      css={styles.root}
+      onClick={handleChange}
+    >
       <Icon icon="SunFilled" size={20} stroke={1.2} />
       <Icon icon="MoonStars" size={20} stroke={1.2} />
     </Box>

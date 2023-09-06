@@ -24,6 +24,7 @@ function getInitialColorMode() {
 
 ;(function() {
   const theme = getInitialColorMode();
+  console.log(theme)
   window.localStorage.setItem('fuel-ui-theme', theme);
   window.__FUEL_THEME__ = theme;
 })()
@@ -34,13 +35,13 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          <Script id="theme" strategy="beforeInteractive">
+            {getThemeScript}
+          </Script>
           <style
             id="stitches"
             dangerouslySetInnerHTML={{ __html: getCssText() }}
           />
-          <Script id="theme" strategy="beforeInteractive">
-            {getThemeScript}
-          </Script>
         </Head>
         <body>
           <Main />

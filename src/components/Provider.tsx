@@ -6,10 +6,13 @@ import {
   setFuelThemes,
 } from '@fuel-ui/react';
 import { type ReactNode } from 'react';
+import Cookies from 'universal-cookie';
 
 type ProviderProps = {
   children: ReactNode;
 };
+
+export const themeCookie = new Cookies(null, { path: '/' });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function editTheme(ogTheme: any) {
@@ -24,6 +27,7 @@ function editTheme(ogTheme: any) {
 
 loadIcons('/icons/sprite.svg');
 setFuelThemes({
+  initial: themeCookie.get('theme') || 'light',
   themes: {
     dark: editTheme(darkTheme),
     light: editTheme(lightTheme),

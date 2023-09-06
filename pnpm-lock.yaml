@@ -166,6 +166,9 @@ dependencies:
   unist-util-visit:
     specifier: ^5.0.0
     version: 5.0.0
+  universal-cookie:
+    specifier: ^6.1.1
+    version: 6.1.1
   updates:
     specifier: ^15.0.2
     version: 15.0.2
@@ -8699,7 +8702,7 @@ packages:
       '@types/hoist-non-react-statics': 3.3.1
       hoist-non-react-statics: 3.3.2
       react: 18.2.0
-      universal-cookie: 6.1.0
+      universal-cookie: 6.1.1
     dev: false
 
   /react-dom@18.2.0(react@18.2.0):
@@ -9817,8 +9820,8 @@ packages:
       unist-util-visit-parents: 6.0.1
     dev: false
 
-  /universal-cookie@6.1.0:
-    resolution: {integrity: sha512-QBpQWkFJyH9D6nP1ZjPuLDdrgYr3y9ti8OTWf6uWcZwtY06de5f10GPYv3v68LIYWU0a9J2ZF5xFR5gOdD5ZaQ==}
+  /universal-cookie@6.1.1:
+    resolution: {integrity: sha512-33S9x3CpdUnnjwTNs2Fgc41WGve2tdLtvaK2kPSbZRc5pGpz2vQFbRWMxlATsxNNe/Cy8SzmnmbuBM85jpZPtA==}
     dependencies:
       '@types/cookie': 0.5.2
       cookie: 0.5.0
