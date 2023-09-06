@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import 'plyr-react/plyr.css';
+import { Box } from '@fuel-ui/react';
 import { runSync } from '@mdx-js/mdx';
 import * as provider from '@mdx-js/react';
 import dynamic from 'next/dynamic';
@@ -38,6 +39,7 @@ export const mdxComponents = {
   ul: UL,
   ol: OL,
   hr: Divider,
+  Box,
   Player,
 } as any;
 
