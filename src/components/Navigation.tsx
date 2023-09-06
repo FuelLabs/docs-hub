@@ -1,6 +1,6 @@
 import { cssObj, cx } from '@fuel-ui/css';
 import { Dropdown, ButtonLink, Icon } from '@fuel-ui/react';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
 import { NAVIGATION } from '../config/constants';
@@ -15,12 +15,8 @@ export function Navigation({ active }: { active: string }) {
           const isActive = item.menu?.some((i) => i.slug === active);
           return (
             <Dropdown key={index}>
-              <Dropdown.Trigger>
-                <ButtonLink
-                  css={styles.navButton}
-                  variant="link"
-                  data-active={isActive}
-                >
+              <Dropdown.Trigger asChild>
+                <ButtonLink css={styles.navButton} data-active={isActive}>
                   {item.name}
                 </ButtonLink>
               </Dropdown.Trigger>
@@ -72,16 +68,15 @@ export function Navigation({ active }: { active: string }) {
           );
         }
         return (
-          <ButtonLink
-            key={index}
-            as={Link}
-            href={item.link}
-            css={styles.navButton}
-            variant="link"
-            data-active={active === item.name.toLowerCase()}
-          >
-            {item.name}
-          </ButtonLink>
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          <NextLink key={index} href={item.link as any} legacyBehavior passHref>
+            <ButtonLink
+              css={styles.navButton}
+              data-active={active === item.name.toLowerCase()}
+            >
+              {item.name}
+            </ButtonLink>
+          </NextLink>
         );
       })}
     </>
@@ -107,14 +102,6 @@ export const styles = {
   }),
   navButton: cssObj({
     color: '$intentsBase10',
-
-    '&:not([aria-disabled="true"]):active, &:not([aria-disabled="true"])[aria-pressed="true"]':
-      {
-        outline: 'none',
-        outlineOffset: 'none',
-        outlineColor: 'transparent',
-        transform: 'none',
-      },
 
     '&:hover': {
       textDecoration: 'none',

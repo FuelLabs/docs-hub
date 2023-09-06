@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { cssObj, cx } from '@fuel-ui/css';
 import type { ButtonLinkProps } from '@fuel-ui/react';
 import { ButtonLink } from '@fuel-ui/react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import type { Dispatch, SetStateAction } from 'react';
 import { forwardRef } from 'react';
 import type { SidebarLinkItem } from '~/src/types';
 
@@ -34,12 +34,11 @@ function getActive(pathname: string, slug: string) {
 export type SidebarLinkProps = ButtonLinkProps & {
   item: SidebarLinkItem;
   isActiveMenu?: boolean;
-  handleClick?: Dispatch<SetStateAction<boolean>>;
+  onClick?: ButtonLinkProps['onClick'];
 };
 
-// eslint-disable-next-line react/display-name
 export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
-  ({ item, isActiveMenu, handleClick, ...props }, ref) => {
+  ({ item, isActiveMenu, onClick, ...props }, ref) => {
     const router = useRouter();
     const pathname = router.asPath;
     let slug = item.slug?.replace('../', '').replace('./', '') || '';
@@ -66,18 +65,17 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
     }
 
     return (
-      <ButtonLink
-        {...props}
-        ref={ref}
-        as={NextLink}
-        href={slug}
-        css={styles.root}
-        data-active={Boolean(isActive)}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        onClick={handleClick as any}
-      >
-        {shouldBeLowerCase ? label : capitalize(label)}
-      </ButtonLink>
+      <NextLink href={slug} legacyBehavior passHref>
+        <ButtonLink
+          {...props}
+          ref={ref as any}
+          css={styles.root}
+          data-active={Boolean(isActive)}
+          {...(onClick && { onClick })}
+        >
+          {shouldBeLowerCase ? label : capitalize(label)}
+        </ButtonLink>
+      </NextLink>
     );
   }
 );
@@ -91,14 +89,6 @@ export const styles = {
     height: '$6',
     position: 'relative',
     color: '$textColor',
-
-    '&:not([aria-disabled="true"]):active, &:not([aria-disabled="true"])[aria-pressed="true"]':
-      {
-        outline: 'none',
-        outlineOffset: 'none',
-        outlineColor: 'transparent',
-        transform: 'none',
-      },
 
     '&[data-active="true"], &[data-active="true"]:hover': {
       color: '$textLink',
@@ -121,6 +111,10 @@ export const styles = {
     '&:not([data-active="true"]):hover': {
       textDecoration: 'none',
       color: '$textInverse !important',
+    },
+
+    '& .fuel_Icon': {
+      color: '$textMuted',
     },
   }),
 };

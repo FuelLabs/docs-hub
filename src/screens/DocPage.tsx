@@ -46,7 +46,7 @@ const styles = {
     padding: '$8 $8 $0 $6',
     position: 'sticky',
     borderRight: '1px solid $border',
-    bg: '$overlayBg',
+    bg: '$cardBg',
     top: 20,
 
     '@xl': {
@@ -57,7 +57,7 @@ const styles = {
     position: 'sticky',
     top: 20,
     maxHeight: 'calc(100vh - 40px)',
-    overflowX: 'auto',
+    overflowX: 'visible',
     '&::-webkit-scrollbar': {
       display: 'none',
     },

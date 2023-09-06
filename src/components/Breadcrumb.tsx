@@ -1,6 +1,6 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box, Icon, Text } from '@fuel-ui/react';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import type { DocType } from '~/src/types';
 
 type BreadcrumbProps = {
@@ -11,7 +11,7 @@ export function Breadcrumb({ doc }: BreadcrumbProps) {
   return (
     <Box.Flex css={styles.root}>
       <Text as="span" rightIcon={Icon.is('CaretRight')}>
-        <Link href="/">Docs</Link>
+        <NextLink href="/">Docs</NextLink>
       </Text>
       {doc.category && (
         <Text as="span" rightIcon={Icon.is('CaretRight')}>

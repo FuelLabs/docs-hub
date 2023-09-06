@@ -1,7 +1,11 @@
-import { ThemeProvider, darkTheme, lightTheme } from '@fuel-ui/react';
+import {
+  ThemeProvider,
+  darkTheme,
+  lightTheme,
+  loadIcons,
+  setFuelThemes,
+} from '@fuel-ui/react';
 import { type ReactNode } from 'react';
-
-import useTheme from '../hooks/useTheme';
 
 type ProviderProps = {
   children: ReactNode;
@@ -18,17 +22,14 @@ function editTheme(ogTheme: any) {
   return thisTheme;
 }
 
-const newDarkTheme = editTheme(darkTheme);
-const newLightTheme = editTheme(lightTheme);
+loadIcons('/icons/sprite.svg');
+setFuelThemes({
+  themes: {
+    dark: editTheme(darkTheme),
+    light: editTheme(lightTheme),
+  },
+});
 
 export function Provider({ children }: ProviderProps) {
-  const { theme } = useTheme();
-  return (
-    <ThemeProvider
-      themes={{ light: newLightTheme, dark: newDarkTheme }}
-      initialTheme={theme}
-    >
-      {children}
-    </ThemeProvider>
-  );
+  return <ThemeProvider>{children}</ThemeProvider>;
 }
