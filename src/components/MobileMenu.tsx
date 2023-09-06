@@ -30,7 +30,13 @@ const SPRING: AnimationProps['transition'] = {
   duration: '0.1',
 };
 
-export function MobileMenu({ active }: { active: string }) {
+export function MobileMenu({
+  active,
+  title,
+}: {
+  active: string;
+  title?: string;
+}) {
   const [showing, setShowing] = useState(false);
 
   function toggle() {
@@ -90,7 +96,6 @@ export function MobileMenu({ active }: { active: string }) {
               <ButtonLink
                 key={`${item.slug}${index}`}
                 css={styles.navButton}
-                variant="link"
                 href={item.link}
                 isExternal={item.type === 'external-link'}
                 data-active={active === item.slug}
@@ -108,7 +113,7 @@ export function MobileMenu({ active }: { active: string }) {
 
   return (
     <Box css={styles.root}>
-      <Search />
+      <Search title={title} />
       <ThemeToggler />
       {button}
       <AnimatePresence>
@@ -148,7 +153,6 @@ function MenuButton({ item, active }: MenuButtonProps) {
               return (
                 <ButtonLink
                   css={styles.menuLink}
-                  variant="link"
                   intent="base"
                   key={`${index}${menuItem.slug}`}
                   href={menuItem.link}

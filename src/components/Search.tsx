@@ -1,10 +1,19 @@
 import { DocSearch } from '@docsearch/react';
 import type { DocSearchHit } from '@docsearch/react/dist/esm/types';
+import { useState, useEffect } from 'react';
 import docsearch from '~/docsearch.json';
 
 import { NAVIGATION } from '../config/constants';
 
-export default function Search() {
+export default function Search({ title }: { title?: string }) {
+  const [activeBook, setActiveBook] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (title) {
+      setActiveBook(title);
+    }
+  }, [title]);
+
   const transformItems = (items: DocSearchHit[]) =>
     filterLevelZeroResults(items);
 
@@ -25,7 +34,7 @@ export default function Search() {
         }
       }
     }
-    return ['', 'http://localhost:3000/'];
+    return ['', 'https://docs.fuel.network/'];
   }
 
   function makeNewItem(item: DocSearchHit) {
@@ -56,12 +65,21 @@ export default function Search() {
   }
 
   return (
-    <DocSearch
-      indexName={docsearch.index_name}
-      appId={process.env.NEXT_PUBLIC_ALGOLIA_APP_ID!}
-      apiKey={process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY!}
-      disableUserPersonalization={true}
-      transformItems={transformItems}
-    />
+    <>
+      <DocSearch
+        indexName={docsearch.index_name}
+        appId={process.env.NEXT_PUBLIC_ALGOLIA_APP_ID!}
+        apiKey={process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY!}
+        disableUserPersonalization={true}
+        transformItems={transformItems}
+        searchParameters={
+          activeBook
+            ? {
+                optionalFilters: [`hierarchy.lvl0:${activeBook}`],
+              }
+            : {}
+        }
+      />
+    </>
   );
 }
