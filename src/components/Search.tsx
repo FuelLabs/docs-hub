@@ -1,19 +1,10 @@
 import { DocSearch } from '@docsearch/react';
 import type { DocSearchHit } from '@docsearch/react/dist/esm/types';
-import { useState, useEffect } from 'react';
 import docsearch from '~/docsearch.json';
 
 import { NAVIGATION } from '../config/constants';
 
 export default function Search({ title }: { title?: string }) {
-  const [activeBook, setActiveBook] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (title) {
-      setActiveBook(title);
-    }
-  }, [title]);
-
   const transformItems = (items: DocSearchHit[]) =>
     filterLevelZeroResults(items);
 
@@ -73,9 +64,9 @@ export default function Search({ title }: { title?: string }) {
         disableUserPersonalization={true}
         transformItems={transformItems}
         searchParameters={
-          activeBook
+          title
             ? {
-                optionalFilters: [`hierarchy.lvl0:${activeBook}`],
+                optionalFilters: [`hierarchy.lvl0:${title}`],
               }
             : {}
         }
