@@ -94,7 +94,7 @@ const styles = {
       bg: 'transparent',
     },
     '&[data-state=active]': {
-      bg: '$overlayBg',
+      bg: '$cardBg',
     },
   }),
   tabs: cssObj({

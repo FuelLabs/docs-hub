@@ -1,5 +1,11 @@
 import { getCssText } from '@fuel-ui/css';
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import {
+  loadIcons,
+  setFuelThemes,
+  darkTheme,
+  lightTheme,
+} from '@fuel-ui/react';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 import Script from 'next/script';
 
 const getThemeScript = `
@@ -25,22 +31,44 @@ function getInitialColorMode() {
 ;(function() {
   const theme = getInitialColorMode();
   window.localStorage.setItem('fuel-ui-theme', theme);
+  document.documentElement.setAttribute('data-theme', theme);
+  document.documentElement.classList.add('fuel_' + theme + "-theme");
   window.__FUEL_THEME__ = theme;
 })()
 `;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function editTheme(ogTheme: any) {
+  const thisTheme = ogTheme;
+  if (!thisTheme.components) thisTheme.components = {};
+  if (!thisTheme.components.Button) thisTheme.components.Button = {};
+  thisTheme.components.Button.defaultProps = {
+    intent: 'primary',
+  };
+  return thisTheme;
+}
+
+loadIcons('/icons/sprite.svg');
+setFuelThemes({
+  initial: 'light',
+  themes: {
+    dark: editTheme(darkTheme),
+    light: editTheme(lightTheme),
+  },
+});
 
 export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
         <Head>
+          <Script id="theme" strategy="beforeInteractive">
+            {getThemeScript}
+          </Script>
           <style
             id="stitches"
             dangerouslySetInnerHTML={{ __html: getCssText() }}
           />
-          <Script id="theme" strategy="beforeInteractive">
-            {getThemeScript}
-          </Script>
         </Head>
         <body>
           <Main />
