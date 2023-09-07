@@ -10,3 +10,4 @@ docs
 !src/pages/docs
 public/shiki
 .contentlayer
+src/generated
