@@ -4,7 +4,6 @@ import type { ButtonLinkProps } from '@fuel-ui/react';
 import { ButtonLink } from '@fuel-ui/react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import type { Dispatch, SetStateAction } from 'react';
 import { forwardRef } from 'react';
 import type { SidebarLinkItem } from '~/src/types';
 
@@ -35,11 +34,11 @@ function getActive(pathname: string, slug: string) {
 export type SidebarLinkProps = ButtonLinkProps & {
   item: SidebarLinkItem;
   isActiveMenu?: boolean;
-  handleClick?: Dispatch<SetStateAction<boolean>>;
+  onClick?: ButtonLinkProps['onClick'];
 };
 
 export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
-  ({ item, isActiveMenu, handleClick, ...props }, ref) => {
+  ({ item, isActiveMenu, onClick, ...props }, ref) => {
     const router = useRouter();
     const pathname = router.asPath;
     let slug = item.slug?.replace('../', '').replace('./', '') || '';
@@ -72,7 +71,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
           ref={ref as any}
           css={styles.root}
           data-active={Boolean(isActive)}
-          onClick={handleClick as any}
+          {...(onClick && { onClick })}
         >
           {shouldBeLowerCase ? label : capitalize(label)}
         </ButtonLink>

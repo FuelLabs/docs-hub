@@ -1,14 +1,14 @@
 import { cssObj } from '@fuel-ui/css';
+import type { ButtonLinkProps } from '@fuel-ui/react';
 import { Box, Icon, IconButton, List } from '@fuel-ui/react';
 import { usePathname } from 'next/navigation';
-import type { SetStateAction, Dispatch } from 'react';
 import { useState, useEffect } from 'react';
 import type { SidebarLinkItem } from '~/src/types';
 
 import { SidebarLink } from './SidebarLink';
 
 interface SidebarSubmenuProps extends SidebarLinkItem {
-  handleClick: Dispatch<SetStateAction<boolean>>;
+  onClick?: ButtonLinkProps['onClick'];
 }
 
 export function SidebarSubmenu({
@@ -16,7 +16,7 @@ export function SidebarSubmenu({
   hasIndex,
   submenu,
   subpath,
-  handleClick,
+  onClick,
 }: SidebarSubmenuProps) {
   const pathname = usePathname();
   const [isOpened, setIsOpened] = useState<boolean>();
@@ -62,7 +62,7 @@ export function SidebarSubmenu({
       <Box.Flex justify={'space-between'}>
         <SidebarLink
           intent="base"
-          handleClick={handleClick}
+          onClick={onClick}
           item={{ label, slug }}
           isActiveMenu={isOpened}
         />
@@ -85,12 +85,7 @@ export function SidebarSubmenu({
             ) {
               return (
                 <List.Item key={index}>
-                  <SidebarLink
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    onClick={handleClick as any}
-                    item={item}
-                    data-submenu
-                  />
+                  <SidebarLink onClick={onClick} item={item} data-submenu />
                 </List.Item>
               );
             }

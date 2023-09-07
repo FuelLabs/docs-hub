@@ -1,17 +1,17 @@
 import { cssObj } from '@fuel-ui/css';
+import type { ButtonLinkProps } from '@fuel-ui/react';
 import { Box, ButtonLink, Icon } from '@fuel-ui/react';
 import NextLink from 'next/link';
-import type { Dispatch, SetStateAction } from 'react';
 import { useDocContext } from '~/src/hooks/useDocContext';
 
 import { styles as linkStyles, SidebarLink } from './SidebarLink';
 import { SidebarSubmenu } from './SidebarSubmenu';
 
 interface SidebarProps {
-  handleClick?: Dispatch<SetStateAction<boolean>>;
+  onClick?: ButtonLinkProps['onClick'];
 }
 
-export function Sidebar({ handleClick }: SidebarProps) {
+export function Sidebar({ onClick }: SidebarProps) {
   const ctx = useDocContext();
   const { links, doc, versions } = ctx;
   const version =
@@ -38,14 +38,10 @@ export function Sidebar({ handleClick }: SidebarProps) {
         {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
         {links.map((link: any, index: number) => {
           return link.slug ? (
-            <SidebarLink
-              handleClick={handleClick}
-              key={link.slug}
-              item={link}
-            />
+            <SidebarLink onClick={onClick} key={link.slug} item={link} />
           ) : (
             <SidebarSubmenu
-              handleClick={handleClick}
+              onClick={onClick}
               key={link.subpath ? link.subpath + index : index}
               {...link}
             />
