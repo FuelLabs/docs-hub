@@ -1,22 +1,24 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box, Icon } from '@fuel-ui/react';
+import { Box, Icon, loadIcons } from '@fuel-ui/react';
 import type { ElementRef } from 'react';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import useTheme from '../hooks/useTheme';
 
+loadIcons('/icons/sprite.svg');
+
 export default function ThemeToggler() {
-  const { theme: current, setTheme: setFuelTheme } = useTheme();
-  const [theme, setTheme] = useState(current);
+  const { theme, setTheme: setFuelTheme } = useTheme();
   const ref = useRef<ElementRef<'div'>>(null);
 
   const handleChange = async () => {
-    const next = current === 'dark' ? 'light' : 'dark';
-    setTheme(next);
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setFuelTheme(next);
+    document.documentElement.setAttribute('data-theme', next);
+    ref.current?.setAttribute('data-theme', next);
   };
 
-  useLayoutEffect(() => {
-    setFuelTheme(theme);
+  useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     ref.current?.setAttribute('data-theme', theme);
   }, [theme]);

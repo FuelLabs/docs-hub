@@ -46,7 +46,7 @@ export function Pre({
       </Box>
       <Box css={styles.actions} data-expanded={expanded}>
         {needExpand && (
-          <Button variant="outlined" size="xs" onPress={toggleExpand}>
+          <Button variant="outlined" size="xs" onClick={toggleExpand}>
             {expanded ? 'Collapse' : 'Expand'}
           </Button>
         )}
@@ -56,7 +56,7 @@ export function Pre({
           variant="ghost"
           intent="base"
           aria-label="Copy to Clipboard"
-          onPress={handleCopy}
+          onClick={handleCopy}
         />
       </Box>
     </Box>

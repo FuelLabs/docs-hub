@@ -10,6 +10,7 @@ import {
   Dialog,
   toast,
   Alert,
+  IconButton,
 } from '@fuel-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -67,16 +68,18 @@ export function FeedbackForm() {
     return (
       <Form.Control css={styles.formControl} isRequired>
         <Box.Flex gap={'8px'}>
-          <input
+          <Box
+            as="input"
             type="radio"
             id="trueButton"
             value="true"
             checked={isHelpful === 'true'}
             {...register('helpful', { required: true })}
-            style={styles.radioButton}
+            css={styles.radioButton}
           />
-          <label
-            style={
+          <Box
+            as="label"
+            css={
               isHelpful === 'true'
                 ? {
                     ...styles.buttonLabel,
@@ -87,20 +90,22 @@ export function FeedbackForm() {
             htmlFor="trueButton"
           >
             <Icon
-              css={isHelpful === 'true' && styles.selectedThumbIcon}
+              css={isHelpful === 'true' ? styles.selectedThumbIcon : {}}
               icon="ThumbUp"
             />
-          </label>
-          <input
+          </Box>
+          <Box
+            as="input"
             type="radio"
             id="falseButton"
             value="false"
             checked={isHelpful === 'false'}
             {...register('helpful', { required: true })}
-            style={styles.radioButton}
+            css={styles.radioButton}
           />
-          <label
-            style={
+          <Box
+            as="label"
+            css={
               isHelpful === 'false'
                 ? {
                     ...styles.buttonLabel,
@@ -111,10 +116,10 @@ export function FeedbackForm() {
             htmlFor="falseButton"
           >
             <Icon
-              css={isHelpful === 'false' && styles.selectedThumbIcon}
+              css={isHelpful === 'false' ? styles.selectedThumbIcon : {}}
               icon="ThumbDown"
             />
-          </label>
+          </Box>
         </Box.Flex>
         {errors.helpful && (
           <Alert css={styles.alert} direction="row" status="error">
@@ -140,8 +145,9 @@ export function FeedbackForm() {
           <Text>Optional</Text>
         </Box.Flex>
         <Box css={styles.textareaContainer}>
-          <textarea
-            style={styles.textarea}
+          <Box
+            as="textarea"
+            css={styles.textarea}
             className="form-textarea"
             id="message"
             rows={4}
@@ -187,7 +193,7 @@ export function FeedbackForm() {
           intent="base"
           size="sm"
           type="button"
-          onPress={() => closeForm()}
+          onClick={() => closeForm()}
         >
           Cancel
         </Button>
@@ -206,36 +212,36 @@ export function FeedbackForm() {
 
   return (
     <>
-      <Dialog isOpen={dialogIsOpen}>
+      <Dialog isOpen={dialogIsOpen} onOpenChange={setDialogIsOpen}>
         <Box.Flex align="center" gap={'6px'}>
-          <Button
+          <IconButton
+            aria-label="Thumbs Up"
+            icon="ThumbUp"
             size="sm"
             intent="base"
             variant="ghost"
             css={styles.ratingButton}
-            onPress={() => {
+            onClick={() => {
               setDialogIsOpen(true);
               setValue('helpful', 'true');
             }}
-          >
-            <Icon icon="ThumbUp" />
-          </Button>
-          <Button
+          />
+          <IconButton
+            aria-label="Thumbs Down"
+            icon="ThumbDown"
             size="sm"
             intent="base"
             variant="ghost"
             css={styles.ratingButton}
-            onPress={() => {
+            onClick={() => {
               setDialogIsOpen(true);
               setValue('helpful', 'false');
             }}
-          >
-            <Icon icon="ThumbDown" />
-          </Button>
+          />
           <Text>Was this page helpful?</Text>
         </Box.Flex>
         <Dialog.Content>
-          <Dialog.Close onClick={() => closeForm()} />
+          <Dialog.Close onClick={closeForm} />
           <Dialog.Heading>Was this page helpful?</Dialog.Heading>
           <form onSubmit={handleSubmit(onSubmit)}>
             <HelpfulButtons />
