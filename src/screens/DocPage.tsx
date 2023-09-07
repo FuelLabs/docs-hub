@@ -57,7 +57,7 @@ const styles = {
     position: 'sticky',
     top: 20,
     maxHeight: 'calc(100vh - 40px)',
-    overflowX: 'visible',
+    overflowX: 'auto',
     '&::-webkit-scrollbar': {
       display: 'none',
     },
