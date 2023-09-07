@@ -106,7 +106,7 @@ export function MobileMenu({
           })}
         </Box.Flex>
 
-        <Sidebar onClick={() => setShowing(false)} />
+        <Sidebar handleClick={() => setShowing(false)} />
       </Box>
     </MotionBox>
   );

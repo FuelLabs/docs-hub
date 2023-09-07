@@ -1,14 +1,14 @@
 import { cssObj } from '@fuel-ui/css';
-import type { ButtonLinkProps } from '@fuel-ui/react';
-import { Box, Icon, List } from '@fuel-ui/react';
+import { Box, Icon, IconButton, List } from '@fuel-ui/react';
 import { usePathname } from 'next/navigation';
+import type { SetStateAction, Dispatch } from 'react';
 import { useState, useEffect } from 'react';
 import type { SidebarLinkItem } from '~/src/types';
 
 import { SidebarLink } from './SidebarLink';
 
 interface SidebarSubmenuProps extends SidebarLinkItem {
-  onClick?: ButtonLinkProps['onClick'];
+  handleClick: Dispatch<SetStateAction<boolean>>;
 }
 
 export function SidebarSubmenu({
@@ -16,7 +16,7 @@ export function SidebarSubmenu({
   hasIndex,
   submenu,
   subpath,
-  onClick,
+  handleClick,
 }: SidebarSubmenuProps) {
   const pathname = usePathname();
   const [isOpened, setIsOpened] = useState<boolean>();
@@ -59,13 +59,22 @@ export function SidebarSubmenu({
 
   return (
     <Box.Flex css={styles.root}>
-      <SidebarLink
-        intent="base"
-        onClick={onClick}
-        item={{ label, slug }}
-        isActiveMenu={isOpened}
-        rightIcon={isOpened ? Icon.is('ChevronUp') : Icon.is('ChevronDown')}
-      />
+      <Box.Flex justify={'space-between'}>
+        <SidebarLink
+          intent="base"
+          handleClick={handleClick}
+          item={{ label, slug }}
+          isActiveMenu={isOpened}
+        />
+        <IconButton
+          size="xs"
+          aria-label="Button"
+          intent="base"
+          variant="link"
+          onClick={() => setIsOpened(!isOpened)}
+          icon={isOpened ? Icon.is('ChevronUp') : Icon.is('ChevronDown')}
+        />
+      </Box.Flex>
 
       {isOpened && (
         <List>
@@ -76,7 +85,12 @@ export function SidebarSubmenu({
             ) {
               return (
                 <List.Item key={index}>
-                  <SidebarLink onClick={onClick} item={item} data-submenu />
+                  <SidebarLink
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    onClick={handleClick as any}
+                    item={item}
+                    data-submenu
+                  />
                 </List.Item>
               );
             }
