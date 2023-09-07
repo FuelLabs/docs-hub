@@ -1,5 +1,12 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box, FuelLogo, Icon, Link } from '@fuel-ui/react';
+import {
+  Box,
+  FuelLogo,
+  Icon,
+  Link,
+  darkTheme,
+  lightTheme,
+} from '@fuel-ui/react';
 import dynamic from 'next/dynamic';
 
 import { MobileMenu } from './MobileMenu';
@@ -68,7 +75,13 @@ const styles = {
     alignItems: 'center',
     borderBottom: '1px solid $border',
     gridColumn: '1 / 4',
-    bg: '$overlayBg',
+
+    [`.${darkTheme.theme} &`]: {
+      backgroundColor: '$intentsBase2',
+    },
+    [`.${lightTheme.theme} &`]: {
+      backgroundColor: '$white',
+    },
 
     '.logo': {
       display: 'inline-flex',

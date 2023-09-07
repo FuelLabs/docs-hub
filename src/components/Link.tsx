@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { LinkProps } from '@fuel-ui/react';
-import { Box, Link as FuelLink } from '@fuel-ui/react';
+import { Link as FuelLink } from '@fuel-ui/react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -47,11 +46,11 @@ export function Link(props: LinkProps) {
   return href?.startsWith('http') ? (
     <FuelLink {...props} isExternal css={{ color: '$textLink !important' }} />
   ) : (
-    <Box
-      {...(props as any)}
-      as={NextLink}
-      css={{ color: '$textLink !important' }}
-      href={href}
-    />
+    <NextLink href={href} passHref legacyBehavior>
+      <FuelLink
+        {...props}
+        css={{ color: '$textLink !important', outline: 'none' }}
+      />
+    </NextLink>
   );
 }

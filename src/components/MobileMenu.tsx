@@ -59,7 +59,7 @@ export function MobileMenu({
       icon={showing ? Icon.is('X') : Icon.is('List')}
       iconSize={30}
       aria-label="Menu"
-      onPress={toggle}
+      onClick={toggle}
     />
   );
 
@@ -106,7 +106,7 @@ export function MobileMenu({
           })}
         </Box.Flex>
 
-        <Sidebar handleClick={() => setShowing(false)} />
+        <Sidebar onClick={() => setShowing(false)} />
       </Box>
     </MotionBox>
   );
@@ -134,7 +134,7 @@ function MenuButton({ item, active }: MenuButtonProps) {
   return (
     <>
       <Button
-        onPress={() => setIsOpen(!isOpen)}
+        onClick={() => setIsOpen(!isOpen)}
         css={styles.navButton}
         variant="link"
         intent="base"

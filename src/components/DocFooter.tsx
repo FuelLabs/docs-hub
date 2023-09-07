@@ -1,6 +1,6 @@
 import { cssObj } from '@fuel-ui/css';
 import { Text, Box, Icon, Link as FuelLink } from '@fuel-ui/react';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useDocContext } from '~/src/hooks/useDocContext';
 
@@ -42,10 +42,10 @@ export function DocFooter() {
               <Box as="span" className="label">
                 Previous:
               </Box>
-              <Link href={prevLink}>
+              <NextLink href={prevLink}>
                 <Icon icon={Icon.is('ArrowLeft')} size={14} />{' '}
                 {capitalize(docLink.prev.label)}
-              </Link>
+              </NextLink>
             </>
           )}
         </Box.Stack>
@@ -55,10 +55,10 @@ export function DocFooter() {
               <Box as="span" className="label">
                 Next:
               </Box>
-              <Link href={nextLink}>
+              <NextLink href={nextLink}>
                 {capitalize(docLink.next.label)}{' '}
                 <Icon icon={Icon.is('ArrowRight')} size={14} />
-              </Link>
+              </NextLink>
             </>
           )}
         </Box.Stack>
