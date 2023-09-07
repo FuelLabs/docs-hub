@@ -1,5 +1,14 @@
 import { cssObj } from '@fuel-ui/css';
-import { Link as FuelLink, Box, Icon, Text } from '@fuel-ui/react';
+import {
+  Link as FuelLink,
+  Box,
+  Badge,
+  Text,
+  Card,
+  Button,
+} from '@fuel-ui/react';
+import { useState } from 'react';
+import { TAG_CATEGORIES } from '~/docs/guides/docs/categories';
 
 import { Heading } from '../components/Heading';
 import type { GuideInfo } from '../pages/guides';
@@ -9,73 +18,113 @@ interface GuidesPageProps {
 }
 
 export function GuidesPage({ guides }: GuidesPageProps) {
+  const [active, setActive] = useState<string>('all');
+
   return (
-    <Box css={styles.root}>
-      <Heading as="h1" data-rank="h1" id="fuel-docs">
-        Fuel Guides
+    <Box.Stack css={styles.root}>
+      <Heading as="h1" data-rank="h1" id="fuel-guides">
+        Guides
       </Heading>
-      <Box css={styles.cardList}>
+      <Box.Flex gap={'$3'} wrap={'wrap'} css={styles.categoryContainer}>
+        <Button
+          data-active={active === 'all'}
+          onClick={() => setActive('all')}
+          variant={'outlined'}
+          intent={'base'}
+          css={styles.category}
+          size={'sm'}
+        >
+          All Categories
+        </Button>
+        <Box.Centered>
+          <Box css={styles.separator}>&nbsp;</Box>
+        </Box.Centered>
+        {TAG_CATEGORIES.map((category) => (
+          <Button
+            key={category}
+            data-active={active === category}
+            onClick={() => setActive(category)}
+            variant={'outlined'}
+            intent={'base'}
+            css={styles.category}
+            size={'sm'}
+          >
+            {category}
+          </Button>
+        ))}
+      </Box.Flex>
+      <Box.Stack>
         {Object.keys(guides).map((guideName) => {
           const guideInfo = guides[guideName];
-          return (
-            <Box key={guideName} css={styles.card}>
-              <Icon icon="Code" size={40} stroke={0.7} />
-              <Box.Stack>
-                <FuelLink href={`/guides/${guideName.replaceAll('_', '-')}`}>
-                  <Heading as="h3">{guideInfo.title}</Heading>
-                </FuelLink>
-                <Text>{guideInfo.description}</Text>
-              </Box.Stack>
-            </Box>
-          );
+          if (active === 'all' || guideInfo.tags.includes(active)) {
+            return (
+              <Card css={styles.card} key={guideName}>
+                <Card.Body>
+                  <Box.Flex gap={'$3'}>
+                    {guideInfo.featured && (
+                      <Text css={styles.featured}>Featured</Text>
+                    )}
+                    <Text css={styles.date}>{guideInfo.last_updated}</Text>
+                  </Box.Flex>
+                  <FuelLink href={`/guides/${guideName.replaceAll('_', '-')}`}>
+                    <Heading as="h4">{guideInfo.title}</Heading>
+                  </FuelLink>
+                  <Text>{guideInfo.description}</Text>
+                  <Box.Flex gap={'$2'} css={styles.badgeContainer}>
+                    {guideInfo.tags.map((tag) => (
+                      <Badge key={tag} variant="ghost" css={styles.badge}>
+                        {tag}
+                      </Badge>
+                    ))}
+                  </Box.Flex>
+                </Card.Body>
+              </Card>
+            );
+          }
         })}
-      </Box>
-    </Box>
+      </Box.Stack>
+    </Box.Stack>
   );
 }
 
 const styles = {
   root: cssObj({
-    py: '$6',
-    px: '$6',
-
-    '@xl': {
-      px: '$14',
-    },
-  }),
-  cardList: cssObj({
-    display: 'grid',
-    gap: '$6',
-    py: '$8',
-
-    '@xl': {
-      gridTemplateColumns: 'repeat(2, minmax(300px, 1fr))',
+    padding: '$2 $10 $10 $10',
+    '@md': {
+      padding: '$4 $40 $20 $40',
     },
   }),
   card: cssObj({
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: '$6',
-    padding: '$4 $6 $6',
-    border: '1px solid $border',
-    borderRadius: '$md',
-
-    '& > .fuel_Icon': {
-      mt: '3px',
-      color: '$intentsBase8',
+    marginBottom: '$6',
+    padding: '$3 $2',
+  }),
+  featured: cssObj({
+    color: '$intentsPrimary11',
+    fontSize: '$sm',
+  }),
+  date: cssObj({
+    fontSize: '$sm',
+  }),
+  separator: cssObj({
+    background: '$intentsBase7',
+    height: '20px',
+    width: '2px',
+  }),
+  badge: cssObj({
+    fontSize: '$xs',
+  }),
+  badgeContainer: cssObj({
+    marginTop: '$4',
+  }),
+  categoryContainer: cssObj({
+    marginBottom: '$10',
+  }),
+  category: cssObj({
+    '&:hover': {
+      border: '1px solid $intentsPrimary7 !important',
     },
-
-    h3: {
-      m: '$0',
-      pt: '$2',
-    },
-
-    '.fuel_List': {
-      mt: '$2',
-    },
-
-    '.fuel_ListItem a': {
-      color: '$textLink',
+    '&[data-active="true"]': {
+      border: '1px solid $intentsPrimary7',
     },
   }),
 };

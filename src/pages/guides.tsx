@@ -10,6 +10,9 @@ import { GuidesPage } from '../screens/GuidesPage';
 export interface GuideInfo {
   title: string;
   description: string;
+  last_updated: string;
+  featured: boolean;
+  tags: string[];
 }
 
 interface GuidesProps {
