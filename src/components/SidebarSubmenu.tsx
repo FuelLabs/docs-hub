@@ -1,6 +1,6 @@
 import { cssObj } from '@fuel-ui/css';
 import type { ButtonLinkProps } from '@fuel-ui/react';
-import { Box, Icon, List } from '@fuel-ui/react';
+import { Box, Icon, IconButton, List } from '@fuel-ui/react';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import type { SidebarLinkItem } from '~/src/types';
@@ -59,13 +59,22 @@ export function SidebarSubmenu({
 
   return (
     <Box.Flex css={styles.root}>
-      <SidebarLink
-        intent="base"
-        onClick={onClick}
-        item={{ label, slug }}
-        isActiveMenu={isOpened}
-        rightIcon={isOpened ? Icon.is('ChevronUp') : Icon.is('ChevronDown')}
-      />
+      <Box.Flex justify={'space-between'}>
+        <SidebarLink
+          intent="base"
+          onClick={onClick}
+          item={{ label, slug }}
+          isActiveMenu={isOpened}
+        />
+        <IconButton
+          size="xs"
+          aria-label="Button"
+          intent="base"
+          variant="link"
+          onClick={() => setIsOpened(!isOpened)}
+          icon={isOpened ? Icon.is('ChevronUp') : Icon.is('ChevronDown')}
+        />
+      </Box.Flex>
 
       {isOpened && (
         <List>
