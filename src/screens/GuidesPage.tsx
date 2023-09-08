@@ -8,6 +8,26 @@ interface GuidesPageProps {
   guides: { [key: string]: GuideInfo };
 }
 
+export function GuideCard({
+  guideName,
+  guideInfo,
+}: {
+  guideName: string;
+  guideInfo: GuideInfo;
+}) {
+  return (
+    <Box key={guideName} css={styles.card}>
+      <Icon icon="Code" size={40} stroke={0.7} />
+      <Box.Stack>
+        <FuelLink href={`/guides/${guideName.replaceAll('_', '-')}`}>
+          <Heading as="h3">{guideInfo.title}</Heading>
+        </FuelLink>
+        <Text>{guideInfo.description}</Text>
+      </Box.Stack>
+    </Box>
+  );
+}
+
 export function GuidesPage({ guides }: GuidesPageProps) {
   return (
     <Box css={styles.root}>
@@ -18,15 +38,11 @@ export function GuidesPage({ guides }: GuidesPageProps) {
         {Object.keys(guides).map((guideName) => {
           const guideInfo = guides[guideName];
           return (
-            <Box key={guideName} css={styles.card}>
-              <Icon icon="Code" size={40} stroke={0.7} />
-              <Box.Stack>
-                <FuelLink href={`/guides/${guideName.replaceAll('_', '-')}`}>
-                  <Heading as="h3">{guideInfo.title}</Heading>
-                </FuelLink>
-                <Text>{guideInfo.description}</Text>
-              </Box.Stack>
-            </Box>
+            <GuideCard
+              key={guideName}
+              guideName={guideName}
+              guideInfo={guideInfo}
+            />
           );
         })}
       </Box>
