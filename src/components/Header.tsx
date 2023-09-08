@@ -22,11 +22,11 @@ export function Header({ active, title }: { active: string; title?: string }) {
       </Box.Flex>
       <Box css={styles.desktop}>
         <Box.Stack direction="row" gap="$4" css={{ mr: '$4' }}>
-          <Search />
+          <Search title={title} />
           <ThemeToggler />
         </Box.Stack>
       </Box>
-      <MobileMenu active={active} />
+      <MobileMenu active={active} title={title} />
     </Box.Flex>
   );
 }

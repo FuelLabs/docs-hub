@@ -15,7 +15,7 @@ export interface GuideInfo {
   tags: string[];
 }
 
-interface GuidesProps {
+export interface GuidesProps {
   guides: { [key: string]: GuideInfo };
 }
 
