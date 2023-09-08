@@ -45,6 +45,7 @@ export const styles = {
     display: 'none',
     padding: '$8 $8 $0 $6',
     position: 'sticky',
+    maxHeight: 'calc(100vh - 85px)',
     borderRight: '1px solid $border',
     bg: '$cardBg',
     top: 20,
@@ -56,7 +57,7 @@ export const styles = {
   sidebarContainer: cssObj({
     position: 'sticky',
     top: 20,
-    maxHeight: 'calc(100vh - 40px)',
+    maxHeight: 'calc(100vh - 105px)',
     overflowX: 'auto',
     '&::-webkit-scrollbar': {
       display: 'none',
