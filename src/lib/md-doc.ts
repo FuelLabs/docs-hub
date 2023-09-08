@@ -6,6 +6,7 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
 import { codeImport as walletCodeImport } from '~/docs/fuels-wallet/packages/docs/src/lib/code-import';
+import { capitalize } from '~/docs/fuels-wallet/packages/docs/src/lib/str';
 
 import { DOCS_DIRECTORY } from '../config/constants';
 import type { Config, DocType, SidebarLinkItem } from '../types';
@@ -141,7 +142,9 @@ export class Doc {
     });
 
     const prev = flatLinks[idx - 1] ?? null;
+    if (prev) prev.label = capitalize(prev.label);
     const next = idx + 1 < flatLinks.length ? flatLinks[idx + 1] ?? null : null;
+    if (next) next.label = capitalize(next.label);
     const current = flatLinks[idx];
     const link = { prev, next, ...current };
     return link;

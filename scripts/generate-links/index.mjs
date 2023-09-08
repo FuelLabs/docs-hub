@@ -6,6 +6,7 @@ import { getDocs, getDocBySlug } from './getDocs.mjs';
 import getSortedLinks from './getSortedLinks.mjs';
 import processSummary from './processSummary.mjs';
 import processVPConfig from './processVPConfig.mjs';
+import { capitalize } from './str.mjs';
 
 const DOCS_DIRECTORY = join(process.cwd(), './docs');
 const swaySummaryPath = join(DOCS_DIRECTORY, './sway/docs/book/src/SUMMARY.md');
@@ -64,6 +65,14 @@ async function main() {
           ] = link;
         });
         sortedLinks = newLinks;
+      }
+      if (Array.isArray(sortedLinks)) {
+        sortedLinks = sortedLinks.map((link) => {
+          if (link.label) {
+            link.label = capitalize(link.label.replaceAll('_', ' '));
+          }
+          return link;
+        });
       }
       const json = JSON.stringify(sortedLinks);
       const folderPath = 'src/generated/sidebar-links';

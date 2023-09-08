@@ -2,7 +2,9 @@ import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
 import { HomeSidebar } from '~/src/components/HomeSidebar';
 
-export function HomeScreen() {
+import type { GuidesProps } from '../pages/guides';
+
+export function HomeScreen({ guides }: GuidesProps) {
   return (
     <>
       <Box css={styles.sidebar}>

@@ -14,7 +14,7 @@ interface SidebarSubmenuProps extends SidebarLinkItem {
 export function SidebarSubmenu({
   label,
   isExternal,
-  shouldBeLowerCase,
+  hasIndex,
   submenu,
   onClick,
 }: SidebarSubmenuProps) {
@@ -24,7 +24,6 @@ export function SidebarSubmenu({
     label,
     slug: submenu![0].slug,
     isExternal,
-    shouldBeLowerCase,
   };
 
   useEffect(() => {
@@ -59,10 +58,7 @@ export function SidebarSubmenu({
       {isOpened && (
         <List>
           {submenu?.map((item, index) => {
-            if (
-              item.label !== label ||
-              (item.slug && item.slug.split('/').length > 3)
-            ) {
+            if (!hasIndex || index > 0) {
               return (
                 <List.Item key={index}>
                   <SidebarLink onClick={onClick} item={item} data-submenu />

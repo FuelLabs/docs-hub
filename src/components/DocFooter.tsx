@@ -4,8 +4,6 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useDocContext } from '~/src/hooks/useDocContext';
 
-import { capitalize } from '../lib/str';
-
 import { FeedbackForm } from './FeedbackForm';
 
 function parseLink(link: string) {
@@ -44,7 +42,7 @@ export function DocFooter() {
               </Box>
               <NextLink href={prevLink}>
                 <Icon icon={Icon.is('ArrowLeft')} size={14} />{' '}
-                {capitalize(docLink.prev.label)}
+                {docLink.prev.label}
               </NextLink>
             </>
           )}
@@ -56,7 +54,7 @@ export function DocFooter() {
                 Next:
               </Box>
               <NextLink href={nextLink}>
-                {capitalize(docLink.next.label)}{' '}
+                {docLink.next.label}{' '}
                 <Icon icon={Icon.is('ArrowRight')} size={14} />
               </NextLink>
             </>

@@ -109,6 +109,7 @@ const styles = {
 
           '& .Layout--section': {
             maxWidth: 'calc(100vw - 442px)',
+            minHeight: 'calc(100vh - 120px)',
           },
         },
       },

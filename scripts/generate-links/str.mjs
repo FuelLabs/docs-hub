@@ -26,7 +26,7 @@ const specialCapsWords = [
   { word: 'lsp', newWord: 'LSP' },
 ];
 
-export function capitalize(val: string): string {
+export function capitalize(val) {
   if (val.length === 0) {
     return val;
   }
