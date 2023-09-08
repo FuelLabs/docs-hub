@@ -1,185 +1,66 @@
 import { cssObj } from '@fuel-ui/css';
-import { Link as FuelLink, Box, Icon, List, Text } from '@fuel-ui/react';
-import Link from 'next/link';
+import { Box } from '@fuel-ui/react';
+import { HomeSidebar } from '~/src/components/HomeSidebar';
 
-import { Heading } from '../components/Heading';
-
-export function HomePage() {
-  const cards = {
-    sway: (
-      <Box css={styles.card}>
-        <Icon icon="Code" size={40} stroke={0.7} />
-        <Box.Stack>
-          <Heading as="h3">Sway Language</Heading>
-          <Text>
-            Build powerful programs with a Rust-based DSL, without needlessly
-            verbose boilerplate.
-          </Text>
-          <List icon="ArrowRight">
-            <List.Item>
-              <Link href="/docs/sway">Sway</Link>
-            </List.Item>
-            <List.Item>
-              <FuelLink
-                href="https://fuellabs.github.io/sway/master/std/"
-                isExternal
-              >
-                Standard Library
-              </FuelLink>
-            </List.Item>
-            <List.Item>
-              <FuelLink
-                href="https://github.com/FuelLabs/sway-applications"
-                isExternal
-              >
-                Examples Apps
-              </FuelLink>
-            </List.Item>
-            <List.Item>
-              <FuelLink
-                href="https://fuellabs.github.io/sway/master/core"
-                isExternal
-              >
-                Sway Core
-              </FuelLink>
-            </List.Item>
-          </List>
-        </Box.Stack>
-      </Box>
-    ),
-    sdk: (
-      <Box css={styles.card}>
-        <Icon icon="Book" size={40} stroke={0.7} />
-        <Box.Stack>
-          <Heading as="h3">SDKs</Heading>
-          <Text>
-            Integrate Fuel into a Typescript or Rust project in minutes.
-          </Text>
-          <List icon="ArrowRight">
-            <List.Item>
-              <Link href="/docs/fuels-rs">Rust SDK</Link>
-            </List.Item>
-            <List.Item>
-              <Link href="/docs/fuels-ts">Typescript SDK</Link>
-            </List.Item>
-            <List.Item>
-              <Link href="/docs/wallet">Wallet SDK</Link>
-            </List.Item>
-          </List>
-        </Box.Stack>
-      </Box>
-    ),
-    network: (
-      <Box css={styles.card}>
-        <Icon icon="Bolt" size={40} stroke={0.7} />
-        <Box.Stack>
-          <Heading as="h3">Fuel Network</Heading>
-          <Text>Find network specifications and resources.</Text>
-          <List icon="ArrowRight">
-            {/* <List.Item>
-              <Link href="/docs/about-fuel">About Fuel</Link>
-            </List.Item> */}
-            <List.Item>
-              <Link href="/docs/graphql">GraphQL API</Link>
-            </List.Item>
-            <List.Item>
-              <Link href="/docs/specs">Specs</Link>
-            </List.Item>
-            <List.Item>
-              <FuelLink href="https://faucet-beta-4.fuel.network/" isExternal>
-                Faucet
-              </FuelLink>
-            </List.Item>
-          </List>
-        </Box.Stack>
-      </Box>
-    ),
-    tooling: (
-      <Box css={styles.card}>
-        <Icon icon="Settings" size={40} stroke={0.7} />
-        <Box.Stack>
-          <Heading as="h3">Tooling</Heading>
-          <Text>
-            Explore the best tooling you need to build your next web3 app in the
-            fastest execution layer.
-          </Text>
-          <List icon="ArrowRight">
-            <List.Item>
-              <Link href="/docs/fuelup">Fuelup</Link>
-            </List.Item>
-            <List.Item>
-              <Link href="/docs/forc">Forc</Link>
-            </List.Item>
-            <List.Item>
-              <Link href="/docs/indexer">Indexer</Link>
-            </List.Item>
-          </List>
-        </Box.Stack>
-      </Box>
-    ),
-  };
-
+export function HomeScreen() {
   return (
-    <Box css={styles.root}>
-      <Heading as="h1" data-rank="h1" id="fuel-docs">
-        Fuel Docs
-      </Heading>
-      <Text>
-        Learn about everything Fuel, all the way down to the bits and bytes.{' '}
-      </Text>
-      <Box css={styles.cardList}>
-        {cards.sway}
-        {cards.sdk}
-        {cards.tooling}
-        {cards.network}
+    <>
+      <Box css={styles.sidebar}>
+        <Box css={styles.sidebarContainer}>
+          <HomeSidebar />
+        </Box>
       </Box>
-    </Box>
+      <Box as="section" css={styles.section} className="Layout--section">
+        <Box className="Layout--pageContent"></Box>
+      </Box>
+    </>
   );
 }
 
-const styles = {
-  root: cssObj({
+export const styles = {
+  sidebar: cssObj({
+    display: 'none',
+    padding: '$8 $8 $0 $6',
+    position: 'sticky',
+    borderRight: '1px solid $border',
+    bg: '$cardBg',
+    top: 20,
+
+    '@xl': {
+      display: 'block',
+    },
+  }),
+  sidebarContainer: cssObj({
+    position: 'sticky',
+    top: 20,
+    maxHeight: 'calc(100vh - 40px)',
+    overflowX: 'visible',
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
+  }),
+  section: cssObj({
     py: '$6',
     px: '$6',
-
-    '@xl': {
-      px: '$14',
-    },
-  }),
-  cardList: cssObj({
-    display: 'grid',
-    gap: '$6',
-    py: '$8',
-
-    '@xl': {
-      gridTemplateColumns: 'repeat(2, minmax(300px, 1fr))',
-    },
-  }),
-  card: cssObj({
     display: 'flex',
-    alignItems: 'flex-start',
-    gap: '$6',
-    padding: '$4 $6 $6',
-    border: '1px solid $border',
-    borderRadius: '$md',
-    minHeight: '210px',
+    flexDirection: 'column',
 
-    '& > .fuel_Icon': {
-      mt: '3px',
-      color: '$intentsBase8',
+    '@md': {
+      py: '$8',
+      px: '$8',
     },
 
-    h3: {
-      m: '$0',
-      pt: '$2',
+    '@xl': {
+      py: '$14',
+      px: '$0',
     },
 
-    '.fuel_List': {
-      mt: '$2',
+    '& .fuel_Heading[data-rank="h1"]:first-of-type': {
+      mt: '$0 !important',
     },
 
-    '.fuel_ListItem a': {
-      color: '$textLink',
+    '& .Layout--pageContent': {
+      flex: 1,
     },
   }),
 };

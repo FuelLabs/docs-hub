@@ -13,7 +13,7 @@
     "docs:clean": "sh ./scripts/clean-build-files.sh",
     "docs:sync": "sh ./scripts/sync-repos.sh",
     "export": "DOCS_DIST=${DOCS_DIST:=dist} next export -o $DOCS_DIST",
-    "generate:links": "node scripts/generate-links.mjs",
+    "generate:links": "node scripts/generate-links/index.mjs",
     "generate:components": "node scripts/components.mjs",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "lint:fix": "pnpm lint --fix",

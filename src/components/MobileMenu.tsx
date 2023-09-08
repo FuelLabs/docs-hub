@@ -18,7 +18,6 @@ import { useEffect, useState } from 'react';
 import { NAVIGATION } from '../config/constants';
 import type { LinkObject } from '../config/constants';
 
-import { styles as navStyles } from './Navigation';
 import { Sidebar } from './Sidebar';
 
 const ThemeToggler = dynamic(() => import('./ThemeToggler'), { ssr: false });
@@ -231,7 +230,16 @@ const styles = {
     },
   }),
   navButton: cssObj({
-    ...navStyles.navButton,
+    color: '$intentsBase10',
+
+    '&:hover': {
+      textDecoration: 'none',
+      color: '$intentsBase12 !important',
+    },
+
+    '&[data-active="true"], &[data-active="true"]:hover': {
+      color: '$textLink !important',
+    },
     justifyContent: 'space-between',
     padding: '$0',
   }),

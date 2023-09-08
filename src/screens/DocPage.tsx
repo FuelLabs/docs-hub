@@ -40,7 +40,7 @@ export function DocScreen(props: DocPageProps) {
   );
 }
 
-const styles = {
+export const styles = {
   sidebar: cssObj({
     display: 'none',
     padding: '$8 $8 $0 $6',
@@ -57,7 +57,7 @@ const styles = {
     position: 'sticky',
     top: 20,
     maxHeight: 'calc(100vh - 40px)',
-    overflowX: 'visible',
+    overflowX: 'auto',
     '&::-webkit-scrollbar': {
       display: 'none',
     },

@@ -4,7 +4,7 @@ import { Box, ButtonLink, Icon } from '@fuel-ui/react';
 import NextLink from 'next/link';
 import { useDocContext } from '~/src/hooks/useDocContext';
 
-import { styles as linkStyles, SidebarLink } from './SidebarLink';
+import { SidebarLink } from './SidebarLink';
 import { SidebarSubmenu } from './SidebarSubmenu';
 
 interface SidebarProps {
@@ -22,10 +22,7 @@ export function Sidebar({ onClick }: SidebarProps) {
       <Box.Stack as="nav" css={styles.root} className="Sidebar">
         {doc.parent && (
           <NextLink href={doc.parent.link} legacyBehavior passHref>
-            <ButtonLink
-              intent="base"
-              css={{ ...linkStyles.root, justifyContent: 'flex-start' }}
-            >
+            <ButtonLink intent="base" css={{ justifyContent: 'flex-start' }}>
               <Icon
                 icon={Icon.is('ArrowBackUp')}
                 stroke={1}
@@ -38,7 +35,9 @@ export function Sidebar({ onClick }: SidebarProps) {
         {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
         {links.map((link: any, index: number) => {
           return link.slug ? (
-            <SidebarLink onClick={onClick} key={link.slug} item={link} />
+            <Box key={link.slug}>
+              <SidebarLink onClick={onClick} item={link} />
+            </Box>
           ) : (
             <SidebarSubmenu
               onClick={onClick}

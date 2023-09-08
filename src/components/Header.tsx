@@ -1,12 +1,5 @@
 import { cssObj } from '@fuel-ui/css';
-import {
-  Box,
-  FuelLogo,
-  Icon,
-  Link,
-  darkTheme,
-  lightTheme,
-} from '@fuel-ui/react';
+import { Box, FuelLogo, Link, darkTheme, lightTheme } from '@fuel-ui/react';
 import dynamic from 'next/dynamic';
 
 import { MobileMenu } from './MobileMenu';
@@ -32,32 +25,6 @@ export function Header({ active, title }: { active: string; title?: string }) {
           <Search />
           <ThemeToggler />
         </Box.Stack>
-        <Box.Flex css={styles.menu}>
-          <a
-            href="https://github.com/fuellabs/"
-            target="_blank"
-            rel="noreferrer"
-            title="Github"
-          >
-            <Icon icon={Icon.is('BrandGithub')} size={24} stroke={1} />
-          </a>
-          <a
-            href="https://twitter.com/fuel_network"
-            target="_blank"
-            rel="noreferrer"
-            title="Twitter"
-          >
-            <Icon icon={Icon.is('BrandTwitter')} size={24} stroke={1} />
-          </a>
-          <a
-            href="https://discord.com/invite/xfpK4Pe"
-            target="_blank"
-            rel="noreferrer"
-            title="Discord"
-          >
-            <Icon icon={Icon.is('BrandDiscord')} size={24} stroke={1} />
-          </a>
-        </Box.Flex>
       </Box>
       <MobileMenu active={active} />
     </Box.Flex>
@@ -103,13 +70,6 @@ const styles = {
       px: '$8',
     },
   }),
-  logoText: cssObj({
-    alignItems: 'center',
-    flex: 1,
-    fontSize: '$lg',
-    paddingLeft: '$3',
-    letterSpacing: '$tight',
-  }),
   navWrapper: cssObj({
     padding: '0 $8',
     display: 'none',
@@ -124,31 +84,6 @@ const styles = {
     '@xl': {
       display: 'flex',
       alignItems: 'center',
-    },
-  }),
-  mobile: cssObj({
-    display: 'flex',
-    alignItems: 'center',
-
-    '.fuel_Button': {
-      height: 'auto !important',
-      padding: '$0 !important',
-    },
-
-    '@xl': {
-      display: 'none',
-    },
-  }),
-  menu: cssObj({
-    gap: '$2',
-
-    a: {
-      color: '$intentsBase10',
-      transition: 'all 0.3s',
-    },
-
-    'a.active, a:hover': {
-      color: '$textLink',
     },
   }),
 };
