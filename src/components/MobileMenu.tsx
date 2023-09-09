@@ -18,7 +18,7 @@ import { useEffect, useState } from 'react';
 import { NAVIGATION } from '../config/constants';
 import type { LinkObject } from '../config/constants';
 
-import { Sidebar } from './Sidebar';
+import { DocSidebar } from './DocSidebar';
 
 const ThemeToggler = dynamic(() => import('./ThemeToggler'), { ssr: false });
 const Search = dynamic(() => import('./Search'), { ssr: false });
@@ -105,7 +105,7 @@ export function MobileMenu({
           })}
         </Box.Flex>
 
-        <Sidebar onClick={() => setShowing(false)} />
+        <DocSidebar onClick={() => setShowing(false)} />
       </Box>
     </MotionBox>
   );

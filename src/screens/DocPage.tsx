@@ -1,7 +1,7 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
+import { DocSidebar } from '~/src/components/DocSidebar';
 import { Layout } from '~/src/components/Layout';
-import { Sidebar } from '~/src/components/Sidebar';
 import { TableOfContent } from '~/src/components/TableOfContent';
 import { DocProvider } from '~/src/hooks/useDocContext';
 
@@ -25,7 +25,7 @@ export function DocScreen(props: DocPageProps) {
       >
         <Box css={styles.sidebar}>
           <Box css={styles.sidebarContainer}>
-            <Sidebar />
+            <DocSidebar />
           </Box>
         </Box>
         <Box as="section" css={styles.section} className="Layout--section">
@@ -45,7 +45,6 @@ export const styles = {
     display: 'none',
     padding: '$8 $8 $0 $6',
     position: 'sticky',
-    maxHeight: 'calc(100vh - 85px)',
     borderRight: '1px solid $border',
     bg: '$cardBg',
     top: 20,
@@ -57,7 +56,7 @@ export const styles = {
   sidebarContainer: cssObj({
     position: 'sticky',
     top: 20,
-    maxHeight: 'calc(100vh - 105px)',
+    maxHeight: 'calc(100vh - 40px)',
     overflowX: 'auto',
     '&::-webkit-scrollbar': {
       display: 'none',

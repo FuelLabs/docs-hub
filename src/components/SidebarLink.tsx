@@ -6,6 +6,8 @@ import { useRouter } from 'next/router';
 import { forwardRef } from 'react';
 import type { SidebarLinkItem } from '~/src/types';
 
+import { styles } from './Sidebar';
+
 export type SidebarLinkProps = ButtonLinkProps & {
   item: SidebarLinkItem;
   isActiveMenu?: boolean;
@@ -26,6 +28,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
           {...(onClick && { onClick })}
           isExternal={item.isExternal}
           intent={isActive ? 'primary' : 'base'}
+          css={styles.button}
         >
           {item.label}
         </ButtonLink>

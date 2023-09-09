@@ -1,30 +1,14 @@
-import { readFileSync } from 'fs';
-import type { GetStaticProps } from 'next';
-import { join } from 'path';
-
 import { Layout } from '../components/Layout';
-import { DOCS_DIRECTORY } from '../config/constants';
 import { HomeScreen } from '../screens/HomePage';
-
-import type { GuideInfo } from './guides';
 
 interface HomeProps {
   theme: string;
-  guides: { [key: string]: GuideInfo };
 }
 
-export default function Home({ theme, guides }: HomeProps) {
+export default function Home({ theme }: HomeProps) {
   return (
     <Layout title="Fuel Docs" theme={theme}>
-      <HomeScreen guides={guides} />
+      <HomeScreen />
     </Layout>
   );
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getStaticProps: GetStaticProps<any> = async () => {
-  const guidesPath = join(DOCS_DIRECTORY, `../docs/guides/docs/guides.json`);
-  const guides = JSON.parse(readFileSync(guidesPath, 'utf8'));
-
-  return { props: { guides } };
-};

@@ -41,12 +41,26 @@ export class Doc {
     this.md = item;
     this.config = config;
 
+    let parent;
+    if (!item.parent) {
+      if (
+        item.slug.includes('docs/fuels-rs') ||
+        item.slug.includes('docs/fuels-ts') ||
+        item.slug.includes('docs/wallet')
+      ) {
+        parent = {
+          label: 'All SDKs',
+          link: '/sdk',
+        };
+      }
+    }
+
     const doc = {
       pageLink,
       _raw: item._raw,
       slug: item.slug,
       title: this.#getTitle(item.title),
-      parent: item.parent ?? null,
+      parent: item.parent ?? parent,
       category: item.category ?? null,
       headings: [],
       menu: [],

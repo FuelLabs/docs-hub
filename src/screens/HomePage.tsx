@@ -1,15 +1,38 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
-import { HomeSidebar } from '~/src/components/HomeSidebar';
+import { Sidebar } from '~/src/components/Sidebar';
 
-import type { GuidesProps } from '../pages/guides';
+const homeNavigation = {
+  navigation: [
+    {
+      label: 'Get Started',
+      slug: '/get-started',
+      isExternal: false,
+    },
+    {
+      label: 'Sway Language',
+      slug: '/sway',
+      isExternal: false,
+    },
+    {
+      label: 'SDKs',
+      slug: '/sdk',
+      isExternal: false,
+    },
+    {
+      label: 'Network',
+      slug: '/network',
+      isExternal: false,
+    },
+  ],
+};
 
-export function HomeScreen({ guides }: GuidesProps) {
+export function HomeScreen() {
   return (
     <>
       <Box css={styles.sidebar}>
         <Box css={styles.sidebarContainer}>
-          <HomeSidebar />
+          <Sidebar nav={homeNavigation} />
         </Box>
       </Box>
       <Box as="section" css={styles.section} className="Layout--section">
