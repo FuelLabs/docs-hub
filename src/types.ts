@@ -2,7 +2,9 @@
 import type { RawDocumentData } from 'contentlayer/core';
 import type { ComponentType } from 'react';
 
-export type MenuKey = string;
+export type CategoryProps = {
+  theme: string;
+};
 
 export type Config = {
   title: string;

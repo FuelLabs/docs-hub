@@ -38,6 +38,7 @@ const MdDoc = defineDocumentType(() => ({
     parent: {
       type: 'nested',
       of: ParentType,
+      required: false,
     },
   },
   computedFields: {

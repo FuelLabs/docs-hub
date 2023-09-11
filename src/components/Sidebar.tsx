@@ -5,14 +5,16 @@ import type { SidebarLinkItem } from '../types';
 
 import { SidebarLink } from './SidebarLink';
 
-type SidebarProps = {
-  nav: {
-    parent?: {
-      label: string;
-      link: string;
-    };
-    navigation: SidebarLinkItem[];
+export type SidebarNav = {
+  parent?: {
+    label: string;
+    link: string;
   };
+  navigation: SidebarLinkItem[];
+};
+
+type SidebarProps = {
+  nav: SidebarNav;
 };
 
 export function Sidebar({ nav }: SidebarProps) {
@@ -42,6 +44,7 @@ export const styles = {
   root: cssObj({
     gap: '$1',
     pb: '$4',
+    lineHeight: '1.3',
   }),
   button: cssObj({
     width: '100%',

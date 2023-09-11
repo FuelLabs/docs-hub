@@ -52,6 +52,29 @@ export class Doc {
           label: 'All SDKs',
           link: '/sdk',
         };
+      } else if (
+        item.slug.includes('docs/graphql') ||
+        item.slug.includes('docs/specs')
+        // item.slug.includes('docs/about-fuel')
+      ) {
+        parent = {
+          label: 'All Network Docs',
+          link: '/network',
+        };
+      } else if (
+        item.slug.includes('docs/fuelup') ||
+        item.slug.includes('docs/forc') ||
+        item.slug.includes('docs/indexer')
+      ) {
+        parent = {
+          label: 'All Tooling',
+          link: '/tooling',
+        };
+      } else if (item.slug.includes('docs/sway')) {
+        parent = {
+          label: 'All Sway Docs',
+          link: '/sway',
+        };
       }
     }
 
@@ -60,7 +83,7 @@ export class Doc {
       _raw: item._raw,
       slug: item.slug,
       title: this.#getTitle(item.title),
-      parent: item.parent ?? parent,
+      parent: item.parent ?? parent ?? null,
       category: item.category ?? null,
       headings: [],
       menu: [],

@@ -59,5 +59,6 @@ const styles = {
   root: cssObj({
     gap: '$1',
     pb: '$4',
+    lineHeight: '1.3',
   }),
 };

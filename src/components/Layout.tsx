@@ -12,6 +12,7 @@ type LayoutProps = {
   title?: string;
   children: ReactNode;
   isClean?: boolean;
+  isCleanWithNav?: boolean;
   hasHeadings?: boolean;
   config?: Config;
   theme?: string;
@@ -22,6 +23,7 @@ export function Layout({
   title,
   children,
   isClean,
+  isCleanWithNav,
   hasHeadings,
   config,
 }: LayoutProps) {
@@ -35,6 +37,16 @@ export function Layout({
   function getSlug() {
     return router.pathname === '/guides' ? 'guides' : '';
   }
+
+  const root = cssObj({
+    '&[data-clean="true"]': {
+      gridTemplateColumns: isCleanWithNav ? '250px 1fr' : '1fr',
+
+      '& .Layout--section': {
+        px: '$14',
+      },
+    },
+  });
 
   return (
     <>
@@ -72,7 +84,7 @@ export function Layout({
         ></meta>
       </Head>
       <Box
-        css={styles.root}
+        css={{ ...styles.root, ...root }}
         data-headings={hasHeadings}
         data-clean={Boolean(isClean)}
       >
@@ -110,13 +122,6 @@ const styles = {
           '& .Layout--section': {
             maxWidth: 'calc(100vw - 442px)',
           },
-        },
-      },
-      '&[data-clean="true"]': {
-        gridTemplateColumns: '1fr',
-
-        '& .Layout--section': {
-          px: '$14',
         },
       },
     },

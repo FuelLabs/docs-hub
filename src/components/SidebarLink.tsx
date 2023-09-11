@@ -28,7 +28,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
           {...(onClick && { onClick })}
           isExternal={item.isExternal}
           intent={isActive ? 'primary' : 'base'}
-          css={styles.button}
+          css={{ ...styles.button, lineHeight: '1.3' }}
         >
           {item.label}
         </ButtonLink>

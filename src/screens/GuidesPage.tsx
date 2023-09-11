@@ -1,15 +1,9 @@
 import { cssObj } from '@fuel-ui/css';
-import {
-  Link as FuelLink,
-  Box,
-  Badge,
-  Text,
-  Card,
-  Button,
-} from '@fuel-ui/react';
+import { Box, Button } from '@fuel-ui/react';
 import { useState } from 'react';
 import { TAG_CATEGORIES } from '~/docs/guides/docs/categories';
 
+import { Card } from '../components/Card';
 import { Heading } from '../components/Heading';
 import type { GuideInfo } from '../pages/guides';
 
@@ -58,27 +52,11 @@ export function GuidesPage({ guides }: GuidesPageProps) {
           const guideInfo = guides[guideName];
           if (active === 'all' || guideInfo.tags.includes(active)) {
             return (
-              <Card css={styles.card} key={guideName}>
-                <Card.Body>
-                  <Box.Flex gap={'$3'}>
-                    {guideInfo.featured && (
-                      <Text css={styles.featured}>Featured</Text>
-                    )}
-                    <Text css={styles.date}>{guideInfo.last_updated}</Text>
-                  </Box.Flex>
-                  <FuelLink href={`/guides/${guideName.replaceAll('_', '-')}`}>
-                    <Heading as="h4">{guideInfo.title}</Heading>
-                  </FuelLink>
-                  <Text>{guideInfo.description}</Text>
-                  <Box.Flex gap={'$2'} css={styles.badgeContainer}>
-                    {guideInfo.tags.map((tag) => (
-                      <Badge key={tag} variant="ghost" css={styles.badge}>
-                        {tag}
-                      </Badge>
-                    ))}
-                  </Box.Flex>
-                </Card.Body>
-              </Card>
+              <Card
+                key={guideName}
+                guideInfo={guideInfo}
+                cardName={guideName}
+              />
             );
           }
         })}
@@ -94,27 +72,10 @@ const styles = {
       padding: '$4 $40 $20 $40',
     },
   }),
-  card: cssObj({
-    marginBottom: '$6',
-    padding: '$3 $2',
-  }),
-  featured: cssObj({
-    color: '$intentsPrimary11',
-    fontSize: '$sm',
-  }),
-  date: cssObj({
-    fontSize: '$sm',
-  }),
   separator: cssObj({
     background: '$intentsBase7',
     height: '20px',
     width: '2px',
-  }),
-  badge: cssObj({
-    fontSize: '$xs',
-  }),
-  badgeContainer: cssObj({
-    marginTop: '$4',
   }),
   categoryContainer: cssObj({
     marginBottom: '$10',
