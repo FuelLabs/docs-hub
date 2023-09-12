@@ -1,24 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { cssObj } from '@fuel-ui/css';
-import {
-  Box,
-  IconButton,
-  Icon,
-  FuelLogo,
-  Button,
-  Text,
-  ButtonLink,
-  Link,
-} from '@fuel-ui/react';
+import { Box, IconButton, Icon, FuelLogo, Link } from '@fuel-ui/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { AnimationProps } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 
-import { NAVIGATION } from '../config/constants';
-import type { LinkObject } from '../config/constants';
-
 import { DocSidebar } from './DocSidebar';
+import { Navigation } from './Navigation';
 
 const ThemeToggler = dynamic(() => import('./ThemeToggler'), { ssr: false });
 const Search = dynamic(() => import('./Search'), { ssr: false });
@@ -30,8 +19,8 @@ const SPRING: AnimationProps['transition'] = {
 };
 
 export function MobileMenu({
-  active,
   title,
+  active,
 }: {
   active: string;
   title?: string;
@@ -80,30 +69,9 @@ export function MobileMenu({
         {button}
       </Box.Flex>
       <Box css={styles.navContainer}>
-        <Box.Flex css={styles.nav} direction={'column'}>
-          {NAVIGATION.map((item, index) => {
-            if (item.type === 'menu') {
-              return (
-                <MenuButton
-                  key={`${item.slug}${index}`}
-                  item={item}
-                  active={active}
-                />
-              );
-            }
-            return (
-              <ButtonLink
-                key={`${item.slug}${index}`}
-                css={styles.navButton}
-                href={item.link}
-                isExternal={item.type === 'external-link'}
-                data-active={active === item.slug}
-              >
-                {item.name}
-              </ButtonLink>
-            );
-          })}
-        </Box.Flex>
+        <Box.Stack css={styles.nav}>
+          <Navigation active={active} />
+        </Box.Stack>
 
         <DocSidebar onClick={() => setShowing(false)} />
       </Box>
@@ -119,58 +87,6 @@ export function MobileMenu({
         {showing && <Box css={styles.overlay}>{content}</Box>}
       </AnimatePresence>
     </Box>
-  );
-}
-
-interface MenuButtonProps {
-  item: LinkObject;
-  active: string;
-}
-
-function MenuButton({ item, active }: MenuButtonProps) {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const isActive = item.menu?.some((i) => i.slug === active);
-  return (
-    <>
-      <Button
-        onClick={() => setIsOpen(!isOpen)}
-        css={styles.navButton}
-        variant="link"
-        intent="base"
-        data-active={isActive}
-        rightIcon={isOpen ? Icon.is('ChevronUp') : Icon.is('ChevronDown')}
-      >
-        {item.name}
-      </Button>
-      {isOpen && item.menu && (
-        <Box.Stack css={styles.navButtonMenu}>
-          {item.menu.map((menuItem, index) => {
-            if (
-              menuItem.type === 'internal-link' ||
-              menuItem.type === 'external-link'
-            ) {
-              return (
-                <ButtonLink
-                  css={styles.menuLink}
-                  intent="base"
-                  key={`${index}${menuItem.slug}`}
-                  href={menuItem.link}
-                  isExternal={menuItem.type === 'external-link'}
-                  data-active={active === menuItem.slug}
-                >
-                  {menuItem.name}
-                </ButtonLink>
-              );
-            }
-            return (
-              <Text key={`${index}${menuItem.name}`} css={styles.categoryMenu}>
-                {menuItem.name}
-              </Text>
-            );
-          })}
-        </Box.Stack>
-      )}
-    </>
   );
 }
 
@@ -288,7 +204,9 @@ const styles = {
     },
   }),
   nav: cssObj({
-    gap: '$2',
+    a: {
+      justifyContent: 'flex-start',
+    },
     py: '$4',
   }),
 };

@@ -26,9 +26,9 @@ const networkNavigation = {
   ],
 };
 
-const networkCards = [
+export const networkCards = [
   {
-    heading: 'Fuel Network',
+    heading: '',
     cards: [
       {
         link: '/docs/graphql',
@@ -58,7 +58,12 @@ const networkCards = [
 export default function Network({ theme }: CategoryProps) {
   return (
     <Layout isClean isCleanWithNav title="Network" theme={theme}>
-      <CategoryScreen nav={networkNavigation} cards={networkCards} />
+      <CategoryScreen
+        header="Fuel Network"
+        description="Find network specifications and resources."
+        nav={networkNavigation}
+        cards={networkCards}
+      />
     </Layout>
   );
 }

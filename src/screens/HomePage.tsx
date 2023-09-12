@@ -1,5 +1,5 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box, Text, Heading, Grid } from '@fuel-ui/react';
+import { Box, Text, Heading, Grid, ButtonLink } from '@fuel-ui/react';
 import { Sidebar } from '~/src/components/Sidebar';
 import type { SidebarNav } from '~/src/components/Sidebar';
 
@@ -8,9 +8,15 @@ import type { GuidesProps } from '../pages/guides';
 
 import type { CardInfo } from './CategoryPage';
 
+interface HomeCard {
+  header: string;
+  link?: string;
+  cards: CardInfo[];
+}
+
 interface HomeScreenProps extends GuidesProps {
   homeNavigation: SidebarNav;
-  homeCards: CardInfo[];
+  homeCards: HomeCard[];
 }
 
 export function HomeScreen({
@@ -37,9 +43,9 @@ export function HomeScreen({
             </Text>
           </Box>
           <Heading as="h3" id="getting-started">
-            Getting Started
+            Get Started
           </Heading>
-          <Grid css={styles.grid}>
+          <Grid css={{ ...styles.grid, ...styles.grid2 }}>
             {Object.keys(guides).map((guideName, index) => {
               const guideInfo = guides[guideName];
               if (index < 2) {
@@ -51,18 +57,36 @@ export function HomeScreen({
               }
             })}
           </Grid>
-          <Heading as="h3" id="read-the-docs">
-            Read the Docs
-          </Heading>
-          <Grid css={styles.grid}>
-            {homeCards.map((card) => {
-              return (
-                <Grid.Item key={card.heading}>
-                  <Card cardName={card.heading} cardInfo={card} />
-                </Grid.Item>
-              );
-            })}
-          </Grid>
+
+          {homeCards.map((cardSection) => {
+            return (
+              <Box key={cardSection.header}>
+                <Box.Flex
+                  justify={'space-between'}
+                  css={styles.categoryHeading}
+                >
+                  <Heading as="h3" id="read-the-docs">
+                    {cardSection.header}
+                  </Heading>
+                  {cardSection.link && (
+                    <ButtonLink
+                      href={cardSection.link}
+                      rightIcon={'ArrowNarrowRight'}
+                    >
+                      See All
+                    </ButtonLink>
+                  )}
+                </Box.Flex>
+                <Grid css={{ ...styles.grid, ...styles.grid3 }}>
+                  {cardSection.cards.map((card) => (
+                    <Grid.Item key={card.heading}>
+                      <Card cardName={card.heading} cardInfo={card} />
+                    </Grid.Item>
+                  ))}
+                </Grid>
+              </Box>
+            );
+          })}
         </Box>
       </Box>
     </>
@@ -96,12 +120,22 @@ export const styles = {
     mb: '$10',
     borderBottom: '1px solid $border',
   }),
+  categoryHeading: cssObj({
+    mb: '$10',
+    borderBottom: '1px solid $border',
+  }),
   grid: cssObj({
     gap: '$6',
     margin: '$2 0 $8 0',
-
+  }),
+  grid2: cssObj({
     '@xl': {
       gridTemplateColumns: 'repeat(2, minmax(300px, 1fr))',
+    },
+  }),
+  grid3: cssObj({
+    '@xl': {
+      gridTemplateColumns: 'repeat(3, minmax(300px, 1fr))',
     },
   }),
   section: cssObj({
@@ -117,10 +151,6 @@ export const styles = {
     '@xl': {
       py: '$14',
       px: '$0',
-    },
-
-    '& .fuel_Heading[data-rank="h1"]:first-of-type': {
-      mt: '$0 !important',
     },
 
     '& .Layout--pageContent': {

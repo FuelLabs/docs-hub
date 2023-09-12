@@ -19,6 +19,11 @@ const swayNavigation = {
       isExternal: true,
     },
     {
+      label: 'Sway Playground',
+      slug: 'https://sway-playground.org/',
+      isExternal: true,
+    },
+    {
       label: 'Standard Library',
       slug: 'https://fuellabs.github.io/sway/master/std',
       isExternal: true,
@@ -49,6 +54,13 @@ const swayCards = [
         headingIcon: 'Apps',
         body: 'Explore end-to-end applications written in Sway.',
       },
+      {
+        link: 'https://github.com/FuelLabs/sway-applications',
+        isExternal: true,
+        heading: 'Sway Playground',
+        headingIcon: 'Browser',
+        body: 'Get started experimenting with Sway.',
+      },
     ],
   },
   {
@@ -75,7 +87,12 @@ const swayCards = [
 export default function Sway({ theme }: CategoryProps) {
   return (
     <Layout isClean isCleanWithNav title="Sway Language" theme={theme}>
-      <CategoryScreen nav={swayNavigation} cards={swayCards} />
+      <CategoryScreen
+        header="Sway Language"
+        description="Learn and build with Sway."
+        nav={swayNavigation}
+        cards={swayCards}
+      />
     </Layout>
   );
 }

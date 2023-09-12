@@ -95,9 +95,6 @@ const styles = {
     '.fuel_ListItem a': {
       display: 'block',
       width: '100%',
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
     },
   }),
 };

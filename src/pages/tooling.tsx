@@ -28,7 +28,7 @@ const toolingNavigation = {
 
 const toolingCards = [
   {
-    heading: 'Tooling',
+    heading: '',
     cards: [
       {
         link: '/docs/forc',
@@ -58,7 +58,12 @@ const toolingCards = [
 export default function Tooling({ theme }: CategoryProps) {
   return (
     <Layout isClean isCleanWithNav title="Tooling" theme={theme}>
-      <CategoryScreen nav={toolingNavigation} cards={toolingCards} />
+      <CategoryScreen
+        header="Tooling"
+        description="All the tools you need to develop & deploy."
+        nav={toolingNavigation}
+        cards={toolingCards}
+      />
     </Layout>
   );
 }

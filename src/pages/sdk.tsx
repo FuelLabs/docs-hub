@@ -28,28 +28,28 @@ const sdkNavigation = {
 
 const sdkCards = [
   {
-    heading: 'SDKs',
+    heading: '',
     cards: [
       {
         link: '/docs/fuels-rs',
         isExternal: false,
         heading: 'Rust SDK',
         headingIcon: 'BrandRust',
-        body: 'Read the Rust SDK Docs',
+        body: 'Read the documentation for the Rust SDK.',
       },
       {
         link: '/docs/fuels-ts',
         isExternal: false,
         heading: 'Typescript SDK',
         headingIcon: 'BrandTypescript',
-        body: 'Read the TypeScript SDK Docs',
+        body: 'Read the documentation for the TypeScript SDK.',
       },
       {
         link: '/docs/wallet',
         isExternal: false,
         heading: 'Wallet',
         headingIcon: 'Wallet',
-        body: 'Read the Fuel Wallet SDK Docs',
+        body: 'Read the documentation for the Fuel Wallet.',
       },
     ],
   },
@@ -58,7 +58,12 @@ const sdkCards = [
 export default function SDK({ theme }: CategoryProps) {
   return (
     <Layout isClean isCleanWithNav title="SDK" theme={theme}>
-      <CategoryScreen nav={sdkNavigation} cards={sdkCards} />
+      <CategoryScreen
+        header="Fuel SDKs"
+        description="Everything you need to build apps on Fuel."
+        nav={sdkNavigation}
+        cards={sdkCards}
+      />
     </Layout>
   );
 }

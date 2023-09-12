@@ -85,6 +85,7 @@ export const styles = {
 
     '& .Layout--pageContent': {
       flex: 1,
+      minHeight: '65vh',
     },
   }),
 };

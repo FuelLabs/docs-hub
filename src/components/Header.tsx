@@ -1,5 +1,12 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box, FuelLogo, Link, darkTheme, lightTheme } from '@fuel-ui/react';
+import {
+  Box,
+  FuelLogo,
+  Icon,
+  Link,
+  darkTheme,
+  lightTheme,
+} from '@fuel-ui/react';
 import dynamic from 'next/dynamic';
 
 import { MobileMenu } from './MobileMenu';
@@ -25,6 +32,32 @@ export function Header({ active, title }: { active: string; title?: string }) {
           <Search title={title} />
           <ThemeToggler />
         </Box.Stack>
+        <Box.Flex gap={'$2'} css={styles.menu}>
+          <a
+            href="https://github.com/fuellabs/"
+            target="_blank"
+            rel="noreferrer"
+            title="Github"
+          >
+            <Icon icon={Icon.is('BrandGithub')} size={24} stroke={1} />
+          </a>
+          <a
+            href="https://twitter.com/fuel_network"
+            target="_blank"
+            rel="noreferrer"
+            title="Twitter"
+          >
+            <Icon icon={'BrandTwitter'} size={24} stroke={1} />
+          </a>
+          <a
+            href="https://discord.com/invite/xfpK4Pe"
+            target="_blank"
+            rel="noreferrer"
+            title="Discord"
+          >
+            <Icon icon={Icon.is('BrandDiscord')} size={24} stroke={1} />
+          </a>
+        </Box.Flex>
       </Box>
       <MobileMenu active={active} title={title} />
     </Box.Flex>
@@ -76,6 +109,16 @@ const styles = {
 
     '@xl': {
       display: 'flex',
+    },
+  }),
+  menu: cssObj({
+    a: {
+      color: '$intentsBase10',
+      transition: 'all 0.3s',
+    },
+
+    'a.active, a:hover': {
+      color: '$textLink',
     },
   }),
   desktop: cssObj({
