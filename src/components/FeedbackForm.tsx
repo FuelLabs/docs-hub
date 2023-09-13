@@ -203,6 +203,7 @@ export function FeedbackForm() {
           intent="base"
           size="sm"
           type="submit"
+          onClick={handleSubmit(onSubmit)}
         >
           Send
         </Button>
@@ -243,7 +244,7 @@ export function FeedbackForm() {
         <Dialog.Content>
           <Dialog.Close onClick={closeForm} />
           <Dialog.Heading>Was this page helpful?</Dialog.Heading>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form>
             <HelpfulButtons />
             {isHelpful === 'false' && (
               <Form.HelperText css={styles.forum}>
