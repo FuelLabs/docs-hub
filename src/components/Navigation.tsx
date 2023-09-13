@@ -4,9 +4,11 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
 import { NAVIGATION } from '../config/constants';
+import { useVersion } from '../hooks/useVersion';
 
 export function Navigation({ active }: { active: string }) {
   const router = useRouter();
+  const version = useVersion();
 
   return (
     <>
@@ -32,7 +34,11 @@ export function Navigation({ active }: { active: string }) {
                     );
                     if (menuItem && menuItem.link) {
                       if (menuItem.type === 'internal-link') {
-                        router.push(menuItem.link);
+                        const thisLink =
+                          version && version === 'latest'
+                            ? menuItem.link.replace('docs/', 'docs/latest/')
+                            : menuItem.link;
+                        router.push(thisLink);
                       } else if (menuItem.type === 'external-link') {
                         window.open(menuItem.link);
                       }

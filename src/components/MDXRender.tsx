@@ -50,9 +50,10 @@ type MDXRenderProps = {
 
 export function MDXRender({ code, components }: MDXRenderProps) {
   const pathname = usePathname();
-  if (pathname.startsWith('/docs/wallet/')) {
-    components.td = TD;
-    components.th = TH;
+  const newComponents = components;
+  if (pathname.includes('/wallet/')) {
+    newComponents.td = TD;
+    newComponents.th = TH;
   }
 
   const { default: Content } = useMemo(
@@ -61,7 +62,7 @@ export function MDXRender({ code, components }: MDXRenderProps) {
   );
 
   return (
-    <provider.MDXProvider components={{ ...components, ...mdxComponents }}>
+    <provider.MDXProvider components={{ ...newComponents, ...mdxComponents }}>
       <Content />
     </provider.MDXProvider>
   );

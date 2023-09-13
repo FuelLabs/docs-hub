@@ -5,50 +5,73 @@ import { EOL } from 'os';
 import { join } from 'path';
 
 const DOCS_DIRECTORY = join(process.cwd(), './docs');
-const swaySummaryPath = join(DOCS_DIRECTORY, './sway/docs/book/src/SUMMARY.md');
-const rustSummaryPath = join(DOCS_DIRECTORY, './fuels-rs/docs/src/SUMMARY.md');
-const fuelupSummaryPath = join(DOCS_DIRECTORY, './fuelup/docs/src/SUMMARY.md');
-const indexerSummaryPath = join(
-  DOCS_DIRECTORY,
-  './fuel-indexer/docs/src/SUMMARY.md'
-);
-const specsSummaryPath = join(DOCS_DIRECTORY, './fuel-specs/src/SUMMARY.md');
+const LATEST_DOCS_DIRECTORY = join(process.cwd(), './docs/latest');
 
-const graphqlOrderPath = join(
-  DOCS_DIRECTORY,
-  './fuel-graphql-docs/src/nav.json'
-);
-const guidesOrderPath = join(DOCS_DIRECTORY, './guides/docs/nav.json');
-const walletOrderPath = join(
-  DOCS_DIRECTORY,
-  './fuels-wallet/packages/docs/src/nav.json'
-);
-// const aboutFuelOrderPath = join(DOCS_DIRECTORY, '../docs/about-fuel/nav.json');
-const tsConfigPath = join(
-  DOCS_DIRECTORY,
-  './fuels-ts/apps/docs/.vitepress/config.ts'
+const swaySummaryFile = getFile('./sway/docs/book/src/SUMMARY.md');
+const latestSwaySummaryFile = getFile('./sway/docs/book/src/SUMMARY.md', true);
+
+const rustSummaryFile = getFile('./fuels-rs/docs/src/SUMMARY.md');
+const latestRustSummaryFile = getFile('./fuels-rs/docs/src/SUMMARY.md', true);
+
+const fuelupSummaryFile = getFile('./fuelup/docs/src/SUMMARY.md');
+const latestFuelupSummaryFile = getFile('./fuelup/docs/src/SUMMARY.md', true);
+
+const indexerSummaryFile = getFile('./fuel-indexer/docs/src/SUMMARY.md');
+const latestIndexerSummaryFile = getFile(
+  './fuel-indexer/docs/src/SUMMARY.md',
+  true
 );
 
-const tsAPIOrderPath = join(
-  DOCS_DIRECTORY,
-  './fuels-ts/apps/docs/.typedoc/api-links.json'
+const specsSummaryFile = getFile('./fuel-specs/src/SUMMARY.md');
+const latestSpecsSummaryFile = getFile('./fuel-specs/src/SUMMARY.md', true);
+
+const graphqlOrderFile = getFile(
+  './fuel-graphql-docs/src/nav.json',
+  false,
+  true
+);
+const latestGraphqlOrderFile = getFile(
+  './fuel-graphql-docs/src/nav.json',
+  true,
+  true
 );
 
-const swaySummaryFile = fs.readFileSync(swaySummaryPath, 'utf8');
-const rustSummaryFile = fs.readFileSync(rustSummaryPath, 'utf8');
-const fuelupSummaryFile = fs.readFileSync(fuelupSummaryPath, 'utf8');
-const indexerSummaryFile = fs.readFileSync(indexerSummaryPath, 'utf8');
-const specsSummaryFile = fs.readFileSync(specsSummaryPath, 'utf8');
-const graphqlOrderFile = JSON.parse(fs.readFileSync(graphqlOrderPath, 'utf8'));
-const guidesOrderFile = JSON.parse(fs.readFileSync(guidesOrderPath, 'utf8'));
-const walletOrderFile = JSON.parse(fs.readFileSync(walletOrderPath, 'utf8'));
-// const aboutFuelOrderFile = JSON.parse(
-//   fs.readFileSync(aboutFuelOrderPath, 'utf8')
-// );
-const tsConfigFile = fs.readFileSync(tsConfigPath, 'utf8');
-const tsAPIOrderFile = fs.readFileSync(tsAPIOrderPath, 'utf8');
+const walletOrderFile = getFile(
+  './fuels-wallet/packages/docs/src/nav.json',
+  false,
+  true
+);
+const latestWalletOrderFile = getFile(
+  './fuels-wallet/packages/docs/src/nav.json',
+  true,
+  true
+);
+
+const guidesOrderFile = getFile('./guides/docs/nav.json', false, true);
+const latestGuidesOrderFile = getFile('./guides/docs/nav.json', true, true);
+
+const tsConfigFile = getFile('./fuels-ts/apps/docs/.vitepress/config.ts');
+const latestTsConfigFile = getFile(
+  './fuels-ts/apps/docs/.vitepress/config.ts',
+  true
+);
+
+const tsAPIOrderFile = getFile(
+  './fuels-ts/apps/docs/.typedoc/api-links.json',
+  false,
+  true
+);
+const latestTsAPIOrderFile = getFile(
+  './fuels-ts/apps/docs/.typedoc/api-links.json',
+  true,
+  true
+);
+
+// const aboutFuelOrderFile = getFile('./about-fuel/nav.json', false, true);
+// const latestAboutFuelOrderFile = getFile('./about-fuel/nav.json', true, true);
 
 const forcLines = [];
+const latestForcLines = [];
 
 // GENERATES SIDEBAR LINKS
 await main();
@@ -79,6 +102,17 @@ async function main() {
     })
   );
 }
+
+function getFile(path, isLatest = false, isJSON = false) {
+  const docsDir = isLatest ? LATEST_DOCS_DIRECTORY : DOCS_DIRECTORY;
+  const fullPath = join(docsDir, path);
+  const file = fs.readFileSync(fullPath, 'utf8');
+  if (isJSON) {
+    return JSON.parse(file);
+  }
+  return file;
+}
+
 function extractData(inputString) {
   // used for api.json order
   const regex = /"([^"]+)":\s*"([^"]+)"/g;
@@ -89,7 +123,7 @@ function extractData(inputString) {
   return null;
 }
 
-function handleVPLine(trimmedLine, lines, index, thisOrder, thisCat) {
+function handleVPLine(trimmedLine, lines, index, thisOrder, thisCat, isLatest) {
   const regex = /'([^']+)'/;
   // Create a shallow copy
   let newVPOrder = JSON.parse(JSON.stringify(thisOrder));
@@ -141,7 +175,7 @@ function handleVPLine(trimmedLine, lines, index, thisOrder, thisCat) {
   } else if (trimmedLine.startsWith('apiLinks')) {
     // handle API order
     newVPOrder.menu.push('API');
-    const apiJSON = JSON.parse(tsAPIOrderFile);
+    const apiJSON = isLatest ? latestTsAPIOrderFile : tsAPIOrderFile;
     const apiLines = JSON.stringify(apiJSON, null, 2).split(EOL);
     apiLines.forEach((apiLine, apiIndex) => {
       const trimmedAPILine = apiLine.trimStart();
@@ -150,7 +184,8 @@ function handleVPLine(trimmedLine, lines, index, thisOrder, thisCat) {
         apiLines,
         apiIndex,
         newVPOrder,
-        category
+        category,
+        isLatest
       );
       category = results.category;
       newVPOrder = results.newVPOrder;
@@ -160,7 +195,7 @@ function handleVPLine(trimmedLine, lines, index, thisOrder, thisCat) {
   return { newVPOrder, category };
 }
 
-function processVPConfig(lines) {
+function processVPConfig(lines, isLatest) {
   let tsOrder = { menu: ['fuels-ts'] };
   let currentCategory;
   let foundStart = false;
@@ -172,7 +207,8 @@ function processVPConfig(lines) {
         lines,
         index,
         tsOrder,
-        currentCategory
+        currentCategory,
+        isLatest
       );
       tsOrder = newVPOrder;
       currentCategory = category;
@@ -184,7 +220,7 @@ function processVPConfig(lines) {
   return tsOrder;
 }
 
-function processSummary(lines, docsName) {
+function processSummary(lines, docsName, isLatest = false) {
   const order = { menu: [docsName] };
   let currentCategory;
   lines.forEach((line) => {
@@ -194,7 +230,11 @@ function processSummary(lines, docsName) {
     if (line.includes('.md')) {
       if (docsName === 'sway' && line.includes('/forc/')) {
         // handle forc docs separately
-        forcLines.push(line);
+        if (isLatest) {
+          latestForcLines.push(line);
+        } else {
+          forcLines.push(line);
+        }
       } else if (line[0] === '-') {
         // handle top-level items
         if (paths.length > 2) {
@@ -239,35 +279,74 @@ async function getOrders() {
   const orders = {};
   // SWAY ORDER
   orders.sway = processSummary(swaySummaryFile.split(EOL), 'sway');
+  orders['latest-sway'] = processSummary(
+    latestSwaySummaryFile.split(EOL),
+    'sway',
+    true
+  );
   // FUELS-RS ORDER
   orders['fuels-rs'] = processSummary(rustSummaryFile.split(EOL), 'fuels-rs');
+  orders['latest-fuels-rs'] = processSummary(
+    latestRustSummaryFile.split(EOL),
+    'fuels-rs',
+    true
+  );
   // FUELUP ORDER
   orders.fuelup = processSummary(fuelupSummaryFile.split(EOL), 'fuelup');
+  orders['latest-fuelup'] = processSummary(
+    latestFuelupSummaryFile.split(EOL),
+    'fuelup',
+    true
+  );
   // INDEXER ORDER
   orders.indexer = processSummary(indexerSummaryFile.split(EOL), 'indexer');
+  orders['latest-indexer'] = processSummary(
+    latestIndexerSummaryFile.split(EOL),
+    'indexer',
+    true
+  );
   // SPECS ORDER
   orders.specs = processSummary(specsSummaryFile.split(EOL), 'specs');
+  orders['latest-specs'] = processSummary(
+    latestSpecsSummaryFile.split(EOL),
+    'specs',
+    true
+  );
   // GRAPHQL ORDER
   orders.graphql = graphqlOrderFile;
+  orders['latest-graphql'] = latestGraphqlOrderFile;
 
   // GUIDES ORDER
   orders.guides = guidesOrderFile;
+  orders['latest-guides'] = latestGuidesOrderFile;
 
   // ABOUT FUEL ORDER
   // orders['about-fuel'] = aboutFuelOrderFile;
+  // orders['latest-about-fuel'] = latestAboutFuelOrderFile;
 
   // WALLET ORDER
   orders.wallet = walletOrderFile;
+  orders['latest-wallet'] = latestWalletOrderFile;
 
   // FORC ORDER
-  const newForcLines = forcLines.map((line) =>
-    line.startsWith('-') ? line : line.slice(2, line.length)
-  );
+  const newForcLines = forcLines.map(handleForcLines);
   orders.forc = processSummary(newForcLines, 'forc');
 
+  const newLatestForcLines = latestForcLines.map(handleForcLines);
+  orders['latest-forc'] = processSummary(newLatestForcLines, 'forc', true);
+
+  // FUELS-TS ORDER
   orders['fuels-ts'] = processVPConfig(tsConfigFile.split(EOL));
+  orders['latest-fuels-ts'] = processVPConfig(
+    latestTsConfigFile.split(EOL),
+    true
+  );
 
   return orders;
+}
+
+function handleForcLines(line) {
+  return line.startsWith('-') ? line : line.slice(2, line.length);
 }
 
 function getSortedLinks(config, docs) {

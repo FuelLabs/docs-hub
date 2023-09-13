@@ -3,11 +3,15 @@
 import dynamic from 'next/dynamic';
 import * as GQLExamples from '~/docs/fuel-graphql-docs/examples';
 import * as FuelExamples from '~/docs/fuels-wallet/packages/docs/examples';
-
-import type { DocType, ComponentsList } from '../types';
-
+import * as LatestGQLExamples from '~/docs/latest/fuel-graphql-docs/examples';
+import * as LatestFuelExamples from '~/docs/latest/fuels-wallet/packages/docs/examples';
 import { COMPONENTS as GQL_COMPONENTS } from '~/src/generated/components/graphql';
+import { COMPONENTS as LATEST_GQL_COMPONENTS } from '~/src/generated/components/latest-graphql';
+import { COMPONENTS as LATEST_WALLET_COMPONENTS } from '~/src/generated/components/latest-wallet';
 import { COMPONENTS as WALLET_COMPONENTS } from '~/src/generated/components/wallet';
+
+import type { VersionCtx } from '../hooks/useVersion';
+import type { DocType, ComponentsList } from '../types';
 
 function loadComponent(imp: any, name?: string) {
   return dynamic(() => imp.then((mod: any) => (name ? mod[name] : mod)), {
@@ -15,9 +19,10 @@ function loadComponent(imp: any, name?: string) {
   });
 }
 
-export function getComponents(doc: DocType) {
+export function getComponents(doc: DocType, version?: VersionCtx) {
   const components: any = {};
   const slug = doc.docsConfig.slug || '';
+  const isLatest = version && version === 'latest';
 
   function addComponents(list: ComponentsList) {
     Object.keys(list).forEach((page) => {
@@ -33,28 +38,45 @@ export function getComponents(doc: DocType) {
     });
   }
 
-  if (['guides/'].some((s) => slug.startsWith(s))) {
+  if (slug.startsWith('guides/')) {
     components.CodeImport = loadComponent(
       import('~/src/components/CodeImport'),
       'CodeImport'
     );
-  } else if (['docs/wallet/'].some((s) => slug.startsWith(s))) {
+  } else if (
+    slug.startsWith('docs/wallet') ||
+    slug.startsWith('docs/latest/wallet')
+  ) {
     components.CodeImport = loadComponent(
       import('~/src/components/CodeImport'),
       'CodeImport'
     );
 
-    addComponents(WALLET_COMPONENTS);
-
-    components.Examples = FuelExamples;
-  } else if (['docs/graphql/'].some((s) => slug.startsWith(s))) {
-    components.GQLExamples = GQLExamples;
+    if (isLatest) {
+      components.Examples = LatestFuelExamples;
+      addComponents(LATEST_WALLET_COMPONENTS);
+    } else {
+      components.Examples = FuelExamples;
+      addComponents(WALLET_COMPONENTS);
+    }
+  } else if (
+    slug.startsWith('docs/graphql') ||
+    slug.startsWith('docs/latest/graphql')
+  ) {
+    if (isLatest) {
+      components.GQLExamples = LatestGQLExamples;
+      addComponents(LATEST_GQL_COMPONENTS);
+    } else {
+      components.GQLExamples = GQLExamples;
+      addComponents(GQL_COMPONENTS);
+    }
     components.CodeExamples = loadComponent(
       import('~/src/components/GraphqlCodeExample'),
       'GraphQLCodeExample'
     );
-    addComponents(GQL_COMPONENTS);
   }
+
+  console.log('COMPONENTS:', components);
 
   return components;
 }

@@ -4,10 +4,13 @@ import {
   FuelLogo,
   Icon,
   Link,
+  Dropdown,
   darkTheme,
   lightTheme,
 } from '@fuel-ui/react';
 import dynamic from 'next/dynamic';
+
+import { useVersion, useSetVersion } from '../hooks/useVersion';
 
 import { MobileMenu } from './MobileMenu';
 import { Navigation } from './Navigation';
@@ -16,6 +19,11 @@ const ThemeToggler = dynamic(() => import('./ThemeToggler'), { ssr: false });
 const Search = dynamic(() => import('./Search'), { ssr: false });
 
 export function Header({ active, title }: { active: string; title?: string }) {
+  const version = useVersion();
+  const setVersion = useSetVersion();
+
+  console.log('VERSION:', version);
+
   return (
     <Box.Flex as="header" css={styles.root}>
       <Link href="/" className="logo">
@@ -31,6 +39,28 @@ export function Header({ active, title }: { active: string; title?: string }) {
         <Box.Stack direction="row" gap="$4" css={{ mr: '$4' }}>
           <Search title={title} />
           <ThemeToggler />
+          <Dropdown>
+            <Dropdown.Trigger>Version</Dropdown.Trigger>
+            <Dropdown.Menu
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              onAction={(action: any) => {
+                if (setVersion) {
+                  if (action === 'beta-4') {
+                    setVersion('beta-4');
+                  } else if (action === 'latest') {
+                    setVersion('latest');
+                  }
+                }
+              }}
+            >
+              <Dropdown.MenuItem key="beta-4" aria-label="beta-4">
+                Beta-4
+              </Dropdown.MenuItem>
+              <Dropdown.MenuItem key="latest" aria-label="latest">
+                Latest
+              </Dropdown.MenuItem>
+            </Dropdown.Menu>
+          </Dropdown>
         </Box.Stack>
         <Box.Flex css={styles.menu}>
           <a

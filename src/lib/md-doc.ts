@@ -59,6 +59,7 @@ export class Doc {
   }
 
   #getConfig(slug: string): Config {
+    slug = slug.replace('docs/latest/', 'docs/');
     try {
       if (slug.startsWith('docs/')) {
         slug = slug.replace('docs/', '');

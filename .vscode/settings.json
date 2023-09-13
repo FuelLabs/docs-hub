@@ -10,14 +10,15 @@
   "search.exclude": {
     "**/node_modules": true,
     "**/.git": true,
-    "docs/sway": true,
-    "docs/builds": true,
-    "docs/fuel-graphql-docs": true,
-    "docs/fuel-indexer": true,
-    "docs/fuel-specs": true,
-    "docs/fuels-rs": true,
-    "docs/fuels-ts": true,
-    "docs/fuels-wallet": true,
-    "docs/fuelup": true
-  }
+    "**/sway": true,
+    "**/builds": true,
+    "**/fuel-graphql-docs": true,
+    "**/fuel-indexer": true,
+    "**/fuel-specs": true,
+    "**/fuels-rs": true,
+    "**/fuels-ts": true,
+    "**/fuels-wallet": true,
+    "**/fuelup": true
+  },
+  "git.ignoreLimitWarning": true
 }

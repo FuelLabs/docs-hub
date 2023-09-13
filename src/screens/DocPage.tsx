@@ -1,5 +1,6 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
+import { useEffect, useState } from 'react';
 import { Layout } from '~/src/components/Layout';
 import { Sidebar } from '~/src/components/Sidebar';
 import { TableOfContent } from '~/src/components/TableOfContent';
@@ -7,13 +8,21 @@ import { DocProvider } from '~/src/hooks/useDocContext';
 
 import { DocFooter } from '../components/DocFooter';
 import { MDXRender } from '../components/MDXRender';
+import { useVersion } from '../hooks/useVersion';
 import { getComponents } from '../lib/imports';
 import type { DocPageProps } from '../pages/[...slug]';
 
 export function DocScreen(props: DocPageProps) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [components, setComponents] = useState<any>(null);
   const { doc } = props;
-  const components = getComponents(doc);
+  const version = useVersion();
   const hasHeadings = Boolean(doc?.headings?.length);
+
+  useEffect(() => {
+    const newComponents = getComponents(doc, version);
+    setComponents(newComponents);
+  }, [version]);
 
   return (
     <DocProvider {...props}>
@@ -30,7 +39,9 @@ export function DocScreen(props: DocPageProps) {
         </Box>
         <Box as="section" css={styles.section} className="Layout--section">
           <Box className="Layout--pageContent">
-            {doc && <MDXRender code={props.code} components={components} />}
+            {doc && components !== null && (
+              <MDXRender code={props.code} components={components} />
+            )}
           </Box>
           {doc && <DocFooter />}
         </Box>
