@@ -11,6 +11,7 @@ import {
   toast,
   Alert,
   IconButton,
+  Spinner,
 } from '@fuel-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -205,7 +206,11 @@ export function FeedbackForm() {
           type="submit"
           onClick={handleSubmit(onSubmit)}
         >
-          Send
+          {mutation.isLoading ? (
+            <Spinner color="semanticSolidInfoBg" />
+          ) : (
+            'Send'
+          )}
         </Button>
       </Box.Flex>
     );
