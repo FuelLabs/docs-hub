@@ -17,7 +17,7 @@ export default async function handler(
 
       const isHelpful = helpful === 'true' ? '👍 Yes' : '👎 No';
 
-      base('General User Survey').create([
+      const records = await base('General User Survey').create([
         {
           fields: {
             URL: url,
@@ -27,8 +27,11 @@ export default async function handler(
           },
         },
       ]);
-
-      res.status(200).json({ success: true });
+      if (records.length === 1) {
+        res.status(200).json({ success: true });
+      } else {
+        res.status(500).json({ success: false });
+      }
     } catch (error) {
       console.error('Error sending data to Airtable:', error);
       res.status(500).json({ success: false });
