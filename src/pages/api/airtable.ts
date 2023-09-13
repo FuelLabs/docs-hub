@@ -17,7 +17,7 @@ export default async function handler(
 
       const isHelpful = helpful === 'true' ? '👍 Yes' : '👎 No';
 
-      base('General User Survey').create([
+      await base('General User Survey').create([
         {
           fields: {
             URL: url,
