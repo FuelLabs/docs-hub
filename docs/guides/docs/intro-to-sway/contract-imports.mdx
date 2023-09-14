@@ -1,0 +1,50 @@
+---
+title: Imports
+category: Intro to Sway
+parent:
+  label: Guides
+  link: /guides
+---
+
+## Writing a Contract
+
+The first line of the file is specially reserved to let the compiler know if we are writing a contract, script, predicate, or library. To define the file as a contract, use the `contract` keyword.
+
+```rust
+contract;
+```
+
+### Imports
+
+The Sway standard library provides several utility types and methods we can use in our contract. To import a library, you can use the `use` keyword and `::`, also called a namespace qualifier, to chain library names like this:
+
+```rust
+// imports the msg_sender function from the std library
+use std::auth::msg_sender;
+```
+
+You can also group together imports using curly brackets:
+
+```rust
+use std::{
+    auth::msg_sender,
+    storage::StorageVec,
+}
+```
+
+For this contract, here is what needs to be imported:
+
+```rust
+use std::{
+    auth::msg_sender,
+    call_frames::msg_asset_id,
+    constants::BASE_ASSET_ID,
+    context::{
+        msg_amount,
+        this_balance,
+    },
+    token::transfer,
+};
+```
+
+We'll go through what each of these imports does as we use them later.

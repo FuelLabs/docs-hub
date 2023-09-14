@@ -1,0 +1,48 @@
+---
+title: Storage
+category: Intro to Sway
+parent:
+  label: Guides
+  link: /guides
+---
+
+### Defining The Storage Block
+
+Next, we can add the storage block. The storage block is where you can store any state variables in your contract that you want to be persistent. Any Sway primitive type can be stored in the storage block.
+
+Any variables declared inside a function and not saved in the storage block will be destroyed when the function finishes executing.
+
+```rust
+storage {
+    // counter for total items listed
+    item_counter: u64 = 0,
+    // map of item IDs to Items
+    item_map: StorageMap<u64, Item> = StorageMap {},
+    // owner of the contract
+    owner: Option<Identity> = Option::None,
+}
+```
+
+The first variable we have stored is `item_counter`, a number initialized to 0. You can use this counter to track the total number of items listed.
+
+#### StorageMap
+
+A StorageMap is a special type that allows you to save key-value pairs inside a storage block. 
+
+To define a storage map, you must specify the type for the key and value. For example, below, the type for the key is `u64`, and the type for the value is an `Item` struct.
+
+```rust
+item_map: StorageMap<u64, Item> = StorageMap{}
+```
+
+Here, we are saving a mapping of the item's ID to the Item struct. With this, we can look up information about an item with the ID. 
+
+#### Options
+
+Here we are setting the variable `owner` as a variable that could be `None` or could store an `Identity`.
+
+```rust
+owner: Option<Identity> = Option::None
+```
+
+If you want a value to be null or undefined under certain conditions, you can use an `Option` type, which is an enum that can be either `Some(value)` or `None`. The keyword `None` represents that no value exists, while the keyword `Some` means there is some value stored.

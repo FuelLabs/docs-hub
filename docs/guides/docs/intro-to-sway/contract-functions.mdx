@@ -1,0 +1,367 @@
+---
+title: Functions
+category: Intro to Sway
+parent:
+  label: Guides
+  link: /guides
+---
+
+### Defining The Contract Functions
+
+Finally, we can write our contract functions. Copy and paste the ABI from earlier. The functions in the contract *must* match the ABI, or the compiler will throw an error. Replace the semicolons at the end of each function with curly brackets, and change `abi SwayStore` to `impl SwayStore for Contract` as shown below:
+
+```rust
+impl SwayStore for Contract {
+    #[storage(read, write)]
+    fn list_item(price: u64, metadata: str[20]){
+        
+    }
+
+    #[storage(read, write), payable]
+    fn buy_item(item_id: u64) {
+        
+    }
+
+    #[storage(read)]
+    fn get_item(item_id: u64) -> Item {
+        
+    }
+
+    #[storage(read, write)]
+    fn initialize_owner() -> Identity {
+        
+    }
+
+    #[storage(read)]
+    fn withdraw_funds(){
+        
+    }
+
+    #[storage(read)]
+    fn get_count() -> u64{
+ 
+    }
+}
+```
+
+### Listing an item
+
+Our first function allows sellers to list an item for sale. They can set the item's price and a string that points to some externally-stored data about the item. 
+
+```rust
+#[storage(read, write)]
+fn list_item(price: u64, metadata: str[20]) {
+    // increment the item counter
+    storage.item_counter.write(storage.item_counter.try_read().unwrap() + 1);
+    //  get the message sender
+    let sender = msg_sender().unwrap();
+    // configure the item
+    let new_item: Item = Item {
+        id: storage.item_counter.try_read().unwrap(),
+        price: price,
+        owner: sender,
+        metadata: metadata,
+        total_bought: 0,
+    };
+    // save the new item to storage using the counter value
+    storage.item_map.insert(storage.item_counter.try_read().unwrap(), new_item);
+}
+```
+
+#### Updating storage
+
+The first step is incrementing the `item_counter` from storage so we can use it as the item's ID. In Sway the standard library has `read()`, `write()`, and `try_read()` methods to access or manipulate contract storage. Use try_read() when possible to avoid potential issues with accessing uninitialized storage. Here we are reading the current number of items that are already listed, modifying it, then writing it back into storage. 
+
+```rust
+storage.item_counter.write(storage.item_counter.try_read().unwrap() + 1);
+```
+
+#### Getting the message sender
+
+Next, we can get the `Identity` of the account listing the item.
+
+To define a variable in Sway, you can use `let` or `const`. Types must be declared where they cannot be inferred by the compiler.
+
+To get the `Identity`, you can use the `msg_sender` function imported from the standard library. `msg_sender` refers to the address of the entity (could be a user address or another contract address) that started the current function call. This function returns a `Result`, which is an enum type that is either OK or an error. The `Result` type is used when a value that could potentially be an error is expected.
+
+```rust
+enum Result<T, E> {
+    Ok(T),
+    Err(E),
+}
+```
+
+The `msg_sender` function returns a `Result` that is either an `Identity` or an `AuthError` in the case of an error.
+
+```rust
+let sender = msg_sender().unwrap();
+```
+
+To access the inner returned value, you can use the `unwrap` method, which returns the inner value if the `Result` is OK, and panics if the result is an error.
+
+#### Creating a new item
+
+We can create a new item using the `Item` struct. Use the `item_counter` value from storage for the ID, set the price and metadata as the input parameters, and set `total_bought` to 0. 
+
+Because the `owner` field requires a type `Identity`, you can use the sender value returned from `msg_sender()`.
+
+```rust
+let new_item: Item = Item {
+    id: storage.item_counter.try_read().unwrap(),
+    price: price,
+    owner: sender,
+    metadata: metadata,
+    total_bought: 0,
+};
+```
+
+#### Updating a StorageMap
+
+Finally, you can add the item to the `item_map` in the storage using the `insert` method. You can use the same ID for the key and set the item as the value.
+
+```rust
+storage.item_map.insert(storage.item_counter.try_read().unwrap(), new_item);
+```
+
+### Buying an item
+
+Next, we want buyers to be able to buy an item that has been listed, which means we will need to:
+1. Accept the item ID the buyer wants as a function parameter
+2. Make sure the buyer is paying the right price and using valid coins
+3. Increment the `total_bought` count for the item
+4. Transfer the cost of the item to the seller minus some fee that the contract will keep
+
+```rust
+#[storage(read, write), payable]
+fn buy_item(item_id: u64) {
+    // get the asset id for the asset sent
+    let asset_id = msg_asset_id();
+    // require that the correct asset was sent
+    require(asset_id == BASE_ASSET_ID, InvalidError::IncorrectAssetId(asset_id));
+
+    // get the amount of coins sent
+    let amount = msg_amount();
+
+    // get the item to buy
+    let mut item = storage.item_map.get(item_id).try_read().unwrap();
+
+    // require that the amount is at least the price of the item
+    require(amount >= item.price, InvalidError::NotEnoughTokens(amount));
+
+    // update the total amount bought
+    item.total_bought += 1;
+    // update the item in the storage map
+    storage.item_map.insert(item_id, item);
+
+    // only charge commission if price is more than 0.1 ETH
+    if amount > 100_000_000 {
+        // keep a 5% commission
+        let commission = amount / 20;
+        let new_amount = amount - commission;
+        // send the payout minus commission to the seller
+        transfer(item.owner, asset_id, new_amount);
+    } else {
+        // send the full payout to the seller
+        transfer(item.owner, asset_id, amount);
+    }
+}
+```
+
+#### Verifying payment
+
+We can use the `msg_asset_id` function imported from the standard library to get the asset ID of the coins being sent in the transaction. 
+
+```rust
+let asset_id = msg_asset_id();
+```
+
+Then, we can use a `require` statement to assert that the asset sent is the right one.
+
+A `require` statement takes two arguments: a condition and a value that gets logged if the condition is false. If false, the entire transaction will be reverted, and no changes will be applied. 
+
+Here the condition is that the `asset_id` must be equal to the `BASE_ASSET_ID`, which is the default asset used for the base blockchain that we imported from the standard library.
+ 
+If the asset is any different, or, for example, someone tries to buy an item with another coin, we can throw the custom error that we defined earlier and pass in the `asset_id`.
+
+```rust
+require(asset_id == BASE_ASSET_ID, InvalidError::IncorrectAssetId(asset_id));
+```
+
+Next, we can use the `msg_amount` function from the standard library to get the number of coins sent from the buyer along side the transaction.
+
+```rust
+let amount = msg_amount();
+```
+
+To check that this amount isn't less than the item's price, we need to look up the item details using the `item_id` parameter.
+
+To get a value for a particular key in a storage map, we can use the `get` method and pass in the key value. We access the mapping storage using `try_read()`. This method returns a `Result` type, so we can use the `unwrap` method here to access the item value. 
+
+```rust
+let mut item = storage.item_map.get(item_id).try_read().unwrap();
+```
+
+By default, all variables are immutable in Sway for both `let` and `const`. However, if you want to change the value of any variable, you have to declare it as mutable with the `mut` keyword. Because we'll update the item's `total_bought` value later, we need to define it as mutable.
+
+We also want to require that the number of coins sent to buy the item isn't less than the item's price.
+
+```rust
+require(amount >= item.price, InvalidError::NotEnoughTokens(amount));
+```
+
+#### Updating storage
+
+We can increment the value for the item's `total_bought` field and then re-insert it into the `item_map`. This will overwrite the previous value with the updated item.
+
+```rust
+item.total_bought += 1;
+storage.item_map.insert(item_id, item);
+```
+
+#### Transferring payment
+
+Finally, we can transfer the payment to the seller. It's always best to transfer assets after all storage updates have been made to avoid [re-entrancy attacks](https://fuellabs.github.io/sway/v0.32.1/book/blockchain-development/calling_contracts.html).
+
+We can subtract a fee for items that meet a certain price threshold using a conditional `if` statement. `if` statements in Sway look the same as in JavaScript.
+
+```rust
+if (amount > 100_000_000) {
+    let commission = amount / 20;
+    let new_amount = amount - commission;
+   transfer(item.owner, asset_id, new_amount);
+} else {
+    transfer(item.owner, asset_id, amount);
+}
+```
+
+In the if-condition above, we check if the amount sent exceeds 100,000,000. To visually separate a large number like `100000000`, we can use an underscore, like `100_000_000`. If the base asset for this contract is ETH, this would be equal to 0.1 ETH because Fuel uses a 9 decimal system. 
+
+If the amount exceeds 0.1 ETH, we calculate a commission and subtract that from the amount.
+
+We can use the `transfer` function to send the amount to the item owner. The `transfer` function is imported from the standard library and takes three arguments: the number of coins to transfer, the asset ID of the coins, and an Identity to send the coins to. 
+
+### Get an item
+
+To get the details for an item, we can create a read-only function that returns the `Item` struct for a given item ID.
+
+```rust
+#[storage(read)]
+fn get_item(item_id: u64) -> Item {
+    // returns the item for the given item_id
+    storage.item_map.get(item_id).try_read().unwrap()
+}
+```
+
+To return a value in a function, you can either use the `return` keyword just as you would in JavaScript or omit the semicolon in the last line to return that line. Althought both work it is always good to be more explicit.
+
+```rust
+fn my_function(num: u64) -> u64{
+    // returning the num variable
+    return num;
+    
+    // this would also work:
+    num;
+}
+```
+
+### Initialize the owner
+
+To make sure we are setting the owner `Identity` correctly, instead of hard-coding it, we can use this function to set the owner from a wallet.
+
+```rust
+#[storage(read, write)]
+fn initialize_owner() -> Identity {
+    let owner = storage.owner.try_read().unwrap();
+    // make sure the owner has NOT already been initialized
+    require(owner.is_none(), "owner already initialized");
+    // get the identity of the sender
+    let sender = msg_sender().unwrap(); 
+    // set the owner to the sender's identity
+    storage.owner.write(Option::Some(sender));
+    // return the owner
+    return sender
+}
+```
+
+Because we only want to be able to call this function once (right after the contract is deployed), we'll require that the owner value still needs be `None`. To do that, we can use the `is_none` method, which checks if an Option type is `None`. 
+
+Be aware that [front running](https://scsfg.io/hackers/frontrunning/) is a possibility here. 
+
+```rust
+let owner = storage.owner.try_read().unwrap();
+require(owner.is_none(), "owner already initialized");
+```
+
+To set the `owner` as the message sender, we'll need to convert the `Result` type to an `Option` type.
+
+```rust
+let sender = msg_sender().unwrap(); 
+storage.owner.write(Option::Some(sender));
+```
+
+Last, we'll return the message sender's `Identity`.
+
+```rust
+return sender
+```
+
+### Withdraw funds
+
+The `withdraw_funds` function allows the owner to withdraw the funds that the contract has accrued.
+
+```rust
+fn withdraw_funds() {
+    let owner = storage.owner.try_read().unwrap();
+    // make sure the owner has been initialized
+    require(owner.is_some(), "owner not initialized");
+    let sender = msg_sender().unwrap(); 
+    // require the sender to be the owner
+    require(sender == owner.unwrap(), InvalidError::OnlyOwner(sender));
+
+    // get the current balance of this contract for the base asset
+    let amount = this_balance(BASE_ASSET_ID);
+
+    // require the contract balance to be more than 0
+    require(amount > 0, InvalidError::NotEnoughTokens(amount));
+    // send the amount to the owner
+    transfer(owner.unwrap(), BASE_ASSET_ID, amount);
+}
+```
+
+First, we'll ensure that the owner has been initalized to some address.
+
+```rust
+let owner = storage.owner.try_read().unwrap();
+require(owner.is_some(), "owner not initialized");
+```
+
+Next, we will require that the person trying to withdraw the funds is the owner.
+
+```rust
+let sender = msg_sender().unwrap(); 
+require(sender == owner.unwrap(), InvalidError::OnlyOwner(sender));
+```
+
+We can also ensure that there are funds to send using the `this_balance` function from the standard library, which returns the balance of this contract.
+
+```rust
+let amount = this_balance(BASE_ASSET_ID);
+require(amount > 0, InvalidError::NotEnoughTokens(amount));
+```
+
+Finally, we will transfer the balance of the contract to the owner.
+
+```rust
+transfer(owner.unwrap(), BASE_ASSET_ID, amount);
+```
+
+### Get the project count
+
+The last function we need to add is the `get_count` function, which is a simple getter function to return the `item_counter` variable in storage.
+
+```rust
+#[storage(read)]
+fn get_count() -> u64 {
+    return storage.item_counter.try_read().unwrap()
+}
+```

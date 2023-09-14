@@ -1,0 +1,26 @@
+---
+title: Errors
+category: Intro to Sway
+parent:
+  label: Guides
+  link: /guides
+---
+
+## Defining Error Handling
+
+Enumerations, or enums, are a type that can be one of several variations. In our contract, we can use an enum to create custom errors to handle errors in a function. 
+
+```rust
+enum InvalidError {
+    IncorrectAssetId: ContractId,
+    NotEnoughTokens: u64,
+    OnlyOwner: Identity,
+}
+```
+
+In our contract, we can expect there to be some different situations where we want to throw an error and prevent the transaction from executing: 
+1. Someone could try to pay for an item with the wrong currency.
+2. Someone could try to buy an item without having enough coins.
+3. Someone could try to withdraw funds from the contract who isn't the owner. 
+
+We can define the return types for each error. For the `IncorrectAssetId` error we can return the asset id sent, which is a `ContractId` type. For the `NotEnoughTokens` variation, we can return the number of coins by defining the return type as a `u64`. For the `OnlyOwner` Error, we can use the Identity of the message sender. 

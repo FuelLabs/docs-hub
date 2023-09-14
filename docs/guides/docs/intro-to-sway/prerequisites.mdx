@@ -1,0 +1,39 @@
+---
+title: Prerequisites
+category: Intro to Sway
+parent:
+  label: Guides
+  link: /guides
+---
+
+Before diving into any Sway code, ensure you have installed the following dependencies.
+
+Start by installing the [Fuel toolchain](https://github.com/FuelLabs/fuelup).
+
+Install the beta-4 toolchain distribution and set it as your default with:
+
+```bash
+$ fuelup toolchain install beta-4
+$ fuelup default beta-4
+```
+
+You can check to see the current toolchain version installed by running the following:
+
+```bash
+$ fuelup show
+```
+
+Next, add the [Sway extension](https://marketplace.visualstudio.com/items?itemName=FuelLabs.sway-vscode-plugin) to your VS Code.
+
+If you want to be able to run tests in Rust, install the [Rust toolchain](https://www.rust-lang.org/tools/install) as well.
+
+> This example uses the `beta-4` toolchain, which is version `0.45.0` of `forc`
+
+Within your terminal start by creating a new folder called `sway-store`, and making a new contract called `sway-store-contract`. 
+
+```bash
+$ forc new sway-store
+$ cd sway-store
+```
+
+Open up the `contract` folder in VSCode, and inside the `src` folder you should see a file called `main.sw`. This is where you will write your Sway contract. Since we're creating a brand new contract you can delete everything in this file.

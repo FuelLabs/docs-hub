@@ -10,5 +10,9 @@
   "testnet_migration": {
     "title": "Testnet Migration",
     "description": "Sway and SDK's breaking changes reference"
+  },
+  "intro_to_sway": {
+    "title": "Introduction to Sway",
+    "description": "Learning Sway Fundamentals to start building DApps"
   }
 }

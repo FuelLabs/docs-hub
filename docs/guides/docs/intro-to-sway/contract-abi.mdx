@@ -1,0 +1,53 @@
+---
+title: ABI
+category: Intro to Sway
+parent:
+  label: Guides
+  link: /guides
+---
+
+### Defining The ABI
+
+Next, we will define our ABI. ABI stands for application binary interface. In a Sway contract, it's an outline of all of the functions in the contract. For each function, you must specify its name, input types, return types, and level of storage access. 
+
+Our contract's ABI will look like this:
+
+```rust
+abi SwayStore {
+    // a function to list an item for sale
+    // takes the price and metadata as args
+    #[storage(read, write)]
+    fn list_item(price: u64, metadata: String);
+
+    // a function to buy an item
+    // takes the item id as the arg
+    #[storage(read, write), payable]
+    fn buy_item(item_id: u64);
+
+    // a function to get a certain item
+    #[storage(read)]
+    fn get_item(item_id: u64) -> Item;
+
+    // a function to set the contract owner
+    #[storage(read, write)]
+    fn initialize_owner() -> Identity;
+
+    // a function to withdraw contract funds
+    #[storage(read)]
+    fn withdraw_funds();
+
+    // return the number of items listed
+    #[storage(read)]
+    fn get_count() -> u64;
+}
+``` 
+
+#### Functions
+
+A function is defined with the `fn` keyword. Sway uses snake case, so instead of naming a function `myFunction`, you would use `my_function`.
+
+You must define the return type using a skinny arrow if the function returns anything. If there are any parameters, the types must also be defined for those. Semicolons are *required* at the end of each line.
+
+If any function reads from or writes to storage, you must define that level of access above the function with either `#[storage(read)]` or `#[storage(read, write)]`.
+
+If you expect funds to be sent when a function is called, like the `buy_item` function, you must use the `#[payable]` annotation.
