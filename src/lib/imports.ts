@@ -38,14 +38,14 @@ export function getComponents(doc: DocType, version?: VersionCtx) {
     });
   }
 
-  if (slug.startsWith('guides/')) {
+  if (slug.includes('guides/')) {
     components.CodeImport = loadComponent(
       import('~/src/components/CodeImport'),
       'CodeImport'
     );
   } else if (
-    slug.startsWith('docs/wallet') ||
-    slug.startsWith('docs/latest/wallet')
+    slug.includes('docs/wallet') ||
+    slug.includes('docs/latest/wallet')
   ) {
     components.CodeImport = loadComponent(
       import('~/src/components/CodeImport'),
@@ -60,8 +60,8 @@ export function getComponents(doc: DocType, version?: VersionCtx) {
       addComponents(WALLET_COMPONENTS);
     }
   } else if (
-    slug.startsWith('docs/graphql') ||
-    slug.startsWith('docs/latest/graphql')
+    slug.includes('docs/graphql') ||
+    slug.includes('docs/latest/graphql')
   ) {
     if (isLatest) {
       components.GQLExamples = LatestGQLExamples;
@@ -75,8 +75,6 @@ export function getComponents(doc: DocType, version?: VersionCtx) {
       'GraphQLCodeExample'
     );
   }
-
-  console.log('COMPONENTS:', components);
 
   return components;
 }

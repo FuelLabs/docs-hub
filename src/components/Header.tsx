@@ -9,6 +9,8 @@ import {
   lightTheme,
 } from '@fuel-ui/react';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 import { useVersion, useSetVersion } from '../hooks/useVersion';
 
@@ -19,10 +21,14 @@ const ThemeToggler = dynamic(() => import('./ThemeToggler'), { ssr: false });
 const Search = dynamic(() => import('./Search'), { ssr: false });
 
 export function Header({ active, title }: { active: string; title?: string }) {
+  const [mounted, setMounted] = useState<boolean>(false);
+  const router = useRouter();
   const version = useVersion();
   const setVersion = useSetVersion();
 
-  console.log('VERSION:', version);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <Box.Flex as="header" css={styles.root}>
@@ -40,23 +46,48 @@ export function Header({ active, title }: { active: string; title?: string }) {
           <Search title={title} />
           <ThemeToggler />
           <Dropdown>
-            <Dropdown.Trigger>Version</Dropdown.Trigger>
+            <Dropdown.Trigger intent="base" variant="outlined">
+              {version && mounted ? version : ''}
+            </Dropdown.Trigger>
             <Dropdown.Menu
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               onAction={(action: any) => {
                 if (setVersion) {
                   if (action === 'beta-4') {
                     setVersion('beta-4');
+                    const path = router.asPath.replace('/latest/', '/');
+                    router.push(path);
                   } else if (action === 'latest') {
                     setVersion('latest');
+                    const path = router.asPath
+                      .replace('docs/', 'docs/latest/')
+                      .replace('guides/', 'guides/latest/');
+                    router.push(path);
                   }
                 }
               }}
             >
-              <Dropdown.MenuItem key="beta-4" aria-label="beta-4">
+              <Dropdown.MenuItem
+                css={
+                  version && mounted && version === 'beta-4'
+                    ? styles.hidden
+                    : {}
+                }
+                key="beta-4"
+                aria-label="beta-4"
+              >
                 Beta-4
               </Dropdown.MenuItem>
-              <Dropdown.MenuItem key="latest" aria-label="latest">
+
+              <Dropdown.MenuItem
+                css={
+                  version && mounted && version === 'latest'
+                    ? styles.hidden
+                    : {}
+                }
+                key="latest"
+                aria-label="latest"
+              >
                 Latest
               </Dropdown.MenuItem>
             </Dropdown.Menu>
@@ -180,5 +211,9 @@ const styles = {
     'a.active, a:hover': {
       color: '$textLink',
     },
+  }),
+  hidden: cssObj({
+    visibility: 'hidden',
+    display: 'none',
   }),
 };

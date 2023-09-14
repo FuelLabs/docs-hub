@@ -107,8 +107,10 @@ export class Doc {
     return this.#createUrl(slug);
   }
 
-  get sidebarLinks() {
-    const configSlug = this.config.slug;
+  sidebarLinks(slug: string) {
+    const configSlug = slug.includes('/latest/')
+      ? `latest-${this.config.slug}`
+      : this.config.slug;
     const guideName = this.item.slug.split('/')[0];
     const linksPath = join(
       DOCS_DIRECTORY,
@@ -129,7 +131,7 @@ export class Doc {
 
   get navLinks() {
     const slug = this.#parseSlug(this.item.slug);
-    const links = this.sidebarLinks;
+    const links = this.sidebarLinks(this.item.slug);
     const flatLinks = links
       .flatMap((i) => (i.submenu || i) as SidebarLinkItem | SidebarLinkItem[])
       .map((i) => ({ ...i, slug: this.#parseSlug(i.slug) }));

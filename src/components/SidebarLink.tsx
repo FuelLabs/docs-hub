@@ -16,14 +16,16 @@ function getActive(pathname: string, slug: string) {
   if (slug.includes('guides')) {
     return pathname.includes(slug);
   } else if (split.length > 2) {
-    const category = pathnameSegments[3];
-    let active = category === split[2];
+    const isLatest = pathname.includes('latest/');
+    const category = isLatest ? pathnameSegments[4] : pathnameSegments[3];
+    let active = isLatest ? category === split[3] : category === split[2];
+    const iFactor = isLatest ? 1 : 0;
     if (active) {
-      if (pathnameSegments.length === 5) {
-        active = split.length === 3;
-      } else if (pathnameSegments.length === 6) {
-        const pageName = pathnameSegments[4];
-        active = split.length > 3 && pageName === split[3];
+      if (pathnameSegments.length === 5 + iFactor) {
+        active = split.length === 3 + iFactor;
+      } else if (pathnameSegments.length === 6 + iFactor) {
+        const pageName = pathnameSegments[4 + iFactor];
+        active = split.length > 3 + iFactor && pageName === split[3 + iFactor];
       }
     }
     return active;
@@ -56,7 +58,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
 
     let label = item.label.replaceAll(/[_-]/g, ' ');
     const shouldBeLowerCase = LOWER_CASE_NAV_PATHS.some((prefix) =>
-      slug.startsWith(prefix)
+      slug.includes(prefix)
     );
 
     const regex = /(b|B)eta (\d+)/;

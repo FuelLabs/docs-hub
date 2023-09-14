@@ -32,10 +32,10 @@ export type LinkObject = {
 // doc slugs that start with a path in this array
 // won't be capitalized in the navigation sidebar
 export const LOWER_CASE_NAV_PATHS = [
-  'docs/forc/commands/',
-  'docs/forc/plugins/',
-  'docs/indexer/forc-index/',
-  'docs/indexer/forc-postgres/',
+  '/forc/commands/',
+  '/forc/plugins/',
+  '/indexer/forc-index/',
+  '/indexer/forc-postgres/',
 ];
 
 export const NAVIGATION: LinkObject[] = [

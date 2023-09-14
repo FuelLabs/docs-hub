@@ -23,25 +23,30 @@ export function SidebarSubmenu({
   const newLabel = label.replace(/\s+/g, '-').toLowerCase();
   let slug = `${subpath}/${newLabel}`;
   const pathnameSegments = pathname?.split('/');
+  const isLatest = subpath?.includes('latest');
 
   useEffect(() => {
     if (pathname.includes('/guides/')) {
       setIsOpened(true);
     } else {
       const pathArray = submenu![0].slug?.split('/');
-      const index = pathArray?.indexOf(subpath!);
+      const actualBook = subpath?.replace('latest/', '');
+      const index = pathArray?.indexOf(actualBook!);
       const category = pathArray && index ? `/${pathArray[index + 1]}` : '';
+      const bookIndex = isLatest ? 3 : 2;
+      const categoryIndex = isLatest ? 4 : 3;
 
       let active =
         pathnameSegments &&
-        pathnameSegments[2] === subpath &&
-        `/${pathnameSegments[3]}` === category;
+        pathnameSegments[bookIndex] === actualBook &&
+        `/${pathnameSegments[categoryIndex]}` === category;
 
+      // TODO: is this needed?
       let foundPathInSubmenu = false;
-
       if (active && submenu) {
         for (let i = 0; i < submenu.length; i++) {
-          const thisSlug = `/docs/${submenu[i].slug!.replace('./', '')}/`;
+          const thisSlugPath = submenu[i].slug!.replace('./', '');
+          const thisSlug = `/docs/${thisSlugPath}/`;
           if (pathname === thisSlug) {
             foundPathInSubmenu = true;
             break;
@@ -79,9 +84,10 @@ export function SidebarSubmenu({
       {isOpened && (
         <List>
           {submenu?.map((item, index) => {
+            const length = isLatest ? 4 : 3;
             if (
               item.label !== label ||
-              (item.slug && item.slug.split('/').length > 3)
+              (item.slug && item.slug.split('/').length > length)
             ) {
               return (
                 <List.Item key={index}>
