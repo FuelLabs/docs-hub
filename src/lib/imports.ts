@@ -74,7 +74,5 @@ export function getComponents(doc: DocType, isLatest: boolean) {
     );
   }
 
-  console.log('COMPONENTS:', components);
-
   return components;
 }

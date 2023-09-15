@@ -28,7 +28,7 @@ interface MobileMenuProps {
   isLatest: boolean;
 }
 
-export function MobileMenu({ active, title, isLatest }: MobileMenuProps) {
+export function NewMobileMenu({ active, title, isLatest }: MobileMenuProps) {
   const [open, setOpen] = useState(false);
 
   function toggle() {
