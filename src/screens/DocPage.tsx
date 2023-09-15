@@ -20,7 +20,7 @@ export function DocScreen(props: DocPageProps) {
   const hasHeadings = Boolean(doc?.headings?.length);
 
   useEffect(() => {
-    const newComponents = getComponents(doc, version);
+    const newComponents = getComponents(doc, props.isLatest);
     setComponents(newComponents);
   }, [version]);
 
@@ -31,15 +31,16 @@ export function DocScreen(props: DocPageProps) {
         hasHeadings={hasHeadings}
         config={doc.docsConfig}
         category={doc.category}
+        isLatest={props.isLatest}
       >
         <Box css={styles.sidebar}>
           <Box css={styles.sidebarContainer}>
-            <Sidebar />
+            <Sidebar isLatest={props.isLatest} />
           </Box>
         </Box>
         <Box as="section" css={styles.section} className="Layout--section">
           <Box className="Layout--pageContent">
-            {doc && components !== null && (
+            {doc && components && (
               <MDXRender code={props.code} components={components} />
             )}
           </Box>

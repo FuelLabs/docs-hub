@@ -10,9 +10,8 @@ import {
 } from '@fuel-ui/react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 
-import { useVersion, useSetVersion } from '../hooks/useVersion';
+import { useSetVersion } from '../hooks/useVersion';
 
 import { MobileMenu } from './MobileMenu';
 import { Navigation } from './Navigation';
@@ -20,15 +19,15 @@ import { Navigation } from './Navigation';
 const ThemeToggler = dynamic(() => import('./ThemeToggler'), { ssr: false });
 const Search = dynamic(() => import('./Search'), { ssr: false });
 
-export function Header({ active, title }: { active: string; title?: string }) {
-  const [mounted, setMounted] = useState<boolean>(false);
-  const router = useRouter();
-  const version = useVersion();
-  const setVersion = useSetVersion();
+interface HeaderProps {
+  active: string;
+  title?: string;
+  isLatest: boolean;
+}
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+export function Header({ active, title, isLatest }: HeaderProps) {
+  const router = useRouter();
+  const setVersion = useSetVersion();
 
   return (
     <Box.Flex as="header" css={styles.root}>
@@ -39,7 +38,7 @@ export function Header({ active, title }: { active: string; title?: string }) {
         {title}
       </span>
       <Box.Flex css={styles.navWrapper} grow={'1'} gap={'$4'}>
-        <Navigation active={active} />
+        <Navigation active={active} isLatest={isLatest} />
       </Box.Flex>
       <Box css={styles.desktop}>
         <Box.Stack direction="row" gap="$4" css={{ mr: '$4' }}>
@@ -47,7 +46,7 @@ export function Header({ active, title }: { active: string; title?: string }) {
           <ThemeToggler />
           <Dropdown>
             <Dropdown.Trigger intent="base" variant="outlined">
-              {version && mounted ? version : ''}
+              {isLatest ? 'latest' : 'beta-4'}
             </Dropdown.Trigger>
             <Dropdown.Menu
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -61,18 +60,14 @@ export function Header({ active, title }: { active: string; title?: string }) {
                     setVersion('latest');
                     const path = router.asPath
                       .replace('docs/', 'docs/latest/')
-                      .replace('guides/', 'guides/latest/');
+                      .replace('guides', 'guides/latest');
                     router.push(path);
                   }
                 }
               }}
             >
               <Dropdown.MenuItem
-                css={
-                  version && mounted && version === 'beta-4'
-                    ? styles.hidden
-                    : {}
-                }
+                css={!isLatest ? styles.hidden : {}}
                 key="beta-4"
                 aria-label="beta-4"
               >
@@ -80,11 +75,7 @@ export function Header({ active, title }: { active: string; title?: string }) {
               </Dropdown.MenuItem>
 
               <Dropdown.MenuItem
-                css={
-                  version && mounted && version === 'latest'
-                    ? styles.hidden
-                    : {}
-                }
+                css={isLatest ? styles.hidden : {}}
                 key="latest"
                 aria-label="latest"
               >

@@ -9,6 +9,7 @@ import { SidebarLink } from './SidebarLink';
 
 interface SidebarSubmenuProps extends SidebarLinkItem {
   onClick?: ButtonLinkProps['onClick'];
+  isLatest: boolean;
 }
 
 export function SidebarSubmenu({
@@ -17,13 +18,13 @@ export function SidebarSubmenu({
   submenu,
   subpath,
   onClick,
+  isLatest,
 }: SidebarSubmenuProps) {
   const pathname = usePathname();
   const [isOpened, setIsOpened] = useState<boolean>();
   const newLabel = label.replace(/\s+/g, '-').toLowerCase();
   let slug = `${subpath}/${newLabel}`;
   const pathnameSegments = pathname?.split('/');
-  const isLatest = subpath?.includes('latest');
 
   useEffect(() => {
     if (pathname.includes('/guides/')) {
@@ -70,6 +71,7 @@ export function SidebarSubmenu({
           onClick={onClick}
           item={{ label, slug }}
           isActiveMenu={isOpened}
+          isLatest={isLatest}
         />
         <IconButton
           size="xs"
@@ -91,7 +93,12 @@ export function SidebarSubmenu({
             ) {
               return (
                 <List.Item key={index}>
-                  <SidebarLink onClick={onClick} item={item} data-submenu />
+                  <SidebarLink
+                    isLatest={isLatest}
+                    onClick={onClick}
+                    item={item}
+                    data-submenu
+                  />
                 </List.Item>
               );
             }

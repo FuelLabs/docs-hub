@@ -111,13 +111,19 @@ export class Doc {
     const configSlug = slug.includes('/latest/')
       ? `latest-${this.config.slug}`
       : this.config.slug;
-    const guideName = this.item.slug.split('/')[0];
+    let guideName = this.item.slug.split('/')[0];
     const linksPath = join(
       DOCS_DIRECTORY,
       `../src/generated/sidebar-links/${configSlug}.json`
     );
     const links = JSON.parse(readFileSync(linksPath, 'utf8'));
-    if (configSlug === 'guides' && guideName) {
+    if (
+      (configSlug === 'guides' || configSlug === 'latest-guides') &&
+      guideName
+    ) {
+      if (configSlug === 'latest-guides') {
+        guideName = `${guideName}/latest`;
+      }
       const slug = this.item.slug
         .replace(`${guideName}/`, '')
         .replace('/index', '');

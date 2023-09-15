@@ -10,7 +10,6 @@ import { COMPONENTS as LATEST_GQL_COMPONENTS } from '~/src/generated/components/
 import { COMPONENTS as LATEST_WALLET_COMPONENTS } from '~/src/generated/components/latest-wallet';
 import { COMPONENTS as WALLET_COMPONENTS } from '~/src/generated/components/wallet';
 
-import type { VersionCtx } from '../hooks/useVersion';
 import type { DocType, ComponentsList } from '../types';
 
 function loadComponent(imp: any, name?: string) {
@@ -19,10 +18,9 @@ function loadComponent(imp: any, name?: string) {
   });
 }
 
-export function getComponents(doc: DocType, version?: VersionCtx) {
+export function getComponents(doc: DocType, isLatest: boolean) {
   const components: any = {};
   const slug = doc.docsConfig.slug || '';
-  const isLatest = version && version === 'latest';
 
   function addComponents(list: ComponentsList) {
     Object.keys(list).forEach((page) => {
@@ -75,6 +73,8 @@ export function getComponents(doc: DocType, version?: VersionCtx) {
       'GraphQLCodeExample'
     );
   }
+
+  console.log('COMPONENTS:', components);
 
   return components;
 }

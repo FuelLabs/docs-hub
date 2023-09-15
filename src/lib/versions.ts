@@ -2,17 +2,21 @@ import { promises as fs } from 'node:fs';
 import { join } from 'node:path';
 import toml from 'toml';
 
-import { DOCS_DIRECTORY } from '../config/constants';
+import { DOCS_DIRECTORY, LATEST_DOCS_DIRECTORY } from '../config/constants';
 
-async function itemFromPackageJson(filename: string) {
-  const file = await fs.readFile(join(DOCS_DIRECTORY, filename), 'utf-8');
+async function itemFromPackageJson(docsDir: string, filename: string) {
+  const file = await fs.readFile(join(docsDir, filename), 'utf-8');
   const json = JSON.parse(file);
   return json;
 }
 
-async function getWalletVersion() {
-  const { homepage } = await itemFromPackageJson('fuels-wallet/package.json');
+async function getWalletVersion(docsDir: string) {
+  const { homepage } = await itemFromPackageJson(
+    docsDir,
+    'fuels-wallet/package.json'
+  );
   const json = await itemFromPackageJson(
+    docsDir,
     'fuels-wallet/packages/sdk/package.json'
   );
   return {
@@ -23,9 +27,13 @@ async function getWalletVersion() {
   };
 }
 
-async function getTSSDKVersion() {
-  const { homepage } = await itemFromPackageJson('fuels-ts/package.json');
+async function getTSSDKVersion(docsDir: string) {
+  const { homepage } = await itemFromPackageJson(
+    docsDir,
+    'fuels-ts/package.json'
+  );
   const json = await itemFromPackageJson(
+    docsDir,
     'fuels-ts/packages/fuels/package.json'
   );
   return {
@@ -36,8 +44,8 @@ async function getTSSDKVersion() {
   };
 }
 
-async function getRustSDKVersion() {
-  const filedir = join(DOCS_DIRECTORY, 'fuels-rs/Cargo.toml');
+async function getRustSDKVersion(docsDir: string) {
+  const filedir = join(docsDir, 'fuels-rs/Cargo.toml');
   const file = await fs.readFile(filedir, 'utf-8');
   const tomfile = toml.parse(file);
   return {
@@ -48,8 +56,8 @@ async function getRustSDKVersion() {
   };
 }
 
-async function getFuelupVersion() {
-  const filedir = join(DOCS_DIRECTORY, 'fuelup/Cargo.toml');
+async function getFuelupVersion(docsDir: string) {
+  const filedir = join(docsDir, 'fuelup/Cargo.toml');
   const file = await fs.readFile(filedir, 'utf-8');
   const tomfile = toml.parse(file);
 
@@ -61,8 +69,8 @@ async function getFuelupVersion() {
   };
 }
 
-async function getForcVersion() {
-  const swayfile = join(DOCS_DIRECTORY, 'sway/Cargo.toml');
+async function getForcVersion(docsDir: string) {
+  const swayfile = join(docsDir, 'sway/Cargo.toml');
   const file = await fs.readFile(swayfile, 'utf-8');
   const swaitomfile = toml.parse(file);
   const forcfiledir = join(DOCS_DIRECTORY, 'sway/forc-pkg/Cargo.toml');
@@ -77,8 +85,8 @@ async function getForcVersion() {
   };
 }
 
-async function getIndexerVersion() {
-  const filedir = join(DOCS_DIRECTORY, 'fuel-indexer/Cargo.toml');
+async function getIndexerVersion(docsDir: string) {
+  const filedir = join(docsDir, 'fuel-indexer/Cargo.toml');
   const file = await fs.readFile(filedir, 'utf-8');
   const tomfile = toml.parse(file);
   return {
@@ -89,13 +97,14 @@ async function getIndexerVersion() {
   };
 }
 
-export async function getVersions() {
-  const wallet = await getWalletVersion();
-  const tsSDK = await getTSSDKVersion();
-  const rust = await getRustSDKVersion();
-  const fuelup = await getFuelupVersion();
-  const forc = await getForcVersion();
-  const indexer = await getIndexerVersion();
+export async function getVersions(isLatest: boolean) {
+  const docsDir = isLatest ? LATEST_DOCS_DIRECTORY : DOCS_DIRECTORY;
+  const wallet = await getWalletVersion(docsDir);
+  const tsSDK = await getTSSDKVersion(docsDir);
+  const rust = await getRustSDKVersion(docsDir);
+  const fuelup = await getFuelupVersion(docsDir);
+  const forc = await getForcVersion(docsDir);
+  const indexer = await getIndexerVersion(docsDir);
 
   return {
     Forc: forc,

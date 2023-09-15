@@ -4,7 +4,8 @@ import { join } from 'path';
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
 import type { Parent } from 'unist-util-visit/lib';
-import { versions } from '~/docs/fuels-ts/packages/versions/src';
+import { versions as beta4Versions } from '~/docs/fuels-ts/packages/versions/src';
+import { versions as latestVersions } from '~/docs/latest/fuels-ts/packages/versions/src';
 
 import { handleForcGenDocs } from './forc-gen-docs';
 import { handleLinks } from './links';
@@ -15,6 +16,14 @@ import {
   handlePlayerComp,
   handleWalletImages,
 } from './wallet-docs';
+
+type TSVersions = {
+  FORC: string;
+  FUEL_CORE: string;
+  FUELS: string;
+};
+
+type NodeArray = [any, number | null, Parent<any, any>][];
 
 const conditions = {
   forcGen: (tree: any, node: any, filepath: string) => {
@@ -59,13 +68,14 @@ const conditions = {
   },
 };
 
-type NodeArray = [any, number | null, Parent<any, any>][];
-
 export function handlePlugins() {
   return function transformer(tree: Root, file: any) {
     const rootDir = process.cwd();
     const filepath = join(rootDir, file.data.rawDocumentData?.sourceFilePath);
     const dirname = file.data.rawDocumentData?.sourceFileDir;
+    const versions = filepath.includes('/latest/')
+      ? latestVersions
+      : beta4Versions;
 
     if (filepath.includes('/fuel-graphql-docs/')) {
       handleGraphQLDocs(tree, filepath);
@@ -74,7 +84,7 @@ export function handlePlugins() {
     } else if (filepath.includes('/fuels-wallet/')) {
       handleWalletDocs(tree, filepath);
     } else if (filepath.includes('/fuels-ts/')) {
-      handleTSDocs(tree, rootDir, dirname);
+      handleTSDocs(tree, rootDir, dirname, versions);
     } else if (
       filepath.includes('/fuel-indexer/') ||
       filepath.includes('/fuelup/') ||
@@ -179,7 +189,12 @@ function handleSwayDocs(
   });
 }
 
-function handleTSDocs(tree: Root, rootDir: string, dirname: string) {
+function handleTSDocs(
+  tree: Root,
+  rootDir: string,
+  dirname: string,
+  versions: TSVersions
+) {
   const nodes: NodeArray = [];
   // handle injected link urls
   if (conditions.hasScriptLink(tree.children[0])) {

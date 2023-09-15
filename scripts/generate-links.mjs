@@ -84,7 +84,7 @@ async function main() {
       const slugs = await getDocs(key, orders[key]);
       const final = slugs.map(({ slug }) => getDocBySlug(slug, slugs));
       let sortedLinks = getSortedLinks(orders[key], final);
-      if (key === 'guides') {
+      if (key.includes('guides')) {
         const newLinks = {};
         sortedLinks.forEach((link) => {
           newLinks[
@@ -365,6 +365,10 @@ function getSortedLinks(config, docs) {
       doc.category = 'src';
     }
 
+    const finalSlug = doc.slug
+      .toLowerCase()
+      .replace('latest/guides', 'guides/latest');
+
     if (
       !doc.category ||
       doc.category === 'src' ||
@@ -396,7 +400,7 @@ function getSortedLinks(config, docs) {
         links[categoryIdx].hasIndex = true;
       }
       submenu.push({
-        slug: doc.slug.toLowerCase(),
+        slug: finalSlug,
         label: newLabel,
       });
       continue;
@@ -406,9 +410,10 @@ function getSortedLinks(config, docs) {
       hasIndex = true;
     }
     const splitSlug = doc.slug.split('/');
-    const subpath =
+    let subpath =
       splitSlug[1] === 'latest' ? `latest/${splitSlug[2]}` : splitSlug[1];
-    const submenu = [{ slug: doc.slug.toLowerCase(), label: doc.title }];
+    subpath = subpath.replace('latest/guides', 'guides/latest');
+    const submenu = [{ slug: finalSlug, label: doc.title }];
     links.push({
       subpath,
       label: doc.category,

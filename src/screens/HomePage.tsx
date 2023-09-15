@@ -13,7 +13,7 @@ import type { GuidesProps } from '../pages/guides';
 
 import { GuideCard } from './GuidesPage';
 
-export function HomePage({ guides }: GuidesProps) {
+export function HomePage({ guides, isLatest }: GuidesProps) {
   const cards = {
     sway: (
       <Box css={{ ...styles.card, ...styles.docsCard }}>
@@ -26,7 +26,9 @@ export function HomePage({ guides }: GuidesProps) {
           </Text>
           <List icon="ArrowRight">
             <List.Item>
-              <Link href="/docs/sway">Sway</Link>
+              <Link href={isLatest ? '/docs/latest/sway' : '/docs/sway'}>
+                Sway
+              </Link>
             </List.Item>
             <List.Item>
               <FuelLink
@@ -66,13 +68,23 @@ export function HomePage({ guides }: GuidesProps) {
           </Text>
           <List icon="ArrowRight">
             <List.Item>
-              <Link href="/docs/fuels-rs">Rust SDK</Link>
+              <Link
+                href={isLatest ? '/docs/latest/fuels-rs' : '/docs/fuels-rs'}
+              >
+                Rust SDK
+              </Link>
             </List.Item>
             <List.Item>
-              <Link href="/docs/fuels-ts">Typescript SDK</Link>
+              <Link
+                href={isLatest ? '/docs/latest/fuels-ts' : '/docs/fuels-ts'}
+              >
+                Typescript SDK
+              </Link>
             </List.Item>
             <List.Item>
-              <Link href="/docs/wallet">Wallet SDK</Link>
+              <Link href={isLatest ? '/docs/latest/wallet' : '/docs/wallet'}>
+                Wallet SDK
+              </Link>
             </List.Item>
           </List>
         </Box.Stack>
@@ -89,10 +101,14 @@ export function HomePage({ guides }: GuidesProps) {
               <Link href="/docs/about-fuel">About Fuel</Link>
             </List.Item> */}
             <List.Item>
-              <Link href="/docs/graphql">GraphQL API</Link>
+              <Link href={isLatest ? '/docs/latest/graphql' : '/docs/graphql'}>
+                GraphQL API
+              </Link>
             </List.Item>
             <List.Item>
-              <Link href="/docs/specs">Specs</Link>
+              <Link href={isLatest ? '/docs/latest/specs' : '/docs/specs'}>
+                Specs
+              </Link>
             </List.Item>
             <List.Item>
               <FuelLink href="https://faucet-beta-4.fuel.network/" isExternal>
@@ -114,13 +130,19 @@ export function HomePage({ guides }: GuidesProps) {
           </Text>
           <List icon="ArrowRight">
             <List.Item>
-              <Link href="/docs/fuelup">Fuelup</Link>
+              <Link href={isLatest ? '/docs/latest/fuelup' : '/docs/fuelup'}>
+                Fuelup
+              </Link>
             </List.Item>
             <List.Item>
-              <Link href="/docs/forc">Forc</Link>
+              <Link href={isLatest ? '/docs/latest/forc' : '/docs/forc'}>
+                Forc
+              </Link>
             </List.Item>
             <List.Item>
-              <Link href="/docs/indexer">Indexer</Link>
+              <Link href={isLatest ? '/docs/latest/indexer' : '/docs/indexer'}>
+                Indexer
+              </Link>
             </List.Item>
           </List>
         </Box.Stack>
@@ -150,6 +172,7 @@ export function HomePage({ guides }: GuidesProps) {
                 key={guideName}
                 guideName={guideName}
                 guideInfo={guideInfo}
+                isLatest={isLatest}
               />
             );
           }

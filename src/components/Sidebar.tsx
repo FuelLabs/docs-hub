@@ -9,9 +9,10 @@ import { SidebarSubmenu } from './SidebarSubmenu';
 
 interface SidebarProps {
   onClick?: ButtonLinkProps['onClick'];
+  isLatest: boolean;
 }
 
-export function Sidebar({ onClick }: SidebarProps) {
+export function Sidebar({ onClick, isLatest }: SidebarProps) {
   const ctx = useDocContext();
   const { links, doc, versions } = ctx;
   const version =
@@ -38,11 +39,17 @@ export function Sidebar({ onClick }: SidebarProps) {
         {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
         {links.map((link: any, index: number) => {
           return link.slug ? (
-            <SidebarLink onClick={onClick} key={link.slug} item={link} />
+            <SidebarLink
+              isLatest={isLatest}
+              onClick={onClick}
+              key={link.slug}
+              item={link}
+            />
           ) : (
             <SidebarSubmenu
               onClick={onClick}
               key={link.subpath ? link.subpath + index : index}
+              isLatest={isLatest}
               {...link}
             />
           );

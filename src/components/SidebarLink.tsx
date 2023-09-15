@@ -10,13 +10,12 @@ import type { SidebarLinkItem } from '~/src/types';
 import { LOWER_CASE_NAV_PATHS } from '../config/constants';
 import { capitalize } from '../lib/str';
 
-function getActive(pathname: string, slug: string) {
+function getActive(pathname: string, slug: string, isLatest: boolean) {
   const split = slug.split('/');
   const pathnameSegments = pathname.split('/');
   if (slug.includes('guides')) {
     return pathname.includes(slug);
   } else if (split.length > 2) {
-    const isLatest = pathname.includes('latest/');
     const category = isLatest ? pathnameSegments[4] : pathnameSegments[3];
     let active = isLatest ? category === split[3] : category === split[2];
     const iFactor = isLatest ? 1 : 0;
@@ -37,10 +36,11 @@ export type SidebarLinkProps = ButtonLinkProps & {
   item: SidebarLinkItem;
   isActiveMenu?: boolean;
   onClick?: ButtonLinkProps['onClick'];
+  isLatest: boolean;
 };
 
 export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
-  ({ item, isActiveMenu, onClick, ...props }, ref) => {
+  ({ item, isActiveMenu, onClick, isLatest, ...props }, ref) => {
     const router = useRouter();
     const pathname = router.asPath;
     let slug = item.slug?.replace('../', '').replace('./', '') || '';
@@ -50,7 +50,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
     }
     let active = isActiveMenu;
     if (!active) {
-      active = getActive(pathname, slug);
+      active = getActive(pathname, slug, isLatest);
     }
     const isActive = cx({
       active,

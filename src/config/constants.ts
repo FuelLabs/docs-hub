@@ -1,6 +1,7 @@
 import { join } from 'path';
 
 export const DOCS_DIRECTORY = join(process.cwd(), './docs');
+export const LATEST_DOCS_DIRECTORY = join(process.cwd(), './docs/latest');
 export const FIELDS = ['title', 'slug', 'content', 'category'];
 
 export type Tabs =

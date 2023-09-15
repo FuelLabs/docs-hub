@@ -28,6 +28,10 @@ export class Docs {
 
   static findDoc(slug: string[], mdDocs: MdDoc[]) {
     const path = slug.join('/');
+
+    // if (slug.includes('guides')) {
+    //   console.log('PATH:', path);
+    // }
     const item = mdDocs.find((doc) => {
       return (
         doc.slug === path ||

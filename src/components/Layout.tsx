@@ -16,6 +16,7 @@ type LayoutProps = {
   config?: Config;
   theme?: string;
   category?: string | undefined;
+  isLatest: boolean;
 };
 
 export function Layout({
@@ -24,6 +25,7 @@ export function Layout({
   isClean,
   hasHeadings,
   config,
+  isLatest,
 }: LayoutProps) {
   const router = useRouter();
 
@@ -33,7 +35,7 @@ export function Layout({
       : 'Fuel Docs';
 
   function getSlug() {
-    return router.pathname === '/guides' ? 'guides' : '';
+    return router.pathname.includes('/guides') ? 'guides' : '';
   }
 
   return (
@@ -79,6 +81,7 @@ export function Layout({
         <Header
           active={config?.slug ? config.slug : getSlug()}
           title={config?.title}
+          isLatest={isLatest}
         />
         {children}
       </Box>

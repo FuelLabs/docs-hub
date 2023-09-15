@@ -34,6 +34,7 @@ export type DocPageProps = {
   docLink?: SidebarLinkItem;
   theme: string;
   versions: Versions;
+  isLatest: boolean;
 };
 
 export default function DocPage(props: DocPageProps) {
@@ -52,7 +53,8 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   const doc = new Doc(slugArray, allMdDocs);
   const slug = slugArray.join('/');
   const code = await doc.getCode();
-  const versions = await getVersions();
+  const isLatest = slug.includes('/latest/');
+  const versions = await getVersions(isLatest);
   return {
     props: {
       code,
@@ -61,6 +63,7 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
       links: doc.sidebarLinks(slug),
       docLink: doc.navLinks,
       versions,
+      isLatest,
     },
   };
 };
