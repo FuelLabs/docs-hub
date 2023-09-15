@@ -20,6 +20,7 @@ import type { LinkObject } from '../config/constants';
 
 import { styles as navStyles } from './Navigation';
 import { Sidebar } from './Sidebar';
+import VersionDropdown from './VersionDropdown';
 
 const ThemeToggler = dynamic(() => import('./ThemeToggler'), { ssr: false });
 const Search = dynamic(() => import('./Search'), { ssr: false });
@@ -30,13 +31,13 @@ const SPRING: AnimationProps['transition'] = {
   duration: '0.1',
 };
 
-export function MobileMenu({
-  active,
-  title,
-}: {
+interface MobileMenuProps {
   active: string;
   title?: string;
-}) {
+  isLatest: boolean;
+}
+
+export function MobileMenu({ active, title, isLatest }: MobileMenuProps) {
   const [showing, setShowing] = useState(false);
 
   function toggle() {
@@ -89,14 +90,20 @@ export function MobileMenu({
                   key={`${item.slug}${index}`}
                   item={item}
                   active={active}
+                  isLatest={isLatest}
                 />
               );
             }
+            const thisLink = isLatest
+              ? item.link
+                  ?.replace('docs/', 'docs/latest/')
+                  .replace('guides', 'guides/latest')
+              : item.link;
             return (
               <ButtonLink
                 key={`${item.slug}${index}`}
                 css={styles.navButton}
-                href={item.link}
+                href={thisLink}
                 isExternal={item.type === 'external-link'}
                 data-active={active === item.slug}
               >
@@ -106,7 +113,7 @@ export function MobileMenu({
           })}
         </Box.Flex>
 
-        <Sidebar onClick={() => setShowing(false)} />
+        <Sidebar onClick={() => setShowing(false)} isLatest={isLatest} />
       </Box>
     </MotionBox>
   );
@@ -115,6 +122,7 @@ export function MobileMenu({
     <Box css={styles.root}>
       <Search title={title} />
       <ThemeToggler />
+      <VersionDropdown isLatest={isLatest} />
       {button}
       <AnimatePresence>
         {showing && <Box css={styles.overlay}>{content}</Box>}
@@ -126,9 +134,10 @@ export function MobileMenu({
 interface MenuButtonProps {
   item: LinkObject;
   active: string;
+  isLatest: boolean;
 }
 
-function MenuButton({ item, active }: MenuButtonProps) {
+function MenuButton({ item, active, isLatest }: MenuButtonProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const isActive = item.menu?.some((i) => i.slug === active);
   return (
@@ -150,12 +159,18 @@ function MenuButton({ item, active }: MenuButtonProps) {
               menuItem.type === 'internal-link' ||
               menuItem.type === 'external-link'
             ) {
+              const thisLink = isLatest
+                ? menuItem.link
+                    ?.replace('docs/', 'docs/latest/')
+                    .replace('guides', 'guides/latest')
+                : menuItem.link;
+
               return (
                 <ButtonLink
                   css={styles.menuLink}
                   intent="base"
                   key={`${index}${menuItem.slug}`}
-                  href={menuItem.link}
+                  href={thisLink}
                   isExternal={menuItem.type === 'external-link'}
                   data-active={active === menuItem.slug}
                 >

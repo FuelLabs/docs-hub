@@ -10,26 +10,31 @@ import type { SidebarLinkItem } from '~/src/types';
 import { LOWER_CASE_NAV_PATHS } from '../config/constants';
 import { capitalize } from '../lib/str';
 
-function getActive(pathname: string, slug: string, isLatest: boolean) {
-  const split = slug.split('/');
+function getActive(pathname: string, slug: string, isLatest: boolean): boolean {
+  const slugSegments = slug.split('/');
   const pathnameSegments = pathname.split('/');
   if (slug.includes('guides')) {
     return pathname.includes(slug);
-  } else if (split.length > 2) {
-    const category = isLatest ? pathnameSegments[4] : pathnameSegments[3];
-    let active = isLatest ? category === split[3] : category === split[2];
-    const iFactor = isLatest ? 1 : 0;
-    if (active) {
-      if (pathnameSegments.length === 5 + iFactor) {
-        active = split.length === 3 + iFactor;
-      } else if (pathnameSegments.length === 6 + iFactor) {
-        const pageName = pathnameSegments[4 + iFactor];
-        active = split.length > 3 + iFactor && pageName === split[3 + iFactor];
-      }
-    }
-    return active;
   }
-  return pathname === `/${slug}` || pathname === `/${slug}/`;
+  const categoryIndex = isLatest ? 4 : 3;
+  const slugIndex = isLatest ? 3 : 2;
+  if (slugSegments.length <= slugIndex) {
+    return pathname === `/${slug}/`;
+  }
+  const categoryMatch =
+    pathnameSegments[categoryIndex] === slugSegments[slugIndex];
+  const iFactor = isLatest ? 1 : 0;
+  if (!categoryMatch) return false;
+  if (pathnameSegments.length === 5 + iFactor) {
+    return slugSegments.length === 3 + iFactor;
+  }
+  if (pathnameSegments.length === 6 + iFactor) {
+    return (
+      slugSegments.length > 3 + iFactor &&
+      pathnameSegments[4 + iFactor] === slugSegments[3 + iFactor]
+    );
+  }
+  return false;
 }
 
 export type SidebarLinkProps = ButtonLinkProps & {

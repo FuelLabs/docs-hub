@@ -4,17 +4,14 @@ import {
   FuelLogo,
   Icon,
   Link,
-  Dropdown,
   darkTheme,
   lightTheme,
 } from '@fuel-ui/react';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
-
-import { useSetVersion } from '../hooks/useVersion';
 
 import { MobileMenu } from './MobileMenu';
 import { Navigation } from './Navigation';
+import VersionDropdown from './VersionDropdown';
 
 const ThemeToggler = dynamic(() => import('./ThemeToggler'), { ssr: false });
 const Search = dynamic(() => import('./Search'), { ssr: false });
@@ -26,9 +23,6 @@ interface HeaderProps {
 }
 
 export function Header({ active, title, isLatest }: HeaderProps) {
-  const router = useRouter();
-  const setVersion = useSetVersion();
-
   return (
     <Box.Flex as="header" css={styles.root}>
       <Link href="/" className="logo">
@@ -44,45 +38,7 @@ export function Header({ active, title, isLatest }: HeaderProps) {
         <Box.Stack direction="row" gap="$4" css={{ mr: '$4' }}>
           <Search title={title} />
           <ThemeToggler />
-          <Dropdown>
-            <Dropdown.Trigger intent="base" variant="outlined">
-              {isLatest ? 'latest' : 'beta-4'}
-            </Dropdown.Trigger>
-            <Dropdown.Menu
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              onAction={(action: any) => {
-                if (setVersion) {
-                  if (action === 'beta-4') {
-                    setVersion('beta-4');
-                    const path = router.asPath.replace('/latest/', '/');
-                    router.push(path);
-                  } else if (action === 'latest') {
-                    setVersion('latest');
-                    const path = router.asPath
-                      .replace('docs/', 'docs/latest/')
-                      .replace('guides', 'guides/latest');
-                    router.push(path);
-                  }
-                }
-              }}
-            >
-              <Dropdown.MenuItem
-                css={!isLatest ? styles.hidden : {}}
-                key="beta-4"
-                aria-label="beta-4"
-              >
-                Beta-4
-              </Dropdown.MenuItem>
-
-              <Dropdown.MenuItem
-                css={isLatest ? styles.hidden : {}}
-                key="latest"
-                aria-label="latest"
-              >
-                Latest
-              </Dropdown.MenuItem>
-            </Dropdown.Menu>
-          </Dropdown>
+          <VersionDropdown isLatest={isLatest} />
         </Box.Stack>
         <Box.Flex css={styles.menu}>
           <a
@@ -111,7 +67,7 @@ export function Header({ active, title, isLatest }: HeaderProps) {
           </a>
         </Box.Flex>
       </Box>
-      <MobileMenu active={active} title={title} />
+      <MobileMenu active={active} title={title} isLatest={isLatest} />
     </Box.Flex>
   );
 }

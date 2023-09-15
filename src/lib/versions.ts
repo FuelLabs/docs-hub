@@ -73,7 +73,7 @@ async function getForcVersion(docsDir: string) {
   const swayfile = join(docsDir, 'sway/Cargo.toml');
   const file = await fs.readFile(swayfile, 'utf-8');
   const swaitomfile = toml.parse(file);
-  const forcfiledir = join(DOCS_DIRECTORY, 'sway/forc-pkg/Cargo.toml');
+  const forcfiledir = join(docsDir, 'sway/forc-pkg/Cargo.toml');
   const forcfile = await fs.readFile(forcfiledir, 'utf-8');
   const version = forcfile?.match(/version = "(.*)"/)?.[1];
 
