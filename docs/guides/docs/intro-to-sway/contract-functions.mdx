@@ -6,7 +6,7 @@ parent:
   link: /guides
 ---
 
-### Defining The Contract Functions
+## Defining the Contract Functions
 
 Finally, we can write our contract functions. Copy and paste the ABI from earlier. The functions in the contract *must* match the ABI, or the compiler will throw an error. Replace the semicolons at the end of each function with curly brackets, and change `abi SwayStore` to `impl SwayStore for Contract` as shown below:
 
@@ -44,7 +44,7 @@ impl SwayStore for Contract {
 }
 ```
 
-### Listing an item
+## 1. Listing an item
 
 Our first function allows sellers to list an item for sale. They can set the item's price and a string that points to some externally-stored data about the item. 
 
@@ -123,7 +123,7 @@ Finally, you can add the item to the `item_map` in the storage using the `insert
 storage.item_map.insert(storage.item_counter.try_read().unwrap(), new_item);
 ```
 
-### Buying an item
+## 2. Buying an item
 
 Next, we want buyers to be able to buy an item that has been listed, which means we will need to:
 1. Accept the item ID the buyer wants as a function parameter
@@ -240,7 +240,7 @@ If the amount exceeds 0.1 ETH, we calculate a commission and subtract that from 
 
 We can use the `transfer` function to send the amount to the item owner. The `transfer` function is imported from the standard library and takes three arguments: the number of coins to transfer, the asset ID of the coins, and an Identity to send the coins to. 
 
-### Get an item
+## 3. Get an item
 
 To get the details for an item, we can create a read-only function that returns the `Item` struct for a given item ID.
 
@@ -264,7 +264,7 @@ fn my_function(num: u64) -> u64{
 }
 ```
 
-### Initialize the owner
+## 4. Initialize the owner
 
 To make sure we are setting the owner `Identity` correctly, instead of hard-coding it, we can use this function to set the owner from a wallet.
 
@@ -305,7 +305,7 @@ Last, we'll return the message sender's `Identity`.
 return sender
 ```
 
-### Withdraw funds
+## 5. Withdraw funds
 
 The `withdraw_funds` function allows the owner to withdraw the funds that the contract has accrued.
 
@@ -355,7 +355,7 @@ Finally, we will transfer the balance of the contract to the owner.
 transfer(owner.unwrap(), BASE_ASSET_ID, amount);
 ```
 
-### Get the project count
+## 6. Get the total items
 
 The last function we need to add is the `get_count` function, which is a simple getter function to return the `item_counter` variable in storage.
 

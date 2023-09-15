@@ -6,11 +6,11 @@ parent:
   link: /guides
 ---
 
-## Sway contract checkpoint
+## Sway Contract Checkpoint
 
 If you have followed the previous steps correctly your `main.sw` marketplace contract should look like this
 
-```rust
+```sway
 contract;
 
 use std::{
@@ -176,4 +176,13 @@ impl SwayStore for Contract {
 
 To format your contract, run `forc fmt`.
 
-You can compile your contract by running `forc build` in the contract folder. And that's it! You just wrote an entire contract in Sway 💪🛠🔥🚀🎉😎🌴✨.
+You can compile your contract by running `forc build` in the contract folder. And that's it! You just wrote an entire contract in Sway!
+
+
+## Deploying the contract
+
+You can find the instructions to deploy this contract in the official Fuel developer quickstart: https://fuelbook.fuel.network/master/quickstart/smart-contract.html#deploy-the-contract
+
+Make sure to deploy with the `--random-salt` flag, as this contract has been deployed.
+
+Once your contract is deployed, save your contract ID to use in the frontend.

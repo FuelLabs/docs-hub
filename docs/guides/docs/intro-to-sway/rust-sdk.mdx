@@ -1,0 +1,332 @@
+---
+title: Rust Testing
+category: Intro to Sway
+parent:
+  label: Guides
+  link: /guides
+---
+
+## Testing the contract
+
+You can see the complete code for this contract plus example tests using the Rust SDK in this repo.
+
+To generate your own test template in Rust, you can use `cargo-generate`:
+
+```
+cargo install cargo-generate
+cargo generate --init fuellabs/sway templates/sway-test-rs --name contract
+```
+
+To run the tests in `harness.rs`, use `cargo test`. To print to the console from the tests, use `cargo test -- --nocapture`.
+
+## Rust SDK
+
+At the top of the `harness.rs` file import the Fuel rust sdk majority of the functionalities you need are within the prelude.
+
+```rust
+use fuels::{prelude::*, types::{Identity, SizedAsciiString}};
+```
+
+Make sure to compile your contracts everytime you have made changes to them so that you are using the most up to date `contract-abi` that is generated
+
+```rust
+// Load abi from json
+abigen!(Contract(name="SwayStore", abi="out/debug/contract-abi.json"));
+```
+
+## Initialing Functions
+
+Two of the most important objects that are needed when writing tests for Sway is firstly the contract instance and the wallets that will be used to interact with said contract. 
+This helper function is useful for generating a clean slate everytime we write a new test case. We will be exporting the deployed contracts, contract id as well as all of the wallets we have generated for this.
+
+```rust
+async fn get_contract_instance() -> (SwayStore<WalletUnlocked>, ContractId, Vec<WalletUnlocked>) {
+    // Launch a local network and deploy the contract
+    let wallets = launch_custom_provider_and_get_wallets(
+        WalletsConfig::new(
+            Some(3),             /* Three wallets */
+            Some(1),             /* Single coin (UTXO) */
+            Some(1_000_000_000), /* Amount per coin */
+        ),
+        None,
+        None,
+    )
+    .await;
+
+    let wallet = wallets.get(0).unwrap().clone();
+
+    let storage_config =
+    StorageConfiguration::load_from("out/debug/contract-storage_slots.json").unwrap();
+
+    let load_config = LoadConfiguration::default().with_storage_configuration(storage_config);
+
+    let id = Contract::load_from(
+        "./out/debug/contract.bin",
+        load_config,
+    )
+    .unwrap()
+    .deploy(&wallet, TxParameters::default())
+    .await
+    .unwrap();
+
+    let instance = SwayStore::new(id.clone(), wallet);
+
+    (instance, id.into(), wallets)
+}
+```
+
+### Contract Storage and Binary
+
+Along side the ABI which denotes how a user can interact with the smart contract we will need to load in the contract storage as well as the actual binary of the contract as well. 
+All three peices of information are nesscsary for generating and deploying the contract instance to properly test later. 
+
+```rust
+let storage_config = StorageConfiguration::load_from("out/debug/contract-storage_slots.json").unwrap();
+
+let load_config = LoadConfiguration::default().with_storage_configuration(storage_config);
+let id = Contract::load_from("./out/debug/contract.bin", load_config).unwrap().deploy(&wallet, TxParameters::default()).await.unwrap();
+```
+
+## Test Cases
+
+Due to the nature of smart contracts being immutable it is crutial to not only test the basic funcionalities but ensure that all of the edgecases are covered. 
+
+### Setting Owner
+
+In this test case we are simply using the contract instance and using the built in SDK method `.with_account()` to mock as the first wallet inorder to call initialize owner. 
+Since to ensure that we have properly set the owner of the function properly we should be able to assert that the return of the contract is indeed equal to wallet 1.
+Additionally you can also verify this by reading into the contract storage to see if the wallet 1 address is there. 
+
+```rust
+#[tokio::test]
+async fn can_set_owner() {
+    let (instance, _id, wallets) = get_contract_instance().await;
+
+    // get access to a test wallet
+    let wallet_1 = wallets.get(0).unwrap();
+
+    // initialize wallet_1 as the owner
+    let owner_result = instance
+        .with_account(wallet_1.clone())
+        .unwrap()
+        .methods()
+        .initialize_owner()
+        .call()
+        .await
+        .unwrap();
+
+    // make sure the returned identity matches wallet_1
+    assert!(Identity::Address(wallet_1.address().into()) == owner_result.value);
+}
+```
+
+### Setting Owner Once 
+
+An edge case that we would be looking for is trying to set the owner twiceh, we don't want someone stealing ownerhsip of our contract! 
+Since we have already sepcifed `require(owner.is_none(), "owner already initialized");` this line within our Sway contract which ensures that the owner can only be set when it is unset.
+Again in a new contract instance we are setting the instance with wallet 1 and trying to set with wallet 2 and this should fail
+
+```rust
+#[tokio::test]
+#[should_panic]
+async fn can_set_owner_only_once() {
+    let (instance, _id, wallets) = get_contract_instance().await;
+
+    // get access to some test wallets
+    let wallet_1 = wallets.get(0).unwrap();
+    let wallet_2 = wallets.get(1).unwrap();
+
+    // initialize wallet_1 as the owner
+    let _owner_result = instance
+        .with_account(wallet_1.clone())
+        .unwrap()
+        .methods()
+        .initialize_owner()
+        .call()
+        .await
+        .unwrap();
+
+    // this should fail
+    // try to set the owner from wallet_2
+    let _fail_owner_result = instance
+        .with_account(wallet_2.clone())
+        .unwrap()
+        .methods()
+        .initialize_owner()
+        .call()
+        .await
+        .unwrap();
+}
+```
+
+### Buying and Selling in the Marketplace
+
+It is important to test the basic functionalities of the smart contract see see if it is working properly. This time we have two wallets set up.
+The first wallet making a transaction call to list an item that they are selling by calling the `.list_item()` method  specifying the price as well as information as to what they are selling. 
+Theecond wallet to make a purchase of that item will call the `.buy_item()` method along with the index of the item being purchased. 
+
+At the end of these two transactions we will be checking the balance of each of the wallets to ensure that the transaction has work succesfully!
+
+```rust
+#[tokio::test]
+async fn can_list_and_buy_item() {
+    let (instance, _id, wallets) = get_contract_instance().await;
+    // Now you have an instance of your contract you can use to test each function
+
+    // get access to some test wallets
+    let wallet_1 = wallets.get(0).unwrap();
+    let wallet_2 = wallets.get(1).unwrap();
+
+    // item 1 params
+    let item_1_metadata: SizedAsciiString<20> = "metadata__url__here_"
+        .try_into()
+        .expect("Should have succeeded");
+    let item_1_price: u64 = 15;
+
+    // list item 1 from wallet_1
+    let _item_1_result = instance
+        .with_account(wallet_1.clone())
+        .unwrap()
+        .methods()
+        .list_item(item_1_price, item_1_metadata)
+        .call()
+        .await
+        .unwrap();
+
+    // call params to send the project price in the buy_item fn
+    let call_params = CallParameters::default().with_amount(item_1_price);
+
+    // buy item 1 from wallet_2
+    let _item_1_purchase = instance
+        .with_account(wallet_2.clone())
+        .unwrap()
+        .methods()
+        .buy_item(1)
+        .append_variable_outputs(1)
+        .call_params(call_params)
+        .unwrap()
+        .call()
+        .await
+        .unwrap();
+
+    // check the balances of wallet_1 and wallet_2
+    let balance_1: u64 = wallet_1.get_asset_balance(&BASE_ASSET_ID).await.unwrap();
+    let balance_2: u64 = wallet_2.get_asset_balance(&BASE_ASSET_ID).await.unwrap();
+
+    // make sure the price was transferred from wallet_2 to wallet_1
+    assert!(balance_1 == 1000000015);
+    assert!(balance_2 == 999999985);
+
+    let item_1 = instance.methods().get_item(1).call().await.unwrap();
+
+    assert!(item_1.value.price == item_1_price);
+    assert!(item_1.value.id == 1);
+    assert!(item_1.value.total_bought == 1);
+}
+```
+
+Lastly the most importantly is that the creator of the market place is being paid. Similar to the previous tests we will be calling the appropriate functions inorder to
+
+```rust
+#[tokio::test]
+async fn can_withdraw_funds() {
+    let (instance, _id, wallets) = get_contract_instance().await;
+    // Now you have an instance of your contract you can use to test each function
+
+    // get access to some test wallets
+    let wallet_1 = wallets.get(0).unwrap();
+    let wallet_2 = wallets.get(1).unwrap();
+    let wallet_3 = wallets.get(2).unwrap();
+
+    // initialize wallet_1 as the owner
+    let owner_result = instance
+        .with_account(wallet_1.clone())
+        .unwrap()
+        .methods()
+        .initialize_owner()
+        .call()
+        .await
+        .unwrap();
+
+    // make sure the returned identity matches wallet_1
+    assert!(Identity::Address(wallet_1.address().into()) == owner_result.value);
+
+    // item 1 params
+    let item_1_metadata: SizedAsciiString<20> = "metadata__url__here_"
+        .try_into()
+        .expect("Should have succeeded");
+    let item_1_price: u64 = 150_000_000;
+
+    // list item 1 from wallet_2
+    let item_1_result = instance
+        .with_account(wallet_2.clone())
+        .unwrap()
+        .methods()
+        .list_item(item_1_price, item_1_metadata)
+        .call()
+        .await;
+    assert!(item_1_result.is_ok());
+
+    // make sure the item count increased
+    let count = instance
+        .methods()
+        .get_count()
+        .simulate()
+        .await
+        .unwrap();
+    assert_eq!(count.value, 1);
+
+    // call params to send the project price in the buy_item fn
+    let call_params = CallParameters::default().with_amount(item_1_price);
+    
+    // buy item 1 from wallet_3
+    let item_1_purchase = instance
+        .with_account(wallet_3.clone())
+        .unwrap()
+        .methods()
+        .buy_item(1)
+        .append_variable_outputs(1)
+        .call_params(call_params)
+        .unwrap()
+        .call()
+        .await;
+    assert!(item_1_purchase.is_ok());
+
+     // make sure the item's total_bought count increased
+     let listed_item = instance
+     .methods()
+     .get_item(1)
+     .simulate()
+     .await
+     .unwrap();
+ assert_eq!(listed_item.value.total_bought, 1);
+
+    // withdraw the balance from the owner's wallet
+    let withdraw = instance
+        .with_account(wallet_1.clone())
+        .unwrap()
+        .methods()
+        .withdraw_funds()
+        .append_variable_outputs(1)
+        .call()
+        .await;
+    assert!(withdraw.is_ok());
+
+     // Bytes representation of the asset ID of the "base" asset used for gas fees.
+     const BASE_ASSET_ID: AssetId = AssetId::new([0u8; 32]);
+
+    // check the balances of wallet_1 and wallet_2
+    let balance_1: u64 = wallet_1.get_asset_balance(&BASE_ASSET_ID).await.unwrap();
+    let balance_2: u64 = wallet_2.get_asset_balance(&BASE_ASSET_ID).await.unwrap();
+    let balance_3: u64 = wallet_3.get_asset_balance(&BASE_ASSET_ID).await.unwrap();
+
+    // println!("BALANCE 1: {:?}", balance_1);
+    assert!(balance_1 == 1007500000);
+    // println!("BALANCE 2: {:?}", balance_2);
+    assert!(balance_2 == 1142500000);
+    // println!("BALANCE 3: {:?}", balance_3);
+    assert!(balance_3 == 850000000);
+}
+```
+
+Now that we are confident that smart contract is working properly we should move to building a frontend that people can interact with your new marketplace! 

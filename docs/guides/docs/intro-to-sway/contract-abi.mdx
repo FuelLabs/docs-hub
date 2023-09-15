@@ -6,13 +6,13 @@ parent:
   link: /guides
 ---
 
-### Defining The ABI
+## Defining the ABI
 
 Next, we will define our ABI. ABI stands for application binary interface. In a Sway contract, it's an outline of all of the functions in the contract. For each function, you must specify its name, input types, return types, and level of storage access. 
 
 Our contract's ABI will look like this:
 
-```rust
+```sway
 abi SwayStore {
     // a function to list an item for sale
     // takes the price and metadata as args

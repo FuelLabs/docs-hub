@@ -6,7 +6,7 @@ parent:
   link: /guides
 ---
 
-## Writing a Contract
+## Defining the Program Type
 
 The first line of the file is specially reserved to let the compiler know if we are writing a contract, script, predicate, or library. To define the file as a contract, use the `contract` keyword.
 
@@ -14,7 +14,7 @@ The first line of the file is specially reserved to let the compiler know if we 
 contract;
 ```
 
-### Imports
+## Imports
 
 The Sway standard library provides several utility types and methods we can use in our contract. To import a library, you can use the `use` keyword and `::`, also called a namespace qualifier, to chain library names like this:
 
