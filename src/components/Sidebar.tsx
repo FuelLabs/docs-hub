@@ -13,8 +13,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({ onClick, isLatest }: SidebarProps) {
-  const ctx = useDocContext();
-  const { links, doc, versions } = ctx;
+  const { links, doc, versions } = useDocContext();
   const version =
     doc && doc.docsConfig ? versions[doc.docsConfig.title]?.version : null;
 
@@ -39,12 +38,7 @@ export function Sidebar({ onClick, isLatest }: SidebarProps) {
         {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
         {links.map((link: any, index: number) => {
           return link.slug ? (
-            <SidebarLink
-              isLatest={isLatest}
-              onClick={onClick}
-              key={link.slug}
-              item={link}
-            />
+            <SidebarLink onClick={onClick} key={link.slug} item={link} />
           ) : (
             <SidebarSubmenu
               onClick={onClick}
@@ -54,19 +48,19 @@ export function Sidebar({ onClick, isLatest }: SidebarProps) {
             />
           );
         })}
-        {version && (
-          <Box css={{ fontSize: '$sm', padding: '20px 0 60px 0' }}>
-            Version: {version}
-          </Box>
-        )}
+        {version && <Box css={styles.version}>Version: {version}</Box>}
       </Box.Stack>
     )
   );
 }
 
-const styles = {
+export const styles = {
   root: cssObj({
     gap: '$1',
     pb: '$4',
+  }),
+  version: cssObj({
+    fontSize: '$sm',
+    padding: '20px 0 60px 0',
   }),
 };

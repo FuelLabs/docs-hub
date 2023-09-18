@@ -16,52 +16,27 @@ export function SidebarSubmenu({
   label,
   hasIndex,
   submenu,
-  subpath,
+  isExternal,
   onClick,
-  isLatest,
 }: SidebarSubmenuProps) {
   const pathname = usePathname();
   const [isOpened, setIsOpened] = useState<boolean>();
-  const newLabel = label.replace(/\s+/g, '-').toLowerCase();
-  let slug = `${subpath}/${newLabel}`;
-  const pathnameSegments = pathname?.split('/');
+
+  const thisItem = {
+    label,
+    slug: submenu![0].slug,
+    isExternal,
+  };
 
   useEffect(() => {
     if (pathname.includes('/guides/')) {
       setIsOpened(true);
     } else {
-      const pathArray = submenu![0].slug?.split('/');
-      const actualBook = subpath?.replace('latest/', '');
-      const index = pathArray?.indexOf(actualBook!);
-      const category = pathArray && index ? `/${pathArray[index + 1]}` : '';
-      const bookIndex = isLatest ? 3 : 2;
-      const categoryIndex = isLatest ? 4 : 3;
-
-      let active =
-        pathnameSegments &&
-        pathnameSegments[bookIndex] === actualBook &&
-        `/${pathnameSegments[categoryIndex]}` === category;
-
-      // TODO: is this needed?
-      let foundPathInSubmenu = false;
-      if (active && submenu) {
-        for (let i = 0; i < submenu.length; i++) {
-          const thisSlugPath = submenu[i].slug!.replace('./', '');
-          const thisSlug = `/docs/${thisSlugPath}/`;
-          if (pathname === thisSlug) {
-            foundPathInSubmenu = true;
-            break;
-          }
-        }
-        if (!foundPathInSubmenu) active = false;
-      }
+      const actualSlug = `/${thisItem.slug}/`;
+      const active = pathname.startsWith(actualSlug);
       setIsOpened(active);
     }
   }, [pathname]);
-
-  if (!hasIndex && submenu && submenu[0].slug) {
-    slug = submenu[0].slug;
-  }
 
   return (
     <Box.Flex css={styles.root}>
@@ -69,9 +44,8 @@ export function SidebarSubmenu({
         <SidebarLink
           intent="base"
           onClick={onClick}
-          item={{ label, slug }}
+          item={thisItem}
           isActiveMenu={isOpened}
-          isLatest={isLatest}
         />
         <IconButton
           size="xs"
@@ -86,19 +60,10 @@ export function SidebarSubmenu({
       {isOpened && (
         <List>
           {submenu?.map((item, index) => {
-            const length = isLatest ? 4 : 3;
-            if (
-              item.label !== label ||
-              (item.slug && item.slug.split('/').length > length)
-            ) {
+            if (!hasIndex || index > 0) {
               return (
                 <List.Item key={index}>
-                  <SidebarLink
-                    isLatest={isLatest}
-                    onClick={onClick}
-                    item={item}
-                    data-submenu
-                  />
+                  <SidebarLink onClick={onClick} item={item} data-submenu />
                 </List.Item>
               );
             }

@@ -9,7 +9,7 @@ export default function VersionDropdown({ isLatest }: { isLatest: boolean }) {
   const setVersion = useSetVersion();
   return (
     <Dropdown>
-      <Dropdown.Trigger intent="base" variant="outlined">
+      <Dropdown.Trigger intent="base" variant="outlined" css={styles.trigger}>
         {isLatest ? 'latest' : 'beta-4'}
       </Dropdown.Trigger>
       <Dropdown.Menu
@@ -31,19 +31,19 @@ export default function VersionDropdown({ isLatest }: { isLatest: boolean }) {
         }}
       >
         <Dropdown.MenuItem
-          css={!isLatest ? styles.hidden : {}}
+          css={!isLatest ? styles.hidden : styles.menuItem}
           key="beta-4"
           aria-label="beta-4"
         >
-          Beta-4
+          beta-4
         </Dropdown.MenuItem>
 
         <Dropdown.MenuItem
-          css={isLatest ? styles.hidden : {}}
+          css={isLatest ? styles.hidden : styles.menuItem}
           key="latest"
           aria-label="latest"
         >
-          Latest
+          latest
         </Dropdown.MenuItem>
       </Dropdown.Menu>
     </Dropdown>
@@ -52,7 +52,17 @@ export default function VersionDropdown({ isLatest }: { isLatest: boolean }) {
 
 const styles = {
   hidden: cssObj({
-    visibility: 'hidden',
     display: 'none',
+  }),
+  menuItem: cssObj({
+    justifyContent: 'center',
+    fontSize: '16px',
+  }),
+  trigger: cssObj({
+    border: 'none',
+    width: '120px',
+    '&:hover': {
+      border: 'none !important',
+    },
   }),
 };

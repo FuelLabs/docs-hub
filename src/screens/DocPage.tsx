@@ -21,6 +21,7 @@ export function DocScreen(props: DocPageProps) {
 
   useEffect(() => {
     const newComponents = getComponents(doc, props.isLatest);
+    console.log('newComponents', newComponents);
     setComponents(newComponents);
   }, [version]);
 
@@ -40,7 +41,7 @@ export function DocScreen(props: DocPageProps) {
         </Box>
         <Box as="section" css={styles.section} className="Layout--section">
           <Box className="Layout--pageContent">
-            {doc && components && (
+            {doc && components !== null && (
               <MDXRender code={props.code} components={components} />
             )}
           </Box>
@@ -58,6 +59,7 @@ const styles = {
     padding: '$8 $8 $0 $6',
     position: 'sticky',
     borderRight: '1px solid $border',
+    maxHeight: 'calc(100vh - 102px)',
     bg: '$cardBg',
     top: 20,
 
@@ -68,7 +70,7 @@ const styles = {
   sidebarContainer: cssObj({
     position: 'sticky',
     top: 20,
-    maxHeight: 'calc(100vh - 40px)',
+    maxHeight: 'calc(100vh - 102px)',
     overflowX: 'auto',
     '&::-webkit-scrollbar': {
       display: 'none',
