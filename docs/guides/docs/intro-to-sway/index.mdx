@@ -8,35 +8,33 @@ parent:
 
 # Introduction to Sway Language for JavaScript Developers
 
-If you know JavaScript and basic blockchain fundamentals you can quickly learn to build full-stack decentralized applications, on Fuel with Sway. Once you learn some Sway fundamentals, you'll be ready to start building your own dapp.
+If you're familiar with JavaScript and have a basic understanding of blockchain fundamentals, you can swiftly grasp how to build full-stack decentralized applications on Fuel using Sway. Once you get a handle on Sway's essentials, you'll be able to begin building your own dapp.
 
-Let's make a Sway contract for an online marketplace like Amazon where:  
+Within this tutorial, we will be crafting a Sway contract for an online marketplace similar to Amazon, where:
 
-1. Sellers can list products
-2. Buyers can buy products
+1. Sellers can list products.
+2. Buyers can purchase those products.
 
-Part of what makes smart contracts so powerful is that they are immutable and permissionless. This means no single entity can change or alter the rules of the marketplace once it has been deployed. The deployer of the contract cannot suddenly change the state of the products that are listed within the contract. Likewise, if we hard-code a commission amount in the contract, no one can ever change the commission taken for products. 
+One of the compelling features of smart contracts is their immutability and permissionless nature. This ensures that no single entity can modify or adjust the rules of the marketplace after its deployment. For instance, once a product is listed in the contract, the deployer cannot suddenly alter its status. Similarly, if a commission amount is hardcoded into the contract, it remains fixed, preventing any changes to the commission charged for products.
 
-On top of this, anyone can interact with the contract. This means that anyone interact with the market place with their own custom frontend without permission, and contracts can interact with any number of frontends.
+Furthermore, the contract remains open for interaction by anyone. This universality allows any individual to engage with the marketplace using their custom frontend without requiring permission.
 
-Within this tutorial we will be spcifically focused on `contracts` which is one of the [four programming types](https://docs.fuel.network/docs/sway/sway-program-types/) that are present in the Sway language. 
+In this tutorial, our attention will be specifically directed towards program type `contracts`. This is just one of the [four programming types](https://docs.fuel.network/docs/sway/sway-program-types/) inherent to the Sway language.
 
 ## What is Sway?
 
-Sway is a strongly-typed programming language based on Rust used to write smart contracts on the Fuel blockchain. It inherits Rust's performance, control, and safety to use in a blockchain virtual machine environment optimized for gas costs and contract safety. 
+Sway is a strongly-typed programming language based on Rust, designed for authoring smart contracts on the Fuel blockchain. It leverages Rust's performance, control, and safety attributes, making it suitable for a blockchain virtual machine environment that's optimized for gas costs and contract security.
 
-Sway is backed by a powerful compiler and toolchain that work to abstract away complexities and ensure that your code is working, safe, and performant. 
+Sway is bolstered by a robust compiler and toolchain. These tools simplify the complexities and ensure that your code is efficient, secure, and performs optimally.
 
-Part of what makes Sway so unique is the fantastic suite of tools surrounding it that help you turn a contract into a full-stack dapp which is all developed with each other in mind to help ensure the developer expereince is seemless and the best.
+What truly distinguishes Sway is the exceptional suite of tools built around it. These tools are meticulously designed to convert contracts into full-stack dapps, ensuring a seamless and unparalleled developer experience.
 
-- 📚 Sway Standard Library: A native library of helpful types and methods.
+📚 [Sway Standard Library](https://github.com/FuelLabs/sway/tree/master/sway-lib-std): A native library equipped with useful types and methods.
 
-- 🧰 Forc: The Fuel toolbox that helps you build, deploy, and manage your Sway projects.
+🧑‍🔧 [Fuelup](https://github.com/FuelLabs/fuelup): The official Fuel toolchain manager aids in installing and managing different versions.
 
-- 🧑‍🔧 Fuelup: The official Fuel toolchain manager helps you install and manage versions. 
+🦀 [Fuel's Rust SDK](https://github.com/FuelLabs/fuels-rs): Test and interact with your Sway contracts using Rust.
 
-- 🦀 Fuels Rust SDK: Test and interact with your Sway contract with Rust.
+⚡ [Fuel's TypeScript SDK](https://github.com/FuelLabs/fuels-ts): Test and interact with your Sway contracts using TypeScript.
 
-- ⚡ Fuels Typescript SDK: Test and interact with your Sway contract with TypeScript.
-
-- 🔭 Fuel Indexer: Make your own indexer to organize and query on-chain data.
+🔭 [Fuel Indexer](https://github.com/FuelLabs/fuel-indexer/): Craft your own indexer to organize and query on-chain data.

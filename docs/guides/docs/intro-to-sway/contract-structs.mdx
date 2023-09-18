@@ -10,11 +10,11 @@ parent:
 
 Struct is short for structure, which is a data structure similar to an object in JavaScript. You define a struct with the `struct` keyword in Sway and define the fields of a struct inside curly brackets.
 
-The core of our program is the ability to list, sell, and get `Items`.
+The core of our program is the ability to list, sell, and get `items`.
 
-Let's define the `Item` type as shown below:
+Let's define the Item type as shown below:
 
-```rust
+```sway
 struct Item {
     id: u64,
     price: u64,
@@ -24,24 +24,24 @@ struct Item {
 }
 ```
 
-The item struct will hold an ID, price, the owner's identity, a string for a URL or identifier where off-chain data about the item is stored (such as the description and photos), and a total bought counter to keep track of the total number of purchases.
+The item struct will contain an ID, price, the owner's identity, a string representing a URL or identifier for off-chain data about the item (such as its description and photos), and a "total bought" counter to track the overall number of purchases.
 
 ### Types
 
 The `Item` struct uses three types: `u64`, `String`, and `Identity`.
 
-`u64`: a 64-bit unsigned integer
+`u64`: a 64-bit unsigned integer.
 
 In Sway, there are four native types of numbers:
-- `u8`: an 8-bit unsigned integer
-- `u16` a 16-bit unsigned integer
-- `u32` a 32-bit unsigned integer
-- `u64`: a 64-bit unsigned integer
+- `u8`: an 8-bit unsigned integer.
+- `u16`: a 16-bit unsigned integer.
+- `u32`: a 32-bit unsigned integer.
+- `u64`: a 64-bit unsigned integer.
 
-An unsigned integer means there is no `+` or `-` sign, so the value is always positive. `u64` is the default type used for numbers in Sway. To use other number types, for example [`u256`](https://github.com/FuelLabs/sway/blob/master/sway-lib-std/src/u256.sw) or [signed integers](https://github.com/FuelLabs/sway-libs/tree/master/sway_libs/src/signed_integers), you must import them from a library.
+An unsigned integer means there is no `+` or `-` sign, making the value always positive. `u64` is the default type used for numbers in Sway. To use other number types, such as [`u256`](https://github.com/FuelLabs/sway/blob/master/sway-lib-std/src/u256.sw) or [signed integers](https://github.com/FuelLabs/sway-libs/tree/master/sway_libs/src/signed_integers), you must import them from a library.
 
-In JavaScript, there are two types of integers: a number and a BigInt. The main difference between these types is that BigInt can store a much larger value. Similarly, each number type for Sway has different values for the largest number that can be stored.
+In JavaScript, there are two types of integers: `number` and `BigInt`. The primary difference between these types is that `BigInt` can store much larger values. Similarly, each numeric type in Sway has its maximum value that can be stored.
 
-`String`: a string with created from the string in the standard library. If you want to use the `str` keyword you must define a fixed length and cannot be changed. 
+`String`: a string created from the string type in the standard library. If you want to use the `str` keyword, you must define a fixed length, and it cannot be changed. 
 
-`Identity`: an enum type that represents either a user's `Address` or a `ContractId`. We already imported this type from the standard library earlier. To a contract or and EOA (Externally owned account) which are two clearly differentiated in Sway. Which are both just typesafe wrapped b256.
+`Identity`: an enum type that represents either a user's `Address` or a `ContractId`. We already imported this type from the standard library earlier. In Sway, a contract and an EOA (Externally Owned Account) are distinctly differentiated. Both are typesafe wrappers for b256.

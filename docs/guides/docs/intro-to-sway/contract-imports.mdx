@@ -8,24 +8,23 @@ parent:
 
 ## Defining the Program Type
 
-The first line of the file is specially reserved to let the compiler know if we are writing a contract, script, predicate, or library. To define the file as a contract, use the `contract` keyword.
-
-```rust
+The first line of the file is specifically reserved to inform the compiler whether we are writing a contract, script, predicate, or library. To designate the file as a contract, use the `contract` keyword.
+```sway
 contract;
 ```
 
 ## Imports
 
-The Sway standard library provides several utility types and methods we can use in our contract. To import a library, you can use the `use` keyword and `::`, also called a namespace qualifier, to chain library names like this:
+The [Sway standard library](https://github.com/FuelLabs/sway/tree/master/sway-lib-std) provides several utility types and methods we can use in our contract. To import a library, you can use the `use` keyword and `::`, also called a namespace qualifier, to chain library names like this:
 
-```rust
+```sway
 // imports the msg_sender function from the std library
 use std::auth::msg_sender;
 ```
 
 You can also group together imports using curly brackets:
 
-```rust
+```sway
 use std::{
     auth::msg_sender,
     storage::StorageVec,
@@ -34,7 +33,7 @@ use std::{
 
 For this contract, here is what needs to be imported:
 
-```rust
+```sway
 use std::{
     auth::msg_sender,
     call_frames::msg_asset_id,
@@ -47,4 +46,4 @@ use std::{
 };
 ```
 
-We'll go through what each of these imports does as we use them later.
+We'll go through what each of these imports does as we use them in the next steps.

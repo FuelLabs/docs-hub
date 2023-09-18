@@ -174,15 +174,32 @@ impl SwayStore for Contract {
 
 ## Building the contract
 
-To format your contract, run `forc fmt`.
+Here's a polished version of your instructions:
 
-You can compile your contract by running `forc build` in the contract folder. And that's it! You just wrote an entire contract in Sway!
+To format your contract, execute the command:
+```
+forc fmt
+```
 
+To compile your contract, navigate to the contract folder and run:
+```
+forc build
+```
+Congratulations! You've successfully written a full contract in Sway!
+
+Post-compilation, the system will automatically generate `abi.json`, `storage_slots.json`, and `contract.bin`. You can locate these files in the following directory:
+```
+contract/out/debug/*
+```
 
 ## Deploying the contract
 
-You can find the instructions to deploy this contract in the official Fuel developer quickstart: https://fuelbook.fuel.network/master/quickstart/smart-contract.html#deploy-the-contract
+For detailed steps on deploying this contract, refer to the official Fuel developer quickstart guide: 
+[Deploy the Contract](https://fuelbook.fuel.network/master/quickstart/smart-contract.html#deploy-the-contract)
 
-Make sure to deploy with the `--random-salt` flag, as this contract has been deployed.
+To deploy, use the following command:
+```bash
+forc-deploy --node-url https://beta-4.fuel.network/graphql --gas-price 1 --gas-limit 1000000
+```
 
-Once your contract is deployed, save your contract ID to use in the frontend.
+After deploying, remember to save your contract ID. You'll need it for frontend integrations.

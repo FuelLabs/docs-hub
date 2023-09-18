@@ -8,36 +8,52 @@ parent:
 
 ## Testing the contract
 
-You can see the complete code for this contract plus example tests using the Rust SDK in this repo.
+You can find the full contract code, along with example tests using the Rust SDK, in the provided repository.
 
-To generate your own test template in Rust, you can use `cargo-generate`:
+### Generating a Test Template in Rust
 
-```
+To create your own test template using Rust, follow these steps with `cargo-generate`:
+
+1. Install `cargo-generate`:
+```bash
 cargo install cargo-generate
+```
+
+2. Generate the template:
+```bash
 cargo generate --init fuellabs/sway templates/sway-test-rs --name contract
 ```
 
-To run the tests in `harness.rs`, use `cargo test`. To print to the console from the tests, use `cargo test -- --nocapture`.
+### Running the Tests
 
-## Rust SDK
+For running tests located in `harness.rs`, use:
+```bash
+cargo test
+```
 
-At the top of the `harness.rs` file import the Fuel rust sdk majority of the functionalities you need are within the prelude.
+If you wish to print outputs to the console during tests, execute:
+```bash
+cargo test -- --nocapture
+```
+
+## Imports
+
+At the beginning of the harness.rs file, import the Fuel Rust SDK. The majority of the functionalities you'll need are housed within the prelude.
 
 ```rust
 use fuels::{prelude::*, types::{Identity, SizedAsciiString}};
 ```
 
-Make sure to compile your contracts everytime you have made changes to them so that you are using the most up to date `contract-abi` that is generated
+Always compile your contracts after making any changes. This ensures you're working with the most recent `contract-abi` that gets generated.
 
 ```rust
 // Load abi from json
 abigen!(Contract(name="SwayStore", abi="out/debug/contract-abi.json"));
 ```
 
-## Initialing Functions
+## Initializing Functions
 
-Two of the most important objects that are needed when writing tests for Sway is firstly the contract instance and the wallets that will be used to interact with said contract. 
-This helper function is useful for generating a clean slate everytime we write a new test case. We will be exporting the deployed contracts, contract id as well as all of the wallets we have generated for this.
+When writing tests for Sway, two crucial objects are required: the contract instance and the wallets that interact with it. This helper function ensures a fresh start for every new test case. It will export the deployed contracts, the contract ID, and all the generated wallets for this purpose.
 
 ```rust
 async fn get_contract_instance() -> (SwayStore<WalletUnlocked>, ContractId, Vec<WalletUnlocked>) {
@@ -77,8 +93,7 @@ async fn get_contract_instance() -> (SwayStore<WalletUnlocked>, ContractId, Vec<
 
 ### Contract Storage and Binary
 
-Along side the ABI which denotes how a user can interact with the smart contract we will need to load in the contract storage as well as the actual binary of the contract as well. 
-All three peices of information are nesscsary for generating and deploying the contract instance to properly test later. 
+Besides the ABI, which outlines the interaction protocol with the smart contract, it's imperative to also load the contract's storage and binary. These three components are vital for the successful creation and deployment of the contract instance, guaranteeing precise testing in the following phases.
 
 ```rust
 let storage_config = StorageConfiguration::load_from("out/debug/contract-storage_slots.json").unwrap();
@@ -89,13 +104,11 @@ let id = Contract::load_from("./out/debug/contract.bin", load_config).unwrap().d
 
 ## Test Cases
 
-Due to the nature of smart contracts being immutable it is crutial to not only test the basic funcionalities but ensure that all of the edgecases are covered. 
+Given the immutable nature of smart contracts, it's not only vital to test basic functionalities but also imperative to thoroughly cover all potential edge cases.
 
 ### Setting Owner
 
-In this test case we are simply using the contract instance and using the built in SDK method `.with_account()` to mock as the first wallet inorder to call initialize owner. 
-Since to ensure that we have properly set the owner of the function properly we should be able to assert that the return of the contract is indeed equal to wallet 1.
-Additionally you can also verify this by reading into the contract storage to see if the wallet 1 address is there. 
+For this test case, we utilize the contract instance and harness the SDK's `.with_account()` method. This method allows us to mimic the actions of the first wallet, especially the 'initialize owner' procedure. To ascertain the accuracy of the owner designation, we can confirm that the address returned by the contract aligns with that of wallet 1. For a more in-depth verification, probing the contract storage will reveal whether wallet 1's address is appropriately stored.
 
 ```rust
 #[tokio::test]
@@ -122,9 +135,8 @@ async fn can_set_owner() {
 
 ### Setting Owner Once 
 
-An edge case that we would be looking for is trying to set the owner twiceh, we don't want someone stealing ownerhsip of our contract! 
-Since we have already sepcifed `require(owner.is_none(), "owner already initialized");` this line within our Sway contract which ensures that the owner can only be set when it is unset.
-Again in a new contract instance we are setting the instance with wallet 1 and trying to set with wallet 2 and this should fail
+An edge case we need to be vigilant about is an attempt to set the owner twice. We certainly don't want unauthorized ownership transfer of our contract! To address this, we've included the following line in our Sway contract: `require(owner.is_none(), "owner already initialized");`
+This ensures the owner can only be set when it hasn't been previously established. To test this, we create a new contract instance: initially, we set the owner using wallet 1. Any subsequent attempt to set the owner with wallet 2 should be unsuccessful.
 
 ```rust
 #[tokio::test]
@@ -161,11 +173,12 @@ async fn can_set_owner_only_once() {
 
 ### Buying and Selling in the Marketplace
 
-It is important to test the basic functionalities of the smart contract see see if it is working properly. This time we have two wallets set up.
-The first wallet making a transaction call to list an item that they are selling by calling the `.list_item()` method  specifying the price as well as information as to what they are selling. 
-Theecond wallet to make a purchase of that item will call the `.buy_item()` method along with the index of the item being purchased. 
+It's essential to test the basic functionalities of a smart contract to ensure its proper operation. For this test, we have two wallets set up:
 
-At the end of these two transactions we will be checking the balance of each of the wallets to ensure that the transaction has work succesfully!
+1. The first wallet initiates a transaction to list an item for sale. This is done by calling the `.list_item()` method, specifying both the price and details of the item they're selling.
+2. The second wallet proceeds to purchase the listed item using the `.buy_item()` method, providing the index of the item they intend to buy.
+
+Following these transactions, we'll assess the balances of both wallets to confirm the successful execution of the transactions.
 
 ```rust
 #[tokio::test]
@@ -225,7 +238,9 @@ async fn can_list_and_buy_item() {
 }
 ```
 
-Lastly the most importantly is that the creator of the market place is being paid. Similar to the previous tests we will be calling the appropriate functions inorder to
+### Withdraw Owner Fees 
+
+Most importantly, as the creator of the marketplace, you need to ensure you're compensated. Similar to the previous tests, we'll invoke the relevant functions to make an exchange. This time, we'll verify if you can extract the difference in funds.
 
 ```rust
 #[tokio::test]
@@ -329,4 +344,4 @@ async fn can_withdraw_funds() {
 }
 ```
 
-Now that we are confident that smart contract is working properly we should move to building a frontend that people can interact with your new marketplace! 
+Now that we're confident in the functionality of our smart contract, it's time to build a frontend. This will allow users to seamlessly interact with our new marketplace!

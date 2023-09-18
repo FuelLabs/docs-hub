@@ -8,9 +8,9 @@ parent:
 
 ## Defining Error Handling
 
-Enumerations, or enums, are a type that can be one of several variations. In our contract, we can use an enum to create custom errors to handle errors in a function. 
+Enumerations, commonly referred to as enums, are a type that can represent one of several possible variants. Within our contract, we can employ enums to craft custom error messages, facilitating more precise error handling within functions.
 
-```rust
+```sway
 enum InvalidError {
     IncorrectAssetId: ContractId,
     NotEnoughTokens: u64,
@@ -18,9 +18,13 @@ enum InvalidError {
 }
 ```
 
-In our contract, we can expect there to be some different situations where we want to throw an error and prevent the transaction from executing: 
-1. Someone could try to pay for an item with the wrong currency.
-2. Someone could try to buy an item without having enough coins.
-3. Someone could try to withdraw funds from the contract who isn't the owner. 
+Within our contract, we can anticipate various scenarios where we'd want to throw an error and halt the transaction:
+1. Someone might attempt to pay for an item using an incorrect currency.
+2. An individual could try to purchase an item without possessing sufficient coins.
+3. Someone other than the owner might attempt to withdraw funds from the contract.
 
-We can define the return types for each error. For the `IncorrectAssetId` error we can return the asset id sent, which is a `ContractId` type. For the `NotEnoughTokens` variation, we can return the number of coins by defining the return type as a `u64`. For the `OnlyOwner` Error, we can use the Identity of the message sender. 
+For each situation, we can define specific return types for the errors:
+
+- For the `IncorrectAssetId` error, we can return the submitted asset id, which is of type `ContractId`.
+- In the case of the `NotEnoughTokens` error, we can define the return type as `u64` to indicate the number of coins involved.
+- For the `OnlyOwner` error, we can utilize the `Identity` of the message sender as the return.

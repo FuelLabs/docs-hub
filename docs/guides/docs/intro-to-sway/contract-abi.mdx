@@ -8,9 +8,9 @@ parent:
 
 ## Defining the ABI
 
-Next, we will define our ABI. ABI stands for application binary interface. In a Sway contract, it's an outline of all of the functions in the contract. For each function, you must specify its name, input types, return types, and level of storage access. 
+Next, we will define our ABI. ABI stands for Application Binary Interface. In a Sway contract, it serves as an outline of all the functions within the contract. For each function, you need to specify its name, input types, return types, and level of storage access.
 
-Our contract's ABI will look like this:
+Our contract's ABI will be structured as follows:
 
 ```sway
 abi SwayStore {
@@ -42,12 +42,12 @@ abi SwayStore {
 }
 ``` 
 
-#### Functions
+### Functions
 
-A function is defined with the `fn` keyword. Sway uses snake case, so instead of naming a function `myFunction`, you would use `my_function`.
+A function is defined using the `fn` keyword. In Sway, snake case is the convention, so instead of naming a function `myFunction`, you would name it `my_function`.
 
-You must define the return type using a skinny arrow if the function returns anything. If there are any parameters, the types must also be defined for those. Semicolons are *required* at the end of each line.
+If the function returns a value, its return type must be defined using a skinny arrow. Additionally, if the function has parameters, their types must also be specified. Semicolons are *required* at the end of each statement.
 
-If any function reads from or writes to storage, you must define that level of access above the function with either `#[storage(read)]` or `#[storage(read, write)]`.
+If a function either reads from or writes to storage, you need to specify the access level above the function using annotations like `#[storage(read)]` or `#[storage(read, write)]`.
 
-If you expect funds to be sent when a function is called, like the `buy_item` function, you must use the `#[payable]` annotation.
+For functions that are expected to receive funds when called, such as the `buy_item` function, the `#[payable]` annotation should be used.
