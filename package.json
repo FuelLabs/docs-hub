@@ -22,7 +22,8 @@
     "prettier:check": "prettier --check .",
     "prettier:format": "prettier --write .",
     "start": "next start",
-    "ts:check": "tsc --noEmit"
+    "ts:check": "tsc --noEmit",
+    "update-latest-docs": "sh ./scripts/update-latest-submodules.sh"
   },
   "dependencies": {
     "@docsearch/css": "^3.5.2",
