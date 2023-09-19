@@ -9,11 +9,16 @@ import {
 } from '@fuel-ui/react';
 import Link from 'next/link';
 
-import type { GuidesProps } from '../pages/guides';
+import type { GuideInfo } from '../pages/guides';
 
 import { GuideCard } from './GuidesPage';
 
-export function HomePage({ guides, isLatest }: GuidesProps) {
+interface HomePageProps {
+  guides: { [key: string]: GuideInfo };
+  isLatest: boolean;
+}
+
+export function HomePage({ guides, isLatest }: HomePageProps) {
   const cards = {
     sway: (
       <Box css={{ ...styles.card, ...styles.docsCard }}>

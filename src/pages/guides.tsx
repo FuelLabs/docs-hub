@@ -5,18 +5,24 @@ import { useState, useEffect } from 'react';
 
 import { Layout } from '../components/Layout';
 import { DOCS_DIRECTORY, LATEST_DOCS_DIRECTORY } from '../config/constants';
+import useTheme from '../hooks/useTheme';
 import { useVersion } from '../hooks/useVersion';
-import { HomePage } from '../screens/HomePage';
+import { GuidesPage } from '../screens/GuidesPage';
 
-import type { GuidesProps } from './guides';
-
-interface HomeProps extends GuidesProps {
-  theme: string;
+export interface GuideInfo {
+  title: string;
+  description: string;
 }
 
-export default function Home({ theme, guides, latestGuides }: HomeProps) {
+export interface GuidesProps {
+  guides: { [key: string]: GuideInfo };
+  latestGuides: { [key: string]: GuideInfo };
+}
+
+export default function Guides({ guides, latestGuides }: GuidesProps) {
   const [mounted, setIsMounted] = useState<boolean>(false);
   const version = useVersion();
+  const { theme } = useTheme();
 
   useEffect(() => {
     setIsMounted(true);
@@ -25,8 +31,11 @@ export default function Home({ theme, guides, latestGuides }: HomeProps) {
   const isLatest = mounted && version === 'latest';
 
   return (
-    <Layout title="Fuel Docs" isClean theme={theme} isLatest={isLatest}>
-      <HomePage guides={isLatest ? latestGuides : guides} isLatest={isLatest} />
+    <Layout title="Fuel Guides" isClean theme={theme} isLatest={isLatest}>
+      <GuidesPage
+        isLatest={isLatest}
+        guides={isLatest ? latestGuides : guides}
+      />
     </Layout>
   );
 }

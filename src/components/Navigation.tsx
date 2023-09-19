@@ -80,9 +80,7 @@ export function Navigation({ active, isLatest }: NavigationProps) {
             key={index}
             href={
               isLatest
-                ? item.link
-                    ?.replace('docs/', 'docs/latest/')
-                    .replace('/guides', '/guides/latest')
+                ? item.link?.replace('docs/', 'docs/latest/')
                 : // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   (item.link as any)
             }

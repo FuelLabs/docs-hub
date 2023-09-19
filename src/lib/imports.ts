@@ -1,30 +1,42 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import dynamic from 'next/dynamic';
+import type { ComponentType } from 'react';
 import * as GQLExamples from '~/docs/fuel-graphql-docs/examples';
 import * as FuelExamples from '~/docs/fuels-wallet/packages/docs/examples';
 import * as LatestGQLExamples from '~/docs/latest/fuel-graphql-docs/examples';
 import * as LatestFuelExamples from '~/docs/latest/fuels-wallet/packages/docs/examples';
+import { TD, TH } from '~/src/components/Table';
 import { COMPONENTS as GQL_COMPONENTS } from '~/src/generated/components/graphql';
 import { COMPONENTS as LATEST_GQL_COMPONENTS } from '~/src/generated/components/latest-graphql';
 import { COMPONENTS as LATEST_WALLET_COMPONENTS } from '~/src/generated/components/latest-wallet';
 import { COMPONENTS as WALLET_COMPONENTS } from '~/src/generated/components/wallet';
 
-import type { DocType, ComponentsList } from '../types';
+import type { ComponentsList } from '../types';
 
-function loadComponent(imp: any, name?: string) {
+function loadComponent(imp: any, name?: string): ComponentType<object> {
   return dynamic(() => imp.then((mod: any) => (name ? mod[name] : mod)), {
     ssr: false,
   });
 }
 
-export function getComponents(doc: DocType, isLatest: boolean) {
-  const components: any = {};
-  const slug = doc.docsConfig.slug || '';
+type Component = React.ComponentType<any>;
+
+export interface ComponentsObject {
+  [key: string]:
+    | Component
+    | typeof GQLExamples
+    | typeof FuelExamples
+    | typeof LatestGQLExamples
+    | typeof LatestFuelExamples;
+}
+
+export function getComponents(docSlug: string, isLatest: boolean) {
+  const components: ComponentsObject = {};
 
   function addComponents(list: ComponentsList) {
     Object.keys(list).forEach((page) => {
-      if (doc.slug.includes(page)) {
+      if (docSlug.includes(page)) {
         list[page].forEach((comp: any) => {
           if (comp.import) {
             components[comp.name] = comp.import;
@@ -36,19 +48,21 @@ export function getComponents(doc: DocType, isLatest: boolean) {
     });
   }
 
-  if (slug.includes('guides/')) {
+  if (docSlug.includes('guides/')) {
     components.CodeImport = loadComponent(
       import('~/src/components/CodeImport'),
       'CodeImport'
     );
   } else if (
-    slug.includes('docs/wallet') ||
-    slug.includes('docs/latest/wallet')
+    docSlug.includes('docs/wallet') ||
+    docSlug.includes('docs/latest/wallet')
   ) {
     components.CodeImport = loadComponent(
       import('~/src/components/CodeImport'),
       'CodeImport'
     );
+    components.td = TD;
+    components.th = TH;
 
     if (isLatest) {
       components.Examples = LatestFuelExamples;
@@ -58,8 +72,8 @@ export function getComponents(doc: DocType, isLatest: boolean) {
       addComponents(WALLET_COMPONENTS);
     }
   } else if (
-    slug.includes('docs/graphql') ||
-    slug.includes('docs/latest/graphql')
+    docSlug.includes('docs/graphql') ||
+    docSlug.includes('docs/latest/graphql')
   ) {
     if (isLatest) {
       components.GQLExamples = LatestGQLExamples;

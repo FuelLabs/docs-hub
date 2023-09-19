@@ -1,6 +1,5 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
-import { useEffect, useState } from 'react';
 import { Layout } from '~/src/components/Layout';
 import { Sidebar } from '~/src/components/Sidebar';
 import { TableOfContent } from '~/src/components/TableOfContent';
@@ -8,22 +7,13 @@ import { DocProvider } from '~/src/hooks/useDocContext';
 
 import { DocFooter } from '../components/DocFooter';
 import { MDXRender } from '../components/MDXRender';
-import { useVersion } from '../hooks/useVersion';
 import { getComponents } from '../lib/imports';
 import type { DocPageProps } from '../pages/[...slug]';
 
 export function DocScreen(props: DocPageProps) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [components, setComponents] = useState<any>(null);
   const { doc } = props;
-  const version = useVersion();
-  const hasHeadings = Boolean(doc?.headings?.length);
-
-  useEffect(() => {
-    const newComponents = getComponents(doc, props.isLatest);
-    console.log('newComponents', newComponents);
-    setComponents(newComponents);
-  }, [version]);
+  const components = getComponents(doc.slug, doc.isLatest);
+  const hasHeadings = Boolean(doc.headings?.length);
 
   return (
     <DocProvider {...props}>
@@ -32,21 +22,24 @@ export function DocScreen(props: DocPageProps) {
         hasHeadings={hasHeadings}
         config={doc.docsConfig}
         category={doc.category}
-        isLatest={props.isLatest}
+        isLatest={doc.isLatest}
       >
         <Box css={styles.sidebar}>
           <Box css={styles.sidebarContainer}>
-            <Sidebar isLatest={props.isLatest} />
+            <Sidebar isLatest={doc.isLatest} />
           </Box>
         </Box>
-        <Box as="section" css={styles.section} className="Layout--section">
+        <Box.Flex
+          direction={'column'}
+          as="section"
+          css={styles.section}
+          className="Layout--section"
+        >
           <Box className="Layout--pageContent">
-            {doc && components !== null && (
-              <MDXRender code={props.code} components={components} />
-            )}
+            {doc && <MDXRender code={props.code} components={components} />}
           </Box>
           {doc && <DocFooter />}
-        </Box>
+        </Box.Flex>
         {doc && hasHeadings && <TableOfContent />}
       </Layout>
     </DocProvider>
@@ -59,7 +52,6 @@ const styles = {
     padding: '$8 $8 $0 $6',
     position: 'sticky',
     borderRight: '1px solid $border',
-    maxHeight: 'calc(100vh - 102px)',
     bg: '$cardBg',
     top: 20,
 
@@ -70,21 +62,17 @@ const styles = {
   sidebarContainer: cssObj({
     position: 'sticky',
     top: 20,
-    maxHeight: 'calc(100vh - 102px)',
+    maxHeight: 'calc(100vh - 40px)',
     overflowX: 'auto',
     '&::-webkit-scrollbar': {
       display: 'none',
     },
   }),
   section: cssObj({
-    py: '$6',
-    px: '$6',
-    display: 'flex',
-    flexDirection: 'column',
+    padding: '$6',
 
     '@md': {
-      py: '$8',
-      px: '$8',
+      padding: '$8',
     },
 
     '@xl': {

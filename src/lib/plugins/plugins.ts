@@ -10,6 +10,7 @@ import { versions as latestVersions } from '~/docs/latest/fuels-ts/packages/vers
 import { handleForcGenDocs } from './forc-gen-docs';
 import { handleLinks } from './links';
 import { handleExampleImports } from './mdbook-example-import';
+import { handleRustVersion } from './rust-versions';
 import { handleScriptLink } from './ts-docs';
 import {
   handleDemoComp,
@@ -66,6 +67,9 @@ const conditions = {
   hasScriptLink: (node: any) => {
     return node.type === 'html' && node.value.includes('const url =');
   },
+  rustBookVersion: (node: any) => {
+    return node.value && node.value.includes('{{versions.fuels}}');
+  },
 };
 
 export function handlePlugins() {
@@ -85,10 +89,11 @@ export function handlePlugins() {
       handleWalletDocs(tree, filepath);
     } else if (filepath.includes('/fuels-ts/')) {
       handleTSDocs(tree, rootDir, dirname, versions);
+    } else if (filepath.includes('/fuels-rs/')) {
+      handleRustBooks(tree, rootDir, dirname);
     } else if (
       filepath.includes('/fuel-indexer/') ||
       filepath.includes('/fuelup/') ||
-      filepath.includes('/fuels-rs/') ||
       filepath.includes('/fuel-specs/')
     ) {
       handleMDBooks(tree, rootDir, dirname);
@@ -230,6 +235,34 @@ function handleTSDocs(
       }
     } else {
       node.lang = 'ts';
+    }
+  });
+}
+
+function handleRustBooks(tree: Root, rootDir: string, dirname: string) {
+  const nodes: NodeArray = [];
+  visit(tree, '', (node: any, idx, parent) => {
+    if (
+      // handle example code imports in mdbook repos and the TS SDK docs
+      conditions.exampleImport(node) ||
+      // remove .md from mdBook links
+      conditions.mdBookLinks(node) ||
+      // replace {{versions}}
+      conditions.rustBookVersion(node)
+    ) {
+      nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
+    }
+  });
+  nodes.forEach(([node, _idx, parent]) => {
+    if (conditions.exampleImport(node)) {
+      const content = handleExampleImports(node, dirname, rootDir, parent);
+      node.value = content;
+    } else if (conditions.mdBookLinks(node)) {
+      const newUrl = handleLinks(node, dirname);
+      if (newUrl) node.url = newUrl;
+    } else {
+      const newValue = handleRustVersion(node, dirname);
+      node.value = newValue;
     }
   });
 }

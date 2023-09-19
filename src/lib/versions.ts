@@ -1,21 +1,21 @@
-import { promises as fs } from 'node:fs';
-import { join } from 'node:path';
+import fs from 'fs';
+import { join } from 'path';
 import toml from 'toml';
 
 import { DOCS_DIRECTORY, LATEST_DOCS_DIRECTORY } from '../config/constants';
 
-async function itemFromPackageJson(docsDir: string, filename: string) {
-  const file = await fs.readFile(join(docsDir, filename), 'utf-8');
+function itemFromPackageJson(docsDir: string, filename: string) {
+  const file = fs.readFileSync(join(docsDir, filename), 'utf-8');
   const json = JSON.parse(file);
   return json;
 }
 
-async function getWalletVersion(docsDir: string) {
-  const { homepage } = await itemFromPackageJson(
+function getWalletVersion(docsDir: string) {
+  const { homepage } = itemFromPackageJson(
     docsDir,
     'fuels-wallet/package.json'
   );
-  const json = await itemFromPackageJson(
+  const json = itemFromPackageJson(
     docsDir,
     'fuels-wallet/packages/sdk/package.json'
   );
@@ -27,12 +27,9 @@ async function getWalletVersion(docsDir: string) {
   };
 }
 
-async function getTSSDKVersion(docsDir: string) {
-  const { homepage } = await itemFromPackageJson(
-    docsDir,
-    'fuels-ts/package.json'
-  );
-  const json = await itemFromPackageJson(
+function getTSSDKVersion(docsDir: string) {
+  const { homepage } = itemFromPackageJson(docsDir, 'fuels-ts/package.json');
+  const json = itemFromPackageJson(
     docsDir,
     'fuels-ts/packages/fuels/package.json'
   );
@@ -44,9 +41,9 @@ async function getTSSDKVersion(docsDir: string) {
   };
 }
 
-async function getRustSDKVersion(docsDir: string) {
+export function getRustSDKVersion(docsDir: string) {
   const filedir = join(docsDir, 'fuels-rs/Cargo.toml');
-  const file = await fs.readFile(filedir, 'utf-8');
+  const file = fs.readFileSync(filedir, 'utf-8');
   const tomfile = toml.parse(file);
   return {
     name: 'fuels-rs',
@@ -56,9 +53,9 @@ async function getRustSDKVersion(docsDir: string) {
   };
 }
 
-async function getFuelupVersion(docsDir: string) {
+function getFuelupVersion(docsDir: string) {
   const filedir = join(docsDir, 'fuelup/Cargo.toml');
-  const file = await fs.readFile(filedir, 'utf-8');
+  const file = fs.readFileSync(filedir, 'utf-8');
   const tomfile = toml.parse(file);
 
   return {
@@ -69,12 +66,12 @@ async function getFuelupVersion(docsDir: string) {
   };
 }
 
-async function getForcVersion(docsDir: string) {
+function getForcVersion(docsDir: string) {
   const swayfile = join(docsDir, 'sway/Cargo.toml');
-  const file = await fs.readFile(swayfile, 'utf-8');
+  const file = fs.readFileSync(swayfile, 'utf-8');
   const swaitomfile = toml.parse(file);
   const forcfiledir = join(docsDir, 'sway/forc-pkg/Cargo.toml');
-  const forcfile = await fs.readFile(forcfiledir, 'utf-8');
+  const forcfile = fs.readFileSync(forcfiledir, 'utf-8');
   const version = forcfile?.match(/version = "(.*)"/)?.[1];
 
   return {
@@ -85,9 +82,9 @@ async function getForcVersion(docsDir: string) {
   };
 }
 
-async function getIndexerVersion(docsDir: string) {
+function getIndexerVersion(docsDir: string) {
   const filedir = join(docsDir, 'fuel-indexer/Cargo.toml');
-  const file = await fs.readFile(filedir, 'utf-8');
+  const file = fs.readFileSync(filedir, 'utf-8');
   const tomfile = toml.parse(file);
   return {
     name: 'fuel-indexer',
@@ -97,14 +94,14 @@ async function getIndexerVersion(docsDir: string) {
   };
 }
 
-export async function getVersions(isLatest: boolean) {
+export function getVersions(isLatest: boolean) {
   const docsDir = isLatest ? LATEST_DOCS_DIRECTORY : DOCS_DIRECTORY;
-  const wallet = await getWalletVersion(docsDir);
-  const tsSDK = await getTSSDKVersion(docsDir);
-  const rust = await getRustSDKVersion(docsDir);
-  const fuelup = await getFuelupVersion(docsDir);
-  const forc = await getForcVersion(docsDir);
-  const indexer = await getIndexerVersion(docsDir);
+  const wallet = getWalletVersion(docsDir);
+  const tsSDK = getTSSDKVersion(docsDir);
+  const rust = getRustSDKVersion(docsDir);
+  const fuelup = getFuelupVersion(docsDir);
+  const forc = getForcVersion(docsDir);
+  const indexer = getIndexerVersion(docsDir);
 
   return {
     Forc: forc,

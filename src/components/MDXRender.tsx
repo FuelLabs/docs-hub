@@ -4,7 +4,6 @@ import { Box } from '@fuel-ui/react';
 import { runSync } from '@mdx-js/mdx';
 import * as provider from '@mdx-js/react';
 import dynamic from 'next/dynamic';
-import { usePathname } from 'next/navigation';
 import { useMemo } from 'react';
 
 import { runtime } from '../lib/runtime';
@@ -17,7 +16,7 @@ import { Link } from './Link';
 import { UL, OL } from './List';
 import { Paragraph } from './Paragraph';
 import { Pre } from './Pre';
-import { Table, TD, TH } from './Table';
+import { Table } from './Table';
 
 const Player = dynamic(() => import('./Player'), {
   ssr: false,
@@ -49,20 +48,13 @@ type MDXRenderProps = {
 };
 
 export function MDXRender({ code, components }: MDXRenderProps) {
-  const pathname = usePathname();
-  const newComponents = components;
-  if (pathname.includes('/wallet/')) {
-    newComponents.td = TD;
-    newComponents.th = TH;
-  }
-
   const { default: Content } = useMemo(
     () => runSync(code, { ...runtime, ...provider }),
     [code]
   );
 
   return (
-    <provider.MDXProvider components={{ ...newComponents, ...mdxComponents }}>
+    <provider.MDXProvider components={{ ...components, ...mdxComponents }}>
       <Content />
     </provider.MDXProvider>
   );

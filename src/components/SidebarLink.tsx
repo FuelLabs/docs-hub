@@ -25,7 +25,8 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
           ref={ref as any}
           css={styles.root}
           size="sm"
-          data-active={Boolean(isActive)}
+          intent="base"
+          data-active={isActive}
           {...(onClick && { onClick })}
         >
           {item.label}

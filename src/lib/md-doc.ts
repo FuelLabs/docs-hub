@@ -53,6 +53,7 @@ export class Doc {
         ...config,
         slug: item.slug,
       },
+      isLatest: item.slug.includes('/latest/'),
     } as DocType;
 
     this.item = doc;
