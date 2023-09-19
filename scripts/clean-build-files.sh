@@ -18,9 +18,13 @@ TARGET_DIRS=(
 "./docs/latest/fuels-wallet"
 )
 
-# File/folder names to exclude from deletion
-EXCLUSIONS=("book" "docs" "examples" "apps" "fuels" "Cargo.toml" "package.json")
-
+# File/folder names to exclude from deletion in each book
+EXCLUSIONS_sway=("Cargo.toml" "forc-pkg" "docs" "examples")
+EXCLUSIONS_fuels_rs=("Cargo.toml" "docs" "examples")
+EXCLUSIONS_fuels_ts=("apps" "packages" "package.json")
+EXCLUSIONS_fuelup=("Cargo.toml" "docs")
+EXCLUSIONS_fuel_indexer=("Cargo.toml" "docs" "examples")
+EXCLUSIONS_fuels_wallet=("package.json" "packages")
 
 for TARGET_DIR in "${TARGET_DIRS[@]}"; do
     # Check if directory exists
@@ -35,7 +39,10 @@ for TARGET_DIR in "${TARGET_DIRS[@]}"; do
     for item in *; do
         should_delete=true
 
-        for exclusion in "${EXCLUSIONS[@]}"; do
+       dir_basename=$(basename "$TARGET_DIR" | tr '-' '_')
+       current_exclusions="EXCLUSIONS_$dir_basename[@]"
+
+        for exclusion in "${!current_exclusions}"; do
             if [[ "$item" == "$exclusion" ]]; then
                 should_delete=false
                 break
