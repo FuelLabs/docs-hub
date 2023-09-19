@@ -43,7 +43,7 @@ jobs:
         run: |
           pnpm check:prod
 
-  build-quickstart-contract-example:
+  build-quickstart-contract-examples:
     name: build-quickstart-contract
     runs-on: ubuntu-latest
     steps:
@@ -58,6 +58,7 @@ jobs:
           curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh
       - name: Modify Path
         run: echo "$HOME/.fuelup/bin:${GITHUB_PATH}" >> $GITHUB_PATH
+      # CHECK BETA-4
       - name: Set Default Beta-4 Toolchain
         run: fuelup toolchain install beta-4 && fuelup default beta-4
       - name: Build Contract
@@ -70,5 +71,20 @@ jobs:
       - name: Check Cargo fmt & clippy
         run: |
           cd docs/guides/examples/quickstart/counter-contract
+          cargo fmt --all --check
+          cargo clippy --all-targets --all-features
+        # CHECK LATEST
+      - name: Set Default Latest Toolchain
+        run: fuelup toolchain install latest && fuelup default latest
+      - name: Build Contract
+        run: forc build --path ./docs/latest/guides/examples/quickstart/counter-contract
+      - name: Run contract tests
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --manifest-path ./docs/latest/guides/examples/quickstart/counter-contract/Cargo.toml
+      - name: Check Cargo fmt & clippy
+        run: |
+          cd docs/latest/guides/examples/quickstart/counter-contract
           cargo fmt --all --check
           cargo clippy --all-targets --all-features

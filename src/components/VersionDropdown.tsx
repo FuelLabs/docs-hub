@@ -22,8 +22,12 @@ export default function VersionDropdown({ isLatest }: { isLatest: boolean }) {
               router.push(path);
             } else if (action === 'latest') {
               setVersion('latest');
-              const path = router.asPath.replace('docs/', 'docs/latest/');
-              router.push(path);
+              if (router.asPath !== '/guides/') {
+                const path = router.asPath
+                  .replace('docs/', 'docs/latest/')
+                  .replace('guides/', 'guides/latest/');
+                router.push(path);
+              }
             }
           }
         }}

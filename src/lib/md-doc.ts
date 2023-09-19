@@ -6,6 +6,8 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
 import { codeImport as walletCodeImport } from '~/docs/fuels-wallet/packages/docs/src/lib/code-import';
+import { codeExamples as latestCodeExamples } from '~/docs/latest/fuel-graphql-docs/src/lib/code-examples';
+import { codeImport as latestWalletCodeImport } from '~/docs/latest/fuels-wallet/packages/docs/src/lib/code-import';
 
 import { DOCS_DIRECTORY } from '../config/constants';
 import type { Config, DocType, SidebarLinkItem } from '../types';
@@ -177,9 +179,12 @@ export class Doc {
 
     if (this.md.slug.startsWith('docs/wallet/')) {
       plugins = plugins.concat([[walletCodeImport, { filepath }] as any]);
-    }
-    if (this.md.slug.startsWith('docs/graphql/')) {
+    } else if (this.md.slug.startsWith('docs/latest/wallet/')) {
+      plugins = plugins.concat([[latestWalletCodeImport, { filepath }] as any]);
+    } else if (this.md.slug.startsWith('docs/graphql/')) {
       plugins = plugins.concat([[codeExamples, { filepath }] as any]);
+    } else if (this.md.slug.startsWith('docs/latest/graphql/')) {
+      plugins = plugins.concat([[latestCodeExamples, { filepath }] as any]);
     }
 
     return plugins;

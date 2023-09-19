@@ -43,7 +43,11 @@ export default function getSortedLinks(config, docs) {
 
     const isExternal = doc.slug.startsWith('http');
     doc.slug = doc.slug.replace('../', '').replace('./', '') || '';
-    if (!doc.slug.startsWith('guides/') && !isExternal) {
+    if (
+      !doc.slug.startsWith('guides') &&
+      !doc.slug.startsWith('latest/guides') &&
+      !isExternal
+    ) {
       doc.slug = `docs/${doc.slug}`;
     }
     const shouldBeLowerCase = LOWER_CASE_NAV_PATHS.some((prefix) => {
@@ -109,7 +113,7 @@ export default function getSortedLinks(config, docs) {
     subpath = subpath.replace('latest/guides', 'guides/latest');
     const submenu = [
       {
-        slug: doc.slug.toLowerCase(),
+        slug: finalSlug,
         label: editLabel(doc.title, shouldBeLowerCase),
         isExternal,
       },

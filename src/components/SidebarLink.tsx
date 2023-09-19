@@ -40,6 +40,7 @@ export const styles = {
   root: cssObj({
     padding: '$0',
     justifyContent: 'space-between',
+    fontSize: '$sm',
 
     '&[data-active="true"], &[data-active="true"]:hover': {
       color: '$textLink',

@@ -61,6 +61,7 @@ export function SidebarSubmenu({
         <List>
           {submenu?.map((item, index) => {
             if (!hasIndex || index > 0) {
+              console.log('ITEM:', item);
               return (
                 <List.Item key={index}>
                   <SidebarLink onClick={onClick} item={item} data-submenu />
