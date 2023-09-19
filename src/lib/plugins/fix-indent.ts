@@ -41,6 +41,7 @@ export function fixIndent() {
     const rootDir = process.cwd();
     const fullpath = join(rootDir, file.data.rawDocumentData?.sourceFilePath);
     const isSway = fullpath.includes('sway');
+    const isIndexer = fullpath.includes('/fuel-indexer/');
     const isFuelsTs = fullpath.includes('fuels-ts');
 
     visit(tree, '', (node: any) => {
@@ -54,7 +55,7 @@ export function fixIndent() {
         setValueOnNode(node, (value) => {
           if (
             node.type === 'code' &&
-            ['rust', 'ts', 'typescript'].includes(lang)
+            ['rust', 'rust,ignore', 'ts', 'typescript'].includes(lang)
           ) {
             const lines = value.split('\n');
             const newLines = lines
@@ -71,7 +72,7 @@ export function fixIndent() {
               })
               // parsing code blocks with 8 spaces indentation
               .map((line: string) => {
-                if (isSway) return line;
+                if (isSway || isIndexer) return line;
                 if (line.match(/^\s{8}/)) {
                   return line.replace(/^\s{8}/, '');
                 }
