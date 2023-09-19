@@ -32,7 +32,12 @@ export function SidebarSubmenu({
     if (pathname.includes('/guides/')) {
       setIsOpened(true);
     } else {
-      const actualSlug = `/${thisItem.slug}/`;
+      const split = thisItem.slug.split('/');
+      let actualSlug = `/${thisItem.slug}/`;
+      if (split.length > 3) {
+        split.pop();
+        actualSlug = `/${split.join('/')}/`;
+      }
       const active = pathname.startsWith(actualSlug);
       setIsOpened(active);
     }
@@ -61,7 +66,6 @@ export function SidebarSubmenu({
         <List>
           {submenu?.map((item, index) => {
             if (!hasIndex || index > 0) {
-              console.log('ITEM:', item);
               return (
                 <List.Item key={index}>
                   <SidebarLink onClick={onClick} item={item} data-submenu />

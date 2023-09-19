@@ -9,10 +9,9 @@ import { SidebarSubmenu } from './SidebarSubmenu';
 
 interface SidebarProps {
   onClick?: ButtonLinkProps['onClick'];
-  isLatest: boolean;
 }
 
-export function Sidebar({ onClick, isLatest }: SidebarProps) {
+export function Sidebar({ onClick }: SidebarProps) {
   const { links, doc, versions } = useDocContext();
   const version =
     doc && doc.docsConfig ? versions[doc.docsConfig.title]?.version : null;
@@ -43,7 +42,7 @@ export function Sidebar({ onClick, isLatest }: SidebarProps) {
             <SidebarSubmenu
               onClick={onClick}
               key={link.subpath ? link.subpath + index : index}
-              isLatest={isLatest}
+              isLatest={doc.isLatest}
               {...link}
             />
           );

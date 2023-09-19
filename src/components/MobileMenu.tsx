@@ -110,7 +110,7 @@ export function MobileMenu({ active, title, isLatest }: MobileMenuProps) {
                 })}
               </Box.VStack>
 
-              <Sidebar onClick={() => setOpen(false)} isLatest={isLatest} />
+              <Sidebar onClick={() => setOpen(false)} />
             </Box>
           </Drawer.Body>
         </Drawer.Content>

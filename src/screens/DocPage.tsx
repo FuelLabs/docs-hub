@@ -26,7 +26,7 @@ export function DocScreen(props: DocPageProps) {
       >
         <Box css={styles.sidebar}>
           <Box css={styles.sidebarContainer}>
-            <Sidebar isLatest={doc.isLatest} />
+            <Sidebar />
           </Box>
         </Box>
         <Box.Flex
