@@ -1,56 +1,55 @@
 #!/bin/bash
 
-# Remove all unused files from build folder to reduce deploy size
-
-# function to delete folders with exclusions
-delete_with_exclusions() {
-    local TARGET_DIR="$1"
-    shift
-    local EXCLUSIONS=("$@")
-
-    # Loop through all items in the directory
-    for ITEM in "$TARGET_DIR"/*; do
-        # If the item is a directory
-        if [[ -d "$ITEM" ]]; then
-            # By default, assume that the directory is to be deleted
-            DELETE=true
-            # Loop through the exclusion list
-            for EXCLUDE in "${EXCLUSIONS[@]}"; do
-                # If the directory matches an exclusion
-                if [[ "$(basename "$ITEM")" == "$EXCLUDE" ]]; then
-                    DELETE=false
-                    break
-                fi
-            done
-            # If the directory was not in the exclusion list, delete it
-            if $DELETE; then
-                rm -rf "$ITEM"
-                echo "Deleted: $ITEM"
-            fi
-        fi
-    done
-}
-
-# List of target directories and their respective exclusions
-declare -A DIRECTORIES=(
-    ["/docs/sway"]=("book" "examples")
-    ["/docs/builds/sway"]=("master")
-    ["/docs/fuel-indexer"]=("docs" "examples")
-    ["/docs/fuels-rs"]=("docs" "examples")
-    ["/docs/fuels-ts"]=("apps" "versions")
-    ["/docs/fuels-wallet"]=("docs")
-    ["/docs/fuelup"]=("docs")
-    ["/docs/latest/sway"]=("book" "examples")
-    ["/docs/latest/builds/sway"]=("master")
-    ["/docs/latest/fuel-indexer"]=("docs" "examples")
-    ["/docs/latest/fuels-rs"]=("docs" "examples")
-    ["/docs/latest/fuels-ts"]=("apps" "versions")
-    ["/docs/latest/fuels-wallet"]=("docs")
-    ["/docs/latest/fuelup"]=("docs")
+# List of directories to delete unused files from
+TARGET_DIRS=(
+"./docs/sway" 
+"./docs/latest/sway" 
+"./docs/builds/sway" 
+"./docs/latest/builds/sway" 
+"./docs/fuel-indexer"
+"./docs/latest/fuel-indexer"
+"./docs/fuelup"
+"./docs/latest/fuelup"
+"./docs/fuels-rs"
+"./docs/latest/fuels-rs"
+"./docs/fuels-ts"
+"./docs/latest/fuels-ts"
+"./docs/fuels-wallet"
+"./docs/latest/fuels-wallet"
 )
 
-# delete all unnecessary folders in each directory
-for DIR in "${!DIRECTORIES[@]}"; do
-    delete_with_exclusions "$DIR" "${DIRECTORIES[$DIR]}"
-done
+# File/folder names to exclude from deletion
+EXCLUSIONS=("book" "docs" "examples" "apps" "fuels" "Cargo.toml" "package.json")
 
+
+for TARGET_DIR in "${TARGET_DIRS[@]}"; do
+    # Check if directory exists
+    if [[ ! -d "$TARGET_DIR" ]]; then
+        echo "Warning: Target directory $TARGET_DIR does not exist. Skipping..."
+        continue
+    fi
+
+    # Change to the target directory, pushing to directory stack
+    pushd "$TARGET_DIR" > /dev/null
+
+    for item in *; do
+        should_delete=true
+
+        for exclusion in "${EXCLUSIONS[@]}"; do
+            if [[ "$item" == "$exclusion" ]]; then
+                should_delete=false
+                break
+            fi
+        done
+
+        if $should_delete; then
+            rm -rf "$item"
+            # echo "DELETED: $item"
+        fi
+    done
+
+    echo "Cleanup done for $TARGET_DIR!"
+
+    # Return to the original directory, popping from directory stack
+    popd > /dev/null
+done
