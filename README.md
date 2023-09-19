@@ -16,6 +16,12 @@ git clone --recursive https://github.com/FuelLabs/docs-hub
 cd docs-hub
 ```
 
+If your project's documentation does not reside on the default branch, open the `.gitmodules` file and add/change the `branch = ...` field to point to the corresponding branch. Make sure you update the submodule by using the new branch:
+
+```sh
+git submodule update --remote [SUBMODULE]
+```
+
 ### Install Dependencies
 
 ```sh
