@@ -4,9 +4,13 @@ import { capitalize } from './str.mjs';
 // won't be capitalized in the navigation sidebar
 const LOWER_CASE_NAV_PATHS = [
   'docs/forc/commands/',
+  'docs/latest/forc/commands/',
   'docs/forc/plugins/',
+  'docs/latest/forc/plugins/',
   'docs/indexer/forc-index/',
+  'docs/latest/indexer/forc-index/',
   'docs/indexer/forc-postgres/',
+  'docs/latest/indexer/forc-postgres/',
 ];
 
 function editLabel(label, shouldBeLowerCase) {
