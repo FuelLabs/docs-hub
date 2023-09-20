@@ -17,6 +17,7 @@ export function SidebarSubmenu({
   hasIndex,
   submenu,
   isExternal,
+  isLatest,
   onClick,
 }: SidebarSubmenuProps) {
   const pathname = usePathname();
@@ -32,9 +33,10 @@ export function SidebarSubmenu({
     if (pathname.includes('/guides/')) {
       setIsOpened(true);
     } else {
-      const split = thisItem.slug.split('/');
       let actualSlug = `/${thisItem.slug}/`;
-      if (split.length > 3) {
+      const split = thisItem.slug.split('/');
+      const length = isLatest ? 4 : 3;
+      if (split.length > length) {
         split.pop();
         actualSlug = `/${split.join('/')}/`;
       }
