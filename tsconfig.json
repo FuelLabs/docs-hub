@@ -11,7 +11,11 @@
     "baseUrl": ".",
     "rootDir": ".",
     "paths": {
-      "~/*": ["./*", "./docs/fuels-wallet/packages/docs/*"],
+      "~/*": [
+        "./*",
+        "./docs/fuels-wallet/packages/docs/*",
+        "../fuel-ui/design-system/react/src/*"
+      ],
       "contentlayer/generated": ["./.contentlayer/generated"]
     }
   },

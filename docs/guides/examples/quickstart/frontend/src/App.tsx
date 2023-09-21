@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from 'react';
-
-import '@fuel-wallet/sdk';
-import './App.css';
+import { useEffect, useState } from "react";
+import "./App.css";
 // Import the contract factory -- you can find the name in index.ts.
 // You can also do command + space and the compiler will suggest the correct name.
-import { CounterContractAbi__factory } from './contracts';
+import { CounterContractAbi__factory } from "./contracts";
 
 // The address of the contract deployed the Fuel testnet
 const CONTRACT_ID =
-  '0x9751545a0f45aa4b88904b6b4a896bfb02f231676de5438d346d4beab5cb9820';
+  "0x...";
 
 function App() {
   const [connected, setConnected] = useState<boolean>(false);
-  const [account, setAccount] = useState<string>('');
+  const [account, setAccount] = useState<string>("");
   const [counter, setCounter] = useState<number>(0);
   const [loaded, setLoaded] = useState(false);
 
@@ -20,9 +18,9 @@ function App() {
     setTimeout(() => {
       checkConnection();
       setLoaded(true);
-    }, 200);
+    }, 200)
     if (connected) getCount();
-  }, [connected]);
+  }, [connected])
 
   async function connect() {
     if (window.fuel) {
@@ -32,7 +30,7 @@ function App() {
         setAccount(account);
         setConnected(true);
       } catch (err) {
-        console.log('error connecting: ', err);
+        console.log("error connecting: ", err);
       }
     }
   }
@@ -52,7 +50,7 @@ function App() {
     if (window.fuel) {
       const wallet = await window.fuel.getWallet(account);
       const contract = CounterContractAbi__factory.connect(CONTRACT_ID, wallet);
-      const { value } = await contract.functions.count().get();
+      const { value } = await contract.functions.count().simulate();
       setCounter(value.toNumber());
     }
   }
@@ -67,28 +65,28 @@ function App() {
         await contract.functions.increment().txParams({ gasPrice: 1 }).call();
         getCount();
       } catch (err) {
-        console.log('error sending transaction...', err);
+        console.log("error sending transaction...", err);
       }
     }
   }
 
-  if (!loaded) return null;
+  if (!loaded) return null
 
   return (
     <>
       <div className="App">
-        {connected ? (
-          <>
-            <h3>Counter: <span id="count">{counter?.toFixed(0)}</span></h3>
-            <button style={buttonStyle} onClick={increment}>
-              Increment
-            </button>
-          </>
-        ) : (
-          <button style={buttonStyle} onClick={connect}>
-            Connect
-          </button>
-        )}
+        {
+          connected ? (
+            <>
+              <h3>Counter: {counter}</h3>
+              <button style={buttonStyle} onClick={increment}>
+                Increment
+              </button>
+            </>
+          ) : (
+            <button style={buttonStyle} onClick={connect}>Connect</button>
+          )
+        }
       </div>
     </>
   );
@@ -97,15 +95,15 @@ function App() {
 export default App;
 
 const buttonStyle = {
-  borderRadius: '48px',
-  marginTop: '10px',
-  backgroundColor: '#03ffc8',
-  fontSize: '20px',
-  fontWeight: '600',
-  color: 'rgba(0, 0, 0, .88)',
-  border: 'none',
-  outline: 'none',
-  height: '60px',
-  width: '400px',
-  cursor: 'pointer',
-};
+  borderRadius: "48px",
+  marginTop: "10px",
+  backgroundColor: "#03ffc8",
+  fontSize: "20px",
+  fontWeight: "600",
+  color: "rgba(0, 0, 0, .88)",
+  border: "none",
+  outline: "none",
+  height: "60px",
+  width: "400px",
+  cursor: "pointer"
+}

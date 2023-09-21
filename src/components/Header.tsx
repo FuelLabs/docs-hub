@@ -1,5 +1,12 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box, FuelLogo, Icon, Link } from '@fuel-ui/react';
+import {
+  Box,
+  FuelLogo,
+  Icon,
+  Link,
+  darkTheme,
+  lightTheme,
+} from '@fuel-ui/react';
 import dynamic from 'next/dynamic';
 
 import { MobileMenu } from './MobileMenu';
@@ -22,7 +29,7 @@ export function Header({ active, title }: { active: string; title?: string }) {
       </Box.Flex>
       <Box css={styles.desktop}>
         <Box.Stack direction="row" gap="$4" css={{ mr: '$4' }}>
-          <Search />
+          <Search title={title} />
           <ThemeToggler />
         </Box.Stack>
         <Box.Flex css={styles.menu}>
@@ -52,7 +59,7 @@ export function Header({ active, title }: { active: string; title?: string }) {
           </a>
         </Box.Flex>
       </Box>
-      <MobileMenu active={active} />
+      <MobileMenu active={active} title={title} />
     </Box.Flex>
   );
 }
@@ -68,7 +75,13 @@ const styles = {
     alignItems: 'center',
     borderBottom: '1px solid $border',
     gridColumn: '1 / 4',
-    bg: '$overlayBg',
+
+    [`.${darkTheme.theme} &`]: {
+      backgroundColor: '$intentsBase2',
+    },
+    [`.${lightTheme.theme} &`]: {
+      backgroundColor: '$white',
+    },
 
     '.logo': {
       display: 'inline-flex',

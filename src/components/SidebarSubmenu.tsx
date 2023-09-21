@@ -1,14 +1,14 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box, Button, Icon, List } from '@fuel-ui/react';
+import type { ButtonLinkProps } from '@fuel-ui/react';
+import { Box, Icon, IconButton, List } from '@fuel-ui/react';
 import { usePathname } from 'next/navigation';
-import type { Dispatch, SetStateAction } from 'react';
 import { useState, useEffect } from 'react';
 import type { SidebarLinkItem } from '~/src/types';
 
 import { SidebarLink } from './SidebarLink';
 
 interface SidebarSubmenuProps extends SidebarLinkItem {
-  handleClick: Dispatch<SetStateAction<boolean>>;
+  onClick?: ButtonLinkProps['onClick'];
 }
 
 export function SidebarSubmenu({
@@ -16,12 +16,13 @@ export function SidebarSubmenu({
   hasIndex,
   submenu,
   subpath,
-  handleClick,
+  onClick,
 }: SidebarSubmenuProps) {
   const pathname = usePathname();
   const [isOpened, setIsOpened] = useState<boolean>();
   const newLabel = label.replace(/\s+/g, '-').toLowerCase();
   let slug = `${subpath}/${newLabel}`;
+  const pathnameSegments = pathname?.split('/');
 
   useEffect(() => {
     if (pathname.includes('/guides/')) {
@@ -30,7 +31,24 @@ export function SidebarSubmenu({
       const pathArray = submenu![0].slug?.split('/');
       const index = pathArray?.indexOf(subpath!);
       const category = pathArray && index ? `/${pathArray[index + 1]}` : '';
-      const active = pathname?.startsWith(`/docs/${subpath}${category}/`);
+
+      let active =
+        pathnameSegments &&
+        pathnameSegments[2] === subpath &&
+        `/${pathnameSegments[3]}` === category;
+
+      let foundPathInSubmenu = false;
+
+      if (active && submenu) {
+        for (let i = 0; i < submenu.length; i++) {
+          const thisSlug = `/docs/${submenu[i].slug!.replace('./', '')}/`;
+          if (pathname === thisSlug) {
+            foundPathInSubmenu = true;
+            break;
+          }
+        }
+        if (!foundPathInSubmenu) active = false;
+      }
       setIsOpened(active);
     }
   }, [pathname]);
@@ -44,32 +62,30 @@ export function SidebarSubmenu({
       <Box.Flex justify={'space-between'}>
         <SidebarLink
           intent="base"
-          handleClick={handleClick}
+          onClick={onClick}
           item={{ label, slug }}
+          isActiveMenu={isOpened}
         />
-        <Button
-          onPress={() => setIsOpened(!isOpened)}
-          css={styles.button}
-          intent="base"
+        <IconButton
           size="xs"
-        >
-          <Icon
-            icon={isOpened ? Icon.is('ChevronUp') : Icon.is('ChevronDown')}
-          />
-        </Button>
+          aria-label="Button"
+          intent="base"
+          variant="link"
+          onClick={() => setIsOpened(!isOpened)}
+          icon={isOpened ? Icon.is('ChevronUp') : Icon.is('ChevronDown')}
+        />
       </Box.Flex>
 
       {isOpened && (
         <List>
           {submenu?.map((item, index) => {
-            if (item.label !== label) {
+            if (
+              item.label !== label ||
+              (item.slug && item.slug.split('/').length > 3)
+            ) {
               return (
                 <List.Item key={index}>
-                  <SidebarLink
-                    handleClick={handleClick}
-                    item={item}
-                    data-submenu
-                  />
+                  <SidebarLink onClick={onClick} item={item} data-submenu />
                 </List.Item>
               );
             }
@@ -106,15 +122,6 @@ const styles = {
       whiteSpace: 'nowrap',
       overflow: 'hidden',
       textOverflow: 'ellipsis',
-    },
-  }),
-  button: cssObj({
-    background: 'transparent',
-    '.fuel_Icon': {
-      color: 'var(--colors-semanticLinkBaseIcon)',
-    },
-    '&:hover': {
-      background: 'transparent !important',
     },
   }),
 };

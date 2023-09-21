@@ -14,7 +14,15 @@ parent:
 {/* installation:example:start */}
 Start by [installing the Rust toolchain](https://www.rust-lang.org/tools/install).
 
+```console
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
 Then, [install the Fuel toolchain](/docs/fuelup/installation).
+
+```console
+curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh
+```
 {/* installation:example:end */}
 
 {/* This example should include the instructions for installing the latest toolchain */}
@@ -25,14 +33,27 @@ Make sure you have the latest version of `fuelup` by running the following comma
 fuelup self update
 ```
 
-Then run `fuelup toolchain install beta-3` to install the `beta-3` toolchain.
+```console
+Fetching binary from https://github.com/FuelLabs/fuelup/releases/download/v0.19.5/fuelup-0.19.5-aarch64-apple-darwin.tar.gz
+Downloading component fuelup without verifying checksum
+Unpacking and moving fuelup to /var/folders/tp/0l8zdx9j4s9_n609ykwxl0qw0000gn/T/.tmpiNJQHt
+Moving /var/folders/tp/0l8zdx9j4s9_n609ykwxl0qw0000gn/T/.tmpiNJQHt/fuelup to /Users/.fuelup/bin/fuelup
+```
 
-Finally, set the `beta-3` toolchain as your default distribution with the following command:
+Next, install the `beta-4` toolchain with:
 
-<span id="set-default-fuelup-toolchain"></span>
+```console
+fuelup toolchain install beta-4
+```
 
-```sh
-fuelup default beta-3
+Finally, set the `beta-4` toolchain as your default distribution with the following command:
+
+```console
+fuelup default beta-4
+```
+
+```console
+default toolchain set to 'beta-4'
 ```
 
 You can check your current toolchain anytime by running `fuelup show`.
@@ -46,28 +67,46 @@ We'll build a simple counter contract with two functions: one to increment the c
 
 **Start by creating a new, empty folder. We'll call it `fuel-project`.**
 
-<span id="create-project-folder"></span>
-
 ```sh
 mkdir fuel-project
 ```
 
 ### Writing the Contract
 
-Create a contract project inside of your `fuel-project` folder:
-
-<span id="create-contract"></span>
+Move inside of your `fuel-project` folder:
 
 ```sh
 cd fuel-project
+```
+
+Then create a contract project using forc:
+
+```sh
 forc new counter-contract
+```
+
+You will get this output:
+
+```sh
+To compile, use `forc build`, and to run tests use `forc test`
+----
+Read the Docs:
+- Sway Book: https://docs.fuel.network/docs/sway
+- Forc Book: https://docs.fuel.network/docs/forc
+- Rust SDK Book: https://docs.fuel.network/docs/fuels-rs
+- TypeScript SDK: https://docs.fuel.network/docs/fuels-ts
+
+Join the Community:
+- Follow us @SwayLang: https://twitter.com/SwayLang
+- Ask questions on Discourse: https://forum.fuel.network/
+
+Report Bugs:
+- Sway Issues: https://github.com/FuelLabs/sway/issues/new
 ```
 
 {/* This example should include a tree for a new forc project and explain the boilerplate files */}
 {/* forc_new:example:start */}
 Here is the project that `Forc` has initialized:
-
-<span id="contract-tree"></span>
 
 ```console
 $ tree counter-contract
@@ -75,8 +114,6 @@ counter-contract
 ├── Forc.toml
 └── src
     └── main.sw
-
-1 directory, 2 files
 ```
 
 `Forc.toml` is the _manifest file_ (similar to `Cargo.toml` for Cargo or `package.json` for Node) and defines project metadata such as the project name and dependencies.
@@ -85,8 +122,6 @@ counter-contract
 Open your project in a code editor and delete everything in `src/main.sw` apart from the first line.
 
 Every Sway file must start with a declaration of what type of program the file contains; here, we've declared that this file is a contract.
-
-<span id="program-type"></span>
 
 <CodeImport
   file="../../examples/quickstart/counter-contract/src/main.sw"
@@ -97,8 +132,6 @@ Every Sway file must start with a declaration of what type of program the file c
 
 Next, we'll define a storage value. In our case, we have a single counter that we'll call `counter` of type 64-bit unsigned integer and initialize it to 0.
 
-<span id="storage"></span>
-
 <CodeImport
   file="../../examples/quickstart/counter-contract/src/main.sw"
   comment="storage"
@@ -108,11 +141,9 @@ Next, we'll define a storage value. In our case, we have a single counter that w
 
 ### ABI
 
-An ABI defines an interface, and there is no function body in the ABI. A contract must either define or import an ABI declaration and implement it. It is considered best practice to define your ABI in a separate library and import it into your contract because this allows callers of the contract to import and use the ABI in scripts to call your contract.
+An ABI defines an interface for a contract. A contract must either define or import an ABI declaration. It is considered best practice to define your ABI in a separate library and import it into your contract because this allows callers of the contract to import and use the ABI in scripts to call your contract
 
-For simplicity, we will define the ABI directly in the contract file.
-
-<span id="abi"></span>
+For simplicity, we will define the ABI directly in the contract file itself.
 
 <CodeImport
   file="../../examples/quickstart/counter-contract/src/main.sw"
@@ -125,8 +156,6 @@ For simplicity, we will define the ABI directly in the contract file.
 
 Below your ABI definition, you will write the implementation of the functions defined in your ABI.
 
-<span id="impl"></span>
-
 <CodeImport
   file="../../examples/quickstart/counter-contract/src/main.sw"
   comment="counter-contract"
@@ -134,13 +163,11 @@ Below your ABI definition, you will write the implementation of the functions de
   lang="sway"
 />
 
-> **Note**: `storage.counter` is an implicit return and is equivalent to `return storage.counter;`.
+**Note**: `storage.counter.read()` is an implicit return and is equivalent to `return storage.counter.read();`.
 
 Here's what your code should look like so far:
 
 File: `./counter-contract/src/main.sw`
-
-<span id="entire-contract"></span>
 
 <CodeImport
   file="../../examples/quickstart/counter-contract/src/main.sw"
@@ -151,17 +178,30 @@ File: `./counter-contract/src/main.sw`
 
 ### Build the Contract
 
-From inside the `fuel-project/counter-contract` directory, run the following command to build your contract:
+Navigate to your contract folder:
 
-<span id="build-contract"></span>
+```console
+cd counter-contract
+```
 
-```sh
+```console
+changed directory into `counter-countract`
+```
+
+Then run the following command to build your contract:
+
+```console
 forc build
 ```
 
-Let's have a look at the content of the `counter-contract` folder after building:
+```console
+  Compiled library "core".
+  Compiled library "std".
+  Compiled contract "counter-contract".
+  Bytecode size is 232 bytes.
+```
 
-<span id="built-contract-tree"></span>
+Let's have a look at the content of the `counter-contract` folder after building:
 
 ```console
 $ tree .
@@ -175,8 +215,6 @@ $ tree .
 │       └── counter-contract.bin
 └── src
     └── main.sw
-
-3 directories, 6 files
 ```
 
 We now have an `out` directory that contains our build artifacts such as the JSON representation of our ABI and the contract bytecode.
@@ -185,26 +223,35 @@ We now have an `out` directory that contains our build artifacts such as the JSO
 
 We will start by adding a Rust integration test harness using a Cargo generate template. If this is your first time going through this quickstart, you'll need to install the `cargo generate` command. In the future, you can skip this step as it will already be installed.
 
-Navigate to your contract and then run the installation command:
+Let's start by running the installation command:
 
-```sh
-cd counter-contract
+```console
 cargo install cargo-generate
+```
+
+```console
+ Updating crates.io index...
+ installed package `cargo-generate v0.17.3`
 ```
 
 > **Note**: You can learn more about cargo generate by visiting [its repository](https://github.com/cargo-generate/cargo-generate).
 
 Now, let's generate the default test harness with the following:
 
-<span id="cargo-generate-test"></span>
-
-```sh
+```console
 cargo generate --init fuellabs/sway templates/sway-test-rs --name counter-contract
 ```
 
-Let's have a look at the result:
+```console
+⚠️   Favorite `fuellabs/sway` not found in config, using it as a git repository: https://github.com/fuellabs/sway.git
+🔧   Destination: /home/user/path/to/counter-contract ...
+🔧   project-name: counter-contract ...
+🔧   Generating template ...
+🔧   Moving generated files into: `/home/user/path/to/counter-contract`...
+✨   Done! New project created /home/user/path/to/counter-contract
+```
 
-<span id="cargo-test-tree"></span>
+Let's have a look at the result:
 
 ```console
 $ tree .
@@ -221,8 +268,6 @@ $ tree .
 │   └── main.sw
 └── tests
     └── harness.rs
-
-4 directories, 8 files
 ```
 
 We have two new files!
@@ -232,11 +277,7 @@ We have two new files!
 
 Now that we have our default test harness, let's add some useful tests to it.
 
-At the bottom of `test/harness.rs`, define the body of `can_get_contract_id()`. Here is what your code should look like to verify that the value of the counter did get incremented:
-
-File: `tests/harness.rs`
-
-<span id="test-harness"></span>
+At the bottom of `test/harness.rs` below the `can_get_contract_id()` test, add the `test_increment` test function below to verify that the value of the counter gets incremented:
 
 <CodeImport
   file="../../examples/quickstart/counter-contract/tests/harness.rs"
@@ -245,16 +286,31 @@ File: `tests/harness.rs`
   lang="rust"
 />
 
-Run `cargo test` in the terminal. If all goes well, the output should look as follows:
+Here is what your file should look like:
 
-<span id="run-cargo-test"></span>
+File: `./counter-contract/tests/harness.rs`
+
+<CodeImport
+  file="../../examples/quickstart/counter-contract/tests/harness.rs"
+  comment="contract-test-all"
+  commentType="//"
+  lang="rust"
+/>
+
+Run `cargo test` in the terminal:
 
 ```console
 cargo test
+```
+
+If all goes well, the output should look as follows:
+
+```console
   ...
-  running 1 test
+  running 2 tests
   test can_get_contract_id ... ok
-  test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+  test test_increment ... ok
+  test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s
 ```
 
 ## Deploy the Contract
@@ -263,60 +319,75 @@ It's now time to deploy the contract to the testnet. We will show how to do this
 
 In order to deploy a contract, you need to have a wallet to sign the transaction and coins to pay for gas. First, we'll create a wallet.
 
-### Install the Wallet CLI
+### Setup the Wallet CLI
 
-Follow [these steps to set up a wallet and create an account](https://github.com/FuelLabs/forc-wallet#forc-wallet).
+If you haven't deployed a contract before, you'll need to set up a local wallet with the forc-wallet plugin. `forc-wallet` is packaged alongside the default distributed toolchains when installed using fuelup, so you should already have this installed.
+
+You can initialize a new wallet with the command below:
+
+```console
+forc wallet new
+```
 
 After typing in a password, be sure to save the mnemonic phrase that is output.
 
+Next, create a new wallet account with:
+
+```console
+forc wallet account new
+```
+
 With this, you'll get a fuel address that looks something like this: `fuel1efz7lf36w9da9jekqzyuzqsfrqrlzwtt3j3clvemm6eru8fe9nvqj5kar8`. Save this address as you'll need it to sign transactions when we deploy the contract.
+
+If you need to list your accounts, you can run the command below:
+
+```console
+forc wallet accounts
+```
 
 ### Get Testnet Coins
 
-With your account address in hand, head to the [testnet faucet](https://faucet-beta-3.fuel.network/) to get some coins sent to your wallet.
+With your account address in hand, head to the [testnet faucet](https://faucet-beta-4.fuel.network/) to get some coins sent to your wallet.
 
 ### Deploy To Testnet
 
-Now that you have a wallet, you can deploy with `forc deploy` and passing in the testnet endpoint like this:
-
-`forc deploy --node-url beta-3.fuel.network/graphql --gas-price 1 --random-salt`
-
-> **Note**: We set the gas price to 1. Without this flag, the gas price is 0 by default and the transaction will fail.
-
-The terminal will ask for the address of the wallet you want to sign this transaction with, paste in the address you saved earlier, it looks like this: `fuel1efz7lf36w9da9jekqzyuzqsfrqrlzwtt3j3clvemm6eru8fe9nvqj5kar8`
-
-The terminal will output your `Contract id` like this:
+Now that you have a wallet, you can deploy with `forc deploy` and adding the `--testnet` to target the latest network:
 
 ```console
-Contract id: 0xd09b469b0c31c05222b553021aa23c3b6a535db5092c22b84690dc88ca17deaa
+forc deploy --testnet
 ```
 
-Be sure to save this as you will need it to build a frontend with the Typescript SDK later in this tutorial.
+The terminal will ask for the password of the wallet:
 
-The terminal will output a `Transaction id to sign` and prompt you for a signature. Open a new terminal tab and view your accounts by running `forc wallet accounts`. If you followed these steps, you'll notice you only have one account, `0`.
+`Please provide the password of your encrypted wallet vault at "~/.fuel/wallets/.wallet":`
 
-Grab the `Transaction id to sign` from your other terminal and sign with your account by running the following command:
+Once you unlocked the wallet, the terminal will show a list of the accounts of this wallet:
 
 ```console
-forc wallet sign --account `[the account index, without brackets]` tx-id `[Transaction id to sign, without brackets]`
+Account 0 -- fuel18caanqmumttfnm8qp0eq7u9yluydxtqmzuaqtzdjlsww5t2jmg9skutn8n:
+  Asset ID                                                           Amount
+  0000000000000000000000000000000000000000000000000000000000000000 499999940
 ```
 
-Your command should look like this:
+Just below the list, you'll see this prompt:
+
+`Please provide the index of account to use for signing:`
+
+Then you'll enter the number of the account of preference and press `Y` when prompted to accept the transaction.
+
+Finally, you will get back the network endpoint where the contract was dpeloyed, a `ContractId` and the block where the transaction was signed. To confirm your contract was deployed. With this ID, you can head to the [block explorer](https://fuellabs.github.io/block-explorer-v2/) and view your contract.
 
 ```console
-$ forc wallet sign --account 0 tx-id 16d7a8f9d15cfba1bd000d3f99cd4077dfa1fce2a6de83887afc3f739d6c84df
-Please enter your password to decrypt initialized wallet's phrases:
-Signature: 736dec3e92711da9f52bed7ad4e51e3ec1c9390f4b05caf10743229295ffd5c1c08a4ca477afa85909173af3feeda7c607af5109ef6eb72b6b40b3484db2332c
+Contract deploy-to-beta-4 Deployed!
+
+Network: https://beta-4.fuel.network
+Contract ID: 0x8342d413de2a678245d9ee39f020795800c7e6a4ac5ff7daae275f533dc05e08
+Deployed in block 0x4ea52b6652836c499e44b7e42f7c22d1ed1f03cf90a1d94cd0113b9023dfa636
 ```
 
-Enter your password when prompted, and you'll get back a `signature`. Save that signature, and return to your other terminal window, and paste that in where its prompting you to `provide a signature for this transaction`.
-
-Finally, you will get back a `TransactionId` to confirm your contract was deployed. With this ID, you can head to the [block explorer](https://fuellabs.github.io/block-explorer-v2/) and view your contract.
-
-> **Note**
-> You should prefix your `TransactionId` with `0x` to view it in the block explorer
-
+<Box.Centered>
 ![block explorer](/images/block-explorer.png)
+</Box.Centered>
 
 ### Congrats, you have completed your first smart contract on Fuel ⛽
 

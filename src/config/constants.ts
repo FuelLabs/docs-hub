@@ -48,10 +48,10 @@ export const NAVIGATION: LinkObject[] = [
   {
     name: 'Sway',
     type: 'menu',
-    categories: ['Tooling', 'Sway'],
+    categories: ['Tooling', 'Sway Language'],
     menu: [
       {
-        name: 'Sway',
+        name: 'Sway Language',
         type: 'category',
       },
       {
@@ -68,7 +68,12 @@ export const NAVIGATION: LinkObject[] = [
       {
         name: 'Example Apps',
         type: 'external-link',
-        link: 'https://github.com/FuelLabs/sway-applications',
+        link: 'https://github.com/FuelLabs/sway-applications/',
+      },
+      {
+        name: 'Sway Core',
+        type: 'external-link',
+        link: 'https://fuellabs.github.io/sway/master/core/',
       },
       {
         name: 'Tooling',
@@ -143,7 +148,7 @@ export const NAVIGATION: LinkObject[] = [
       {
         name: 'Faucet',
         type: 'external-link',
-        link: 'https://faucet-beta-3.fuel.network/',
+        link: 'https://faucet-beta-4.fuel.network/',
       },
     ],
   },

@@ -9,3 +9,4 @@ docs
 public/shiki
 guide-examples
 .contentlayer
+src/generated

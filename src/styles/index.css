@@ -26,11 +26,6 @@ h6 {
   font-feature-settings: 'pnum' on, 'onum' on, 'ss04' on;
 }
 
-*:focus-visible:not(input) {
-  outline: 2px solid var(--colors-brand);
-  border-radius: 5px;
-}
-
 a,
 a:visited {
   text-decoration: none;
@@ -77,4 +72,8 @@ ul > li > ul {
 
 textarea {
   color: inherit !important;
+}
+
+.form-textarea:focus {
+  outline: 1px solid var(--colors-inputBaseBorder) !important;
 }

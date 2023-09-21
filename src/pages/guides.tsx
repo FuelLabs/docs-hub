@@ -12,7 +12,7 @@ export interface GuideInfo {
   description: string;
 }
 
-interface GuidesProps {
+export interface GuidesProps {
   guides: { [key: string]: GuideInfo };
 }
 

@@ -1,10 +1,12 @@
 import { cssObj } from '@fuel-ui/css';
-import { Text, Box, Icon } from '@fuel-ui/react';
-import Link from 'next/link';
+import { Text, Box, Icon, Link as FuelLink } from '@fuel-ui/react';
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useDocContext } from '~/src/hooks/useDocContext';
 
 import { capitalize } from '../lib/str';
+
+import { FeedbackForm } from './FeedbackForm';
 
 function parseLink(link: string) {
   if (link.startsWith('../')) {
@@ -14,7 +16,7 @@ function parseLink(link: string) {
 }
 
 export function DocFooter() {
-  const { docLink, doc } = useDocContext();
+  const { docLink } = useDocContext();
   const router = useRouter();
   const prevLink = docLink.prev?.slug && parseLink(docLink.prev.slug);
   let nextLink = docLink.next?.slug && parseLink(docLink.next?.slug);
@@ -24,14 +26,13 @@ export function DocFooter() {
   return (
     <>
       <Text as="div" css={styles.feedback}>
-        <Link href="https://forum.fuel.network/">
+        <FeedbackForm />
+        <Box.Flex gap={'6px'}>
           <Icon icon={Icon.is('HelpCircle')} stroke={1} color="textMuted" />
-          Questions? Give us a feedback
-        </Link>
-        <Link href={doc.pageLink}>
-          <Icon icon={Icon.is('Edit')} stroke={1} color="textMuted" />
-          Edit this page
-        </Link>
+          <FuelLink href="https://forum.fuel.network/" isExternal>
+            Ask a question in the forum.
+          </FuelLink>
+        </Box.Flex>
       </Text>
 
       <Box as="footer" css={styles.links}>
@@ -41,10 +42,10 @@ export function DocFooter() {
               <Box as="span" className="label">
                 Previous:
               </Box>
-              <Link href={prevLink}>
+              <NextLink href={prevLink}>
                 <Icon icon={Icon.is('ArrowLeft')} size={14} />{' '}
                 {capitalize(docLink.prev.label)}
-              </Link>
+              </NextLink>
             </>
           )}
         </Box.Stack>
@@ -54,10 +55,10 @@ export function DocFooter() {
               <Box as="span" className="label">
                 Next:
               </Box>
-              <Link href={nextLink}>
+              <NextLink href={nextLink}>
                 {capitalize(docLink.next.label)}{' '}
                 <Icon icon={Icon.is('ArrowRight')} size={14} />
-              </Link>
+              </NextLink>
             </>
           )}
         </Box.Stack>

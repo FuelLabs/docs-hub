@@ -1,19 +1,28 @@
 import { cssObj } from '@fuel-ui/css';
-import { Link as FuelLink, Box, Icon, List, Text } from '@fuel-ui/react';
+import {
+  Link as FuelLink,
+  Box,
+  Icon,
+  List,
+  Text,
+  Heading,
+} from '@fuel-ui/react';
 import Link from 'next/link';
 
-import { Heading } from '../components/Heading';
+import type { GuidesProps } from '../pages/guides';
 
-export function HomePage() {
+import { GuideCard } from './GuidesPage';
+
+export function HomePage({ guides }: GuidesProps) {
   const cards = {
     sway: (
-      <Box css={styles.card}>
+      <Box css={{ ...styles.card, ...styles.docsCard }}>
         <Icon icon="Code" size={40} stroke={0.7} />
         <Box.Stack>
           <Heading as="h3">Sway Language</Heading>
           <Text>
-            Build powerful programs with a Rust-based DSL, but without
-            needlessly verbose boilerplate.
+            Build powerful programs with a Rust-based DSL, without needlessly
+            verbose boilerplate.
           </Text>
           <List icon="ArrowRight">
             <List.Item>
@@ -35,12 +44,20 @@ export function HomePage() {
                 Examples Apps
               </FuelLink>
             </List.Item>
+            <List.Item>
+              <FuelLink
+                href="https://fuellabs.github.io/sway/master/core"
+                isExternal
+              >
+                Sway Core
+              </FuelLink>
+            </List.Item>
           </List>
         </Box.Stack>
       </Box>
     ),
     sdk: (
-      <Box css={styles.card}>
+      <Box css={{ ...styles.card, ...styles.docsCard }}>
         <Icon icon="Book" size={40} stroke={0.7} />
         <Box.Stack>
           <Heading as="h3">SDKs</Heading>
@@ -62,7 +79,7 @@ export function HomePage() {
       </Box>
     ),
     network: (
-      <Box css={styles.card}>
+      <Box css={{ ...styles.card, ...styles.docsCard }}>
         <Icon icon="Bolt" size={40} stroke={0.7} />
         <Box.Stack>
           <Heading as="h3">Fuel Network</Heading>
@@ -78,7 +95,7 @@ export function HomePage() {
               <Link href="/docs/specs">Specs</Link>
             </List.Item>
             <List.Item>
-              <FuelLink href="https://faucet-beta-3.fuel.network/" isExternal>
+              <FuelLink href="https://faucet-beta-4.fuel.network/" isExternal>
                 Faucet
               </FuelLink>
             </List.Item>
@@ -87,7 +104,7 @@ export function HomePage() {
       </Box>
     ),
     tooling: (
-      <Box css={styles.card}>
+      <Box css={{ ...styles.card, ...styles.docsCard }}>
         <Icon icon="Settings" size={40} stroke={0.7} />
         <Box.Stack>
           <Heading as="h3">Tooling</Heading>
@@ -113,12 +130,34 @@ export function HomePage() {
 
   return (
     <Box css={styles.root}>
-      <Heading as="h1" data-rank="h1" id="fuel-docs">
-        Fuel Docs
+      <Box css={styles.heading}>
+        <Heading as="h1" id="fuel-docs">
+          Fuel Docs
+        </Heading>
+        <Text fontSize="lg">
+          Learn about everything Fuel, all the way down to the bits and bytes.{' '}
+        </Text>
+      </Box>
+      <Heading as="h3" id="getting-started">
+        Getting Started
       </Heading>
-      <Text>
-        Learn about everything Fuel, all the way down to the bits and bytes.{' '}
-      </Text>
+      <Box css={styles.cardList}>
+        {Object.keys(guides).map((guideName, index) => {
+          const guideInfo = guides[guideName];
+          if (index < 2) {
+            return (
+              <GuideCard
+                key={guideName}
+                guideName={guideName}
+                guideInfo={guideInfo}
+              />
+            );
+          }
+        })}
+      </Box>
+      <Heading as="h3" id="read-the-docs">
+        Read the Docs
+      </Heading>
       <Box css={styles.cardList}>
         {cards.sway}
         {cards.sdk}
@@ -141,11 +180,19 @@ const styles = {
   cardList: cssObj({
     display: 'grid',
     gap: '$6',
-    py: '$8',
+    padding: '$2 0 $8 0',
 
     '@xl': {
       gridTemplateColumns: 'repeat(2, minmax(300px, 1fr))',
     },
+  }),
+  heading: cssObj({
+    py: '$10',
+    mb: '$10',
+    borderBottom: '1px solid $border',
+  }),
+  docsCard: cssObj({
+    minHeight: '210px',
   }),
   card: cssObj({
     display: 'flex',

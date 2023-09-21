@@ -45,7 +45,7 @@ const styles = {
     flexDirection: 'column',
     gap: '$4',
     padding: '$4',
-    bg: '$overlayBg',
+    bg: '$cardBg',
     borderRadius: '$md',
     border: '1px solid $border',
     maxWidth: '90vw',
