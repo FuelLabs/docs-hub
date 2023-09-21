@@ -36,7 +36,7 @@ export function Header({ active, title, isLatest }: HeaderProps) {
       </Box.Flex>
       <Box css={styles.desktop}>
         <Box.Stack direction="row" gap="$4" css={{ mr: '$4' }}>
-          <Search title={title} />
+          <Search title={title} isLatest={isLatest} />
           <ThemeToggler />
           <VersionDropdown isLatest={isLatest} />
         </Box.Stack>

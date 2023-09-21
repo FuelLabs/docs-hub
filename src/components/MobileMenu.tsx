@@ -49,7 +49,7 @@ export function MobileMenu({ active, title, isLatest }: MobileMenuProps) {
 
   return (
     <Box.HStack css={styles.root}>
-      <Search title={title} />
+      <Search title={title} isLatest={isLatest} />
       <ThemeToggler />
       <VersionDropdown isLatest={isLatest} />
       <Drawer

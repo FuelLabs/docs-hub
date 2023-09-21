@@ -43,13 +43,22 @@ export class Doc {
     this.md = item;
     this.config = config;
 
+    let category = item.category;
+    if (!category && item.slug.includes('docs/')) {
+      const isLatest = item.slug.includes('/latest/');
+      const split = item.slug.split('/');
+      const index = isLatest ? 3 : 2;
+      const isIndex = split.length === index;
+      category = split[isIndex ? index - 1 : index].replaceAll('-', ' ');
+    }
+
     const doc = {
       pageLink,
       _raw: item._raw,
       slug: item.slug,
       title: this.#getTitle(item.title),
       parent: item.parent ?? null,
-      category: item.category ?? null,
+      category: category,
       headings: [],
       menu: [],
       docsConfig: {

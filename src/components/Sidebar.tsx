@@ -42,7 +42,8 @@ export function Sidebar({ onClick }: SidebarProps) {
             <SidebarSubmenu
               onClick={onClick}
               key={link.subpath ? link.subpath + index : index}
-              isLatest={doc.isLatest}
+              slug={doc.slug}
+              category={doc.category}
               {...link}
             />
           );

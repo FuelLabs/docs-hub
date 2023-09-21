@@ -1,7 +1,6 @@
 import { cssObj } from '@fuel-ui/css';
 import type { ButtonLinkProps } from '@fuel-ui/react';
 import { Box, Icon, IconButton, List } from '@fuel-ui/react';
-import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import type { SidebarLinkItem } from '~/src/types';
 
@@ -9,7 +8,7 @@ import { SidebarLink } from './SidebarLink';
 
 interface SidebarSubmenuProps extends SidebarLinkItem {
   onClick?: ButtonLinkProps['onClick'];
-  isLatest: boolean;
+  category: string;
 }
 
 export function SidebarSubmenu({
@@ -17,12 +16,13 @@ export function SidebarSubmenu({
   hasIndex,
   submenu,
   isExternal,
-  isLatest,
+  slug,
+  category,
   onClick,
 }: SidebarSubmenuProps) {
-  const pathname = usePathname();
-  const [isOpened, setIsOpened] = useState<boolean>();
-
+  const [isOpened, setIsOpened] = useState<boolean>(
+    slug.includes('/guides/') || label.toLowerCase() === category
+  );
   const thisItem = {
     label,
     slug: submenu![0].slug,
@@ -30,20 +30,15 @@ export function SidebarSubmenu({
   };
 
   useEffect(() => {
-    if (pathname.includes('/guides/')) {
+    if (slug.includes('/guides/')) {
       setIsOpened(true);
     } else {
-      let actualSlug = `/${thisItem.slug}/`;
-      const split = thisItem.slug.split('/');
-      const length = isLatest ? 4 : 3;
-      if (split.length > length) {
-        split.pop();
-        actualSlug = `/${split.join('/')}/`;
-      }
-      const active = pathname.startsWith(actualSlug);
+      const active =
+        label.toLowerCase().replaceAll('-', ' ') ===
+        category.toLowerCase().replaceAll('-', ' ');
       setIsOpened(active);
     }
-  }, [pathname]);
+  }, [slug, label, category]);
 
   return (
     <Box.Flex css={styles.root}>
