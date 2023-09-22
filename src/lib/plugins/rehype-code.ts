@@ -210,7 +210,7 @@ function getGraphQLCodeTabs(node: any) {
 
   const apolloImport = `import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
   const apolloClient= new ApolloClient({
-  uri: 'https://beta-3.fuel.network/graphql',
+  uri: 'https://beta-4.fuel.network/graphql',
   cache: new InMemoryCache(),
   });\n\n`;
   const apolloContentValue = apolloImport + apolloContent?.value ?? '';
@@ -219,7 +219,7 @@ function getGraphQLCodeTabs(node: any) {
 
   const urlqImport = `import { createClient } from 'urql';
   const urqlClient= createClient({
-    url: 'https://beta-3.fuel.network/graphql',
+    url: 'https://beta-4.fuel.network/graphql',
   });\n\n`;
   const urlQContentValue = urlqImport + urqlContent?.value ?? '';
   const urlQRaw = prettier.format(urlQContentValue, prettierProps);
