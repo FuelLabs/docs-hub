@@ -22,7 +22,12 @@ Our front end application will need to interact with the Fuel Network, so we'll 
 
 Fuel Wallet version `0.11.0` is not compatible with beta 4. For compatibility with beta-4, please download the non-backwards compatible Fuel Wallet version `0.12.3`.
 
+If you have previously installed the wallet, you can find your current version by opening the hamburger menu at the top right. 
+The version is listed at the bottom of the menu.
+
 We have already submitted the beta-4 compatible version to the Chrome Web Store, and it is currently under review.
+
+> Note: Make sure your browser is using the latest version of chromium.
 
 Please follow the instructions provided below:
 
@@ -49,13 +54,13 @@ To split our project's contract from frontend code, let's initialize our fronten
 cd ..
 ```
 
-Now, iniitialize a react project using [`Create React App`](https://create-react-app.dev/).
+Now, initialize a react project using [`Create React App`](https://create-react-app.dev/).
 
 ```console
 npx create-react-app frontend --template typescript
 ```
 
-The output should be simmilar to:
+The output should be similar to:
 
 ```console
 Success! Created frontend at Fuel/fuel-project/frontend
@@ -83,13 +88,13 @@ Move into the `frontend` folder, then run:
 cd frontend
 ```
 
-Then:
+Install `fuels` and `@fuel-wallet/sdk`.
 
 ```console
-npm install fuels@0.55.0 @fuel-wallet/sdk@0.12.3 --save
+npm install fuels@0.57.0 @fuel-wallet/sdk@0.12.3 --save
 ```
 
-If the installation wnet correctly the result will be simmilar to this:
+If the installation went correctly the result will be similar to this:
 
 ```console
 added 114 packages, and audited 115 packages in 9s
@@ -117,7 +122,7 @@ Inside the `fuel-project/frontend` directory run:
 npx fuels typegen -i ../counter-contract/out/debug/*-abi.json -o ./src/contracts
 ```
 
-A succesful process should print and output like the following:
+A successful process should print and output like the following:
 
 ```console
 Generating files..
@@ -143,7 +148,7 @@ File: `./frontend/src/App.tsx`
   lang="tsx"
 />
 
-Finally, replace the value of the `CONTRACT_ID` variable in `App.tsx` with the address of the contract you just deployed.
+Finally, replace the value of the `CONTRACT_ID` variable at the top of your `App.tsx` file with the address of the contract you just deployed.
 
 ### Run your project
 
