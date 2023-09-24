@@ -13,6 +13,7 @@ const indexerSummaryPath = join(
   './fuel-indexer/docs/src/SUMMARY.md'
 );
 const specsSummaryPath = join(DOCS_DIRECTORY, './fuel-specs/src/SUMMARY.md');
+const nixSummaryPath = join(DOCS_DIRECTORY, './fuel-nix/book/src/SUMMARY.md');
 
 const graphqlOrderPath = join(
   DOCS_DIRECTORY,
@@ -42,6 +43,8 @@ const specsSummaryFile = fs.readFileSync(specsSummaryPath, 'utf8');
 const graphqlOrderFile = JSON.parse(fs.readFileSync(graphqlOrderPath, 'utf8'));
 const guidesOrderFile = JSON.parse(fs.readFileSync(guidesOrderPath, 'utf8'));
 const walletOrderFile = JSON.parse(fs.readFileSync(walletOrderPath, 'utf8'));
+const nixSummaryFile = fs.readFileSync(nixSummaryPath, 'utf8');
+
 // const aboutFuelOrderFile = JSON.parse(
 //   fs.readFileSync(aboutFuelOrderPath, 'utf8')
 // );
@@ -247,6 +250,9 @@ async function getOrders() {
   orders.indexer = processSummary(indexerSummaryFile.split(EOL), 'indexer');
   // SPECS ORDER
   orders.specs = processSummary(specsSummaryFile.split(EOL), 'specs');
+  
+  orders.nix = processSummary(nixSummaryFile.split(EOL), 'specs'); 
+
   // GRAPHQL ORDER
   orders.graphql = graphqlOrderFile;
 
@@ -487,6 +493,15 @@ async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
+    case 'nix':
+      paths = [
+        // SPECS DOCS
+        './fuel-nix/book/src/*.md',
+        './fuel-nix/book/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
     // case 'about-fuel':
     //   paths = [
     //     // ABOUT FUEL DOCS
@@ -565,6 +580,7 @@ function removeDocsPath(path, duplicateAPICategories) {
       newPath = `${paths.join('/')}/`;
     }
   }
+
 
   return newPath;
 }

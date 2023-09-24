@@ -27,3 +27,6 @@
 [submodule "docs/fuel-specs"]
 	path = docs/fuel-specs
 	url = https://github.com/FuelLabs/fuel-specs.git
+[submodule "docs/fuel-nix"]
+	path = docs/fuel-nix
+	url = git@github.com:FuelLabs/fuel.nix.git
