@@ -10,54 +10,7 @@ parent:
 
 ## Installation
 
-{/* This example should include the instructions for installing Rust & Fuelup */}
-{/* installation:example:start */}
-Start by [installing the Rust toolchain](https://www.rust-lang.org/tools/install).
-
-```console
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-```
-
-Then, [install the Fuel toolchain](/docs/fuelup/installation).
-
-```console
-curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh
-```
-{/* installation:example:end */}
-
-{/* This example should include the instructions for installing the latest toolchain */}
-{/* toolchain_installation:example:start */}
-Make sure you have the latest version of `fuelup` by running the following command:
-
-```console
-fuelup self update
-```
-
-```console
-Fetching binary from https://github.com/FuelLabs/fuelup/releases/download/v0.19.5/fuelup-0.19.5-aarch64-apple-darwin.tar.gz
-Downloading component fuelup without verifying checksum
-Unpacking and moving fuelup to /var/folders/tp/0l8zdx9j4s9_n609ykwxl0qw0000gn/T/.tmpiNJQHt
-Moving /var/folders/tp/0l8zdx9j4s9_n609ykwxl0qw0000gn/T/.tmpiNJQHt/fuelup to /Users/.fuelup/bin/fuelup
-```
-
-Next, install the `beta-4` toolchain with:
-
-```console
-fuelup toolchain install beta-4
-```
-
-Finally, set the `beta-4` toolchain as your default distribution with the following command:
-
-```console
-fuelup default beta-4
-```
-
-```console
-default toolchain set to 'beta-4'
-```
-
-You can check your current toolchain anytime by running `fuelup show`.
-{/* toolchain_installation:example:end */}
+Please visit the Fuel's [installation guide](guides/installation) to install The Fuel toolchain binaries and pre requisites.
 
 > Having problems with this part? Post your question on our forum [https://forum.fuel.network/](https://forum.fuel.network/). To help you as efficiently as possible, include the output of this command in your post: `fuelup show.`
 
