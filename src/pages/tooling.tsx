@@ -2,29 +2,29 @@ import { Layout } from '../components/Layout';
 import { CategoryScreen } from '../screens/CategoryPage';
 import type { CategoryProps } from '../types';
 
-const toolingNavigation = {
-  parent: {
-    label: 'All Docs',
-    link: '/',
-  },
-  navigation: [
-    {
-      label: 'Forc',
-      slug: 'docs/forc',
-      isExternal: false,
-    },
-    {
-      label: 'Fuelup',
-      slug: 'docs/fuelup',
-      isExternal: false,
-    },
-    {
-      label: 'Indexer',
-      slug: 'docs/indexer',
-      isExternal: false,
-    },
-  ],
-};
+// const toolingNavigation = {
+//   parent: {
+//     label: 'All Docs',
+//     link: '/',
+//   },
+//   navigation: [
+//     {
+//       label: 'Forc',
+//       slug: 'docs/forc',
+//       isExternal: false,
+//     },
+//     {
+//       label: 'Fuelup',
+//       slug: 'docs/fuelup',
+//       isExternal: false,
+//     },
+//     {
+//       label: 'Indexer',
+//       slug: 'docs/indexer',
+//       isExternal: false,
+//     },
+//   ],
+// };
 
 const toolingCards = [
   {
@@ -61,7 +61,7 @@ export default function Tooling({ theme }: CategoryProps) {
       <CategoryScreen
         header="Tooling"
         description="All the tools you need to develop & deploy."
-        nav={toolingNavigation}
+        // nav={toolingNavigation}
         cards={toolingCards}
       />
     </Layout>

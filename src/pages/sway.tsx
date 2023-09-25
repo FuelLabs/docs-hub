@@ -2,39 +2,39 @@ import { Layout } from '../components/Layout';
 import { CategoryScreen } from '../screens/CategoryPage';
 import type { CategoryProps } from '../types';
 
-const swayNavigation = {
-  parent: {
-    label: 'All Docs',
-    link: '/',
-  },
-  navigation: [
-    {
-      label: 'Sway',
-      slug: 'docs/sway',
-      isExternal: false,
-    },
-    {
-      label: 'Example Apps',
-      slug: 'https://github.com/FuelLabs/sway-applications',
-      isExternal: true,
-    },
-    {
-      label: 'Sway Playground',
-      slug: 'https://sway-playground.org/',
-      isExternal: true,
-    },
-    {
-      label: 'Standard Library',
-      slug: 'https://fuellabs.github.io/sway/master/std',
-      isExternal: true,
-    },
-    {
-      label: 'Sway Core',
-      slug: 'https://fuellabs.github.io/sway/master/core',
-      isExternal: true,
-    },
-  ],
-};
+// const swayNavigation = {
+//   parent: {
+//     label: 'All Docs',
+//     link: '/',
+//   },
+//   navigation: [
+//     {
+//       label: 'Sway',
+//       slug: 'docs/sway',
+//       isExternal: false,
+//     },
+//     {
+//       label: 'Example Apps',
+//       slug: 'https://github.com/FuelLabs/sway-applications',
+//       isExternal: true,
+//     },
+//     {
+//       label: 'Sway Playground',
+//       slug: 'https://sway-playground.org/',
+//       isExternal: true,
+//     },
+//     {
+//       label: 'Standard Library',
+//       slug: 'https://fuellabs.github.io/sway/master/std',
+//       isExternal: true,
+//     },
+//     {
+//       label: 'Sway Core',
+//       slug: 'https://fuellabs.github.io/sway/master/core',
+//       isExternal: true,
+//     },
+//   ],
+// };
 
 const swayCards = [
   {
@@ -90,7 +90,7 @@ export default function Sway({ theme }: CategoryProps) {
       <CategoryScreen
         header="Sway Language"
         description="Learn and build with Sway."
-        nav={swayNavigation}
+        // nav={swayNavigation}
         cards={swayCards}
       />
     </Layout>

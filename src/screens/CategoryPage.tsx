@@ -1,7 +1,7 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box, Grid, Heading, Text } from '@fuel-ui/react';
-import { Sidebar } from '~/src/components/Sidebar';
-import type { SidebarNav } from '~/src/components/Sidebar';
+// import { Sidebar } from '~/src/components/Sidebar';
+// import type { SidebarNav } from '~/src/components/Sidebar';
 
 import { Card } from '../components/Card';
 
@@ -21,14 +21,14 @@ interface CardsSection {
 }
 
 interface CategoryProps {
-  nav: SidebarNav;
+  // nav: SidebarNav;
   cards: CardsSection[];
   header: string;
   description: string;
 }
 
 export function CategoryScreen({
-  nav,
+  // nav,
   cards,
   header,
   description,
@@ -37,7 +37,7 @@ export function CategoryScreen({
     <>
       <Box css={homeStyles.sidebar}>
         <Box css={homeStyles.sidebarContainer}>
-          <Sidebar nav={nav} />
+          {/* <Sidebar nav={nav} /> */}
         </Box>
       </Box>
       <Box as="section" css={styles.section} className="Layout--section">

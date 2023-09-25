@@ -31,19 +31,11 @@ type SectionProps = {
   versions?: Versions;
 };
 
-function SidebarSection({
-  links,
-  onClick,
-  book,
-  docSlug,
-  versions,
-}: SectionProps) {
+function SidebarSection({ links, onClick, book, docSlug }: SectionProps) {
   const [isOpened, setIsOpened] = useState<boolean>(
     book === 'guides' || docSlug.includes(book.toLowerCase())
   );
   const isGuide = book === 'guides';
-
-  console.log('VERSIONS:', versions);
 
   function toggle() {
     setIsOpened((s) => !s);

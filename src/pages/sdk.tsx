@@ -2,29 +2,29 @@ import { Layout } from '../components/Layout';
 import { CategoryScreen } from '../screens/CategoryPage';
 import type { CategoryProps } from '../types';
 
-const sdkNavigation = {
-  parent: {
-    label: 'All Docs',
-    link: '/',
-  },
-  navigation: [
-    {
-      label: 'Rust',
-      slug: 'docs/fuels-rs',
-      isExternal: false,
-    },
-    {
-      label: 'TypeScript',
-      slug: 'docs/fuels-ts',
-      isExternal: false,
-    },
-    {
-      label: 'Wallet',
-      slug: 'docs/wallet',
-      isExternal: false,
-    },
-  ],
-};
+// const sdkNavigation = {
+//   parent: {
+//     label: 'All Docs',
+//     link: '/',
+//   },
+//   navigation: [
+//     {
+//       label: 'Rust',
+//       slug: 'docs/fuels-rs',
+//       isExternal: false,
+//     },
+//     {
+//       label: 'TypeScript',
+//       slug: 'docs/fuels-ts',
+//       isExternal: false,
+//     },
+//     {
+//       label: 'Wallet',
+//       slug: 'docs/wallet',
+//       isExternal: false,
+//     },
+//   ],
+// };
 
 const sdkCards = [
   {
@@ -61,7 +61,7 @@ export default function SDK({ theme }: CategoryProps) {
       <CategoryScreen
         header="Fuel SDKs"
         description="Everything you need to build apps on Fuel."
-        nav={sdkNavigation}
+        // nav={sdkNavigation}
         cards={sdkCards}
       />
     </Layout>
