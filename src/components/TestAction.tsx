@@ -32,7 +32,10 @@ export default function TestAction({ id, action }: TestActionProps) {
       }
       data-at-line={action.name === 'modifyFile' ? action.atLine : null}
       data-remove-lines={
-        action.name === 'modifyFile' ? action.removeLines : null
+        action.name === 'modifyFile' ? JSON.stringify(action.removeLines) : null
+      }
+      data-use-set-data={
+        action.name === 'modifyFile' ? action.useSetData : null
       }
       data-test-path-name={
         action.name === 'compareFiles' ? action.testPathName : null

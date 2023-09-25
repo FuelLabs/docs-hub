@@ -118,7 +118,8 @@ id="config-types"
 action={{ 
   name: 'modifyFile', 
   filepath: 'guides-testing/fuel-project/frontend/tsconfig.json',
-  atLine: 3
+  atLine: 3,
+  useSetData: ' "types": ["@fuel-wallet/sdk"],'
 }}
 />
 
@@ -185,6 +186,17 @@ action={{
 />
 
 Finally, replace the value of the `CONTRACT_ID` variable in `App.tsx` with the address of the contract you just deployed.
+
+<TestAction
+id="app-code"
+action={{
+  name: 'modifyFile', 
+  filepath: 'guides-testing/fuel-project/frontend/src/App.tsx',
+  atLine: 9,
+  removeLines: [9],
+  useSetData: '  "0xa0f2b97f32300d7360b5632e682c1508b326da9a00fbe755646d3809aec90672";'
+}}
+/>
 
 ### Run your project
 
@@ -253,7 +265,7 @@ action={{
   url: "http://localhost:4000"
 }}
 />
-
+{/* 
 <TestAction
 id="click-connect-button"
 action={{
@@ -340,4 +352,4 @@ action={{
   initialIndex: 0,
   finalIndex: 1
 }}
-/>
+/> */}

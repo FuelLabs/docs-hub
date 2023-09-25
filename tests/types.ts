@@ -35,6 +35,7 @@ export type ModifyFile = {
   removeLines?: number[];
   addSpacesBefore?: number;
   addSpacesAfter?: number;
+  useSetData?: string;
 };
 
 export type CompareToFile = {

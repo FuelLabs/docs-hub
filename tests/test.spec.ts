@@ -48,10 +48,7 @@ test.describe('Guides', () => {
       stopServers();
     }
     saved = [];
-    // if (QUICKSTART_TEST_CONFIG.needs_wallet) {
-    //   console.log('SETTING UP WALLET');
-    //   await useFuelWallet(context, extensionId, page);
-    // }
+    // await useFuelWallet(context, extensionId, page);
     console.log('SETTING UP FOLDERS');
     await setupFolders('fuel-project');
 
@@ -62,19 +59,26 @@ test.describe('Guides', () => {
     console.log('START SERVER OUTPUT:', startOutput);
     await page.waitForTimeout(4000);
     console.log('WAITED 4 SECONDS');
-    console.log('RUNNING TEST');
     const CONTRACT_PAGE_URL = 'guides/quickstart/building-a-smart-contract';
     console.log('GOING TO URL:', CONTRACT_PAGE_URL);
     await visit(page, CONTRACT_PAGE_URL);
 
-    console.log('GETTING TEST ACTIONS');
+    console.log('GETTING CONTRACT TEST ACTIONS');
     const contractActions = await getTestActions(page);
     expect(contractActions.length).toBeGreaterThan(0);
-    console.log('RUNNING TEST');
+
+    console.log('RUNNING TEST: CONTRACT');
     await runTest(page, contractActions, context);
 
-    // const FRONTEND_PAGE_URL = "guides/quickstart/building-a-frontend"
-    // const frontendActions;
+    const FRONTEND_PAGE_URL = 'guides/quickstart/building-a-frontend';
+    await visit(page, FRONTEND_PAGE_URL);
+
+    console.log('GETTING FRONTEND TEST ACTIONS');
+    const frontendActions = await getTestActions(page);
+    expect(frontendActions.length).toBeGreaterThan(0);
+
+    console.log('RUNNING TEST: FRONTEND');
+    await runTest(page, frontendActions, context);
 
     isRunning = checkIfServersRunning();
     if (isRunning) {
@@ -108,7 +112,7 @@ async function runTest(
         }
         break;
       case 'wait':
-        await page.waitForTimeout(step['data-timeout']);
+        await page.waitForTimeout(parseInt(step['data-timeout']));
         break;
       case 'reload':
         await reload(page);
@@ -135,8 +139,9 @@ async function runTest(
           step['data-filepath'],
           parseInt(step['data-add-spaces-before']),
           step['data-add-spaces-after'],
-          step['data-at-line'],
-          step['data-remove-lines']
+          parseInt(step['data-at-line']),
+          step['data-remove-lines'],
+          step['data-use-set-data']
         );
         break;
       case 'getByLocator-save':
@@ -224,27 +229,34 @@ async function modifyFile(
   addSpacesBefore?: number,
   addSpacesAfter?: number,
   atLine?: number,
-  removeLines?: number[]
+  removeLines?: string,
+  useSetData?: string
 ) {
-  const content = await clickCopyButton(page, buttonName);
+  let contentText = useSetData;
+  if (!contentText) {
+    const content = await clickCopyButton(page, buttonName);
+    contentText = content.text;
+  }
+  const spacesBefore = '\n'.repeat(addSpacesBefore ?? 0);
+  const spacesAfter = '\n'.repeat(addSpacesAfter ?? 0);
   if (!atLine && !removeLines) {
-    const spacesBefore = '\n'.repeat(addSpacesBefore ?? 0);
-    const spacesAfter = '\n'.repeat(addSpacesAfter ?? 0);
-    const finalContent = spacesBefore + content.text + spacesAfter;
+    const finalContent = spacesBefore + contentText + spacesAfter;
     fs.appendFileSync(filePath, finalContent + '\n\n');
   } else {
     const lines = fs.readFileSync(filePath, 'utf8').split('\n');
     if (removeLines) {
-      removeLines.forEach((lineNumber) => {
-        lines[lineNumber - 1] = '~~~REMOVE~~~';
+      const removeLinesArray = JSON.parse(removeLines);
+      removeLinesArray.forEach((lineNumber) => {
+        lines[parseInt(lineNumber) - 1] = '~~~REMOVE~~~';
       });
     }
     if (atLine) {
-      lines.splice(atLine - 1, 0, content.text);
+      lines.splice(atLine - 1, 0, contentText);
     }
-    const finalContent = lines
+    let finalContent = lines
       .filter((line) => line !== '~~~REMOVE~~~')
       .join('\n');
+    finalContent = spacesBefore + finalContent + spacesAfter;
     fs.writeFileSync(filePath, finalContent, 'utf8');
   }
 }
