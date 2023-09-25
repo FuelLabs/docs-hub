@@ -41,12 +41,22 @@ Moving /var/folders/tp/0l8zdx9j4s9_n609ykwxl0qw0000gn/T/.tmpiNJQHt/fuelup to /Us
 ```
 
 Next, install the `beta-4` toolchain with:
+{/* 
+<TestAction
+id="install-beta-4-toolchain"
+action={{ name: 'runCommand' }}
+/> */}
 
 ```console
 fuelup toolchain install beta-4
 ```
 
 Finally, set the `beta-4` toolchain as your default distribution with the following command:
+
+<TestAction
+id="set-default-toolchain"
+action={{ name: 'runCommand' }}
+/>
 
 ```console
 fuelup default beta-4
@@ -67,6 +77,14 @@ We'll build a simple counter contract with two functions: one to increment the c
 
 **Start by creating a new, empty folder. We'll call it `fuel-project`.**
 
+<TestAction
+id="create-project-folder"
+action={{ 
+  name: 'runCommand', 
+  commandFolder: 'guides-testing'
+}}
+/>
+
 ```sh
 mkdir fuel-project
 ```
@@ -80,6 +98,14 @@ cd fuel-project
 ```
 
 Then create a contract project using forc:
+
+<TestAction
+id="create-contract"
+action={{
+  name: 'runCommand', 
+  commandFolder: 'guides-testing/fuel-project'
+}}
+/>
 
 ```sh
 forc new counter-contract
@@ -108,12 +134,22 @@ Report Bugs:
 {/* forc_new:example:start */}
 Here is the project that `Forc` has initialized:
 
+<TestAction
+id="contract-tree"
+action={{
+  name: 'runCommand', 
+  commandFolder: 'guides-testing/fuel-project'
+}}
+/>
+
 ```console
 $ tree counter-contract
 counter-contract
 ├── Forc.toml
 └── src
     └── main.sw
+
+2 directories, 2 files
 ```
 
 `Forc.toml` is the _manifest file_ (similar to `Cargo.toml` for Cargo or `package.json` for Node) and defines project metadata such as the project name and dependencies.
@@ -123,6 +159,14 @@ Open your project in a code editor and delete everything in `src/main.sw` apart 
 
 Every Sway file must start with a declaration of what type of program the file contains; here, we've declared that this file is a contract.
 
+<TestAction
+id="program-type"
+action={{
+  name: 'writeToFile',
+  filepath: 'guides-testing/fuel-project/counter-contract/src/main.sw'
+}}
+/>
+
 <CodeImport
   file="../../examples/quickstart/counter-contract/src/main.sw"
   comment="contract"
@@ -131,6 +175,14 @@ Every Sway file must start with a declaration of what type of program the file c
 />
 
 Next, we'll define a storage value. In our case, we have a single counter that we'll call `counter` of type 64-bit unsigned integer and initialize it to 0.
+
+<TestAction
+id="storage"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/counter-contract/src/main.sw'
+}}
+/>
 
 <CodeImport
   file="../../examples/quickstart/counter-contract/src/main.sw"
@@ -145,6 +197,14 @@ An ABI defines an interface for a contract. A contract must either define or imp
 
 For simplicity, we will define the ABI directly in the contract file itself.
 
+<TestAction
+id="abi"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/counter-contract/src/main.sw'
+}}
+/>
+
 <CodeImport
   file="../../examples/quickstart/counter-contract/src/main.sw"
   comment="abi"
@@ -155,6 +215,14 @@ For simplicity, we will define the ABI directly in the contract file itself.
 ### Implement ABI
 
 Below your ABI definition, you will write the implementation of the functions defined in your ABI.
+
+<TestAction
+id="impl"
+action={{ 
+  name: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/counter-contract/src/main.sw'
+}}
+/>
 
 <CodeImport
   file="../../examples/quickstart/counter-contract/src/main.sw"
@@ -168,6 +236,14 @@ Below your ABI definition, you will write the implementation of the functions de
 Here's what your code should look like so far:
 
 File: `./counter-contract/src/main.sw`
+
+<TestAction
+id="entire-contract"
+action={{
+  name: 'compareToFile',
+  filepath: 'guides-testing/fuel-project/counter-contract/src/main.sw'
+}}
+/>
 
 <CodeImport
   file="../../examples/quickstart/counter-contract/src/main.sw"
@@ -190,6 +266,14 @@ changed directory into `counter-countract`
 
 Then run the following command to build your contract:
 
+<TestAction
+id="build-contract"
+action={{
+  name: 'runCommand', 
+  commandFolder: 'guides-testing/fuel-project/counter-contract'
+}}
+/>
+
 ```console
 forc build
 ```
@@ -203,6 +287,14 @@ forc build
 
 Let's have a look at the content of the `counter-contract` folder after building:
 
+<TestAction
+id="built-contract-tree"
+action={{
+  name: 'runCommand', 
+  commandFolder: 'guides-testing/fuel-project/counter-contract'
+}}
+/>
+
 ```console
 $ tree .
 .
@@ -215,6 +307,8 @@ $ tree .
 │       └── counter-contract.bin
 └── src
     └── main.sw
+
+4 directories, 6 files
 ```
 
 We now have an `out` directory that contains our build artifacts such as the JSON representation of our ABI and the contract bytecode.
@@ -238,6 +332,14 @@ cargo install cargo-generate
 
 Now, let's generate the default test harness with the following:
 
+<TestAction
+id="cargo-generate-test"
+action={{
+  name: 'runCommand', 
+  commandFolder: 'guides-testing/fuel-project/counter-contract'
+}}
+/>
+
 ```console
 cargo generate --init fuellabs/sway templates/sway-test-rs --name counter-contract
 ```
@@ -252,6 +354,14 @@ cargo generate --init fuellabs/sway templates/sway-test-rs --name counter-contra
 ```
 
 Let's have a look at the result:
+
+<TestAction
+id="cargo-test-tree"
+action={{
+  name: 'runCommand', 
+  commandFolder: 'guides-testing/fuel-project/counter-contract'
+}}
+/>
 
 ```console
 $ tree .
@@ -268,6 +378,8 @@ $ tree .
 │   └── main.sw
 └── tests
     └── harness.rs
+
+5 directories, 8 files
 ```
 
 We have two new files!
@@ -279,6 +391,15 @@ Now that we have our default test harness, let's add some useful tests to it.
 
 At the bottom of `test/harness.rs` below the `can_get_contract_id()` test, add the `test_increment` test function below to verify that the value of the counter gets incremented:
 
+<TestAction
+id="test-harness"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/counter-contract/tests/harness.rs',
+  addSpacesBefore: 1, 
+}}
+/>
+
 <CodeImport
   file="../../examples/quickstart/counter-contract/tests/harness.rs"
   comment="contract-test"
@@ -289,6 +410,14 @@ At the bottom of `test/harness.rs` below the `can_get_contract_id()` test, add t
 Here is what your file should look like:
 
 File: `./counter-contract/tests/harness.rs`
+
+<TestAction
+id="final-test-harness"
+action={{
+  name: 'compareToFile',
+  filepath: 'guides-testing/fuel-project/counter-contract/tests/harness.rs'
+}}
+/>
 
 <CodeImport
   file="../../examples/quickstart/counter-contract/tests/harness.rs"

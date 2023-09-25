@@ -8,7 +8,6 @@ import https from 'https';
 import path from 'path';
 
 const pathToExtension = path.join(__dirname, '../../test-results/wallet-dist');
-console.log('PATH TO EXTENSION:', pathToExtension);
 
 export const test = base.extend<{
   context: BrowserContext;
@@ -71,10 +70,6 @@ export const test = base.extend<{
     const extensionId = background.url().split('/')[2];
     await use(extensionId);
   },
-});
-
-test.afterAll(({ context }) => {
-  context.close();
 });
 
 export const expect = test.expect;

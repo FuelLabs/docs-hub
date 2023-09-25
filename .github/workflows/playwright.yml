@@ -31,8 +31,8 @@ jobs:
             curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh
       - name: Modify Path
         run: echo "$HOME/.fuelup/bin:${GITHUB_PATH}" >> $GITHUB_PATH
-      - name: Set Default Beta-3 Toolchain
-        run: fuelup toolchain install beta-3 && fuelup default beta-3
+      - name: Set Default Beta-4 Toolchain
+        run: fuelup toolchain install beta-4 && fuelup default beta-4
       - name: Build Contract
         run: forc build --path ./docs/guides/examples/quickstart/counter-contract
       - name: Run contract tests

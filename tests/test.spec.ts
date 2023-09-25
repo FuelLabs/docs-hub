@@ -1,9 +1,7 @@
-/* eslint-disable no-case-declarations */
 import type { BrowserContext, Page } from '@playwright/test';
 import { execSync } from 'child_process';
 import fs from 'fs';
 import { EOL } from 'os';
-import { join } from 'path';
 
 import { test, expect } from './utils/fixtures';
 import { visit, reload } from './utils/visit';
@@ -13,10 +11,6 @@ interface Instruction {
   text: string;
   output: string;
 }
-
-const QUICKSTART_TEST_CONFIG = JSON.parse(
-  fs.readFileSync(join(process.cwd(), '/tests/quickstart.json'), 'utf8')
-);
 
 const START_SERVER_COMMAND = "pnpm pm2 start npm --name 'docs-hub' -- run dev";
 const STOP_SERVERS = 'pnpm pm2 delete all';
@@ -33,98 +27,129 @@ test.describe('Guides', () => {
     await walletSetup(context, extensionId, page);
   }
 
+  async function getTestActions(page: Page) {
+    const testActions = await page.$$eval('span[data-name]', (elements) => {
+      return elements.map((el) => {
+        const dataAttributes = {};
+        for (const attr of el.attributes) {
+          dataAttributes[attr.name] = attr.value;
+        }
+        dataAttributes['id'] = el.id;
+        return dataAttributes;
+      });
+    });
+    console.log('FINAL TEST ACTIONS:', testActions);
+    return testActions;
+  }
+
   test('dev quickstart', async ({ context, extensionId, page }) => {
     let isRunning = checkIfServersRunning();
     if (isRunning) {
       stopServers();
     }
     saved = [];
-    if (QUICKSTART_TEST_CONFIG.needs_wallet) {
-      console.log('SETTING UP WALLET');
-      await useFuelWallet(context, extensionId, page);
-    }
+    // if (QUICKSTART_TEST_CONFIG.needs_wallet) {
+    //   console.log('SETTING UP WALLET');
+    //   await useFuelWallet(context, extensionId, page);
+    // }
     console.log('SETTING UP FOLDERS');
-    await setupFolders(QUICKSTART_TEST_CONFIG.project_folder);
+    await setupFolders('fuel-project');
+
     console.log('STARTING DEV SERVER');
     const startOutput = execSync(START_SERVER_COMMAND, {
       encoding: 'utf-8',
     });
     console.log('START SERVER OUTPUT:', startOutput);
-    await page.waitForTimeout(12000);
-    console.log('WAITED 12 SECONDS');
+    await page.waitForTimeout(4000);
+    console.log('WAITED 4 SECONDS');
     console.log('RUNNING TEST');
-    await runTest(page, QUICKSTART_TEST_CONFIG, context);
-    console.log('DONE RUNNING TEST');
+    const CONTRACT_PAGE_URL = 'guides/quickstart/building-a-smart-contract';
+    console.log('GOING TO URL:', CONTRACT_PAGE_URL);
+    await visit(page, CONTRACT_PAGE_URL);
+
+    console.log('GETTING TEST ACTIONS');
+    const contractActions = await getTestActions(page);
+    expect(contractActions.length).toBeGreaterThan(0);
+    console.log('RUNNING TEST');
+    await runTest(page, contractActions, context);
+
+    // const FRONTEND_PAGE_URL = "guides/quickstart/building-a-frontend"
+    // const frontendActions;
 
     isRunning = checkIfServersRunning();
     if (isRunning) {
       stopServers();
     }
+    context.close();
   });
 });
 async function runTest(
   page: Page,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  config: any,
+  steps: any,
   context: BrowserContext
 ) {
-  await visit(page, config.start_url);
-
-  for (const step of config.steps) {
+  for (const step of steps) {
     console.log('STEP:', step);
     await page.waitForTimeout(1000);
-    switch (step.action) {
+    switch (step['data-name']) {
       case 'runCommand':
-        if (step.inputs.length === 1) {
-          await runCommand(page, step.inputs[0]);
+        if (step['data-pre-command']) {
+          await runCommand(
+            page,
+            step.id,
+            step['data-command-folder'],
+            step['data-pre-command']
+          );
+        } else if (step['data-command-folder']) {
+          await runCommand(page, step.id, step['data-command-folder']);
         } else {
-          await runCommand(page, step.inputs[0], step.inputs[1]);
+          await runCommand(page, step.id);
         }
         break;
       case 'wait':
-        await page.waitForTimeout(step.inputs[0]);
+        await page.waitForTimeout(step['data-timeout']);
         break;
       case 'reload':
         await reload(page);
         break;
       case 'goToUrl':
-        await visit(page, step.inputs[0]);
+        await visit(page, step['data-url']);
         break;
       case 'compareFiles':
-        await compareFiles(step.inputs[0], step.inputs[1]);
+        await compareFiles(
+          step['data-test-path-name'],
+          step['data-ref-path-name']
+        );
         break;
       case 'compareToFile':
-        await compareToFile(page, step.inputs[0], step.inputs[1]);
+        await compareToFile(page, step.id, step['data-filepath']);
         break;
       case 'writeToFile':
-        await writeToFile(page, step.inputs[0], step.inputs[1]);
+        await writeToFile(page, step.id, step['data-filepath']);
         break;
       case 'modifyFile':
-        if (step.inputs.length === 2) {
-          await modifyFile(page, step.inputs[0], step.inputs[1]);
-        } else if (step.inputs.length === 3) {
-          await modifyFile(
-            page,
-            step.inputs[0],
-            step.inputs[1],
-            step.inputs[2]
-          );
-        } else {
-          await modifyFile(
-            page,
-            step.inputs[0],
-            step.inputs[1],
-            step.inputs[2],
-            step.inputs[3]
-          );
-        }
+        await modifyFile(
+          page,
+          step.id,
+          step['data-filepath'],
+          parseInt(step['data-add-spaces-before']),
+          step['data-add-spaces-after'],
+          step['data-at-line'],
+          step['data-remove-lines']
+        );
         break;
       case 'getByLocator-save':
-        const locatorVal = await page.locator(step.inputs[0]).allInnerTexts();
+        // eslint-disable-next-line no-case-declarations
+        const locatorVal = await page
+          .locator(step['data-locator'])
+          .allInnerTexts();
         saved.push(locatorVal);
         break;
       case 'clickByRole':
-        await page.getByRole(step.inputs[0], { name: step.inputs[1] }).click();
+        await page
+          .getByRole(step['data-role'], { name: step['data-element-name'] })
+          .click();
         break;
       case 'walletApproveConnect':
         await walletConnect(context);
@@ -133,15 +158,13 @@ async function runTest(
         await walletApprove(context);
         break;
       case 'checkIfIsIncremented':
-        console.log('SAVED:', saved);
-        console.log('INITAL INPUT:', parseInt(step.inputs[0]));
-        console.log('FINAL INPUT:', parseInt(step.inputs[1]));
         checkIfIsIncremented(
-          parseInt(step.inputs[0]),
-          parseInt(step.inputs[1])
+          parseInt(step['data-initial-index']),
+          parseInt(step['data-final-index'])
         );
         break;
       default:
+        console.log('STEP NOT FOUND:', step);
     }
   }
 }
@@ -160,16 +183,24 @@ async function clickCopyButton(page: Page, id: string) {
   return clipboardText;
 }
 
-async function runCommand(page: Page, buttonName: string, goToFolder?: string) {
+async function runCommand(
+  page: Page,
+  buttonName: string,
+  goToFolder?: string | null,
+  preCommand?: string
+) {
   const copied = await clickCopyButton(page, buttonName);
   console.log('COPIED', copied.text);
   let command = copied.text;
-  if (goToFolder) {
-    if (goToFolder.includes('<COMMAND>')) {
-      command = goToFolder.replace('<COMMAND>', copied.text);
+  if (preCommand) {
+    if (preCommand.includes('<COMMAND>')) {
+      command = preCommand.replace('<COMMAND>', copied.text);
     } else {
-      command = goToFolder + copied.text;
+      command = preCommand + copied.text;
     }
+  }
+  if (goToFolder) {
+    command = `cd ${goToFolder} && ` + command;
   }
   console.log('COMMAND', command);
   const commandOutput = execSync(command, {
@@ -190,12 +221,17 @@ async function modifyFile(
   page: Page,
   buttonName: string,
   filePath: string,
+  addSpacesBefore?: number,
+  addSpacesAfter?: number,
   atLine?: number,
   removeLines?: number[]
 ) {
   const content = await clickCopyButton(page, buttonName);
   if (!atLine && !removeLines) {
-    fs.appendFileSync(filePath, content.text + '\n\n');
+    const spacesBefore = '\n'.repeat(addSpacesBefore ?? 0);
+    const spacesAfter = '\n'.repeat(addSpacesAfter ?? 0);
+    const finalContent = spacesBefore + content.text + spacesAfter;
+    fs.appendFileSync(filePath, finalContent + '\n\n');
   } else {
     const lines = fs.readFileSync(filePath, 'utf8').split('\n');
     if (removeLines) {
@@ -206,11 +242,10 @@ async function modifyFile(
     if (atLine) {
       lines.splice(atLine - 1, 0, content.text);
     }
-    const modifiedContent = lines
+    const finalContent = lines
       .filter((line) => line !== '~~~REMOVE~~~')
       .join('\n');
-
-    fs.writeFileSync(filePath, modifiedContent, 'utf8');
+    fs.writeFileSync(filePath, finalContent, 'utf8');
   }
 }
 
