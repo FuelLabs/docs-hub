@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { type ReactNode } from 'react';
 
+import type { NavOrder } from '../pages';
 import type { Config } from '../types';
 
 import { Header } from './Header';
@@ -17,6 +18,7 @@ type LayoutProps = {
   config?: Config;
   theme?: string;
   category?: string | undefined;
+  allNavs?: NavOrder[];
 };
 
 export function Layout({
@@ -26,6 +28,7 @@ export function Layout({
   isCleanWithNav,
   hasHeadings,
   config,
+  allNavs,
 }: LayoutProps) {
   const router = useRouter();
 
@@ -91,6 +94,7 @@ export function Layout({
         <Header
           active={config?.slug ? config.slug : getSlug()}
           title={config?.title}
+          allNavs={allNavs}
         />
         {children}
       </Box>

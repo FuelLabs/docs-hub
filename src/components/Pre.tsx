@@ -73,7 +73,7 @@ const styles = {
       mb: '$0 !important',
       padding: '$3 $5 $3',
       tabSize: '4',
-      fontSize: '15px !important',
+      fontSize: '16px !important',
       bg: 'transparent !important',
       borderRadius: '$default',
     },

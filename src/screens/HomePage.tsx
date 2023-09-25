@@ -1,10 +1,10 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box, Text, Heading, Grid, ButtonLink } from '@fuel-ui/react';
 import { Sidebar } from '~/src/components/Sidebar';
-import type { SidebarNav } from '~/src/components/Sidebar';
 
 import { Card } from '../components/Card';
 import type { GuidesProps } from '../pages/guides';
+import type { NavOrder } from '../pages/index';
 
 import type { CardInfo } from './CategoryPage';
 
@@ -15,20 +15,16 @@ interface HomeCard {
 }
 
 interface HomeScreenProps extends GuidesProps {
-  homeNavigation: SidebarNav;
+  allNavs: NavOrder[];
   homeCards: HomeCard[];
 }
 
-export function HomeScreen({
-  guides,
-  homeNavigation,
-  homeCards,
-}: HomeScreenProps) {
+export function HomeScreen({ guides, allNavs, homeCards }: HomeScreenProps) {
   return (
     <>
       <Box css={styles.sidebar}>
         <Box css={styles.sidebarContainer}>
-          <Sidebar nav={homeNavigation} />
+          <Sidebar allNavs={allNavs} />
         </Box>
       </Box>
       <Box as="section" css={styles.section} className="Layout--section">
@@ -110,7 +106,7 @@ export const styles = {
     position: 'sticky',
     top: 20,
     maxHeight: 'calc(100vh - 40px)',
-    overflowX: 'visible',
+    overflowX: 'auto',
     '&::-webkit-scrollbar': {
       display: 'none',
     },

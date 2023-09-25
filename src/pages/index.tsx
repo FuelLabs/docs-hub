@@ -8,40 +8,17 @@ import { HomeScreen } from '../screens/HomePage';
 
 import type { GuideInfo } from './guides';
 
+export interface NavOrder {
+  key: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  links: any[];
+}
+
 interface HomeProps {
   theme: string;
   guides: { [key: string]: GuideInfo };
+  allNavs: NavOrder[];
 }
-
-const homeNavigation = {
-  navigation: [
-    {
-      label: 'Get Started',
-      slug: '/guides/quickstart',
-      isExternal: false,
-    },
-    {
-      label: 'Sway Language',
-      slug: '/sway',
-      isExternal: false,
-    },
-    {
-      label: 'Tooling',
-      slug: '/tooling',
-      isExternal: false,
-    },
-    {
-      label: 'SDKs',
-      slug: '/sdk',
-      isExternal: false,
-    },
-    {
-      label: 'Network',
-      slug: '/network',
-      isExternal: false,
-    },
-  ],
-};
 
 const homeCards = [
   {
@@ -154,22 +131,29 @@ const homeCards = [
   },
 ];
 
-export default function Home({ theme, guides }: HomeProps) {
+export default function Home({ theme, guides, allNavs }: HomeProps) {
   return (
-    <Layout isClean isCleanWithNav title="Fuel Docs" theme={theme}>
-      <HomeScreen
-        guides={guides}
-        homeNavigation={homeNavigation}
-        homeCards={homeCards}
-      />
+    <Layout
+      allNavs={allNavs}
+      isClean
+      isCleanWithNav
+      title="Fuel Docs"
+      theme={theme}
+    >
+      <HomeScreen guides={guides} allNavs={allNavs} homeCards={homeCards} />
     </Layout>
   );
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getStaticProps: GetStaticProps<any> = async () => {
-  const guidesPath = join(DOCS_DIRECTORY, `../docs/guides/docs/guides.json`);
+  const guidesPath = join(DOCS_DIRECTORY, `./guides/docs/guides.json`);
+  const allNavsPath = join(
+    DOCS_DIRECTORY,
+    `../src/generated/sidebar-links/all-orders.json`
+  );
   const guides = JSON.parse(readFileSync(guidesPath, 'utf8'));
+  const allNavs = JSON.parse(readFileSync(allNavsPath, 'utf8'));
 
-  return { props: { guides } };
+  return { props: { guides, allNavs } };
 };

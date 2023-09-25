@@ -1,13 +1,18 @@
+import { readFileSync } from 'fs';
 import type { GetStaticProps } from 'next';
+import { join } from 'path';
 
 import type { MdDoc } from '../../.contentlayer/generated';
 import { allMdDocs } from '../../.contentlayer/generated';
+import { DOCS_DIRECTORY } from '../config/constants';
 import useTheme from '../hooks/useTheme';
 import { Doc } from '../lib/md-doc';
 import { Docs } from '../lib/md-docs';
 import { getVersions } from '../lib/versions';
 import { DocScreen } from '../screens/DocPage';
 import type { DocType, SidebarLinkItem } from '../types';
+
+import type { NavOrder } from '.';
 
 export type VersionItem = {
   version: string;
@@ -27,6 +32,7 @@ export type Versions = {
 };
 
 export type DocPageProps = {
+  allNavs: NavOrder[];
   code: string;
   md: MdDoc;
   doc: DocType;
@@ -51,8 +57,15 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   const doc = new Doc(params?.slug as string[], allMdDocs);
   const code = await doc.getCode();
   const versions = await getVersions();
+  const allNavsPath = join(
+    DOCS_DIRECTORY,
+    `../src/generated/sidebar-links/all-orders.json`
+  );
+  const allNavs = JSON.parse(readFileSync(allNavsPath, 'utf8'));
+
   return {
     props: {
+      allNavs,
       code,
       md: doc.md,
       doc: doc.item,

@@ -4,9 +4,13 @@ import { capitalize } from './str.mjs';
 // won't be capitalized in the navigation sidebar
 const LOWER_CASE_NAV_PATHS = [
   'docs/forc/commands/',
+  'docs/latest/forc/commands/',
   'docs/forc/plugins/',
+  'docs/latest/forc/plugins/',
   'docs/indexer/forc-index/',
+  'docs/latest/indexer/forc-index/',
   'docs/indexer/forc-postgres/',
+  'docs/latest/indexer/forc-postgres/',
 ];
 
 function editLabel(label, shouldBeLowerCase) {
@@ -39,13 +43,21 @@ export default function getSortedLinks(config, docs) {
 
     const isExternal = doc.slug.startsWith('http');
     doc.slug = doc.slug.replace('../', '').replace('./', '') || '';
-    if (!doc.slug.startsWith('guides/') && !isExternal) {
+    if (
+      !doc.slug.startsWith('guides') &&
+      !doc.slug.startsWith('latest/guides') &&
+      !isExternal
+    ) {
       doc.slug = `docs/${doc.slug}`;
     }
     const shouldBeLowerCase = LOWER_CASE_NAV_PATHS.some((prefix) => {
       const lcSlug = doc.slug.toLowerCase();
       return lcSlug.startsWith(prefix) && `${lcSlug}/` !== prefix;
     });
+
+    const finalSlug = doc.slug
+      .toLowerCase()
+      .replace('latest/guides', 'guides/latest');
 
     if (
       !thisCategory ||
@@ -54,8 +66,8 @@ export default function getSortedLinks(config, docs) {
       (thisCategory === 'guide' && doc.title === 'guide') ||
       (thisCategory === 'api' && doc.title === 'api')
     ) {
-      let newLabel = doc.title;
-      if (doc.title === 'index' || doc.title === 'README') {
+      let newLabel = doc.title.replace('latest/', '');
+      if (newLabel === 'index' || newLabel === 'README') {
         const arr = doc.slug.split('/');
         newLabel = arr[arr.length - 1];
       }
@@ -70,7 +82,6 @@ export default function getSortedLinks(config, docs) {
     const categoryIdx = links.findIndex((l) => {
       return l?.label === thisCategory;
     });
-
     /** Insert category item based on order prop */
     if (categoryIdx >= 0) {
       const submenu = links[categoryIdx]?.submenu || [];
@@ -86,7 +97,7 @@ export default function getSortedLinks(config, docs) {
         links[categoryIdx].hasIndex = true;
       }
       submenu.push({
-        slug: doc.slug.toLowerCase(),
+        slug: finalSlug,
         label: editLabel(newLabel, shouldBeLowerCase),
         isExternal,
       });
@@ -96,10 +107,13 @@ export default function getSortedLinks(config, docs) {
     if (thisCategory === doc.title) {
       hasIndex = true;
     }
-    const subpath = doc.slug.split('/')[1];
+    const splitSlug = doc.slug.split('/');
+    let subpath =
+      splitSlug[1] === 'latest' ? `latest/${splitSlug[2]}` : splitSlug[1];
+    subpath = subpath.replace('latest/guides', 'guides/latest');
     const submenu = [
       {
-        slug: doc.slug.toLowerCase(),
+        slug: finalSlug,
         label: editLabel(doc.title, shouldBeLowerCase),
         isExternal,
       },
@@ -108,8 +122,8 @@ export default function getSortedLinks(config, docs) {
       subpath,
       label: thisCategory,
       isExternal,
-      hasIndex,
       submenu,
+      hasIndex,
     });
     /** Insert inside category submenu if category is already on array */
   }

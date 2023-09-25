@@ -9,13 +9,21 @@ import {
 } from '@fuel-ui/react';
 import dynamic from 'next/dynamic';
 
+import type { NavOrder } from '../pages';
+
 import { MobileMenu } from './MobileMenu';
 import { Navigation } from './Navigation';
 
 const ThemeToggler = dynamic(() => import('./ThemeToggler'), { ssr: false });
 const Search = dynamic(() => import('./Search'), { ssr: false });
 
-export function Header({ active, title }: { active: string; title?: string }) {
+interface HeaderProps {
+  active: string;
+  title?: string;
+  allNavs?: NavOrder[];
+}
+
+export function Header({ active, title, allNavs }: HeaderProps) {
   return (
     <Box.Flex as="header" css={styles.root}>
       <Link href="/" className="logo">
@@ -59,7 +67,7 @@ export function Header({ active, title }: { active: string; title?: string }) {
           </a>
         </Box.Flex>
       </Box>
-      <MobileMenu active={active} title={title} />
+      <MobileMenu allNavs={allNavs} active={active} title={title} />
     </Box.Flex>
   );
 }

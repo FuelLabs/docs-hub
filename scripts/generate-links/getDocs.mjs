@@ -19,14 +19,29 @@ export async function getDocs(key, order) {
         '!./sway/docs/book/src/forc/**/*.md',
       ];
       break;
+    case 'latest-sway':
+      paths = [
+        // SWAY DOCS
+        './latest/sway/docs/book/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+        // IGNORE FORC PAGES
+        '!./latest/sway/docs/book/src/forc/*.md',
+        '!./latest/sway/docs/book/src/forc/**/*.md',
+      ];
+      break;
     case 'forc':
       paths = [
         // FORC DOCS
         './sway/docs/book/src/forc/*.md',
         './sway/docs/book/src/forc/**/*.md',
-        // REMOVE UNUSED FILES
-        '!./sway/docs/book/src/forc/commands/forc_deploy.md',
-        '!./sway/docs/book/src/forc/commands/forc_run.md',
+      ];
+      break;
+    case 'latest-forc':
+      paths = [
+        // FORC DOCS
+        './latest/sway/docs/book/src/forc/*.md',
+        './latest/sway/docs/book/src/forc/**/*.md',
       ];
       break;
     case 'fuels-rs':
@@ -34,6 +49,15 @@ export async function getDocs(key, order) {
         // RUST SDK DOCS
         './fuels-rs/docs/src/**/*.md',
         './fuels-rs/docs/src/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
+    case 'latest-fuels-rs':
+      paths = [
+        // RUST SDK DOCS
+        './latest/fuels-rs/docs/src/**/*.md',
+        './latest/fuels-rs/docs/src/*.md',
         // IGNORE ALL SUMMARY PAGES
         '!**/SUMMARY.md',
       ];
@@ -46,11 +70,26 @@ export async function getDocs(key, order) {
         './fuels-ts/apps/docs/src/**/*.md',
       ];
       break;
+    case 'latest-fuels-ts':
+      paths = [
+        // TS SDK DOCS
+        './latest/fuels-ts/apps/docs/src/*.md',
+        './latest/fuels-ts/apps/docs/src/**/*.md',
+        './latest/fuels-ts/apps/docs/src/**/*.md',
+      ];
+      break;
     case 'wallet':
       paths = [
         // WALLET DOCS
         './fuels-wallet/packages/docs/docs/**/*.mdx',
         './fuels-wallet/packages/docs/docs/*.mdx',
+      ];
+      break;
+    case 'latest-wallet':
+      paths = [
+        // WALLET DOCS
+        './latest/fuels-wallet/packages/docs/docs/**/*.mdx',
+        './latest/fuels-wallet/packages/docs/docs/*.mdx',
       ];
       break;
     case 'graphql':
@@ -60,11 +99,27 @@ export async function getDocs(key, order) {
         './fuel-graphql-docs/docs/**/*.mdx',
       ];
       break;
+    case 'latest-graphql':
+      paths = [
+        // GRAPHQL DOCS
+        './latest/fuel-graphql-docs/docs/*.mdx',
+        './latest/fuel-graphql-docs/docs/**/*.mdx',
+      ];
+      break;
     case 'fuelup':
       paths = [
         // FUELUP DOCS
         './fuelup/docs/src/*.md',
         './fuelup/docs/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
+    case 'latest-fuelup':
+      paths = [
+        // FUELUP DOCS
+        './latest/fuelup/docs/src/*.md',
+        './latest/fuelup/docs/src/**/*.md',
         // IGNORE ALL SUMMARY PAGES
         '!**/SUMMARY.md',
       ];
@@ -78,6 +133,15 @@ export async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
+    case 'latest-indexer':
+      paths = [
+        // INDEXER DOCS
+        './latest/fuel-indexer/docs/src/*.md',
+        './latest/fuel-indexer/docs/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
     case 'specs':
       paths = [
         // SPECS DOCS
@@ -87,7 +151,29 @@ export async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
+    case 'latest-specs':
+      paths = [
+        // SPECS DOCS
+        './latest/fuel-specs/src/*.md',
+        './latest/fuel-specs/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
+    case 'guides':
+      paths = [
+        // GUIDES
+        './guides/**/*.mdx',
+      ];
+      break;
+    case 'latest-guides':
+      paths = [
+        // GUIDES
+        './latest/guides/**/*.mdx',
+      ];
+      break;
     // case 'about-fuel':
+    // case 'latest-about-fuel':
     //   paths = [
     //     // ABOUT FUEL DOCS
     //     './about-fuel/*.md',
@@ -95,10 +181,6 @@ export async function getDocs(key, order) {
     //   ];
     //   break;
     default:
-      paths = [
-        // GUIDES
-        './guides/**/*.mdx',
-      ];
       break;
   }
 

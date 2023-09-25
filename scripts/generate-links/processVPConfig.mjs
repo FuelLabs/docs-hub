@@ -1,14 +1,17 @@
-import fs from 'fs';
 import { EOL } from 'os';
-import { join } from 'path';
 
-const DOCS_DIRECTORY = join(process.cwd(), './docs');
+import { getFile } from './getFile.mjs';
 
-const tsAPIOrderPath = join(
-  DOCS_DIRECTORY,
-  './fuels-ts/apps/docs/.typedoc/api-links.json'
+const tsAPIOrderFile = getFile(
+  './fuels-ts/apps/docs/.typedoc/api-links.json',
+  false,
+  true
 );
-const tsAPIOrderFile = fs.readFileSync(tsAPIOrderPath, 'utf8');
+// const latestTsAPIOrderFile = getFile(
+//   './fuels-ts/apps/docs/.typedoc/api-links.json',
+//   true,
+//   true
+// );
 
 function extractData(inputString) {
   // used for api.json order
@@ -20,7 +23,7 @@ function extractData(inputString) {
   return null;
 }
 
-function handleVPLine(trimmedLine, lines, index, thisOrder, thisCat) {
+function handleVPLine(trimmedLine, lines, index, thisOrder, thisCat, isLatest) {
   const regex = /'([^']+)'/;
   // Create a shallow copy
   let newVPOrder = JSON.parse(JSON.stringify(thisOrder));
@@ -72,7 +75,8 @@ function handleVPLine(trimmedLine, lines, index, thisOrder, thisCat) {
   } else if (trimmedLine.startsWith('apiLinks')) {
     // handle API order
     newVPOrder.menu.push('API');
-    const apiJSON = JSON.parse(tsAPIOrderFile);
+    // const apiJSON = isLatest ? latestTsAPIOrderFile : tsAPIOrderFile;
+    const apiJSON = tsAPIOrderFile;
     const apiLines = JSON.stringify(apiJSON, null, 2).split(EOL);
     apiLines.forEach((apiLine, apiIndex) => {
       const trimmedAPILine = apiLine.trimStart();
@@ -81,7 +85,8 @@ function handleVPLine(trimmedLine, lines, index, thisOrder, thisCat) {
         apiLines,
         apiIndex,
         newVPOrder,
-        category
+        category,
+        isLatest
       );
       category = results.category;
       newVPOrder = results.newVPOrder;
@@ -91,7 +96,7 @@ function handleVPLine(trimmedLine, lines, index, thisOrder, thisCat) {
   return { newVPOrder, category };
 }
 
-export default function processVPConfig(lines) {
+export function processVPConfig(lines, isLatest) {
   let tsOrder = { menu: ['fuels-ts'] };
   let currentCategory;
   let foundStart = false;
@@ -103,7 +108,8 @@ export default function processVPConfig(lines) {
         lines,
         index,
         tsOrder,
-        currentCategory
+        currentCategory,
+        isLatest
       );
       tsOrder = newVPOrder;
       currentCategory = category;
@@ -112,5 +118,5 @@ export default function processVPConfig(lines) {
     }
   });
 
-  return tsOrder;
+  return { order: tsOrder };
 }

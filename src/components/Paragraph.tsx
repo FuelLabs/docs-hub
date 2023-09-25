@@ -11,7 +11,7 @@ const styles = {
   root: cssObj({
     mt: '$3',
     mb: '$3',
-    fontSize: '17px',
+    fontSize: '18px',
     lineHeight: '1.7',
     wordWrap: 'break-word',
   }),

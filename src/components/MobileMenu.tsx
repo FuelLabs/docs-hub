@@ -6,8 +6,10 @@ import type { AnimationProps } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 
-import { DocSidebar } from './DocSidebar';
+import type { NavOrder } from '../pages';
+
 import { Navigation } from './Navigation';
+import { Sidebar } from './Sidebar';
 
 const ThemeToggler = dynamic(() => import('./ThemeToggler'), { ssr: false });
 const Search = dynamic(() => import('./Search'), { ssr: false });
@@ -18,13 +20,13 @@ const SPRING: AnimationProps['transition'] = {
   duration: '0.1',
 };
 
-export function MobileMenu({
-  title,
-  active,
-}: {
+interface MobileMenuProps {
   active: string;
   title?: string;
-}) {
+  allNavs?: NavOrder[];
+}
+
+export function MobileMenu({ title, active, allNavs }: MobileMenuProps) {
   const [showing, setShowing] = useState(false);
 
   function toggle() {
@@ -73,7 +75,7 @@ export function MobileMenu({
           <Navigation active={active} />
         </Box.Stack>
 
-        <DocSidebar onClick={() => setShowing(false)} />
+        <Sidebar allNavs={allNavs} onClick={() => setShowing(false)} />
       </Box>
     </MotionBox>
   );
