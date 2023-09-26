@@ -148,7 +148,7 @@ export const NAVIGATION: LinkObject[] = [
       {
         name: 'Explorer',
         type: 'external-link',
-        link: 'https://fuellabs.github.io/block-explorer-v2/beta-4/#/',
+        link: 'https://fuellabs.github.io/block-explorer-v2/',
       },
       {
         name: 'Faucet',
