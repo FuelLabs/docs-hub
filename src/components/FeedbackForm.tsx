@@ -139,11 +139,11 @@ export function FeedbackForm() {
           justify={'space-between'}
           align={'flex-end'}
         >
-          <Form.Label htmlFor="feedback">
+          <Form.Label css={styles.text} htmlFor="feedback">
             Let us know what we{' '}
             {isHelpful === 'true' ? 'did well' : 'can do better'}
           </Form.Label>
-          <Text>Optional</Text>
+          <Text css={styles.text}>Optional</Text>
         </Box.Flex>
         <Box css={styles.textareaContainer}>
           <Box
@@ -168,10 +168,10 @@ export function FeedbackForm() {
           justify={'space-between'}
           align={'flex-end'}
         >
-          <Form.Label htmlFor="email">
+          <Form.Label css={styles.text} htmlFor="email">
             If we can contact you with questions, please enter your email
           </Form.Label>
-          <Text>Optional</Text>
+          <Text css={styles.text}>Optional</Text>
         </Box.Flex>
         <Input isFullWidth>
           <Input.ElementLeft element={<Icon icon="Mail" />} />
@@ -195,11 +195,12 @@ export function FeedbackForm() {
           size="sm"
           type="button"
           onClick={() => closeForm()}
+          css={styles.text}
         >
           Cancel
         </Button>
         <Button
-          css={styles.submit}
+          css={{ ...styles.text, ...styles.submit }}
           variant="outlined"
           intent="base"
           size="sm"
@@ -217,7 +218,7 @@ export function FeedbackForm() {
   }
 
   return (
-    <>
+    <Box>
       <Dialog isOpen={dialogIsOpen} onOpenChange={setDialogIsOpen}>
         <Box.Flex align="center" gap={'6px'}>
           <IconButton
@@ -244,7 +245,7 @@ export function FeedbackForm() {
               setValue('helpful', 'false');
             }}
           />
-          <Text>Was this page helpful?</Text>
+          <Text css={styles.text}>Was this page helpful?</Text>
         </Box.Flex>
         <Dialog.Content>
           <Dialog.Close onClick={closeForm} />
@@ -252,7 +253,7 @@ export function FeedbackForm() {
           <form>
             <HelpfulButtons />
             {isHelpful === 'false' && (
-              <Form.HelperText css={styles.forum}>
+              <Form.HelperText css={{ ...styles.text, ...styles.forum }}>
                 If you need support, please create a post in our{' '}
                 <Link
                   css={styles.forumLink}
@@ -270,11 +271,16 @@ export function FeedbackForm() {
           </form>
         </Dialog.Content>
       </Dialog>
-    </>
+    </Box>
   );
 }
 
 const styles = {
+  text: cssObj({
+    'html[class="fuel_light-theme"] &': {
+      color: '$intentsBase12',
+    },
+  }),
   buttonLabel: cssObj({
     padding: '8px 16px',
     margin: 0,
@@ -292,6 +298,9 @@ const styles = {
   submit: cssObj({
     '&:hover': {
       backgroundColor: '$semanticSolidInfoBg !important',
+      'html[class="fuel_light-theme"] &': {
+        color: '$gray6',
+      },
     },
   }),
   helpful: cssObj({

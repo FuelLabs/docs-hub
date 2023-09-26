@@ -37,7 +37,7 @@ function SidebarSection({
     <>
       {book !== 'guides' && (
         <Link href={links[0].slug} legacyBehavior passHref>
-          <ButtonLink css={styles.sectionLink} intent="base" size="lg">
+          <ButtonLink css={styles.sectionLink} intent="base">
             {book}
           </ButtonLink>
         </Link>

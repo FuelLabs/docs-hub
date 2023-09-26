@@ -68,7 +68,7 @@ const styles = {
       },
     },
     [head([1, 2])]: {
-      mt: '$12',
+      mt: '$8',
       mb: '$5',
       pb: '$2',
       borderBottom: '1px solid $border',

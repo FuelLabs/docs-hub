@@ -8,8 +8,9 @@ import { useEffect, useState } from 'react';
 
 import type { NavOrder } from '../pages';
 
+import { AltSidebar } from './AltSidebar';
 import { Navigation } from './Navigation';
-import { Sidebar } from './Sidebar';
+// import { Sidebar } from './Sidebar';
 
 const ThemeToggler = dynamic(() => import('./ThemeToggler'), { ssr: false });
 const Search = dynamic(() => import('./Search'), { ssr: false });
@@ -75,7 +76,8 @@ export function MobileMenu({ title, active, allNavs }: MobileMenuProps) {
           <Navigation active={active} />
         </Box.Stack>
 
-        <Sidebar allNavs={allNavs} onClick={() => setShowing(false)} />
+        <AltSidebar allNavs={allNavs} onClick={() => setShowing(false)} />
+        {/* <Sidebar allNavs={allNavs} onClick={() => setShowing(false)} /> */}
       </Box>
     </MotionBox>
   );
@@ -124,7 +126,7 @@ const styles = {
     },
 
     'a.active, a:hover': {
-      color: '$textLink',
+      color: '$green11',
     },
   }),
   overlay: cssObj({
@@ -162,7 +164,7 @@ const styles = {
     },
 
     '&[data-active="true"], &[data-active="true"]:hover': {
-      color: '$textLink !important',
+      color: '$green11 !important',
     },
     justifyContent: 'space-between',
     padding: '$0',
@@ -181,12 +183,12 @@ const styles = {
     minHeight: 'auto',
 
     '&:hover': {
-      background: '$textLink',
+      background: '$green11',
       color: '$white',
       textDecoration: 'none',
     },
     '&[data-active="true"]': {
-      color: '$textLink',
+      color: '$green11',
     },
   }),
   categoryMenu: cssObj({

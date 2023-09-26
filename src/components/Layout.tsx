@@ -109,22 +109,31 @@ const styles = {
     height: '100vh',
     gridTemplateRows: '70px auto',
 
+    '& .Layout--section': {
+      maxWidth: '1000px',
+      margin: 'auto',
+    },
+
     '@xl': {
       display: 'grid',
+
+      '& .Layout--section': {
+        margin: 0,
+      },
 
       '&[data-clean="false"]': {
         gridTemplateColumns: '250px 1fr 220px',
         gridColumnGap: '$24',
 
         '& .Layout--section': {
-          maxWidth: 'calc(100vw - 662px)',
+          width: 'calc(100vw - 662px)',
         },
 
         '&[data-headings="false"]': {
           gridTemplateColumns: '250px 1fr',
 
           '& .Layout--section': {
-            maxWidth: 'calc(100vw - 442px)',
+            width: 'calc(100vw - 442px)',
           },
         },
       },

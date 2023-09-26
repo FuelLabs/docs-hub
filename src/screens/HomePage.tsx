@@ -1,7 +1,8 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box, Text, Heading, Grid, ButtonLink } from '@fuel-ui/react';
-import { Sidebar } from '~/src/components/Sidebar';
+// import { Sidebar } from '~/src/components/Sidebar';
 
+import { AltSidebar } from '../components/AltSidebar';
 import { Card } from '../components/Card';
 import type { GuidesProps } from '../pages/guides';
 import type { NavOrder } from '../pages/index';
@@ -24,7 +25,8 @@ export function HomeScreen({ guides, allNavs, homeCards }: HomeScreenProps) {
     <>
       <Box css={styles.sidebar}>
         <Box css={styles.sidebarContainer}>
-          <Sidebar allNavs={allNavs} />
+          <AltSidebar allNavs={allNavs} />
+          {/* <Sidebar allNavs={allNavs} /> */}
         </Box>
       </Box>
       <Box as="section" css={styles.section} className="Layout--section">

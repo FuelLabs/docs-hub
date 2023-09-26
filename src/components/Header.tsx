@@ -126,7 +126,7 @@ const styles = {
     },
 
     'a.active, a:hover': {
-      color: '$textLink',
+      color: '$green11',
     },
   }),
   desktop: cssObj({

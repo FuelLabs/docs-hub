@@ -27,13 +27,13 @@ type SectionProps = {
   links: any;
   onClick?: ButtonLinkProps['onClick'];
   book: string;
-  docSlug: string;
+  docSlug: string | undefined;
   versions?: Versions;
 };
 
 function SidebarSection({ links, onClick, book, docSlug }: SectionProps) {
-  const [isOpened, setIsOpened] = useState<boolean>(
-    book === 'guides' || docSlug.includes(book.toLowerCase())
+  const [isOpened, setIsOpened] = useState<boolean | undefined>(
+    book === 'guides' || docSlug?.includes(book.toLowerCase())
   );
   const isGuide = book === 'guides';
 
@@ -110,7 +110,7 @@ export function AltSidebar({ allNavs, onClick, versions }: SidebarProps) {
             book="guides"
             links={links}
             onClick={onClick}
-            docSlug={doc.slug}
+            docSlug={doc && doc.slug}
           />
         </>
       )}
@@ -122,7 +122,7 @@ export function AltSidebar({ allNavs, onClick, versions }: SidebarProps) {
               book={navOrder.key}
               links={navOrder.links}
               onClick={onClick}
-              docSlug={doc.slug}
+              docSlug={doc && doc.slug}
               versions={versions}
             />
           </Box>
@@ -149,13 +149,22 @@ export const styles = {
     },
   }),
   sectionLink: cssObj({
-    px: 0,
     '&:hover': {
-      color: '$textHeading !important',
+      color: '$intentsBase1 !important',
+      bg: '$green11 !important',
+      'html[class="fuel_light-theme"] &': {
+        color: '$intentsBase12 !important',
+        bg: '$green6 !important',
+      },
       textDecoration: 'none',
     },
   }),
   activeSectionLink: cssObj({
-    color: '$textHeading',
+    color: '$intentsBase1',
+    bg: '$green11',
+    'html[class="fuel_light-theme"] &': {
+      color: '$intentsBase12',
+      bg: '$green6',
+    },
   }),
 };

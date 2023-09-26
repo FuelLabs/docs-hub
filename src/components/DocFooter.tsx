@@ -1,109 +1,115 @@
 import { cssObj } from '@fuel-ui/css';
-import { Text, Box, Icon, Link as FuelLink } from '@fuel-ui/react';
+import {
+  Text,
+  Box,
+  Icon,
+  Link as FuelLink,
+  Button,
+  Grid,
+} from '@fuel-ui/react';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
 import { useDocContext } from '~/src/hooks/useDocContext';
 
 import { FeedbackForm } from './FeedbackForm';
 
-function parseLink(link: string) {
-  if (link.startsWith('../')) {
-    link = link.replace('../', '');
-  }
-  return link.startsWith('guides/') ? link : `docs/${link}`;
+export function PrevAndNextLinks() {
+  const { docLink } = useDocContext();
+  const prevLink = docLink.prev?.slug;
+  const nextLink = docLink.next?.slug;
+  const ICON_SIZE = 24;
+
+  return (
+    <Grid templateColumns={'50% 50%'} gap={'$4'}>
+      <Box.Stack css={styles.linkContainer} gap={'0'}>
+        {docLink.prev && prevLink && (
+          <NextLink href={prevLink}>
+            <Button
+              css={styles.linkButton}
+              leftIcon={'ArrowLeft'}
+              variant="outlined"
+              intent="base"
+              iconSize={ICON_SIZE}
+            >
+              <Box.VStack css={{ ...styles.links, ...styles.alignRight }}>
+                <Text>PREVIOUS</Text>
+                <Text css={styles.label}>{docLink.prev.label}</Text>
+              </Box.VStack>
+            </Button>
+          </NextLink>
+        )}
+      </Box.Stack>
+      <Box.Stack css={styles.linkContainer} gap={'0'}>
+        {docLink.next && nextLink && (
+          <NextLink href={nextLink}>
+            <Button
+              css={styles.linkButton}
+              rightIcon={'ArrowRight'}
+              variant="outlined"
+              intent="base"
+              iconSize={ICON_SIZE}
+            >
+              <Box.VStack css={{ ...styles.links, ...styles.alignLeft }}>
+                <Text>NEXT</Text>
+                <Text css={styles.label}>{docLink.next.label}</Text>
+              </Box.VStack>
+            </Button>
+          </NextLink>
+        )}
+      </Box.Stack>
+    </Grid>
+  );
 }
 
 export function DocFooter() {
-  const { docLink } = useDocContext();
-  const router = useRouter();
-  const prevLink = docLink.prev?.slug && parseLink(docLink.prev.slug);
-  let nextLink = docLink.next?.slug && parseLink(docLink.next?.slug);
-
-  if (router.asPath === '/') nextLink = `docs/${nextLink}`;
-
   return (
-    <>
-      <Text as="div" css={styles.feedback}>
+    <Box css={styles.root} as="footer">
+      <Box.Flex justify="space-between" css={styles.feedbackContainer}>
         <FeedbackForm />
         <Box.Flex gap={'6px'}>
-          <Icon icon={Icon.is('HelpCircle')} stroke={1} color="textMuted" />
+          <Icon icon={'HelpCircle'} stroke={1} color="textMuted" />
           <FuelLink href="https://forum.fuel.network/" isExternal>
             Ask a question in the forum.
           </FuelLink>
         </Box.Flex>
-      </Text>
-
-      <Box as="footer" css={styles.links}>
-        <Box.Stack>
-          {docLink.prev && prevLink && (
-            <>
-              <Box as="span" className="label">
-                Previous:
-              </Box>
-              <NextLink href={prevLink}>
-                <Icon icon={Icon.is('ArrowLeft')} size={14} />{' '}
-                {docLink.prev.label}
-              </NextLink>
-            </>
-          )}
-        </Box.Stack>
-        <Box.Stack>
-          {docLink.next && nextLink && (
-            <>
-              <Box as="span" className="label">
-                Next:
-              </Box>
-              <NextLink href={nextLink}>
-                {docLink.next.label}{' '}
-                <Icon icon={Icon.is('ArrowRight')} size={14} />
-              </NextLink>
-            </>
-          )}
-        </Box.Stack>
-      </Box>
-    </>
+      </Box.Flex>
+      <PrevAndNextLinks />
+    </Box>
   );
 }
 
 const styles = {
-  links: cssObj({
-    pb: '$4',
-    pt: '$4',
-    display: 'flex',
+  root: cssObj({
     fontSize: '$sm',
-    justifyContent: 'space-between',
-
+    mb: '$20',
+  }),
+  linkButton: cssObj({
+    width: '100%',
+    height: '100%',
+    py: '$4',
+  }),
+  linkContainer: cssObj({
+    width: '100%',
+    height: '100%',
     a: {
-      display: 'inline-flex',
-      alignItems: 'center',
-      gap: '$4',
-      color: '$intentsBase9',
-      lineHeight: 1,
-    },
-    'a:hover': {
-      color: '$intentsPrimary11',
-    },
-    '.label': {
-      fontSize: '$sm',
-      color: '$textMuted',
+      height: '100%',
     },
   }),
-  feedback: cssObj({
-    mt: '$4',
+  links: cssObj({
+    width: '100%',
+  }),
+  alignLeft: cssObj({
+    textAlign: 'left',
+  }),
+  alignRight: cssObj({
+    textAlign: 'right',
+  }),
+  label: cssObj({
+    color: '$textInverse',
+  }),
+  feedbackContainer: cssObj({
+    my: '$4',
     py: '$4',
-    display: 'flex',
-    fontSize: '$sm',
-    justifyContent: 'space-between',
     borderTop: '1px solid $border',
     borderBottom: '1px solid $border',
-
-    'a, a:visited': {
-      color: '$intentsBase9',
-    },
-    '& a': {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '$2',
-    },
   }),
 };

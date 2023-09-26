@@ -18,6 +18,14 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
   ({ item, isActiveMenu, onClick, ...props }, ref) => {
     const router = useRouter();
     const isActive = isActiveMenu ?? router.asPath === `/${item.slug}/`;
+    const buttonStyles = {
+      ...styles.button,
+      lineHeight: '1.3',
+      color: isActive ?? '$green11',
+      'html[class="fuel_light-theme"] &': {
+        color: isActive ? '$green11' : '$intentsBase12',
+      },
+    };
 
     return (
       <NextLink href={item.slug} legacyBehavior passHref>
@@ -28,7 +36,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
           {...(onClick && { onClick })}
           isExternal={item.isExternal}
           intent={isActive ? 'primary' : 'base'}
-          css={{ ...styles.button, lineHeight: '1.3' }}
+          css={buttonStyles}
         >
           {item.label}
         </ButtonLink>
