@@ -52,6 +52,7 @@ export function Pre({
         )}
         <IconButton
           size="xs"
+          css={styles.copyIcon}
           icon={<Icon icon={Icon.is('ClipboardText')} size={12} stroke={1} />}
           variant="ghost"
           intent="base"
@@ -175,6 +176,13 @@ const styles = {
       },
       '&:hover': {
         borderColor: '$whiteA9 !important',
+      },
+    },
+  }),
+  copyIcon: cssObj({
+    '.fuel_Icon': {
+      'html[class="fuel_light-theme"] &': {
+        color: '$gray6 !important',
       },
     },
   }),
