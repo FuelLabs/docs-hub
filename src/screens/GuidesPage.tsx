@@ -12,18 +12,16 @@ interface GuidesPageProps {
 interface GuideCardProps {
   guideName: string;
   guideInfo: GuideInfo;
-  isLatest: boolean;
+  // isLatest: boolean;
 }
 
-export function GuideCard({ guideName, guideInfo, isLatest }: GuideCardProps) {
+export function GuideCard({ guideName, guideInfo }: GuideCardProps) {
   const cleanGuideName = guideName.replaceAll('_', '-');
   return (
     <Box key={guideName} css={styles.card}>
       <Icon icon="Code" size={40} stroke={0.7} />
       <Box.Stack>
-        <FuelLink
-          href={`${isLatest ? '/guides/latest/' : '/guides/'}${cleanGuideName}`}
-        >
+        <FuelLink href={`/guides/${cleanGuideName}`}>
           <Heading as="h3">{guideInfo.title}</Heading>
         </FuelLink>
         <Text>{guideInfo.description}</Text>
@@ -32,7 +30,7 @@ export function GuideCard({ guideName, guideInfo, isLatest }: GuideCardProps) {
   );
 }
 
-export function GuidesPage({ guides, isLatest }: GuidesPageProps) {
+export function GuidesPage({ guides }: GuidesPageProps) {
   return (
     <Box css={styles.root}>
       <Heading as="h1" data-rank="h1" id="fuel-docs">
@@ -46,7 +44,7 @@ export function GuidesPage({ guides, isLatest }: GuidesPageProps) {
               key={guideName}
               guideName={guideName}
               guideInfo={guideInfo}
-              isLatest={isLatest}
+              // isLatest={isLatest}
             />
           );
         })}

@@ -9,7 +9,6 @@ export default function VersionDropdown({ isLatest }: { isLatest: boolean }) {
   const setVersion = useSetVersion();
   const splitPath = router.asPath.split('/');
   const isDoc = router.asPath.includes('docs');
-  const isGuide = router.asPath.includes('guides');
   const bookIndex = isLatest ? 3 : 2;
   return (
     <Dropdown>
@@ -31,8 +30,6 @@ export default function VersionDropdown({ isLatest }: { isLatest: boolean }) {
                   splitPath[bookIndex]
                 }`
               );
-            } else if (isGuide) {
-              router.push('/guides');
             }
           }
         }}

@@ -1,6 +1,0 @@
-{
-  "menu": ["Quickstart", "Running a Node", "Testnet Migration"],
-  "quickstart": ["Building a Smart Contract", "Building a Frontend"],
-  "running_a_node": ["Running a Local Node", "Running a Beta-4 Node"],
-  "testnet_migration": ["Beta 4 Testnet Migration"]
-}
