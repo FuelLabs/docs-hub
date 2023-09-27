@@ -7,6 +7,10 @@ import { useSetVersion } from '../hooks/useVersion';
 export default function VersionDropdown({ isLatest }: { isLatest: boolean }) {
   const router = useRouter();
   const setVersion = useSetVersion();
+  const splitPath = router.asPath.split('/');
+  const isDoc = router.asPath.includes('docs');
+  const isGuide = router.asPath.includes('guides');
+  const bookIndex = isLatest ? 3 : 2;
   return (
     <Dropdown>
       <Dropdown.Trigger intent="base" variant="outlined" css={styles.trigger}>
@@ -18,16 +22,17 @@ export default function VersionDropdown({ isLatest }: { isLatest: boolean }) {
           if (setVersion) {
             if (action === 'beta-4') {
               setVersion('beta-4');
-              const path = router.asPath.replace('/latest/', '/');
-              router.push(path);
             } else if (action === 'latest') {
               setVersion('latest');
-              if (router.asPath !== '/guides/') {
-                const path = router.asPath
-                  .replace('docs/', 'docs/latest/')
-                  .replace('guides/', 'guides/latest/');
-                router.push(path);
-              }
+            }
+            if (isDoc) {
+              router.push(
+                `/docs/${action === 'latest' ? 'latest/' : ''}${
+                  splitPath[bookIndex]
+                }`
+              );
+            } else if (isGuide) {
+              router.push('/guides');
             }
           }
         }}
