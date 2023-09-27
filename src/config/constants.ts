@@ -15,8 +15,8 @@ export type Tabs =
   | 'indexer'
   | 'specs'
   // | 'about-fuel'
-  | 'forc'
-  | 'nix';
+  // | 'nix'
+  | 'forc';
 
 export type LinkType = 'menu' | 'internal-link' | 'external-link' | 'category';
 
@@ -98,12 +98,12 @@ export const NAVIGATION: LinkObject[] = [
         link: '/docs/indexer/',
         slug: 'indexer',
       },
-      {
-        name: 'Fuel Nix',
-        type: 'internal-link',
-        link: '/docs/nix/',
-        slug: 'nix',
-      },
+      // {
+      //   name: 'Fuel Nix',
+      //   type: 'internal-link',
+      //   link: '/docs/nix/',
+      //   slug: 'nix',
+      // },
     ],
   },
   {

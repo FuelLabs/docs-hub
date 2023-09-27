@@ -15,6 +15,5 @@
   "fuel-graphql-docs": "graphql",
   "fuel-specs": "specs",
   "fuel-indexer": "indexer",
-  "fuels-wallet": "wallet",
-  "fuel-nix": "nix"
+  "fuels-wallet": "wallet"
 }

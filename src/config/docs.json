@@ -97,14 +97,5 @@
       "description": "Official documentation for the Fuel Orchestrator",
       "image": ""
     }
-  },
-  "nix": {
-    "title": "Fuel Nix",
-    "slug": "nix",
-    "repository": "https://github.com/FuelLabs/fuel.nix/tree/master",
-    "ogTags": {
-      "description": "Official Nix flack for the Fuel Network",
-      "image": ""
-    }
   }
 }

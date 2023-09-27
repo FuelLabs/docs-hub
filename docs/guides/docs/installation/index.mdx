@@ -10,7 +10,6 @@ parent:
 
 This guide will help you to install the Fuel toolchain binaries and pre requisites. 
 
-
 This guide covers the following topics:
 1. [Installing rust](#installing-rust)
 2. [Installing the fuel toolchain using fuelup](#installing-the-fuel-toolchain-using-fuelup)
@@ -93,14 +92,12 @@ That will output your current `fuelup` verison:
 fuelup 0.19.5
 ```
 
-
 ## Setting up a default toolchain
 
 Just as seen in [rust](https://rust-lang.github.io/rustup/concepts/toolchains.html) Fuel supports multiple toolchains. A toolchain is a collection of tools (such as the compiler, lsp, etc).
 By default, Fuelup includes a series of toolchain with packages tested to work with each other, providing a realiable set of tools.
 
 In this case, we will install the `beta-4` toolchain, which is the stable toolchain compatible with the beta-4 network. For more information on beta-4 check the [Fuel blog](https://fuel-labs.ghost.io/announcing-beta-4-testnet/) page.
-
 
 ### Updating fuelup
 
@@ -205,18 +202,11 @@ You can create your own set of specific versions, this is known as 'custom toolc
 
 > 👉 Visit the [Fuelup docs](docs/fuelup/concepts/toolchains) to learn how to set up your own custom toolchains.
 
-### Use Nix to install Fuel toolchain
-
-Nix is a cross-platform package manager for advanced users.
-
-> 👉 Check out the [Nix flake for Fuel](/docs/nix) to learn more.
-
 ### Build form source
 
 You can always build the Fuel packages from source.
 
 > 👉 visit the [Fuelup docs](docs/fuelup/install/other) to get more details other types of installation.
-
 
 ### Github codespaces
 
