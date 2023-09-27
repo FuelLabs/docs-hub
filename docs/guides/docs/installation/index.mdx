@@ -17,7 +17,7 @@ This guide covers the following topics:
 
 ## Installing rust
 
-The Fuel toolchain is built on top of the Rust programming language. To install Rust, you can use the rustup tool.
+The Fuel toolchain is built on top of the Rust programming language. To install Rust, you can use the `rustup` tool.
 
 Run the following command in your shell; this downloads and runs rustup-init.sh, which in turn downloads and runs the correct version of the rustup-init executable for your platform.
 
@@ -29,7 +29,7 @@ Check the official Rust documentation to get more information on [installing the
 
 ## Installing the fuel toolchain using fuelup
 
-_fuelup_ is the official package manager for [Fuel] that installs The Fuel Toolchain
+`fuelup` is the official package manager for Fuel that installs the Fuel toolchain
 from the official release channels, enabling you to easily switch between different
 toolchains and keep them updated. It makes building and maintaining Sway applications
 simpler with [forc](docs/forc) and [fuel-core](https://github.com/FuelLabs/fuel-core) for common platforms.
@@ -47,7 +47,7 @@ To install the fuel toolchain, you'll use the `fuelup-init` script. This will in
 curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh
 ```
 
-> 🚧 Be aware that currently  we do not natively support Windows. If you wish to use fuelup on Windows, please use Windows Subsystem for Linux.
+> 🚧 Be aware that currently  we do not natively support Windows. If you wish to use `fuelup` on Windows, please use Windows Subsystem for Linux.
 
 ### Setup PATH
 
@@ -66,8 +66,6 @@ Would you like fuelup-init to modify your PATH variable for you? (N/y)
 ```
 
 👉 If this is your first time installing the Fuel toolchain just press the `Y` key in your terminal and press _Enter_ 
-
-Basically you are allowing your terminal to use the `fuelup` command.
 
 ### Checking the installation
 
@@ -97,7 +95,7 @@ fuelup 0.19.5
 Just as seen in [rust](https://rust-lang.github.io/rustup/concepts/toolchains.html) Fuel supports multiple toolchains. A toolchain is a collection of tools (such as the compiler, lsp, etc).
 By default, Fuelup includes a series of toolchain with packages tested to work with each other, providing a realiable set of tools.
 
-In this case, we will install the `beta-4` toolchain, which is the stable toolchain compatible with the beta-4 network. For more information on beta-4 check the [Fuel blog](https://fuel-labs.ghost.io/announcing-beta-4-testnet/) page.
+In this case, we will install the `beta-4` toolchain, which is the stable toolchain compatible with the beta-4 network. For more information on `beta-4` check the [Fuel blog](https://fuel-labs.ghost.io/announcing-beta-4-testnet/) page.
 
 ### Updating fuelup
 
@@ -119,8 +117,6 @@ Moving /var/folders/tp/0l8zdx9j4s9_n609ykwxl0qw0000gn/T/.tmpiNJQHt/fuelup to /Us
 ### Installing the beta-4 toolchain
 
 The beta-4 network is the latest Fuel testnet. This includes public infrastructure such a the [Beta-4 faucet](https://faucet-beta-4.fuel.network/) and the [Beta-4 GraphQL endpoint](https://beta-4.fuel.network/playground).
-
-> 💡 Check up the [Networks section](docs/about-fuel) for more information.
 
 To properly interact with the `beta-4` network is necessary to use it's corresponding toolchain.
 

@@ -493,15 +493,15 @@ async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
-    case 'nix':
-      paths = [
-        // SPECS DOCS
-        './fuel-nix/book/src/*.md',
-        './fuel-nix/book/src/**/*.md',
-        // IGNORE ALL SUMMARY PAGES
-        '!**/SUMMARY.md',
-      ];
-      break;
+    // case 'nix':
+    //   paths = [
+    //     // SPECS DOCS
+    //     './fuel-nix/book/src/*.md',
+    //     './fuel-nix/book/src/**/*.md',
+    //     // IGNORE ALL SUMMARY PAGES
+    //     '!**/SUMMARY.md',
+    //   ];
+      // break;
     // case 'about-fuel':
     //   paths = [
     //     // ABOUT FUEL DOCS
