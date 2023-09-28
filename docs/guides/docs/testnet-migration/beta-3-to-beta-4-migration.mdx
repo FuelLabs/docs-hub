@@ -10,9 +10,11 @@ parent:
 
 This guide focuses on the transition from the end of tool support for `beta 3` to the start of `beta 4`.
 
+> The team is constantly building. For updates on breaking changes beyond this guide, please refer to our bi-weekly report on [GitHub](https://github.com/FuelLabs/breaking-change-log/tree/master) or check announcements in our [forum](https://forum.fuel.network/c/announcements/7).
+
 - [Fuelup v0.19.5](https://github.com/FuelLabs/fuelup/releases/tag/v0.19.5)
 - [Sway v0.45.0](https://github.com/FuelLabs/sway/releases/tag/v0.45.0)
-- [TS SDK v0.55.0](https://github.com/FuelLabs/fuels-ts/releases/tag/v0.55.0)
+- [TS SDK v0.57.0](https://github.com/FuelLabs/fuels-ts/releases/tag/v0.57.0)
 - [Rust SDK v0.47.0](https://github.com/FuelLabs/fuels-rs/releases/tag/v0.47.0)
 - [Wallet SDK v0.12.3](https://github.com/FuelLabs/fuels-wallet/releases/tag/v0.12.3)
 
@@ -172,6 +174,39 @@ let { value } = await contract.functions.get_count().get();
 
 // AFTER - BETA 4
 let { value } = await contract.functions.get_count().simulate();
+```
+
+The `addResourceInputsAndOutputs` function has been renamed to `addResources`, streamlining its name.
+
+```typescript
+// BEFORE - BETA 3
+request.addResourceInputsAndOutputs(resources);
+
+// AFTER - BETA 4
+request.addResources(resources);
+```
+
+Similarly, `addPredicateResourcesInputsAndOutputs` is now more concisely known as `addPredicateResources`.
+The reason we have a distinct method for adding predicate resources is that the creation of predicate inputs mandates the presence of both the predicate’s bytes and data bytes. 
+With these methods, there’s no longer a need to manually create and set up an instance of a `ScriptTransactionRequest`, simplifying the process further.
+
+```typescript
+// BEFORE - BETA 3
+const predicateInputs: TransactionRequestInput[] = predicateUtxos.map((utxo) => ({
+  id: utxo.id,
+  type: InputType.Coin,
+  amount: utxo.amount,
+  assetId: utxo.assetId,
+  owner: utxo.owner.toB256(),
+  txPointer: '0x00000000000000000000000000000000',
+  witnessIndex: 0,
+  maturity: 0,
+  predicate: predicate.bytes,
+  predicateData: predicate.predicateData,
+}));
+
+// AFTER - BETA 4
+request.addPredicateResources(predicateUtxos, predicate.bytes, predicate.predicateData)
 ```
 
 ## Rust SDK

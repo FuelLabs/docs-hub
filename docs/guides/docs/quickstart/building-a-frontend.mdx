@@ -18,26 +18,13 @@ To build out our frontend application, we'll do the following:
 
 ## Install the Fuel Browser Wallet
 
+> Note: Make sure your browser is using the latest version of chromium.
+
 Our front end application will need to interact with the Fuel Network, so we'll need to have a browser wallet installed for us to do so.
 
-Fuel Wallet version `0.11.0` is not compatible with beta 4. For compatibility with beta-4, please download the non-backwards compatible Fuel Wallet version `0.12.3`.
+Before going to the next steps, install the Fuel Wallet [here](https://chrome.google.com/webstore/detail/fuel-wallet/dldjpboieedgcmpkchcjcbijingjcgok).
 
-We have already submitted the beta-4 compatible version to the Chrome Web Store, and it is currently under review.
-
-Please follow the instructions provided below:
-
-> **Note**: This is a temporary measure while the Fuel Wallet version `0.12.3` gets published in the Chrome WebStore.
-
-1. Download [FuelWallet zip file](https://next-wallet.fuel.network/app/fuel-wallet.zip)
-2. Inside Chrome or Brave;
-3. Open the extensions page; it can be done by:
-    - Clicking on settings -> extensions or;
-4. Accessing brave://extensions/ or chrome://extensions/.
-5. Enable the "Developer mode" switch on the top right
-6. Load fuel-wallet.zip by:
-    - Dragging your downloaded Fuel wallet file and dropping it in the extensions page or;
-    - Clicking on Load unpacked and selecting the file.
-7. If all goes right, an onboarding page will instantly open.
+If you have previously installed the wallet, make sure you have updated to the latest version.
 
 Once you've installed the wallet, take the address of your wallet and use it to get some coins from [the testnet faucet](https://faucet-beta-4.fuel.network/).
 
@@ -49,7 +36,7 @@ To split our project's contract from frontend code, let's initialize our fronten
 cd ..
 ```
 
-Now, iniitialize a react project using [`Create React App`](https://create-react-app.dev/).
+Now, initialize a react project using [`Create React App`](https://create-react-app.dev/).
 
 <TestAction
 id="create-react-app"
@@ -63,7 +50,7 @@ action={{
 npx create-react-app frontend --template typescript
 ```
 
-The output should be simmilar to:
+The output should be similar to:
 
 ```console
 Success! Created frontend at Fuel/fuel-project/frontend
@@ -91,7 +78,7 @@ Move into the `frontend` folder, then run:
 cd frontend
 ```
 
-Then:
+Install `fuels` and `@fuel-wallet/sdk`.
 
 <TestAction
 id="install-deps"
@@ -102,10 +89,10 @@ action={{
 />
 
 ```console
-npm install fuels@0.55.0 @fuel-wallet/sdk@0.12.3 --save
+npm install fuels@0.57.0 @fuel-wallet/sdk@0.13.0 --save
 ```
 
-If the installation wnet correctly the result will be simmilar to this:
+If the installation went correctly the result will be similar to this:
 
 ```console
 added 114 packages, and audited 115 packages in 9s
@@ -151,7 +138,7 @@ action={{
 npx fuels typegen -i ../counter-contract/out/debug/*-abi.json -o ./src/contracts
 ```
 
-A succesful process should print and output like the following:
+A successful process should print and output like the following:
 
 ```console
 Generating files..
@@ -185,7 +172,7 @@ action={{
   lang="tsx"
 />
 
-Finally, replace the value of the `CONTRACT_ID` variable in `App.tsx` with the address of the contract you just deployed.
+Finally, replace the value of the `CONTRACT_ID` variable at the top of your `App.tsx` file with the address of the contract you just deployed.
 
 <TestAction
 id="app-code"
