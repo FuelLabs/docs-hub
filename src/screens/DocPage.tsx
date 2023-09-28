@@ -21,7 +21,7 @@ export function DocScreen(props: DocPageProps) {
     setIsMounted(true);
   }, []);
 
-  const isLatest = mounted ? version === 'latest' : doc.isLatest;
+  const isLatest = mounted ? version === 'Latest' : doc.isLatest;
   const components = getComponents(doc.slug, doc.isLatest);
   const hasHeadings = Boolean(doc.headings?.length);
 

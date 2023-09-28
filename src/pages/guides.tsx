@@ -28,7 +28,7 @@ export default function Guides({ guides }: GuidesProps) {
     setIsMounted(true);
   }, []);
 
-  const isLatest = mounted && version === 'latest';
+  const isLatest = mounted && version === 'Latest';
 
   return (
     <Layout title="Fuel Guides" isClean theme={theme} isLatest={isLatest}>

@@ -1,9 +1,9 @@
 import type { ReactNode, FC } from 'react';
 import { createContext, useContext, useState } from 'react';
 
-export type VersionCtx = 'beta-4' | 'latest';
+export type VersionCtx = 'Beta-4' | 'Latest';
 
-const versionCtx = createContext<VersionCtx>('beta-4');
+const versionCtx = createContext<VersionCtx>('Beta-4');
 const setVersionCtx = createContext<(value: VersionCtx) => void>(() => {});
 
 export function useVersion() {
@@ -21,9 +21,9 @@ interface VersionProviderProps {
 export const VersionProvider: FC<VersionProviderProps> = ({ children }) => {
   const [state, setState] = useState<VersionCtx>(() => {
     if (typeof window !== 'undefined') {
-      return (sessionStorage.getItem('version') as VersionCtx) || 'beta-4';
+      return (sessionStorage.getItem('version') as VersionCtx) || 'Beta-4';
     }
-    return 'beta-4';
+    return 'Beta-4';
   });
 
   const setVersionInSession = (version: VersionCtx) => {
