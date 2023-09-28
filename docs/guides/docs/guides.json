@@ -1,7 +1,7 @@
 {
   "installation": {
     "title": "Toolchain Installation",
-    "description": "Install Fuel toolchain and binaries."
+    "description": "Install the Fuel toolchain and binaries."
   },
   "quickstart": {
     "title": "Developer Quickstart",
