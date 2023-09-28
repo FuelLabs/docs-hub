@@ -75,7 +75,7 @@ const excludeDirs = [
   'docs/fuel-indexer/docs/src/SUMMARY.md',
   'docs/fuel-specs/src/SUMMARY.md',
   // 'docs/fuel-nix/book/src/SUMMARY.md',
-];0
+];
 
 export default makeSource({
   contentDirPath: './',
