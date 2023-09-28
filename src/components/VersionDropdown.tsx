@@ -25,10 +25,14 @@ export default function VersionDropdown({ isLatest }: { isLatest: boolean }) {
               setVersion('latest');
             }
             if (isDoc) {
+              let book = splitPath[bookIndex];
+              if (book === 'wallet') {
+                book = 'wallet/install';
+              } else if (book === 'graphql') {
+                book = 'graphql/overview';
+              }
               router.push(
-                `/docs/${action === 'latest' ? 'latest/' : ''}${
-                  splitPath[bookIndex]
-                }`
+                `/docs/${action === 'latest' ? 'latest/' : ''}${book}`
               );
             }
           }
