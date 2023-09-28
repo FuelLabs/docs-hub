@@ -22,7 +22,7 @@ export default function Home({ theme, guides }: HomeProps) {
     setIsMounted(true);
   }, []);
 
-  const isLatest = mounted && version === 'latest';
+  const isLatest = mounted && version === 'Latest';
 
   return (
     <Layout title="Fuel Docs" isClean theme={theme} isLatest={isLatest}>

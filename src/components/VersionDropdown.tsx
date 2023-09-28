@@ -1,22 +1,26 @@
 import { cssObj } from '@fuel-ui/css';
 import { Dropdown, Text, Icon } from '@fuel-ui/react';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 import { useSetVersion } from '../hooks/useVersion';
 
 export default function VersionDropdown({ isLatest }: { isLatest: boolean }) {
+  const [opened, setOpened] = useState(false);
   const router = useRouter();
   const setVersion = useSetVersion();
   const splitPath = router.asPath.split('/');
   const isDoc = router.asPath.includes('docs');
   const bookIndex = isLatest ? 3 : 2;
   return (
-    <Dropdown>
+    <Dropdown isOpen={opened} onOpenChange={setOpened}>
       <Dropdown.Trigger
         size="sm"
         intent="base"
         variant="outlined"
-        css={styles.trigger}
+        css={
+          opened ? { ...styles.trigger, ...styles.triggerOpen } : styles.trigger
+        }
       >
         Version: {isLatest ? 'Latest' : 'Beta-4'}
       </Dropdown.Trigger>
@@ -74,12 +78,16 @@ const styles = {
   }),
   dropdownMenu: cssObj({
     bg: '$bodyColor !important',
-    border: '1px solid $gray6',
+    border: '1px solid $gray7',
   }),
   trigger: cssObj({
     border: 'none',
     '&:hover': {
       border: 'none !important',
+      bg: '$gray4 !important',
     },
+  }),
+  triggerOpen: cssObj({
+    bg: '$gray4',
   }),
 };
