@@ -11,6 +11,7 @@ import {
   toast,
   Alert,
   IconButton,
+  Spinner,
 } from '@fuel-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -203,8 +204,13 @@ export function FeedbackForm() {
           intent="base"
           size="sm"
           type="submit"
+          onClick={handleSubmit(onSubmit)}
         >
-          Send
+          {mutation.isLoading ? (
+            <Spinner color="semanticSolidInfoBg" />
+          ) : (
+            'Send'
+          )}
         </Button>
       </Box.Flex>
     );
@@ -243,7 +249,7 @@ export function FeedbackForm() {
         <Dialog.Content>
           <Dialog.Close onClick={closeForm} />
           <Dialog.Heading>Was this page helpful?</Dialog.Heading>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form>
             <HelpfulButtons />
             {isHelpful === 'false' && (
               <Form.HelperText css={styles.forum}>
