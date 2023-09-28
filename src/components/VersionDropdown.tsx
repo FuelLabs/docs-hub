@@ -78,7 +78,7 @@ const styles = {
   }),
   dropdownMenu: cssObj({
     bg: '$bodyColor !important',
-    border: '1px solid $gray7',
+    border: '1px solid $gray6 !important',
   }),
   trigger: cssObj({
     border: 'none',
