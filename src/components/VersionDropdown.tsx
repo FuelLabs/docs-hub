@@ -82,6 +82,7 @@ const styles = {
   }),
   trigger: cssObj({
     border: 'none',
+    height: '100%',
     '&:hover': {
       border: 'none !important',
       bg: '$gray4 !important',
