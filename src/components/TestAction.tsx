@@ -6,9 +6,6 @@ export type TestActionProps = {
 };
 
 export default function TestAction({ id, action }: TestActionProps) {
-  if (action.name === 'modifyFile') {
-    console.log('ACTION:', action);
-  }
   return (
     <span
       id={id}
@@ -46,6 +43,9 @@ export default function TestAction({ id, action }: TestActionProps) {
       data-url={action.name === 'goToUrl' ? action.url : null}
       data-timeout={action.name === 'wait' ? action.timeout : null}
       data-locator={action.name === 'getByLocator-save' ? action.locator : null}
+      data-remove-from-value={
+        action.name === 'getByLocator-save' ? action.removeFromValue : null
+      }
       data-role={action.name === 'clickByRole' ? action.role : null}
       data-element-name={
         action.name === 'clickByRole' ? action.elementName : null

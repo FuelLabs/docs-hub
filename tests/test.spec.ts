@@ -48,7 +48,7 @@ test.describe('Guides', () => {
       stopServers();
     }
     saved = [];
-    // await useFuelWallet(context, extensionId, page);
+    await useFuelWallet(context, extensionId, page);
     console.log('SETTING UP FOLDERS');
     await setupFolders('fuel-project');
 
@@ -145,11 +145,11 @@ async function runTest(
         );
         break;
       case 'getByLocator-save':
-        // eslint-disable-next-line no-case-declarations
-        const locatorVal = await page
-          .locator(step['data-locator'])
-          .allInnerTexts();
-        saved.push(locatorVal);
+        await getByLocator(
+          page,
+          step['data-locator'],
+          step['data-remove-from-value']
+        );
         break;
       case 'clickByRole':
         await page
@@ -313,8 +313,12 @@ async function compareFiles(testPathName: string, refPathName: string) {
 }
 
 function checkIfIsIncremented(initialIndex: number, finalIndex: number) {
-  const initial: number = parseInt(saved[initialIndex]);
-  const final: number = parseInt(saved[finalIndex]);
+  console.log('INITIAL Index:', initialIndex);
+  console.log('FINAL Index:', finalIndex);
+  const savedInitial = saved[initialIndex];
+  const savedFinal = saved[finalIndex];
+  const initial: number = parseInt(savedInitial);
+  const final: number = parseInt(savedFinal);
   console.log('INITIAL:', initial);
   console.log('FINAL:', final);
   const isIncremented = final === initial + 1;
@@ -338,4 +342,18 @@ function checkIfServersRunning() {
     console.error('Error checking PM2 servers:', error);
     return false;
   }
+}
+
+async function getByLocator(
+  page: Page,
+  locator: string,
+  removeFromValue: string
+) {
+  const locatorVals = await page.locator(locator).allInnerTexts();
+  let locatorVal = locatorVals[0];
+  if (removeFromValue) {
+    locatorVal = locatorVal.replace(removeFromValue, '');
+  }
+  saved.push(locatorVal);
+  console.log('SAVED:', saved);
 }

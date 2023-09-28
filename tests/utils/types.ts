@@ -33,6 +33,9 @@ export type ModifyFile = {
   filepath: string;
   atLine?: number;
   removeLines?: number[];
+  addSpacesBefore?: number;
+  addSpacesAfter?: number;
+  useSetData?: string;
 };
 
 export type CompareToFile = {
@@ -61,6 +64,7 @@ export type Reload = { name: 'reload' };
 export type GetByLocatorAndSave = {
   name: 'getByLocator-save';
   locator: string;
+  removeFromValue: string;
 };
 
 export type ClickByRole = {

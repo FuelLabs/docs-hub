@@ -193,7 +193,6 @@ Inside the `fuel-project/frontend` directory run:
 id="start-app"
 action={{
   name: 'runCommand', 
-  commandFolder: 'guides-testing/fuel-project/frontend',
   preCommand: "pnpm pm2 start 'PORT=4000 BROWSER=none <COMMAND>' --name 'react-dapp' --cwd ./guides-testing/fuel-project/frontend"
 }}
 />
@@ -252,7 +251,7 @@ action={{
   url: "http://localhost:4000"
 }}
 />
-{/* 
+
 <TestAction
 id="click-connect-button"
 action={{
@@ -281,7 +280,8 @@ action={{
 id="get-initial-count"
 action={{
   name: 'getByLocator-save', 
-  locator: "#count"
+  locator: "h3",
+  removeFromValue: "Counter: "
 }}
 />
 
@@ -328,7 +328,8 @@ action={{
 id="get-final-count"
 action={{
   name: 'getByLocator-save', 
-  locator: "#count"
+  locator: "h3",
+  removeFromValue: "Counter: "
 }}
 />
 
@@ -339,4 +340,4 @@ action={{
   initialIndex: 0,
   finalIndex: 1
 }}
-/> */}
+/>
