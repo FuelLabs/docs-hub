@@ -11,8 +11,8 @@ export async function startServers(page: Page) {
     encoding: 'utf-8',
   });
   console.log('START SERVER OUTPUT:', startOutput);
-  await page.waitForTimeout(2000);
-  console.log('WAITED 2 SECONDS');
+  await page.waitForTimeout(10000);
+  console.log('WAITED 10 SECONDS');
 }
 
 export function stopServers() {
