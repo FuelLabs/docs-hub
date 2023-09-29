@@ -250,8 +250,8 @@ async function getOrders() {
   orders.indexer = processSummary(indexerSummaryFile.split(EOL), 'indexer');
   // SPECS ORDER
   orders.specs = processSummary(specsSummaryFile.split(EOL), 'specs');
-  
-  // orders.nix = processSummary(nixSummaryFile.split(EOL), 'specs'); 
+
+  // orders.nix = processSummary(nixSummaryFile.split(EOL), 'specs');
 
   // GRAPHQL ORDER
   orders.graphql = graphqlOrderFile;
@@ -501,7 +501,7 @@ async function getDocs(key, order) {
     //     // IGNORE ALL SUMMARY PAGES
     //     '!**/SUMMARY.md',
     //   ];
-      // break;
+    // break;
     // case 'about-fuel':
     //   paths = [
     //     // ABOUT FUEL DOCS
@@ -580,7 +580,6 @@ function removeDocsPath(path, duplicateAPICategories) {
       newPath = `${paths.join('/')}/`;
     }
   }
-
 
   return newPath;
 }
