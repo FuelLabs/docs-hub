@@ -2,7 +2,10 @@ import type { BrowserContext, Page } from '@playwright/test';
 
 import { getButtonByText } from './button';
 import { expect } from './fixtures';
-import { FUEL_MNEMONIC, FUEL_WALLET_PASSWORD } from './mocks';
+
+export const FUEL_MNEMONIC =
+  'demand fashion unaware upgrade upon heart bright august panel kangaroo want gaze';
+export const FUEL_WALLET_PASSWORD = '$123Ran123Dom123!';
 
 export async function walletSetup(
   context: BrowserContext,
@@ -51,6 +54,14 @@ export async function walletSetup(
     .waitFor({ state: 'visible', timeout: 9000 });
 
   await signupPage.close();
+}
+
+export async function useFuelWallet(
+  context: BrowserContext,
+  extensionId: string,
+  page: Page
+) {
+  await walletSetup(context, extensionId, page);
 }
 
 export async function walletConnect(context: BrowserContext) {

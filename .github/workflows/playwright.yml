@@ -9,12 +9,20 @@ jobs:
     name: build-quickstart-contract
     runs-on: ubuntu-latest
     steps:
+
+    # SETUP
       - uses: actions/checkout@v3
         with:
           submodules: 'true'
       - uses: ./.github/actions/setup-node
         with:
           install: false
+
+    # INSTALLATIONS
+      - name: Install dependencies
+        run: pnpm install
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
@@ -31,8 +39,12 @@ jobs:
             curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh
       - name: Modify Path
         run: echo "$HOME/.fuelup/bin:${GITHUB_PATH}" >> $GITHUB_PATH
+      
+    # CONFIGURE FUEL TOOLCHAIN
       - name: Set Default Beta-4 Toolchain
         run: fuelup toolchain install beta-4 && fuelup default beta-4
+    
+    # BUILD & RUN QUICKSTART CONTRACT TEST
       - name: Build Contract
         run: forc build --path ./docs/guides/examples/quickstart/counter-contract
       - name: Run contract tests
@@ -45,10 +57,8 @@ jobs:
             cd docs/guides/examples/quickstart/counter-contract
             cargo fmt --all --check
             cargo clippy --all-targets --all-features
-      - name: Install dependencies
-        run: pnpm install
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps chromium
+
+    # RUN QUICKSTART E2E TEST
       - name: Run Playwright tests
         run: xvfb-run --auto-servernum pnpm test:guides
       - uses: actions/upload-artifact@v2
