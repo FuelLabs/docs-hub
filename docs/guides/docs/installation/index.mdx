@@ -6,20 +6,20 @@ parent:
   link: /guides
 ---
 
-# Toolchain Installation
+# Toolchain installation
 
-This guide will help you to install the Fuel toolchain binaries and pre requisites. 
+This guide will help you to install the Fuel toolchain binaries and pre-requisites. 
 
 This guide covers the following topics:
-1. [Installing rust](#installing-rust)
-2. [Installing the fuel toolchain using fuelup](#installing-the-fuel-toolchain-using-fuelup)
+1. [Installing Rust](#installing-rust)
+2. [Installing the Fuel toolchain using `fuelup`](#installing-the-fuel-toolchain-using-fuelup)
 3. [Setting up a default toolchain](#setting-up-a-default-toolchain)
 
 ## Installing Rust
 
 The Fuel toolchain is built on top of the Rust programming language. To install Rust, you can use the `rustup` tool.
 
-Run the following command in your shell; this downloads and runs rustup-init.sh, which in turn downloads and runs the correct version of the rustup-init executable for your platform.
+Run the following command in your shell; this downloads and runs rustup-init.sh, which in turn downloads and runs the correct version of the `rustup-init` executable for your platform.
 
 ```console
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -27,19 +27,19 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 Check the official Rust documentation to get more information on [installing the Rust toolchain](https://www.rust-lang.org/tools/install).
 
-## Installing the fuel toolchain using fuelup
+## Installing the Fuel toolchain using fuelup
 
 `fuelup` is the official package manager for Fuel that installs the Fuel toolchain
 from the official release channels, enabling you to easily switch between different
-toolchains and keep them updated. It makes building and maintaining Sway applications
-simpler with [forc](docs/forc) and [fuel-core](https://github.com/FuelLabs/fuel-core) for common platforms.
+toolchains and keep them updated. It makes building and maintaining Sway applications.
+simpler with [`forc`](docs/forc) and [`fuel-core`](https://github.com/FuelLabs/fuel-core) for common platforms.
 
-> 💡 Check out the [Fuelup docs](docs/fuelup) for more information.
+> 💡 Check out the [fuelup docs](docs/fuelup) for more information.
 
 
 ### Running fuelup-init
 
-To install the fuel toolchain, you'll use the `fuelup-init` script. This will install `forc`, `forc-client`, `forc-fmt`, `forc-lsp`, `forc-wallet` as well as `fuel-core` in `~/.fuelup/bin`.
+To install the Fuel toolchain, you'll use the `fuelup-init` script. This will install `forc`, `forc-client`, `forc-fmt`, `forc-lsp`, `forc-wallet` as well as `fuel-core` in `~/.fuelup/bin`.
 
 👉 Just paste the following line in your terminal and press _Enter_.
 
@@ -51,12 +51,12 @@ curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh
 
 ### Setup PATH
 
-Once the script is downloaded it will be executed automatically. The `fuelup-init` script will prompt something as this.
+Once the script is downloaded, it will be executed automatically. The `fuelup-init` script will prompt something as this.
 
 ```sh
 fuelup uses "/home/username/.fuelup" as its home directory to manage the Fuel toolchain, and will install binaries there.
 
-To use the toolchain, you will have to configure your PATH, which tells your machine where to locate fuelup and the Fuel toolchain.
+To use the toolchain, you will have to configure your PATH, which tells your machine where to locate `fuelup` and the Fuel toolchain.
 
 If permitted, fuelup-init will configure your PATH for you by running the following:
 
@@ -84,7 +84,7 @@ To generate completions for your shell, run 'fuelup completions --shell=SHELL'.
 ```sh
  fuelup --version
 ```
-That will output your current `fuelup` verison:
+That will output your current `fuelup` version:
 
 ```sh
 fuelup 0.19.5
@@ -93,13 +93,13 @@ fuelup 0.19.5
 ## Setting up a default toolchain
 
 Just as seen in [Rust](https://rust-lang.github.io/rustup/concepts/toolchains.html) Fuel supports multiple toolchains. A toolchain is a collection of tools (such as the compiler, lsp, etc).
-By default, Fuelup includes a series of toolchain with packages tested to work with each other, providing a realiable set of tools.
+By default, `fuelup` includes a series of toolchain with packages tested to work with each other, providing a reliable set of tools.
 
 In this case, we will install the `beta-4` toolchain, which is the stable toolchain compatible with the beta-4 network. For more information on `beta-4` check the [Fuel blog](https://fuel-labs.ghost.io/announcing-beta-4-testnet/) page.
 
 ### Updating fuelup
 
-Make sure you have the latest version of `fuelup` so you can accesses the latest features and have the best performance.
+Make sure you have the latest version of `fuelup` so you can access the latest features and have the best performance.
 
 👉 Update `fuelup`  by running the following command:
 
@@ -118,7 +118,7 @@ Moving /var/folders/tp/0l8zdx9j4s9_n609ykwxl0qw0000gn/T/.tmpiNJQHt/fuelup to /Us
 
 The `beta-4` network is the latest Fuel testnet. This includes public infrastructure such a the [Beta-4 faucet](https://faucet-beta-4.fuel.network/) and the [Beta-4 GraphQL endpoint](https://beta-4.fuel.network/playground).
 
-To properly interact with the `beta-4` network is necessary to use it's corresponding toolchain.
+To properly interact with the `beta-4` network it is necessary to use its corresponding toolchain.
 
 👉 Run the following command to install the `beta-4`:
 
@@ -147,9 +147,9 @@ default toolchain set to 'beta-4'
 
 ### Checking your current toolchain
 
-Sometimes you might end up using multiples toolchain at once, don't worry if you get confused about wich toolchain your are using since you can check your current toolchain anytime.
+Sometimes you might end up using multiples toolchain at once, don't worry if you get confused about which toolchain your are using since you can check your current toolchain anytime.
 
-👉 Run the `fuelup show` command to see toolchain that your are using and the version of the binaries of that toolchain.
+👉 Run the `fuelup show` command to see toolchain that you are using and the version of the binaries of that toolchain.
 
 ```sh
 fuelup show
@@ -182,7 +182,7 @@ forc : 0.45
 forc-wallet : 0.45
 ```
 
-As you can see the beta-4 toolchain is active 🚀
+As you can see, the beta-4 toolchain is active 🚀
 
 ## What's next?
 
@@ -204,8 +204,8 @@ You can always build the Fuel packages from source.
 
 > 👉 visit the [Fuelup docs](docs/fuelup/install/other) to get more details other types of installation.
 
-### Github codespaces
+### Github Codespaces
 
-It's always possible to run a developement enviroment on the browser. 
+It's always possible to run a development environment on the browser. 
 
-> 👉 Please visit our guide on [Github Codespaces](guides/install/codespaces) to use the Fuel Toolchain on the browser.
+> 👉 Please visit our guide on [Github Codespaces](guides/installation/codespace) to use the Fuel toolchain on the browser.

@@ -5,14 +5,14 @@
   },
   "quickstart": {
     "title": "Developer Quickstart",
-    "description": "Get started by building a counter dApp in Fuel"
+    "description": "Get started by building a counter dApp in Fuel."
   },
   "running_a_node": {
     "title": "Running a Node",
-    "description": "Run a local Fuel node"
+    "description": "Run a local Fuel node."
   },
   "testnet_migration": {
     "title": "Testnet Migration",
-    "description": "Sway and SDK's breaking changes reference"
+    "description": "Sway and SDK's breaking changes reference."
   }
 }
