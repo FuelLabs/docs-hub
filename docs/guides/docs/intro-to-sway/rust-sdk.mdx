@@ -40,67 +40,43 @@ cargo test -- --nocapture
 
 At the beginning of the harness.rs file, import the Fuel Rust SDK. The majority of the functionalities you'll need are housed within the prelude.
 
-```rust
-use fuels::{prelude::*, types::{Identity, SizedAsciiString}};
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/tests/harness.rs"
+  comment="rs_import"
+  commentType="//"
+  lang="rust"
+/>
 
 Always compile your contracts after making any changes. This ensures you're working with the most recent `contract-abi` that gets generated.
 
-```rust
-// Load abi from json
-abigen!(Contract(name="SwayStore", abi="out/debug/contract-abi.json"));
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/tests/harness.rs"
+  comment="rs_abi"
+  commentType="//"
+  lang="rust"
+/>
 
 ## Initializing Functions
 
 When writing tests for Sway, two crucial objects are required: the contract instance and the wallets that interact with it. This helper function ensures a fresh start for every new test case. It will export the deployed contracts, the contract ID, and all the generated wallets for this purpose.
 
-```rust
-async fn get_contract_instance() -> (SwayStore<WalletUnlocked>, ContractId, Vec<WalletUnlocked>) {
-    // Launch a local network and deploy the contract
-    let wallets = launch_custom_provider_and_get_wallets(
-        WalletsConfig::new(
-            Some(3),             /* Three wallets */
-            Some(1),             /* Single coin (UTXO) */
-            Some(1_000_000_000), /* Amount per coin */
-        ),
-        None,
-        None,
-    )
-    .await;
-
-    let wallet = wallets.get(0).unwrap().clone();
-
-    let storage_config =
-    StorageConfiguration::load_from("out/debug/contract-storage_slots.json").unwrap();
-
-    let load_config = LoadConfiguration::default().with_storage_configuration(storage_config);
-
-    let id = Contract::load_from(
-        "./out/debug/contract.bin",
-        load_config,
-    )
-    .unwrap()
-    .deploy(&wallet, TxParameters::default())
-    .await
-    .unwrap();
-
-    let instance = SwayStore::new(id.clone(), wallet);
-
-    (instance, id.into(), wallets)
-}
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/tests/harness.rs"
+  comment="rs_contract_instance_parent"
+  commentType="//"
+  lang="rust"
+/>
 
 ### Contract Storage and Binary
 
 Besides the ABI, which outlines the interaction protocol with the smart contract, it's imperative to also load the contract's storage and binary. These three components are vital for the successful creation and deployment of the contract instance, guaranteeing precise testing in the following phases.
 
-```rust
-let storage_config = StorageConfiguration::load_from("out/debug/contract-storage_slots.json").unwrap();
-
-let load_config = LoadConfiguration::default().with_storage_configuration(storage_config);
-let id = Contract::load_from("./out/debug/contract.bin", load_config).unwrap().deploy(&wallet, TxParameters::default()).await.unwrap();
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/tests/harness.rs"
+  comment="rs_contract_instance_config"
+  commentType="//"
+  lang="rust"
+/>
 
 ## Test Cases
 

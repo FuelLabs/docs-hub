@@ -48,33 +48,23 @@ impl SwayStore for Contract {
 
 Our first function enables sellers to list an item for sale. They can specify the item's price and provide a string that references externally-stored data about the item.
 
-```sway
-#[storage(read, write)]
-fn list_item(price: u64, metadata: str[20]) {
-    // increment the item counter
-    storage.item_counter.write(storage.item_counter.try_read().unwrap() + 1);
-    //  get the message sender
-    let sender = msg_sender().unwrap();
-    // configure the item
-    let new_item: Item = Item {
-        id: storage.item_counter.try_read().unwrap(),
-        price: price,
-        owner: sender,
-        metadata: metadata,
-        total_bought: 0,
-    };
-    // save the new item to storage using the counter value
-    storage.item_map.insert(storage.item_counter.try_read().unwrap(), new_item);
-}
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="list_item_parent"
+  commentType="//"
+  lang="sway"
+/>
 
 ### Updating storage
 
 The initial step involves incrementing the `item_counter` in storage, which will serve as the item's ID. In Sway, the standard library provides `read()`, `write()`, and `try_read()` methods to access or manipulate contract storage. It's advisable to use `try_read()` when possible to prevent potential issues arising from accessing uninitialized storage. In this process, we read the current count of listed items, modify it, and then store the updated count back into storage.
 
-```sway
-storage.item_counter.write(storage.item_counter.try_read().unwrap() + 1);
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="list_item_increment"
+  commentType="//"
+  lang="sway"
+/>
 
 ### Getting the message sender
 
@@ -93,9 +83,12 @@ enum Result<T, E> {
 
 The `msg_sender` function yields a `Result`, which can either be an `Identity` or, in the event of an error, an `AuthError`.
 
-```sway
-let sender = msg_sender().unwrap();
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="list_item_sender"
+  commentType="//"
+  lang="sway"
+/>
 
 To retrieve the inner value, you can employ the `unwrap` method. It returns the contained value if the `Result` is OK and triggers a panic if the result indicates an error.
 
@@ -105,23 +98,23 @@ You can instantiate a new item using the `Item` struct. Use the `item_counter` v
 
 Since the `owner` field requires an `Identity` type, you should utilize the sender value obtained from `msg_sender()`.
 
-```sway
-let new_item: Item = Item {
-    id: storage.item_counter.try_read().unwrap(),
-    price: price,
-    owner: sender,
-    metadata: metadata,
-    total_bought: 0,
-};
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="list_item_new_item"
+  commentType="//"
+  lang="sway"
+/>
 
 ### Updating a StorageMap
 
 Lastly, add the item to the `item_map` within storage using the `insert` method. Utilize the same ID for the key and designate the item as its corresponding value.
 
-```sway
-storage.item_map.insert(storage.item_counter.try_read().unwrap(), new_item);
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="list_item_insert"
+  commentType="//"
+  lang="sway"
+/>
 
 ## 2. Buying an item
 
@@ -132,49 +125,23 @@ Next, we aim to allow buyers to purchase listed items. To achieve this, we'll ne
 3. Increase the `total_bought` count for that item.
 4. Deduct a contract fee from the item's cost and transfer the remaining amount to the seller.
 
-```sway
-#[storage(read, write), payable]
-fn buy_item(item_id: u64) {
-    // get the asset id for the asset sent
-    let asset_id = msg_asset_id();
-    // require that the correct asset was sent
-    require(asset_id == BASE_ASSET_ID, InvalidError::IncorrectAssetId(asset_id));
-
-    // get the amount of coins sent
-    let amount = msg_amount();
-
-    // get the item to buy
-    let mut item = storage.item_map.get(item_id).try_read().unwrap();
-
-    // require that the amount is at least the price of the item
-    require(amount >= item.price, InvalidError::NotEnoughTokens(amount));
-
-    // update the total amount bought
-    item.total_bought += 1;
-    // update the item in the storage map
-    storage.item_map.insert(item_id, item);
-
-    // only charge commission if price is more than 0.1 ETH
-    if amount > 100_000_000 {
-        // keep a 5% commission
-        let commission = amount / 20;
-        let new_amount = amount - commission;
-        // send the payout minus commission to the seller
-        transfer(item.owner, asset_id, new_amount);
-    } else {
-        // send the full payout to the seller
-        transfer(item.owner, asset_id, amount);
-    }
-}
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="buy_item_parent"
+  commentType="//"
+  lang="sway"
+/>
 
 ### Verifying payment
 
 We can employ the `msg_asset_id` function from the standard library to obtain the asset ID of the coins being transferred in the transaction.
 
-```sway
-let asset_id = msg_asset_id();
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="buy_item_asset"
+  commentType="//"
+  lang="sway"
+/>
 
 Next, we'll utilize the `require` statement to ensure the sent asset is the correct one.
 
@@ -184,40 +151,54 @@ In this case, the condition checks if the `asset_id` matches the `BASE_ASSET_ID`
 
 If there's a mismatch in the asset, or if, for instance, someone attempts to purchase an item using a different coin, we'll trigger the custom error previously defined, passing along the `asset_id`.
 
-```sway
-require(asset_id == BASE_ASSET_ID, InvalidError::IncorrectAssetId(asset_id));
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="buy_item_require_not_base"
+  commentType="//"
+  lang="sway"
+/>
 
 Next, we can employ the `msg_amount` function from the standard library to retrieve the quantity of coins transmitted by the buyer within the transaction.
 
-```sway
-let amount = msg_amount();
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="buy_item_msg_amount"
+  commentType="//"
+  lang="sway"
+/>
 
 To ensure the sent amount is not less than the item's price, we should retrieve the item details using the `item_id` parameter.
 
 To obtain a value for a specific key in a storage map, the `get` method is handy, wherein the key value is passed. For mapping storage access, the `try_read()` method is utilized. As this method produces a `Result` type, the `unwrap` method can be applied to extract the item value.
 
-```sway
-let mut item = storage.item_map.get(item_id).try_read().unwrap();
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="buy_item_get_item"
+  commentType="//"
+  lang="sway"
+/>
 
 In Sway, all variables are immutable by default, whether declared with `let` or `const`. To modify the value of any variable, it must be declared mutable using the `mut` keyword. Since we plan to update the item's `total_bought` value, it should be defined as mutable.
 
 Additionally, it's essential to ensure that the quantity of coins sent for the item isn't less than the item's price.
 
-```sway
-require(amount >= item.price, InvalidError::NotEnoughTokens(amount));
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="buy_item_require_ge_amount"
+  commentType="//"
+  lang="sway"
+/>
 
 ### Updating storage
 
 We can increase the item's `total_bought` field value and subsequently reinsert it into the `item_map`. This action will replace the earlier value with the revised item.
 
-```sway
-item.total_bought += 1;
-storage.item_map.insert(item_id, item);
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="buy_item_require_update_storage"
+  commentType="//"
+  lang="sway"
+/>
 
 ### Transferring payment
 
@@ -225,15 +206,12 @@ Lastly, we can process the payment to the seller. It's recommended to transfer a
 
 For items reaching a specific price threshold, a fee can be deducted using a conditional `if` statement. The structure of `if` statements in Sway mirrors that in JavaScript.
 
-```sway
-if (amount > 100_000_000) {
-    let commission = amount / 20;
-    let new_amount = amount - commission;
-   transfer(item.owner, asset_id, new_amount);
-} else {
-    transfer(item.owner, asset_id, amount);
-}
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="buy_item_require_transferring_payment"
+  commentType="//"
+  lang="sway"
+/>
 
 In the aforementioned if-condition, we assess if the transmitted amount surpasses 100,000,000. For clarity in large numbers like `100000000`, we can represent it as `100_000_000`. If the foundational asset for this contract is ETH, this equates to 0.1 ETH given that Fuel employs a 9 decimal system.
 
@@ -245,13 +223,13 @@ To facilitate the payment to the item's owner, the `transfer` function is utiliz
 
 To get the details for an item, we can create a read-only function that returns the `Item` struct for a given item ID.
 
-```sway
-#[storage(read)]
-fn get_item(item_id: u64) -> Item {
-    // returns the item for the given item_id
-    storage.item_map.get(item_id).try_read().unwrap()
-}
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="get_item"
+  commentType="//"
+  lang="sway"
+/>
+
 
 To return a value in a function, you can use the `return` keyword, similar to JavaScript. Alternatively, you can omit the semicolon in the last line to return that value. Although both methods are effective, it's generally better to be explicit.
 
@@ -269,100 +247,96 @@ fn my_function(num: u64) -> u64{
 
 To ensure the owner's `Identity` is set accurately, we should avoid hard-coding it. Instead, we can utilize this function to determine the owner based on a wallet.
 
-```sway
-#[storage(read, write)]
-fn initialize_owner() -> Identity {
-    let owner = storage.owner.try_read().unwrap();
-    // make sure the owner has NOT already been initialized
-    require(owner.is_none(), "owner already initialized");
-    // get the identity of the sender
-    let sender = msg_sender().unwrap(); 
-    // set the owner to the sender's identity
-    storage.owner.write(Option::Some(sender));
-    // return the owner
-    return sender
-}
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="initialize_owner_parent"
+  commentType="//"
+  lang="sway"
+/>
 
 To ensure that this function can only be called once, specifically right after the contract's deployment, it's imperative that the owner's value remains set to `None`. We can achieve this verification using the `is_none` method, which assesses if an Option type is `None`. 
 
 It's also important to note the potential risk of [front running](https://scsfg.io/hackers/frontrunning/) in this context.
 
-```sway
-let owner = storage.owner.try_read().unwrap();
-require(owner.is_none(), "owner already initialized");
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="initialize_owner_get_owner"
+  commentType="//"
+  lang="sway"
+/>
 
 To assign the `owner` as the message sender, it's necessary to transform the `Result` type into an `Option` type.
 
-```sway
-let sender = msg_sender().unwrap(); 
-storage.owner.write(Option::Some(sender));
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="initialize_owner_set_owner"
+  commentType="//"
+  lang="sway"
+/>
 
 Finally, we'll return the `Identity` of the message sender.
 
-```sway
-return sender
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="initialize_owner_return_owner"
+  commentType="//"
+  lang="sway"
+/>
 
 ## 5. Withdraw funds
 
 The `withdraw_funds` function permits the owner to withdraw any accumulated funds from the contract.
 
-```sway
-fn withdraw_funds() {
-    let owner = storage.owner.try_read().unwrap();
-    // make sure the owner has been initialized
-    require(owner.is_some(), "owner not initialized");
-    let sender = msg_sender().unwrap(); 
-    // require the sender to be the owner
-    require(sender == owner.unwrap(), InvalidError::OnlyOwner(sender));
-
-    // get the current balance of this contract for the base asset
-    let amount = this_balance(BASE_ASSET_ID);
-
-    // require the contract balance to be more than 0
-    require(amount > 0, InvalidError::NotEnoughTokens(amount));
-    // send the amount to the owner
-    transfer(owner.unwrap(), BASE_ASSET_ID, amount);
-}
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="withdraw_funds_parent"
+  commentType="//"
+  lang="sway"
+/>
 
 First, we'll ensure that the owner has been initialized to a specific address.
 
-```sway
-let owner = storage.owner.try_read().unwrap();
-require(owner.is_some(), "owner not initialized");
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="withdraw_funds_set_owner"
+  commentType="//"
+  lang="sway"
+/>
 
 Next, we'll verify that the individual attempting to withdraw the funds is indeed the owner.
 
-```sway
-let sender = msg_sender().unwrap(); 
-require(sender == owner.unwrap(), InvalidError::OnlyOwner(sender));
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="withdraw_funds_require_owner"
+  commentType="//"
+  lang="sway"
+/>
 
 Additionally, we can confirm the availability of funds for withdrawal using the `this_balance` function from the standard library. This function returns the current balance of the contract.
 
-```sway
-let amount = this_balance(BASE_ASSET_ID);
-require(amount > 0, InvalidError::NotEnoughTokens(amount));
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="withdraw_funds_require_base_asset"
+  commentType="//"
+  lang="sway"
+/>
 
 Lastly, we'll transfer the entire balance of the contract to the owner.
 
-```sway
-transfer(owner.unwrap(), BASE_ASSET_ID, amount);
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="withdraw_funds_transfer_owner"
+  commentType="//"
+  lang="sway"
+/>
 
 ## 6. Get the total items
 
 The final function we'll introduce is `get_count`. This straightforward getter function returns the value of the `item_counter` variable stored in the contract's storage.
 
-```sway
-#[storage(read)]
-fn get_count() -> u64 {
-    return storage.item_counter.try_read().unwrap()
-}
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="get_count_parent"
+  commentType="//"
+  lang="sway"
+/>

@@ -9,6 +9,12 @@ import * as prettier from 'prettier';
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
 
+interface Block {
+  content: string;
+  lineStart: number;
+  lineEnd: number;
+}
+
 function toAST(content: string) {
   return acorn.parse(content, {
     ecmaVersion: 'latest',
@@ -50,10 +56,11 @@ function extractCommentBlock(
   comment: string,
   commentType: CommentTypes,
   trim: string
-) {
+): Block {
   const lines = content.split(EOL);
-  let lineStart = 1;
-  let lineEnd = 1;
+  let lineStart = -1;
+  let lineEnd = -1;
+  let anchorStack: string[] = [];
 
   const endCommentType =
     commentType === '<!--'
@@ -63,22 +70,21 @@ function extractCommentBlock(
       : commentType === '/*'
       ? ' */'
       : '';
+
+  const startAnchor = `${commentType} ANCHOR: ${comment}${endCommentType}`;
+  const endAnchor = `${commentType} ANCHOR_END: ${comment}${endCommentType}`;
+
   for (let i = 0; i < lines.length; i++) {
-    const g = `${commentType} ANCHOR: ${comment}${endCommentType}`;
-    const start =
-      lines[i] === `${commentType} ${comment}:example:start${endCommentType}` ||
-      lines[i] === `${commentType}${comment}:example:start${endCommentType}` ||
-      lines[i] === g;
-    if (start === true) {
-      lineStart = i + 1;
-    } else {
-      const x = `${commentType} ANCHOR_END: ${comment}${endCommentType}`;
-      const end =
-        lines[i] === `${commentType} ${comment}:example:end${endCommentType}` ||
-        lines[i] === `${commentType}${comment}:example:end${endCommentType}` ||
-        lines[i] === x;
-      if (end === true) {
+    if (lines[i].includes(startAnchor)) {
+      if (lineStart === -1) {
+        lineStart = i + 1;
+      }
+      anchorStack.push('anchor');
+    } else if (lines[i].includes(endAnchor)) {
+      anchorStack.pop();
+      if (anchorStack.length === 0) {
         lineEnd = i;
+        break;
       }
     }
   }
@@ -95,14 +101,19 @@ function extractCommentBlock(
     lineEnd = lines.length;
   }
 
-  const newLines = lines.slice(lineStart, lineEnd);
+  let newLines = lines.slice(lineStart, lineEnd);
+  newLines = newLines.filter((line) => !line.includes('ANCHOR'));
 
-  const linesContent = newLines
-    .filter((line) => !line.includes('ANCHOR'))
-    .join('\n');
+  // Dedent the lines here:
+  const toDedent = minWhitespace(newLines);
+  if (toDedent > 0) {
+    newLines = dedent(newLines, toDedent);
+  }
+
+  const linesContent = newLines.join('\n').replace(/\n{3,}/g, '\n\n');
 
   return {
-    content: linesContent,
+    content: linesContent.trim(),
     lineStart,
     lineEnd,
   };
@@ -149,6 +160,18 @@ function extractTestCase(source: string, testCase: string) {
     lineStart,
     lineEnd: lineEnd !== lineStart ? lineEnd : undefined,
   };
+}
+
+function minWhitespace(lines: string[]): number {
+  return lines
+    .filter((line) => line.trim() !== '') // ignore blank lines
+    .map((line) => line.match(/^(\s*)/)[0].length)
+    .reduce((min, curr) => Math.min(min, curr), Infinity);
+}
+
+function dedent(lines: string[], amount: number): string[] {
+  const regex = new RegExp(`^\\s{${amount}}`);
+  return lines.map((line) => line.replace(regex, ''));
 }
 
 const ROOT_DIR = path.resolve(__dirname, '../../../../../../../');
@@ -216,6 +239,13 @@ export function codeImport() {
         content = testResult.content;
       } else {
         content = fileContent;
+      }
+
+      const lines = content.split(EOL);
+      const toDedent = minWhitespace(lines);
+      if (toDedent > 0) {
+        const dedentedLines = dedent(lines, toDedent);
+        content = dedentedLines.join(EOL);
       }
 
       const newAttrs = [

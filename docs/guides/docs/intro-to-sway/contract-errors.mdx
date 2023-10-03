@@ -10,13 +10,12 @@ parent:
 
 Enumerations, commonly referred to as enums, are a type that can represent one of several possible variants. Within our contract, we can employ enums to craft custom error messages, facilitating more precise error handling within functions.
 
-```sway
-enum InvalidError {
-    IncorrectAssetId: ContractId,
-    NotEnoughTokens: u64,
-    OnlyOwner: Identity,
-}
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="error_handling"
+  commentType="//"
+  lang="sway"
+/>
 
 Within our contract, we can anticipate various scenarios where we'd want to throw an error and halt the transaction:
 1. Someone might attempt to pay for an item using an incorrect currency.

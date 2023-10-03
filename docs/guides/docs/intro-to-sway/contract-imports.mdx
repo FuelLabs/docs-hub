@@ -9,9 +9,12 @@ parent:
 ## Defining the Program Type
 
 The first line of the file is specifically reserved to inform the compiler whether we are writing a contract, script, predicate, or library. To designate the file as a contract, use the `contract` keyword.
-```sway
-contract;
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="contract"
+  commentType="//"
+  lang="sway"
+/>
 
 ## Imports
 
@@ -33,17 +36,11 @@ use std::{
 
 For this contract, here is what needs to be imported:
 
-```sway
-use std::{
-    auth::msg_sender,
-    call_frames::msg_asset_id,
-    constants::BASE_ASSET_ID,
-    context::{
-        msg_amount,
-        this_balance,
-    },
-    token::transfer,
-};
-```
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="import"
+  commentType="//"
+  lang="sway"
+/>
 
 We'll go through what each of these imports does as we use them in the next steps.

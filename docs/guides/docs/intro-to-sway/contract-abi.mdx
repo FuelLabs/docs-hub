@@ -12,35 +12,12 @@ Next, we will define our ABI. ABI stands for Application Binary Interface. In a 
 
 Our contract's ABI will be structured as follows:
 
-```sway
-abi SwayStore {
-    // a function to list an item for sale
-    // takes the price and metadata as args
-    #[storage(read, write)]
-    fn list_item(price: u64, metadata: String);
-
-    // a function to buy an item
-    // takes the item id as the arg
-    #[storage(read, write), payable]
-    fn buy_item(item_id: u64);
-
-    // a function to get a certain item
-    #[storage(read)]
-    fn get_item(item_id: u64) -> Item;
-
-    // a function to set the contract owner
-    #[storage(read, write)]
-    fn initialize_owner() -> Identity;
-
-    // a function to withdraw contract funds
-    #[storage(read)]
-    fn withdraw_funds();
-
-    // return the number of items listed
-    #[storage(read)]
-    fn get_count() -> u64;
-}
-``` 
+<CodeImport
+  file="../../../intro-to-sway/contract/src/main.sw"
+  comment="abi"
+  commentType="//"
+  lang="sway"
+/>
 
 ### Functions
 
