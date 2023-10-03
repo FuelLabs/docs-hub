@@ -60,7 +60,7 @@ function extractCommentBlock(
   const lines = content.split(EOL);
   let lineStart = -1;
   let lineEnd = -1;
-  const anchorStack: string[] = [];
+  let anchorStack: string[] = [];
 
   const endCommentType =
     commentType === '<!--'
