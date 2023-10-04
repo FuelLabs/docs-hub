@@ -1,0 +1,56 @@
+name: Update Docs
+
+on:
+  schedule:
+    # This runs at 12:00 UTC every Monday and Thursday
+    - cron: '0 12 * * 1,4'
+  # Option to run the workflow manually
+  workflow_dispatch: 
+
+jobs:
+  update-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+    # SETUP
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - uses: FuelLabs/github-actions/setups/node
+      with:
+        node-version: 18.14.1
+        pnpm-version: latest
+
+    - name: Install gh CLI
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gh
+
+    - name: Setup git user
+      run: |
+        git config --global user.name "${{ github.actor }}"
+        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
+    # CREATE A NEW BRANCH
+    - name: Create and checkout new branch
+      run: |
+        timestamp=$(date +'%Y%m%d%H%M%S')
+        branch_name="docs-update-$timestamp"
+        git checkout -b $branch_name
+
+    # UPDATE THE LATEST SUBMODULES
+    - name: Run pnpm update-latest-docs
+      run: pnpm update-latest-docs
+
+    # IF THERE ARE CHANGES, COMMIT THEM AND CREATE A PR
+    - name: Commit and create PR if there are changes
+      run: |
+        git diff --exit-code
+        if [ $? -ne 0 ]; then
+          git add .
+          git commit -m "chore: update latest docs"
+          git push origin $branch_name
+          gh pr create --title "chore: update latest docs" --body "Automated update of latest docs." --base master --head $branch_name
+        else
+          echo "No changes to commit."
+        fi
