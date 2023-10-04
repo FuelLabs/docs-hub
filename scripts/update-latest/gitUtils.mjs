@@ -1,4 +1,5 @@
 import { exec } from '@actions/exec';
+import { getOctokit } from '@actions/github';
 
 export const setupUser = async () => {
   await exec('git', ['config', 'user.name', `"github-actions[bot]"`]);
@@ -59,4 +60,20 @@ export async function checkDiff() {
   // returns true if there are changes
   // returns false if there are no changes
   return output.length > 0;
+}
+
+export async function createPR(title, branchName) {
+  const githubToken = process.env.GITHUB_TOKEN;
+  const octokit = getOctokit(githubToken);
+  const body = 'This is an automated PR to udpate the latest docs.';
+
+  await octokit.pulls.create({
+    owner: 'FuelLabs',
+    repo: 'docs-hub',
+    title,
+    head: branchName,
+    base: 'master',
+    body,
+    maintainer_can_modify: true,
+  });
 }

@@ -4,6 +4,9 @@ import {
   updateSubmodule,
   checkoutVersion,
   checkDiff,
+  commitAll,
+  push,
+  createPR,
 } from './gitUtils.mjs';
 
 export async function updateLatest(newVersions) {
@@ -20,23 +23,29 @@ export async function updateLatest(newVersions) {
   await updateSubmodules(newVersions);
 
   // check if there are any differences
-  // if yes,
+  // if yes, commit the changes and create a PR
   const isDifferent = await checkDiff();
   console.log('IS DIFFERENT:', isDifferent);
-  // add changes & commit
-  // await commitAll('chore: update latest docs');
+  if (isDifferent) {
+    const title = 'chore: update latest docs';
 
-  // push branch & open PR
+    // add changes & commit
+    await commitAll(title);
+
+    // push branch & open PR
+    await push(branchName);
+    await createPR(title, branchName);
+  }
 }
 
 async function updateSubmodules(newVersions) {
   // update everything that doesn't have a version
   // or has a release branch
-  // latest/fuelup should already be updated
   const updateRegardless = [
     'docs/latest/fuels-wallet',
     'docs/latest/fuel-specs',
     'docs/latest/fuel-graphql-docs',
+    'docs/latest/fuelup',
   ];
   console.log('GOING TO UPDATE REGARDLESS');
   await Promise.all(
