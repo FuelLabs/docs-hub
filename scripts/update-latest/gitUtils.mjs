@@ -48,7 +48,7 @@ export const updateSubmodule = async (submdoule) => {
 
 export async function checkDiff() {
   let output = '';
-  await exec('git diff', [], {
+  await exec('git diff -- docs', [], {
     listeners: {
       stdout: (data) => {
         output += data.toString();

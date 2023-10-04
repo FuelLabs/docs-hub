@@ -47,31 +47,33 @@ async function updateSubmodules(newVersions) {
   );
 
   // update versions branches if new for sway, indexer, fuels-rs, & fuels-ts
-  console.log('GOING TO UPDATE LATEST TOOLCHAIN VERSIONS');
-  await Promise.all(
-    Object.keys(newVersions).map(async (key) => {
-      console.log('UPDATING SUB:', key);
-      const version = `v${newVersions[key]}`;
-      console.log('NEW VERSION:', version);
-      let submoduleName;
-      switch (key) {
-        case 'forc':
-          submoduleName = 'docs/latest/sway';
-          await updateSubmodule('docs/latest/builds/sway');
-          break;
-        case 'indexer':
-          submoduleName = 'docs/latest/fuel-indexer';
-          break;
-        case 'rust':
-          submoduleName = 'docs/latest/fuel-rs';
-          break;
-        case 'ts':
-          submoduleName = 'docs/latest/fuel-ts';
-          break;
-        default:
-      }
-      await updateSubmodule(submoduleName);
-      await checkoutVersion(version, submoduleName);
-    })
-  );
+  if (newVersions) {
+    console.log('GOING TO UPDATE LATEST TOOLCHAIN VERSIONS');
+    await Promise.all(
+      Object.keys(newVersions).map(async (key) => {
+        console.log('UPDATING SUB:', key);
+        const version = `v${newVersions[key]}`;
+        console.log('NEW VERSION:', version);
+        let submoduleName;
+        switch (key) {
+          case 'forc':
+            submoduleName = 'docs/latest/sway';
+            await updateSubmodule('docs/latest/builds/sway');
+            break;
+          case 'indexer':
+            submoduleName = 'docs/latest/fuel-indexer';
+            break;
+          case 'rust':
+            submoduleName = 'docs/latest/fuel-rs';
+            break;
+          case 'ts':
+            submoduleName = 'docs/latest/fuel-ts';
+            break;
+          default:
+        }
+        await updateSubmodule(submoduleName);
+        await checkoutVersion(version, submoduleName);
+      })
+    );
+  }
 }
