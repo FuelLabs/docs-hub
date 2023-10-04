@@ -51,7 +51,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh
 
 ### Setup PATH
 
-Once the script is downloaded, it will be executed automatically. The `fuelup-init` script will prompt something as this.
+Once the script is downloaded, it will be executed automatically. The `fuelup-init` script will prompt you with the question below:
 
 ```sh
 fuelup uses "/home/username/.fuelup" as its home directory to manage the Fuel toolchain, and will install binaries there.
@@ -65,7 +65,7 @@ If permitted, fuelup-init will configure your PATH for you by running the follow
 Would you like fuelup-init to modify your PATH variable for you? (N/y)
 ```
 
-👉 If this is your first time installing the Fuel toolchain just press the `Y` key in your terminal and press _Enter_ 
+👉 Press the `Y` key in your terminal and press _Enter_ to modify your PATH.
 
 ### Checking the installation
 
@@ -79,7 +79,7 @@ To fetch the latest toolchain containing the forc and fuel-core binaries, run 'f
 To generate completions for your shell, run 'fuelup completions --shell=SHELL'.
 ```
 
-👉 Use `fuelup --version`any time to check which version of the package you are using.
+👉 Use `fuelup --version` any time to check which version of the package you are using.
 
 ```sh
  fuelup --version
@@ -92,7 +92,7 @@ fuelup 0.19.5
 
 ## Setting up a default toolchain
 
-Just as seen in [Rust](https://rust-lang.github.io/rustup/concepts/toolchains.html) Fuel supports multiple toolchains. A toolchain is a collection of tools (such as the compiler, lsp, etc).
+Just as in [Rust](https://rust-lang.github.io/rustup/concepts/toolchains.html), Fuel supports multiple toolchains. A toolchain is a collection of tools (such as the compiler, lsp, etc).
 By default, `fuelup` includes a series of toolchain with packages tested to work with each other, providing a reliable set of tools.
 
 In this case, we will install the `beta-4` toolchain, which is the stable toolchain compatible with the beta-4 network. For more information on `beta-4` check the [Fuel blog](https://fuel-labs.ghost.io/announcing-beta-4-testnet/) page.
@@ -116,11 +116,11 @@ Moving /var/folders/tp/0l8zdx9j4s9_n609ykwxl0qw0000gn/T/.tmpiNJQHt/fuelup to /Us
 
 ### Installing the beta-4 toolchain
 
-The `beta-4` network is the latest Fuel testnet. This includes public infrastructure such a the [Beta-4 faucet](https://faucet-beta-4.fuel.network/) and the [Beta-4 GraphQL endpoint](https://beta-4.fuel.network/playground).
+The `beta-4` network is the latest Fuel testnet. This includes public infrastructure such as the [Beta-4 faucet](https://faucet-beta-4.fuel.network/) and the [Beta-4 GraphQL endpoint](https://beta-4.fuel.network/playground).
 
 To properly interact with the `beta-4` network it is necessary to use its corresponding toolchain.
 
-👉 Run the following command to install the `beta-4`:
+👉 Run the following command to install the `beta-4` toolchain:
 
 ```console
 fuelup toolchain install beta-4
@@ -131,15 +131,15 @@ If the toolchain was successfully installed, you will see this output:
 The Fuel toolchain is installed and up to date
 ```
 
-The toolchain was installed correctly, however is in use yet. You need to indicate `fuelup` to use the `beta-4` toolchain.
+The toolchain was installed correctly, however is not in use yet. Next, you need to configure `fuelup` to use the `beta-4` toolchain as the default.
 
-👉 set the `beta-4` as your default toolchain with the following command:
+👉 Set `beta-4` as your default toolchain with the following command:
 
 ```console
 fuelup default beta-4
 ```
 
-You will get the following output indicating that you are ready to go. 
+You will get the following output indicating that you have successfully set `beta-4` as your default toolchain. 
 
 ```console
 default toolchain set to 'beta-4'
@@ -147,9 +147,9 @@ default toolchain set to 'beta-4'
 
 ### Checking your current toolchain
 
-Sometimes you might end up using multiples toolchain at once, don't worry if you get confused about which toolchain your are using since you can check your current toolchain anytime.
+Sometimes you might end up using multiple toolchains at once. Don't worry if you get confused about which toolchain you are using, since you can check your current toolchain anytime.
 
-👉 Run the `fuelup show` command to see toolchain that you are using and the version of the binaries of that toolchain.
+👉 Run the `fuelup show` command to see the toolchain and the versions of each tool you are using.
 
 ```sh
 fuelup show
@@ -202,10 +202,10 @@ You can create your own set of specific versions, this is known as 'custom toolc
 
 You can always build the Fuel packages from source.
 
-> 👉 visit the [Fuelup docs](docs/fuelup/install/other) to get more details other types of installation.
+> 👉 Visit the [Fuelup docs](docs/fuelup/install/other) to get more details about other types of installation.
 
 ### Github Codespaces
 
-It's always possible to run a development environment on the browser. 
+It's always possible to run a development environment in the browser. 
 
-> 👉 Please visit our guide on [Github Codespaces](guides/installation/codespace) to use the Fuel toolchain on the browser.
+> 👉 Please visit our guide on [Github Codespaces](guides/installation/codespace) to use the Fuel toolchain in the browser.
