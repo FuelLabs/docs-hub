@@ -18,12 +18,6 @@ jobs:
     - uses: ./.github/actions/setup-node
       with:
         install: false
-    
-    # - name: Update fuelup repo & checkout gh-pages branch
-    #   run: |
-    #     git submodule update --remote docs/latest/fuelup
-    #     cd docs/latest/fuelup
-    #     git checkout gh-pages
 
     - name: Run Script
       run: |
