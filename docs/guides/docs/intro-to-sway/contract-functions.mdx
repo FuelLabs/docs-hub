@@ -10,12 +10,39 @@ parent:
 
 Finally, it's time to compose our contract functions. Begin by copying and pasting the ABI we outlined earlier. It's crucial to ensure that the functions within the contract *exactly* align with the ABI; otherwise, the compiler will generate an error. Now, substitute the semicolons at the conclusion of each function with curly brackets. Also, modify `abi SwayStore` to `impl SwayStore for Contract`, as demonstrated below:
 
-<CodeImport
-  file="../../../intro-to-sway/contract/src/docs_hub_misc.sw"
-  comment="contract_skeleton"
-  commentType="//"
-  lang="sway"
-/>
+```sway
+impl SwayStore for Contract {
+    #[storage(read, write)]
+    fn list_item(price: u64, metadata: str[20]){
+        
+    }
+
+    #[storage(read, write), payable]
+    fn buy_item(item_id: u64) {
+        
+    }
+
+    #[storage(read)]
+    fn get_item(item_id: u64) -> Item {
+        
+    }
+
+    #[storage(read, write)]
+    fn initialize_owner() -> Identity {
+        
+    }
+
+    #[storage(read)]
+    fn withdraw_funds(){
+        
+    }
+
+    #[storage(read)]
+    fn get_count() -> u64{
+ 
+    }
+}
+```
 
 ## 1. Listing an item
 
