@@ -59,6 +59,7 @@ const includeDirs = [
   'docs/fuel-graphql-docs/docs',
   'docs/fuels-wallet/packages/docs/docs',
   'docs/guides/docs',
+  // 'docs/fuel-nix/book/src',
   // 'docs/about-fuel',
 ];
 
@@ -73,6 +74,7 @@ const excludeDirs = [
   'docs/fuels-rs/docs/src/SUMMARY.md',
   'docs/fuel-indexer/docs/src/SUMMARY.md',
   'docs/fuel-specs/src/SUMMARY.md',
+  // 'docs/fuel-nix/book/src/SUMMARY.md',
 ];
 
 export default makeSource({
