@@ -6,6 +6,9 @@ inputs:
   pnpm-version:
     description: "PNPM version"
     default: latest
+  install:
+    description: "Should install?"
+    default: true
 runs:
   using: "composite"
   steps:
@@ -26,4 +29,4 @@ runs:
       uses: pnpm/action-setup@v2.2.2
       with:
         version: ${{ inputs.pnpm-version }}
-        run_install: true
+        run_install: ${{ inputs.install }}
