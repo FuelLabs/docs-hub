@@ -1,4 +1,8 @@
 {
+  "installation": {
+    "title": "Toolchain Installation",
+    "description": "Install the Fuel toolchain and binaries."
+  },
   "quickstart": {
     "title": "Developer Quickstart",
     "description": "Get started by building a counter dApp in Fuel"

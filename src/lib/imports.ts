@@ -3,11 +3,11 @@
 import dynamic from 'next/dynamic';
 import * as GQLExamples from '~/docs/fuel-graphql-docs/examples';
 import * as FuelExamples from '~/docs/fuels-wallet/packages/docs/examples';
-
-import type { DocType, ComponentsList } from '../types';
-
+import TestAction from '~/src/components/TestAction';
 import { COMPONENTS as GQL_COMPONENTS } from '~/src/generated/components/graphql';
 import { COMPONENTS as WALLET_COMPONENTS } from '~/src/generated/components/wallet';
+
+import type { DocType, ComponentsList } from '../types';
 
 function loadComponent(imp: any, name?: string) {
   return dynamic(() => imp.then((mod: any) => (name ? mod[name] : mod)), {
@@ -38,6 +38,7 @@ export function getComponents(doc: DocType) {
       import('~/src/components/CodeImport'),
       'CodeImport'
     );
+    components.TestAction = TestAction;
   } else if (['docs/wallet/'].some((s) => slug.startsWith(s))) {
     components.CodeImport = loadComponent(
       import('~/src/components/CodeImport'),
