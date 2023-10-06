@@ -33,7 +33,7 @@ In the `tsconfig.json` file, add the line below in the `compilerOptions` object 
 Open the `src/App.tsx` file, and replace the boilerplate code with the template below:
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/App.tsx"
+  file="../../examples/intro-to-sway/frontend/src/App.tsx"
   comment="fe_app_template"
   commentType="//"
   lang="tsx"
@@ -42,7 +42,7 @@ Open the `src/App.tsx` file, and replace the boilerplate code with the template 
 Finally, copy and paste the CSS code below in your `App.css` file to add some simple styling.
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/App.css"
+  file="../../examples/intro-to-sway/frontend/src/App.css"
   comment="fe_css"
   commentType="//"
   lang="tsx"
@@ -53,7 +53,7 @@ Finally, copy and paste the CSS code below in your `App.css` file to add some si
 At the top of the file, add your contract ID as a constant.
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/App.tsx"
+  file="../../examples/intro-to-sway/frontend/src/App.tsx"
   comment="fe_contract_id"
   commentType="//"
   lang="tsx"
@@ -64,7 +64,7 @@ Next, create a new folder in the `src` folder called `hooks`, and copy and paste
 In `App.tsx`, import these hooks.
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/App.tsx"
+  file="../../examples/intro-to-sway/frontend/src/App.tsx"
   comment="fe_import_hooks"
   commentType="//"
   lang="tsx"
@@ -73,7 +73,7 @@ In `App.tsx`, import these hooks.
 In the `App` function, we can call these hooks like this:
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/App.tsx"
+  file="../../examples/intro-to-sway/frontend/src/App.tsx"
   comment="fe_call_hooks"
   commentType="//"
   lang="tsx"
@@ -85,7 +85,7 @@ If the user doesn't have the `fuel` object in their window, we know that they do
 If they have it installed, we can then check if the wallet is connected.
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/App.tsx"
+  file="../../examples/intro-to-sway/frontend/src/App.tsx"
   comment="fe_fuel_obj"
   commentType="{/*"
   lang="tsx"
@@ -96,7 +96,7 @@ Next, let's add a state variable called `wallets` with the `useState` hook, whic
 You can think of a locked wallet as a user wallet you can't sign transactions for, and an unlocked wallet as a wallet where you have the private key and are able to sign transactions.
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/App.tsx"
+  file="../../examples/intro-to-sway/frontend/src/App.tsx"
   comment="fe_wallet"
   commentType="//"
   lang="tsx"
@@ -105,7 +105,7 @@ You can think of a locked wallet as a user wallet you can't sign transactions fo
 Next, we can use the `useMemo` hook to connect to our contract with the connected wallet.
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/App.tsx"
+  file="../../examples/intro-to-sway/frontend/src/App.tsx"
   comment="fe_use_memo"
   commentType="//"
   lang="tsx"
@@ -121,7 +121,7 @@ In our app we're going to have two tabs: one to see all of the items listed for 
 Let's add another state variable called `active` that we can use to toggle between our tabs. We can set the default tab to show all listed items.
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/App.tsx"
+  file="../../examples/intro-to-sway/frontend/src/App.tsx"
   comment="fe_state_active"
   commentType="//"
   lang="tsx"
@@ -130,7 +130,7 @@ Let's add another state variable called `active` that we can use to toggle betwe
 Below the header, add a nav section to toggle between the two options.
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/App.tsx"
+  file="../../examples/intro-to-sway/frontend/src/App.tsx"
   comment="fe_ui_state_active"
   commentType="{/*"
   lang="tsx"
@@ -145,7 +145,7 @@ Create a new folder in the `src` folder called `components`, and create a file t
 At the top of the file, import the `useState` hook from `react`, the generated contract ABI from the `contracts` folder, and `bn` (big number) type from `fuels`.
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/components/ListItem.tsx"
+  file="../../examples/intro-to-sway/frontend/src/components/ListItem.tsx"
   comment="fe_list_items_import"
   commentType="//"
   lang="tsx"
@@ -154,7 +154,7 @@ At the top of the file, import the `useState` hook from `react`, the generated c
 This component will take the contract we made in `App.tsx` as a prop, so let's create an interface for the component.
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/components/ListItem.tsx"
+  file="../../examples/intro-to-sway/frontend/src/components/ListItem.tsx"
   comment="fe_list_items_interface"
   commentType="//"
   lang="tsx"
@@ -163,7 +163,7 @@ This component will take the contract we made in `App.tsx` as a prop, so let's c
 We can set up the template for the function like this.
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/components/ListItem.tsx"
+  file="../../examples/intro-to-sway/frontend/src/components/ListItem.tsx"
   comment="fe_list_items_function"
   commentType="//"
   lang="tsx"
@@ -174,7 +174,7 @@ To list an item, we'll create a form where the user can input the metadata strin
 Let's start by adding some state variables for the `metadata` and `price`. We can also add a `status` variable to track the submit status.
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/components/ListItem.tsx"
+  file="../../examples/intro-to-sway/frontend/src/components/ListItem.tsx"
   comment="fe_list_items_state_variables"
   commentType="//"
   lang="tsx"
@@ -183,7 +183,7 @@ Let's start by adding some state variables for the `metadata` and `price`. We ca
 Under the heading, add the code below for the form:
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/components/ListItem.tsx"
+  file="../../examples/intro-to-sway/frontend/src/components/ListItem.tsx"
   comment="fe_list_items_form"
   commentType="{/*"
   lang="tsx"
@@ -193,7 +193,7 @@ Finally, we need to add the `handleSubmit` function.
 We can use the contract prop to call the `list_item` function and pass in the `price` and `metadata` from the form.
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/components/ListItem.tsx"
+  file="../../examples/intro-to-sway/frontend/src/components/ListItem.tsx"
   comment="fe_list_items_handle_submit"
   commentType="//"
   lang="tsx"
@@ -205,7 +205,7 @@ Import the `ListItem` component at the top of the file.
 Then, replace where it says `Connected!` with the code below:
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/App.tsx"
+  file="../../examples/intro-to-sway/frontend/src/App.tsx"
   comment="fe_items_contract"
   commentType="{/*"
   lang="tsx"
@@ -221,7 +221,7 @@ Next, let's create a new file called `AllItems.tsx` in the `components` folder.
 Copy and paste the template code below for this component:
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/components/AllItems.tsx"
+  file="../../examples/intro-to-sway/frontend/src/components/AllItems.tsx"
   comment="fe_all_items_template"
   commentType="//"
   lang="tsx"
@@ -232,7 +232,7 @@ Here we can get the item count to see how many items are listed, and then loop t
 First, let's create some state variables to store the number of items listed, an array of the item details, and the loading status.
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/components/AllItems.tsx"
+  file="../../examples/intro-to-sway/frontend/src/components/AllItems.tsx"
   comment="fe_all_items_state_variables"
   commentType="//"
   lang="tsx"
@@ -242,7 +242,7 @@ Next, let's fetch the items in a `useEffect` hook.
 Because these are read-only functions, we can simulate a dry-run of the transaction by using the `get` method instead of `call` so the user doesn't have to sign anything.
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/components/AllItems.tsx"
+  file="../../examples/intro-to-sway/frontend/src/components/AllItems.tsx"
   comment="fe_all_items_use_effect"
   commentType="//"
   lang="tsx"
@@ -253,7 +253,7 @@ If the item count is greater than `0` and we are able to successfully load the i
 The item card will show the item details and a buy button to buy that item, so we'll need to pass the contract and the item as props.
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/components/AllItems.tsx"
+  file="../../examples/intro-to-sway/frontend/src/components/AllItems.tsx"
   comment="fe_all_items_cards"
   commentType="{/*"
   lang="tsx"
@@ -265,7 +265,7 @@ Now let's create the item card component.
 Create a new file called `ItemCard.tsx` in the components folder, and copy and paste the template code below.
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/components/ItemCard.tsx"
+  file="../../examples/intro-to-sway/frontend/src/components/ItemCard.tsx"
   comment="fe_item_card_template"
   commentType="//"
   lang="tsx"
@@ -274,7 +274,7 @@ Create a new file called `ItemCard.tsx` in the components folder, and copy and p
 Add a `status` variable to track the status of the buy button.
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/components/ItemCard.tsx"
+  file="../../examples/intro-to-sway/frontend/src/components/ItemCard.tsx"
   comment="fe_item_card_status"
   commentType="//"
   lang="tsx"
@@ -283,7 +283,7 @@ Add a `status` variable to track the status of the buy button.
 Then add the item details and status messages to the card.
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/components/ItemCard.tsx"
+  file="../../examples/intro-to-sway/frontend/src/components/ItemCard.tsx"
   comment="fe_item_cards"
   commentType="//"
   lang="tsx"
@@ -297,7 +297,7 @@ Whenever we call any function that uses the transfer or mint functions in Sway, 
 Next, because this function is payable and the user needs to transfer the price of the item, we'll use the `callParams` method to forward the amount. With Fuel you can transfer any type of asset, so we need to specify both the amount and the asset ID.
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/components/ItemCard.tsx"
+  file="../../examples/intro-to-sway/frontend/src/components/ItemCard.tsx"
   comment="fe_item_card_buy_item"
   commentType="//"
   lang="tsx"
@@ -314,7 +314,7 @@ Ensure that all your files are correctly configured by examining the code below.
 `App.tsx`
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/App.tsx"
+  file="../../examples/intro-to-sway/frontend/src/App.tsx"
   comment="fe_app_all"
   commentType="/*"
   lang="tsx"
@@ -323,7 +323,7 @@ Ensure that all your files are correctly configured by examining the code below.
 `AllItems.tsx`
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/components/AllItems.tsx"
+  file="../../examples/intro-to-sway/frontend/src/components/AllItems.tsx"
   comment="fe_all_items_all"
   commentType="/*"
   lang="tsx"
@@ -332,7 +332,7 @@ Ensure that all your files are correctly configured by examining the code below.
 `ItemCard.tsx`
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/components/ItemCard.tsx"
+  file="../../examples/intro-to-sway/frontend/src/components/ItemCard.tsx"
   comment="fe_item_card_all"
   commentType="/*"
   lang="tsx"
@@ -341,7 +341,7 @@ Ensure that all your files are correctly configured by examining the code below.
 `ListItem.tsx`
 
 <CodeImport
-  file="../../../intro-to-sway/frontend/src/components/ListItem.tsx"
+  file="../../examples/intro-to-sway/frontend/src/components/ListItem.tsx"
   comment="fe_list_item_all"
   commentType="/*"
   lang="tsx"
