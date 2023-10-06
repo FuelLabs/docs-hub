@@ -2,135 +2,132 @@
 import { cssObj } from '@fuel-ui/css';
 import {
   Box,
-  IconButton,
-  Icon,
-  FuelLogo,
-  Button,
   Text,
-  ButtonLink,
+  Drawer,
+  IconButton,
+  FuelLogo,
   Link,
+  Icon,
+  ButtonLink,
+  Button,
 } from '@fuel-ui/react';
-import { AnimatePresence, motion } from 'framer-motion';
-import type { AnimationProps } from 'framer-motion';
-import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { NAVIGATION } from '../config/constants';
 import type { LinkObject } from '../config/constants';
+import { NAVIGATION } from '../config/constants';
 
 import { styles as navStyles } from './Navigation';
+import Search from './Search';
 import { Sidebar } from './Sidebar';
+import ThemeToggler from './ThemeToggler';
+import VersionDropdown from './VersionDropdown';
 
-const ThemeToggler = dynamic(() => import('./ThemeToggler'), { ssr: false });
-const Search = dynamic(() => import('./Search'), { ssr: false });
-
-const MotionBox = motion<any>(Box);
-const SPRING: AnimationProps['transition'] = {
-  ease: 'linear',
-  duration: '0.1',
-};
-
-export function MobileMenu({
-  active,
-  title,
-}: {
+interface MobileMenuProps {
   active: string;
   title?: string;
-}) {
-  const [showing, setShowing] = useState(false);
+  isLatest: boolean;
+}
+
+export function MobileMenu({ active, title, isLatest }: MobileMenuProps) {
+  const [open, setOpen] = useState(false);
 
   function toggle() {
-    setShowing((s) => !s);
+    setOpen((s) => !s);
   }
 
-  useEffect(() => {
-    if (showing) {
-      document.body.classList.add('no-scroll');
-    } else {
-      document.body.classList.remove('no-scroll');
-    }
-  }, [showing]);
-
-  const button = (
+  const drawerButton = (
     <IconButton
       className="mobile-button"
       variant="link"
       intent="base"
-      icon={showing ? Icon.is('X') : Icon.is('List')}
+      icon={open ? Icon.is('X') : Icon.is('List')}
       iconSize={30}
       aria-label="Menu"
       onClick={toggle}
     />
   );
 
-  const content = (
-    <MotionBox
-      css={styles.content}
-      animate={{ x: 0 }}
-      initial={{ x: '100%' }}
-      exit={{ x: '100%' }}
-      transition={SPRING}
-    >
-      <Box.Flex css={styles.menu}>
-        <Link href="/" css={styles.logoWrapper}>
-          <FuelLogo size={30} />
-        </Link>
-        <a href="https://github.com/fuellabs/" target="_blank" rel="noreferrer">
-          <Icon icon={Icon.is('BrandGithub')} size={24} />
-        </a>
-        {button}
-      </Box.Flex>
-      <Box css={styles.navContainer}>
-        <Box.Flex css={styles.nav} direction={'column'}>
-          {NAVIGATION.map((item, index) => {
-            if (item.type === 'menu') {
-              return (
-                <MenuButton
-                  key={`${item.slug}${index}`}
-                  item={item}
-                  active={active}
-                />
-              );
-            }
-            return (
-              <ButtonLink
-                key={`${item.slug}${index}`}
-                css={styles.navButton}
-                href={item.link}
-                isExternal={item.type === 'external-link'}
-                data-active={active === item.slug}
-              >
-                {item.name}
-              </ButtonLink>
-            );
-          })}
-        </Box.Flex>
-
-        <Sidebar onClick={() => setShowing(false)} />
-      </Box>
-    </MotionBox>
-  );
-
   return (
-    <Box css={styles.root}>
-      <Search title={title} />
+    <Box.HStack css={styles.root}>
+      <Search title={title} isLatest={isLatest} />
       <ThemeToggler />
-      {button}
-      <AnimatePresence>
-        {showing && <Box css={styles.overlay}>{content}</Box>}
-      </AnimatePresence>
-    </Box>
+      <VersionDropdown isLatest={isLatest} />
+      <Drawer
+        isDismissable
+        isOpen={open}
+        side="right"
+        onClose={() => setOpen(false)}
+      >
+        <Drawer.Trigger>{drawerButton}</Drawer.Trigger>
+
+        <Drawer.Content css={styles.drawer}>
+          <Drawer.Body>
+            <Box.Flex css={styles.topContainer} justify={'space-between'}>
+              <Link href="/">
+                <FuelLogo size={30} />
+              </Link>
+              <Box.Flex gap="$4" align="center" css={styles.iconContainer}>
+                <a
+                  href="https://github.com/fuellabs/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Icon icon={'BrandGithub'} size={24} />
+                </a>
+                {drawerButton}
+              </Box.Flex>
+            </Box.Flex>
+
+            <Box css={styles.navContainer}>
+              <Box.VStack>
+                {NAVIGATION.map((item, index) => {
+                  if (item.type === 'menu') {
+                    return (
+                      <MenuButton
+                        key={`${item.slug}${index}`}
+                        item={item}
+                        active={active}
+                        isLatest={isLatest}
+                      />
+                    );
+                  }
+                  const thisLink = isLatest
+                    ? item.link
+                        ?.replace('docs/', 'docs/latest/')
+                        .replace('guides', 'guides/latest')
+                    : item.link;
+                  return (
+                    <ButtonLink
+                      key={`${item.slug}${index}`}
+                      css={styles.navButton}
+                      href={thisLink}
+                      isExternal={item.type === 'external-link'}
+                      data-active={active === item.slug}
+                    >
+                      {item.name}
+                    </ButtonLink>
+                  );
+                })}
+              </Box.VStack>
+
+              <Sidebar onClick={() => setOpen(false)} />
+            </Box>
+          </Drawer.Body>
+        </Drawer.Content>
+      </Drawer>
+    </Box.HStack>
   );
 }
 
 interface MenuButtonProps {
   item: LinkObject;
   active: string;
+  isLatest: boolean;
 }
 
-function MenuButton({ item, active }: MenuButtonProps) {
+function MenuButton({ item, active, isLatest }: MenuButtonProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const isActive = item.menu?.some((i) => i.slug === active);
+  const isActive = item.menu?.some((i: any) => i.slug === active);
   return (
     <>
       <Button
@@ -145,17 +142,24 @@ function MenuButton({ item, active }: MenuButtonProps) {
       </Button>
       {isOpen && item.menu && (
         <Box.Stack css={styles.navButtonMenu}>
-          {item.menu.map((menuItem, index) => {
+          {item.menu.map((menuItem: any, index: number) => {
             if (
               menuItem.type === 'internal-link' ||
               menuItem.type === 'external-link'
             ) {
+              const thisLink = isLatest
+                ? menuItem.link
+                    ?.replace('docs/', 'docs/latest/')
+                    .replace('guides', 'guides/latest')
+                : menuItem.link;
+
               return (
                 <ButtonLink
                   css={styles.menuLink}
                   intent="base"
+                  size="sm"
                   key={`${index}${menuItem.slug}`}
-                  href={menuItem.link}
+                  href={thisLink}
                   isExternal={menuItem.type === 'external-link'}
                   data-active={active === menuItem.slug}
                 >
@@ -164,7 +168,11 @@ function MenuButton({ item, active }: MenuButtonProps) {
               );
             }
             return (
-              <Text key={`${index}${menuItem.name}`} css={styles.categoryMenu}>
+              <Text
+                key={`${index}${menuItem.name}`}
+                css={styles.categoryMenu}
+                fontSize="sm"
+              >
                 {menuItem.name}
               </Text>
             );
@@ -177,30 +185,35 @@ function MenuButton({ item, active }: MenuButtonProps) {
 
 const styles = {
   root: cssObj({
-    display: 'flex',
-    alignItems: 'center',
-    gap: '$4',
-
-    '.mobile-button': {
-      height: 'auto !important',
-      padding: '$0 !important',
-      color: '$intentsBase8 !important',
-    },
-
     '@xl': {
       display: 'none',
     },
   }),
-  logoWrapper: cssObj({
-    flex: 1,
-    alignItems: 'center',
+  drawer: cssObj({
+    section: {
+      bg: '$bodyColor',
+      padding: '$6',
+    },
+    '@xl': {
+      display: 'none',
+    },
   }),
-  menu: cssObj({
-    pb: '$4',
+  categoryMenu: cssObj({
+    color: '$textMuted',
     borderBottom: '1px solid $border',
-    gap: '$6',
-    alignItems: 'center',
-
+    mb: '$2',
+    mt: '$1',
+  }),
+  menuLink: cssObj({
+    justifyContent: 'space-between',
+    padding: 0,
+  }),
+  topContainer: cssObj({
+    pb: '$4',
+    mb: '$4',
+    borderBottom: '1px solid $border',
+  }),
+  iconContainer: cssObj({
     a: {
       color: '$intentsBase10',
       transition: 'all 0.3s',
@@ -208,32 +221,6 @@ const styles = {
 
     'a.active, a:hover': {
       color: '$textLink',
-    },
-  }),
-  overlay: cssObj({
-    display: 'flex',
-    flexDirection: 'row-reverse',
-    zIndex: '$10',
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    width: '100vw',
-    height: '100vh',
-    background: 'rgba(0,0,0,.8)',
-    overflow: 'hidden',
-    boxSizing: 'border-box',
-  }),
-  content: cssObj({
-    boxSizing: 'border-box',
-    padding: '$6',
-    width: '100vw',
-    height: '100%',
-    background: '$bodyColor',
-
-    '@sm': {
-      width: '400px',
     },
   }),
   navButton: cssObj({
@@ -245,42 +232,13 @@ const styles = {
     bg: '$intentsBase1',
     padding: '$3',
     borderRadius: '$default',
-  }),
-  menuLink: cssObj({
-    padding: '$0',
-    justifyContent: 'space-between',
-    color: '$intentsBase10',
-    fontSize: '$sm',
-    height: '$4',
-    minHeight: 'auto',
-
-    '&:hover': {
-      background: '$textLink',
-      color: '$white',
-      textDecoration: 'none',
-    },
-    '&[data-active="true"]': {
-      color: '$textLink',
-    },
-  }),
-  categoryMenu: cssObj({
-    fontSize: '$sm',
-    color: '$textMuted',
-    borderBottom: '1px solid $border',
-    mb: '$2',
+    gap: '$1',
   }),
   navContainer: cssObj({
-    overflowY: 'auto',
-    overflowX: 'hidden',
-    maxHeight: 'calc(100vh - 100px)',
-
     '.Sidebar': {
       borderTop: '1px solid $border',
       pt: '$4',
+      mt: '$4',
     },
-  }),
-  nav: cssObj({
-    gap: '$2',
-    py: '$4',
   }),
 };

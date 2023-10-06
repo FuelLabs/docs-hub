@@ -1,6 +1,7 @@
 import { join } from 'path';
 
 export const DOCS_DIRECTORY = join(process.cwd(), './docs');
+export const LATEST_DOCS_DIRECTORY = join(process.cwd(), './docs/latest');
 export const FIELDS = ['title', 'slug', 'content', 'category'];
 
 export type Tabs =
@@ -33,10 +34,10 @@ export type LinkObject = {
 // doc slugs that start with a path in this array
 // won't be capitalized in the navigation sidebar
 export const LOWER_CASE_NAV_PATHS = [
-  'docs/forc/commands/',
-  'docs/forc/plugins/',
-  'docs/indexer/forc-index/',
-  'docs/indexer/forc-postgres/',
+  '/forc/commands/',
+  '/forc/plugins/',
+  '/indexer/forc-index/',
+  '/indexer/forc-postgres/',
 ];
 
 export const NAVIGATION: LinkObject[] = [
