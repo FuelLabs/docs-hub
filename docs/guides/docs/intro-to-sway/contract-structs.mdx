@@ -34,8 +34,9 @@ In Sway, there are four native types of numbers:
 - `u16`: a 16-bit unsigned integer.
 - `u32`: a 32-bit unsigned integer.
 - `u64`: a 64-bit unsigned integer.
+- `u256`: a 256-bit unsigned integer.
 
-An unsigned integer means there is no `+` or `-` sign, making the value always positive. `u64` is the default type used for numbers in Sway. To use other number types, such as [`u256`](https://github.com/FuelLabs/sway/blob/master/sway-lib-std/src/u256.sw) or [signed integers](https://github.com/FuelLabs/sway-libs/tree/master/sway_libs/src/signed_integers), you must import them from a library.
+An unsigned integer means there is no `+` or `-` sign, making the value always positive. `u64` is the default type used for numbers in Sway.
 
 In JavaScript, there are two types of integers: `number` and `BigInt`. The primary difference between these types is that `BigInt` can store much larger values. Similarly, each numeric type in Sway has its maximum value that can be stored.
 

@@ -12,13 +12,51 @@ Before diving into any Sway code, ensure you have properly followed the [install
 
 > This example uses the `beta-4` toolchain, which is version `0.46.1` of `forc`
 
-Within your terminal start by creating a new folder called `sway-store`, and making a new contract called `sway-store-contract`. 
+Start with a new empty folder and name it `fuel-project`.
 
-```bash
+```sh
+$ mkdir fuel-project
+```
+
+Go into the `fuel-project` folder:
+
+```sh
+$ cd fuel-project
+```
+
+Within your terminal start by creating a new sway project called `sway-store`:
+
+```sh
 $ forc new sway-store
+```
+
+Move into your sway-store folder:
+
+```sh
 $ cd sway-store
 ```
 
-Open up the `contract` folder in VSCode, and inside the `src` folder you should see a file called `main.sw`. This is where you will write your Sway contract. 
+Open up the `sway-store` folder in VSCode, and inside the `src` folder you should see a file called `main.sw`. This is where you will write your Sway contract. 
 
-Since we're creating a brand new contract you can delete everything in this file.
+Your project structure generated from the `forc` command should like this: 
+
+```sh
+$ tree sway-store
+sway-store
+├── Forc.toml
+└── src
+    └── main.sw
+```
+
+Since we're creating a brand new contract you can delete everything in this file except for the `contract` keyword.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="contract"
+  commentType="//"
+  lang="sway"
+/>
+
+The first line of the file is specifically reserved to inform the compiler whether we are writing a contract, script, predicate, or library. To designate the file as a contract, use the `contract` keyword.
+
+

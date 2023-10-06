@@ -32,6 +32,8 @@ Our first function enables sellers to list an item for sale. They can specify th
 
 The initial step involves incrementing the `item_counter` in storage, which will serve as the item's ID. In Sway, the standard library provides `read()`, `write()`, and `try_read()` methods to access or manipulate contract storage. It's advisable to use `try_read()` when possible to prevent potential issues arising from accessing uninitialized storage. In this process, we read the current count of listed items, modify it, and then store the updated count back into storage.
 
+When a function returns an `Option` or `Result` type, we can use `unwrap()` to access its inner value. For instance, `try_read()` returns an `Option` type. If it yields `Some`, we get the contained value; but if it returns `None`, the contract call is immediately halted.
+
 <CodeImport
   file="../../examples/intro-to-sway/contract/src/main.sw"
   comment="list_item_increment"
@@ -175,7 +177,7 @@ We can increase the item's `total_bought` field value and subsequently reinsert 
 
 ### Transferring payment
 
-Lastly, we can process the payment to the seller. It's recommended to transfer assets only after all storage modifications are completed to prevent [re-entrancy attacks](https://fuellabs.github.io/sway/v0.32.1/book/blockchain-development/calling_contracts.html#handling-re-entrancy).
+Lastly, we can process the payment to the seller. It's recommended to transfer assets only after all storage modifications are completed to prevent [re-entrancy attacks](https://docs.fuel.network/docs/sway/blockchain-development/calling_contracts/#handling-re-entrancy).
 
 For items reaching a specific price threshold, a fee can be deducted using a conditional `if` statement. The structure of `if` statements in Sway mirrors that in JavaScript.
 
@@ -204,7 +206,7 @@ To get the details for an item, we can create a read-only function that returns 
 />
 
 
-To return a value in a function, you can use the `return` keyword, similar to JavaScript. Alternatively, you can omit the semicolon in the last line to return that value. Although both methods are effective, it's generally better to be explicit.
+To return a value in a function, you can use the `return` keyword, similar to JavaScript. Alternatively, you can omit the semicolon in the last line to return that value like in Rust. Although both methods are effective.
 
 ```sway
 fn my_function(num: u64) -> u64{
