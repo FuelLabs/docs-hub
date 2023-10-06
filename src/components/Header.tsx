@@ -4,6 +4,7 @@ import {
   FuelLogo,
   Icon,
   Link,
+  Alert,
   darkTheme,
   lightTheme,
 } from '@fuel-ui/react';
@@ -24,51 +25,63 @@ interface HeaderProps {
 
 export function Header({ active, title, isLatest }: HeaderProps) {
   return (
-    <Box.Flex as="header" css={styles.root}>
-      <Link href="/" className="logo">
-        <FuelLogo size={30} />
-      </Link>
-      <span id="lvl0" style={{ visibility: 'hidden', width: '0', height: '0' }}>
-        {title}
-      </span>
-      <Box.Flex css={styles.navWrapper} grow={'1'} gap={'$4'}>
-        <Navigation active={active} isLatest={isLatest} />
-      </Box.Flex>
-      <Box css={styles.desktop}>
-        <Box.Stack direction="row" gap="$4" css={{ mr: '$4' }}>
-          <Search title={title} isLatest={isLatest} />
-          <ThemeToggler />
-          <VersionDropdown isLatest={isLatest} />
-        </Box.Stack>
-        <Box.Flex css={styles.menu}>
-          <a
-            href="https://github.com/fuellabs/"
-            target="_blank"
-            rel="noreferrer"
-            title="Github"
-          >
-            <Icon icon={Icon.is('BrandGithub')} size={24} stroke={1} />
-          </a>
-          <a
-            href="https://twitter.com/fuel_network"
-            target="_blank"
-            rel="noreferrer"
-            title="Twitter"
-          >
-            <Icon icon={Icon.is('BrandTwitter')} size={24} stroke={1} />
-          </a>
-          <a
-            href="https://discord.com/invite/xfpK4Pe"
-            target="_blank"
-            rel="noreferrer"
-            title="Discord"
-          >
-            <Icon icon={Icon.is('BrandDiscord')} size={24} stroke={1} />
-          </a>
+    <Box as="header" css={styles.root}>
+      <Box.Flex css={styles.header}>
+        <Link href="/" className="logo">
+          <FuelLogo size={30} />
+        </Link>
+        <span
+          id="lvl0"
+          style={{ visibility: 'hidden', width: '0', height: '0' }}
+        >
+          {title}
+        </span>
+        <Box.Flex css={styles.navWrapper} grow={'1'} gap={'$4'}>
+          <Navigation active={active} isLatest={isLatest} />
         </Box.Flex>
-      </Box>
-      <MobileMenu active={active} title={title} isLatest={isLatest} />
-    </Box.Flex>
+        <Box css={styles.desktop}>
+          <Box.Stack direction="row" gap="$4" css={{ mr: '$4' }}>
+            <Search title={title} isLatest={isLatest} />
+            <ThemeToggler />
+            <VersionDropdown isLatest={isLatest} />
+          </Box.Stack>
+          <Box.Flex css={styles.menu}>
+            <a
+              href="https://github.com/fuellabs/"
+              target="_blank"
+              rel="noreferrer"
+              title="Github"
+            >
+              <Icon icon={Icon.is('BrandGithub')} size={24} stroke={1} />
+            </a>
+            <a
+              href="https://twitter.com/fuel_network"
+              target="_blank"
+              rel="noreferrer"
+              title="Twitter"
+            >
+              <Icon icon={Icon.is('BrandTwitter')} size={24} stroke={1} />
+            </a>
+            <a
+              href="https://discord.com/invite/xfpK4Pe"
+              target="_blank"
+              rel="noreferrer"
+              title="Discord"
+            >
+              <Icon icon={Icon.is('BrandDiscord')} size={24} stroke={1} />
+            </a>
+          </Box.Flex>
+        </Box>
+        <MobileMenu active={active} title={title} isLatest={isLatest} />
+      </Box.Flex>
+      {isLatest && (
+        <Alert css={styles.alert} direction="row" status="warning">
+          <Alert.Description>
+            Latest versions may be unstable or not compatible across tooling.
+          </Alert.Description>
+        </Alert>
+      )}
+    </Box>
   );
 }
 
@@ -77,6 +90,17 @@ const styles = {
     zIndex: '$10',
     position: 'sticky',
     top: 0,
+
+    '@xl': {
+      position: 'relative',
+    },
+  }),
+  alert: cssObj({
+    zIndex: '-1',
+    py: '$1',
+    borderRadius: '0',
+  }),
+  header: cssObj({
     gap: '$2',
     py: '$4',
     px: '$4',
@@ -106,7 +130,6 @@ const styles = {
     },
 
     '@xl': {
-      position: 'relative',
       py: '$4',
       px: '$8',
     },

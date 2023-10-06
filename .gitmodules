@@ -48,6 +48,7 @@
 [submodule "docs/latest/fuels-wallet"]
 	path = docs/latest/fuels-wallet
 	url = https://github.com/FuelLabs/fuels-wallet.git
+	branch = release
 [submodule "docs/latest/fuelup"]
 	path = docs/latest/fuelup
 	url = https://github.com/FuelLabs/fuelup.git

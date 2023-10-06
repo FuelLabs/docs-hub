@@ -1,5 +1,5 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box } from '@fuel-ui/react';
+import { Box, Grid } from '@fuel-ui/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { type ReactNode } from 'react';
@@ -73,17 +73,19 @@ export function Layout({
           content="width=device-width, initial-scale=1.0"
         ></meta>
       </Head>
-      <Box
-        css={styles.root}
-        data-headings={hasHeadings}
-        data-clean={Boolean(isClean)}
-      >
+      <Box css={styles.root}>
         <Header
           active={config?.slug ? config.slug : getSlug()}
           title={config?.title}
           isLatest={isLatest}
         />
-        {children}
+        <Grid
+          data-headings={hasHeadings}
+          data-clean={Boolean(isClean)}
+          css={styles.grid}
+        >
+          {children}
+        </Grid>
       </Box>
     </>
   );
@@ -91,43 +93,38 @@ export function Layout({
 
 const styles = {
   root: cssObj({
-    maxWidth: '100vw',
     width: '100vw',
     height: '100vh',
-    gridTemplateRows: '70px auto',
+  }),
+  grid: cssObj({
+    height: '100vh',
+
+    '& .Layout--section': {
+      maxWidth: '1000px',
+    },
 
     '@xl': {
-      display: 'grid',
-
-      '&[data-clean="false"]': {
+      gridTemplateColumns: '250px 1fr',
+      gridColumnGap: '$24',
+      '& .Layout--section': {
+        width: 'calc(100vw - 442px)',
+      },
+      '&[data-headings="true"]': {
         gridTemplateColumns: '250px 1fr 220px',
-        gridColumnGap: '$24',
-
         '& .Layout--section': {
-          maxWidth: 'calc(100vw - 662px)',
-        },
-
-        '&[data-headings="false"]': {
-          gridTemplateColumns: '250px 1fr',
-
-          '& .Layout--section': {
-            maxWidth: 'calc(100vw - 442px)',
-          },
+          width: 'calc(100vw - 662px)',
         },
       },
       '&[data-clean="true"]': {
         gridTemplateColumns: '1fr',
-
         '& .Layout--section': {
           px: '$14',
         },
       },
     },
-
     '& .Layout--section a, & .Layout--section a:visited': {
       color: 'currentColor',
     },
-
     '& .Layout--section *:first-child': {
       mt: '$0',
     },

@@ -15,25 +15,23 @@ export async function getLatestVersions(latestFileName, dir) {
   const versions = {};
   console.log('Most recently created file:', latestFileName);
   const content = fs.readFileSync(join(dir, latestFileName), 'utf-8');
-  const forcMatches = content.match(/pkg\.forc.*?version\s*=\s*"([^"]+)"/s);
-  if (forcMatches) {
-    versions.forc = forcMatches[1];
-  } else {
-    throw 'ERROR: forc version not found!';
-  }
-
-  const indexerMatches = content.match(
-    /pkg\.fuel-indexer.*?version\s*=\s*"([^"]+)"/s
-  );
-  if (indexerMatches) {
-    versions.indexer = indexerMatches[1];
-  } else {
-    throw 'ERROR: indexer version not found!';
-  }
-
+  versions.forc = getVersionFromToolchainConfig(content, 'forc');
+  versions.indexer = getVersionFromToolchainConfig(content, 'fuel-indexer');
   versions.rust = await getLatestRelease('fuels-rs');
   versions.ts = await getLatestRelease('fuels-ts');
   return versions;
+}
+
+function getVersionFromToolchainConfig(content, pkgName) {
+  const pattern = new RegExp(
+    `pkg\\.${pkgName}.*?version\\s*=\\s*"([^"]+)"`,
+    's'
+  );
+  const matches = content.match(pattern);
+  if (!matches) {
+    throw `ERROR: ${pkgName} version not found!`;
+  }
+  return matches[1];
 }
 
 function getForcVersion() {
