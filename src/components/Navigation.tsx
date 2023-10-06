@@ -5,7 +5,12 @@ import { useRouter } from 'next/router';
 
 import { NAVIGATION } from '../config/constants';
 
-export function Navigation({ active }: { active: string }) {
+interface NavigationProps {
+  active: string;
+  isLatest: boolean;
+}
+
+export function Navigation({ active, isLatest }: NavigationProps) {
   const router = useRouter();
 
   return (
@@ -32,7 +37,10 @@ export function Navigation({ active }: { active: string }) {
                     );
                     if (menuItem && menuItem.link) {
                       if (menuItem.type === 'internal-link') {
-                        router.push(menuItem.link);
+                        const thisLink = isLatest
+                          ? menuItem.link.replace('docs/', 'docs/latest/')
+                          : menuItem.link;
+                        router.push(thisLink);
                       } else if (menuItem.type === 'external-link') {
                         window.open(menuItem.link);
                       }
@@ -68,8 +76,17 @@ export function Navigation({ active }: { active: string }) {
           );
         }
         return (
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          <NextLink key={index} href={item.link as any} legacyBehavior passHref>
+          <NextLink
+            key={index}
+            href={
+              isLatest
+                ? item.link?.replace('docs/', 'docs/latest/')
+                : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  (item.link as any)
+            }
+            legacyBehavior
+            passHref
+          >
             <ButtonLink
               css={styles.navButton}
               data-active={active === item.name.toLowerCase()}

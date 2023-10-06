@@ -6,20 +6,22 @@ import type { GuideInfo } from '../pages/guides';
 
 interface GuidesPageProps {
   guides: { [key: string]: GuideInfo };
+  isLatest: boolean;
 }
 
-export function GuideCard({
-  guideName,
-  guideInfo,
-}: {
+interface GuideCardProps {
   guideName: string;
   guideInfo: GuideInfo;
-}) {
+  // isLatest: boolean;
+}
+
+export function GuideCard({ guideName, guideInfo }: GuideCardProps) {
+  const cleanGuideName = guideName.replaceAll('_', '-');
   return (
     <Box key={guideName} css={styles.card}>
       <Icon icon="Code" size={40} stroke={0.7} />
       <Box.Stack>
-        <FuelLink href={`/guides/${guideName.replaceAll('_', '-')}`}>
+        <FuelLink href={`/guides/${cleanGuideName}`}>
           <Heading as="h3">{guideInfo.title}</Heading>
         </FuelLink>
         <Text>{guideInfo.description}</Text>
@@ -42,6 +44,7 @@ export function GuidesPage({ guides }: GuidesPageProps) {
               key={guideName}
               guideName={guideName}
               guideInfo={guideInfo}
+              // isLatest={isLatest}
             />
           );
         })}

@@ -28,3 +28,33 @@
 [submodule "docs/fuel-specs"]
 	path = docs/fuel-specs
 	url = https://github.com/FuelLabs/fuel-specs.git
+[submodule "docs/latest/sway"]
+	path = docs/latest/sway
+	url = https://github.com/FuelLabs/sway.git
+[submodule "docs/latest/fuels-rs"]
+	path = docs/latest/fuels-rs
+	url = https://github.com/FuelLabs/fuels-rs.git
+[submodule "docs/latest/fuel-graphql-docs"]
+	path = docs/latest/fuel-graphql-docs
+	url = https://github.com/FuelLabs/fuel-graphql-docs.git
+[submodule "docs/latest/fuels-ts"]
+	path = docs/latest/fuels-ts
+	url = https://github.com/FuelLabs/fuels-ts
+	branch = docs
+[submodule "docs/latest/builds/sway"]
+	path = docs/latest/builds/sway
+	branch = gh-pages
+	url = https://github.com/FuelLabs/sway.git
+[submodule "docs/latest/fuels-wallet"]
+	path = docs/latest/fuels-wallet
+	url = https://github.com/FuelLabs/fuels-wallet.git
+	branch = release
+[submodule "docs/latest/fuelup"]
+	path = docs/latest/fuelup
+	url = https://github.com/FuelLabs/fuelup.git
+[submodule "docs/latest/fuel-indexer"]
+	path = docs/latest/fuel-indexer
+	url = https://github.com/FuelLabs/fuel-indexer.git
+[submodule "docs/latest/fuel-specs"]
+	path = docs/latest/fuel-specs
+	url = https://github.com/FuelLabs/fuel-specs.git

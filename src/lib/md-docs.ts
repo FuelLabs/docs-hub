@@ -28,6 +28,7 @@ export class Docs {
 
   static findDoc(slug: string[], mdDocs: MdDoc[]) {
     const path = slug.join('/');
+
     const item = mdDocs.find((doc) => {
       return (
         doc.slug === path ||
