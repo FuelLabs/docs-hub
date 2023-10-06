@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@actions/exec": "^1.1.1",
+    "@actions/github": "^5.1.1",
     "@docsearch/css": "^3.5.2",
     "@docsearch/react": "3.5.2",
     "@fuel-ui/css": "0.21.0-pr-305-04b8434",
