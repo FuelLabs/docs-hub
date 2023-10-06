@@ -22,7 +22,8 @@ export class DocParser {
       );
     }
 
-    for (const [key, value] of Object.entries(pathsConfig)) {
+    for (const key in pathsConfig) {
+      const value = pathsConfig[key];
       slug = slug.replaceAll(key, value as string);
     }
     return slug.toLowerCase();

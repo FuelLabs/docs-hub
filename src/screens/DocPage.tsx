@@ -1,5 +1,6 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
+import { useEffect, useState } from 'react';
 import { Layout } from '~/src/components/Layout';
 import { Sidebar } from '~/src/components/Sidebar';
 import { TableOfContent } from '~/src/components/TableOfContent';
@@ -7,13 +8,22 @@ import { DocProvider } from '~/src/hooks/useDocContext';
 
 import { DocFooter } from '../components/DocFooter';
 import { MDXRender } from '../components/MDXRender';
+import { useVersion } from '../hooks/useVersion';
 import { getComponents } from '../lib/imports';
 import type { DocPageProps } from '../pages/[...slug]';
 
 export function DocScreen(props: DocPageProps) {
   const { doc } = props;
-  const components = getComponents(doc);
-  const hasHeadings = Boolean(doc?.headings?.length);
+  const [mounted, setIsMounted] = useState<boolean>(false);
+  const version = useVersion();
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const isLatest = mounted ? version === 'Latest' : doc.isLatest;
+  const components = getComponents(doc.slug, doc.isLatest);
+  const hasHeadings = Boolean(doc.headings?.length);
 
   return (
     <DocProvider {...props}>
@@ -22,18 +32,24 @@ export function DocScreen(props: DocPageProps) {
         hasHeadings={hasHeadings}
         config={doc.docsConfig}
         category={doc.category}
+        isLatest={isLatest}
       >
         <Box css={styles.sidebar}>
           <Box css={styles.sidebarContainer}>
             <Sidebar />
           </Box>
         </Box>
-        <Box as="section" css={styles.section} className="Layout--section">
+        <Box.Flex
+          direction={'column'}
+          as="section"
+          css={styles.section}
+          className="Layout--section"
+        >
           <Box className="Layout--pageContent">
             {doc && <MDXRender code={props.code} components={components} />}
           </Box>
           {doc && <DocFooter />}
-        </Box>
+        </Box.Flex>
         {doc && hasHeadings && <TableOfContent />}
       </Layout>
     </DocProvider>
@@ -63,14 +79,10 @@ const styles = {
     },
   }),
   section: cssObj({
-    py: '$6',
-    px: '$6',
-    display: 'flex',
-    flexDirection: 'column',
+    padding: '$6',
 
     '@md': {
-      py: '$8',
-      px: '$8',
+      padding: '$8',
     },
 
     '@xl': {

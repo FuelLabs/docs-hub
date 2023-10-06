@@ -56,7 +56,7 @@ const styles = {
     },
 
     '&[data-theme="light"]': {
-      bg: '#EBEDF0',
+      bg: '$gray4',
 
       '[aria-label*="MoonStars"]': {
         transform: 'translateX(100%)',
