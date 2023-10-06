@@ -24,6 +24,6 @@ Within our contract, we can anticipate various scenarios where we'd want to thro
 
 For each situation, we can define specific return types for the errors:
 
-- For the `IncorrectAssetId` error, we can return the submitted asset id, which is of type `ContractId`.
+- For the `IncorrectAssetId` error, we can return the submitted asset id, which is of type `AssetId`.
 - In the case of the `NotEnoughTokens` error, we can define the return type as `u64` to indicate the number of coins involved.
 - For the `OnlyOwner` error, we can utilize the `Identity` of the message sender as the return.
