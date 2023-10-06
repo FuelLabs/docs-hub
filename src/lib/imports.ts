@@ -7,6 +7,7 @@ import * as FuelExamples from '~/docs/fuels-wallet/packages/docs/examples';
 import * as LatestGQLExamples from '~/docs/latest/fuel-graphql-docs/examples';
 import * as LatestFuelExamples from '~/docs/latest/fuels-wallet/packages/docs/examples';
 import { TD, TH } from '~/src/components/Table';
+import TestAction from '~/src/components/TestAction';
 import { COMPONENTS as GQL_COMPONENTS } from '~/src/generated/components/graphql';
 import { COMPONENTS as LATEST_GQL_COMPONENTS } from '~/src/generated/components/latest-graphql';
 import { COMPONENTS as LATEST_WALLET_COMPONENTS } from '~/src/generated/components/latest-wallet';
@@ -53,6 +54,7 @@ export function getComponents(docSlug: string, isLatest: boolean) {
       import('~/src/components/CodeImport'),
       'CodeImport'
     );
+    components.TestAction = TestAction;
   } else if (
     docSlug.includes('docs/wallet') ||
     docSlug.includes('docs/latest/wallet')
