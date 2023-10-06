@@ -95,12 +95,18 @@ const styles = {
   root: cssObj({
     width: '100vw',
     height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
   }),
   grid: cssObj({
-    height: '100vh',
+    flex: 1,
+    overflowY: 'auto',
+    overflowX: 'hidden',
 
     '& .Layout--section': {
       maxWidth: '1000px',
+      width: '100vw',
+      boxSizing: 'border-box',
     },
 
     '@xl': {
