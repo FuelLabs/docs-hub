@@ -20,14 +20,8 @@ Next, install the fuels Typescript and wallet SDKs in the frontend folder and ge
 
 ```shell
 cd frontend
-npm install fuels @fuel-wallet/sdk
+npm install fuels@0.60.0 @fuel-wallet/sdk@0.13.0 --save
 npx fuels typegen -i ../contract/out/debug/*-abi.json -o ./src/contracts
-```
-
-In the `tsconfig.json` file, add the line below in the `compilerOptions` object to add the Fuel wallet type on the window object.
-
-```json
-"types": ["@fuel-wallet/sdk"],
 ```
 
 Open the `src/App.tsx` file, and replace the boilerplate code with the template below:
