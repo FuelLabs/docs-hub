@@ -43,7 +43,7 @@ async function updateSubmodules(newVersions) {
   // update everything that doesn't have a version
   // or has a release branch
   const updateRegardless = [
-    'docs/latest/fuels-wallet',
+    // 'docs/latest/fuels-wallet',
     'docs/latest/fuel-specs',
     'docs/latest/fuel-graphql-docs',
     'docs/latest/fuelup',
@@ -68,7 +68,7 @@ async function updateSubmodules(newVersions) {
         switch (key) {
           case 'forc':
             submoduleName = 'docs/latest/sway';
-            await updateSubmodule('docs/latest/builds/sway');
+            await update(version, 'docs/latest/builds/sway');
             break;
           case 'indexer':
             submoduleName = 'docs/latest/fuel-indexer';
@@ -81,10 +81,14 @@ async function updateSubmodules(newVersions) {
             break;
           default:
         }
-        await updateSubmodule(submoduleName);
-        await fetchTag(version, submoduleName);
-        await checkoutVersion(version, submoduleName);
+        await update(version, submoduleName);
       })
     );
   }
+}
+
+export async function update(version, dir) {
+  await updateSubmodule(dir);
+  await fetchTag(version, dir);
+  await checkoutVersion(version, dir);
 }
