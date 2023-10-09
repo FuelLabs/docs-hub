@@ -17,7 +17,11 @@ export async function updateLatest(newVersions) {
 
   // create a new branch of docs-hub
   const date = new Date();
-  const branchName = `latest-update-${date.getDay()}-${date.getMonth()}-${date.getFullYear()}`;
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+  const branchName = `bot/latest-update-${formattedDate}`;
   await switchToNewBranch(branchName);
 
   // update latest submodules
