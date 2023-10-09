@@ -7,6 +7,7 @@ import {
   commitAll,
   push,
   createPR,
+  fetchTag,
 } from './gitUtils.mjs';
 
 export async function updateLatest(newVersions) {
@@ -81,6 +82,7 @@ async function updateSubmodules(newVersions) {
           default:
         }
         await updateSubmodule(submoduleName);
+        await fetchTag(version, submoduleName);
         await checkoutVersion(version, submoduleName);
       })
     );
