@@ -7,6 +7,9 @@ on:
     # Option to run the workflow manually
     workflow_dispatch: 
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   find-latest-file:
     runs-on: ubuntu-latest
@@ -14,6 +17,8 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v3
+      with:
+        submodules: 'true'
     
     - uses: ./.github/actions/setup-node
       with:
