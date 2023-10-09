@@ -58,7 +58,8 @@ const styles = {
   }),
   root: cssObj({
     position: 'sticky',
-    top: 0,
+    // header height
+    top: 69,
     py: '$8',
     pr: '$8',
 
