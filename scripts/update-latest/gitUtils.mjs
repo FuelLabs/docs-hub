@@ -17,6 +17,18 @@ export const push = async (branch, { force } = {}) => {
   );
 };
 
+export const fetchTag = async (tag, dir) => {
+  await exec('git', ['fetch', 'origin', 'tag', tag], {
+    cwd: dir,
+  });
+};
+
+export const fetchBranch = async (branch, dir) => {
+  await exec('git', ['fetch', 'origin', `${branch}:${branch}`], {
+    cwd: dir,
+  });
+};
+
 export const switchToExistingBranch = async (branch, dir) => {
   await exec('git', ['switch', branch], {
     cwd: dir,
