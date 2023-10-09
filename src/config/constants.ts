@@ -154,6 +154,11 @@ export const NAVIGATION: LinkObject[] = [
         slug: 'specs',
       },
       {
+        name: 'Explorer',
+        type: 'external-link',
+        link: 'https://fuellabs.github.io/block-explorer-v2/',
+      },
+      {
         name: 'Faucet',
         type: 'external-link',
         link: 'https://faucet-beta-4.fuel.network/',

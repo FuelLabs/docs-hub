@@ -116,6 +116,14 @@ export function HomePage({ guides, isLatest }: HomePageProps) {
               </Link>
             </List.Item>
             <List.Item>
+              <FuelLink
+                href="https://fuellabs.github.io/block-explorer-v2/"
+                isExternal
+              >
+                Block Explorer
+              </FuelLink>
+            </List.Item>
+            <List.Item>
               <FuelLink href="https://faucet-beta-4.fuel.network/" isExternal>
                 Faucet
               </FuelLink>
@@ -177,7 +185,7 @@ export function HomePage({ guides, isLatest }: HomePageProps) {
                 key={guideName}
                 guideName={guideName}
                 guideInfo={guideInfo}
-                isLatest={isLatest}
+                // isLatest={isLatest}
               />
             );
           }
