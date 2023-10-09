@@ -7,6 +7,9 @@ on:
     # Option to run the workflow manually
     workflow_dispatch: 
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   find-latest-file:
     runs-on: ubuntu-latest

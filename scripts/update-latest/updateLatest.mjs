@@ -8,6 +8,7 @@ import {
   push,
   createPR,
   fetchTag,
+  fetchBranch,
 } from './gitUtils.mjs';
 
 export async function updateLatest(newVersions) {
@@ -41,9 +42,7 @@ export async function updateLatest(newVersions) {
 
 async function updateSubmodules(newVersions) {
   // update everything that doesn't have a version
-  // or has a release branch
   const updateRegardless = [
-    // 'docs/latest/fuels-wallet',
     'docs/latest/fuel-specs',
     'docs/latest/fuel-graphql-docs',
     'docs/latest/fuelup',
@@ -65,30 +64,40 @@ async function updateSubmodules(newVersions) {
         const version = `v${newVersions[key]}`;
         console.log('NEW VERSION:', version);
         let submoduleName;
+        let branch;
         switch (key) {
           case 'forc':
             submoduleName = 'docs/latest/sway';
-            await update(version, 'docs/latest/builds/sway');
+            await update(version, 'docs/latest/builds/sway', 'gh-pages');
             break;
           case 'indexer':
             submoduleName = 'docs/latest/fuel-indexer';
             break;
           case 'rust':
-            submoduleName = 'docs/latest/fuel-rs';
+            submoduleName = 'docs/latest/fuels-rs';
             break;
           case 'ts':
-            submoduleName = 'docs/latest/fuel-ts';
+            submoduleName = 'docs/latest/fuels-ts';
+            branch = 'docs';
+            break;
+          case 'wallet':
+            submoduleName = 'docs/latest/fuels-wallet';
+            branch = 'release';
             break;
           default:
         }
-        await update(version, submoduleName);
+        await update(version, submoduleName, branch);
       })
     );
   }
 }
 
-export async function update(version, dir) {
+export async function update(version, dir, branch) {
   await updateSubmodule(dir);
+  if (branch) {
+    await fetchBranch(branch, dir);
+    await switchToExistingBranch(branch, dir);
+  }
   await fetchTag(version, dir);
   await checkoutVersion(version, dir);
 }
