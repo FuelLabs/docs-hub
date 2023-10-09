@@ -8,6 +8,7 @@ export function getExistingVersions() {
     indexer: getIndexerVersion(),
     rust: getRustSDKVersion(),
     ts: getTSSDKVersion(),
+    wallet: getWalletVersion(),
   };
 }
 
@@ -19,6 +20,7 @@ export async function getLatestVersions(latestFileName, dir) {
   versions.indexer = getVersionFromToolchainConfig(content, 'fuel-indexer');
   versions.rust = await getLatestRelease('fuels-rs');
   versions.ts = await getLatestRelease('fuels-ts');
+  versions.wallet = await getLatestRelease('fuels-wallet');
   return versions;
 }
 
@@ -42,26 +44,35 @@ function getForcVersion() {
 }
 
 function getIndexerVersion() {
-  const filedir = 'docs/latest/fuel-indexer/Cargo.toml';
-  const file = fs.readFileSync(filedir, 'utf-8');
-  const tomfile = toml.parse(file);
-  return tomfile.workspace.package.version;
+  return getVersionFromTOMLFile('docs/latest/fuel-indexer/Cargo.toml');
 }
 
 function getTSSDKVersion() {
-  const file = fs.readFileSync(
-    'docs/latest/fuels-ts/packages/fuels/package.json',
-    'utf-8'
+  return getVersionFromJSONFile(
+    'docs/latest/fuels-ts/packages/fuels/package.json'
   );
+}
+
+function getRustSDKVersion() {
+  return getVersionFromTOMLFile('docs/latest/fuels-rs/Cargo.toml');
+}
+
+function getWalletVersion() {
+  return getVersionFromJSONFile(
+    'docs/latest/fuels-wallet/packages/sdk/package.json'
+  );
+}
+
+function getVersionFromJSONFile(path) {
+  const file = fs.readFileSync(path, 'utf-8');
   const json = JSON.parse(file);
   return json.version;
 }
 
-function getRustSDKVersion() {
-  const filedir = 'docs/latest/fuels-rs/Cargo.toml';
-  const file = fs.readFileSync(filedir, 'utf-8');
-  const tomfile = toml.parse(file);
-  return tomfile.workspace.package.version;
+function getVersionFromTOMLFile(path) {
+  const file = fs.readFileSync(path, 'utf-8');
+  const tomlFile = toml.parse(file);
+  return tomlFile.workspace.package.version;
 }
 
 async function getLatestRelease(repoName) {
