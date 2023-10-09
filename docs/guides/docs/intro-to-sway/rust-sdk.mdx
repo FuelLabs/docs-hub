@@ -10,7 +10,7 @@ parent:
 
 ### Generating a Test Template in Rust
 
-To create your own test template using Rust, follow these steps with `cargo-generate`:
+To create your own test template using Rust, follow these steps with `cargo-generate` in the contract project directory:
 
 1. Install `cargo-generate`:
 ```bash
@@ -22,9 +22,15 @@ cargo install cargo-generate
 cargo generate --init fuellabs/sway templates/sway-test-rs --name contract
 ```
 
+{/* TODO: Remove this after cargo generate updates */}
+3. In the `cargo.toml` under `[dev-dependencies]` update the version of `fuels-rs` to 0.48.0:
+```toml
+fuels = { version = "0.48", features = ["fuel-core-lib"] }
+```
+
 ## Imports
 
-At the beginning of the harness.rs file, import the Fuel Rust SDK. The majority of the functionalities you'll need are housed within the prelude.
+We will be changing the exisiting test file that has been generated. Firstly we need to change the imports. By importing the Fuel Rust SDK you will get majority of the functionalities housed within the prelude.
 
 <CodeImport
   file="../../examples/intro-to-sway/contract/tests/harness.rs"
@@ -44,7 +50,7 @@ Always compile your contracts after making any changes. This ensures you're work
 
 ## Initializing Functions
 
-When writing tests for Sway, two crucial objects are required: the contract instance and the wallets that interact with it. This helper function ensures a fresh start for every new test case. It will export the deployed contracts, the contract ID, and all the generated wallets for this purpose.
+When writing tests for Sway, two crucial objects are required: the contract instance and the wallets that interact with it. This helper function ensures a fresh start for every new test case so copy into your test file. It will export the deployed contracts, the contract ID, and all the generated wallets for this purpose.
 
 <CodeImport
   file="../../examples/intro-to-sway/contract/tests/harness.rs"

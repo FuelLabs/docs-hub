@@ -17,6 +17,8 @@ Finally, it's time to compose our contract functions. Begin by copying and pasti
   lang="sway"
 />
 
+This guide will first show each of the completed functions above. Then, we'll break it down to explain each part, clarify specific syntax, and discuss fundamental concepts in Sway.
+
 ## 1. Listing an item
 
 Our first function enables sellers to list an item for sale. They can specify the item's price and provide a string that references externally-stored data about the item.
@@ -45,9 +47,7 @@ When a function returns an `Option` or `Result` type, we can use `unwrap()` to a
 
 Next, we'll retrieve the `Identity` of the account listing the item.
 
-In Sway, you can define a variable using either `let` or `const`. It's essential to declare types when they can't be automatically inferred by the compiler.
-
-To obtain the `Identity`, utilize the `msg_sender` function from the standard library. The `msg_sender` represents the address of the entity (be it a user address or another contract address) initiating the current function call. This function yields a `Result`, which is an enum type that can either be OK or an error. Employ the `Result` type when anticipating a value that might result in an error.
+To obtain the `Identity`, utilize the `msg_sender` function from the standard library. The `msg_sender` represents the address of the entity (be it a user address or another contract address) initiating the current function call. This function yields a `Result`, which is an enum type that can either be OK or an error. Use the `Result` type when anticipating a value that might result in an error.
 
 ```sway
 enum Result<T, E> {
@@ -56,7 +56,7 @@ enum Result<T, E> {
 }
 ```
 
-The `msg_sender` function yields a `Result`, which can either be an `Identity` or, in the event of an error, an `AuthError`.
+In Sway, you can define a variable using either `let` or `const`. It's essential to declare types when they can't be automatically inferred by the compiler.
 
 <CodeImport
   file="../../examples/intro-to-sway/contract/src/main.sw"
@@ -65,7 +65,7 @@ The `msg_sender` function yields a `Result`, which can either be an `Identity` o
   lang="sway"
 />
 
-To retrieve the inner value, you can employ the `unwrap` method. It returns the contained value if the `Result` is OK and triggers a panic if the result indicates an error.
+To retrieve the inner value, you can use the `unwrap` method. It returns the contained value if the `Result` is OK and triggers a panic if the result indicates an error.
 
 ### Creating a new item
 
@@ -109,7 +109,7 @@ Next, we aim to allow buyers to purchase listed items. To achieve this, we'll ne
 
 ### Verifying payment
 
-We can employ the `msg_asset_id` function from the standard library to obtain the asset ID of the coins being transferred in the transaction.
+We can use the `msg_asset_id` function from the standard library to obtain the asset ID of the coins being transferred in the transaction.
 
 <CodeImport
   file="../../examples/intro-to-sway/contract/src/main.sw"
@@ -133,7 +133,7 @@ If there's a mismatch in the asset, or if, for instance, someone attempts to pur
   lang="sway"
 />
 
-Next, we can employ the `msg_amount` function from the standard library to retrieve the quantity of coins transmitted by the buyer within the transaction.
+Next, we can use the `msg_amount` function from the standard library to retrieve the quantity of coins transmitted by the buyer within the transaction.
 
 <CodeImport
   file="../../examples/intro-to-sway/contract/src/main.sw"
@@ -188,11 +188,11 @@ For items reaching a specific price threshold, a fee can be deducted using a con
   lang="sway"
 />
 
-In the aforementioned if-condition, we assess if the transmitted amount surpasses 100,000,000. For clarity in large numbers like `100000000`, we can represent it as `100_000_000`. If the foundational asset for this contract is ETH, this equates to 0.1 ETH given that Fuel employs a 9 decimal system.
+In the aforementioned if-condition, we assess if the transmitted amount surpasses 100,000,000. For clarity in large numbers like `100000000`, we can represent it as `100_000_000`. If the foundational asset for this contract is ETH, this equates to 0.1 ETH given that Fuel uses a 9 decimal system.
 
 Should the amount exceed 0.1 ETH, a commission is determined and then deducted from the total.
 
-To facilitate the payment to the item's owner, the `transfer` function is utilized. This function, sourced from the standard library, requires three parameters: the coin quantity for transfer, the coin's asset ID, and the Identity to which the coins are dispatched.
+To facilitate the payment to the item's owner, the `transfer` function is utilized. This function, sourced from the standard library, requires three parameters: the Identity to which the coins are sent, the coin's asset ID, and the coin quantity for transfer.
 
 ## 3. Get an item
 
@@ -220,7 +220,7 @@ fn my_function(num: u64) -> u64{
 
 ## 4. Initialize the owner
 
-To ensure the owner's `Identity` is set accurately, we should avoid hard-coding it. Instead, we can utilize this function to determine the owner based on a wallet.
+This method sets the owner's `Identity` for the contract but only once.
 
 <CodeImport
   file="../../examples/intro-to-sway/contract/src/main.sw"
@@ -231,7 +231,7 @@ To ensure the owner's `Identity` is set accurately, we should avoid hard-coding 
 
 To ensure that this function can only be called once, specifically right after the contract's deployment, it's imperative that the owner's value remains set to `None`. We can achieve this verification using the `is_none` method, which assesses if an Option type is `None`. 
 
-It's also important to note the potential risk of [front running](https://scsfg.io/hackers/frontrunning/) in this context.
+It's also important to note the potential risk of [front running](https://scsfg.io/hackers/frontrunning/) in this context this code has not been audited. 
 
 <CodeImport
   file="../../examples/intro-to-sway/contract/src/main.sw"
