@@ -1,6 +1,6 @@
 import { cssObj } from '@fuel-ui/css';
 import type { ButtonLinkProps } from '@fuel-ui/react';
-import { Box, Icon, IconButton, List } from '@fuel-ui/react';
+import { Box, List } from '@fuel-ui/react';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import type { SidebarLinkItem } from '~/src/types';
@@ -38,25 +38,15 @@ export function SidebarSubmenu({
 
   return (
     <Box.Flex css={styles.root}>
-      <Box.Flex justify={'space-between'}>
-        <SidebarLink
-          intent="base"
-          onClick={onClick}
-          item={thisItem}
-          isActiveMenu={isOpened}
-        />
-        <IconButton
-          size="xs"
-          aria-label="Button"
-          intent="base"
-          variant="link"
-          onClick={() => setIsOpened(!isOpened)}
-          icon={isOpened ? Icon.is('ChevronUp') : Icon.is('ChevronDown')}
-        />
-      </Box.Flex>
+      <SidebarLink
+        intent="base"
+        onClick={onClick}
+        item={thisItem}
+        isActiveMenu={isOpened}
+      />
 
       {isOpened && (
-        <List>
+        <List css={styles.list}>
           {submenu?.map((item, index) => {
             if (!hasIndex || index > 0) {
               return (
@@ -76,25 +66,8 @@ export function SidebarSubmenu({
 const styles = {
   root: cssObj({
     flexDirection: 'column',
-
-    '.fuel_List': {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '$1',
-      mt: '$1',
-      pl: '$3',
-      ml: '$1',
-      borderLeft: '1px solid $border',
-    },
-    '.fuel_ListItem': {
-      width: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '$0',
-    },
-    '.fuel_ListItem a': {
-      display: 'block',
-      width: '100%',
-    },
+  }),
+  list: cssObj({
+    pl: '$4',
   }),
 };

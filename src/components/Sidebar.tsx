@@ -104,7 +104,6 @@ export const styles = {
   root: cssObj({
     gap: '$1',
     pb: '$4',
-    lineHeight: '1.3',
   }),
   sectionContainer: cssObj({
     pb: '$4',
@@ -112,10 +111,9 @@ export const styles = {
   button: cssObj({
     width: '100%',
     justifyContent: 'flex-start',
-    py: '$2',
     '&:hover': {
-      bg: '$intentsBase3 !important',
       textDecoration: 'none',
+      color: '$green11 !important',
     },
   }),
   sectionLink: cssObj({

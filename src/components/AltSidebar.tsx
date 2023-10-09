@@ -1,6 +1,6 @@
 import { cssObj } from '@fuel-ui/css';
 import type { ButtonLinkProps } from '@fuel-ui/react';
-import { Box, ButtonLink, Button } from '@fuel-ui/react';
+import { Box, ButtonLink, Icon, IconButton } from '@fuel-ui/react';
 import { useState } from 'react';
 
 import { useDocContext } from '../hooks/useDocContext';
@@ -36,6 +36,9 @@ function SidebarSection({ links, onClick, book, docSlug }: SectionProps) {
     book === 'guides' || docSlug?.includes(book.toLowerCase())
   );
   const isGuide = book === 'guides';
+  const bookHasIndex =
+    book?.toLowerCase().replaceAll(/[_-]/g, ' ') ===
+    links[0].label.toLowerCase().replaceAll(/[_-]/g, ' ');
 
   function toggle() {
     setIsOpened((s) => !s);
@@ -43,38 +46,43 @@ function SidebarSection({ links, onClick, book, docSlug }: SectionProps) {
   return (
     <>
       {!isGuide && (
-        <Button
-          onClick={toggle}
-          css={
-            isOpened
-              ? {
-                  ...styles.button,
-                  ...styles.sectionLink,
-                  ...styles.activeSectionLink,
-                }
-              : { ...styles.button, ...styles.sectionLink }
-          }
-          variant="link"
-          intent="base"
-          size="lg"
-        >
-          {book}
-        </Button>
+        <Box.Flex justify={'space-between'}>
+          <SidebarLink
+            intent="base"
+            onClick={onClick}
+            item={{
+              slug: links[0].slug,
+              isExternal: false,
+              label: book,
+            }}
+            isActiveMenu={isOpened}
+          />
+          <IconButton
+            size="xs"
+            aria-label="Button"
+            intent="base"
+            variant="link"
+            onClick={toggle}
+            icon={isOpened ? Icon.is('ChevronUp') : Icon.is('ChevronDown')}
+          />
+        </Box.Flex>
       )}
 
       {(isGuide || isOpened) && (
         <Box css={styles.sectionContainer}>
           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           {links.map((link: any, index: number) => {
-            return link.slug ? (
-              <SidebarLink onClick={onClick} key={link.slug} item={link} />
-            ) : (
-              <SidebarSubmenu
-                onClick={onClick}
-                key={link.subpath ? link.subpath + index : index}
-                {...link}
-              />
-            );
+            if (!bookHasIndex || index > 0) {
+              return link.slug ? (
+                <SidebarLink onClick={onClick} key={link.slug} item={link} />
+              ) : (
+                <SidebarSubmenu
+                  onClick={onClick}
+                  key={link.subpath ? link.subpath + index : index}
+                  {...link}
+                />
+              );
+            }
           })}
           {/* {version && (
             <Box css={{ fontSize: '$sm', padding: '20px 0 20px 0' }}>
@@ -135,10 +143,10 @@ export const styles = {
   root: cssObj({
     gap: '$1',
     pb: '$4',
-    lineHeight: '1.3',
   }),
   sectionContainer: cssObj({
     pb: '$4',
+    pl: '$2',
   }),
   button: cssObj({
     width: '100%',

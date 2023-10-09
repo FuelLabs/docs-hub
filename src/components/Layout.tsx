@@ -119,6 +119,7 @@ const styles = {
 
       '& .Layout--section': {
         margin: 0,
+        width: 'calc(100vw - 368px)',
       },
 
       '&[data-clean="false"]': {

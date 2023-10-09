@@ -20,7 +20,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
     const isActive = isActiveMenu ?? router.asPath === `/${item.slug}/`;
     const buttonStyles = {
       ...styles.button,
-      lineHeight: '1.3',
+      // lineHeight: '1.3',
       color: isActive ?? '$green11',
       'html[class="fuel_light-theme"] &': {
         color: isActive ? '$green11' : '$intentsBase12',

@@ -36,20 +36,20 @@ export function Breadcrumb({ doc, navLinks }: BreadcrumbProps) {
 
         if (link) {
           return (
-            <>
-              <NextLink key={`${index}-${label}`} href={link}>
+            <Box key={`${index}-${label}`}>
+              <NextLink href={link}>
                 <Label label={label} />
               </NextLink>
               {index < split.length - 1 && ' / '}
-            </>
+            </Box>
           );
         }
 
         return (
-          <>
-            <Label key={`${index}-${label}`} label={label} />
+          <div key={`${index}-${label}`}>
+            <Label label={label} />
             {index < split.length - 1 && ' / '}
-          </>
+          </div>
         );
       })}
     </Box.Flex>
