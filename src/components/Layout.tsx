@@ -100,8 +100,6 @@ const styles = {
   }),
   grid: cssObj({
     flex: 1,
-    overflowY: 'auto',
-    overflowX: 'hidden',
 
     '& .Layout--section': {
       maxWidth: '1000px',
