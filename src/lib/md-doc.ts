@@ -6,6 +6,9 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
 import { codeImport as walletCodeImport } from '~/docs/fuels-wallet/packages/docs/src/lib/code-import';
+import { codeExamples as latestCodeExamples } from '~/docs/latest/fuel-graphql-docs/src/lib/code-examples';
+import { codeImport as latestWalletCodeImport } from '~/docs/latest/fuels-wallet/packages/docs/src/lib/code-import';
+import { codeImport } from '~/src/lib/plugins/code-import';
 
 import { DOCS_DIRECTORY } from '../config/constants';
 import type { Config, DocType, SidebarLinkItem } from '../types';
@@ -40,25 +43,36 @@ export class Doc {
     this.md = item;
     this.config = config;
 
+    let category = item.category;
+    if (!category && item.slug.includes('docs/')) {
+      const isLatest = item.slug.includes('/latest/');
+      const split = item.slug.split('/');
+      const index = isLatest ? 3 : 2;
+      const isIndex = split.length === index;
+      category = split[isIndex ? index - 1 : index].replaceAll('-', ' ');
+    }
+
     const doc = {
       pageLink,
       _raw: item._raw,
       slug: item.slug,
       title: this.#getTitle(item.title),
       parent: item.parent ?? null,
-      category: item.category ?? null,
+      category: category,
       headings: [],
       menu: [],
       docsConfig: {
         ...config,
         slug: item.slug,
       },
+      isLatest: item.slug.includes('/latest/'),
     } as DocType;
 
     this.item = doc;
   }
 
   #getConfig(slug: string): Config {
+    slug = slug.replace('docs/latest/', 'docs/');
     try {
       if (slug.startsWith('docs/')) {
         slug = slug.replace('docs/', '');
@@ -106,15 +120,23 @@ export class Doc {
     return this.#createUrl(slug);
   }
 
-  get sidebarLinks() {
-    const configSlug = this.config.slug;
-    const guideName = this.item.slug.split('/')[0];
+  sidebarLinks(slug: string) {
+    const configSlug = slug.includes('/latest/')
+      ? `latest-${this.config.slug}`
+      : this.config.slug;
+    let guideName = this.item.slug.split('/')[0];
     const linksPath = join(
       DOCS_DIRECTORY,
       `../src/generated/sidebar-links/${configSlug}.json`
     );
     const links = JSON.parse(readFileSync(linksPath, 'utf8'));
-    if (configSlug === 'guides' && guideName) {
+    if (
+      (configSlug === 'guides' || configSlug === 'latest-guides') &&
+      guideName
+    ) {
+      if (configSlug === 'latest-guides') {
+        guideName = `${guideName}/latest`;
+      }
       const slug = this.item.slug
         .replace(`${guideName}/`, '')
         .replace('/index', '');
@@ -128,7 +150,7 @@ export class Doc {
 
   get navLinks() {
     const slug = this.#parseSlug(this.item.slug);
-    const links = this.sidebarLinks;
+    const links = this.sidebarLinks(this.item.slug);
     const flatLinks = links
       .flatMap((i) => (i.submenu || i) as SidebarLinkItem | SidebarLinkItem[])
       .map((i) => ({ ...i, slug: this.#parseSlug(i.slug) }));
@@ -167,9 +189,14 @@ export class Doc {
 
     if (this.md.slug.startsWith('docs/wallet/')) {
       plugins = plugins.concat([[walletCodeImport, { filepath }] as any]);
-    }
-    if (this.md.slug.startsWith('docs/graphql/')) {
+    } else if (this.md.slug.startsWith('docs/latest/wallet/')) {
+      plugins = plugins.concat([[latestWalletCodeImport, { filepath }] as any]);
+    } else if (this.md.slug.startsWith('docs/graphql/')) {
       plugins = plugins.concat([[codeExamples, { filepath }] as any]);
+    } else if (this.md.slug.startsWith('docs/latest/graphql/')) {
+      plugins = plugins.concat([[latestCodeExamples, { filepath }] as any]);
+    } else if (this.md.slug.includes('guides')) {
+      plugins = plugins.concat([[codeImport, { filepath }] as any]);
     }
 
     return plugins;

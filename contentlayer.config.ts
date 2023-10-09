@@ -59,7 +59,18 @@ const includeDirs = [
   'docs/fuel-graphql-docs/docs',
   'docs/fuels-wallet/packages/docs/docs',
   'docs/guides/docs',
+  // 'docs/fuel-nix/book/src',
   // 'docs/about-fuel',
+  'docs/latest/sway/docs/book/src',
+  'docs/latest/fuelup/docs/src',
+  'docs/latest/fuels-rs/docs/src',
+  'docs/latest/fuels-ts/apps/docs/src',
+  'docs/latest/fuel-indexer/docs/src',
+  'docs/latest/fuel-specs/src',
+  'docs/latest/fuel-graphql-docs/docs',
+  'docs/latest/fuels-wallet/packages/docs/docs',
+  // 'docs/latest/guides/docs',
+  // 'docs/latest/about-fuel',
 ];
 
 const excludeDirs = [
@@ -73,6 +84,17 @@ const excludeDirs = [
   'docs/fuels-rs/docs/src/SUMMARY.md',
   'docs/fuel-indexer/docs/src/SUMMARY.md',
   'docs/fuel-specs/src/SUMMARY.md',
+  // 'docs/latest/guides/docs/guides.json',
+  // 'docs/latest/guides/docs/nav.json',
+  // 'docs/latest/about-fuel/nav.json',
+  'docs/latest/sway/docs/book/src/SUMMARY.md',
+  'docs/latest/sway/docs/book/src/forc/commands/forc_deploy.md',
+  'docs/latest/sway/docs/book/src/forc/commands/forc_run.md',
+  'docs/latest/fuelup/docs/src/SUMMARY.md',
+  'docs/latest/fuels-rs/docs/src/SUMMARY.md',
+  'docs/latest/fuel-indexer/docs/src/SUMMARY.md',
+  'docs/latest/fuel-specs/src/SUMMARY.md',
+  // 'docs/fuel-nix/book/src/SUMMARY.md',
 ];
 
 export default makeSource({

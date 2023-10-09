@@ -12,8 +12,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({ onClick }: SidebarProps) {
-  const ctx = useDocContext();
-  const { links, doc, versions } = ctx;
+  const { links, doc, versions } = useDocContext();
   const version =
     doc && doc.docsConfig ? versions[doc.docsConfig.title]?.version : null;
 
@@ -43,23 +42,25 @@ export function Sidebar({ onClick }: SidebarProps) {
             <SidebarSubmenu
               onClick={onClick}
               key={link.subpath ? link.subpath + index : index}
+              slug={doc.slug}
+              category={doc.category}
               {...link}
             />
           );
         })}
-        {version && (
-          <Box css={{ fontSize: '$sm', padding: '20px 0 60px 0' }}>
-            Version: {version}
-          </Box>
-        )}
+        {version && <Box css={styles.version}>Version: {version}</Box>}
       </Box.Stack>
     )
   );
 }
 
-const styles = {
+export const styles = {
   root: cssObj({
     gap: '$1',
     pb: '$4',
+  }),
+  version: cssObj({
+    fontSize: '$sm',
+    padding: '20px 0 60px 0',
   }),
 };

@@ -77,6 +77,7 @@ export function handleExampleImports(
 
   let exampleName = null;
   let paths = [];
+  const isLatest = dirname.includes('docs/latest/');
 
   if (node.type === 'code') {
     // handle mdbook docs example format
@@ -102,9 +103,11 @@ export function handleExampleImports(
     filePath = paths[0];
   }
 
-  const bookPath = dirname.split('/')[1];
+  const bookPathIndex = isLatest ? 2 : 1;
+  const bookPath = dirname.split('/')[bookPathIndex];
+  const docsPath = isLatest ? 'docs/latest/' : 'docs/';
   let fileAbsPath = path.resolve(
-    path.join(rootDir, `docs/${bookPath}/`),
+    path.join(rootDir, `${docsPath}${bookPath}/`),
     filePath
   );
 
@@ -118,7 +121,7 @@ export function handleExampleImports(
   }
 
   try {
-    if (fileAbsPath.includes('docs/fuels-ts/demo-typegen/')) {
+    if (fileAbsPath.includes('/fuels-ts/demo-typegen/')) {
       fileAbsPath = fileAbsPath.replace(
         'fuels-ts/demo-typegen',
         'fuels-ts/apps/demo-typegen'
@@ -136,7 +139,7 @@ export function handleExampleImports(
 
     content = extractCommentBlock(fileContent, exampleName);
   } catch (err) {
-    // console.error(err);
+    // console.error('ERROR:', err);
   }
 
   return content;
