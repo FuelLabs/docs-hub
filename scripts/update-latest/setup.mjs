@@ -14,7 +14,7 @@ export async function setup() {
   const publishBranch = 'gh-pages';
   await updateSubmodule(fuelupFolder);
   console.log('UPDATED FUELUP SUBMODLE');
-  await fetchBranch(publishBranch);
+  await fetchBranch(publishBranch, fuelupFolder);
   console.log(`FETCHED ${publishBranch} BRANCH`);
   await switchToExistingBranch(publishBranch, fuelupFolder);
   console.log(`SWITCHED TO ${publishBranch} BRANCH`);
