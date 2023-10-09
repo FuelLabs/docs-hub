@@ -21,7 +21,7 @@ export async function updateLatest(newVersions) {
   const month = date.getMonth() + 1;
   const year = date.getFullYear();
   const formattedDate = `${day}-${month}-${year}`;
-  const branchName = `bot/latest-update-${formattedDate}`;
+  const branchName = `ci/latest-update-${formattedDate}`;
   await switchToNewBranch(branchName);
 
   // update latest submodules

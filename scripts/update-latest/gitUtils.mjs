@@ -77,7 +77,7 @@ export async function checkDiff() {
 export async function createPR(title, branchName) {
   const githubToken = process.env.GITHUB_TOKEN;
   const octokit = getOctokit(githubToken);
-  const body = 'This is an automated PR to udpate the latest docs.';
+  const body = 'This is an automated PR to update the latest docs.';
 
   await octokit.pulls.create({
     owner: 'FuelLabs',
