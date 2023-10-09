@@ -2,7 +2,7 @@ import { cssObj } from '@fuel-ui/css';
 import { Box, Grid } from '@fuel-ui/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useEffect, type ReactNode, useRef } from 'react';
+import { type ReactNode } from 'react';
 
 import type { Config } from '../types';
 
@@ -28,7 +28,6 @@ export function Layout({
   isLatest,
 }: LayoutProps) {
   const router = useRouter();
-  const scrollContainer = useRef<HTMLDivElement>(null);
 
   const titleText =
     title && router.pathname !== '/'
@@ -38,11 +37,6 @@ export function Layout({
   function getSlug() {
     return router.pathname.includes('/guides') ? 'guides' : '';
   }
-
-  // Reset scroll view position when route changes
-  useEffect(() => {
-    scrollContainer.current?.scrollTo(0, 0);
-  }, [router.asPath]);
 
   return (
     <>
@@ -86,7 +80,6 @@ export function Layout({
           isLatest={isLatest}
         />
         <Grid
-          ref={scrollContainer}
           data-headings={hasHeadings}
           data-clean={Boolean(isClean)}
           css={styles.grid}
@@ -101,14 +94,11 @@ export function Layout({
 const styles = {
   root: cssObj({
     width: '100vw',
-    height: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
+    minHeight: '100vh',
   }),
   grid: cssObj({
-    flex: 1,
-    overflowY: 'auto',
-    overflowX: 'hidden',
+    // Min height is 100vh - header height
+    minHeight: 'calc(100vh - 69px)',
 
     '& .Layout--section': {
       maxWidth: '1000px',

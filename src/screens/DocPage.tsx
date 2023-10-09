@@ -71,7 +71,8 @@ const styles = {
   }),
   sidebarContainer: cssObj({
     position: 'sticky',
-    top: 20,
+    // header height + padding top
+    top: 101,
     maxHeight: 'calc(100vh - 40px)',
     overflowX: 'auto',
     '&::-webkit-scrollbar': {
