@@ -7,12 +7,9 @@ export function TableOfContent({ isLatest }: { isLatest: boolean }) {
   const { headings } = doc;
   const lastActive = activeHistory?.at(activeHistory.length - 1);
 
-  const offsetHeight = isLatest ? 105 : 69;
-
   return (
     <Box css={styles.queries}>
-      {/* header height */}
-      <Box css={{ ...styles.root, top: offsetHeight }}>
+      <Box css={{ ...styles.root, top: isLatest ? 105 : 69 }}>
         <Heading as="h6">
           <Icon
             icon={Icon.is('ListDetails')}

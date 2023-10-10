@@ -35,7 +35,13 @@ export function DocScreen(props: DocPageProps) {
         isLatest={isLatest}
       >
         <Box css={styles.sidebar}>
-          <Box css={styles.sidebarContainer}>
+          <Box
+            css={{
+              ...styles.sidebarContainer,
+              top: isLatest ? 116 : 101,
+              maxHeight: `calc(100vh - ${isLatest ? '132px' : '104px'})`,
+            }}
+          >
             <Sidebar />
           </Box>
         </Box>
@@ -71,9 +77,6 @@ const styles = {
   }),
   sidebarContainer: cssObj({
     position: 'sticky',
-    // header height + padding top
-    top: 101,
-    maxHeight: 'calc(100vh - 40px)',
     overflowX: 'auto',
     '&::-webkit-scrollbar': {
       display: 'none',
