@@ -17,6 +17,18 @@ export const push = async (branch, { force } = {}) => {
   );
 };
 
+export const fetchTag = async (tag, dir) => {
+  await exec('git', ['fetch', 'origin', 'tag', tag], {
+    cwd: dir,
+  });
+};
+
+export const fetchBranch = async (branch, dir) => {
+  await exec('git', ['fetch', 'origin', `${branch}:${branch}`], {
+    cwd: dir,
+  });
+};
+
 export const switchToExistingBranch = async (branch, dir) => {
   await exec('git', ['switch', branch], {
     cwd: dir,
@@ -40,7 +52,7 @@ export const checkoutVersion = async (version, dir) => {
 
 export const commitAll = async (message) => {
   await exec('git', ['add', '.']);
-  await exec('git', ['commit', '-m', message]);
+  await exec('git', ['commit', '-m', `'${message}'`]);
 };
 
 export const updateSubmodule = async (submdoule) => {
@@ -65,7 +77,7 @@ export async function checkDiff() {
 export async function createPR(title, branchName) {
   const githubToken = process.env.GITHUB_TOKEN;
   const octokit = getOctokit(githubToken);
-  const body = 'This is an automated PR to udpate the latest docs.';
+  const body = 'This is an automated PR to update the latest docs.';
 
   await octokit.pulls.create({
     owner: 'FuelLabs',

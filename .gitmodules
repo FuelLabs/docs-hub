@@ -10,15 +10,15 @@
 [submodule "docs/fuels-ts"]
 	path = docs/fuels-ts
 	url = https://github.com/FuelLabs/fuels-ts
-	branch = docs
+	# branch = docs
 [submodule "docs/builds/sway"]
 	path = docs/builds/sway
 	url = https://github.com/FuelLabs/sway.git
-	branch = gh-pages
+	# branch = gh-pages
 [submodule "docs/fuels-wallet"]
 	path = docs/fuels-wallet
 	url = https://github.com/FuelLabs/fuels-wallet.git
-	branch = release
+	# branch = release
 [submodule "docs/fuelup"]
 	path = docs/fuelup
 	url = https://github.com/FuelLabs/fuelup.git
@@ -43,15 +43,15 @@
 [submodule "docs/latest/fuels-ts"]
 	path = docs/latest/fuels-ts
 	url = https://github.com/FuelLabs/fuels-ts
-	branch = docs
+	# branch = docs
 [submodule "docs/latest/builds/sway"]
 	path = docs/latest/builds/sway
-	branch = gh-pages
+	# branch = gh-pages
 	url = https://github.com/FuelLabs/sway.git
 [submodule "docs/latest/fuels-wallet"]
 	path = docs/latest/fuels-wallet
 	url = https://github.com/FuelLabs/fuels-wallet.git
-	branch = release
+	# branch = release
 [submodule "docs/latest/fuelup"]
 	path = docs/latest/fuelup
 	url = https://github.com/FuelLabs/fuelup.git

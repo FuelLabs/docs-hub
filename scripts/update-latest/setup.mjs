@@ -2,6 +2,7 @@ import {
   updateSubmodule,
   setupUser,
   switchToExistingBranch,
+  fetchBranch,
 } from './gitUtils.mjs';
 
 export async function setup() {
@@ -10,8 +11,11 @@ export async function setup() {
 
   // checkout the latest gh-pages branch of fuelup
   const fuelupFolder = 'docs/latest/fuelup';
+  const publishBranch = 'gh-pages';
   await updateSubmodule(fuelupFolder);
   console.log('UPDATED FUELUP SUBMODLE');
-  await switchToExistingBranch('gh-pages', fuelupFolder);
-  console.log('SWITCHED TO GH-PAGES BRANCH');
+  await fetchBranch(publishBranch, fuelupFolder);
+  console.log(`FETCHED ${publishBranch} BRANCH`);
+  await switchToExistingBranch(publishBranch, fuelupFolder);
+  console.log(`SWITCHED TO ${publishBranch} BRANCH`);
 }
