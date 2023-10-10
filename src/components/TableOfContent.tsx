@@ -2,14 +2,17 @@ import { cssObj } from '@fuel-ui/css';
 import { Box, Heading, Icon, List } from '@fuel-ui/react';
 import { useDocContext } from '~/src/hooks/useDocContext';
 
-export function TableOfContent() {
+export function TableOfContent({ isLatest }: { isLatest: boolean }) {
   const { doc, activeHistory } = useDocContext();
   const { headings } = doc;
   const lastActive = activeHistory?.at(activeHistory.length - 1);
 
+  const offsetHeight = isLatest ? 105 : 69;
+
   return (
     <Box css={styles.queries}>
-      <Box css={styles.root}>
+      {/* header height */}
+      <Box css={{ ...styles.root, top: offsetHeight }}>
         <Heading as="h6">
           <Icon
             icon={Icon.is('ListDetails')}
@@ -58,8 +61,6 @@ const styles = {
   }),
   root: cssObj({
     position: 'sticky',
-    // header height
-    top: 69,
     py: '$8',
     pr: '$8',
 

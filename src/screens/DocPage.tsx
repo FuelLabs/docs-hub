@@ -50,7 +50,7 @@ export function DocScreen(props: DocPageProps) {
           </Box>
           {doc && <DocFooter />}
         </Box.Flex>
-        {doc && hasHeadings && <TableOfContent />}
+        {doc && hasHeadings && <TableOfContent isLatest={isLatest} />}
       </Layout>
     </DocProvider>
   );
