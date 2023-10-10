@@ -8,7 +8,7 @@ parent:
 
 ## Sway Contract Checkpoint
 
-If you have followed the previous steps correctly your `main.sw` marketplace contract should look like this
+If you have followed the previous steps correctly your `main.sw` marketplace contract should look like this:
 
 <CodeImport
   file="../../examples/intro-to-sway/contract/src/main.sw"
@@ -22,17 +22,21 @@ If you have followed the previous steps correctly your `main.sw` marketplace con
 Here's a polished version of your instructions:
 
 To format your contract, execute the command:
+
 ```sh
 forc fmt
 ```
 
 To compile your contract, navigate to the contract folder and run:
+
 ```sh
 forc build
 ```
+
 Congratulations! You've successfully written a full contract in Sway!
 
 Post-compilation, the system will automatically generate `abi.json`, `storage_slots.json`, and `contract.bin`. You can locate these files in the following directory:
+
 ```
 contract/out/debug/*
 ```
@@ -40,12 +44,12 @@ contract/out/debug/*
 ## Deploying the contract
 
 For detailed steps on deploying this contract, refer to the official Fuel developer quickstart guide: 
-[Deploy the Contract](https://docs.fuel.network/guides/quickstart/building-a-smart-contract/#deploy-the-contract)
+[Deploy the Contract](/guides/quickstart/building-a-smart-contract/#deploy-the-contract)
 
 To deploy, use the following command if you've already set up the forc-wallet and have testnet funds in your account. If not, please follow the instructions above.
 
 ```sh
-forc-deploy --node-url https://beta-4.fuel.network/graphql --gas-price 1 --gas-limit 1000000
+forc deploy --testnet
 ```
 
 After deploying, remember to save your contract ID. You'll need it for frontend integrations.

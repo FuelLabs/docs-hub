@@ -20,7 +20,7 @@ Next, install the fuels Typescript and wallet SDKs in the frontend folder and ge
 
 ```shell
 cd frontend
-npm install fuels@0.60.0 @fuel-wallet/sdk@0.13.0 --save
+npm install fuels@0.60.0 @fuel-wallet/sdk@0.13.0 @fuel-wallet/react@0.13.0 --save
 npx fuels typegen -i ../contract/out/debug/*-abi.json -o ./src/contracts
 ```
 
@@ -53,7 +53,7 @@ At the top of the file, add your contract ID as a constant.
   lang="tsx"
 />
 
-Next, create a new folder in the `src` folder called `hooks`, and copy and paste the `useFuel.tsx` and `useIsConnected.tsx` hooks from the example in this repo. You can also find them in the [offical wallet docs](https://wallet.fuel.network/docs/react/).
+Next, we will be using the webhooks from the Fuel Wallet package in order to connect our wallet to the dApp
 
 In `App.tsx`, import these hooks.
 
