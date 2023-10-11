@@ -92,7 +92,7 @@ counter-contract
 └── src
     └── main.sw
 
-1 directory, 2 files
+2 directories, 2 files
 ```
 
 `forc.toml` is the _manifest file_ (similar to `Cargo.toml` for Cargo or `package.json` for Node) and defines project metadata such as the project name and dependencies.
@@ -251,7 +251,7 @@ $ tree .
 └── src
     └── main.sw
 
-3 directories, 6 files
+4 directories, 6 files
 ```
 
 We now have an `out` directory that contains our build artifacts such as the JSON representation of our ABI and the contract bytecode.
@@ -284,7 +284,7 @@ action={{
 />
 
 ```console
-cargo generate --init fuellabs/sway templates/sway-test-rs --name counter-contract
+cargo generate --init calldelegation/template sway-test-rs --name counter-contract
 ```
 
 ```console
@@ -322,7 +322,7 @@ $ tree .
 └── tests
     └── harness.rs
 
-4 directories, 8 files
+5 directories, 8 files
 ```
 
 We have two new files!
