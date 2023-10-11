@@ -1,6 +1,7 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
 import { Layout } from '~/src/components/Layout';
 import { Sidebar } from '~/src/components/Sidebar';
 import { TableOfContent } from '~/src/components/TableOfContent';
@@ -16,10 +17,16 @@ export function DocScreen(props: DocPageProps) {
   const { doc } = props;
   const [mounted, setIsMounted] = useState<boolean>(false);
   const version = useVersion();
+  const router = useRouter();
+  const scrollContainer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
+    if (!mounted) {
+      setIsMounted(true);
+    }
+    // Reset scroll view position when route changes
+    scrollContainer.current?.scrollTo(0, 0);
+  }, [router.asPath]);
 
   const isLatest = mounted ? version === 'Latest' : doc.isLatest;
   const components = getComponents(doc.slug, doc.isLatest);
@@ -35,7 +42,13 @@ export function DocScreen(props: DocPageProps) {
         isLatest={isLatest}
       >
         <Box css={styles.sidebar}>
-          <Box css={styles.sidebarContainer}>
+          <Box
+            css={{
+              ...styles.sidebarContainer,
+              top: isLatest ? 116 : 101,
+              maxHeight: `calc(100vh - ${isLatest ? '122px' : '104px'})`,
+            }}
+          >
             <Sidebar />
           </Box>
         </Box>
@@ -44,13 +57,14 @@ export function DocScreen(props: DocPageProps) {
           as="section"
           css={styles.section}
           className="Layout--section"
+          ref={scrollContainer}
         >
           <Box className="Layout--pageContent">
             {doc && <MDXRender code={props.code} components={components} />}
           </Box>
           {doc && <DocFooter />}
         </Box.Flex>
-        {doc && hasHeadings && <TableOfContent />}
+        {doc && hasHeadings && <TableOfContent isLatest={isLatest} />}
       </Layout>
     </DocProvider>
   );
@@ -71,22 +85,23 @@ const styles = {
   }),
   sidebarContainer: cssObj({
     position: 'sticky',
-    top: 20,
-    maxHeight: 'calc(100vh - 40px)',
     overflowX: 'auto',
     '&::-webkit-scrollbar': {
       display: 'none',
     },
   }),
   section: cssObj({
-    padding: '$6',
-
-    '@md': {
-      padding: '$8',
+    padding: '$2',
+    position: 'sticky',
+    height: 'calc(100vh - 65px)',
+    overflowY: 'auto',
+    scrollBehavior: 'smooth',
+    '&::-webkit-scrollbar': {
+      display: 'none',
     },
 
     '@xl': {
-      py: '$14',
+      pb: '$14',
       px: '$0',
     },
 
