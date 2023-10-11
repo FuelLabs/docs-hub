@@ -10,6 +10,7 @@ import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
 
 import { getEndCommentType } from './text-import';
+import type { CommentTypes } from './text-import';
 
 function toAST(content: string) {
   return acorn.parse(content, {
@@ -44,8 +45,6 @@ function extractLines(
     return lines.slice(start - 1, end).join('\n');
   }
 }
-
-export type CommentTypes = '<!--' | '{/*' | '//' | '/*';
 
 function extractCommentBlock(
   content: string,
@@ -144,7 +143,6 @@ function extractTestCase(source: string, testCase: string) {
   };
 }
 
-// const ROOT_DIR = path.resolve(__dirname, '../../../../../../../');
 export function codeImport() {
   return function transformer(tree: Root, file: any) {
     const rootDir = process.cwd();

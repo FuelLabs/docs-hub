@@ -8,7 +8,7 @@ import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
 import type { Parent } from 'unist-util-visit/lib';
 
-import type { CommentTypes } from './code-import';
+export type CommentTypes = '<!--' | '{/*' | '//' | '/*';
 
 export function getEndCommentType(commentType: string) {
   let commentEnd;
