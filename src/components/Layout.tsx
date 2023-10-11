@@ -94,14 +94,11 @@ export function Layout({
 const styles = {
   root: cssObj({
     width: '100vw',
-    height: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
+    minHeight: '100vh',
   }),
   grid: cssObj({
-    flex: 1,
-    overflowY: 'auto',
-    overflowX: 'hidden',
+    // Min height is 100vh - header height
+    minHeight: 'calc(100vh - 69px)',
 
     '& .Layout--section': {
       maxWidth: '1000px',
