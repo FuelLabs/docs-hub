@@ -14,6 +14,14 @@ Before diving into any Sway code, ensure you have properly followed the [install
 
 Start with a new empty folder and name it `fuel-project`.
 
+<TestAction
+id="create-project-folder"
+action={{ 
+  name: 'runCommand', 
+  commandFolder: 'guides-testing'
+}}
+/>
+
 ```sh
 $ mkdir fuel-project
 ```
@@ -25,6 +33,14 @@ $ cd fuel-project
 ```
 
 Within your terminal start by creating a new sway project called `contract`:
+
+<TestAction
+id="create-contract"
+action={{
+  name: 'runCommand', 
+  commandFolder: 'guides-testing/fuel-project'
+}}
+/>
 
 ```sh
 $ forc new contract
@@ -40,15 +56,33 @@ Open up the `contract` folder in VSCode, and inside the `src` folder you should 
 
 Your project structure generated from the `forc` command should like this: 
 
-```sh
+<TestAction
+id="contract-tree"
+action={{
+  name: 'runCommand', 
+  commandFolder: 'guides-testing/fuel-project'
+}}
+/>
+
+```console
 $ tree contract
 contract
 ├── Forc.toml
 └── src
     └── main.sw
+
+2 directories, 2 files
 ```
 
 Since we're creating a brand new contract you can delete everything in this file except for the `contract` keyword.
+
+<TestAction
+id="sway-program-type"
+action={{
+  name: 'writeToFile',
+  filepath: 'guides-testing/fuel-project/contract/src/main.sw'
+}}
+/>
 
 <CodeImport
   file="../../examples/intro-to-sway/contract/src/main.sw"

@@ -17,6 +17,14 @@ To create your own test template using Rust, follow these steps with `cargo-gene
 cargo install cargo-generate
 ```
 
+<TestAction
+id="cargo-generate-test"
+action={{
+  name: 'runCommand', 
+  commandFolder: 'guides-testing/fuel-project/contract'
+}}
+/>
+
 2. Generate the template:
 ```bash
 cargo generate --init fuellabs/sway templates/sway-test-rs --name contract

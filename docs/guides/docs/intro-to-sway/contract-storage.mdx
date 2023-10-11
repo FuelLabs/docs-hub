@@ -8,9 +8,17 @@ parent:
 
 ## Defining The Storage Block
 
-Next, we'll introduce the storage block. This block is where you store state variables in your contract that need to be persistent. Any Sway primitive type can be placed in the storage block.
+Next, we'll introduce the storage block. This block is where you store state variables in your contract that need to be persistent.
 
-Variables declared within a function and not saved in the storage block will be discarded once the function completes its execution.
+Variables declared within a function and not saved in the storage block will be discarded once the function completes its execution. Add the storage block below to your `main.sw` file:
+
+<TestAction
+id="sway-storage"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/contract/src/main.sw'
+}}
+/>
 
 <CodeImport
   file="../../examples/intro-to-sway/contract/src/main.sw"

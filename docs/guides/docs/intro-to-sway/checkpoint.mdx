@@ -23,11 +23,27 @@ Here's a polished version of your instructions:
 
 To format your contract, execute the command:
 
+<TestAction
+id="format-contract"
+action={{
+  name: 'runCommand', 
+  commandFolder: 'guides-testing/fuel-project/contract'
+}}
+/>
+
 ```sh
 forc fmt
 ```
 
 To compile your contract, navigate to the contract folder and run:
+
+<TestAction
+id="build-contract"
+action={{
+  name: 'runCommand', 
+  commandFolder: 'guides-testing/fuel-project/contract'
+}}
+/>
 
 ```sh
 forc build

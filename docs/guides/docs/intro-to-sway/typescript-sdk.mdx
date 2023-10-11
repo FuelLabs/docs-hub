@@ -12,15 +12,49 @@ parent:
 
 Initialize a new React app with TypeScript in the same parent folder as your contract using the command below.
 
-```shell
+<TestAction
+id="create-frontend"
+action={{
+  name: 'runCommand', 
+  commandFolder: 'guides-testing/fuel-project'
+}}
+/>
+
+```sh
 npx create-react-app frontend --template typescript
 ```
 
-Next, install the fuels Typescript and wallet SDKs in the frontend folder and generate types from your contract with `fuels typegen`.
+Let's go into the frontend folder:
 
-```shell
+```sh
 cd frontend
+```
+
+Next, install the fuels Typescript and wallet SDKs in the frontend folder:
+
+<TestAction
+id="frontend-npm-install"
+action={{
+  name: 'runCommand', 
+  commandFolder: 'guides-testing/fuel-project/frontend'
+}}
+/>
+
+```sh
 npm install fuels@0.60.0 @fuel-wallet/sdk@0.13.0 @fuel-wallet/react@0.13.0 --save
+```
+
+Generate types from your contract with `fuels typegen` by running:
+
+<TestAction
+id="frontend-gen-types"
+action={{
+  name: 'runCommand', 
+  commandFolder: 'guides-testing/fuel-project/frontend'
+}}
+/>
+
+```sh
 npx fuels typegen -i ../contract/out/debug/*-abi.json -o ./src/contracts
 ```
 
