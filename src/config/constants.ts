@@ -73,6 +73,11 @@ export const NAVIGATION: LinkObject[] = [
         link: 'https://github.com/FuelLabs/sway-applications/',
       },
       {
+        name: 'Sway Playground',
+        type: 'external-link',
+        link: 'https://sway-playground.org/',
+      },
+      {
         name: 'Sway Core',
         type: 'external-link',
         link: 'https://fuellabs.github.io/sway/master/core/',
@@ -162,6 +167,11 @@ export const NAVIGATION: LinkObject[] = [
         name: 'Faucet',
         type: 'external-link',
         link: 'https://faucet-beta-4.fuel.network/',
+      },
+      {
+        name: 'Bridge',
+        type: 'external-link',
+        link: 'https://alpha.fuel.network/bridge/',
       },
     ],
   },
