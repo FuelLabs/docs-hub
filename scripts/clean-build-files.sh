@@ -20,7 +20,7 @@ TARGET_DIRS=(
 
 # File/folder names to exclude from deletion in each book
 EXCLUSIONS_sway=("Cargo.toml" "forc-pkg" "docs" "examples" "master")
-EXCLUSIONS_fuels_rs=("Cargo.toml" "docs" "examples")
+EXCLUSIONS_fuels_rs=("Cargo.toml" "docs" "examples" "packages")
 EXCLUSIONS_fuels_ts=("apps" "packages" "package.json")
 EXCLUSIONS_fuelup=("Cargo.toml" "docs")
 EXCLUSIONS_fuel_indexer=("Cargo.toml" "docs" "examples")
