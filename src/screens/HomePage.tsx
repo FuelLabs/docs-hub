@@ -133,6 +133,11 @@ export function HomePage({ guides, isLatest }: HomePageProps) {
                 Faucet
               </FuelLink>
             </List.Item>
+            <List.Item>
+              <FuelLink href="https://alpha.fuel.network/bridge/" isExternal>
+                Bridge
+              </FuelLink>
+            </List.Item>
           </List>
         </Box.Stack>
       </Box>

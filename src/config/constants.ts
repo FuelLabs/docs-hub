@@ -168,6 +168,11 @@ export const NAVIGATION: LinkObject[] = [
         type: 'external-link',
         link: 'https://faucet-beta-4.fuel.network/',
       },
+      {
+        name: 'Bridge',
+        type: 'external-link',
+        link: 'https://alpha.fuel.network/bridge/',
+      },
     ],
   },
 ];
