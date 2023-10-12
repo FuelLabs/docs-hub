@@ -1,6 +1,7 @@
 import { join } from 'path';
 
 export const DOCS_DIRECTORY = join(process.cwd(), './docs');
+export const LATEST_DOCS_DIRECTORY = join(process.cwd(), './docs/latest');
 export const FIELDS = ['title', 'slug', 'content', 'category'];
 
 export type Tabs =
@@ -15,6 +16,7 @@ export type Tabs =
   | 'indexer'
   | 'specs'
   // | 'about-fuel'
+  // | 'nix'
   | 'forc';
 
 export type LinkType = 'menu' | 'internal-link' | 'external-link' | 'category';
@@ -28,6 +30,15 @@ export type LinkObject = {
   menu?: LinkObject[];
   slug?: Tabs;
 };
+
+// doc slugs that start with a path in this array
+// won't be capitalized in the navigation sidebar
+export const LOWER_CASE_NAV_PATHS = [
+  '/forc/commands/',
+  '/forc/plugins/',
+  '/indexer/forc-index/',
+  '/indexer/forc-postgres/',
+];
 
 export const NAVIGATION: LinkObject[] = [
   {
@@ -88,6 +99,12 @@ export const NAVIGATION: LinkObject[] = [
         link: '/docs/indexer/',
         slug: 'indexer',
       },
+      // {
+      //   name: 'Fuel Nix',
+      //   type: 'internal-link',
+      //   link: '/docs/nix/',
+      //   slug: 'nix',
+      // },
     ],
   },
   {
@@ -135,6 +152,11 @@ export const NAVIGATION: LinkObject[] = [
         type: 'internal-link',
         link: '/docs/specs',
         slug: 'specs',
+      },
+      {
+        name: 'Explorer',
+        type: 'external-link',
+        link: 'https://fuellabs.github.io/block-explorer-v2/',
       },
       {
         name: 'Faucet',

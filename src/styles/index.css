@@ -6,9 +6,9 @@ html {
   scroll-behavior: smooth;
 }
 
-body,
-#__next {
+body {
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 body.no-scroll {

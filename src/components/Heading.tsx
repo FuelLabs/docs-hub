@@ -68,17 +68,17 @@ const styles = {
       },
     },
     [head([1, 2])]: {
-      mt: '$8',
+      pt: '$12',
       mb: '$5',
       pb: '$2',
       borderBottom: '1px solid $border',
     },
     [head([3])]: {
-      mt: '$8',
+      pt: '$8',
       mb: '$4',
     },
     [head([4, 5, 6])]: {
-      mt: '$6',
+      pt: '$6',
       mb: '$2',
     },
 

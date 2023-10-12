@@ -1,0 +1,30 @@
+name: Find Latest File
+
+on:
+    schedule:
+      # This runs at 12:00 UTC every Monday and Thursday
+      - cron: '0 12 * * 1,4'
+    # Option to run the workflow manually
+    workflow_dispatch: 
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  find-latest-file:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+      with:
+        submodules: 'true'
+    
+    - uses: ./.github/actions/setup-node
+      with:
+        install: false
+
+    - name: Run Script
+      run: |
+        pnpm install
+        node scripts/update-latest/index.mjs

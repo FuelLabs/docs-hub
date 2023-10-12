@@ -19,7 +19,22 @@ const GRAPHQL_COMPONENTS_CONFIG_PATH = path.join(
   './src/components.json'
 );
 
+const LATEST_GRAPHQL_BOOK_NAME = 'latest/fuel-graphql-docs';
+const LATEST_GRAPHQL_DIRECTORY = path.join(
+  DOCS_DIRECTORY,
+  `./latest/${GRAPHQL_BOOK_NAME}`
+);
+const LATEST_GRAPHQL_DOCS_DIRECTORY = path.join(
+  LATEST_GRAPHQL_DIRECTORY,
+  './docs'
+);
+const LATEST_GRAPHQL_COMPONENTS_CONFIG_PATH = path.join(
+  LATEST_GRAPHQL_DIRECTORY,
+  './src/components.json'
+);
+
 const WALLET_BOOK_NAME = 'fuels-wallet';
+const WALLET_PATH = path.join(DOCS_DIRECTORY, WALLET_BOOK_NAME);
 const WALLET_DIRECTORY = path.join(
   DOCS_DIRECTORY,
   `./${WALLET_BOOK_NAME}/packages/docs`
@@ -27,6 +42,24 @@ const WALLET_DIRECTORY = path.join(
 const WALLET_DOCS_DIRECTORY = path.join(WALLET_DIRECTORY, './docs');
 const WALLET_COMPONENTS_CONFIG_PATH = path.join(
   WALLET_DIRECTORY,
+  './src/components.json'
+);
+
+const LATEST_WALLET_BOOK_NAME = 'latest/fuels-wallet';
+const LATEST_WALLET_PATH = path.join(
+  DOCS_DIRECTORY,
+  `latest/${WALLET_BOOK_NAME}`
+);
+const LATEST_WALLET_DIRECTORY = path.join(
+  DOCS_DIRECTORY,
+  `./latest/${WALLET_BOOK_NAME}/packages/docs`
+);
+const LATEST_WALLET_DOCS_DIRECTORY = path.join(
+  LATEST_WALLET_DIRECTORY,
+  './docs'
+);
+const LATEST_WALLET_COMPONENTS_CONFIG_PATH = path.join(
+  LATEST_WALLET_DIRECTORY,
   './src/components.json'
 );
 
@@ -45,11 +78,25 @@ async function main() {
     'graphql.ts'
   );
   await exportComponents(
-    path.join(DOCS_DIRECTORY, WALLET_BOOK_NAME),
+    LATEST_GRAPHQL_DIRECTORY,
+    LATEST_GRAPHQL_DOCS_DIRECTORY,
+    LATEST_GRAPHQL_BOOK_NAME,
+    LATEST_GRAPHQL_COMPONENTS_CONFIG_PATH,
+    'latest-graphql.ts'
+  );
+  await exportComponents(
+    WALLET_PATH,
     WALLET_DOCS_DIRECTORY,
     WALLET_BOOK_NAME,
     WALLET_COMPONENTS_CONFIG_PATH,
     'wallet.ts'
+  );
+  await exportComponents(
+    LATEST_WALLET_PATH,
+    LATEST_WALLET_DOCS_DIRECTORY,
+    LATEST_WALLET_BOOK_NAME,
+    LATEST_WALLET_COMPONENTS_CONFIG_PATH,
+    'latest-wallet.ts'
   );
 }
 

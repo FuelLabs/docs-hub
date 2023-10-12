@@ -9,6 +9,7 @@ import type { GuideInfo } from '../pages/guides';
 
 interface GuidesPageProps {
   guides: { [key: string]: GuideInfo };
+  isLatest: boolean;
 }
 
 export function GuidesPage({ guides }: GuidesPageProps) {

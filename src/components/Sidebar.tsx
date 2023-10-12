@@ -1,102 +1,56 @@
 import { cssObj } from '@fuel-ui/css';
 import type { ButtonLinkProps } from '@fuel-ui/react';
-import { Box, ButtonLink } from '@fuel-ui/react';
-import Link from 'next/link';
+import { Box, ButtonLink, Icon } from '@fuel-ui/react';
+import NextLink from 'next/link';
+import { useDocContext } from '~/src/hooks/useDocContext';
 
-import { useDocContext } from '../hooks/useDocContext';
-import type { NavOrder } from '../pages';
-import type { SidebarLinkItem } from '../types';
-
-import { SidebarLink } from './SidebarLink';
+import { styles as linkStyles, SidebarLink } from './SidebarLink';
 import { SidebarSubmenu } from './SidebarSubmenu';
 
-type SidebarProps = {
-  allNavs?: NavOrder[];
+interface SidebarProps {
   onClick?: ButtonLinkProps['onClick'];
-  parent?: {
-    label: string;
-    link: string;
-  };
-  links?: SidebarLinkItem[];
-};
+}
 
-function SidebarSection({
-  links,
-  onClick,
-  book,
-}: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  links: any;
-  onClick?: ButtonLinkProps['onClick'];
-  book?: string;
-}) {
-  const bookHasIndex =
-    book?.toLowerCase().replaceAll(/[_-]/g, ' ') ===
-    links[0].label.toLowerCase().replaceAll(/[_-]/g, ' ');
+export function Sidebar({ onClick }: SidebarProps) {
+  const { links, doc, versions } = useDocContext();
+  const version =
+    doc && doc.docsConfig ? versions[doc.docsConfig.title]?.version : null;
+
   return (
-    <>
-      {book !== 'guides' && (
-        <Link href={links[0].slug} legacyBehavior passHref>
-          <ButtonLink css={styles.sectionLink} intent="base">
-            {book}
-          </ButtonLink>
-        </Link>
-      )}
-
-      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-      {links.map((link: any, index: number) => {
-        if (!bookHasIndex || index > 0) {
+    links && (
+      <Box.Stack as="nav" css={styles.root} className="Sidebar">
+        {doc.parent && (
+          <NextLink href={doc.parent.link} legacyBehavior passHref>
+            <ButtonLink
+              intent="base"
+              css={{ ...linkStyles.root, justifyContent: 'flex-start' }}
+            >
+              <Icon
+                icon={Icon.is('ArrowBackUp')}
+                stroke={1}
+                color="textMuted"
+              />
+              Back to {doc.parent.label}
+            </ButtonLink>
+          </NextLink>
+        )}
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+        {links.map((link: any, index: number) => {
           return link.slug ? (
             <SidebarLink onClick={onClick} key={link.slug} item={link} />
           ) : (
             <SidebarSubmenu
               onClick={onClick}
               key={link.subpath ? link.subpath + index : index}
+              slug={doc.slug}
+              category={doc.category}
               {...link}
             />
           );
-        }
-      })}
-    </>
-  );
-}
-
-// TODO: use props for guides doc.parent & links
-
-export function Sidebar({ allNavs, onClick }: SidebarProps) {
-  const ctx = useDocContext();
-  const { links, doc } = ctx;
-
-  return (
-    <Box.Stack as="nav" css={styles.root} className="Sidebar">
-      {!allNavs && (
-        <>
-          {doc.parent && (
-            <ButtonLink
-              href={doc.parent.link}
-              intent={'base'}
-              leftIcon={'ArrowNarrowLeft'}
-              css={styles.button}
-              size={'sm'}
-            >
-              {doc.parent.label}
-            </ButtonLink>
-          )}
-          <SidebarSection book="guides" links={links} onClick={onClick} />
-        </>
-      )}
-
-      {allNavs &&
-        allNavs.map((navOrder) => (
-          <Box key={navOrder.key} css={styles.sectionContainer}>
-            <SidebarSection
-              book={navOrder.key}
-              links={navOrder.links}
-              onClick={onClick}
-            />
-          </Box>
-        ))}
-    </Box.Stack>
+        })}
+        {version && <Box css={styles.version}>Version: {version}</Box>}
+      </Box.Stack>
+    )
   );
 }
 
@@ -105,25 +59,8 @@ export const styles = {
     gap: '$1',
     pb: '$4',
   }),
-  sectionContainer: cssObj({
-    pb: '$4',
-  }),
-  button: cssObj({
-    width: '100%',
-    justifyContent: 'flex-start',
-    '&:hover': {
-      textDecoration: 'none',
-      color: '$green11 !important',
-    },
-  }),
-  sectionLink: cssObj({
-    color: '$textHeading',
-    px: 0,
-    width: '100%',
-    justifyContent: 'flex-start',
-    '&:hover': {
-      color: '$textHeading !important',
-      textDecoration: 'none',
-    },
+  version: cssObj({
+    fontSize: '$sm',
+    padding: '20px 0 60px 0',
   }),
 };

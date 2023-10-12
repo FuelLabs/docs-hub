@@ -9,9 +9,7 @@ await main();
 
 // GENERATES SIDEBAR LINKS
 async function main() {
-  const folderPath = 'src/generated/sidebar-links';
   const orders = await getOrders();
-  const allOrders = [];
 
   await Promise.all(
     Object.keys(orders).map(async (key) => {
@@ -36,36 +34,11 @@ async function main() {
         });
       }
       const json = JSON.stringify(sortedLinks);
+      const folderPath = 'src/generated/sidebar-links';
       if (!fs.existsSync(folderPath)) {
         fs.mkdirSync(folderPath, { recursive: true });
       }
       fs.writeFileSync(`${folderPath}/${key}.json`, json, 'utf-8');
-      if (key !== 'guides') {
-        allOrders.push({ key: capitalize(key), links: sortedLinks });
-      }
     })
   );
-
-  const correctOrder = [
-    'sway',
-    'fuelup',
-    'forc',
-    'fuels-rs',
-    'fuels-ts',
-    'wallet',
-    'indexer',
-    'graphql',
-    'specs',
-  ];
-
-  const finalAllOrders = allOrders.sort((a, b) => {
-    const indexA = correctOrder.indexOf(a.key.toLowerCase());
-    const indexB = correctOrder.indexOf(b.key.toLowerCase());
-    if (indexA === -1) return 1;
-    if (indexB === -1) return -1;
-    return indexA - indexB;
-  });
-
-  const json = JSON.stringify(finalAllOrders);
-  fs.writeFileSync(`${folderPath}/all-orders.json`, json, 'utf-8');
 }

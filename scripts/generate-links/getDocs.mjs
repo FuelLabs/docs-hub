@@ -166,12 +166,14 @@ export async function getDocs(key, order) {
         './guides/**/*.mdx',
       ];
       break;
-    case 'latest-guides':
-      paths = [
-        // GUIDES
-        './latest/guides/**/*.mdx',
-      ];
-      break;
+    // case 'latest-guides':
+    //   paths = [
+    //     // LATEST GUIDES
+    //     // TODO: update guides to use latest
+    //     './guides/**/*.mdx',
+    //     // './latest/guides/**/*.mdx',
+    //   ];
+    //   break;
     // case 'about-fuel':
     // case 'latest-about-fuel':
     //   paths = [

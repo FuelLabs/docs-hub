@@ -22,9 +22,14 @@
     "prettier:check": "prettier --check .",
     "prettier:format": "prettier --write .",
     "start": "next start",
-    "ts:check": "tsc --noEmit"
+    "test:guides": "npx playwright test tests/test.spec.ts",
+    "test:guides:debug": "DEBUG=pw:api npx playwright test tests/test.spec.ts",
+    "ts:check": "tsc --noEmit",
+    "update-latest-docs": "sh ./scripts/update-latest-submodules.sh"
   },
   "dependencies": {
+    "@actions/exec": "^1.1.1",
+    "@actions/github": "4.0.0",
     "@docsearch/css": "^3.5.2",
     "@docsearch/react": "3.5.2",
     "@fuel-ui/css": "0.21.0-pr-305-04b8434",
@@ -41,6 +46,7 @@
     "acorn": "^8.10.0",
     "acorn-loose": "^8.3.0",
     "acorn-walk": "^8.2.0",
+    "adm-zip": "^0.5.10",
     "airtable": "^0.12.2",
     "contentlayer": "^0.3.4",
     "cookie": "^0.5.0",
@@ -58,6 +64,7 @@
     "next-contentlayer": "^0.3.4",
     "node-html-markdown": "^1.3.0",
     "plyr-react": "^5.3.0",
+    "pm2": "^5.3.0",
     "prettier": "2.8.0",
     "react": "^18.2.0",
     "react-aria": "^3.27.0",
@@ -80,6 +87,8 @@
     "vfile": "^6.0.1"
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "^13.4.12",
+    "@playwright/test": "^1.36.2",
     "@types/chrome": "^0.0.245",
     "@types/cookie": "^0.5.2",
     "@types/node": "^20.5.9",
@@ -100,7 +109,9 @@
       "semver@<7.5.2": ">=7.5.2",
       "word-wrap": "npm:@aashutoshrathi/word-wrap",
       "@adobe/css-tools@<4.3.1": ">=4.3.1",
-      "graphql@>=16.3.0 <16.8.1": ">=16.8.1"
+      "graphql@>=16.3.0 <16.8.1": ">=16.8.1",
+      "postcss@<8.4.31": ">=8.4.31",
+      "zod@<=3.22.2": ">=3.22.3"
     }
   }
 }

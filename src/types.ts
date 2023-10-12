@@ -26,6 +26,7 @@ export type DocType = {
   menu: string[];
   docsConfig: Config;
   parent?: { label: string; link: string };
+  isLatest: boolean;
 };
 
 export type SidebarLinkItem = {

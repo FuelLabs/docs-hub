@@ -1,5 +1,5 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box } from '@fuel-ui/react';
+import { Box, Grid } from '@fuel-ui/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { type ReactNode } from 'react';
@@ -19,6 +19,7 @@ type LayoutProps = {
   theme?: string;
   category?: string | undefined;
   allNavs?: NavOrder[];
+  isLatest: boolean;
 };
 
 export function Layout({
@@ -29,6 +30,7 @@ export function Layout({
   hasHeadings,
   config,
   allNavs,
+  isLatest,
 }: LayoutProps) {
   const router = useRouter();
 
@@ -38,7 +40,7 @@ export function Layout({
       : 'Fuel Docs';
 
   function getSlug() {
-    return router.pathname === '/guides' ? 'guides' : '';
+    return router.pathname.includes('/guides') ? 'guides' : '';
   }
 
   const root = cssObj({
@@ -95,8 +97,19 @@ export function Layout({
           active={config?.slug ? config.slug : getSlug()}
           title={config?.title}
           allNavs={allNavs}
+          // <Box css={styles.root}>
+          //   <Header
+          //     active={config?.slug ? config.slug : getSlug()}
+          //     title={config?.title}
+          //     isLatest={isLatest}
         />
-        {children}
+        <Grid
+          data-headings={hasHeadings}
+          data-clean={Boolean(isClean)}
+          css={styles.grid}
+        >
+          {children}
+        </Grid>
       </Box>
     </>
   );
@@ -104,10 +117,18 @@ export function Layout({
 
 const styles = {
   root: cssObj({
-    maxWidth: '100vw',
     width: '100vw',
-    height: '100vh',
-    gridTemplateRows: '70px auto',
+    minHeight: '100vh',
+  }),
+  grid: cssObj({
+    // Min height is 100vh - header height
+    minHeight: 'calc(100vh - 69px)',
+
+    '& .Layout--section': {
+      maxWidth: '1000px',
+      width: '100vw',
+      boxSizing: 'border-box',
+    },
 
     '& .Layout--section': {
       maxWidth: '1000px',
@@ -115,31 +136,27 @@ const styles = {
     },
 
     '@xl': {
-      display: 'grid',
-
+      gridTemplateColumns: '250px 1fr',
+      gridColumnGap: '$24',
       '& .Layout--section': {
-        margin: 0,
-        width: 'calc(100vw - 368px)',
+        width: 'calc(100vw - 442px)',
       },
-
-      '&[data-clean="false"]': {
+      '&[data-headings="true"]': {
         gridTemplateColumns: '250px 1fr 220px',
-        gridColumnGap: '$24',
-
         '& .Layout--section': {
           width: 'calc(100vw - 662px)',
         },
-
-        '&[data-headings="false"]': {
-          gridTemplateColumns: '250px 1fr',
-
-          '& .Layout--section': {
-            width: 'calc(100vw - 442px)',
-          },
+      },
+      '&[data-clean="true"]': {
+        gridTemplateColumns: '1fr',
+        '& .Layout--section': {
+          px: '$14',
         },
       },
     },
-
+    '& .Layout--section a, & .Layout--section a:visited': {
+      color: 'currentColor',
+    },
     '& .Layout--section *:first-child': {
       mt: '$0',
     },

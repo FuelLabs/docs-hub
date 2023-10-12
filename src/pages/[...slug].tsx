@@ -54,22 +54,23 @@ export function getStaticPaths() {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
-  const doc = new Doc(params?.slug as string[], allMdDocs);
+  const slugArray = params?.slug as string[];
+  const doc = new Doc(slugArray, allMdDocs);
+  const slug = slugArray.join('/');
   const code = await doc.getCode();
-  const versions = await getVersions();
   const allNavsPath = join(
     DOCS_DIRECTORY,
     `../src/generated/sidebar-links/all-orders.json`
   );
   const allNavs = JSON.parse(readFileSync(allNavsPath, 'utf8'));
-
+  const versions = getVersions(doc.item.isLatest);
   return {
     props: {
       allNavs,
       code,
       md: doc.md,
       doc: doc.item,
-      links: doc.sidebarLinks,
+      links: doc.sidebarLinks(slug),
       docLink: doc.navLinks,
       versions,
     },

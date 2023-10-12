@@ -1,21 +1,28 @@
 {
+  "installation": {
+    "title": "Toolchain Installation",
+    "description": "Install the Fuel toolchain and binaries.",
+    "last_updated": "6. Sep 2023",
+    "featured": true,
+    "tags": ["Getting Started"]
+  },
   "quickstart": {
     "title": "Developer Quickstart",
-    "description": "Get started by building a counter dApp in Fuel",
+    "description": "Get started by building a counter dApp in Fuel.",
     "last_updated": "6. Sep 2023",
     "featured": true,
     "tags": ["Smart Contracts", "Full Stack"]
   },
   "running_a_node": {
     "title": "Running a Node",
-    "description": "Run a local Fuel node",
+    "description": "Run a local Fuel node.",
     "last_updated": "1. Sep 2023",
-    "featured": true,
+    "featured": false,
     "tags": ["fuel-core"]
   },
   "testnet_migration": {
     "title": "Testnet Migration",
-    "description": "Sway and SDK's breaking changes reference",
+    "description": "Sway and SDK's breaking changes reference.",
     "last_updated": "5. Sep 2023",
     "featured": false,
     "tags": []

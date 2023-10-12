@@ -7,11 +7,11 @@ const tsAPIOrderFile = getFile(
   false,
   true
 );
-// const latestTsAPIOrderFile = getFile(
-//   './fuels-ts/apps/docs/.typedoc/api-links.json',
-//   true,
-//   true
-// );
+const latestTsAPIOrderFile = getFile(
+  './fuels-ts/apps/docs/.typedoc/api-links.json',
+  true,
+  true
+);
 
 function extractData(inputString) {
   // used for api.json order
@@ -75,8 +75,7 @@ function handleVPLine(trimmedLine, lines, index, thisOrder, thisCat, isLatest) {
   } else if (trimmedLine.startsWith('apiLinks')) {
     // handle API order
     newVPOrder.menu.push('API');
-    // const apiJSON = isLatest ? latestTsAPIOrderFile : tsAPIOrderFile;
-    const apiJSON = tsAPIOrderFile;
+    const apiJSON = isLatest ? latestTsAPIOrderFile : tsAPIOrderFile;
     const apiLines = JSON.stringify(apiJSON, null, 2).split(EOL);
     apiLines.forEach((apiLine, apiIndex) => {
       const trimmedAPILine = apiLine.trimStart();
