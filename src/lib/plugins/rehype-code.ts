@@ -176,6 +176,9 @@ function codeLanguage() {
       if (lang?.includes('tsx')) {
         node.properties.className[0] = 'language-typescript';
       }
+      if (lang?.includes('sh')) {
+        node.properties.className[0] = 'language-sh';
+      }
     });
   };
 }
@@ -254,7 +257,11 @@ function codeImport() {
       node.type = 'element';
       node.tagName = 'pre';
       const lang = node.attributes?.find((a: any) => a.name === '__language');
-      const code = h('code', { class: lang?.value }, content?.value);
+      const code = h(
+        'code',
+        { class: lang?.value },
+        content?.value.replace(/\r/g, '')
+      );
       node.children = [code];
     });
   };

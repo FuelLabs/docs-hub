@@ -8,6 +8,8 @@ import path from 'path';
 import * as prettier from 'prettier';
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
+import { getEndCommentType } from './text-import';
+import type { CommentTypes } from './text-import';
 
 interface Block {
   content: string;
@@ -48,8 +50,6 @@ function extractLines(
     return lines.slice(start - 1, end).join('\n');
   }
 }
-
-type CommentTypes = '<!--' | '{/*' | '//' | '/*';
 
 function extractCommentBlock(
   content: string,
@@ -175,6 +175,8 @@ function dedent(lines: string[], amount: number): string[] {
 }
 
 const ROOT_DIR = path.resolve(__dirname, '../../../../../../../');
+
+      
 export function codeImport() {
   return function transformer(tree: Root, file: any) {
     const rootDir = process.cwd();
@@ -253,16 +255,6 @@ export function codeImport() {
           name: '__content',
           type: 'mdxJsxAttribute',
           value: content,
-        },
-        {
-          name: '__filepath',
-          type: 'mdxJsxAttribute',
-          value: path.resolve(dirname, file).replace(`${ROOT_DIR}/`, ''),
-        },
-        {
-          name: '__filename',
-          type: 'mdxJsxAttribute',
-          value: path.parse(file).base,
         },
         {
           name: '__language',

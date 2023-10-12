@@ -52,7 +52,7 @@ export const checkoutVersion = async (version, dir) => {
 
 export const commitAll = async (message) => {
   await exec('git', ['add', '.']);
-  await exec('git', ['commit', '-m', `'${message}'`]);
+  await exec('git', ['commit', '-m', message]);
 };
 
 export const updateSubmodule = async (submdoule) => {
