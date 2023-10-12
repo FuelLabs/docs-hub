@@ -44,6 +44,11 @@ export function HomePage({ guides, isLatest }: HomePageProps) {
               </FuelLink>
             </List.Item>
             <List.Item>
+              <FuelLink href="https://sway-playground.org/" isExternal>
+                Sway Playground
+              </FuelLink>
+            </List.Item>
+            <List.Item>
               <FuelLink
                 href="https://github.com/FuelLabs/sway-applications"
                 isExternal
@@ -126,6 +131,11 @@ export function HomePage({ guides, isLatest }: HomePageProps) {
             <List.Item>
               <FuelLink href="https://faucet-beta-4.fuel.network/" isExternal>
                 Faucet
+              </FuelLink>
+            </List.Item>
+            <List.Item>
+              <FuelLink href="https://alpha.fuel.network/bridge/" isExternal>
+                Bridge
               </FuelLink>
             </List.Item>
           </List>
