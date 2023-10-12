@@ -9,6 +9,9 @@ import * as prettier from 'prettier';
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
 
+import { getEndCommentType } from './text-import';
+import type { CommentTypes } from './text-import';
+
 function toAST(content: string) {
   return acorn.parse(content, {
     ecmaVersion: 'latest',
@@ -43,8 +46,6 @@ function extractLines(
   }
 }
 
-type CommentTypes = '<!--' | '{/*' | '//' | '/*';
-
 function extractCommentBlock(
   content: string,
   comment: string,
@@ -55,29 +56,20 @@ function extractCommentBlock(
   let lineStart = 1;
   let lineEnd = 1;
 
-  const endCommentType =
-    commentType === '<!--'
-      ? ' -->'
-      : commentType === '{/*'
-      ? ' */}'
-      : commentType === '/*'
-      ? ' */'
-      : '';
+  const endCommentType = getEndCommentType(commentType);
+
   for (let i = 0; i < lines.length; i++) {
-    const g = `${commentType} ANCHOR: ${comment}${endCommentType}`;
-    const start =
-      lines[i] === `${commentType} ${comment}:example:start${endCommentType}` ||
-      lines[i] === `${commentType}${comment}:example:start${endCommentType}` ||
-      lines[i] === g;
-    if (start === true) {
+    const startLineA = `${commentType}ANCHOR:${comment}${endCommentType}`;
+    const endLineA = `${commentType}ANCHOR_END:${comment}${endCommentType}`;
+    const startLineB = `${commentType}${comment}:example:start${endCommentType}`;
+    const endLineB = `${commentType}${comment}:example:end${endCommentType}`;
+    const cleanLine = lines[i].replace(/\s+/g, '');
+    const start = cleanLine === startLineA || cleanLine === startLineB;
+    if (start) {
       lineStart = i + 1;
     } else {
-      const x = `${commentType} ANCHOR_END: ${comment}${endCommentType}`;
-      const end =
-        lines[i] === `${commentType} ${comment}:example:end${endCommentType}` ||
-        lines[i] === `${commentType}${comment}:example:end${endCommentType}` ||
-        lines[i] === x;
-      if (end === true) {
+      const end = cleanLine === endLineA || cleanLine === endLineB;
+      if (end) {
         lineEnd = i;
       }
     }
@@ -151,7 +143,6 @@ function extractTestCase(source: string, testCase: string) {
   };
 }
 
-const ROOT_DIR = path.resolve(__dirname, '../../../../../../../');
 export function codeImport() {
   return function transformer(tree: Root, file: any) {
     const rootDir = process.cwd();
@@ -223,16 +214,6 @@ export function codeImport() {
           name: '__content',
           type: 'mdxJsxAttribute',
           value: content,
-        },
-        {
-          name: '__filepath',
-          type: 'mdxJsxAttribute',
-          value: path.resolve(dirname, file).replace(`${ROOT_DIR}/`, ''),
-        },
-        {
-          name: '__filename',
-          type: 'mdxJsxAttribute',
-          value: path.parse(file).base,
         },
         {
           name: '__language',

@@ -9,6 +9,7 @@ import { codeImport as walletCodeImport } from '~/docs/fuels-wallet/packages/doc
 import { codeExamples as latestCodeExamples } from '~/docs/latest/fuel-graphql-docs/src/lib/code-examples';
 import { codeImport as latestWalletCodeImport } from '~/docs/latest/fuels-wallet/packages/docs/src/lib/code-import';
 import { codeImport } from '~/src/lib/plugins/code-import';
+import { textImport } from '~/src/lib/plugins/text-import';
 
 import { DOCS_DIRECTORY } from '../config/constants';
 import type { Config, DocType, SidebarLinkItem } from '../types';
@@ -197,6 +198,7 @@ export class Doc {
       plugins = plugins.concat([[latestCodeExamples, { filepath }] as any]);
     } else if (this.md.slug.includes('guides')) {
       plugins = plugins.concat([[codeImport, { filepath }] as any]);
+      plugins = plugins.concat([[textImport, { filepath }] as any]);
     }
 
     return plugins;
