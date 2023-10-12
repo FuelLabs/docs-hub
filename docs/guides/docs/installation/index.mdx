@@ -17,13 +17,17 @@ This guide covers the following topics:
 
 ## Installing Rust
 
+{/* install_rust:example:start */}
 The Fuel toolchain is built on top of the Rust programming language. To install Rust, you can use the `rustup` tool.
+{/* install_rust:example:end */}
 
 Run the following command in your shell; this downloads and runs rustup-init.sh, which in turn downloads and runs the correct version of the `rustup-init` executable for your platform.
 
+{/* install_rust_command:example:start */}
 ```console
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
+{/* install_rust_command:example:end */}
 
 Check the official Rust documentation to get more information on [installing the Rust toolchain](https://www.rust-lang.org/tools/install).
 
@@ -35,16 +39,19 @@ toolchains and keep them updated. It makes building and maintaining Sway applica
 
 > 💡 Check out the [fuelup docs](docs/fuelup) for more information.
 
-
 ### Running fuelup-init
 
+{/* install_fuelup:example:start */}
 To install the Fuel toolchain, you'll use the `fuelup-init` script. This will install `forc`, `forc-client`, `forc-fmt`, `forc-lsp`, `forc-wallet` as well as `fuel-core` in `~/.fuelup/bin`.
+{/* install_fuelup:example:end */}
 
 👉 Just paste the following line in your terminal and press _Enter_.
 
+{/* install_fuelup_command:example:start */}
 ```sh
 curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh
 ```
+{/* install_fuelup_command:example:end */}
 
 > 🚧 Be aware that currently  we do not natively support Windows. If you wish to use `fuelup` on Windows, please use Windows Subsystem for Linux.
 
@@ -119,11 +126,16 @@ The `beta-4` network is the latest Fuel testnet. This includes public infrastruc
 
 To properly interact with the `beta-4` network it is necessary to use its corresponding toolchain.
 
+{/* install_beta-4:example:start */}
 👉 Run the following command to install the `beta-4` toolchain:
+{/* install_beta-4:example:end */}
 
+{/* install_beta-4_command:example:start */}
 ```console
 fuelup toolchain install beta-4
 ```
+{/* install_beta-4_command:example:end */}
+
 If the toolchain was successfully installed, you will see this output:
 
 ```sh
@@ -132,11 +144,15 @@ The Fuel toolchain is installed and up to date
 
 The toolchain was installed correctly, however is not in use yet. Next, you need to configure `fuelup` to use the `beta-4` toolchain as the default.
 
+{/* set_default_beta-4:example:start */}
 👉 Set `beta-4` as your default toolchain with the following command:
+{/* set_default_beta-4:example:end */}
 
+{/* set_default_beta-4_command:example:start */}
 ```console
 fuelup default beta-4
 ```
+{/* set_default_beta-4_command:example:end */}
 
 You will get the following output indicating that you have successfully set `beta-4` as your default toolchain. 
 
