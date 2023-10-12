@@ -68,6 +68,11 @@ export const NAVIGATION: LinkObject[] = [
         link: 'https://fuellabs.github.io/sway/master/std/',
       },
       {
+        name: 'Sway Playground',
+        type: 'external-link',
+        link: 'https://sway-playground.org',
+      },
+      {
         name: 'Example Apps',
         type: 'external-link',
         link: 'https://github.com/FuelLabs/sway-applications/',
