@@ -90,10 +90,6 @@ const styles = {
     zIndex: '$10',
     position: 'sticky',
     top: 0,
-
-    '@xl': {
-      position: 'relative',
-    },
   }),
   alert: cssObj({
     zIndex: '-1',
