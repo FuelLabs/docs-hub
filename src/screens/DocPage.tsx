@@ -1,7 +1,7 @@
 import { Box } from '@fuel-ui/react';
-import { Breadcrumb } from '~/src/components/Breadcrumb';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
+import { Breadcrumb } from '~/src/components/Breadcrumb';
 import { Layout } from '~/src/components/Layout';
 // import { Sidebar } from '~/src/components/Sidebar';
 import { TableOfContent } from '~/src/components/TableOfContent';
@@ -55,7 +55,7 @@ export function DocScreen(props: DocPageProps) {
             />
           </Box>
         </Box>
-        <Box as="section" css={styles.section} className="Layout--section">
+        <Box.Flex as="section" css={styles.section} className="Layout--section">
           {doc && (
             <Box className="Layout--pageContent">
               <Breadcrumb doc={doc} navLinks={props.links} />

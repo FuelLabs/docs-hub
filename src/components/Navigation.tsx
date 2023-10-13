@@ -29,9 +29,9 @@ export function Navigation({ active }: { active: string }) {
 
 const styles = {
   active: cssObj({
-    color: '$green11',
+    color: '$green8',
     '.fuel_Icon': {
-      color: '$green11',
+      color: '$green8',
     },
   }),
 };

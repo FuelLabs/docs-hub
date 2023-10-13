@@ -1,15 +1,13 @@
 import { cssObj } from '@fuel-ui/css';
 import type { ButtonLinkProps } from '@fuel-ui/react';
-import { Box, ButtonLink, Icon, IconButton } from '@fuel-ui/react';
-import { useState } from 'react';
+import { Box, ButtonLink } from '@fuel-ui/react';
 
 import { useDocContext } from '../hooks/useDocContext';
 import type { NavOrder } from '../pages';
 import type { Versions } from '../pages/[...slug]';
 import type { SidebarLinkItem } from '../types';
 
-import { SidebarLink } from './SidebarLink';
-import { SidebarSubmenu } from './SidebarSubmenu';
+import { SidebarSection } from './SidebarSection';
 
 type SidebarProps = {
   allNavs?: NavOrder[];
@@ -21,79 +19,6 @@ type SidebarProps = {
   links?: SidebarLinkItem[];
   versions?: Versions;
 };
-
-type SectionProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  links: any;
-  onClick?: ButtonLinkProps['onClick'];
-  book: string;
-  docSlug: string | undefined;
-  versions?: Versions;
-};
-
-function SidebarSection({ links, onClick, book, docSlug }: SectionProps) {
-  const [isOpened, setIsOpened] = useState<boolean | undefined>(
-    book === 'guides' || docSlug?.includes(book.toLowerCase())
-  );
-  const isGuide = book === 'guides';
-  const bookHasIndex =
-    book?.toLowerCase().replaceAll(/[_-]/g, ' ') ===
-    links[0].label.toLowerCase().replaceAll(/[_-]/g, ' ');
-
-  function toggle() {
-    setIsOpened((s) => !s);
-  }
-  return (
-    <>
-      {!isGuide && (
-        <Box.Flex justify={'space-between'}>
-          <SidebarLink
-            intent="base"
-            onClick={onClick}
-            item={{
-              slug: links[0].slug,
-              isExternal: false,
-              label: book,
-            }}
-            isActiveMenu={isOpened}
-          />
-          <IconButton
-            size="xs"
-            aria-label="Button"
-            intent="base"
-            variant="link"
-            onClick={toggle}
-            icon={isOpened ? Icon.is('ChevronUp') : Icon.is('ChevronDown')}
-          />
-        </Box.Flex>
-      )}
-
-      {(isGuide || isOpened) && (
-        <Box css={styles.sectionContainer}>
-          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-          {links.map((link: any, index: number) => {
-            if (!bookHasIndex || index > 0) {
-              return link.slug ? (
-                <SidebarLink onClick={onClick} key={link.slug} item={link} />
-              ) : (
-                <SidebarSubmenu
-                  onClick={onClick}
-                  key={link.subpath ? link.subpath + index : index}
-                  {...link}
-                />
-              );
-            }
-          })}
-          {/* {version && (
-            <Box css={{ fontSize: '$sm', padding: '20px 0 20px 0' }}>
-              Version: {version.version}
-            </Box>
-          )} */}
-        </Box>
-      )}
-    </>
-  );
-}
 
 export function AltSidebar({ allNavs, onClick, versions }: SidebarProps) {
   const ctx = useDocContext();
@@ -124,17 +49,21 @@ export function AltSidebar({ allNavs, onClick, versions }: SidebarProps) {
       )}
 
       {allNavs &&
-        allNavs.map((navOrder) => (
-          <Box key={navOrder.key}>
-            <SidebarSection
-              book={navOrder.key}
-              links={navOrder.links}
-              onClick={onClick}
-              docSlug={doc && doc.slug}
-              versions={versions}
-            />
-          </Box>
-        ))}
+        allNavs.map((navOrder, index) => {
+          if (index === 0) {
+            return (
+              <Box key={navOrder.key}>
+                <SidebarSection
+                  book={navOrder.key}
+                  links={navOrder.links}
+                  onClick={onClick}
+                  docSlug={doc && doc.slug}
+                  versions={versions}
+                />
+              </Box>
+            );
+          }
+        })}
     </Box.Stack>
   );
 }
@@ -143,10 +72,6 @@ export const styles = {
   root: cssObj({
     gap: '$1',
     pb: '$4',
-  }),
-  sectionContainer: cssObj({
-    pb: '$4',
-    pl: '$2',
   }),
   button: cssObj({
     width: '100%',
@@ -159,7 +84,7 @@ export const styles = {
   sectionLink: cssObj({
     '&:hover': {
       color: '$intentsBase1 !important',
-      bg: '$green11 !important',
+      bg: '$green8 !important',
       'html[class="fuel_light-theme"] &': {
         color: '$intentsBase12 !important',
         bg: '$green6 !important',
@@ -169,7 +94,7 @@ export const styles = {
   }),
   activeSectionLink: cssObj({
     color: '$intentsBase1',
-    bg: '$green11',
+    bg: '$green8',
     'html[class="fuel_light-theme"] &': {
       color: '$intentsBase12',
       bg: '$green6',

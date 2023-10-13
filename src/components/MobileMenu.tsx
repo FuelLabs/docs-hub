@@ -16,7 +16,6 @@ import { useState } from 'react';
 import type { LinkObject } from '../config/constants';
 import { NAVIGATION } from '../config/constants';
 
-import { styles as navStyles } from './Navigation';
 import Search from './Search';
 import { Sidebar } from './Sidebar';
 import ThemeToggler from './ThemeToggler';
@@ -224,7 +223,6 @@ const styles = {
     },
   }),
   navButton: cssObj({
-    ...navStyles.navButton,
     justifyContent: 'space-between',
     padding: '$0',
   }),

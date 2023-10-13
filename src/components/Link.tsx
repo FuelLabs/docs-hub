@@ -44,12 +44,12 @@ export function Link(props: LinkProps) {
   }
 
   return href?.startsWith('http') ? (
-    <FuelLink {...props} isExternal css={{ color: '$green11 !important' }} />
+    <FuelLink {...props} isExternal css={{ color: '$green8 !important' }} />
   ) : (
     <NextLink href={href} passHref legacyBehavior>
       <FuelLink
         {...props}
-        css={{ color: '$green11 !important', outline: 'none' }}
+        css={{ color: '$green8 !important', outline: 'none' }}
       />
     </NextLink>
   );

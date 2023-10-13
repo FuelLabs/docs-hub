@@ -126,7 +126,7 @@ const styles = {
     },
 
     'a.active, a:hover': {
-      color: '$green11',
+      color: '$green8',
     },
   }),
   desktop: cssObj({

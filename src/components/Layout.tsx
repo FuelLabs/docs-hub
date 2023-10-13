@@ -4,7 +4,6 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { type ReactNode } from 'react';
 
-import type { NavOrder } from '../pages';
 import type { Config } from '../types';
 
 import { Header } from './Header';
@@ -13,12 +12,10 @@ type LayoutProps = {
   title?: string;
   children: ReactNode;
   isClean?: boolean;
-  isCleanWithNav?: boolean;
   hasHeadings?: boolean;
   config?: Config;
   theme?: string;
   category?: string | undefined;
-  allNavs?: NavOrder[];
   isLatest: boolean;
 };
 
@@ -26,10 +23,8 @@ export function Layout({
   title,
   children,
   isClean,
-  isCleanWithNav,
   hasHeadings,
   config,
-  allNavs,
   isLatest,
 }: LayoutProps) {
   const router = useRouter();
@@ -42,16 +37,6 @@ export function Layout({
   function getSlug() {
     return router.pathname.includes('/guides') ? 'guides' : '';
   }
-
-  const root = cssObj({
-    '&[data-clean="true"]': {
-      gridTemplateColumns: isCleanWithNav ? '250px 1fr' : '1fr',
-
-      '& .Layout--section': {
-        px: '$14',
-      },
-    },
-  });
 
   return (
     <>
@@ -88,20 +73,11 @@ export function Layout({
           content="width=device-width, initial-scale=1.0"
         ></meta>
       </Head>
-      <Box
-        css={{ ...styles.root, ...root }}
-        data-headings={hasHeadings}
-        data-clean={Boolean(isClean)}
-      >
+      <Box css={styles.root}>
         <Header
           active={config?.slug ? config.slug : getSlug()}
           title={config?.title}
-          allNavs={allNavs}
-          // <Box css={styles.root}>
-          //   <Header
-          //     active={config?.slug ? config.slug : getSlug()}
-          //     title={config?.title}
-          //     isLatest={isLatest}
+          // isLatest={isLatest}
         />
         <Grid
           data-headings={hasHeadings}
@@ -128,11 +104,6 @@ const styles = {
       maxWidth: '1000px',
       width: '100vw',
       boxSizing: 'border-box',
-    },
-
-    '& .Layout--section': {
-      maxWidth: '1000px',
-      margin: 'auto',
     },
 
     '@xl': {
