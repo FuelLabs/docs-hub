@@ -16,21 +16,23 @@ export type SidebarLinkProps = ButtonLinkProps & {
 export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
   ({ item, isActiveMenu, onClick, size, ...props }, ref) => {
     const router = useRouter();
-    const isActive = isActiveMenu ?? router.asPath === `/${item.slug}/`;
-    const buttonStyles = {
-      justifyContent: 'flex-start',
+    const isSamePage = router.asPath === `/${item.slug}/`;
+    const isActive = isActiveMenu ?? isSamePage;
+    const isSubmenu = props['data-submenu'];
+    const isBookMenu = props['data-bookmenu'];
+    const activeStyles = {
       color: isActive ?? '$green8',
       'html[class="fuel_light-theme"] &': {
         color: isActive ? '$green8' : '$intentsBase12',
+        borderLeft: !isBookMenu && isSamePage && '2px solid $green8 !important',
       },
-      pt: '$1',
-      pb: 0,
-      '&:hover': {
-        cursor: 'pointer',
-        textDecoration: 'none',
-        color: '$green8 !important',
-      },
+      borderLeft: !isBookMenu && isSamePage && '2px solid $green8',
+      paddingLeft: isSubmenu ? '$8' : '$4',
     };
+
+    if (props['data-submenu']) {
+      console.log('HERE');
+    }
 
     return (
       <NextLink href={item.slug} legacyBehavior passHref>
@@ -42,7 +44,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
           {...(onClick && { onClick })}
           isExternal={item.isExternal}
           intent={isActive ? 'primary' : 'base'}
-          css={buttonStyles}
+          css={{ ...buttonStyles, ...activeStyles }}
         >
           {item.label}
         </ButtonLink>
@@ -50,3 +52,15 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
     );
   }
 );
+
+const buttonStyles = {
+  justifyContent: 'flex-start',
+  pt: '$1',
+  pb: 0,
+  borderRadius: 0,
+  '&:hover': {
+    cursor: 'pointer',
+    textDecoration: 'none',
+    color: '$green8 !important',
+  },
+};
