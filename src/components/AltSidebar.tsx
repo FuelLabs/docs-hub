@@ -7,6 +7,7 @@ import type { NavOrder } from '../pages';
 import type { Versions } from '../pages/[...slug]';
 import type { SidebarLinkItem } from '../types';
 
+import { buttonStyles } from './SidebarLink';
 import { SidebarSection } from './SidebarSection';
 
 type SidebarProps = {
@@ -33,7 +34,8 @@ export function AltSidebar({ allNavs, onClick, versions }: SidebarProps) {
               href={doc.parent.link}
               intent={'base'}
               leftIcon={'ArrowNarrowLeft'}
-              css={styles.button}
+              css={buttonStyles}
+              // css={styles.button}
               size={'sm'}
             >
               {doc.parent.label}
@@ -49,20 +51,25 @@ export function AltSidebar({ allNavs, onClick, versions }: SidebarProps) {
       )}
 
       {allNavs &&
-        allNavs.map((navOrder, index) => {
-          if (index === 0) {
-            return (
-              <Box key={navOrder.key}>
-                <SidebarSection
-                  book={navOrder.key}
-                  links={navOrder.links}
-                  onClick={onClick}
-                  docSlug={doc && doc.slug}
-                  versions={versions}
-                />
-              </Box>
-            );
+        allNavs.map((navOrder) => {
+          let key = navOrder.links[0].slug.split('/')[1];
+          if (key === 'sway') {
+            key = 'forc';
           }
+          return (
+            <Box key={navOrder.key}>
+              <SidebarSection
+                book={navOrder.key}
+                links={navOrder.links}
+                onClick={onClick}
+                docSlug={doc && doc.slug}
+                version={
+                  versions &&
+                  Object.values(versions).find((v) => v.name === key)
+                }
+              />
+            </Box>
+          );
         })}
     </Box.Stack>
   );
@@ -71,7 +78,7 @@ export function AltSidebar({ allNavs, onClick, versions }: SidebarProps) {
 export const styles = {
   root: cssObj({
     gap: '$1',
-    pb: '$4',
+    mb: '$32',
   }),
   button: cssObj({
     width: '100%',

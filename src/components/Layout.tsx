@@ -4,6 +4,8 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { type ReactNode } from 'react';
 
+import type { NavOrder } from '../pages';
+import type { Versions } from '../pages/[...slug]';
 import type { Config } from '../types';
 
 import { Header } from './Header';
@@ -17,6 +19,8 @@ type LayoutProps = {
   theme?: string;
   category?: string | undefined;
   isLatest: boolean;
+  versions?: Versions;
+  allNavs?: NavOrder[];
 };
 
 export function Layout({
@@ -26,6 +30,8 @@ export function Layout({
   hasHeadings,
   config,
   isLatest,
+  versions,
+  allNavs,
 }: LayoutProps) {
   const router = useRouter();
 
@@ -37,6 +43,8 @@ export function Layout({
   function getSlug() {
     return router.pathname.includes('/guides') ? 'guides' : '';
   }
+
+  const slug = config?.slug ? config.slug : getSlug();
 
   return (
     <>
@@ -75,9 +83,11 @@ export function Layout({
       </Head>
       <Box css={styles.root}>
         <Header
-          active={config?.slug ? config.slug : getSlug()}
+          active={slug}
           title={config?.title}
-          // isLatest={isLatest}
+          isLatest={isLatest}
+          versions={versions}
+          allNavs={allNavs}
         />
         <Grid
           data-headings={hasHeadings}

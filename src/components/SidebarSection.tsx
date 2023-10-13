@@ -4,7 +4,7 @@ import { Box, Icon, IconButton } from '@fuel-ui/react';
 import type { ButtonLinkProps } from '@fuel-ui/react';
 import { useState } from 'react';
 
-import type { Versions } from '../pages/[...slug]';
+import type { VersionItem } from '../pages/[...slug]';
 
 import { SidebarLink } from './SidebarLink';
 import { SidebarSubmenu } from './SidebarSubmenu';
@@ -14,7 +14,7 @@ type SectionProps = {
   onClick?: ButtonLinkProps['onClick'];
   book: string;
   docSlug: string | undefined;
-  versions?: Versions;
+  version?: VersionItem;
 };
 
 export function SidebarSection({
@@ -22,6 +22,7 @@ export function SidebarSection({
   onClick,
   book,
   docSlug,
+  version,
 }: SectionProps) {
   const [isOpened, setIsOpened] = useState<boolean | undefined>(
     book === 'guides' || docSlug?.includes(book.toLowerCase())
@@ -35,6 +36,15 @@ export function SidebarSection({
     setIsOpened((s) => !s);
   }
 
+  function handleClick(e: any) {
+    if (onClick) {
+      onClick(e);
+    }
+    if (!isOpened) {
+      setIsOpened(true);
+    }
+  }
+
   return (
     <>
       {!isGuide && (
@@ -43,13 +53,13 @@ export function SidebarSection({
             intent="base"
             size="md"
             data-bookmenu
-            onClick={onClick}
+            onClick={handleClick}
             item={{
               slug: links[0].slug,
               isExternal: false,
               label: book,
             }}
-            isActiveMenu={false}
+            isActiveMenu={docSlug?.replace('/latest/', '/') === links[0].slug}
           />
           <IconButton
             size="xs"
@@ -89,12 +99,9 @@ export function SidebarSection({
             })}
           </Box.VStack>
         </Box>
-        //     {/* {version && (
-        //         <Box css={{ fontSize: '$sm', padding: '20px 0 20px 0' }}>
-        //           Version: {version.version}
-        //         </Box>
-        //       )} */}
-        //   </Box.VStack>
+      )}
+      {isOpened && version && (
+        <Box css={styles.version}>Version: {version.version}</Box>
       )}
     </>
   );
@@ -102,11 +109,17 @@ export function SidebarSection({
 
 const styles = {
   sectionContainer: cssObj({
-    pb: '$6',
     pl: '$4',
   }),
   listContainer: cssObj({
     position: 'relative',
+    mt: '$2',
+    mb: '$6',
+  }),
+  version: cssObj({
+    fontSize: '$sm',
+    pl: '$4',
+    mb: '$8',
   }),
   listItem: cssObj({
     position: 'relative',

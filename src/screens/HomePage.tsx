@@ -1,32 +1,129 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box, Text, Heading, Grid, ButtonLink } from '@fuel-ui/react';
-// import { Sidebar } from '~/src/components/Sidebar';
+import { Box, Text, Heading, Grid } from '@fuel-ui/react';
 
 import { AltSidebar } from '../components/AltSidebar';
 import { Card } from '../components/Card';
 import type { GuidesProps } from '../pages/guides';
 import type { NavOrder } from '../pages/index';
 
-import type { CardInfo } from './CategoryPage';
-
-interface HomeCard {
-  header: string;
-  link?: string;
-  cards: CardInfo[];
-}
-
 interface HomeScreenProps extends GuidesProps {
   allNavs: NavOrder[];
-  homeCards: HomeCard[];
+  isLatest: boolean;
 }
 
-export function HomeScreen({ guides, allNavs, homeCards }: HomeScreenProps) {
+export function HomeScreen({ guides, allNavs, isLatest }: HomeScreenProps) {
+  const homeCards = [
+    {
+      header: 'Sway Language',
+      cards: [
+        {
+          link: `/docs${isLatest ? '/latest' : ''}/sway`,
+          isExternal: false,
+          heading: 'Sway',
+          headingIcon: 'Code',
+          body: 'Read the official Sway documentation.',
+        },
+        {
+          link: 'https://github.com/FuelLabs/sway-applications',
+          isExternal: true,
+          heading: 'Example Applications',
+          headingIcon: 'Apps',
+          body: 'Explore end-to-end applications written in Sway.',
+        },
+        {
+          link: 'https://github.com/FuelLabs/sway-applications',
+          isExternal: true,
+          heading: 'Sway Playground',
+          headingIcon: 'Browser',
+          body: 'Get started experimenting with Sway in the browser.',
+        },
+      ],
+    },
+    {
+      header: 'Tooling',
+      cards: [
+        {
+          link: `/docs${isLatest ? '/latest' : ''}/forc`,
+          isExternal: false,
+          heading: 'Forc',
+          headingIcon: 'Tool',
+          body: 'Explore tools and commands building on Fuel.',
+        },
+        {
+          link: `/docs${isLatest ? '/latest' : ''}/fuelup`,
+          isExternal: false,
+          heading: 'Fuelup',
+          headingIcon: 'Settings',
+          body: 'Learn more about the official package manager for Fuel.',
+        },
+        {
+          link: `/docs${isLatest ? '/latest' : ''}/indexer`,
+          isExternal: false,
+          heading: 'Indexer',
+          headingIcon: 'LayoutGrid',
+          body: 'Find tooling to index data on the Fuel network.',
+        },
+      ],
+    },
+    {
+      header: 'SDKs',
+      cards: [
+        {
+          link: `/docs${isLatest ? '/latest' : ''}/fuels-rs`,
+          isExternal: false,
+          heading: 'Rust SDK',
+          headingIcon: 'BrandRust',
+          body: 'Read the documentation for the Rust SDK.',
+        },
+        {
+          link: `/docs${isLatest ? '/latest' : ''}/fuels-ts`,
+          isExternal: false,
+          heading: 'Typescript SDK',
+          headingIcon: 'BrandTypescript',
+          body: 'Read the documentation for the TypeScript SDK.',
+        },
+        {
+          link: `/docs${isLatest ? '/latest' : ''}/wallet`,
+          isExternal: false,
+          heading: 'Wallet',
+          headingIcon: 'Wallet',
+          body: 'Read the documentation for the Fuel Wallet.',
+        },
+      ],
+    },
+    {
+      header: 'Network',
+      cards: [
+        {
+          link: `/docs${isLatest ? '/latest' : ''}/graphql`,
+          isExternal: false,
+          heading: 'GraphQL API',
+          headingIcon: 'ChartDots3',
+          body: 'Read the documentation for the GraphQL API.',
+        },
+        {
+          link: `/docs${isLatest ? '/latest' : ''}/specs`,
+          isExternal: false,
+          heading: 'Specs',
+          headingIcon: 'ListDetails',
+          body: 'Explore the specifications for the Fuel Network.',
+        },
+        {
+          link: 'https://faucet-beta-4.fuel.network/',
+          isExternal: true,
+          heading: 'Faucet',
+          headingIcon: 'Coin',
+          body: 'Get beta-4 testnet tokens.',
+        },
+      ],
+    },
+  ];
+
   return (
     <>
       <Box css={styles.sidebar}>
         <Box css={styles.sidebarContainer}>
           <AltSidebar allNavs={allNavs} />
-          {/* <Sidebar allNavs={allNavs} /> */}
         </Box>
       </Box>
       <Box as="section" css={styles.section} className="Layout--section">
@@ -66,14 +163,6 @@ export function HomeScreen({ guides, allNavs, homeCards }: HomeScreenProps) {
                   <Heading as="h3" id="read-the-docs">
                     {cardSection.header}
                   </Heading>
-                  {cardSection.link && (
-                    <ButtonLink
-                      href={cardSection.link}
-                      rightIcon={'ArrowNarrowRight'}
-                    >
-                      See All
-                    </ButtonLink>
-                  )}
                 </Box.Flex>
                 <Grid css={{ ...styles.grid, ...styles.grid3 }}>
                   {cardSection.cards.map((card) => (
@@ -140,6 +229,8 @@ export const styles = {
     px: '$6',
     display: 'flex',
     flexDirection: 'column',
+    mx: 'auto',
+    maxWidth: '1000px',
 
     '@md': {
       py: '$8',
@@ -149,6 +240,7 @@ export const styles = {
     '@xl': {
       py: '$14',
       px: '$0',
+      mx: '0',
     },
 
     '& .Layout--pageContent': {

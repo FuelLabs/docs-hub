@@ -1,13 +1,12 @@
-import { readFileSync } from 'fs';
 import type { GetStaticProps } from 'next';
-import { join } from 'path';
 import { useState, useEffect } from 'react';
 
 import { Layout } from '../components/Layout';
-import { DOCS_DIRECTORY } from '../config/constants';
 import useTheme from '../hooks/useTheme';
 import { useVersion } from '../hooks/useVersion';
 import { GuidesPage } from '../screens/GuidesPage';
+
+import { getProps } from './index';
 
 export interface GuideInfo {
   title: string;
@@ -42,13 +41,6 @@ export default function Guides({ guides }: GuidesProps) {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getStaticProps: GetStaticProps<any> = async () => {
-  const guidesPath = join(DOCS_DIRECTORY, `./guides/docs/guides.json`);
-  // const latestGuidesPath = join(
-  //   LATEST_DOCS_DIRECTORY,
-  //   `./guides/docs/guides.json`
-  // );
-  const guides = JSON.parse(readFileSync(guidesPath, 'utf8'));
-  // const latestGuides = JSON.parse(readFileSync(latestGuidesPath, 'utf8'));
-
-  return { props: { guides } };
+  const { guides, allNavs, allLatestNavs } = getProps();
+  return { props: { guides, allNavs, allLatestNavs } };
 };

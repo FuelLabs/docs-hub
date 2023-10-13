@@ -47,7 +47,7 @@ export function SidebarSubmenu({
       />
 
       {isOpened && (
-        <List css={styles.list}>
+        <List>
           {submenu?.map((item, index) => {
             if (!hasIndex || index > 0) {
               return (
@@ -66,8 +66,5 @@ export function SidebarSubmenu({
 const styles = {
   root: cssObj({
     flexDirection: 'column',
-  }),
-  list: cssObj({
-    // pl: '$4',
   }),
 };

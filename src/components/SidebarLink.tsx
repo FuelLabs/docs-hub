@@ -30,10 +30,6 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
       paddingLeft: isSubmenu ? '$8' : '$4',
     };
 
-    if (props['data-submenu']) {
-      console.log('HERE');
-    }
-
     return (
       <NextLink href={item.slug} legacyBehavior passHref>
         <ButtonLink
@@ -53,14 +49,16 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
   }
 );
 
-const buttonStyles = {
+export const buttonStyles = {
   justifyContent: 'flex-start',
   pt: '$1',
   pb: 0,
   borderRadius: 0,
   '&:hover': {
-    cursor: 'pointer',
     textDecoration: 'none',
     color: '$green8 !important',
+    '.fuel_Icon': {
+      color: '$green8 !important',
+    },
   },
 };
