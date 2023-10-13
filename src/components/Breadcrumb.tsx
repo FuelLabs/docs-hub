@@ -8,6 +8,7 @@ import { capitalize } from '../lib/str';
 type BreadcrumbProps = {
   doc: DocType;
   navLinks: SidebarLinkItem[];
+  isLatest: boolean;
 };
 
 type LabelProps = {
@@ -18,39 +19,44 @@ function Label({ label }: LabelProps) {
   return <Text as="span">{capitalize(label.replaceAll(/[_-]/g, ' '))}</Text>;
 }
 
-export function Breadcrumb({ doc, navLinks }: BreadcrumbProps) {
+export function Breadcrumb({ doc, navLinks, isLatest }: BreadcrumbProps) {
   const split = doc.slug.split('/');
   return (
     <Box.Flex css={styles.root}>
       {split.map((label, index) => {
-        let link;
-        if (index === 0) link = '/';
-        if (index === 1) link = `/docs/${split[1]}`;
-        if (index === 2 && split.length > 3) {
-          const category = split[2];
-          const linkItem = navLinks.find((link) => {
-            return link.label && link.label.toLowerCase() === category;
-          });
-          link = linkItem && linkItem.submenu ? linkItem.submenu[0].slug : null;
-        }
+        if (!isLatest || index !== 1) {
+          let link;
+          const num = isLatest ? 3 : 2;
+          if (index === 0) link = '/';
+          if (index === num - 1)
+            link = `/docs${isLatest ? '/latest' : ''}/${split[num - 1]}`;
+          if (index === num && split.length > num + 1) {
+            const category = split[num];
+            const linkItem = navLinks.find((link) => {
+              return link.label && link.label.toLowerCase() === category;
+            });
+            link =
+              linkItem && linkItem.submenu ? linkItem.submenu[0].slug : null;
+          }
 
-        if (link) {
+          if (link) {
+            return (
+              <Box css={styles.label} key={`${index}-${label}`}>
+                <NextLink href={link}>
+                  <Label label={label} />
+                </NextLink>
+                {index < split.length - 1 && ' / '}
+              </Box>
+            );
+          }
+
           return (
             <Box key={`${index}-${label}`}>
-              <NextLink href={link}>
-                <Label label={label} />
-              </NextLink>
+              <Label label={label} />
               {index < split.length - 1 && ' / '}
             </Box>
           );
         }
-
-        return (
-          <div key={`${index}-${label}`}>
-            <Label label={label} />
-            {index < split.length - 1 && ' / '}
-          </div>
-        );
       })}
     </Box.Flex>
   );
@@ -67,6 +73,16 @@ const styles = {
     },
     '& > span:last-of-type': {
       color: '$intentsBase9',
+    },
+  }),
+  label: cssObj({
+    'a:hover': {
+      textDecoration: 'none !important',
+    },
+    '.fuel_Text': {
+      '&:hover': {
+        color: '$green8 !important',
+      },
     },
   }),
 };

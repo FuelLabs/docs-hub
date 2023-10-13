@@ -59,7 +59,7 @@ export function SidebarSection({
               isExternal: false,
               label: book,
             }}
-            isActiveMenu={docSlug?.replace('/latest/', '/') === links[0].slug}
+            isActiveMenu={docSlug === links[0].slug}
           />
           <IconButton
             size="xs"

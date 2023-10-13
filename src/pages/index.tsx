@@ -37,25 +37,16 @@ export default function Home({
   }, []);
 
   const isLatest = mounted && version === 'Latest';
+  const navs = isLatest ? allLatestNavs : allNavs;
   return (
-    <Layout
-      allNavs={isLatest ? allLatestNavs : allNavs}
-      title="Fuel Docs"
-      theme={theme}
-      isLatest={isLatest}
-    >
-      <HomeScreen guides={guides} allNavs={allNavs} isLatest={isLatest} />
+    <Layout allNavs={navs} title="Fuel Docs" theme={theme} isLatest={isLatest}>
+      <HomeScreen guides={guides} allNavs={navs} isLatest={isLatest} />
     </Layout>
   );
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getStaticProps: GetStaticProps<any> = async () => {
-  const { guides, allNavs, allLatestNavs } = getProps();
-  return { props: { guides, allNavs, allLatestNavs } };
-};
-
-export function getProps() {
+export const getStaticProps: GetStaticProps<any> = () => {
   const guidesPath = join(DOCS_DIRECTORY, `./guides/docs/guides.json`);
   const allNavsPath = join(
     DOCS_DIRECTORY,
@@ -68,5 +59,5 @@ export function getProps() {
   const guides = JSON.parse(readFileSync(guidesPath, 'utf8'));
   const allNavs = JSON.parse(readFileSync(allNavsPath, 'utf8'));
   const allLatestNavs = JSON.parse(readFileSync(allLatestNavsPath, 'utf8'));
-  return { guides, allNavs, allLatestNavs };
-}
+  return { props: { guides, allNavs, allLatestNavs } };
+};
