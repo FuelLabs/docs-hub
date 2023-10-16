@@ -92,10 +92,10 @@ const styles = {
     py: '$4',
     '&:hover': {
       backgroundImage:
-        'linear-gradient($transparent, $intentsBase1) !important',
+        'linear-gradient($transparent, rgb(15, 15, 15)) !important',
       'html[class="fuel_light-theme"] &': {
         backgroundImage:
-          'linear-gradient($transparent, $intentsBase2) !important',
+          'linear-gradient($transparent, rgb(245, 245, 245)) !important',
       },
     },
   }),

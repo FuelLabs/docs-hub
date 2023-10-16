@@ -31,8 +31,13 @@ export function SidebarSubmenu({
     if (pathname.includes('/guides/')) {
       setIsOpened(true);
     } else {
-      const actualSlug = `/${thisItem.slug}/`;
-      const active = pathname.startsWith(actualSlug);
+      let actualSlug = thisItem.slug;
+      if (!hasIndex) {
+        const split = thisItem.slug.split('/');
+        split.pop();
+        actualSlug = split.join('/');
+      }
+      const active = pathname.startsWith(`/${actualSlug}/`);
       setIsOpened(active);
     }
   }, [pathname]);

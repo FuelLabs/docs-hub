@@ -48,7 +48,7 @@ export function GuidesPage({ guides }: GuidesPageProps) {
           </Button>
         ))}
       </Box.Flex>
-      <Box.Stack>
+      <Box.Stack gap="$8">
         {Object.keys(guides).map((guideName) => {
           const guideInfo = guides[guideName];
           if (active === 'all' || guideInfo.tags.includes(active)) {

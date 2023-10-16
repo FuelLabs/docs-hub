@@ -218,12 +218,12 @@ export const styles = {
   }),
   grid2: cssObj({
     '@xl': {
-      gridTemplateColumns: 'repeat(2, minmax(300px, 1fr))',
+      gridTemplateColumns: 'repeat(2, 1fr)',
     },
   }),
   grid3: cssObj({
     '@xl': {
-      gridTemplateColumns: 'repeat(3, minmax(300px, 1fr))',
+      gridTemplateColumns: 'repeat(3, 1fr)',
     },
   }),
   section: cssObj({

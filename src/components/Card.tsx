@@ -72,20 +72,24 @@ const styles = {
     padding: '$3 $2',
     margin: 0,
     height: 'calc(100% - 26px)',
+    width: 'calc(100% - 18px)',
+    border: '1px solid $border',
+    borderRadius: '6px',
     '&:hover': {
       textDecoration: 'none !important',
+      border: '1px solid $intentsBase8',
+    },
+    backgroundImage:
+      'linear-gradient($transparent, rgb(15, 15, 15)) !important',
+    'html[class="fuel_light-theme"] &': {
+      backgroundImage:
+        'linear-gradient($transparent, rgb(245, 245, 245)) !important',
     },
   }),
   card: cssObj({
     width: '100%',
-    backgroundImage: 'linear-gradient($transparent, $intentsBase1) !important',
-    'html[class="fuel_light-theme"] &': {
-      backgroundImage:
-        'linear-gradient($transparent, $intentsBase2) !important',
-    },
-    '&:hover': {
-      border: '1px solid $intentsBase8',
-    },
+    border: 'none',
+    bg: '$transparent',
   }),
   date: cssObj({
     fontSize: '$sm',
@@ -96,9 +100,9 @@ const styles = {
   }),
   badge: cssObj({
     fontSize: '$xs',
-    // '&:hover': {
-
-    // }
+    '&:hover': {
+      bg: '$semanticGhostBaseBg !important',
+    },
   }),
   badgeContainer: cssObj({
     marginTop: '$4',

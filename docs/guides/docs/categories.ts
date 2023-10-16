@@ -1,1 +1,1 @@
-export const TAG_CATEGORIES = ['Smart Contracts', 'Full Stack', 'fuel-core'];
+export const TAG_CATEGORIES = ['Getting Started', 'Full Stack', 'fuel-core'];

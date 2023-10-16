@@ -11,7 +11,7 @@
     "description": "Get started by building a counter dApp in Fuel.",
     "last_updated": "6. Sep 2023",
     "featured": true,
-    "tags": ["Smart Contracts", "Full Stack"]
+    "tags": ["Getting Started", "Full Stack"]
   },
   "running_a_node": {
     "title": "Running a Node",
