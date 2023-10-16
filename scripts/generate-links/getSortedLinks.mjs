@@ -172,9 +172,14 @@ export default function getSortedLinks(config, docs) {
             key = match[1];
             catOrder = config[key];
           }
+          if (!catOrder) {
+            const newConfig = convertKeysToLowerCase(config);
+            catOrder = newConfig[key];
+          }
           catOrder = catOrder?.map((title) =>
             title.toLowerCase().replaceAll('-', '_').replaceAll(' ', '_')
           );
+
           const submenu = link.submenu.sort((a, b) => {
             const lowerA = a.label
               .toLowerCase()
@@ -194,4 +199,13 @@ export default function getSortedLinks(config, docs) {
     : links;
 
   return sortedLinks;
+}
+
+function convertKeysToLowerCase(obj) {
+  const newObj = {};
+  for (const key in obj) {
+    const lowerKey = key.toLowerCase();
+    newObj[lowerKey] = obj[key];
+  }
+  return newObj;
 }
