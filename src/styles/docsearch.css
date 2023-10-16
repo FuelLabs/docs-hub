@@ -57,6 +57,7 @@ html[data-theme='dark'] {
   cursor: pointer;
   width: 160px;
   color: var(--colors-semanticOutlinedBaseColor);
+  background-color: var(--colors-gray4);
 }
 
 .DocSearch-Button-Placeholder {
