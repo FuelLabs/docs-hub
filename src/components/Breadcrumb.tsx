@@ -29,7 +29,7 @@ export function Breadcrumb({ doc, navLinks, isLatest }: BreadcrumbProps) {
           const num = isLatest ? 3 : 2;
           if (index === 0) link = '/';
           if (index === num - 1)
-            link = `/docs${isLatest ? '/latest' : ''}/${split[num - 1]}`;
+            link = `/${split[0]}${isLatest ? '/latest' : ''}/${split[num - 1]}`;
           if (index === num && split.length > num + 1) {
             const category = split[num];
             const linkItem = navLinks.find((link) => {
@@ -81,7 +81,7 @@ const styles = {
     },
     '.fuel_Text': {
       '&:hover': {
-        color: '$green8 !important',
+        color: '$semanticLinkPrimaryColor !important',
       },
     },
   }),

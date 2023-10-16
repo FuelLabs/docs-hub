@@ -10,7 +10,11 @@ export function Navigation({ active }: { active: string }) {
         leftIconAriaLabel="documentation"
         intent="base"
         href={'/'}
-        css={!isGuidesActive && styles.active}
+        css={
+          !isGuidesActive
+            ? { ...styles.navItem, ...styles.active }
+            : styles.navItem
+        }
       >
         Documentation
       </ButtonLink>
@@ -19,7 +23,11 @@ export function Navigation({ active }: { active: string }) {
         leftIconAriaLabel="documentation"
         href={'/guides'}
         intent="base"
-        css={isGuidesActive && styles.active}
+        css={
+          isGuidesActive
+            ? { ...styles.navItem, ...styles.active }
+            : styles.navItem
+        }
       >
         Guides
       </ButtonLink>
@@ -28,10 +36,19 @@ export function Navigation({ active }: { active: string }) {
 }
 
 const styles = {
+  navItem: cssObj({
+    '&:hover': {
+      color: '$semanticLinkPrimaryColor !important',
+      textDecoration: 'none !important',
+      '.fuel_Icon': {
+        color: '$semanticLinkPrimaryColor !important',
+      },
+    },
+  }),
   active: cssObj({
-    color: '$green8',
+    color: '$semanticLinkPrimaryColor',
     '.fuel_Icon': {
-      color: '$green8',
+      color: '$semanticLinkPrimaryColor',
     },
   }),
 };

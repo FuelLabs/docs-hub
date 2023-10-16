@@ -21,12 +21,16 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
     const isSubmenu = props['data-submenu'];
     const isBookMenu = props['data-bookmenu'];
     const activeStyles = {
-      color: isActive ?? '$green8',
+      color: isActive ?? '$semanticLinkPrimaryColor',
       'html[class="fuel_light-theme"] &': {
-        color: isActive ? '$green8' : '$intentsBase12',
-        borderLeft: !isBookMenu && isSamePage && '2px solid $green8 !important',
+        color: isActive ? '$semanticLinkPrimaryColor' : '$intentsBase12',
+        borderLeft:
+          !isBookMenu &&
+          isSamePage &&
+          '2px solid $semanticLinkPrimaryColor !important',
       },
-      borderLeft: !isBookMenu && isSamePage && '2px solid $green8',
+      borderLeft:
+        !isBookMenu && isSamePage && '2px solid $semanticLinkPrimaryColor',
       paddingLeft: isSubmenu ? '$8' : '$4',
     };
 
@@ -56,9 +60,9 @@ export const buttonStyles = {
   borderRadius: 0,
   '&:hover': {
     textDecoration: 'none',
-    color: '$green8 !important',
+    color: '$semanticLinkPrimaryColor !important',
     '.fuel_Icon': {
-      color: '$green8 !important',
+      color: '$semanticLinkPrimaryColor !important',
     },
   },
 };

@@ -74,19 +74,19 @@ const styles = {
     },
   }),
   separator: cssObj({
-    background: '$intentsBase7',
+    background: '$semanticLinkPrimaryColor',
     height: '20px',
-    width: '2px',
+    width: '1.5px',
   }),
   categoryContainer: cssObj({
     marginBottom: '$10',
   }),
   category: cssObj({
     '&:hover': {
-      border: '1px solid $intentsPrimary7 !important',
+      border: '1px solid $semanticLinkPrimaryColor !important',
     },
     '&[data-active="true"]': {
-      border: '1px solid $intentsPrimary7',
+      border: '1px solid $semanticLinkPrimaryColor',
     },
   }),
 };

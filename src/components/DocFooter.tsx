@@ -66,8 +66,12 @@ export function DocFooter() {
       <Box.Flex justify="space-between" css={styles.feedbackContainer}>
         <FeedbackForm />
         <Box.Flex gap={'6px'}>
-          <Icon icon={'HelpCircle'} stroke={1} color="textMuted" />
-          <FuelLink href="https://forum.fuel.network/" isExternal>
+          <Icon icon={'HelpCircle'} stroke={1} color="intentsBase12" />
+          <FuelLink
+            css={styles.forumLink}
+            href="https://forum.fuel.network/"
+            isExternal
+          >
             Ask a question in the forum.
           </FuelLink>
         </Box.Flex>
@@ -86,6 +90,14 @@ const styles = {
     width: '100%',
     height: '100%',
     py: '$4',
+    '&:hover': {
+      backgroundImage:
+        'linear-gradient($transparent, $intentsBase1) !important',
+      'html[class="fuel_light-theme"] &': {
+        backgroundImage:
+          'linear-gradient($transparent, $intentsBase2) !important',
+      },
+    },
   }),
   linkContainer: cssObj({
     width: '100%',
@@ -111,5 +123,8 @@ const styles = {
     py: '$4',
     borderTop: '1px solid $border',
     borderBottom: '1px solid $border',
+  }),
+  forumLink: cssObj({
+    color: '$intentsBase12 !important',
   }),
 };

@@ -2,12 +2,13 @@ import { cssObj } from '@fuel-ui/css';
 import type { ButtonLinkProps } from '@fuel-ui/react';
 import { Box, ButtonLink } from '@fuel-ui/react';
 
+import { EXTERNAL_NAVIGATION_LINKS } from '../config/constants';
 import { useDocContext } from '../hooks/useDocContext';
 import type { NavOrder } from '../pages';
 import type { Versions } from '../pages/[...slug]';
 import type { SidebarLinkItem } from '../types';
 
-import { buttonStyles } from './SidebarLink';
+import { SidebarLink, buttonStyles } from './SidebarLink';
 import { SidebarSection } from './SidebarSection';
 
 type SidebarProps = {
@@ -35,7 +36,6 @@ export function AltSidebar({ allNavs, onClick, versions }: SidebarProps) {
               intent={'base'}
               leftIcon={'ArrowNarrowLeft'}
               css={buttonStyles}
-              // css={styles.button}
               size={'sm'}
             >
               {doc.parent.label}
@@ -50,6 +50,7 @@ export function AltSidebar({ allNavs, onClick, versions }: SidebarProps) {
         </>
       )}
 
+      {/* DOCS */}
       {allNavs &&
         allNavs.map((navOrder) => {
           let key = navOrder.links[0].slug.split('/')[1];
@@ -71,14 +72,29 @@ export function AltSidebar({ allNavs, onClick, versions }: SidebarProps) {
             </Box>
           );
         })}
+      <Box css={styles.links} />
+
+      {/* EXTERNAL LINKS */}
+      {EXTERNAL_NAVIGATION_LINKS.map((item) => (
+        <Box key={item.link}>
+          <SidebarLink
+            item={{ slug: item.name, label: item.name, isExternal: true }}
+          />
+        </Box>
+      ))}
     </Box.Stack>
   );
 }
 
 export const styles = {
   root: cssObj({
-    gap: '$1',
+    gap: '$3',
     mb: '$32',
+  }),
+  links: cssObj({
+    bg: '$intentsBase10',
+    height: '2px',
+    my: '$2',
   }),
   button: cssObj({
     width: '100%',
@@ -91,7 +107,7 @@ export const styles = {
   sectionLink: cssObj({
     '&:hover': {
       color: '$intentsBase1 !important',
-      bg: '$green8 !important',
+      bg: '$semanticLinkPrimaryColor !important',
       'html[class="fuel_light-theme"] &': {
         color: '$intentsBase12 !important',
         bg: '$green6 !important',
@@ -101,7 +117,7 @@ export const styles = {
   }),
   activeSectionLink: cssObj({
     color: '$intentsBase1',
-    bg: '$green8',
+    bg: '$semanticLinkPrimaryColor',
     'html[class="fuel_light-theme"] &': {
       color: '$intentsBase12',
       bg: '$green6',

@@ -162,7 +162,7 @@ const styles = {
     },
 
     'a.active, a:hover': {
-      color: '$green8',
+      color: '$semanticLinkPrimaryColor',
     },
   }),
   desktop: cssObj({

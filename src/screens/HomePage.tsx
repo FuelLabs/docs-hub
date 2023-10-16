@@ -183,11 +183,12 @@ export function HomeScreen({ guides, allNavs, isLatest }: HomeScreenProps) {
 export const styles = {
   sidebar: cssObj({
     display: 'none',
-    padding: '$8 $8 $0 $6',
+    padding: '0 $8 0 $6',
     position: 'sticky',
+    maxHeight: 'calc(100vh - 70px)',
     borderRight: '1px solid $border',
     bg: '$cardBg',
-    top: 20,
+    top: 70,
 
     '@xl': {
       display: 'block',
@@ -195,8 +196,8 @@ export const styles = {
   }),
   sidebarContainer: cssObj({
     position: 'sticky',
-    top: 20,
-    maxHeight: 'calc(100vh - 40px)',
+    maxHeight: 'calc(100vh - 104px)',
+    paddingTop: '$8',
     overflowX: 'auto',
     '&::-webkit-scrollbar': {
       display: 'none',

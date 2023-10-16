@@ -9,7 +9,14 @@ import {
 } from '@fuel-ui/react';
 
 import type { GuideInfo } from '../pages/guides';
-import type { CardInfo } from '../screens/CategoryPage';
+
+type CardInfo = {
+  link: string;
+  isExternal: boolean;
+  heading: string;
+  headingIcon?: string;
+  body: string;
+};
 
 interface CardProps {
   guideInfo?: GuideInfo;
@@ -19,22 +26,24 @@ interface CardProps {
 
 export function Card({ guideInfo, cardInfo, cardName }: CardProps) {
   return (
-    <FuelCard css={styles.card}>
-      <FuelCard.Body>
-        {guideInfo && (
-          <Box.Flex gap={'$3'}>
-            {guideInfo.featured && <Text css={styles.featured}>Featured</Text>}
-            <Text css={styles.date}>{guideInfo.last_updated}</Text>
-          </Box.Flex>
-        )}
-        <FuelLink
-          href={
-            guideInfo
-              ? `/guides/${cardName.replaceAll('_', '-')}`
-              : cardInfo?.link
-          }
-          isExternal={cardInfo ? cardInfo.isExternal : false}
-        >
+    <FuelLink
+      href={
+        guideInfo ? `/guides/${cardName.replaceAll('_', '-')}` : cardInfo?.link
+      }
+      isExternal={cardInfo ? cardInfo.isExternal : false}
+      css={styles.root}
+    >
+      <FuelCard css={styles.card}>
+        <FuelCard.Body>
+          {guideInfo && (
+            <Box.Flex gap={'$3'}>
+              {guideInfo.featured && (
+                <Text css={styles.featured}>Featured</Text>
+              )}
+              <Text css={styles.date}>{guideInfo.last_updated}</Text>
+            </Box.Flex>
+          )}
+
           <Heading
             iconSize={24}
             leftIcon={cardInfo?.headingIcon ?? null}
@@ -42,27 +51,41 @@ export function Card({ guideInfo, cardInfo, cardName }: CardProps) {
           >
             {cardInfo ? cardInfo.heading : guideInfo?.title}
           </Heading>
-        </FuelLink>
-        <Text>{cardInfo ? cardInfo.body : guideInfo?.description}</Text>
-        {guideInfo && (
-          <Box.Flex gap={'$2'} css={styles.badgeContainer}>
-            {guideInfo.tags.map((tag) => (
-              <Badge key={tag} variant="ghost" css={styles.badge}>
-                {tag}
-              </Badge>
-            ))}
-          </Box.Flex>
-        )}
-      </FuelCard.Body>
-    </FuelCard>
+          <Text>{cardInfo ? cardInfo.body : guideInfo?.description}</Text>
+          {guideInfo && (
+            <Box.Flex gap={'$2'} css={styles.badgeContainer}>
+              {guideInfo.tags.map((tag) => (
+                <Badge key={tag} variant="ghost" css={styles.badge}>
+                  {tag}
+                </Badge>
+              ))}
+            </Box.Flex>
+          )}
+        </FuelCard.Body>
+      </FuelCard>
+    </FuelLink>
   );
 }
 
 const styles = {
-  card: cssObj({
+  root: cssObj({
     padding: '$3 $2',
     margin: 0,
     height: 'calc(100% - 26px)',
+    '&:hover': {
+      textDecoration: 'none !important',
+    },
+  }),
+  card: cssObj({
+    width: '100%',
+    backgroundImage: 'linear-gradient($transparent, $intentsBase1) !important',
+    'html[class="fuel_light-theme"] &': {
+      backgroundImage:
+        'linear-gradient($transparent, $intentsBase2) !important',
+    },
+    '&:hover': {
+      border: '1px solid $intentsBase8',
+    },
   }),
   date: cssObj({
     fontSize: '$sm',
@@ -73,6 +96,9 @@ const styles = {
   }),
   badge: cssObj({
     fontSize: '$xs',
+    // '&:hover': {
+
+    // }
   }),
   badgeContainer: cssObj({
     marginTop: '$4',
