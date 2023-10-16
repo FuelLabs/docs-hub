@@ -45,9 +45,9 @@ export function MobileMenu({
 
   return (
     <Box.HStack css={styles.root}>
-      <Search title={title} isLatest={isLatest} />
       <ThemeToggler />
       <VersionDropdown isLatest={isLatest} />
+      <Search title={title} isLatest={isLatest} />
       <Drawer
         isDismissable
         isOpen={open}

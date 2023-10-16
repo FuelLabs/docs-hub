@@ -52,9 +52,9 @@ export function Header({
         </Box.Flex>
         <Box css={styles.desktop}>
           <Box.Stack direction="row" gap="$4" css={{ mr: '$4' }}>
-            <Search title={title} />
             <ThemeToggler />
             <VersionDropdown isLatest={isLatest} />
+            <Search title={title} />
           </Box.Stack>
           <Box.Flex gap={'$2'} css={styles.menu}>
             <a

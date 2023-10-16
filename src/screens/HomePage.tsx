@@ -201,7 +201,7 @@ export const styles = {
     },
   }),
   section: cssObj({
-    px: '$6',
+    padding: '$6',
     display: 'flex',
     flexDirection: 'column',
     mx: 'auto',

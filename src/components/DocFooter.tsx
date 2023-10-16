@@ -83,7 +83,10 @@ export function DocFooter() {
 
 const styles = {
   root: cssObj({
-    fontSize: '$sm',
+    fontSize: '$xs',
+    '@sm': {
+      fontSize: '$sm',
+    },
     mb: '$20',
   }),
   linkButton: cssObj({

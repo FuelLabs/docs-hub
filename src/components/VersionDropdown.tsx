@@ -15,7 +15,6 @@ export default function VersionDropdown({ isLatest }: { isLatest: boolean }) {
   return (
     <Dropdown isOpen={opened} onOpenChange={setOpened}>
       <Dropdown.Trigger
-        size="sm"
         intent="base"
         variant="outlined"
         css={
@@ -73,7 +72,10 @@ export default function VersionDropdown({ isLatest }: { isLatest: boolean }) {
 
 const styles = {
   menuItem: cssObj({
-    fontSize: '$sm',
+    fontSize: '$xs',
+    '@sm': {
+      fontSize: '$sm',
+    },
     justifyContent: 'space-between',
   }),
   dropdownMenu: cssObj({
@@ -83,6 +85,10 @@ const styles = {
   trigger: cssObj({
     border: 'none',
     height: '100%',
+    fontSize: '$xs',
+    '@sm': {
+      fontSize: '$sm',
+    },
     '&:hover': {
       border: 'none !important',
       bg: '$gray4 !important',
