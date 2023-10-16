@@ -50,19 +50,11 @@ export function getComponents(docSlug: string, isLatest: boolean) {
   }
 
   if (docSlug.includes('guides/')) {
-    components.CodeImport = loadComponent(
-      import('~/src/components/CodeImport'),
-      'CodeImport'
-    );
     components.TestAction = TestAction;
   } else if (
     docSlug.includes('docs/wallet') ||
     docSlug.includes('docs/latest/wallet')
   ) {
-    components.CodeImport = loadComponent(
-      import('~/src/components/CodeImport'),
-      'CodeImport'
-    );
     components.td = TD;
     components.th = TH;
 
