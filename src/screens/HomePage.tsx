@@ -1,8 +1,8 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box, Text, Heading, Grid } from '@fuel-ui/react';
 
-import { AltSidebar } from '../components/AltSidebar';
 import { Card } from '../components/Card';
+import { SidebarContainer } from '../components/SidebarContainer';
 import type { GuidesProps } from '../pages/guides';
 import type { NavOrder } from '../pages/index';
 
@@ -121,11 +121,7 @@ export function HomeScreen({ guides, allNavs, isLatest }: HomeScreenProps) {
 
   return (
     <>
-      <Box css={styles.sidebar}>
-        <Box css={styles.sidebarContainer}>
-          <AltSidebar allNavs={allNavs} />
-        </Box>
-      </Box>
+      <SidebarContainer allNavs={allNavs} isLatest={isLatest} />
       <Box as="section" css={styles.section} className="Layout--section">
         <Box className="Layout--pageContent">
           <Box css={styles.heading}>
@@ -181,28 +177,6 @@ export function HomeScreen({ guides, allNavs, isLatest }: HomeScreenProps) {
 }
 
 export const styles = {
-  sidebar: cssObj({
-    display: 'none',
-    padding: '0 $8 0 $6',
-    position: 'sticky',
-    maxHeight: 'calc(100vh - 70px)',
-    borderRight: '1px solid $border',
-    bg: '$cardBg',
-    top: 70,
-
-    '@xl': {
-      display: 'block',
-    },
-  }),
-  sidebarContainer: cssObj({
-    position: 'sticky',
-    maxHeight: 'calc(100vh - 104px)',
-    paddingTop: '$8',
-    overflowX: 'auto',
-    '&::-webkit-scrollbar': {
-      display: 'none',
-    },
-  }),
   heading: cssObj({
     pb: '$10',
     mb: '$10',

@@ -6,9 +6,9 @@ import { Layout } from '~/src/components/Layout';
 import { TableOfContent } from '~/src/components/TableOfContent';
 import { DocProvider } from '~/src/hooks/useDocContext';
 
-import { AltSidebar } from '../components/AltSidebar';
 import { DocFooter } from '../components/DocFooter';
 import { MDXRender } from '../components/MDXRender';
+import { SidebarContainer } from '../components/SidebarContainer';
 import { useVersion } from '../hooks/useVersion';
 import { getComponents } from '../lib/imports';
 import type { DocPageProps } from '../pages/[...slug]';
@@ -50,11 +50,11 @@ export function DocScreen(props: DocPageProps) {
         versions={props.versions}
         allNavs={navs}
       >
-        <Box css={styles.sidebar}>
-          <Box css={styles.sidebarContainer}>
-            <AltSidebar versions={props.versions} allNavs={navs} />
-          </Box>
-        </Box>
+        <SidebarContainer
+          versions={props.versions}
+          allNavs={allNavs}
+          isLatest={isLatest}
+        />
         <Box.Flex as="section" css={styles.section} className="Layout--section">
           {doc && (
             <Box className="Layout--pageContent">

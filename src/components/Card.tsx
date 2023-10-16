@@ -78,12 +78,12 @@ const styles = {
     '&:hover': {
       textDecoration: 'none !important',
       border: '1px solid $intentsBase8',
-    },
-    backgroundImage:
-      'linear-gradient($transparent, rgb(15, 15, 15)) !important',
-    'html[class="fuel_light-theme"] &': {
       backgroundImage:
-        'linear-gradient($transparent, rgb(245, 245, 245)) !important',
+        'linear-gradient($transparent, rgb(15, 15, 15)) !important',
+      'html[class="fuel_light-theme"] &': {
+        backgroundImage:
+          'linear-gradient($transparent, rgb(245, 245, 245)) !important',
+      },
     },
   }),
   card: cssObj({
