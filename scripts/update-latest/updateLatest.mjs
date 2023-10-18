@@ -98,10 +98,10 @@ async function updateSubmodules(newVersions) {
 
 export async function update(version, dir, branch) {
   await updateSubmodule(dir);
+  await fetchTag(version, dir);
+  await checkoutVersion(version, dir);
   if (branch) {
     await fetchBranch(branch, dir);
     await switchToExistingBranch(branch, dir);
   }
-  await fetchTag(version, dir);
-  await checkoutVersion(version, dir);
 }
