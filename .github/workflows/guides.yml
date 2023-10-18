@@ -1,9 +1,29 @@
-name: Playwright Tests
+name: Guides Tests
 
 on:
   pull_request:
 
 jobs:
+  ## CHECK LINKS & LINT
+  check-links-lint:
+    name: Lint & Check Links
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - uses: gaurav-nelson/github-action-markdown-link-check@1.0.12
+        with:
+          config-file: 'mlc..json'
+          file-extension: 'mdx'
+      - uses: ./.github/actions/setup-node
+        with:
+          install: false
+      - name: Install dependencies
+        run: pnpm install
+      - name: Lint Check
+        run: pnpm markdownlint --config .markdownlint.yaml --ignore-path .markdownlintignore '**/*.mdx'
+
+  ## QUICKSTART TEST
   quickstart-test:
     timeout-minutes: 30
     name: build-quickstart-contract

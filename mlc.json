@@ -1,0 +1,20 @@
+{
+  "aliveStatusCodes": [200, 206, 405],
+  "ignorePatterns": [
+    {
+      "pattern": "localhost:"
+    },
+    {
+      "pattern": "^http://[1-9]"
+    },
+    {
+      "pattern": "crates\\.io"
+    },
+    {
+      "pattern": "-indexer.fuel.network"
+    },
+    {
+      "pattern": "fuellabs.github.io/block-explorer-v2"
+    }
+  ]
+}

@@ -8,26 +8,29 @@ parent:
 
 # Toolchain installation
 
-This guide will help you to install the Fuel toolchain binaries and prerequisites. 
+This guide will help you to install the Fuel toolchain binaries and prerequisites.
 
 This guide covers the following topics:
+
 1. [Installing Rust](#installing-rust)
 2. [Installing the Fuel toolchain using `fuelup`](#installing-the-fuel-toolchain-using-fuelup)
 3. [Setting up a default toolchain](#setting-up-a-default-toolchain)
 
 ## Installing Rust
 
-{/* install_rust:example:start */}
+{/*install_rust:example:start*/}
 The Fuel toolchain is built on top of the Rust programming language. To install Rust, you can use the `rustup` tool.
-{/* install_rust:example:end */}
+{/*install_rust:example:end*/}
 
 Run the following command in your shell; this downloads and runs rustup-init.sh, which in turn downloads and runs the correct version of the `rustup-init` executable for your platform.
 
-{/* install_rust_command:example:start */}
+{/*install_rust_command:example:start*/}
+
 ```console
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
-{/* install_rust_command:example:end */}
+
+{/*install_rust_command:example:end*/}
 
 Check the official Rust documentation to get more information on [installing the Rust toolchain](https://www.rust-lang.org/tools/install).
 
@@ -41,17 +44,19 @@ toolchains and keep them updated. It makes building and maintaining Sway applica
 
 ### Running fuelup-init
 
-{/* install_fuelup:example:start */}
+{/*install_fuelup:example:start*/}
 To install the Fuel toolchain, you'll use the `fuelup-init` script. This will install `forc`, `forc-client`, `forc-fmt`, `forc-lsp`, `forc-wallet` as well as `fuel-core` in `~/.fuelup/bin`.
-{/* install_fuelup:example:end */}
+{/*install_fuelup:example:end*/}
 
-👉 Just paste the following line in your terminal and press _Enter_.
+👉 Just paste the following line in your terminal and press *Enter*.
 
-{/* install_fuelup_command:example:start */}
+{/*install_fuelup_command:example:start*/}
+
 ```sh
 curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh
 ```
-{/* install_fuelup_command:example:end */}
+
+{/*install_fuelup_command:example:end*/}
 
 > 🚧 Be aware that currently  we do not natively support Windows. If you wish to use `fuelup` on Windows, please use Windows Subsystem for Linux.
 
@@ -71,11 +76,11 @@ If permitted, fuelup-init will configure your PATH for you by running the follow
 Would you like fuelup-init to modify your PATH variable for you? (N/y)
 ```
 
-👉 Press the `Y` key in your terminal and press _Enter_ to modify your PATH.
+👉 Press the `Y` key in your terminal and press *Enter* to modify your PATH.
 
 ### Checking the installation
 
-After allowing the `fuelup-init` script to modify your `PATH` variable, you will see a lot of information about packages being downloaded and installed. If everything goes as expected you will see the following message: 
+After allowing the `fuelup-init` script to modify your `PATH` variable, you will see a lot of information about packages being downloaded and installed. If everything goes as expected you will see the following message:
 
 ```sh
 The Fuel toolchain is installed and up to date
@@ -90,6 +95,7 @@ To generate completions for your shell, run 'fuelup completions --shell=SHELL'.
 ```sh
  fuelup --version
 ```
+
 That will output your current `fuelup` version:
 
 ```sh
@@ -112,7 +118,9 @@ Make sure you have the latest version of `fuelup` so you can access the latest f
 ```console
 fuelup self update
 ```
+
 Then you will get an output like this:
+
 ```console
 Fetching binary from https://github.com/FuelLabs/fuelup/releases/download/v0.19.5/fuelup-0.19.5-aarch64-apple-darwin.tar.gz
 Downloading component fuelup without verifying checksum
@@ -126,15 +134,17 @@ The `beta-4` network is the latest Fuel testnet. This includes public infrastruc
 
 To properly interact with the `beta-4` network it is necessary to use its corresponding toolchain.
 
-{/* install_beta-4:example:start */}
+{/*install_beta-4:example:start*/}
 👉 Run the following command to install the `beta-4` toolchain:
-{/* install_beta-4:example:end */}
+{/*install_beta-4:example:end*/}
 
-{/* install_beta-4_command:example:start */}
+{/*install_beta-4_command:example:start*/}
+
 ```console
 fuelup toolchain install beta-4
 ```
-{/* install_beta-4_command:example:end */}
+
+{/*install_beta-4_command:example:end*/}
 
 If the toolchain was successfully installed, you will see this output:
 
@@ -144,17 +154,19 @@ The Fuel toolchain is installed and up to date
 
 The toolchain was installed correctly, however is not in use yet. Next, you need to configure `fuelup` to use the `beta-4` toolchain as the default.
 
-{/* set_default_beta-4:example:start */}
+{/*set_default_beta-4:example:start*/}
 👉 Set `beta-4` as your default toolchain with the following command:
-{/* set_default_beta-4:example:end */}
+{/*set_default_beta-4:example:end*/}
 
-{/* set_default_beta-4_command:example:start */}
+{/*set_default_beta-4_command:example:start*/}
+
 ```console
 fuelup default beta-4
 ```
-{/* set_default_beta-4_command:example:end */}
 
-You will get the following output indicating that you have successfully set `beta-4` as your default toolchain. 
+{/*set_default_beta-4_command:example:end*/}
+
+You will get the following output indicating that you have successfully set `beta-4` as your default toolchain.
 
 ```console
 default toolchain set to 'beta-4'
@@ -209,7 +221,7 @@ Now you are ready to start building with Fuel.
 
 ### Custom toolchains
 
-You can create your own set of specific versions, this is known as 'custom toolchains'. 
+You can create your own set of specific versions, this is known as 'custom toolchains'.
 
 > 👉 Visit the [Fuelup docs](docs/fuelup/concepts/toolchains) to learn how to set up your own custom toolchains.
 
@@ -221,6 +233,6 @@ You can always build the Fuel packages from source.
 
 ### Github Codespaces
 
-It's always possible to run a development environment in the browser. 
+It's always possible to run a development environment in the browser.
 
 > 👉 Please visit our guide on [Github Codespaces](guides/installation/codespace) to use the Fuel toolchain in the browser.
