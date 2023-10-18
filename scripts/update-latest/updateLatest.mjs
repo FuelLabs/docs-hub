@@ -86,7 +86,6 @@ async function updateSubmodules(newVersions) {
             break;
           case 'wallet':
             submoduleName = 'docs/latest/fuels-wallet';
-            branch = 'release';
             break;
           default:
         }
