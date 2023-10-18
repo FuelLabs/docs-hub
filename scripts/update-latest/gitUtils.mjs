@@ -103,6 +103,8 @@ export const getVersionCommit = async (version, dir) => {
   return releaseCommit;
 };
 
-export const gitResetCommit = async (releaseCommit) => {
-  await exec('git', ['reset', '--hard', releaseCommit]);
+export const gitResetCommit = async (releaseCommit, dir) => {
+  await exec('git', ['reset', '--hard', releaseCommit], {
+    cwd: dir,
+  });
 };

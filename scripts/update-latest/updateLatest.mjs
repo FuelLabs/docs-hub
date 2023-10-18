@@ -106,6 +106,6 @@ export async function update(version, dir, branch) {
     await fetchBranch(branch, dir);
     await switchToExistingBranch(branch, dir);
     // go to the version commit in the right branch;
-    await gitResetCommit(releaseCommit);
+    await gitResetCommit(releaseCommit, dir);
   }
 }
