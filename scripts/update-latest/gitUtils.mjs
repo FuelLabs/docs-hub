@@ -90,11 +90,19 @@ export async function createPR(title, branchName) {
   });
 }
 
-export const saveVersionCommit = async (version) => {
-  await exec(`RELEASE_COMMIT=$(git rev-list -n 1 tags/${version})`);
-  await exec('echo "SET RELEASE COMMIT: $RELEASE_COMMIT"');
+export const getVersionCommit = async (version) => {
+  let releaseCommit = '';
+  await exec(`git rev-list -n 1 tags/${version}`, [], {
+    cwd: 'path/to/submodule',
+    listeners: {
+      stdout: (data) => {
+        releaseCommit = data.toString().trim();
+      },
+    },
+  });
+  return releaseCommit;
 };
 
-export const gitResetCommit = async () => {
-  await exec('git reset --hard $RELEASE_COMMIT');
+export const gitResetCommit = async (releaseCommit) => {
+  await exec('git', ['reset', '--hard', releaseCommit]);
 };

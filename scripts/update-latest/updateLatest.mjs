@@ -9,7 +9,7 @@ import {
   createPR,
   fetchTag,
   fetchBranch,
-  saveVersionCommit,
+  getVersionCommit,
   gitResetCommit,
 } from './gitUtils.mjs';
 
@@ -102,10 +102,10 @@ export async function update(version, dir, branch) {
   await fetchTag(version, dir);
   await checkoutVersion(version, dir);
   if (branch) {
-    await saveVersionCommit();
+    const releaseCommit = await getVersionCommit(version);
     await fetchBranch(branch, dir);
     await switchToExistingBranch(branch, dir);
     // go to the version commit in the right branch;
-    await gitResetCommit();
+    await gitResetCommit(releaseCommit);
   }
 }
