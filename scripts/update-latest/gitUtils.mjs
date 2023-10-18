@@ -89,3 +89,22 @@ export async function createPR(title, branchName) {
     maintainer_can_modify: true,
   });
 }
+
+export const getVersionCommit = async (version, dir) => {
+  let releaseCommit = '';
+  await exec(`git rev-list -n 1 tags/${version}`, [], {
+    cwd: dir,
+    listeners: {
+      stdout: (data) => {
+        releaseCommit = data.toString().trim();
+      },
+    },
+  });
+  return releaseCommit;
+};
+
+export const gitResetCommit = async (releaseCommit, dir) => {
+  await exec('git', ['reset', '--hard', releaseCommit], {
+    cwd: dir,
+  });
+};
