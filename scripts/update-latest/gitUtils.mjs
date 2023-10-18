@@ -89,3 +89,12 @@ export async function createPR(title, branchName) {
     maintainer_can_modify: true,
   });
 }
+
+export const saveVersionCommit = async (version) => {
+  await exec(`RELEASE_COMMIT=$(git rev-list -n 1 tags/${version})`);
+  await exec('echo "SET RELEASE COMMIT: $RELEASE_COMMIT"');
+};
+
+export const gitResetCommit = async () => {
+  await exec('git reset --hard $RELEASE_COMMIT');
+};

@@ -9,6 +9,8 @@ import {
   createPR,
   fetchTag,
   fetchBranch,
+  saveVersionCommit,
+  gitResetCommit,
 } from './gitUtils.mjs';
 
 export async function updateLatest(newVersions) {
@@ -100,7 +102,10 @@ export async function update(version, dir, branch) {
   await fetchTag(version, dir);
   await checkoutVersion(version, dir);
   if (branch) {
+    await saveVersionCommit();
     await fetchBranch(branch, dir);
     await switchToExistingBranch(branch, dir);
+    // go to the version commit in the right branch;
+    await gitResetCommit();
   }
 }
