@@ -102,7 +102,7 @@ export async function update(version, dir, branch) {
   await fetchTag(version, dir);
   await checkoutVersion(version, dir);
   if (branch) {
-    const releaseCommit = await getVersionCommit(version);
+    const releaseCommit = await getVersionCommit(version, dir);
     await fetchBranch(branch, dir);
     await switchToExistingBranch(branch, dir);
     // go to the version commit in the right branch;

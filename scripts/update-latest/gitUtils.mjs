@@ -90,10 +90,10 @@ export async function createPR(title, branchName) {
   });
 }
 
-export const getVersionCommit = async (version) => {
+export const getVersionCommit = async (version, dir) => {
   let releaseCommit = '';
   await exec(`git rev-list -n 1 tags/${version}`, [], {
-    cwd: 'path/to/submodule',
+    cwd: dir,
     listeners: {
       stdout: (data) => {
         releaseCommit = data.toString().trim();
