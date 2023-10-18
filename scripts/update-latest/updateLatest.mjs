@@ -9,6 +9,8 @@ import {
   createPR,
   fetchTag,
   fetchBranch,
+  getVersionCommit,
+  gitResetCommit,
 } from './gitUtils.mjs';
 
 export async function updateLatest(newVersions) {
@@ -86,7 +88,6 @@ async function updateSubmodules(newVersions) {
             break;
           case 'wallet':
             submoduleName = 'docs/latest/fuels-wallet';
-            branch = 'release';
             break;
           default:
         }
@@ -98,10 +99,13 @@ async function updateSubmodules(newVersions) {
 
 export async function update(version, dir, branch) {
   await updateSubmodule(dir);
-  if (branch) {
-    await fetchBranch(branch, dir);
-    await switchToExistingBranch(branch, dir);
-  }
   await fetchTag(version, dir);
   await checkoutVersion(version, dir);
+  if (branch) {
+    const releaseCommit = await getVersionCommit(version, dir);
+    await fetchBranch(branch, dir);
+    await switchToExistingBranch(branch, dir);
+    // go to the version commit in the right branch;
+    await gitResetCommit(releaseCommit, dir);
+  }
 }
