@@ -105,7 +105,10 @@ export async function update(version, dir, branch) {
     const releaseCommit = await getVersionCommit(version, dir);
     await fetchBranch(branch, dir);
     await switchToExistingBranch(branch, dir);
-    // go to the version commit in the right branch;
-    await gitResetCommit(releaseCommit, dir);
+    // use the latest commit on the docs branch of fuels-ts
+    if (dir !== 'docs/latest/fuels-ts') {
+      // go to the version commit in the right branch;
+      await gitResetCommit(releaseCommit, dir);
+    }
   }
 }
