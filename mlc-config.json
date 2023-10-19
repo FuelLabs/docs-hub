@@ -11,10 +11,22 @@
       "pattern": "crates\\.io"
     },
     {
+      "pattern": "infura\\.io"
+    },
+    {
+      "pattern": "\\.zip$"
+    },
+    {
       "pattern": "-indexer.fuel.network"
     },
     {
       "pattern": "fuellabs.github.io/block-explorer-v2"
+    }
+  ],
+  "replacementPatterns": [
+    {
+      "pattern": "^(/)(.*)",
+      "replacement": "http://localhost:3030/$2"
     }
   ]
 }
