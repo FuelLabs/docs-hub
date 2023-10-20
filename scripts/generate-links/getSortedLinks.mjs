@@ -192,15 +192,18 @@ export default function getSortedLinks(config, docs) {
               .replaceAll(' ', '_')
               .replaceAll('-', '_');
 
-            const pathLength = isLatest ? 4 : 3;
-            const isIndexA = a.slug.split('/').length === pathLength;
-            if (isIndexA) {
-              return -1;
+            if (a.slug.includes('fuels-ts')) {
+              const pathLength = isLatest ? 4 : 3;
+              const isIndexA = a.slug.split('/').length === pathLength;
+              if (isIndexA) {
+                return -1;
+              }
+              const isIndexB = b.slug.split('/').length === pathLength;
+              if (isIndexB) {
+                return 1;
+              }
             }
-            const isIndexB = b.slug.split('/').length === pathLength;
-            if (isIndexB) {
-              return 1;
-            }
+
             const aIdx = catOrder ? catOrder.indexOf(lowerA) : 0;
             const bIdx = catOrder ? catOrder.indexOf(lowerB) : 0;
             const result = aIdx - bIdx;
