@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "build:ci": "run-s docs:* generate:* build",
+    "build:ci": "run-s docs:* generate:* patch:wallet build",
     "check": "run-s lint prettier:check",
     "check:prod": "run-s lint:prod prettier:check",
     "copy:icons": "cp -r ./node_modules/@fuel-ui/icons/dist/icons/sprite.svg ./public/icons",
@@ -22,6 +22,7 @@
     "prettier:check": "prettier --check .",
     "prettier:format": "prettier --write .",
     "start": "next start",
+    "patch:wallet": "node scripts/wallet-examples.mjs",
     "test:guides": "npx playwright test tests/test.spec.ts",
     "test:guides:debug": "DEBUG=pw:api npx playwright test tests/test.spec.ts",
     "ts:check": "tsc --noEmit",
