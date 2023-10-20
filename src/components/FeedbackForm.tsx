@@ -292,6 +292,9 @@ const styles = {
   submit: cssObj({
     '&:hover': {
       backgroundColor: '$semanticSolidInfoBg !important',
+      'html[class="fuel_light-theme"] &': {
+        color: '$gray6',
+      },
     },
   }),
   helpful: cssObj({
