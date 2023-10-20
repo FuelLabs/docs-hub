@@ -16,16 +16,10 @@ jobs:
         with:
           install: false
       - name: Install dependencies
-        run: pnpm install
+        run: npm install -g markdownlint-cli@0.32.1
       # RUN LINT CHECK
       - name: Lint Check
-        run: pnpm markdownlint --config .markdownlint.yaml --ignore-path .markdownlintignore '**/*.mdx'
-     # START DOCS SERVER
-      - name: Run Docs Hub Server
-        run: |
-          pnpm pm2 start 'PORT=3030 BROWSER=none npm run dev' --name 'doc-links'
-      - name: Wait for 12 seconds
-        run: sleep 12
+        run: markdownlint --config .markdownlint.yaml --ignore-path .markdownlintignore '**/*.mdx'
       # RUN LINK CHECK
       - uses: gaurav-nelson/github-action-markdown-link-check@1.0.12
         with:
