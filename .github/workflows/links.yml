@@ -4,19 +4,10 @@ on:
     deployment_status
 
 jobs:
-  check-links:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
+    check-links:
+        uses: FuelLabs/github-actions/.github/workflows/next-links.yml@sarah/next-links-check
         with:
-          install: false
-      # RUN SCRIPT TO USE VERCEL PREVIEW LINK FROM PR
-      - name: Update preview link
-        run: node scripts/generate-mlc-config.mjs ${{ github.event.deployment_status.state }} ${{ github.event.deployment_status.environment_url }}
-      # RUN LINK CHECK
-      - uses: gaurav-nelson/github-action-markdown-link-check@1.0.12
-        with:
-          config-file: 'mlc-config.json'
-          file-extension: 'mdx'
+          status: ${{ github.event.deployment_status.state }}
+          preview-url: ${{ github.event.deployment_status.environment_url }}
           folder-path: docs/guides/docs
+    
