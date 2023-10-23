@@ -3,7 +3,7 @@ name: Links
 on:
   deployment_status:
 jobs:
-  run-e2es:
+  check-links:
     if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
     steps:
