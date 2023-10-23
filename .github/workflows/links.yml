@@ -1,25 +1,19 @@
 name: Links
 
 on:
-    deployment_status:
-
+  deployment_status:
 jobs:
-  ## CHECKS ALL LINKS IN GUIDES
-  ## RUNS AFTER VERCEL LINK IS DEPLOYED
-  check-links:
+  run-e2es:
     if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
-    name: Check Links
     runs-on: ubuntu-latest
     steps:
-      # SETUP & INSTALL
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-node
         with:
           install: false
       # RUN SCRIPT TO USE VERCEL PREVIEW LINK FROM PR
       - name: Update preview link
-        run: node scripts/generate-mlc-config.mjs {{ github.head_ref }}
+        run: node scripts/generate-mlc-config.mjs ${{ github.event.deployment_status.environment_url }}
       # RUN SCRIPT TO GENERATE NEW CONFIG WITH VERCEL PREVIEW URL
       # RUN LINK CHECK
       - uses: gaurav-nelson/github-action-markdown-link-check

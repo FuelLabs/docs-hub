@@ -3,10 +3,10 @@ import fs from 'fs';
 main();
 
 function main() {
+  const previewURL = process.argv[2];
+  console.log('PREVIEW URL:', previewURL);
   const configPath = './mlc-config-test.json';
-  const branchName = process.argv[2].replaceAll('/', '-').toLowerCase();
-  console.log('BRANCH NAME:', branchName);
   const configFile = fs.readFileSync(configPath, 'utf-8');
-  const newContent = configFile.replace('{{BRANCH}}', branchName);
+  const newContent = configFile.replace('{{VERCEL_PREVIEW}}', previewURL);
   fs.writeFileSync(configPath, newContent);
 }
