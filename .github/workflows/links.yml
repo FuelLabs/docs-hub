@@ -5,7 +5,6 @@ on:
 
 jobs:
   check-links:
-    if: github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -14,12 +13,12 @@ jobs:
           install: false
       # RUN SCRIPT TO USE VERCEL PREVIEW LINK FROM PR
       - name: Update preview link
-        run: node scripts/generate-mlc-config.mjs ${{ github.event.deployment_status.environment_url }}
-      # RUN SCRIPT TO GENERATE NEW CONFIG WITH VERCEL PREVIEW URL
-      # RUN LINK CHECK
-      - uses: gaurav-nelson/github-action-markdown-link-check
-        with:
-          config-file: 'mlc-config.json'
-          file-extension: 'mdx'
-          # use-verbose-mode: 'yes'
-          folder-path: docs/guides/docs
+        run: node scripts/generate-mlc-config.mjs ${{ github.event.deployment_status.state }} ${{ github.event.deployment_status.environment_url }}
+    #   # RUN SCRIPT TO GENERATE NEW CONFIG WITH VERCEL PREVIEW URL
+    #   # RUN LINK CHECK
+    #   - uses: gaurav-nelson/github-action-markdown-link-check
+    #     with:
+    #       config-file: 'mlc-config.json'
+    #       file-extension: 'mdx'
+    #       # use-verbose-mode: 'yes'
+    #       folder-path: docs/guides/docs
