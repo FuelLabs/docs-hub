@@ -1,7 +1,7 @@
 name: Links
 
 on:
-  deployment_status:
+    [deployment_status]
 jobs:
   check-links:
     if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
