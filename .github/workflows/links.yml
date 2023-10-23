@@ -1,15 +1,13 @@
 name: Links
 
 on:
-  workflow_run:
-    workflows: [Vercel]
-    types:
-      - completed
+    deployment_status:
 
 jobs:
   ## CHECKS ALL LINKS IN GUIDES
   ## RUNS AFTER VERCEL LINK IS DEPLOYED
   check-links:
+    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
     name: Check Links
     runs-on: ubuntu-latest
     steps:
