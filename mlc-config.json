@@ -26,7 +26,7 @@
   "replacementPatterns": [
     {
       "pattern": "^(/)(.*)",
-      "replacement": "{{VERCEL_PREVIEW}}$2"
+      "replacement": "{{VERCEL_PREVIEW}}/$2"
     }
   ]
 }
