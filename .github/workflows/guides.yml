@@ -21,27 +21,6 @@ jobs:
       - name: Lint Check
         run: markdownlint --config .markdownlint.yaml --ignore-path .markdownlintignore '**/*.mdx'
 
-  ## CHECKS ALL LINKS IN GUIDES
-  ## RUNS AFTER VERCEL LINK IS DEPLOYED
-  check-links:
-    name: Check Links
-    runs-on: ubuntu-latest
-    steps:
-      # SETUP & INSTALL
-      - name: Checkout repo
-        uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
-        with:
-          install: false
-      # RUN SCRIPT TO GENERATE NEW CONFIG WITH VERCEL PREVIEW URL
-      # RUN LINK CHECK
-      - uses: gaurav-nelson/github-action-markdown-link-check
-        with:
-          config-file: 'mlc-config.json'
-          file-extension: 'mdx'
-          use-verbose-mode: 'yes'
-          folder-path: docs/guides/docs
-
   ## QUICKSTART TEST
   quickstart-test:
     timeout-minutes: 30

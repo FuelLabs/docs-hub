@@ -26,7 +26,7 @@
   "replacementPatterns": [
     {
       "pattern": "^(/)(.*)",
-      "replacement": "https://docs-hub-git-sarah-lint-fuel-labs.vercel.app/$2"
+      "replacement": "https://docs-hub-git-{{BRANCH}}-fuel-labs.vercel.app/$2"
     }
   ]
 }
