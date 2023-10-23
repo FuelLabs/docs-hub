@@ -1,13 +1,14 @@
 name: Links
 
 on:
-    [deployment_status]
+    deployment_status
+
 jobs:
   check-links:
-    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
+    if: github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-node
         with:
           install: false
