@@ -4,9 +4,21 @@ on:
   pull_request:
 
 jobs:
-  ## CHECKS ALL GUIDES FOR LINTING
-  linter:
-    name: Linter
+  ## SPELL CHECK ALL GUIDES
+  spell-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - uses: rojopolis/spellcheck-github-actions@0.34.0
+        name: Spellcheck
+        with:
+          config_path: .spellcheck.yml
+          task_name: SPCheck
+
+  ## LINT CHECK ALL GUIDES
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       # SETUP & INSTALL
