@@ -15,7 +15,7 @@ jobs:
       - name: Update preview link
         run: node scripts/generate-mlc-config.mjs ${{ github.event.deployment_status.state }} ${{ github.event.deployment_status.environment_url }}
       # RUN LINK CHECK
-      - uses: gaurav-nelson/github-action-markdown-link-check
+      - uses: gaurav-nelson/github-action-markdown-link-check@1.0.12
         with:
           config-file: 'mlc-config.json'
           file-extension: 'mdx'
