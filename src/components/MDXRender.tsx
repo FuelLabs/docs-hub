@@ -47,51 +47,15 @@ export const mdxComponents = {
   Player,
 } as any;
 
-// type MDXRenderProps = {
-//   code: string;
-//   components: Record<any, any>;
-// };
-
-// export function MDXRender({ code, components }: MDXRenderProps) {
-//   const { default: Content } = useMemo(
-//     () => runSync(code, { ...runtime, ...provider }),
-//     [code]
-//   );
-
-//   return (
-//     <provider.MDXProvider components={{ ...components, ...mdxComponents }}>
-//       <Content
-//         fuelTestnet={FUEL_TESTNET}
-//         fuelTestnetInlineCode={<Code>{FUEL_TESTNET}</Code>}
-//         faucetLink={
-//           <Link href={FAUCET_LINK}>
-//             <Code>{FUEL_TESTNET}</Code> faucet
-//           </Link>
-//         }
-//         GQLPlaygroundLink={
-//           <Link href={PLAYGROUND_LINK}>
-//             <Code>{FUEL_TESTNET}</Code> graphQL playground
-//           </Link>
-//         }
-//       />
-//     </provider.MDXProvider>
-//   );
-// }
-
-export type MDXRenderProps = {
+type MDXRenderProps = {
   code: string;
-  mdxFiles: Array<{ content: string; frontmatter: Record<string, any> }>;
   components: Record<any, any>;
 };
 
-export function MDXRender({ code, mdxFiles, components }: MDXRenderProps) {
+export function MDXRender({ code, components }: MDXRenderProps) {
   const { default: Content } = useMemo(
-    () =>
-      runSync([code, ...mdxFiles.map((file) => file.content)].join('\n'), {
-        ...runtime,
-        ...provider,
-      }),
-    [code, mdxFiles]
+    () => runSync(code, { ...runtime, ...provider }),
+    [code]
   );
 
   return (
@@ -106,7 +70,7 @@ export function MDXRender({ code, mdxFiles, components }: MDXRenderProps) {
         }
         GQLPlaygroundLink={
           <Link href={PLAYGROUND_LINK}>
-            <Code>{FUEL_TESTNET}</Code> GraphQL playground
+            <Code>{FUEL_TESTNET}</Code> graphQL playground
           </Link>
         }
       />

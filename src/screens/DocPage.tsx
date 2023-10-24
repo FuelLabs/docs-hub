@@ -60,13 +60,7 @@ export function DocScreen(props: DocPageProps) {
           ref={scrollContainer}
         >
           <Box className="Layout--pageContent">
-            {doc && (
-              <MDXRender
-                code={props.code}
-                mdxFiles={props.mdxFiles}
-                components={components}
-              />
-            )}
+            {doc && <MDXRender code={props.code} components={components} />}
           </Box>
           {doc && <DocFooter />}
         </Box.Flex>

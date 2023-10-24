@@ -5,10 +5,6 @@ const HAS_LINK_DEPS = Boolean(
   (process.env.LINK_DEPS?.trim().split(' ').filter(Boolean) || []).length
 );
 
-const withMDX = require('@next/mdx')({
-  extension: /\.mdx$/, // Specify the MDX file extension
-});
-
 const depsLinkOpts = {
   transpilePackages: [
     '@fuel-ui/react',
@@ -26,15 +22,6 @@ const depsLinkOpts = {
       'node_modules',
       'react'
     );
-
-    config.module.rules.push({
-      test: /\.mdx$/,
-      use: [
-        {
-          loader: '@mdx-js/loader',
-        },
-      ],
-    });
 
     return config;
   },
@@ -84,4 +71,4 @@ const nextConfig = {
   ...(HAS_LINK_DEPS ? depsLinkOpts : {}),
 };
 
-module.exports = withContentlayer(withMDX(nextConfig));
+module.exports = withContentlayer(nextConfig);
