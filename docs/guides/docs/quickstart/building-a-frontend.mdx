@@ -41,7 +41,7 @@ Now, initialize a react project using [`Create React App`](https://create-react-
 <TestAction
 id="create-react-app"
 action={{
-  name: 'runCommand', 
+  name: 'runCommand',
   commandFolder: 'guides-testing/fuel-project'
 }}
 />
@@ -68,7 +68,7 @@ The `fuels` umbrella package includes all the main tools you need for your front
 
 Also, it contains the routines for ABI TypeScript generation.
 
-> ABI stands for Application Binary Interface. ABI's inform the application the interface to interact with the VM, in other words, they provide info to the APP such as what methods a contract has, what params, types it expects, etc...
+> ABI stands for Application Binary Interface. ABIs inform the application the interface to interact with the VM, in other words, they provide info to the APP such as what methods a contract has, what params, types it expects, etc...
 
 ### Installing
 
@@ -83,7 +83,7 @@ Install `fuels` and `@fuel-wallet/sdk`.
 <TestAction
 id="install-deps"
 action={{
-  name: 'runCommand', 
+  name: 'runCommand',
   commandFolder: 'guides-testing/fuel-project/frontend'
 }}
 />
@@ -102,8 +102,8 @@ Next, update the TypeScript configuration at `tsconfig.json` to add the Fuel Wal
 
 <TestAction
 id="config-types"
-action={{ 
-  name: 'modifyFile', 
+action={{
+  name: 'modifyFile',
   filepath: 'guides-testing/fuel-project/frontend/tsconfig.json',
   atLine: 3,
   useSetData: ' "types": ["@fuel-wallet/sdk"],'
@@ -129,7 +129,7 @@ Inside the `fuel-project/frontend` directory run:
 <TestAction
 id="typegen"
 action={{
-  name: 'runCommand', 
+  name: 'runCommand',
   commandFolder: 'guides-testing/fuel-project/frontend'
 }}
 />
@@ -162,7 +162,7 @@ File: `./frontend/src/App.tsx`
 <TestAction
 id="app-code"
 action={{
-  name: 'writeToFile', 
+  name: 'writeToFile',
   filepath: 'guides-testing/fuel-project/frontend/src/App.tsx'
 }}
 />
@@ -177,7 +177,7 @@ Finally, replace the value of the `CONTRACT_ID` variable at the top of your `App
 <TestAction
 id="app-code"
 action={{
-  name: 'modifyFile', 
+  name: 'modifyFile',
   filepath: 'guides-testing/fuel-project/frontend/src/App.tsx',
   atLine: 9,
   removeLines: [9],
@@ -192,7 +192,7 @@ Inside the `fuel-project/frontend` directory run:
 <TestAction
 id="start-app"
 action={{
-  name: 'runCommand', 
+  name: 'runCommand',
   preCommand: "pnpm pm2 start 'PORT=4000 BROWSER=none <COMMAND>' --name 'react-dapp' --cwd ./guides-testing/fuel-project/frontend"
 }}
 />
@@ -239,7 +239,7 @@ Get help from the team by posting your question in the [Fuel Forum](https://foru
 <TestAction
 id="wait-after-start-app"
 action={{
-  name: 'wait', 
+  name: 'wait',
   timeout: 20000
 }}
 />
@@ -247,7 +247,7 @@ action={{
 <TestAction
 id="go-to-frontend"
 action={{
-  name: 'goToUrl', 
+  name: 'goToUrl',
   url: "http://localhost:4000"
 }}
 />
@@ -255,7 +255,7 @@ action={{
 <TestAction
 id="click-connect-button"
 action={{
-  name: 'clickByRole', 
+  name: 'clickByRole',
   role: "button",
   elementName: "Connect"
 }}
@@ -264,14 +264,14 @@ action={{
 <TestAction
 id="approve-connect"
 action={{
-  name: 'walletApproveConnect', 
+  name: 'walletApproveConnect',
 }}
 />
 
 <TestAction
 id="wait-after-connect"
 action={{
-  name: 'wait', 
+  name: 'wait',
   timeout: 5000
 }}
 />
@@ -279,7 +279,7 @@ action={{
 <TestAction
 id="get-initial-count"
 action={{
-  name: 'getByLocator-save', 
+  name: 'getByLocator-save',
   locator: "h3",
   removeFromValue: "Counter: "
 }}
@@ -288,7 +288,7 @@ action={{
 <TestAction
 id="click-increment-button"
 action={{
-  name: 'clickByRole', 
+  name: 'clickByRole',
   role: "button",
   elementName: "Increment"
 }}
@@ -297,14 +297,14 @@ action={{
 <TestAction
 id="approve-txn"
 action={{
-  name: 'walletApprove', 
+  name: 'walletApprove',
 }}
 />
 
 <TestAction
 id="wait-after-approve"
 action={{
-  name: 'wait', 
+  name: 'wait',
   timeout: 15000
 }}
 />
@@ -312,14 +312,14 @@ action={{
 <TestAction
 id="reload-after-approve"
 action={{
-  name: 'reload', 
+  name: 'reload',
 }}
 />
 
 <TestAction
 id="wait-after-reload"
 action={{
-  name: 'wait', 
+  name: 'wait',
   timeout: 7000
 }}
 />
@@ -327,7 +327,7 @@ action={{
 <TestAction
 id="get-final-count"
 action={{
-  name: 'getByLocator-save', 
+  name: 'getByLocator-save',
   locator: "h3",
   removeFromValue: "Counter: "
 }}
@@ -335,8 +335,8 @@ action={{
 
 <TestAction
 id="check-count"
-action={{ 
-  name: 'checkIfIsIncremented', 
+action={{
+  name: 'checkIfIsIncremented',
   initialIndex: 0,
   finalIndex: 1
 }}
