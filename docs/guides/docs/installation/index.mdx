@@ -22,7 +22,7 @@ This guide covers the following topics:
 The Fuel toolchain is built on top of the Rust programming language. To install Rust, you can use the `rustup` tool.
 {/*install_rust:example:end*/}
 
-Run the following command in your shell; this downloads and runs rustup-init.sh, which in turn downloads and runs the correct version of the `rustup-init` executable for your platform.
+Run the following command in your shell; this downloads and runs `rustup-init.sh`, which in turn downloads and runs the correct version of the `rustup-init` executable for your platform.
 
 {/*install_rust_command:example:start*/}
 
@@ -42,7 +42,7 @@ toolchains and keep them updated. It makes building and maintaining Sway applica
 
 > 💡 Check out the [fuelup docs](docs/fuelup) for more information.
 
-### Running fuelup-init
+### Running `fuelup-init`
 
 {/*install_fuelup:example:start*/}
 To install the Fuel toolchain, you'll use the `fuelup-init` script.
@@ -106,7 +106,7 @@ fuelup 0.19.5
 
 ## Setting up a default toolchain
 
-Just as in [Rust](https://rust-lang.github.io/rustup/concepts/toolchains.html), Fuel supports multiple toolchains. A toolchain is a collection of tools (such as the compiler, lsp, etc).
+Just as in [Rust](https://rust-lang.github.io/rustup/concepts/toolchains.html), Fuel supports multiple toolchains. A toolchain is a collection of tools (such as the compiler, LSP, etc).
 By default, `fuelup` includes a series of packages tested to work with each other, providing a reliable set of tools.
 
 In this case, we will install the {props.fuelTestnetInlineCode} toolchain, which is the stable toolchain compatible with the {props.fuelTestnetInlineCode} network.
