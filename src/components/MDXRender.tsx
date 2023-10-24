@@ -6,6 +6,11 @@ import * as provider from '@mdx-js/react';
 import dynamic from 'next/dynamic';
 import { useMemo } from 'react';
 
+import {
+  FAUCET_LINK,
+  FUEL_TESTNET,
+  PLAYGROUND_LINK,
+} from '../config/constants';
 import { runtime } from '../lib/runtime';
 
 import { Blockquote } from './Blockquote';
@@ -42,20 +47,69 @@ export const mdxComponents = {
   Player,
 } as any;
 
-type MDXRenderProps = {
+// type MDXRenderProps = {
+//   code: string;
+//   components: Record<any, any>;
+// };
+
+// export function MDXRender({ code, components }: MDXRenderProps) {
+//   const { default: Content } = useMemo(
+//     () => runSync(code, { ...runtime, ...provider }),
+//     [code]
+//   );
+
+//   return (
+//     <provider.MDXProvider components={{ ...components, ...mdxComponents }}>
+//       <Content
+//         fuelTestnet={FUEL_TESTNET}
+//         fuelTestnetInlineCode={<Code>{FUEL_TESTNET}</Code>}
+//         faucetLink={
+//           <Link href={FAUCET_LINK}>
+//             <Code>{FUEL_TESTNET}</Code> faucet
+//           </Link>
+//         }
+//         GQLPlaygroundLink={
+//           <Link href={PLAYGROUND_LINK}>
+//             <Code>{FUEL_TESTNET}</Code> graphQL playground
+//           </Link>
+//         }
+//       />
+//     </provider.MDXProvider>
+//   );
+// }
+
+export type MDXRenderProps = {
   code: string;
+  mdxFiles: Array<{ content: string; frontmatter: Record<string, any> }>;
   components: Record<any, any>;
 };
 
-export function MDXRender({ code, components }: MDXRenderProps) {
+export function MDXRender({ code, mdxFiles, components }: MDXRenderProps) {
   const { default: Content } = useMemo(
-    () => runSync(code, { ...runtime, ...provider }),
-    [code]
+    () =>
+      runSync([code, ...mdxFiles.map((file) => file.content)].join('\n'), {
+        ...runtime,
+        ...provider,
+      }),
+    [code, mdxFiles]
   );
 
   return (
     <provider.MDXProvider components={{ ...components, ...mdxComponents }}>
-      <Content />
+      <Content
+        fuelTestnet={FUEL_TESTNET}
+        fuelTestnetInlineCode={<Code>{FUEL_TESTNET}</Code>}
+        faucetLink={
+          <Link href={FAUCET_LINK}>
+            <Code>{FUEL_TESTNET}</Code> faucet
+          </Link>
+        }
+        GQLPlaygroundLink={
+          <Link href={PLAYGROUND_LINK}>
+            <Code>{FUEL_TESTNET}</Code> GraphQL playground
+          </Link>
+        }
+      />
     </provider.MDXProvider>
   );
 }

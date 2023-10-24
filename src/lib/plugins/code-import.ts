@@ -8,6 +8,7 @@ import path from 'path';
 import * as prettier from 'prettier';
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
+import { FUEL_TESTNET } from '~/src/config/constants';
 
 import { getEndCommentType } from './text-import';
 import type { CommentTypes } from './text-import';
@@ -208,6 +209,8 @@ export function codeImport() {
       } else {
         content = fileContent;
       }
+
+      content = content.replaceAll('{props.fuelTestnet}', FUEL_TESTNET);
 
       const newAttrs = [
         {

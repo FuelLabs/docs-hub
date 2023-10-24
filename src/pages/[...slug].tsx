@@ -5,6 +5,8 @@ import { allMdDocs } from '../../.contentlayer/generated';
 import useTheme from '../hooks/useTheme';
 import { Doc } from '../lib/md-doc';
 import { Docs } from '../lib/md-docs';
+import type { MdxFile } from '../lib/mdx-import';
+import { importMdxFiles } from '../lib/mdx-import';
 import { getVersions } from '../lib/versions';
 import { DocScreen } from '../screens/DocPage';
 import type { DocType, SidebarLinkItem } from '../types';
@@ -34,6 +36,7 @@ export type DocPageProps = {
   docLink?: SidebarLinkItem;
   theme: string;
   versions: Versions;
+  mdxFiles: MdxFile[];
 };
 
 export default function DocPage(props: DocPageProps) {
@@ -53,6 +56,8 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   const slug = slugArray.join('/');
   const code = await doc.getCode();
   const versions = getVersions(doc.item.isLatest);
+  const mdxFiles = slug.includes('guides') ? importMdxFiles() : [];
+
   return {
     props: {
       code,
@@ -61,6 +66,7 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
       links: doc.sidebarLinks(slug),
       docLink: doc.navLinks,
       versions,
+      mdxFiles,
     },
   };
 };

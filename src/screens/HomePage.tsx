@@ -9,6 +9,7 @@ import {
 } from '@fuel-ui/react';
 import Link from 'next/link';
 
+import { FAUCET_LINK } from '../config/constants';
 import type { GuideInfo } from '../pages/guides';
 
 import { GuideCard } from './GuidesPage';
@@ -129,7 +130,7 @@ export function HomePage({ guides, isLatest }: HomePageProps) {
               </FuelLink>
             </List.Item>
             <List.Item>
-              <FuelLink href="https://faucet-beta-4.fuel.network/" isExternal>
+              <FuelLink href={FAUCET_LINK} isExternal>
                 Faucet
               </FuelLink>
             </List.Item>
