@@ -80,8 +80,8 @@ We'll build a simple counter contract with two functions: one to increment the c
 
 <TestAction
 id="create-project-folder"
-action={{ 
-  name: 'runCommand', 
+action={{
+  name: 'runCommand',
   commandFolder: 'guides-testing'
 }}
 />
@@ -103,7 +103,7 @@ Then create a contract project using `forc`:
 <TestAction
 id="create-contract"
 action={{
-  name: 'runCommand', 
+  name: 'runCommand',
   commandFolder: 'guides-testing/fuel-project'
 }}
 />
@@ -131,14 +131,14 @@ Report Bugs:
 - Sway Issues: https://github.com/FuelLabs/sway/issues/new
 ```
 
-{/* This example should include a tree for a new `forc` project and explain the boilerplate files */}
-{/* forc_new:example:start */}
+{/*This example should include a tree for a new `forc` project and explain the boilerplate files*/}
+{/*forc_new:example:start*/}
 Here is the project that `forc` has initialized:
 
 <TestAction
 id="contract-tree"
 action={{
-  name: 'runCommand', 
+  name: 'runCommand',
   commandFolder: 'guides-testing/fuel-project'
 }}
 />
@@ -153,8 +153,8 @@ counter-contract
 1 directory, 2 files
 ```
 
-`forc.toml` is the _manifest file_ (similar to `Cargo.toml` for Cargo or `package.json` for Node) and defines project metadata such as the project name and dependencies.
-{/* forc_new:example:end */}
+`forc.toml` is the *manifest file* (similar to `Cargo.toml` for Cargo or `package.json` for Node) and defines project metadata such as the project name and dependencies.
+{/*forc_new:example:end*/}
 
 Open your project in a code editor and delete everything in `src/main.sw` apart from the first line.
 
@@ -219,7 +219,7 @@ Below your ABI definition, you will write the implementation of the functions de
 
 <TestAction
 id="impl"
-action={{ 
+action={{
   name: 'modifyFile',
   filepath: 'guides-testing/fuel-project/counter-contract/src/main.sw'
 }}
@@ -270,7 +270,7 @@ Then run the following command to build your contract:
 <TestAction
 id="build-contract"
 action={{
-  name: 'runCommand', 
+  name: 'runCommand',
   commandFolder: 'guides-testing/fuel-project/counter-contract'
 }}
 />
@@ -291,7 +291,7 @@ Let's have a look at the content of the `counter-contract` folder after building
 <TestAction
 id="built-contract-tree"
 action={{
-  name: 'runCommand', 
+  name: 'runCommand',
   commandFolder: 'guides-testing/fuel-project/counter-contract'
 }}
 />
@@ -336,7 +336,7 @@ Now, let's generate the default test harness with the following:
 <TestAction
 id="cargo-generate-test"
 action={{
-  name: 'runCommand', 
+  name: 'runCommand',
   commandFolder: 'guides-testing/fuel-project/counter-contract'
 }}
 />
@@ -359,7 +359,7 @@ Let's have a look at the result:
 <TestAction
 id="cargo-test-tree"
 action={{
-  name: 'runCommand', 
+  name: 'runCommand',
   commandFolder: 'guides-testing/fuel-project/counter-contract'
 }}
 />
@@ -397,7 +397,7 @@ id="test-harness"
 action={{
   name: 'modifyFile',
   filepath: 'guides-testing/fuel-project/counter-contract/tests/harness.rs',
-  addSpacesBefore: 1, 
+  addSpacesBefore: 1,
 }}
 />
 
@@ -505,7 +505,7 @@ Just below the list, you'll see this prompt:
 
 Then you'll enter the number of the account of preference and press `Y` when prompted to accept the transaction.
 
-Finally, you will get back the network endpoint where the contract was deployed, a `Contract ID` and the block where the transaction was signed. 
+Finally, you will get back the network endpoint where the contract was deployed, a `Contract ID` and the block where the transaction was signed.
 Save the `Contract ID`, as you'll need this later to connect the frontend.
 With this ID, you can also head to the [block explorer](https://fuellabs.github.io/block-explorer-v2/) to confirm the contract was deployed.
 

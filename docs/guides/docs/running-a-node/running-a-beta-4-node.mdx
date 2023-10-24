@@ -73,21 +73,28 @@ parent:
 />
 
 ## Getting a Sepolia (Ethereum Testnet) API Key
-An API key from any RPC provider that supports the Sepolia network will work. Relayers will help listen to events from the Ethereum network. We recommend either [Infura](https://www.infura.io/) or [Alchemy](https://www.alchemy.com/) 
+
+An API key from any RPC provider that supports the Sepolia network will work. Relayers will help listen to events from the Ethereum network. We recommend either [Infura](https://www.infura.io/) or [Alchemy](https://www.alchemy.com/)
 
 The endpoints should look like the following
+
 ### Infura
+
 ```sh
 https://sepolia.infura.io/v3/{YOUR_API_KEY}
 ```
+
 ### Alchemy
+
 ```sh
 https://eth-sepolia.g.alchemy.com/v2/{YOUR_API_KEY}
 ```
+
 Note that using other network endpoints will result in the relayer failing to start.
 
 ## Generating a P2P Key
-Generate a new P2P key pairing by running the following command: 
+
+Generate a new P2P key pairing by running the following command:
 
 ```sh
 $ fuel-core-keygen new --key-type peering
@@ -98,7 +105,7 @@ $ fuel-core-keygen new --key-type peering
 }
 ```
 
-Make sure you save this somewhere safe so you don't need to generate a new key pair in the future. 
+Make sure you save this somewhere safe so you don't need to generate a new key pair in the future.
 
 ## Chain Configuration
 
@@ -351,4 +358,3 @@ To connect to the local node using a browser wallet, import the network address 
 ```sh
 http://127.0.0.1:4000/graphql
 ```
-
