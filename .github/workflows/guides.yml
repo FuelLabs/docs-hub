@@ -1,9 +1,39 @@
-name: Playwright Tests
+name: Guides
 
 on:
   pull_request:
 
 jobs:
+  ## SPELL CHECK ALL GUIDES
+  spell-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - uses: rojopolis/spellcheck-github-actions@0.34.0
+        name: Spellcheck
+        with:
+          config_path: .spellcheck.yml
+          task_name: SPCheck
+
+  ## LINT CHECK ALL GUIDES
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      # SETUP & INSTALL
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+        with:
+          install: false
+      - name: Install dependencies
+        run: npm install -g markdownlint-cli@0.32.1
+      # RUN LINT CHECK
+      - name: Lint Check
+        run: markdownlint --config .markdownlint.yaml --ignore-path .markdownlintignore '**/*.mdx'
+
+  ## QUICKSTART TEST
   quickstart-test:
     timeout-minutes: 30
     name: build-quickstart-contract
