@@ -95,9 +95,9 @@ const excludeDirs = [
   'docs/latest/fuel-indexer/docs/src/SUMMARY.md',
   'docs/latest/fuel-specs/src/SUMMARY.md',
   // 'docs/fuel-nix/book/src/SUMMARY.md',
-  'docs/guides/docs/testnet-migration/breaking-change-log/README.md',
-  'docs/guides/docs/testnet-migration/breaking-change-log/package.json',
-  'docs/guides/docs/testnet-migration/breaking-change-log/pnpm-lock.yaml',
+  'docs/guides/docs/migration-guide/breaking-change-log/README.md',
+  'docs/guides/docs/migration-guide/breaking-change-log/package.json',
+  'docs/guides/docs/migration-guide/breaking-change-log/pnpm-lock.yaml',
 ];
 
 export default makeSource({

@@ -15,7 +15,6 @@ async function main() {
     Object.keys(orders).map(async (key) => {
       const slugs = await getDocs(key, orders[key]);
       const final = slugs.map(({ slug }) => getDocBySlug(slug, slugs));
-      console.log('FINAL:', final);
       let sortedLinks = getSortedLinks(orders[key], final);
       if (key.includes('guides')) {
         const newLinks = {};
