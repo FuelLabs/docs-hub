@@ -311,23 +311,12 @@ function addNumberOfLines() {
   };
 }
 
-function testnetProps() {
-  return function transformer(tree: Root) {
-    visit(tree, '', (node: any) => {
-      if (node.type === 'text') {
-        node.value = node.value.replace('{props.fuelTestnet}', FUEL_TESTNET);
-      }
-    });
-  };
-}
-
 const getRehypeCodeOptions = (): Partial<RehypeCodeOptions> => ({
   theme: 'dracula',
   getHighlighter,
 });
 
 export const getMdxCode = (): PluggableList => [
-  testnetProps,
   codeImport,
   codeGroup,
   codeLanguage,
