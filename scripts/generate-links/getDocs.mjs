@@ -164,6 +164,7 @@ export async function getDocs(key, order) {
       paths = [
         // GUIDES
         './guides/**/*.mdx',
+        './guides/docs/testnet-migration/breaking-change-log/breaking-changes-log.md',
       ];
       break;
     // case 'latest-guides':

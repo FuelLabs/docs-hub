@@ -58,3 +58,7 @@
 [submodule "docs/latest/fuel-specs"]
 	path = docs/latest/fuel-specs
 	url = https://github.com/FuelLabs/fuel-specs.git
+[submodule "docs/guides/docs/testnet-migration/breaking-change-log"]
+	path = docs/guides/docs/testnet-migration/breaking-change-log
+	url = https://github.com/FuelLabs/breaking-change-log
+	branch = sarah/combine-changes
