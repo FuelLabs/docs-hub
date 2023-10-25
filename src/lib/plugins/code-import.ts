@@ -77,8 +77,10 @@ function extractCommentBlock(
   }
 
   if (trim === 'true') {
-    lineStart = lineStart + 1;
-    lineEnd = lineEnd - 1;
+    const startShift = lines[lineStart + 1].includes('```') ? 2 : 1;
+    const endShift = lines[lineEnd - 2].includes('```') ? 2 : 1;
+    lineStart = lineStart + startShift;
+    lineEnd = lineEnd - endShift;
   }
 
   if (lineStart < 0) {
