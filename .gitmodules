@@ -61,4 +61,3 @@
 [submodule "docs/guides/docs/migration-guide/breaking-change-log"]
 	path = docs/guides/docs/migration-guide/breaking-change-log
 	url = https://github.com/FuelLabs/breaking-change-log
-	branch = sarah/combine-changes
