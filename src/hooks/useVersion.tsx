@@ -1,9 +1,11 @@
 import type { ReactNode, FC } from 'react';
 import { createContext, useContext, useState } from 'react';
 
-export type VersionCtx = 'Beta-4' | 'Latest';
+import { FUEL_TESTNET_UPPER_CASE } from '../config/constants';
 
-const versionCtx = createContext<VersionCtx>('Beta-4');
+export type VersionCtx = typeof FUEL_TESTNET_UPPER_CASE | 'Latest';
+
+const versionCtx = createContext<VersionCtx>(FUEL_TESTNET_UPPER_CASE);
 const setVersionCtx = createContext<(value: VersionCtx) => void>(() => {});
 
 export function useVersion() {
@@ -21,9 +23,12 @@ interface VersionProviderProps {
 export const VersionProvider: FC<VersionProviderProps> = ({ children }) => {
   const [state, setState] = useState<VersionCtx>(() => {
     if (typeof window !== 'undefined') {
-      return (sessionStorage.getItem('version') as VersionCtx) || 'Beta-4';
+      return (
+        (sessionStorage.getItem('version') as VersionCtx) ||
+        FUEL_TESTNET_UPPER_CASE
+      );
     }
-    return 'Beta-4';
+    return FUEL_TESTNET_UPPER_CASE;
   });
 
   const setVersionInSession = (version: VersionCtx) => {

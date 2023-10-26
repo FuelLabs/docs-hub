@@ -53,6 +53,7 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   const slug = slugArray.join('/');
   const code = await doc.getCode();
   const versions = getVersions(doc.item.isLatest);
+
   return {
     props: {
       code,

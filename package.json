@@ -26,7 +26,8 @@
     "test:guides": "npx playwright test tests/test.spec.ts",
     "test:guides:debug": "DEBUG=pw:api npx playwright test tests/test.spec.ts",
     "ts:check": "tsc --noEmit",
-    "update-latest-docs": "sh ./scripts/update-latest-submodules.sh"
+    "lint:guides:check": "markdownlint --config .markdownlint.yaml --ignore-path .markdownlintignore '**/*.mdx'",
+    "lint:guides:fix": "markdownlint --config .markdownlint.yaml --ignore-path .markdownlintignore '**/*.mdx' --fix"
   },
   "dependencies": {
     "@actions/exec": "^1.1.1",

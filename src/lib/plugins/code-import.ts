@@ -8,6 +8,7 @@ import path from 'path';
 import * as prettier from 'prettier';
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
+import { FUEL_TESTNET } from '~/src/config/constants';
 
 import { getEndCommentType } from './text-import';
 import type { CommentTypes } from './text-import';
@@ -76,8 +77,10 @@ function extractCommentBlock(
   }
 
   if (trim === 'true') {
-    lineStart = lineStart + 1;
-    lineEnd = lineEnd - 1;
+    const startShift = lines[lineStart + 1].includes('```') ? 2 : 1;
+    const endShift = lines[lineEnd - 2].includes('```') ? 2 : 1;
+    lineStart = lineStart + startShift;
+    lineEnd = lineEnd - endShift;
   }
 
   if (lineStart < 0) {
@@ -208,6 +211,8 @@ export function codeImport() {
       } else {
         content = fileContent;
       }
+
+      content = content.replaceAll('{props.fuelTestnet}', FUEL_TESTNET);
 
       const newAttrs = [
         {

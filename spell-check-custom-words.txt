@@ -54,3 +54,7 @@ runnable
 CLI
 dev
 TODO
+fuelTestnetInlineCode
+fuelTestnet
+faucetLink
+GQLPlaygroundLink
