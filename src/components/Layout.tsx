@@ -104,7 +104,7 @@ const styles = {
       maxWidth: '1000px',
       width: '100vw',
       boxSizing: 'border-box',
-      margin: 'auto',
+      mx: 'auto',
     },
 
     '@xl': {
