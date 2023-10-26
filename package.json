@@ -26,7 +26,8 @@
     "test:guides": "npx playwright test tests/test.spec.ts",
     "test:guides:debug": "DEBUG=pw:api npx playwright test tests/test.spec.ts",
     "ts:check": "tsc --noEmit",
-    "update-latest-docs": "sh ./scripts/update-latest-submodules.sh"
+    "lint:guides:check": "markdownlint --config .markdownlint.yaml --ignore-path .markdownlintignore '**/*.mdx'",
+    "lint:guides:fix": "markdownlint --config .markdownlint.yaml --ignore-path .markdownlintignore '**/*.mdx' --fix"
   },
   "dependencies": {
     "@actions/exec": "^1.1.1",
@@ -113,7 +114,8 @@
       "@adobe/css-tools@<4.3.1": ">=4.3.1",
       "graphql@>=16.3.0 <16.8.1": ">=16.8.1",
       "postcss@<8.4.31": ">=8.4.31",
-      "zod@<=3.22.2": ">=3.22.3"
+      "zod@<=3.22.2": ">=3.22.3",
+      "next@<13.4.20-canary.13": ">=13.4.20-canary.13"
     }
   }
 }
