@@ -45,7 +45,8 @@ toolchains and keep them updated. It makes building and maintaining Sway applica
 ### Running `fuelup-init`
 
 {/*install_fuelup:example:start*/}
-To install the Fuel toolchain, you'll use the `fuelup-init` script. This will install `forc`, `forc-client`, `forc-fmt`, `forc-lsp`, `forc-wallet` as well as `fuel-core` in `~/.fuelup/bin`.
+To install the Fuel toolchain, you'll use the `fuelup-init` script.
+This will install `forc`, `forc-client`, `forc-fmt`, `forc-lsp`, `forc-wallet` as well as `fuel-core` in `~/.fuelup/bin`.
 {/*install_fuelup:example:end*/}
 
 👉 Just paste the following line in your terminal and press *Enter*.
@@ -62,7 +63,8 @@ curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh
 
 ### Setup PATH
 
-Once the script is downloaded, it will be executed automatically. The `fuelup-init` script will prompt you with the question below:
+Once the script is downloaded, it will be executed automatically.
+The `fuelup-init` script will prompt you with the question below:
 
 ```sh
 fuelup uses "/home/username/.fuelup" as its home directory to manage the Fuel toolchain, and will install binaries there.
@@ -107,7 +109,8 @@ fuelup 0.19.5
 Just as in [Rust](https://rust-lang.github.io/rustup/concepts/toolchains.html), Fuel supports multiple toolchains. A toolchain is a collection of tools (such as the compiler, LSP, etc).
 By default, `fuelup` includes a series of packages tested to work with each other, providing a reliable set of tools.
 
-In this case, we will install the `beta-4` toolchain, which is the stable toolchain compatible with the beta-4 network. For more information on `beta-4` check the [Fuel blog](https://fuel-labs.ghost.io/announcing-beta-4-testnet/) page.
+In this case, we will install the {props.fuelTestnetInlineCode} toolchain, which is the stable toolchain compatible with the {props.fuelTestnetInlineCode} network.
+For more information on {props.fuelTestnetInlineCode} check the [Fuel blog](https://fuel-labs.ghost.io/announcing-beta-4-testnet/) page.
 
 ### Updating fuelup
 
@@ -128,23 +131,24 @@ Unpacking and moving fuelup to /var/folders/tp/0l8zdx9j4s9_n609ykwxl0qw0000gn/T/
 Moving /var/folders/tp/0l8zdx9j4s9_n609ykwxl0qw0000gn/T/.tmpiNJQHt/fuelup to /Users/.fuelup/bin/fuelup
 ```
 
-### Installing the beta-4 toolchain
+### Installing the {props.fuelTestnet} toolchain
 
-The `beta-4` network is the latest Fuel testnet. This includes public infrastructure such as the [Beta-4 faucet](https://faucet-beta-4.fuel.network/) and the [Beta-4 GraphQL endpoint](https://beta-4.fuel.network/playground).
+The {props.fuelTestnetInlineCode} network is the latest Fuel testnet.
+This includes public infrastructure such as the {props.faucetLink} and the {props.GQLPlaygroundLink}.
 
-To properly interact with the `beta-4` network it is necessary to use its corresponding toolchain.
+To properly interact with the {props.fuelTestnetInlineCode} network it is necessary to use its corresponding toolchain.
 
-{/*install_beta-4:example:start*/}
-👉 Run the following command to install the `beta-4` toolchain:
-{/*install_beta-4:example:end*/}
+{/*install_testnet:example:start*/}
+👉 Run the following command to install the {props.fuelTestnetInlineCode} toolchain:
+{/*install_testnet:example:end*/}
 
-{/*install_beta-4_command:example:start*/}
+{/*install_testnet_command:example:start*/}
 
 ```console
-fuelup toolchain install beta-4
+fuelup toolchain install {props.fuelTestnet}
 ```
 
-{/*install_beta-4_command:example:end*/}
+{/*install_testnet_command:example:end*/}
 
 If the toolchain was successfully installed, you will see this output:
 
@@ -152,29 +156,30 @@ If the toolchain was successfully installed, you will see this output:
 The Fuel toolchain is installed and up to date
 ```
 
-The toolchain was installed correctly, however is not in use yet. Next, you need to configure `fuelup` to use the `beta-4` toolchain as the default.
+The toolchain was installed correctly, however is not in use yet. Next, you need to configure `fuelup` to use the {props.fuelTestnetInlineCode} toolchain as the default.
 
-{/*set_default_beta-4:example:start*/}
-👉 Set `beta-4` as your default toolchain with the following command:
-{/*set_default_beta-4:example:end*/}
+{/*set_default_testnet:example:start*/}
+👉 Set {props.fuelTestnetInlineCode} as your default toolchain with the following command:
+{/*set_default_testnet:example:end*/}
 
-{/*set_default_beta-4_command:example:start*/}
+{/*set_default_testnet_command:example:start*/}
 
 ```console
-fuelup default beta-4
+fuelup default {props.fuelTestnet}
 ```
 
-{/*set_default_beta-4_command:example:end*/}
+{/*set_default_testnet_command:example:end*/}
 
-You will get the following output indicating that you have successfully set `beta-4` as your default toolchain.
+You will get the following output indicating that you have successfully set {props.fuelTestnetInlineCode} as your default toolchain.
 
 ```console
-default toolchain set to 'beta-4'
+default toolchain set to '{props.fuelTestnet}'
 ```
 
 ### Checking your current toolchain
 
-Sometimes you might end up using multiple toolchains at once. Don't worry if you get confused about which toolchain you are using, since you can check your current toolchain anytime.
+Sometimes you might end up using multiple toolchains at once.
+Don't worry if you get confused about which toolchain you are using, since you can check your current toolchain anytime.
 
 👉 Run the `fuelup show` command to see the toolchain and the versions of each tool you are using.
 
@@ -209,7 +214,7 @@ forc : 0.45
 forc-wallet : 0.45
 ```
 
-As you can see, the beta-4 toolchain is active 🚀
+As you can see, the {props.fuelTestnetInlineCode} toolchain is active 🚀
 
 ## What's next?
 

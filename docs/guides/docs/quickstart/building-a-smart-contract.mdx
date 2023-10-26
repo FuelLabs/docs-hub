@@ -40,13 +40,13 @@ parent:
 
 <TextImport
   file="../installation/index.mdx"
-  comment="install_beta-4"
+  comment="install_testnet"
   commentType="{/*"
 />
 
 <CodeImport
   file="../installation/index.mdx"
-  comment="install_beta-4_command"
+  comment="install_testnet_command"
   commentType="{/*"
   lang="sh"
   trim="true"
@@ -54,21 +54,23 @@ parent:
 
 <TextImport
   file="../installation/index.mdx"
-  comment="set_default_beta-4"
+  comment="set_default_testnet"
   commentType="{/*"
 />
 
 <CodeImport
   file="../installation/index.mdx"
-  comment="set_default_beta-4_command"
+  comment="set_default_testnet_command"
   commentType="{/*"
   lang="sh"
   trim="true"
 />
 
+{/*install_help:example:start*/}
 For more detailed instructions on installing `fuelup`, visit the [installation guide](/guides/installation).
 
 > Having problems with this part? Post your question on our [forum](https://forum.fuel.network/). To help you as efficiently as possible, include the output of this command in your post: `fuelup show.`
+{/*install_help:example:end*/}
 
 ## Your First Sway Project
 
@@ -475,7 +477,7 @@ forc wallet accounts
 
 ### Get Testnet Coins
 
-With your account address in hand, head to the [testnet faucet](https://faucet-beta-4.fuel.network/) to get some coins sent to your wallet.
+With your account address in hand, head to the {props.faucetLink} to get some coins sent to your wallet.
 
 ### Deploy To Testnet
 
