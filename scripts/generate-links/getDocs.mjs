@@ -164,6 +164,7 @@ export async function getDocs(key, order) {
       paths = [
         // GUIDES
         './guides/docs/**/*.mdx',
+        './guides/docs/migration-guide/breaking-change-log/breaking-changes-log.md',
       ];
       break;
     // case 'latest-guides':
