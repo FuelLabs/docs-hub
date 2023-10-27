@@ -38,7 +38,13 @@ export function Navigation({ active }: { active: string }) {
 const styles = {
   navItem: cssObj({
     '&:hover': {
-      color: '$semanticLinkPrimaryColor !important',
+      'html[class="fuel_light-theme"] &': {
+        color: '#009957 !important',
+      },
+      'html[class="fuel_dark-theme"] &': {
+        color: '$semanticLinkPrimaryColor !important',
+      },
+
       textDecoration: 'none !important',
       '.fuel_Icon': {
         color: '$semanticLinkPrimaryColor !important',

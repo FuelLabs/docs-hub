@@ -4,10 +4,12 @@
 
 html {
   scroll-behavior: smooth;
+  height: 100vh;
+  overflow: hidden;
 }
 
 body {
-  min-height: 100vh;
+  height: 100vh;
   overflow-x: hidden;
 }
 

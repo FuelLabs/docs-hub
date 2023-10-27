@@ -1,13 +1,5 @@
 import { cssObj } from '@fuel-ui/css';
-import {
-  Alert,
-  Box,
-  FuelLogo,
-  Icon,
-  Link,
-  darkTheme,
-  lightTheme,
-} from '@fuel-ui/react';
+import { Alert, Box, darkTheme, lightTheme } from '@fuel-ui/react';
 import dynamic from 'next/dynamic';
 
 import type { NavOrder } from '../pages';
@@ -38,16 +30,13 @@ export function Header({
   return (
     <Box as="header" css={styles.root}>
       <Box.Flex css={styles.header}>
-        <Link href="/" className="logo">
-          <FuelLogo size={30} />
-        </Link>
         <span
           id="lvl0"
           style={{ visibility: 'hidden', width: '0', height: '0' }}
         >
           {title}
         </span>
-        <Box.Flex css={styles.navWrapper} grow={'1'} gap={'$4'}>
+        <Box.Flex css={styles.navWrapper}>
           <Navigation active={active} />
         </Box.Flex>
         <Box css={styles.desktop}>
@@ -56,32 +45,6 @@ export function Header({
             <VersionDropdown isLatest={isLatest} />
             <Search title={title} />
           </Box.Stack>
-          <Box.Flex gap={'$2'} css={styles.menu}>
-            <a
-              href="https://github.com/fuellabs/"
-              target="_blank"
-              rel="noreferrer"
-              title="Github"
-            >
-              <Icon icon={Icon.is('BrandGithub')} size={24} stroke={1} />
-            </a>
-            <a
-              href="https://twitter.com/fuel_network"
-              target="_blank"
-              rel="noreferrer"
-              title="Twitter"
-            >
-              <Icon icon={'BrandTwitter'} size={24} stroke={1} />
-            </a>
-            <a
-              href="https://discord.com/invite/xfpK4Pe"
-              target="_blank"
-              rel="noreferrer"
-              title="Discord"
-            >
-              <Icon icon={Icon.is('BrandDiscord')} size={24} stroke={1} />
-            </a>
-          </Box.Flex>
         </Box>
         <MobileMenu
           allNavs={allNavs}
@@ -118,14 +81,14 @@ const styles = {
     py: '$4',
     px: '$4',
     alignItems: 'center',
-    borderBottom: '1px solid $border',
+    borderBottom: '1px solid transparent',
     gridColumn: '1 / 4',
 
     [`.${darkTheme.theme} &`]: {
-      backgroundColor: '$intentsBase2',
+      backgroundColor: '$bodyColor',
     },
     [`.${lightTheme.theme} &`]: {
-      backgroundColor: '$white',
+      backgroundColor: 'white',
     },
 
     '.logo': {
@@ -153,16 +116,6 @@ const styles = {
 
     '@xl': {
       display: 'flex',
-    },
-  }),
-  menu: cssObj({
-    a: {
-      color: '$intentsBase10',
-      transition: 'all 0.3s',
-    },
-
-    'a.active, a:hover': {
-      color: '$semanticLinkPrimaryColor',
     },
   }),
   desktop: cssObj({

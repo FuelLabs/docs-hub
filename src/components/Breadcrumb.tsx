@@ -66,6 +66,9 @@ const styles = {
   root: cssObj({
     alignItems: 'center',
     gap: '$2',
+    '@xl': {
+      display: 'none',
+    },
 
     span: {
       color: '$intentsBase11',

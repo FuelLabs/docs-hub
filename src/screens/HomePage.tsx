@@ -110,7 +110,7 @@ export function HomeScreen({ guides, allNavs, isLatest }: HomeScreenProps) {
           body: 'Explore the specifications for the Fuel Network.',
         },
         {
-          link: 'https://faucet-beta-4.fuel.network/',
+          link: FAUCET_LINK,
           isExternal: true,
           heading: 'Faucet',
           headingIcon: 'Coin',

@@ -17,17 +17,14 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
   ({ item, isActiveMenu, onClick, size, ...props }, ref) => {
     const router = useRouter();
     const isSamePage = router.asPath === `/${item.slug}/`;
-    const isActive = isActiveMenu ?? isSamePage;
     const isSubmenu = props['data-submenu'];
     const isBookMenu = props['data-bookmenu'];
     const activeStyles = {
-      color: isActive ?? '$semanticLinkPrimaryColor',
+      color: isSamePage ?? '$semanticLinkPrimaryColor',
+      fontWeight: isActiveMenu ? '600' : 'normal',
       'html[class="fuel_light-theme"] &': {
-        color: isActive ? '$semanticLinkPrimaryColor' : '$intentsBase12',
-        borderLeft:
-          !isBookMenu &&
-          isSamePage &&
-          '2px solid $semanticLinkPrimaryColor !important',
+        color: isSamePage ? '#009957' : '$intentsBase12',
+        borderLeft: !isBookMenu && isSamePage && '2px solid #009957 !important',
       },
       borderLeft:
         !isBookMenu && isSamePage && '2px solid $semanticLinkPrimaryColor',
@@ -40,10 +37,10 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
           {...props}
           size={size ?? 'sm'}
           ref={ref as any}
-          data-active={Boolean(isActive)}
+          data-active={Boolean(isSamePage)}
           {...(onClick && { onClick })}
           isExternal={item.isExternal}
-          intent={isActive ? 'primary' : 'base'}
+          intent={isSamePage ? 'primary' : 'base'}
           css={{ ...buttonStyles, ...activeStyles }}
         >
           {item.label}

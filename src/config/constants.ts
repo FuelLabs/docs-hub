@@ -61,7 +61,6 @@ export const NAVIGATION: LinkObject[] = [
       },
       {
         name: 'Sway Playground',
-        type: 'external-link',
         link: 'https://sway-playground.org',
       },
       {
