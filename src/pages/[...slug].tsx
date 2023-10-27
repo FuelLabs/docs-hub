@@ -70,6 +70,7 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   const allNavs = JSON.parse(readFileSync(allNavsPath, 'utf8'));
   const allLatestNavs = JSON.parse(readFileSync(allLatestNavsPath, 'utf8'));
   const versions = getVersions(doc.item.isLatest);
+
   return {
     props: {
       allNavs,

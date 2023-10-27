@@ -9,6 +9,8 @@ import {
   createPR,
   fetchTag,
   fetchBranch,
+  getVersionCommit,
+  gitResetCommit,
 } from './gitUtils.mjs';
 
 export async function updateLatest(newVersions) {
@@ -50,6 +52,7 @@ async function updateSubmodules(newVersions) {
     'docs/latest/fuel-specs',
     'docs/latest/fuel-graphql-docs',
     'docs/latest/fuelup',
+    'docs/guides/docs/migration-guide/breaking-change-log',
   ];
   console.log('GOING TO UPDATE REGARDLESS');
   await Promise.all(
@@ -86,7 +89,6 @@ async function updateSubmodules(newVersions) {
             break;
           case 'wallet':
             submoduleName = 'docs/latest/fuels-wallet';
-            branch = 'release';
             break;
           default:
         }
@@ -96,12 +98,23 @@ async function updateSubmodules(newVersions) {
   }
 }
 
+// use the latest commit on the docs branch of fuels-ts
 export async function update(version, dir, branch) {
   await updateSubmodule(dir);
+  if (dir !== 'docs/latest/fuels-ts') {
+    await fetchTag(version, dir);
+    await checkoutVersion(version, dir);
+  }
   if (branch) {
+    let releaseCommit;
+    if (dir !== 'docs/latest/fuels-ts') {
+      releaseCommit = await getVersionCommit(version, dir);
+    }
     await fetchBranch(branch, dir);
     await switchToExistingBranch(branch, dir);
+    if (dir !== 'docs/latest/fuels-ts') {
+      // go to the version commit in the right branch;
+      await gitResetCommit(releaseCommit, dir);
+    }
   }
-  await fetchTag(version, dir);
-  await checkoutVersion(version, dir);
 }

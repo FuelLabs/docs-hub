@@ -12,10 +12,10 @@ In addition to deploying and testing on the Fuel Testnet, you can also run a loc
 
 There are two types of Fuel networks that can be run:
 
-1. In-memory network (without persistance)
-2. Local network with persistance
+1. In-memory network (without persistence)
+2. Local network with persistence
 
-## In-memory local node (without state persistance)
+## In-memory local node (without state persistence)
 
 An in-memory node does not persist the blockchain state anywhere, it is only stored in memory as long as the node is active and running.
 
@@ -37,11 +37,11 @@ Or to deploy without using a signing key:
 forc deploy --unsigned --node-url 127.0.0.1:4000/graphql
 ```
 
-## Local node (with state persistance)
+## Local node (with state persistence)
 
 This node does persist the blockchain state locally.
 
-To run a local node with persistance, you must configure a `chainConfig.json` file. Here is an example of what that looks like:
+To run a local node with persistence, you must configure a `chainConfig.json` file. Here is an example of what that looks like:
 
 ```json
 {

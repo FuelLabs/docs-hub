@@ -3,6 +3,7 @@ import { Dropdown, Text, Icon } from '@fuel-ui/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
+import { FUEL_TESTNET, FUEL_TESTNET_UPPER_CASE } from '../config/constants';
 import { useSetVersion } from '../hooks/useVersion';
 
 export default function VersionDropdown({ isLatest }: { isLatest: boolean }) {
@@ -21,16 +22,16 @@ export default function VersionDropdown({ isLatest }: { isLatest: boolean }) {
           opened ? { ...styles.trigger, ...styles.triggerOpen } : styles.trigger
         }
       >
-        Version: {isLatest ? 'Latest' : 'Beta-4'}
+        Version: {isLatest ? 'Latest' : FUEL_TESTNET_UPPER_CASE}
       </Dropdown.Trigger>
       <Dropdown.Menu
-        disabledKeys={isLatest ? ['latest'] : ['beta-4']}
+        disabledKeys={isLatest ? ['latest'] : [FUEL_TESTNET]}
         css={styles.dropdownMenu}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onAction={(action: any) => {
           if (setVersion) {
-            if (action === 'beta-4') {
-              setVersion('Beta-4');
+            if (action === FUEL_TESTNET) {
+              setVersion(FUEL_TESTNET_UPPER_CASE);
             } else if (action === 'latest') {
               setVersion('Latest');
             }
@@ -50,10 +51,10 @@ export default function VersionDropdown({ isLatest }: { isLatest: boolean }) {
       >
         <Dropdown.MenuItem
           css={styles.menuItem}
-          key="beta-4"
-          aria-label="beta-4"
+          key={FUEL_TESTNET}
+          aria-label={FUEL_TESTNET}
         >
-          <Text>Beta-4</Text>
+          <Text>{FUEL_TESTNET_UPPER_CASE}</Text>
           {!isLatest && <Icon icon="Check" color="accent11" />}
         </Dropdown.MenuItem>
 

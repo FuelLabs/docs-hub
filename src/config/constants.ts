@@ -4,6 +4,11 @@ export const DOCS_DIRECTORY = join(process.cwd(), './docs');
 export const LATEST_DOCS_DIRECTORY = join(process.cwd(), './docs/latest');
 export const FIELDS = ['title', 'slug', 'content', 'category'];
 
+export const FUEL_TESTNET = 'beta-4';
+export const FUEL_TESTNET_UPPER_CASE = 'Beta-4';
+export const FAUCET_LINK = `https://faucet-${FUEL_TESTNET}.fuel.network/`;
+export const PLAYGROUND_LINK = `https://${FUEL_TESTNET}.fuel.network/playground/`;
+
 export type LinkObject = {
   name: string;
   link?: string;
@@ -126,11 +131,10 @@ export const NAVIGATION: LinkObject[] = [
       },
       {
         name: 'Faucet',
-        link: 'https://faucet-beta-4.fuel.network/',
+        link: FAUCET_LINK,
       },
       {
         name: 'Bridge',
-        type: 'external-link',
         link: 'https://alpha.fuel.network/bridge/',
       },
     ],

@@ -3,6 +3,7 @@ import { Box, Text, Heading, Grid } from '@fuel-ui/react';
 
 import { Card } from '../components/Card';
 import { SidebarContainer } from '../components/SidebarContainer';
+import { FAUCET_LINK } from '../config/constants';
 import type { GuidesProps } from '../pages/guides';
 import type { NavOrder } from '../pages/index';
 

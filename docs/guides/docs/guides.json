@@ -20,8 +20,8 @@
     "featured": false,
     "tags": ["fuel-core"]
   },
-  "testnet_migration": {
-    "title": "Testnet Migration",
+  "migration_guide": {
+    "title": "Migration Guide",
     "description": "Sway and SDK's breaking changes reference.",
     "last_updated": "5. Sep 2023",
     "featured": false,

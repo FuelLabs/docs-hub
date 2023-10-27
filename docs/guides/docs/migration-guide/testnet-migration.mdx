@@ -1,16 +1,14 @@
 ---
-title: Beta 4 Testnet Migration 
-category: Testnet Migration
+title: Testnet Migration 
+category: Migration Guide
 parent:
   label: All Guides
   link: /guides
 ---
 
-# Beta 4 Migration
+# Testnet Migration
 
-This guide focuses on the transition from the end of tool support for `beta 3` to the start of `beta 4`.
-
-> The team is constantly building. For updates on breaking changes beyond this guide, please refer to our bi-weekly report on [GitHub](https://github.com/FuelLabs/breaking-change-log/tree/master) or check announcements in our [forum](https://forum.fuel.network/c/announcements/7).
+This guide focuses on the transition from the end of tool support for `beta-3` to the start of `beta-4`.
 
 - [Fuelup v0.19.5](https://github.com/FuelLabs/fuelup/releases/tag/v0.19.5)
 - [Sway v0.45.0](https://github.com/FuelLabs/sway/releases/tag/v0.45.0)
@@ -46,28 +44,11 @@ default toolchain set to 'beta-4-aarch64-apple-darwin'
 
 ## Wallet
 
-Fuel Wallet version `0.11.0` is not compatible with beta 4. For compatibility with beta-4, please download the non-backwards compatible Fuel Wallet version `0.12.3`.
+If you have already installed the Fuel Wallet extension, make sure the extension is up-to-date.
 
-```sh
-pnpm install @fuel-wallet@0.12.3
-```
+If you haven't already installed the Fuel Wallet, you can install it [here](https://chrome.google.com/webstore/detail/fuel-wallet/dldjpboieedgcmpkchcjcbijingjcgok).
 
-We have already submitted the beta-4 compatible version to the Chrome Web Store, and it is currently under review. Once your users update to this version, they will no longer be able to interact with the contracts you currently have deployed on the beta-3 testnet.
-
-Please follow the instructions provided below:
-
-1. Download [FuelWallet zip file](https://next-wallet.fuel.network/app/fuel-wallet.zip)
-2. Inside Chrome or Brave;
-3. Open the extensions page; it can be done by:
-    - Clicking on settings -> extensions or;
-4. Accessing brave://extensions/ or chrome://extensions/.
-5. Enable the "Developer mode" switch on the top right
-6. Load fuel-wallet.zip by:
-    - Dragging your downloaded Fuel wallet file and dropping it in the extensions page or;
-    - Clicking on Load unpacked and selecting the file.
-7. If all goes right, an onboarding page will instantly open.
-
-## Sway 
+## Sway
 
 Integer types no longer implicitly cast to each other. Here are some examples of the changes:
 
@@ -187,7 +168,7 @@ request.addResources(resources);
 ```
 
 Similarly, `addPredicateResourcesInputsAndOutputs` is now more concisely known as `addPredicateResources`.
-The reason we have a distinct method for adding predicate resources is that the creation of predicate inputs mandates the presence of both the predicate’s bytes and data bytes. 
+The reason we have a distinct method for adding predicate resources is that the creation of predicate inputs mandates the presence of both the predicate’s bytes and data bytes.
 With these methods, there’s no longer a need to manually create and set up an instance of a `ScriptTransactionRequest`, simplifying the process further.
 
 ```typescript
@@ -229,7 +210,7 @@ let response = contract_methods
     .await?;
 ```
 
-`setup_contract_test` has been changed to `setup_program_test`. 
+`setup_contract_test` has been changed to `setup_program_test`.
 
 The command to generate bindings with Abigen has been modified; previously, it was `Abigen(name="...")`, but now it requires the program type and should be written as `Abigen(Program_Type(name="..."))`:
 
@@ -251,7 +232,7 @@ setup_program_test!(
 );
 ```
 
-Now supporting String types, there have been slight modifications if you directly use ParamTypes:
+Now supporting String types, there have been slight modifications if you directly use `ParamTypes`:
 
 ```rust
 // BEFORE - BETA 3
