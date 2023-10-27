@@ -1,4 +1,5 @@
 SDK
+SDKs
 testnet
 testnets
 mainnet

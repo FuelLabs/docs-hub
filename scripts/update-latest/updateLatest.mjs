@@ -52,6 +52,7 @@ async function updateSubmodules(newVersions) {
     'docs/latest/fuel-specs',
     'docs/latest/fuel-graphql-docs',
     'docs/latest/fuelup',
+    'docs/guides/docs/migration-guide/breaking-change-log',
   ];
   console.log('GOING TO UPDATE REGARDLESS');
   await Promise.all(
