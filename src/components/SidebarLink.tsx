@@ -9,25 +9,24 @@ import type { SidebarLinkItem } from '~/src/types';
 export type SidebarLinkProps = ButtonLinkProps & {
   item: SidebarLinkItem;
   isActiveMenu?: boolean;
+  isIndex?: boolean;
   onClick?: ButtonLinkProps['onClick'];
   size?: ButtonSizes;
 };
 
 export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
-  ({ item, isActiveMenu, onClick, size, ...props }, ref) => {
+  ({ item, isActiveMenu, isIndex, onClick, size, ...props }, ref) => {
     const router = useRouter();
     const isSamePage = router.asPath === `/${item.slug}/`;
     const isSubmenu = props['data-submenu'];
-    const isBookMenu = props['data-bookmenu'];
     const activeStyles = {
       color: isSamePage ?? '$semanticLinkPrimaryColor',
-      fontWeight: isActiveMenu ? '600' : 'normal',
+      fontWeight: isActiveMenu && !isSamePage ? '480' : 'normal',
       'html[class="fuel_light-theme"] &': {
         color: isSamePage ? '#009957' : '$intentsBase12',
-        borderLeft: !isBookMenu && isSamePage && '2px solid #009957 !important',
+        borderLeft: isSamePage && '2px solid #009957 !important',
       },
-      borderLeft:
-        !isBookMenu && isSamePage && '2px solid $semanticLinkPrimaryColor',
+      borderLeft: isSamePage && '2px solid $semanticLinkPrimaryColor',
       paddingLeft: isSubmenu ? '$8' : '$4',
     };
 
@@ -43,7 +42,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
           intent={isSamePage ? 'primary' : 'base'}
           css={{ ...buttonStyles, ...activeStyles }}
         >
-          {item.label}
+          {isIndex ? 'About' : item.label}
         </ButtonLink>
       </NextLink>
     );

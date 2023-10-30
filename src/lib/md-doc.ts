@@ -106,6 +106,7 @@ export class Doc {
         ...rehypePlugins,
         rehypeExtractHeadings({
           headings: this.item.headings,
+          slug: this.item.slug,
         }),
       ],
     });

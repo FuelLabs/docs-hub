@@ -28,7 +28,6 @@ export function DocScreen(props: DocPageProps) {
 
   const isLatest = mounted ? version === 'Latest' : doc.isLatest;
   const components = getComponents(doc.slug, doc.isLatest);
-  const hasHeadings = Boolean(doc.headings?.length);
   const navs = doc.slug.includes('guides')
     ? undefined
     : isLatest
@@ -39,9 +38,8 @@ export function DocScreen(props: DocPageProps) {
     <DocProvider {...props}>
       <Layout
         title={doc?.title}
-        hasHeadings={hasHeadings}
+        isClean={false}
         config={doc.docsConfig}
-        category={doc.category}
         isLatest={isLatest}
         versions={props.versions}
         allNavs={navs}

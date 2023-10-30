@@ -30,15 +30,14 @@ export function Header({
   return (
     <Box as="header" css={styles.root}>
       <Box.Flex css={styles.header}>
+        {/* THIS GETS USED BY THE SEARCH INDEXER */}
         <span
           id="lvl0"
           style={{ visibility: 'hidden', width: '0', height: '0' }}
         >
           {title}
         </span>
-        <Box.Flex css={styles.navWrapper}>
-          <Navigation active={active} />
-        </Box.Flex>
+        <Navigation active={active} />
         <Box css={styles.desktop}>
           <Box.Stack direction="row" gap="$4" css={{ mr: '$4' }}>
             <ThemeToggler />
@@ -77,9 +76,8 @@ const styles = {
     borderRadius: '0',
   }),
   header: cssObj({
-    gap: '$2',
+    gap: '$4',
     py: '$3',
-    px: '$3',
     alignItems: 'center',
     gridColumn: '1 / 4',
     justifyContent: 'flex-end',
@@ -103,14 +101,6 @@ const styles = {
 
     '@md': {
       px: '$8',
-    },
-  }),
-  navWrapper: cssObj({
-    padding: '0 $8',
-    display: 'none',
-
-    '@xl': {
-      display: 'flex',
     },
   }),
   desktop: cssObj({

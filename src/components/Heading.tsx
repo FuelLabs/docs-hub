@@ -2,47 +2,23 @@
 
 import { cssObj } from '@fuel-ui/css';
 import { Heading as FuelHeading, Icon } from '@fuel-ui/react';
-import { useRef, useEffect } from 'react';
-
-import { useDocContext } from '../hooks/useDocContext';
 
 export function Heading({ children, ...props }: any) {
-  const ref = useRef<HTMLHeadingElement>(null);
-  const { setActiveHistory } = useDocContext();
-  const iEntries = useRef<string[]>([]);
-
-  useEffect(() => {
-    if (['h1', 'h4', 'h5', 'h6'].includes(props['data-rank'])) return;
-    const watch = ref.current;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        iEntries.current = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort(
-            (a, b) =>
-              a.target.getBoundingClientRect().top -
-              b.target.getBoundingClientRect().top
-          )
-          .map((entry) => entry.target.getAttribute('id'))
-          .filter((id): id is string => id !== null);
-
-        if (iEntries.current.length) {
-          setActiveHistory(iEntries.current);
-        }
-      },
-      { rootMargin: '0px', threshold: 1.0 }
-    );
-    watch && observer.observe(watch);
-
-    // Make sure to unobserve on component unmount.
-    return () => {
-      watch && observer.unobserve(watch);
-    };
-  }, []);
-
+  const isLatest = props['data-latest'];
+  const paddingStyles = cssObj({
+    [head([1])]: {
+      pt: isLatest ? '$24' : '$20',
+    },
+    [head([2, 3, 4])]: {
+      pt: isLatest ? '108px' : '$16',
+    },
+    // [head([3])]: {
+    //   pt: isLatest ? '$16' : '$12',
+    // },
+  });
   return (
-    <FuelHeading ref={ref} as={props['data-rank']} {...props} css={styles.root}>
-      <Icon icon={Icon.is('Link')} />
+    <FuelHeading {...props} css={{ ...styles.root, ...paddingStyles }}>
+      <Icon icon={'Link'} />
       {props.id ? <a href={`#${props.id}`}>{children}</a> : children}
     </FuelHeading>
   );
@@ -68,26 +44,26 @@ const styles = {
       },
     },
     [head([1, 2])]: {
-      pt: '$12',
       mb: '$5',
       pb: '$2',
       borderBottom: '1px solid $border',
     },
     [head([3])]: {
-      pt: '$8',
       mb: '$4',
+      textSize: '2xl',
     },
     [head([4, 5, 6])]: {
       pt: '$6',
       mb: '$2',
+      textSize: 'xl',
     },
 
-    [`${head([1, 2])} a, ${head([1, 2])} a:visited`]: {
+    [`${head([1, 2, 3, 4, 5, 6])} a, ${head([1, 2, 3, 4, 5, 6])} a:visited`]: {
       color: '$intentsBase12',
     },
-    [`${head([3, 4, 5, 6])} a, ${head([3, 4, 5, 6])} a:visited`]: {
-      color: '$intentsBase11',
-    },
+    // [`${head([1, 2])} a, ${head([1, 2, 3, 4, 5, 6])} a:visited`]: {
+    //   color: '$intentsBase12',
+    // },
 
     '& a': {
       color: 'currentColor',

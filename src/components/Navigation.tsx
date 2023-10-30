@@ -1,10 +1,10 @@
 import { cssObj } from '@fuel-ui/css';
-import { ButtonLink } from '@fuel-ui/react';
+import { Box, ButtonLink } from '@fuel-ui/react';
 
 export function Navigation({ active }: { active: string }) {
   const isGuidesActive = active.startsWith('guides');
   return (
-    <>
+    <Box.Flex gap={'$4'} css={styles.navContainer}>
       <ButtonLink
         leftIcon="FileDescription"
         leftIconAriaLabel="documentation"
@@ -31,11 +31,18 @@ export function Navigation({ active }: { active: string }) {
       >
         Guides
       </ButtonLink>
-    </>
+    </Box.Flex>
   );
 }
 
 const styles = {
+  navContainer: cssObj({
+    display: 'none',
+
+    '@xl': {
+      display: 'flex',
+    },
+  }),
   navItem: cssObj({
     '&:hover': {
       'html[class="fuel_light-theme"] &': {

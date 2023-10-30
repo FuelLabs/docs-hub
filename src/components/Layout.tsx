@@ -15,10 +15,7 @@ type LayoutProps = {
   title?: string;
   children: ReactNode;
   isClean?: boolean;
-  hasHeadings?: boolean;
   config?: Config;
-  theme?: string;
-  category?: string | undefined;
   isLatest: boolean;
   versions?: Versions;
   allNavs?: NavOrder[];
@@ -27,6 +24,7 @@ type LayoutProps = {
 export function Layout({
   title,
   children,
+  isClean,
   config,
   isLatest,
   versions,
@@ -81,10 +79,16 @@ export function Layout({
         ></meta>
       </Head>
       <Box css={styles.root}>
-        <Grid css={styles.grid}>
-          <Grid.Item>
-            <SidebarContainer versions={versions} allNavs={allNavs} />
-          </Grid.Item>
+        <Grid data-clean={Boolean(isClean)} css={styles.grid}>
+          {!isClean && (
+            <Grid.Item>
+              <SidebarContainer
+                versions={versions}
+                allNavs={allNavs}
+                isLatest={isLatest}
+              />
+            </Grid.Item>
+          )}
           <Grid.Item css={styles.right}>
             <Header
               active={slug}
@@ -103,31 +107,43 @@ export function Layout({
 
 const styles = {
   root: cssObj({
+    position: 'sticky',
+    top: 0,
     width: '100vw',
     height: '100vh',
     boxSizing: 'border-box',
     overflow: 'hidden',
+    // TODO: fix weirdness when clicking h1 on /sway
+    // backgroundColor: 'pink',
+    backgroundColor: '$bodyColor',
+    'html[class="fuel_light-theme"] &': {
+      backgroundColor: 'white',
+    },
   }),
   right: cssObj({
     height: '100vh',
     boxSizing: 'border-box',
     overflowX: 'auto',
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
   }),
   grid: cssObj({
     height: '100vh',
-    maxWidth: '1400px',
+    maxWidth: '1360px',
     gridTemplateColumns: '1fr',
     mx: 'auto',
     boxSizing: 'border-box',
-
     '& .Layout--section': {
       boxSizing: 'border-box',
-      padding: '$8',
+      padding: '0 $8 $8 $8',
       display: 'block',
     },
 
     '@xl': {
-      gridTemplateColumns: '300px 1fr',
+      '&[data-clean="false"]': {
+        gridTemplateColumns: '300px 1fr',
+      },
     },
   }),
 };

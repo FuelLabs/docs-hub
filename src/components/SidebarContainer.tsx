@@ -4,14 +4,19 @@ import { Box, FuelLogo, Link } from '@fuel-ui/react';
 import type { NavOrder } from '../pages';
 import type { Versions } from '../pages/[...slug]';
 
-import { AltSidebar } from './AltSidebar';
+import { Sidebar } from './Sidebar';
 
 interface SidebarContainerProps {
   allNavs?: NavOrder[];
   versions?: Versions;
+  isLatest: boolean;
 }
 
-export function SidebarContainer({ allNavs, versions }: SidebarContainerProps) {
+export function SidebarContainer({
+  allNavs,
+  versions,
+  isLatest,
+}: SidebarContainerProps) {
   return (
     <Box css={styles.sidebar}>
       <Box css={styles.logo}>
@@ -21,7 +26,7 @@ export function SidebarContainer({ allNavs, versions }: SidebarContainerProps) {
       </Box>
 
       <Box>
-        <AltSidebar allNavs={allNavs} versions={versions} />
+        <Sidebar allNavs={allNavs} versions={versions} isLatest={isLatest} />
       </Box>
     </Box>
   );
@@ -29,11 +34,8 @@ export function SidebarContainer({ allNavs, versions }: SidebarContainerProps) {
 
 export const styles = {
   sidebar: cssObj({
-    backgroundColor: '$bodyColor',
-    'html[class="fuel_light-theme"] &': {
-      backgroundColor: 'white',
-    },
     display: 'none',
+    borderRight: '1px solid $border',
     padding: '$8',
     height: 'calc(100vh - 64px)',
     overflowY: 'auto',

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import type { NavOrder } from '../pages';
 import type { Versions } from '../pages/[...slug]';
 
-import { AltSidebar } from './AltSidebar';
+import { Sidebar } from './Sidebar';
 import Search from './Search';
 import ThemeToggler from './ThemeToggler';
 import VersionDropdown from './VersionDropdown';
@@ -75,10 +75,11 @@ export function MobileMenu({
             </Box.Flex>
 
             <Box css={styles.navContainer}>
-              <AltSidebar
+              <Sidebar
                 versions={versions}
                 allNavs={active.includes('guides') ? undefined : allNavs}
                 onClick={() => setOpen(false)}
+                isLatest={isLatest}
               />
             </Box>
           </Drawer.Body>
