@@ -49,7 +49,7 @@ const conditions = {
       (node.name === 'Player' && filepath.includes('/fuels-wallet/'))
     );
   },
-  mdBookLinks: (node: any) => {
+  links: (node: any) => {
     return (
       ((node.type === 'link' || node.type === 'definition') &&
         node.url !== '..') ||
@@ -82,11 +82,11 @@ export function handlePlugins() {
       : beta4Versions;
 
     if (filepath.includes('/fuel-graphql-docs/')) {
-      handleGraphQLDocs(tree, filepath);
+      handleGraphQLDocs(tree, filepath, dirname);
     } else if (filepath.includes('/sway/')) {
       handleSwayDocs(tree, filepath, rootDir, dirname);
     } else if (filepath.includes('/fuels-wallet/')) {
-      handleWalletDocs(tree, filepath);
+      handleWalletDocs(tree, filepath, dirname);
     } else if (filepath.includes('/fuels-ts/')) {
       handleTSDocs(tree, rootDir, dirname, versions);
     } else if (filepath.includes('/fuels-rs/')) {
@@ -101,35 +101,42 @@ export function handlePlugins() {
   };
 }
 
-function handleGraphQLDocs(tree: Root, filepath: string) {
+function handleGraphQLDocs(tree: Root, filepath: string, dirname: string) {
   const nodes: NodeArray = [];
   visit(tree, '', (node: any, idx, parent) => {
     if (
-      node.name === 'a' &&
-      node.attributes &&
-      node.attributes[0].value.includes('/docs/')
+      (node.name === 'a' &&
+        node.attributes &&
+        node.attributes[0].value.includes('/docs/')) ||
+      conditions.links(node)
     ) {
       nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
     }
   });
   nodes.forEach(([node, _idx, _idxparent]) => {
-    let url = node.attributes[0].value;
-    if (filepath.includes('latest')) {
-      url = url.replace('/docs/', '/docs/latest/graphql/');
+    if (conditions.links(node)) {
+      const newUrl = handleLinks(node, dirname);
+      if (newUrl) node.url = newUrl;
     } else {
-      url = url.replace('/docs/', '/docs/graphql/');
+      let url = node.attributes[0].value;
+      if (filepath.includes('latest')) {
+        url = url.replace('/docs/', '/docs/latest/graphql/');
+      } else {
+        url = url.replace('/docs/', '/docs/graphql/');
+      }
+      node.attributes[0].value = url;
     }
-    node.attributes[0].value = url;
   });
 }
 
-function handleWalletDocs(tree: Root, filepath: string) {
+function handleWalletDocs(tree: Root, filepath: string, dirname: string) {
   const nodes: NodeArray = [];
   visit(tree, '', (node: any, idx, parent) => {
     if (
       // update the image & video paths in the wallet docs
       conditions.walletImages(node, filepath) ||
-      conditions.walletComponents(node, filepath)
+      conditions.walletComponents(node, filepath) ||
+      conditions.links(node)
     ) {
       nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
     }
@@ -149,6 +156,9 @@ function handleWalletDocs(tree: Root, filepath: string) {
           elements;
         node.attributes[0].value.value = value;
       }
+    } else if (conditions.links(node)) {
+      const newUrl = handleLinks(node, dirname);
+      if (newUrl) node.url = newUrl;
     }
   });
 }
@@ -177,7 +187,7 @@ function handleSwayDocs(
       // handle example code imports in mdbook repos and the TS SDK docs
       conditions.exampleImport(node) ||
       // remove .md from mdBook links
-      conditions.mdBookLinks(node)
+      conditions.links(node)
     ) {
       nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
     }
@@ -187,7 +197,7 @@ function handleSwayDocs(
       const content = handleExampleImports(node, dirname, rootDir, parent);
       node.value = content;
     }
-    if (conditions.mdBookLinks(node)) {
+    if (conditions.links(node)) {
       const newUrl = handleLinks(node, dirname, idx, parent);
       if (newUrl) node.url = newUrl;
     }
@@ -210,7 +220,7 @@ function handleTSDocs(
       // handle example code imports in mdbook repos and the TS SDK docs
       conditions.exampleImport(node) ||
       // remove .md from mdBook links
-      conditions.mdBookLinks(node) ||
+      conditions.links(node) ||
       // handle TS book versions
       conditions.tsBookVersions(node) ||
       (node.type === 'code' && node.lang === 'ts:line-numbers')
@@ -222,7 +232,7 @@ function handleTSDocs(
     if (conditions.exampleImport(node)) {
       const content = handleExampleImports(node, dirname, rootDir, parent);
       node.value = content;
-    } else if (conditions.mdBookLinks(node)) {
+    } else if (conditions.links(node)) {
       const newUrl = handleLinks(node, dirname, idx, parent, tree);
       if (newUrl) node.url = newUrl;
     } else if (conditions.tsBookVersions(node)) {
@@ -246,7 +256,7 @@ function handleRustBooks(tree: Root, rootDir: string, dirname: string) {
       // handle example code imports in mdbook repos and the TS SDK docs
       conditions.exampleImport(node) ||
       // remove .md from mdBook links
-      conditions.mdBookLinks(node) ||
+      conditions.links(node) ||
       // replace {{versions}}
       conditions.rustBookVersion(node)
     ) {
@@ -257,7 +267,7 @@ function handleRustBooks(tree: Root, rootDir: string, dirname: string) {
     if (conditions.exampleImport(node)) {
       const content = handleExampleImports(node, dirname, rootDir, parent);
       node.value = content;
-    } else if (conditions.mdBookLinks(node)) {
+    } else if (conditions.links(node)) {
       const newUrl = handleLinks(node, dirname);
       if (newUrl) node.url = newUrl;
     } else {
@@ -274,7 +284,7 @@ function handleMDBooks(tree: Root, rootDir: string, dirname: string) {
       // handle example code imports in mdbook repos and the TS SDK docs
       conditions.exampleImport(node) ||
       // remove .md from mdBook links
-      conditions.mdBookLinks(node)
+      conditions.links(node)
     ) {
       nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
     }
