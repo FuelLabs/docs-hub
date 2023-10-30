@@ -82,16 +82,8 @@ export function Layout({
       </Head>
       <Box css={styles.root}>
         <Grid css={styles.grid}>
-          <Grid.Item
-          // css={{ bg: '$gray6' }}
-          >
-            {/* <Box css={{ padding: '$4' }}> */}
-            <SidebarContainer
-              versions={versions}
-              allNavs={allNavs}
-              isLatest={isLatest}
-            />
-            {/* </Box> */}
+          <Grid.Item>
+            <SidebarContainer versions={versions} allNavs={allNavs} />
           </Grid.Item>
           <Grid.Item css={styles.right}>
             <Header
@@ -104,20 +96,6 @@ export function Layout({
             {children}
           </Grid.Item>
         </Grid>
-        {/* <Header
-          active={slug}
-          title={config?.title}
-          isLatest={isLatest}
-          versions={versions}
-          allNavs={allNavs}
-        />
-        <Grid
-          data-headings={hasHeadings}
-          data-clean={Boolean(isClean)}
-          css={styles.grid}
-        >
-          {children}
-        </Grid> */}
       </Box>
     </>
   );
@@ -127,12 +105,10 @@ const styles = {
   root: cssObj({
     width: '100vw',
     height: '100vh',
-    // background: 'purple',
     boxSizing: 'border-box',
     overflow: 'hidden',
   }),
   right: cssObj({
-    // border: '1px solid orange',
     height: '100vh',
     boxSizing: 'border-box',
     overflowX: 'auto',
@@ -140,45 +116,18 @@ const styles = {
   grid: cssObj({
     height: '100vh',
     maxWidth: '1400px',
-    gridTemplateColumns: '300px 1fr',
+    gridTemplateColumns: '1fr',
     mx: 'auto',
-    // border: '1px solid blue',
     boxSizing: 'border-box',
-    // // Min height is 100vh - header height
-    // minHeight: 'calc(100vh - 69px)',
 
     '& .Layout--section': {
-      //   maxWidth: '1000px',
-      //   width: '100vw',
       boxSizing: 'border-box',
-      //   mx: 'auto',
       padding: '$8',
+      display: 'block',
     },
 
-    // '@xl': {
-    //   gridTemplateColumns: '250px 1fr',
-    //   gridColumnGap: '$24',
-    //   '& .Layout--section': {
-    //     width: 'calc(100vw - 442px)',
-    //   },
-    //   '&[data-headings="true"]': {
-    //     gridTemplateColumns: '250px 1fr 220px',
-    //     '& .Layout--section': {
-    //       width: 'calc(100vw - 662px)',
-    //     },
-    //   },
-    //   '&[data-clean="true"]': {
-    //     gridTemplateColumns: '1fr',
-    //     '& .Layout--section': {
-    //       px: '$14',
-    //     },
-    //   },
-    // },
-    // '& .Layout--section a, & .Layout--section a:visited': {
-    //   color: 'currentColor',
-    // },
-    // '& .Layout--section *:first-child': {
-    //   mt: '$0',
-    // },
+    '@xl': {
+      gridTemplateColumns: '300px 1fr',
+    },
   }),
 };

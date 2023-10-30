@@ -19,7 +19,7 @@ export function PrevAndNextLinks() {
   const ICON_SIZE = 24;
 
   return (
-    <Grid templateColumns={'50% 50%'} gap={'$4'}>
+    <Grid templateColumns={'calc(50% - 8px) calc(50% - 8px)'} gap={'$4'}>
       <Box.Stack css={styles.linkContainer} gap={'0'}>
         {docLink.prev && prevLink && (
           <NextLink href={prevLink}>
@@ -88,6 +88,7 @@ const styles = {
       fontSize: '$sm',
     },
     mb: '$20',
+    pb: '$10',
   }),
   linkButton: cssObj({
     width: '100%',

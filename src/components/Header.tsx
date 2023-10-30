@@ -78,11 +78,11 @@ const styles = {
   }),
   header: cssObj({
     gap: '$2',
-    py: '$4',
-    px: '$4',
+    py: '$3',
+    px: '$3',
     alignItems: 'center',
-    borderBottom: '1px solid transparent',
     gridColumn: '1 / 4',
+    justifyContent: 'flex-end',
 
     [`.${darkTheme.theme} &`]: {
       backgroundColor: '$bodyColor',
@@ -102,11 +102,6 @@ const styles = {
     },
 
     '@md': {
-      px: '$8',
-    },
-
-    '@xl': {
-      py: '$4',
       px: '$8',
     },
   }),

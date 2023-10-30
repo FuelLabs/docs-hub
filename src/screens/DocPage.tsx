@@ -11,8 +11,6 @@ import { useVersion } from '../hooks/useVersion';
 import { getComponents } from '../lib/imports';
 import type { DocPageProps } from '../pages/[...slug]';
 
-import { styles } from './HomePage';
-
 export function DocScreen(props: DocPageProps) {
   const { doc, allNavs, allLatestNavs } = props;
   const [mounted, setIsMounted] = useState<boolean>(false);
@@ -48,7 +46,11 @@ export function DocScreen(props: DocPageProps) {
         versions={props.versions}
         allNavs={navs}
       >
-        <Box.Flex as="section" css={styles.section} className="Layout--section">
+        <Box.Flex
+          as="section"
+          className="Layout--section"
+          ref={scrollContainer}
+        >
           {doc && (
             <Box className="Layout--pageContent">
               <Breadcrumb
