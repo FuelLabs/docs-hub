@@ -101,6 +101,8 @@ export const styles = {
   root: cssObj({
     gap: '$3',
     mb: '$32',
+    overflow: 'hidden',
+    wordBreak: 'break-word',
   }),
   links: cssObj({
     bg: '$intentsBase10',

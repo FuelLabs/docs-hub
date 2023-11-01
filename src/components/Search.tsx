@@ -95,7 +95,14 @@ const styles = {
   container: cssObj({
     width: '120px',
     '@sm': {
-      width: '160px',
+      width: '150px',
+    },
+
+    '.DocSearch-Button': {
+      backgroundColor: '#151718',
+      'html[class="fuel_light-theme"] &': {
+        backgroundColor: '$gray4',
+      },
     },
   }),
   textContainer: cssObj({

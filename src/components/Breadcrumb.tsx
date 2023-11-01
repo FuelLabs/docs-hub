@@ -65,8 +65,9 @@ export function Breadcrumb({ doc, navLinks, isLatest }: BreadcrumbProps) {
 const styles = {
   root: cssObj({
     alignItems: 'center',
+    mt: '$4',
     gap: '$2',
-    '@xl': {
+    '@lg': {
       display: 'none',
     },
 

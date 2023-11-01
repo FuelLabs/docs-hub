@@ -5,8 +5,9 @@ import { useState } from 'react';
 import type { NavOrder } from '../pages';
 import type { Versions } from '../pages/[...slug]';
 
-import { Sidebar } from './Sidebar';
+import { Navigation } from './Navigation';
 import Search from './Search';
+import { Sidebar } from './Sidebar';
 import ThemeToggler from './ThemeToggler';
 import VersionDropdown from './VersionDropdown';
 
@@ -63,16 +64,10 @@ export function MobileMenu({
                 <FuelLogo size={30} />
               </Link>
               <Box.Flex gap="$4" align="center" css={styles.iconContainer}>
-                <a
-                  href="https://github.com/fuellabs/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <Icon icon={'BrandGithub'} size={24} />
-                </a>
                 {drawerButton}
               </Box.Flex>
             </Box.Flex>
+            <Navigation active={active} />
 
             <Box css={styles.navContainer}>
               <Sidebar
@@ -91,7 +86,7 @@ export function MobileMenu({
 
 const styles = {
   root: cssObj({
-    '@xl': {
+    '@lg': {
       display: 'none',
     },
   }),
@@ -100,7 +95,7 @@ const styles = {
       bg: '$bodyColor',
       padding: '$6',
     },
-    '@xl': {
+    '@lg': {
       display: 'none',
     },
   }),

@@ -12,9 +12,6 @@ export function Heading({ children, ...props }: any) {
     [head([2, 3, 4])]: {
       pt: isLatest ? '108px' : '$16',
     },
-    // [head([3])]: {
-    //   pt: isLatest ? '$16' : '$12',
-    // },
   });
   return (
     <FuelHeading {...props} css={{ ...styles.root, ...paddingStyles }}>

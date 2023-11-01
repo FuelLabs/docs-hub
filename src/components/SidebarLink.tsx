@@ -21,12 +21,17 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
     const isSubmenu = props['data-submenu'];
     const activeStyles = {
       color: isSamePage ?? '$semanticLinkPrimaryColor',
-      fontWeight: isActiveMenu && !isSamePage ? '480' : 'normal',
+      fontWeight: isActiveMenu && !isSamePage ? '550' : 'normal',
       'html[class="fuel_light-theme"] &': {
         color: isSamePage ? '#009957' : '$intentsBase12',
         borderLeft: isSamePage && '2px solid #009957 !important',
       },
-      borderLeft: isSamePage && '2px solid $semanticLinkPrimaryColor',
+      borderTop: 'none !important',
+      borderBottom: 'none !important',
+      borderRight: 'none !important',
+      borderLeft: isSamePage
+        ? '2px solid $semanticLinkPrimaryColor !important'
+        : 'none !important',
       paddingLeft: isSubmenu ? '$8' : '$4',
     };
 

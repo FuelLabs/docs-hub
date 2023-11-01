@@ -87,6 +87,7 @@ const styles = {
     border: 'none',
     height: '100%',
     fontSize: '$xs',
+    width: '154px',
     '@sm': {
       fontSize: '$sm',
     },

@@ -107,14 +107,12 @@ export function Layout({
 
 const styles = {
   root: cssObj({
-    position: 'sticky',
+    position: 'fixed',
     top: 0,
     width: '100vw',
     height: '100vh',
     boxSizing: 'border-box',
     overflow: 'hidden',
-    // TODO: fix weirdness when clicking h1 on /sway
-    // backgroundColor: 'pink',
     backgroundColor: '$bodyColor',
     'html[class="fuel_light-theme"] &': {
       backgroundColor: 'white',
@@ -140,9 +138,9 @@ const styles = {
       display: 'block',
     },
 
-    '@xl': {
+    '@lg': {
       '&[data-clean="false"]': {
-        gridTemplateColumns: '300px 1fr',
+        gridTemplateColumns: '354px 1fr',
       },
     },
   }),

@@ -123,7 +123,7 @@ const styles = {
     '&:hover': {
       bg: '$gray2 !important',
       border: 'none !important',
-      fontWeight: '480',
+      fontWeight: '550',
     },
   }),
 };

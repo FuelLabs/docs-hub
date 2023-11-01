@@ -1,7 +1,8 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box, Text, Heading, Grid } from '@fuel-ui/react';
+import { Box, Text, Grid } from '@fuel-ui/react';
 
 import { Card } from '../components/Card';
+import { Heading } from '../components/Heading';
 import { FAUCET_LINK } from '../config/constants';
 import type { GuidesProps } from '../pages/guides';
 import type { NavOrder } from '../pages/index';
@@ -184,12 +185,12 @@ export const styles = {
     margin: '$2 0 $8 0',
   }),
   grid2: cssObj({
-    '@xl': {
+    '@lg': {
       gridTemplateColumns: 'repeat(2, 1fr)',
     },
   }),
   grid3: cssObj({
-    '@xl': {
+    '@lg': {
       gridTemplateColumns: 'repeat(3, 1fr)',
     },
   }),

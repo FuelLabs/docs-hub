@@ -63,9 +63,9 @@ export function PrevAndNextLinks() {
 export function DocFooter() {
   return (
     <Box css={styles.root} as="footer">
-      <Box.Flex justify="space-between" css={styles.feedbackContainer}>
+      <Box.Flex css={styles.feedbackContainer}>
         <FeedbackForm />
-        <Box.Flex gap={'6px'}>
+        <Box.Flex gap={'6px'} css={styles.forum}>
           <Icon icon={'HelpCircle'} stroke={1} color="intentsBase12" />
           <FuelLink
             css={styles.forumLink}
@@ -125,10 +125,22 @@ const styles = {
   feedbackContainer: cssObj({
     my: '$4',
     py: '$4',
+    gap: '$4',
     borderTop: '1px solid $border',
     borderBottom: '1px solid $border',
+    flexDirection: 'column',
+    '@sm': {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
   }),
   forumLink: cssObj({
-    color: '$intentsBase12 !important',
+    color: '$intentsBase11 !important',
+  }),
+  forum: cssObj({
+    justifyContent: 'center',
+    '@sm': {
+      justifyContent: 'flex-start',
+    },
   }),
 };

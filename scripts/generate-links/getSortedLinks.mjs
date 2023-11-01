@@ -92,8 +92,11 @@ export default function getSortedLinks(config, docs) {
         const arr = doc.slug.split('/');
         newLabel = arr[arr.length - 1];
       }
+      const lcCategory = thisCategory.toLowerCase();
+      const lcTitle = doc.title.toLowerCase();
       if (
-        thisCategory.toLowerCase() === doc.title.toLowerCase() ||
+        lcCategory === lcTitle ||
+        lcCategory === `api-${lcTitle}` ||
         doc.title.toLowerCase() === 'index'
       ) {
         links[categoryIdx].hasIndex = true;

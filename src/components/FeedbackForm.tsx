@@ -220,7 +220,7 @@ export function FeedbackForm() {
   return (
     <Box>
       <Dialog isOpen={dialogIsOpen} onOpenChange={setDialogIsOpen}>
-        <Box.Flex align="center" gap={'6px'}>
+        <Box.Flex align="center" gap={'6px'} css={styles.container}>
           <IconButton
             aria-label="Thumbs Up"
             icon="ThumbUp"
@@ -343,5 +343,11 @@ const styles = {
     outline: 'none',
     fontSize: 'var(--fontSizes-base)',
     fontFamily: 'var(--fonts-display)',
+  }),
+  container: cssObj({
+    justifyContent: 'center',
+    '@sm': {
+      justifyContent: 'flex-start',
+    },
   }),
 };

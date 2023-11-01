@@ -39,11 +39,12 @@ export const styles = {
     padding: '$8',
     height: 'calc(100vh - 64px)',
     overflowY: 'auto',
-    '@xl': {
+    '@lg': {
       display: 'block',
     },
   }),
   logo: cssObj({
     mb: '$8',
+    px: '$4',
   }),
 };

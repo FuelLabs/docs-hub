@@ -37,9 +37,11 @@ export function Header({
         >
           {title}
         </span>
-        <Navigation active={active} />
         <Box css={styles.desktop}>
-          <Box.Stack direction="row" gap="$4" css={{ mr: '$4' }}>
+          <Navigation active={active} />
+        </Box>
+        <Box css={styles.desktop}>
+          <Box.Stack direction="row" gap="$3" css={{ mr: '$3' }}>
             <ThemeToggler />
             <VersionDropdown isLatest={isLatest} />
             <Search title={title} />
@@ -76,8 +78,9 @@ const styles = {
     borderRadius: '0',
   }),
   header: cssObj({
-    gap: '$4',
+    gap: '$3',
     py: '$3',
+    px: '$3',
     alignItems: 'center',
     gridColumn: '1 / 4',
     justifyContent: 'flex-end',
@@ -94,19 +97,19 @@ const styles = {
       color: '$intentsBase9',
       flex: 1,
 
-      '@xl': {
+      '@lg': {
         flex: 'none',
       },
     },
 
     '@md': {
-      px: '$8',
+      px: '$6',
     },
   }),
   desktop: cssObj({
     display: 'none',
 
-    '@xl': {
+    '@lg': {
       display: 'flex',
       alignItems: 'center',
     },
