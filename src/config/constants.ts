@@ -8,10 +8,11 @@ export const FUEL_TESTNET = 'beta-4';
 export const FUEL_TESTNET_UPPER_CASE = 'Beta-4';
 export const FAUCET_LINK = `https://faucet-${FUEL_TESTNET}.fuel.network/`;
 export const PLAYGROUND_LINK = `https://${FUEL_TESTNET}.fuel.network/playground/`;
+export const EXPLORER_LINK = 'https://fuellabs.github.io/block-explorer-v2/';
 
 export type LinkObject = {
   name: string;
-  link?: string;
+  link: string;
   menu?: LinkObject[];
 };
 
@@ -40,7 +41,8 @@ export const EXTERNAL_NAVIGATION_LINKS: LinkObject[] = [
 
 // TODO: replace this
 // this is only used the search component
-export const NAVIGATION: LinkObject[] = [
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const NAVIGATION: any[] = [
   {
     name: 'Guides',
     link: '/guides',

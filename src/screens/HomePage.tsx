@@ -3,7 +3,7 @@ import { Box, Text, Grid } from '@fuel-ui/react';
 
 import { Card } from '../components/Card';
 import { Heading } from '../components/Heading';
-import { FAUCET_LINK } from '../config/constants';
+import { FAUCET_LINK, EXPLORER_LINK } from '../config/constants';
 import type { GuidesProps } from '../pages/guides';
 import type { NavOrder } from '../pages/index';
 
@@ -23,6 +23,13 @@ export function HomeScreen({ guides, isLatest }: HomeScreenProps) {
           heading: 'Sway',
           headingIcon: 'Code',
           body: 'Read the official Sway documentation.',
+        },
+        {
+          link: 'https://fuellabs.github.io/sway/master/std/',
+          isExternal: true,
+          heading: 'Standard Lib',
+          headingIcon: 'Book',
+          body: 'Find definitions for the Sway std-lib.',
         },
         {
           link: 'https://github.com/FuelLabs/sway-applications',
@@ -116,56 +123,61 @@ export function HomeScreen({ guides, isLatest }: HomeScreenProps) {
           headingIcon: 'Coin',
           body: 'Get beta-4 testnet tokens.',
         },
+        {
+          link: EXPLORER_LINK,
+          isExternal: true,
+          heading: 'Explorer',
+          headingIcon: 'Search',
+          body: 'Explore transactions on the Fuel network.',
+        },
       ],
     },
   ];
 
   return (
     <Box as="section" className="Layout--section">
-      <Box className="Layout--pageContent">
-        <Box css={styles.heading}>
-          <Heading as="h1" id="fuel-docs">
-            Fuel Docs
-          </Heading>
-          <Text fontSize="lg">
-            Learn about everything Fuel, all the way down to the bits and bytes.{' '}
-          </Text>
-        </Box>
-        <Heading as="h3" id="getting-started">
-          Get Started
+      <Box css={styles.heading}>
+        <Heading as="h1" id="fuel-docs">
+          Fuel Docs
         </Heading>
-        <Grid css={{ ...styles.grid, ...styles.grid2 }}>
-          {Object.keys(guides).map((guideName, index) => {
-            const guideInfo = guides[guideName];
-            if (index < 2) {
-              return (
-                <Grid.Item key={guideName}>
-                  <Card cardName={guideName} guideInfo={guideInfo} />
-                </Grid.Item>
-              );
-            }
-          })}
-        </Grid>
-
-        {homeCards.map((cardSection) => {
-          return (
-            <Box key={cardSection.header}>
-              <Box.Flex justify={'space-between'} css={styles.categoryHeading}>
-                <Heading as="h3" id="read-the-docs">
-                  {cardSection.header}
-                </Heading>
-              </Box.Flex>
-              <Grid css={{ ...styles.grid, ...styles.grid3 }}>
-                {cardSection.cards.map((card) => (
-                  <Grid.Item key={card.heading}>
-                    <Card cardName={card.heading} cardInfo={card} />
-                  </Grid.Item>
-                ))}
-              </Grid>
-            </Box>
-          );
-        })}
+        <Text fontSize="lg">
+          Learn about everything Fuel, all the way down to the bits and bytes.{' '}
+        </Text>
       </Box>
+      <Heading as="h3" id="getting-started">
+        Get Started
+      </Heading>
+      <Grid css={{ ...styles.grid, ...styles.grid2 }}>
+        {Object.keys(guides).map((guideName, index) => {
+          const guideInfo = guides[guideName];
+          if (index < 2) {
+            return (
+              <Grid.Item key={guideName}>
+                <Card cardName={guideName} guideInfo={guideInfo} />
+              </Grid.Item>
+            );
+          }
+        })}
+      </Grid>
+
+      {homeCards.map((cardSection) => {
+        return (
+          <Box key={cardSection.header}>
+            <Box.Flex justify={'space-between'} css={styles.categoryHeading}>
+              <Heading as="h3" id="read-the-docs">
+                {cardSection.header}
+              </Heading>
+            </Box.Flex>
+            <Grid css={{ ...styles.grid, ...styles.grid3 }}>
+              {cardSection.cards.map((card) => (
+                <Grid.Item key={card.heading}>
+                  <Card cardName={card.heading} cardInfo={card} />
+                </Grid.Item>
+              ))}
+            </Grid>
+          </Box>
+        );
+      })}
     </Box>
   );
 }
@@ -185,13 +197,13 @@ export const styles = {
     margin: '$2 0 $8 0',
   }),
   grid2: cssObj({
-    '@lg': {
+    '@xl': {
       gridTemplateColumns: 'repeat(2, 1fr)',
     },
   }),
   grid3: cssObj({
-    '@lg': {
-      gridTemplateColumns: 'repeat(3, 1fr)',
+    '@xl': {
+      gridTemplateColumns: 'repeat(2, 1fr)',
     },
   }),
 };

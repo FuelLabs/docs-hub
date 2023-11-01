@@ -87,7 +87,7 @@ export function Sidebar({
           {EXTERNAL_NAVIGATION_LINKS.map((item) => (
             <Box key={item.link}>
               <SidebarLink
-                item={{ slug: item.name, label: item.name, isExternal: true }}
+                item={{ slug: item.link, label: item.name, isExternal: true }}
               />
             </Box>
           ))}

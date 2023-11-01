@@ -17,7 +17,7 @@ export type SidebarLinkProps = ButtonLinkProps & {
 export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
   ({ item, isActiveMenu, isIndex, onClick, size, ...props }, ref) => {
     const router = useRouter();
-    const isSamePage = router.asPath === `/${item.slug}/`;
+    const isSamePage = router.asPath.split('#')[0] === `/${item.slug}/`;
     const isSubmenu = props['data-submenu'];
     const activeStyles = {
       color: isSamePage ?? '$semanticLinkPrimaryColor',

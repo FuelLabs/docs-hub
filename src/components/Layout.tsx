@@ -2,7 +2,7 @@ import { cssObj } from '@fuel-ui/css';
 import { Box, Grid } from '@fuel-ui/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { type ReactNode } from 'react';
+import { useRef, type ReactNode, useEffect } from 'react';
 
 import type { NavOrder } from '../pages';
 import type { Versions } from '../pages/[...slug]';
@@ -31,6 +31,13 @@ export function Layout({
   allNavs,
 }: LayoutProps) {
   const router = useRouter();
+  const scrollContainer = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollContainer.current) {
+      scrollContainer.current.scrollTo({ top: 0 });
+    }
+  }, [router.asPath.split('#')[0]]);
 
   const titleText =
     title && router.pathname !== '/'
@@ -89,7 +96,7 @@ export function Layout({
               />
             </Grid.Item>
           )}
-          <Grid.Item css={styles.right}>
+          <Grid.Item css={styles.right} ref={scrollContainer}>
             <Header
               active={slug}
               title={config?.title}
@@ -127,6 +134,8 @@ const styles = {
     },
   }),
   grid: cssObj({
+    position: 'sticky',
+    top: 0,
     height: '100vh',
     maxWidth: '1360px',
     gridTemplateColumns: '1fr',

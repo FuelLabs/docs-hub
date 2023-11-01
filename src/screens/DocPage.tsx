@@ -1,6 +1,5 @@
 import { Box } from '@fuel-ui/react';
-import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Breadcrumb } from '~/src/components/Breadcrumb';
 import { Layout } from '~/src/components/Layout';
 import { DocProvider } from '~/src/hooks/useDocContext';
@@ -15,16 +14,10 @@ export function DocScreen(props: DocPageProps) {
   const { doc, allNavs, allLatestNavs } = props;
   const [mounted, setIsMounted] = useState<boolean>(false);
   const version = useVersion();
-  const router = useRouter();
-  const scrollContainer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!mounted) {
-      setIsMounted(true);
-    }
-    // Reset scroll view position when route changes
-    scrollContainer.current?.scrollTo(0, 0);
-  }, [router.asPath]);
+    setIsMounted(true);
+  }, []);
 
   const isLatest = mounted ? version === 'Latest' : doc.isLatest;
   const components = getComponents(doc.slug, doc.isLatest);
@@ -44,13 +37,9 @@ export function DocScreen(props: DocPageProps) {
         versions={props.versions}
         allNavs={navs}
       >
-        <Box.Flex
-          as="section"
-          className="Layout--section"
-          ref={scrollContainer}
-        >
+        <Box.Flex as="section" className="Layout--section">
           {doc && (
-            <Box className="Layout--pageContent">
+            <Box>
               <Breadcrumb
                 doc={doc}
                 navLinks={props.links}
