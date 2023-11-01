@@ -43,10 +43,16 @@ const styles = {
     background: '$intentsBase1',
     borderRadius: '$lg',
     boxSizing: 'border-box',
-    border: '1px solid $intentsBase3',
+    border: '1px solid $border',
+    borderSpacing: '0px',
     width: '100%',
     td: cssObj({
       wordWrap: 'break-word',
+      borderTop: '1px solid $border',
+      py: '$4',
+    }),
+    th: cssObj({
+      pb: '$2',
     }),
   }),
   td: cssObj({
