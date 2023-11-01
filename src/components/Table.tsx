@@ -39,6 +39,9 @@ const styles = {
     py: '$3',
     px: '$4',
     mb: '$6',
+    'html[class="fuel_light-theme"] &': {
+      color: 'black',
+    },
     tableLayout: 'fixed',
     background: '$intentsBase1',
     borderRadius: '$lg',
