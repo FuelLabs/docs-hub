@@ -66,6 +66,7 @@ export default function getSortedLinks(config, docs) {
       thisCategory === 'src' ||
       thisCategory === 'forc' ||
       (thisCategory === 'guide' && doc.title === 'guide') ||
+      thisCategory === 'intro' ||
       (thisCategory === 'api' && doc.title === 'api')
     ) {
       let newLabel = doc.title.replace('latest/', '');

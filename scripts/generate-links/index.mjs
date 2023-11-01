@@ -41,7 +41,7 @@ async function main() {
         fs.mkdirSync(folderPath, { recursive: true });
       }
       fs.writeFileSync(`${folderPath}/${key}.json`, json, 'utf-8');
-      if (key !== 'guides') {
+      if (!key.includes('guides')) {
         if (key.includes('latest')) {
           allLatestOrders.push({
             key: capitalize(key.replace('latest-', '')),
@@ -60,6 +60,7 @@ async function main() {
 
 function handleAllOrders(allOrders, folderPath, filename) {
   const correctOrder = [
+    'intro',
     'sway',
     'fuelup',
     'forc',

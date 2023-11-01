@@ -48,6 +48,10 @@ export const NAVIGATION: any[] = [
     link: '/guides',
   },
   {
+    name: 'Intro',
+    link: '/docs/intro',
+  },
+  {
     name: 'Sway',
     menu: [
       {

@@ -60,6 +60,7 @@ const includeDirs = [
   'docs/fuel-graphql-docs/docs',
   'docs/fuels-wallet/packages/docs/docs',
   'docs/guides/docs',
+  'docs/intro',
   // 'docs/fuel-nix/book/src',
   // 'docs/about-fuel',
   'docs/latest/sway/docs/book/src',
@@ -77,6 +78,7 @@ const includeDirs = [
 const excludeDirs = [
   'docs/guides/docs/guides.json',
   'docs/guides/docs/nav.json',
+  'docs/intro/nav.json',
   // 'docs/about-fuel/nav.json',
   'docs/sway/docs/book/src/SUMMARY.md',
   'docs/sway/docs/book/src/forc/commands/forc_deploy.md',
