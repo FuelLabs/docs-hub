@@ -136,6 +136,9 @@ const styles = {
   }),
   forumLink: cssObj({
     color: '$intentsBase11 !important',
+    'html[class="fuel_light-theme"] &': {
+      color: '$intentsBase12 !important',
+    },
   }),
   forum: cssObj({
     justifyContent: 'center',
