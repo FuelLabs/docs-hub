@@ -1,9 +1,9 @@
 # What is Fuel?
 
-Fuel v1 began as a layer-2 (L2) scalability technology for a monolithic Ethereum. 
+Fuel v1 began as a layer-2 (L2) scalability technology for a monolithic Ethereum.
 It was the first optimistic rollup on mainnet Ethereum, deployed at the end of 2020.
 
-Today, Fuel is the fastest modular execution layer. 
+Today, Fuel is the fastest modular execution layer.
 Fuel delivers the highest security and flexible throughput, focusing on a superior developer experience.
 
 Here is how we do it:
@@ -12,27 +12,27 @@ Here is how we do it:
 
 The FuelVM learns from the Ethereum ecosystem, implementing improvements suggested to the Ethereum VM (EVM) for many years but couldn’t be implemented due to the need to maintain backward compatibility.
 
-Fuel delivers unmatched processing capacity through its ability to execute transactions in parallel by using strict state access lists in the form of a UTXO model. 
-This enables Fuel to use far more threads and cores of your CPU that are typically idle in single-threaded blockchains. 
+Fuel delivers unmatched processing capacity through its ability to execute transactions in parallel by using strict state access lists in the form of a UTXO model.
+This enables Fuel to use far more threads and cores of your CPU that are typically idle in single-threaded blockchains.
 As a result, Fuel can deliver far more compute, state accesses, and transactional throughput than its single-threaded counterparts.
 
 With the EVM, it is difficult to know if and where there are dependencies between transactions, so transactions must be executed sequentially.
 
-The FuelVM uses the UTXO model, enabling parallel transaction execution by identifying transaction dependencies through what is known as state access lists. 
+The FuelVM uses the UTXO model, enabling parallel transaction execution by identifying transaction dependencies through what is known as state access lists.
 With the FuelVM, Fuel full nodes identify the accounts a transaction touches, mapping out dependencies before execution.
 
 ## Sway Language
 
 Fuel provides a powerful and sleek developer experience with our own domain-specific language called Sway.
-Sway is a domain-specific language (DSL) for the Fuel Virtual Machine (FuelVM), a blockchain-optimized VM designed for the Fuel blockchain. 
+Sway is a domain-specific language (DSL) for the Fuel Virtual Machine (FuelVM), a blockchain-optimized VM designed for the Fuel blockchain.
 
 Sway is based on Rust and includes syntax to leverage a blockchain VM without needlessly verbose boilerplate.
 Sway was created alongside the FuelVM and designed for the high-compute Fuel environment.
 
 ## Developer Tooling
 
-Part of what makes Sway so powerful is the fantastic suite of developer tools surrounding it. 
-The Fuel development environment retains the benefits of smart contract languages like Solidity, while adopting the paradigms introduced in the Rust tooling ecosystem. 
+Part of what makes Sway so powerful is the fantastic suite of developer tools surrounding it.
+The Fuel development environment retains the benefits of smart contract languages like Solidity, while adopting the paradigms introduced in the Rust tooling ecosystem.
 Now, developers can have a completely vertically integrated experience where every component, from the virtual machine to the CLI works in harmony.
 
 - Sway Standard Library: A native library of helpful types and methods for the Sway language.
