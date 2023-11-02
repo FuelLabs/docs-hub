@@ -19,6 +19,7 @@ export type Config = {
 export type DocType = {
   _raw: RawDocumentData;
   title: string;
+  originalSlug: string;
   slug: string;
   category?: string;
   pageLink: string;

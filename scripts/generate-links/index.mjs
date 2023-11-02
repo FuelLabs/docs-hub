@@ -42,12 +42,13 @@ async function main() {
       }
       fs.writeFileSync(`${folderPath}/${key}.json`, json, 'utf-8');
       if (!key.includes('guides')) {
-        if (key.includes('latest')) {
+        if (key.includes('latest') || key === 'intro') {
           allLatestOrders.push({
             key: capitalize(key.replace('latest-', '')),
             links: sortedLinks,
           });
-        } else {
+        }
+        if (!key.includes('latest')) {
           allOrders.push({ key: capitalize(key), links: sortedLinks });
         }
       }

@@ -28,13 +28,30 @@ export class Doc {
   config: Config;
 
   constructor(slug: string[], mdDocs: MdDoc[]) {
-    const item = Docs.findDoc(slug, mdDocs);
+    const isIntroQuickstartContract =
+      slug[slug.length - 1] === 'quickstart-contract';
+    const isIntroQuickstartFrontend =
+      slug[slug.length - 1] === 'quickstart-frontend';
 
+    let actualSlug = slug;
+    if (isIntroQuickstartContract) {
+      actualSlug = ['guides', 'quickstart', 'building-a-smart-contract'];
+    } else if (isIntroQuickstartFrontend) {
+      actualSlug = ['guides', 'quickstart', 'building-a-frontend'];
+    }
+
+    const item = Docs.findDoc(actualSlug, mdDocs);
     if (!item) {
       throw new Error(`${slug} not found`);
     }
 
-    const config = this.#getConfig(item.slug);
+    if (isIntroQuickstartContract) {
+      item.title = 'Quickstart Contract';
+    } else if (isIntroQuickstartFrontend) {
+      item.title = 'Quickstart Frontend';
+    }
+
+    const config = this.#getConfig(slug.join('/'));
     const splitPath = item._raw.flattenedPath.split('/');
     splitPath.splice(0, 2);
     splitPath.pop();
@@ -56,6 +73,7 @@ export class Doc {
     const doc = {
       pageLink,
       _raw: item._raw,
+      originalSlug: slug.join('/'),
       slug: item.slug,
       title: this.#getTitle(item.title),
       parent: item.parent ?? null,
@@ -151,8 +169,8 @@ export class Doc {
   }
 
   get navLinks() {
-    const slug = this.#parseSlug(this.item.slug);
-    const links = this.sidebarLinks(this.item.slug);
+    const slug = this.#parseSlug(this.item.originalSlug);
+    const links = this.sidebarLinks(this.item.originalSlug);
     const flatLinks = links
       .flatMap((i) => (i.submenu || i) as SidebarLinkItem | SidebarLinkItem[])
       .map((i) => ({ ...i, slug: this.#parseSlug(i.slug) }));
@@ -197,7 +215,10 @@ export class Doc {
       plugins = plugins.concat([[codeExamples, { filepath }] as any]);
     } else if (this.md.slug.startsWith('docs/latest/graphql/')) {
       plugins = plugins.concat([[latestCodeExamples, { filepath }] as any]);
-    } else if (this.md.slug.includes('guides')) {
+    } else if (
+      this.md.slug.includes('guides') ||
+      this.md.slug.includes('/intro/')
+    ) {
       plugins = plugins.concat([[codeImport, { filepath }] as any]);
       plugins = plugins.concat([[textImport, { filepath }] as any]);
     }

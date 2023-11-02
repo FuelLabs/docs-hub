@@ -11,7 +11,8 @@ export default function VersionDropdown({ isLatest }: { isLatest: boolean }) {
   const router = useRouter();
   const setVersion = useSetVersion();
   const splitPath = router.asPath.split('/');
-  const isDoc = router.asPath.includes('docs');
+  const isDoc =
+    router.asPath.includes('docs') && !router.asPath.includes('/intro/');
   const bookIndex = isLatest ? 3 : 2;
   return (
     <Dropdown isOpen={opened} onOpenChange={setOpened}>

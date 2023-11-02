@@ -21,7 +21,7 @@ export function DocScreen(props: DocPageProps) {
 
   const isLatest = mounted ? version === 'Latest' : doc.isLatest;
   const components = getComponents(doc.slug, doc.isLatest);
-  const navs = doc.slug.includes('guides')
+  const navs = doc.originalSlug.includes('guides')
     ? undefined
     : isLatest
     ? allLatestNavs
