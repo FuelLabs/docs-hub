@@ -43,8 +43,8 @@
 	# branch = docs
 [submodule "docs/latest/builds/sway"]
 	path = docs/latest/builds/sway
-	# branch = gh-pages
 	url = https://github.com/FuelLabs/sway.git
+	# branch = gh-pages
 [submodule "docs/latest/fuels-wallet"]
 	path = docs/latest/fuels-wallet
 	url = https://github.com/FuelLabs/fuels-wallet.git
