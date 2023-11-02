@@ -9,8 +9,10 @@ import {
   createPR,
   fetchTag,
   fetchBranch,
-  getVersionCommit,
+  getReleaseTimestamp,
   gitResetCommit,
+  getCommitByTimestamp,
+  checkoutBranch,
 } from './gitUtils.mjs';
 
 export async function updateLatest(newVersions) {
@@ -106,15 +108,21 @@ export async function update(version, dir, branch) {
     await checkoutVersion(version, dir);
   }
   if (branch) {
-    let releaseCommit;
+    let releaseTimestamp;
     if (dir !== 'docs/latest/fuels-ts') {
-      releaseCommit = await getVersionCommit(version, dir);
+      releaseTimestamp = await getReleaseTimestamp(version, dir);
+      console.log('RELEASE TIMESTAMP:', releaseTimestamp);
     }
     await fetchBranch(branch, dir);
-    await switchToExistingBranch(branch, dir);
+    await checkoutBranch(branch, dir);
     if (dir !== 'docs/latest/fuels-ts') {
-      // go to the version commit in the right branch;
-      await gitResetCommit(releaseCommit, dir);
+      const commitHash = await getCommitByTimestamp(
+        releaseTimestamp,
+        branch,
+        dir
+      );
+      console.log('COMMIT HASH:', commitHash);
+      await gitResetCommit(commitHash, dir);
     }
   }
 }
