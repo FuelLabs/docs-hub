@@ -43,7 +43,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
       <NextLink href={item.slug} legacyBehavior passHref>
         <ButtonLink
           {...props}
-          size={size ?? 'sm'}
+          size={size}
           ref={ref as any}
           data-active={Boolean(isSamePage)}
           {...(onClick && { onClick })}
@@ -60,6 +60,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
 
 export const buttonStyles = {
   justifyContent: 'flex-start',
+  fontSize: '14.3px',
   pt: '$1',
   pb: 0,
   borderRadius: 0,

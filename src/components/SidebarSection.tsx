@@ -29,8 +29,6 @@ export function SidebarSection({
       docSlug?.includes(book.toLowerCase()) ||
       (book === 'Intro' && docSlug?.includes('guides/quickstart/'))
   );
-  console.log('BOOK:', book);
-  console.log('docSlug:', docSlug);
   const isGuide = book === 'guides';
   const bookHasIndex =
     book?.toLowerCase().replaceAll(/[_-]/g, ' ') ===
@@ -105,6 +103,9 @@ const styles = {
     fontSize: '$sm',
     pl: '$4',
     mb: '$8',
+    'html[class="fuel_light-theme"] &': {
+      color: '$intentsBase12 !important',
+    },
   }),
   listItem: cssObj({
     position: 'relative',

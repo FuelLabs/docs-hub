@@ -4,8 +4,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useRef, type ReactNode, useEffect } from 'react';
 
-import type { NavOrder } from '../pages';
-import type { Versions } from '../pages/[...slug]';
+import type { NavOrder, Versions } from '../pages/[...slug]';
 import type { Config } from '../types';
 
 import { Header } from './Header';
@@ -143,13 +142,13 @@ const styles = {
     boxSizing: 'border-box',
     '& .Layout--section': {
       boxSizing: 'border-box',
-      padding: '0 $12 $12 $12',
+      padding: '0 $16 $16 $16',
       display: 'block',
     },
 
     '@lg': {
       '&[data-clean="false"]': {
-        gridTemplateColumns: '354px 1fr',
+        gridTemplateColumns: '310px 1fr',
       },
     },
   }),

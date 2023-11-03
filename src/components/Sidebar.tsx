@@ -4,8 +4,7 @@ import { Box, ButtonLink } from '@fuel-ui/react';
 
 import { EXTERNAL_NAVIGATION_LINKS } from '../config/constants';
 import { useDocContext } from '../hooks/useDocContext';
-import type { NavOrder } from '../pages';
-import type { Versions } from '../pages/[...slug]';
+import type { NavOrder, Versions } from '../pages/[...slug]';
 import type { SidebarLinkItem } from '../types';
 
 import { SidebarLink, buttonStyles } from './SidebarLink';
