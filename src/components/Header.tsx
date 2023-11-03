@@ -2,8 +2,7 @@ import { cssObj } from '@fuel-ui/css';
 import { Alert, Box, darkTheme, lightTheme } from '@fuel-ui/react';
 import dynamic from 'next/dynamic';
 
-import type { NavOrder } from '../pages';
-import type { Versions } from '../pages/[...slug]';
+import type { NavOrder, Versions } from '../pages/[...slug]';
 
 import { MobileMenu } from './MobileMenu';
 import { Navigation } from './Navigation';

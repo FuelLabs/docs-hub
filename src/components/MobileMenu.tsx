@@ -2,8 +2,7 @@ import { cssObj } from '@fuel-ui/css';
 import { Box, Drawer, IconButton, FuelLogo, Link, Icon } from '@fuel-ui/react';
 import { useState } from 'react';
 
-import type { NavOrder } from '../pages';
-import type { Versions } from '../pages/[...slug]';
+import type { NavOrder, Versions } from '../pages/[...slug]';
 
 import { Navigation } from './Navigation';
 import Search from './Search';
@@ -88,7 +87,6 @@ const styles = {
   root: cssObj({
     gap: '$1',
     justifyContent: 'space-around',
-    // border: '1px solid blue',
     '@lg': {
       display: 'none',
     },

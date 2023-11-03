@@ -1,6 +1,5 @@
 import { Box } from '@fuel-ui/react';
 import { useEffect, useState } from 'react';
-import { Breadcrumb } from '~/src/components/Breadcrumb';
 import { Layout } from '~/src/components/Layout';
 import { DocProvider } from '~/src/hooks/useDocContext';
 
@@ -40,11 +39,6 @@ export function DocScreen(props: DocPageProps) {
         <Box.Flex as="section" className="Layout--section">
           {doc && (
             <Box>
-              <Breadcrumb
-                doc={doc}
-                navLinks={props.links}
-                isLatest={isLatest}
-              />
               <MDXRender
                 code={props.code}
                 components={components}

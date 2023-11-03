@@ -93,7 +93,7 @@ export default function Search({
 
 const styles = {
   container: cssObj({
-    width: '90px',
+    width: '100px',
     '@sm': {
       width: '150px',
     },

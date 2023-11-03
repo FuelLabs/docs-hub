@@ -47,7 +47,11 @@ export function Layout({
     return router.pathname.includes('/guides') ? 'guides' : '';
   }
 
-  const slug = config?.slug ? config.slug : getSlug();
+  const slug = config?.slug
+    ? config.slug.includes('guides/')
+      ? router.asPath
+      : config.slug
+    : getSlug();
 
   return (
     <>

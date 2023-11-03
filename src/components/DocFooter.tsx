@@ -108,6 +108,9 @@ const styles = {
     height: '100%',
     a: {
       height: '100%',
+      '&:visited, &:active, &:hover': {
+        textDecoration: 'none !important',
+      },
     },
   }),
   links: cssObj({

@@ -1,8 +1,7 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box, FuelLogo, Link } from '@fuel-ui/react';
 
-import type { NavOrder } from '../pages';
-import type { Versions } from '../pages/[...slug]';
+import type { NavOrder, Versions } from '../pages/[...slug]';
 
 import { Sidebar } from './Sidebar';
 

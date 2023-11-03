@@ -34,6 +34,7 @@ export function TH(props: any) {
 const styles = {
   root: cssObj({
     maxWidth: '100%',
+    wordWrap: 'anywhere',
   }),
   table: cssObj({
     py: '$3',
@@ -50,7 +51,6 @@ const styles = {
     borderSpacing: '0px',
     width: '100%',
     td: cssObj({
-      wordWrap: 'break-word',
       borderTop: '1px solid $border',
       py: '$4',
     }),
