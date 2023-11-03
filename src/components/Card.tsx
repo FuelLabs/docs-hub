@@ -10,8 +10,9 @@ import {
 
 import type { GuideInfo } from '../pages/guides';
 
-type CardInfo = {
+export type CardInfo = {
   link: string;
+  latestLink?: string;
   isExternal: boolean;
   heading: string;
   headingIcon?: string;
@@ -22,13 +23,18 @@ interface CardProps {
   guideInfo?: GuideInfo;
   cardInfo?: CardInfo;
   cardName: string;
+  isLatest?: boolean;
 }
 
-export function Card({ guideInfo, cardInfo, cardName }: CardProps) {
+export function Card({ guideInfo, cardInfo, cardName, isLatest }: CardProps) {
   return (
     <FuelLink
       href={
-        guideInfo ? `/guides/${cardName.replaceAll('_', '-')}` : cardInfo?.link
+        guideInfo
+          ? `/guides/${cardName.replaceAll('_', '-')}`
+          : isLatest && cardInfo?.latestLink
+          ? cardInfo?.latestLink
+          : cardInfo?.link
       }
       isExternal={cardInfo ? cardInfo.isExternal : false}
       css={styles.root}
@@ -84,6 +90,10 @@ const styles = {
         backgroundImage:
           'linear-gradient($transparent, rgb(245, 245, 245)) !important',
       },
+    },
+    '@sm': {
+      padding: '$3 $6 $3 $2',
+      width: 'calc(100% - 26px)',
     },
   }),
   card: cssObj({

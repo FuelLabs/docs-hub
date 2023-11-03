@@ -45,7 +45,7 @@ export function MobileMenu({
   );
 
   return (
-    <Box.HStack css={styles.root}>
+    <Box.Flex css={styles.root}>
       <ThemeToggler />
       <VersionDropdown isLatest={isLatest} />
       <Search title={title} isLatest={isLatest} />
@@ -80,12 +80,15 @@ export function MobileMenu({
           </Drawer.Body>
         </Drawer.Content>
       </Drawer>
-    </Box.HStack>
+    </Box.Flex>
   );
 }
 
 const styles = {
   root: cssObj({
+    gap: '$1',
+    justifyContent: 'space-around',
+    // border: '1px solid blue',
     '@lg': {
       display: 'none',
     },

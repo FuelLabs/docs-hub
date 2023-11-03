@@ -12,7 +12,11 @@ import { getVersions } from '../lib/versions';
 import { DocScreen } from '../screens/DocPage';
 import type { DocType, SidebarLinkItem } from '../types';
 
-import type { NavOrder } from './index';
+export interface NavOrder {
+  key: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  links: any[];
+}
 
 export type VersionItem = {
   version: string;

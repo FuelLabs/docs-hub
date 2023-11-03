@@ -87,7 +87,7 @@ const styles = {
     '@sm': {
       fontSize: '$sm',
     },
-    mb: '$20',
+    my: '$20',
     pb: '$10',
   }),
   linkButton: cssObj({

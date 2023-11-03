@@ -67,7 +67,7 @@ html[data-theme='dark'] {
 
 @media (max-width: 640px) {
   .DocSearch-Button {
-    width: 120px;
+    width: 90px;
   }
 
   .DocSearch-Button-Placeholder {

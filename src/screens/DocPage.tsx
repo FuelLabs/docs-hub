@@ -45,7 +45,11 @@ export function DocScreen(props: DocPageProps) {
                 navLinks={props.links}
                 isLatest={isLatest}
               />
-              <MDXRender code={props.code} components={components} />
+              <MDXRender
+                code={props.code}
+                components={components}
+                isLatest={isLatest}
+              />
             </Box>
           )}
           {doc && <DocFooter />}

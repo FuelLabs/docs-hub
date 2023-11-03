@@ -78,9 +78,9 @@ const styles = {
     borderRadius: '0',
   }),
   header: cssObj({
-    gap: '$3',
+    gap: '$1',
     py: '$3',
-    px: '$3',
+    px: '$1',
     alignItems: 'center',
     gridColumn: '1 / 4',
     justifyContent: 'flex-end',
@@ -102,7 +102,8 @@ const styles = {
       },
     },
 
-    '@md': {
+    '@sm': {
+      gap: '$3',
       px: '$6',
     },
   }),

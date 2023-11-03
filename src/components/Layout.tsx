@@ -143,7 +143,7 @@ const styles = {
     boxSizing: 'border-box',
     '& .Layout--section': {
       boxSizing: 'border-box',
-      padding: '0 $8 $8 $8',
+      padding: '0 $12 $12 $12',
       display: 'block',
     },
 

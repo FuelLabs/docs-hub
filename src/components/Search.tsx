@@ -93,7 +93,7 @@ export default function Search({
 
 const styles = {
   container: cssObj({
-    width: '120px',
+    width: '90px',
     '@sm': {
       width: '150px',
     },
@@ -106,18 +106,18 @@ const styles = {
     },
   }),
   textContainer: cssObj({
-    position: 'relative',
-    left: '-40px',
-    display: 'grid',
-    placeItems: 'center',
-    border: '1px solid $border',
-    height: '24px',
-    borderRadius: '8px',
-    px: '$1',
-    my: 'auto',
-    fontSize: '$xs',
+    display: 'none',
     '@sm': {
+      display: 'grid',
       fontSize: '$sm',
+      left: '-40px',
+      position: 'relative',
+      placeItems: 'center',
+      border: '1px solid $border',
+      height: '24px',
+      borderRadius: '8px',
+      px: '$1',
+      my: 'auto',
     },
   }),
 };

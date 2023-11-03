@@ -17,7 +17,11 @@ export type SidebarLinkProps = ButtonLinkProps & {
 export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
   ({ item, isActiveMenu, isIndex, onClick, size, ...props }, ref) => {
     const router = useRouter();
-    const isSamePage = router.asPath.split('#')[0] === `/${item.slug}/`;
+    const cleanRoute = router.asPath.split('#')[0];
+    const isSamePage =
+      cleanRoute === '/'
+        ? item.slug === 'docs/intro/what-is-fuel'
+        : router.asPath.split('#')[0] === `/${item.slug}/`;
     const isSubmenu = props['data-submenu'];
     const activeStyles = {
       color: isSamePage ?? '$semanticLinkPrimaryColor',

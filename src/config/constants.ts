@@ -9,6 +9,7 @@ export const FUEL_TESTNET_UPPER_CASE = 'Beta-4';
 export const FAUCET_LINK = `https://faucet-${FUEL_TESTNET}.fuel.network/`;
 export const PLAYGROUND_LINK = `https://${FUEL_TESTNET}.fuel.network/playground/`;
 export const EXPLORER_LINK = 'https://fuellabs.github.io/block-explorer-v2/';
+export const BRIDGE_LINK = 'https://alpha.fuel.network/bridge';
 
 export type LinkObject = {
   name: string;
@@ -132,7 +133,7 @@ export const NAVIGATION: any[] = [
       },
       {
         name: 'Explorer',
-        link: 'https://fuellabs.github.io/block-explorer-v2/',
+        link: EXPLORER_LINK,
       },
       {
         name: 'Faucet',
@@ -140,7 +141,7 @@ export const NAVIGATION: any[] = [
       },
       {
         name: 'Bridge',
-        link: 'https://alpha.fuel.network/bridge/',
+        link: BRIDGE_LINK,
       },
     ],
   },

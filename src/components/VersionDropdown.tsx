@@ -88,9 +88,10 @@ const styles = {
     border: 'none',
     height: '100%',
     fontSize: '$xs',
-    width: '154px',
+    width: '140px',
     '@sm': {
       fontSize: '$sm',
+      width: '154px',
     },
     '&:hover': {
       border: 'none !important',
