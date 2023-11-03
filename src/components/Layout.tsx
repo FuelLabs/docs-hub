@@ -144,6 +144,7 @@ const styles = {
       boxSizing: 'border-box',
       padding: '0 $8 $8 $8',
       display: 'block',
+
       '@md': {
         padding: '0 $16 $16 $16',
       },
