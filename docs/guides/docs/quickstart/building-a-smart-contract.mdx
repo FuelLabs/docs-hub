@@ -447,41 +447,9 @@ If all goes well, the output should look as follows:
 
 It's now time to deploy the contract to the testnet. We will show how to do this using `forc` from the command line, but you can also do it using the [Rust SDK](/docs/fuels-rs/deploying) or the [TypeScript SDK](/docs/fuels-ts/contracts/deploying-contracts).
 
-In order to deploy a contract, you need to have a wallet to sign the transaction and coins to pay for gas. First, we'll create a wallet.
+In order to deploy a contract, you need to have a wallet to sign the transaction and coins to pay for gas. `Fuelup` will guide you in this process.
 
-### Setup the Wallet CLI
-
-If you haven't deployed a contract before, you'll need to set up a local wallet with the forc-wallet plugin. `forc-wallet` is packaged alongside the default distributed toolchains when installed using fuelup, so you should already have this installed.
-
-You can initialize a new wallet with the command below:
-
-```console
-forc wallet new
-```
-
-After typing in a password, be sure to save the mnemonic phrase that is output.
-
-Next, create a new wallet account with:
-
-```console
-forc wallet account new
-```
-
-With this, you'll get a fuel address that looks something like this: `fuel1efz7lf36w9da9jekqzyuzqsfrqrlzwtt3j3clvemm6eru8fe9nvqj5kar8`. Save this address as you'll need it to sign transactions when we deploy the contract.
-
-If you need to list your accounts, you can run the command below:
-
-```console
-forc wallet accounts
-```
-
-### Get Testnet Coins
-
-With your account address in hand, head to the {props.faucetLink} to get some coins sent to your wallet.
-
-### Deploy To Testnet
-
-Now that you have a wallet, you can deploy with `forc deploy` and adding the `--testnet` to target the latest network:
+You can deploy with `forc deploy` and adding the `--testnet` to target the latest network:
 
 ```console
 forc deploy --testnet
