@@ -5,46 +5,46 @@ import processSummary from './processSummary.mjs';
 import { processVPConfig } from './processVPConfig.mjs';
 
 const CONFIG = {
-  sway: {
-    type: 'mdbook',
-    path: './sway/docs/book/src/SUMMARY.md',
-  },
-  'fuels-rs': {
-    type: 'mdbook',
-    path: './fuels-rs/docs/src/SUMMARY.md',
-  },
+  // sway: {
+  //   type: 'mdbook',
+  //   path: './sway/docs/book/src/SUMMARY.md',
+  // },
+  // 'fuels-rs': {
+  //   type: 'mdbook',
+  //   path: './fuels-rs/docs/src/SUMMARY.md',
+  // },
   'fuels-ts': {
     type: 'vp',
     path: './fuels-ts/apps/docs/.vitepress/config.ts',
   },
-  fuelup: {
-    type: 'mdbook',
-    path: './fuelup/docs/src/SUMMARY.md',
-  },
-  indexer: {
-    type: 'mdbook',
-    path: './fuel-indexer/docs/src/SUMMARY.md',
-  },
-  specs: {
-    type: 'mdbook',
-    path: './fuel-specs/src/SUMMARY.md',
-  },
-  graphql: {
-    type: 'json',
-    path: './fuel-graphql-docs/src/nav.json',
-  },
-  wallet: {
-    type: 'json',
-    path: './fuels-wallet/packages/docs/src/nav.json',
-  },
-  guides: {
-    type: 'json',
-    path: './guides/docs/nav.json',
-  },
-  intro: {
-    type: 'json',
-    path: './intro/nav.json',
-  },
+  // fuelup: {
+  //   type: 'mdbook',
+  //   path: './fuelup/docs/src/SUMMARY.md',
+  // },
+  // indexer: {
+  //   type: 'mdbook',
+  //   path: './fuel-indexer/docs/src/SUMMARY.md',
+  // },
+  // specs: {
+  //   type: 'mdbook',
+  //   path: './fuel-specs/src/SUMMARY.md',
+  // },
+  // graphql: {
+  //   type: 'json',
+  //   path: './fuel-graphql-docs/src/nav.json',
+  // },
+  // wallet: {
+  //   type: 'json',
+  //   path: './fuels-wallet/packages/docs/src/nav.json',
+  // },
+  // guides: {
+  //   type: 'json',
+  //   path: './guides/docs/nav.json',
+  // },
+  // intro: {
+  //   type: 'json',
+  //   path: './intro/nav.json',
+  // },
   // 'about-fuel': {
   //   type: 'json',
   //   path: './about-fuel/nav.json',

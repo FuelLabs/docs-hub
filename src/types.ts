@@ -30,6 +30,11 @@ export type DocType = {
   isLatest: boolean;
 };
 
+export type BreadCrumb = {
+  label: string;
+  link?: string;
+};
+
 export type SidebarLinkItem = {
   slug: string;
   isExternal: boolean;
@@ -37,6 +42,7 @@ export type SidebarLinkItem = {
   submenu?: SidebarLinkItem[];
   subpath?: string;
   label: string;
+  breadcrumbs: BreadCrumb[];
   prev?: SidebarLinkItem;
   next?: SidebarLinkItem;
 };

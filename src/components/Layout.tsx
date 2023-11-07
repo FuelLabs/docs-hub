@@ -140,7 +140,7 @@ const styles = {
     position: 'sticky',
     top: 0,
     height: '100vh',
-    maxWidth: '1360px',
+    maxWidth: '1300px',
     gridTemplateColumns: '1fr',
     mx: 'auto',
     boxSizing: 'border-box',
@@ -150,7 +150,8 @@ const styles = {
       display: 'block',
 
       '@md': {
-        padding: '0 $16 $16 $16',
+        maxWidth: '736px',
+        mx: 'auto',
       },
     },
 

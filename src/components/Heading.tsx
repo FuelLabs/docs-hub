@@ -33,6 +33,7 @@ const styles = {
 
     [`${head([1])}:first-of-type`]: {
       mb: '$8',
+      pt: '$6',
       position: 'relative',
       textSize: '5xl',
 

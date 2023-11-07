@@ -13,45 +13,26 @@ const LOWER_CASE_NAV_PATHS = [
   'docs/latest/indexer/forc-postgres/',
 ];
 
-function editLabel(label, shouldBeLowerCase) {
-  let newLabel = label
-    .replaceAll(/[_-]/g, ' ')
-    .replace(/(b|B)eta (\d+)/, (_, p1, p2) => `${p1}eta-${p2}`);
-  if (!shouldBeLowerCase) {
-    newLabel = capitalize(newLabel);
-  }
-  return newLabel;
-}
-
 export default function getSortedLinks(config, docs) {
-  const links = [];
   const lcOrder = config.menu.map((o) =>
     o.toLowerCase().replaceAll('-', '_').replaceAll(' ', '_')
   );
-
   const isLatest = docs[0].slug.includes('/latest/');
+  const links = createLinks(docs, isLatest);
+  const sortedLinks = sortLinks(lcOrder, links, config, isLatest);
+
+  return sortedLinks;
+}
+
+function createLinks(docs, isLatest) {
+  const links = [];
 
   for (let i = 0; i < docs.length; i++) {
     const doc = docs[i];
-    let thisCategory = doc.category;
-
-    if (thisCategory === 'forc_client') {
-      thisCategory = 'plugins';
-    }
-
-    if (thisCategory === 'about fuel') {
-      thisCategory = 'src';
-    }
-
+    const thisCategory = getCategory(doc.category);
     const isExternal = doc.slug.startsWith('http');
-    doc.slug = doc.slug.replace('../', '').replace('./', '') || '';
-    if (
-      !doc.slug.startsWith('guides') &&
-      !doc.slug.startsWith('latest/guides') &&
-      !isExternal
-    ) {
-      doc.slug = `docs/${doc.slug}`;
-    }
+    doc.slug = updateSlug(doc.slug);
+
     const shouldBeLowerCase = LOWER_CASE_NAV_PATHS.some((prefix) => {
       const lcSlug = doc.slug.toLowerCase();
       return lcSlug.startsWith(prefix) && `${lcSlug}/` !== prefix;
@@ -60,6 +41,9 @@ export default function getSortedLinks(config, docs) {
     const finalSlug = doc.slug
       .toLowerCase()
       .replace('latest/guides', 'guides/latest');
+    const isGuide = finalSlug.includes('guides');
+
+    const splitSlug = finalSlug.split('/');
 
     if (
       !thisCategory ||
@@ -69,71 +53,56 @@ export default function getSortedLinks(config, docs) {
       thisCategory === 'intro' ||
       (thisCategory === 'api' && doc.title === 'api')
     ) {
-      let newLabel = doc.title.replace('latest/', '');
-      if (newLabel === 'index' || newLabel === 'README') {
-        const arr = doc.slug.split('/');
-        newLabel = arr[arr.length - 1];
-      }
-      links.push({
-        slug: doc.slug,
-        label: editLabel(newLabel, shouldBeLowerCase),
+      const newLink = handleLink(
+        doc.title,
+        finalSlug,
+        splitSlug,
+        shouldBeLowerCase,
+        isLatest,
         isExternal,
-      });
+        isGuide
+      );
+      links.push(newLink);
       continue;
     }
 
     const categoryIdx = links.findIndex((l) => {
-      return l?.label === thisCategory;
+      return l.label === thisCategory;
     });
-    /** Insert category item based on order prop */
     if (categoryIdx >= 0) {
-      const submenu = links[categoryIdx]?.submenu || [];
-      let newLabel = doc.title;
-      if (doc.title === 'index') {
-        const arr = doc.slug.split('/');
-        newLabel = arr[arr.length - 1];
-      }
-      const lcCategory = thisCategory.toLowerCase();
-      const lcTitle = doc.title.toLowerCase();
-      if (
-        lcCategory === lcTitle ||
-        lcCategory === `api-${lcTitle}` ||
-        doc.title.toLowerCase() === 'index'
-      ) {
-        links[categoryIdx].hasIndex = true;
-      }
-      submenu.push({
-        slug: finalSlug,
-        label: editLabel(newLabel, shouldBeLowerCase),
+      links[categoryIdx].submenu = handleSubmenuItem(
+        links,
+        categoryIdx,
+        doc.title,
+        finalSlug,
+        thisCategory,
+        shouldBeLowerCase,
+        isLatest,
+        splitSlug,
         isExternal,
-      });
+        isGuide
+      );
       continue;
     }
-    let hasIndex = false;
-    if (thisCategory === doc.title) {
-      hasIndex = true;
-    }
-    const splitSlug = doc.slug.split('/');
-    let subpath =
-      splitSlug[1] === 'latest' ? `latest/${splitSlug[2]}` : splitSlug[1];
-    subpath = subpath.replace('latest/guides', 'guides/latest');
-    const submenu = [
-      {
-        slug: finalSlug,
-        label: editLabel(doc.title, shouldBeLowerCase),
-        isExternal,
-      },
-    ];
-    links.push({
-      subpath,
-      label: thisCategory,
+
+    const newSubMenu = handleSubmenu(
+      thisCategory,
+      doc.title,
+      finalSlug,
+      splitSlug,
+      finalSlug,
+      shouldBeLowerCase,
       isExternal,
-      submenu,
-      hasIndex,
-    });
-    /** Insert inside category submenu if category is already on array */
+      isLatest,
+      isGuide
+    );
+    links.push(newSubMenu);
   }
 
+  return links;
+}
+
+function sortLinks(lcOrder, links, config, isLatest) {
   const sortedLinks = lcOrder
     ? links
         /** Sort first level links */
@@ -220,6 +189,30 @@ export default function getSortedLinks(config, docs) {
   return sortedLinks;
 }
 
+function getCategory(category) {
+  let thisCategory = category;
+  if (thisCategory === 'forc_client') {
+    thisCategory = 'plugins';
+  }
+  if (thisCategory === 'about fuel') {
+    thisCategory = 'src';
+  }
+  return thisCategory;
+}
+
+function updateSlug(docSlug, isExternal) {
+  let slug = docSlug.replace('../', '').replace('./', '') || '';
+
+  if (
+    !slug.startsWith('guides') &&
+    !slug.startsWith('latest/guides') &&
+    !isExternal
+  ) {
+    slug = `docs/${slug}`;
+  }
+  return slug;
+}
+
 function convertKeysToLowerCase(obj) {
   const newObj = {};
   for (const key in obj) {
@@ -227,4 +220,210 @@ function convertKeysToLowerCase(obj) {
     newObj[lowerKey] = obj[key];
   }
   return newObj;
+}
+
+function editLabel(label, shouldBeLowerCase) {
+  let newLabel = label
+    .replaceAll(/[_-]/g, ' ')
+    .replace(/(b|B)eta (\d+)/, (_, p1, p2) => `${p1}eta-${p2}`);
+  if (!shouldBeLowerCase) {
+    newLabel = capitalize(newLabel);
+  }
+  return newLabel;
+}
+
+function handleLink(
+  title,
+  slug,
+  splitSlug,
+  shouldBeLowerCase,
+  isLatest,
+  isExternal,
+  isGuide
+) {
+  let newLabel = title.replace('latest/', '');
+  if (newLabel === 'index' || newLabel === 'README') {
+    newLabel = splitSlug[splitSlug.length - 1];
+  }
+  const label = editLabel(newLabel, shouldBeLowerCase);
+
+  const breadcrumbs = [
+    { label: isGuide ? 'Guides' : 'Docs', link: isGuide ? '/guides' : '/' },
+  ];
+
+  if (isLatest) {
+    breadcrumbs.push({ label: 'Latest' });
+  }
+
+  if (slug.includes('docs/intro/')) {
+    breadcrumbs.push({ label: 'Intro' });
+  } else {
+    const i = isLatest ? 2 : 1;
+    if (splitSlug.length > i + 1) {
+      const link = '/' + splitSlug.slice(0, splitSlug.length - 1).join('/');
+      breadcrumbs.push({
+        label: editLabel(splitSlug[i], shouldBeLowerCase),
+        link,
+      });
+    }
+  }
+
+  breadcrumbs.push({ label });
+
+  return {
+    slug,
+    label,
+    isExternal,
+    breadcrumbs,
+  };
+}
+
+function handleSubmenuItem(
+  links,
+  categoryIdx,
+  title,
+  slug,
+  thisCategory,
+  shouldBeLowerCase,
+  isLatest,
+  splitSlug,
+  isExternal,
+  isGuide
+) {
+  const submenu = links[categoryIdx].submenu || [];
+  let newLabel = title;
+  if (title === 'index') {
+    const arr = slug.split('/');
+    newLabel = arr[arr.length - 1];
+  }
+  const lcCategory = thisCategory.toLowerCase();
+  const lcTitle = title.toLowerCase();
+  if (
+    lcCategory === lcTitle ||
+    lcCategory === `api-${lcTitle}` ||
+    title.toLowerCase() === 'index'
+  ) {
+    links[categoryIdx].hasIndex = true;
+  }
+
+  const label = editLabel(newLabel, shouldBeLowerCase);
+
+  const breadcrumbs = [
+    { label: isGuide ? 'Guides' : 'Docs', link: isGuide ? '/guides' : '/' },
+  ];
+
+  if (isLatest) {
+    breadcrumbs.push({ label: 'Latest' });
+  }
+
+  if (slug.includes('docs/intro/')) {
+    breadcrumbs.push({ label: 'Intro' });
+  } else {
+    const i = isLatest ? 2 : 1;
+    const l = isGuide ? 2 : isLatest ? 4 : 3;
+    if (splitSlug.length > l) {
+      const p = isGuide ? 1 : 2;
+      const link1 = '/' + splitSlug.slice(0, splitSlug.length - p).join('/');
+      breadcrumbs.push({
+        label: editLabel(splitSlug[i], shouldBeLowerCase),
+        link: link1,
+      });
+    }
+
+    if (!isGuide) {
+      const link2 = '/' + splitSlug.slice(0, splitSlug.length - 1).join('/');
+      let label;
+      if (splitSlug.length < l + 1) {
+        label = editLabel(splitSlug[i], shouldBeLowerCase);
+      } else {
+        label = editLabel(splitSlug[i + 1], shouldBeLowerCase);
+      }
+      breadcrumbs.push({
+        label,
+        link: link2,
+      });
+    }
+  }
+
+  breadcrumbs.push({ label });
+
+  submenu.push({
+    slug,
+    label,
+    isExternal,
+    breadcrumbs,
+  });
+
+  return submenu;
+}
+
+function handleSubmenu(
+  thisCategory,
+  title,
+  slug,
+  splitSlug,
+  finalSlug,
+  shouldBeLowerCase,
+  isExternal,
+  isLatest,
+  isGuide
+) {
+  let hasIndex = false;
+  if (thisCategory === title) {
+    hasIndex = true;
+  }
+  let subpath =
+    splitSlug[1] === 'latest' ? `latest/${splitSlug[2]}` : splitSlug[1];
+  subpath = subpath.replace('latest/guides', 'guides/latest');
+  const submenu = [
+    {
+      slug: finalSlug,
+      label: editLabel(title, shouldBeLowerCase),
+      isExternal,
+    },
+  ];
+
+  const breadcrumbs = [
+    { label: isGuide ? 'Guides' : 'Docs', link: isGuide ? '/guides' : '/' },
+  ];
+
+  if (isLatest) {
+    breadcrumbs.push({ label: 'Latest' });
+  }
+
+  if (slug.includes('docs/intro/')) {
+    breadcrumbs.push({ label: 'Intro' });
+  } else {
+    const i = isLatest ? 2 : 1;
+    const l = hasIndex ? 1 : 2;
+    const link = '/' + splitSlug.slice(0, splitSlug.length - l).join('/');
+    breadcrumbs.push({
+      label: editLabel(splitSlug[i], shouldBeLowerCase),
+      link,
+    });
+  }
+
+  if (!hasIndex) {
+    const i = isLatest ? 3 : 2;
+    const link = '/' + splitSlug.slice(0, splitSlug.length - 1).join('/');
+    breadcrumbs.push({
+      label: editLabel(splitSlug[i], shouldBeLowerCase),
+      link,
+    });
+    breadcrumbs.push({
+      label: editLabel(splitSlug[splitSlug.length - 1], shouldBeLowerCase),
+      link: '/' + finalSlug,
+    });
+  } else {
+    breadcrumbs.push({ label: editLabel(thisCategory, shouldBeLowerCase) });
+  }
+
+  return {
+    subpath,
+    label: thisCategory,
+    isExternal,
+    submenu,
+    hasIndex,
+    breadcrumbs,
+  };
 }

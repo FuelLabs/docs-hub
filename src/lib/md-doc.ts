@@ -61,10 +61,10 @@ export class Doc {
     this.md = item;
     this.config = config;
 
+    const split = item.slug.split('/');
     let category = item.category;
     if (!category && item.slug.includes('docs/')) {
       const isLatest = item.slug.includes('/latest/');
-      const split = item.slug.split('/');
       const index = isLatest ? 3 : 2;
       const isIndex = split.length === index;
       category = split[isIndex ? index - 1 : index].replaceAll('-', ' ');
@@ -171,20 +171,32 @@ export class Doc {
   get navLinks() {
     const slug = this.#parseSlug(this.item.originalSlug);
     const links = this.sidebarLinks(this.item.originalSlug);
-    const flatLinks = links
-      .flatMap((i) => (i.submenu || i) as SidebarLinkItem | SidebarLinkItem[])
-      .map((i) => ({ ...i, slug: this.#parseSlug(i.slug) }));
 
-    const idx = flatLinks.findIndex((i) => {
+    const result = [];
+    for (const link of links) {
+      if (link.submenu) {
+        for (const subItem of link.submenu) {
+          const newItem = subItem;
+          (newItem.slug = this.#parseSlug(subItem.slug) ?? subItem.slug),
+            result.push(newItem);
+        }
+      } else {
+        const newItem = link;
+        (newItem.slug = this.#parseSlug(link.slug) ?? link.slug),
+          result.push(newItem);
+      }
+    }
+
+    const idx = result.findIndex((i) => {
       if (!i.slug) return false;
       return (
         `docs/${i.slug}`.startsWith(slug || '') || i.slug.startsWith(slug || '')
       );
     });
 
-    const prev = flatLinks[idx - 1] ?? null;
-    const next = idx + 1 < flatLinks.length ? flatLinks[idx + 1] ?? null : null;
-    const current = flatLinks[idx];
+    const prev = idx > 0 ? result[idx - 1] : null;
+    const next = idx + 1 < result.length ? result[idx + 1] : null;
+    const current = result[idx];
     const link = { prev, next, ...current };
     return link;
   }

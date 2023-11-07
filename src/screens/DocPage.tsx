@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Layout } from '~/src/components/Layout';
 import { DocProvider } from '~/src/hooks/useDocContext';
 
+import { Breadcrumb } from '../components/Breadcrumb';
 import { DocFooter } from '../components/DocFooter';
 import { MDXRender } from '../components/MDXRender';
 import { useVersion } from '../hooks/useVersion';
@@ -39,6 +40,7 @@ export function DocScreen(props: DocPageProps) {
         <Box.Flex as="section" className="Layout--section">
           {doc && (
             <Box>
+              {navs && <Breadcrumb />}
               <MDXRender
                 code={props.code}
                 components={components}
