@@ -10,7 +10,6 @@ import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
 import { FUEL_TESTNET } from '~/src/config/constants';
 
-import { getEndCommentType } from './text-import';
 import type { CommentTypes } from './text-import';
 
 interface Block {
@@ -178,9 +177,6 @@ function dedent(lines: string[], amount: number): string[] {
   return lines.map((line) => line.replace(regex, ''));
 }
 
-const ROOT_DIR = path.resolve(__dirname, '../../../../../../../');
-
-      
 export function codeImport() {
   return function transformer(tree: Root, file: any) {
     const rootDir = process.cwd();
