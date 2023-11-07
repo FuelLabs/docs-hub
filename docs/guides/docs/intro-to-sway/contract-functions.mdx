@@ -177,7 +177,7 @@ We can increase the item's `total_bought` field value and subsequently reinsert 
 
 ### Transferring payment
 
-Lastly, we can process the payment to the seller. It's recommended to transfer assets only after all storage modifications are completed to prevent [re-entrancy attacks](/docs/sway/blockchain-development/calling_contracts/#handling-re-entrancy).
+Lastly, we can process the payment to the seller. It's recommended to transfer assets only after all storage modifications are completed to prevent [reentrancy attacks](/docs/sway/blockchain-development/calling_contracts/#handling-re-entrancy).
 
 For items reaching a specific price threshold, a fee can be deducted using a conditional `if` statement. The structure of `if` statements in Sway mirrors that in JavaScript except for the brackets `()`.
 
