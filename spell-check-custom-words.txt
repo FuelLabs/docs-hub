@@ -51,6 +51,7 @@ PoA
 PoS
 PoW
 quickstart
+reentrancy
 relayer
 relayers
 repo
@@ -58,6 +59,7 @@ RPC
 runnable
 SDK
 SDKs
+SDK's
 Sepolia
 stateful
 StorageMap
