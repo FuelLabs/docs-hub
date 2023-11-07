@@ -46,8 +46,8 @@
 	# branch = docs
 [submodule "docs/latest/builds/sway"]
 	path = docs/latest/builds/sway
-	# branch = gh-pages
 	url = https://github.com/FuelLabs/sway.git
+	# branch = gh-pages
 [submodule "docs/latest/fuels-wallet"]
 	path = docs/latest/fuels-wallet
 	url = https://github.com/FuelLabs/fuels-wallet.git
@@ -61,3 +61,6 @@
 [submodule "docs/latest/fuel-specs"]
 	path = docs/latest/fuel-specs
 	url = https://github.com/FuelLabs/fuel-specs.git
+[submodule "docs/guides/docs/migration-guide/breaking-change-log"]
+	path = docs/guides/docs/migration-guide/breaking-change-log
+	url = https://github.com/FuelLabs/breaking-change-log

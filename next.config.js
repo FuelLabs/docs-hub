@@ -58,6 +58,16 @@ const nextConfig = {
         destination: '/docs/graphql/overview/',
         permanent: true,
       },
+      {
+        source: '/guides/testnet-migration/',
+        destination: '/guides/migration-guide/',
+        permanent: true,
+      },
+      {
+        source: '/guides/testnet-migration/beta-3-to-beta-4-migration/',
+        destination: '/guides/migration-guide/testnet-migration/',
+        permanent: true,
+      },
     ];
   },
   typescript: {

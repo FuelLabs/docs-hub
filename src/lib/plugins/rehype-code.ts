@@ -10,6 +10,7 @@ import type { Root } from 'remark-gfm';
 import { getHighlighter as shikiGetHighlighter } from 'shiki';
 import type { PluggableList } from 'unified';
 import { visit } from 'unist-util-visit';
+import { FUEL_TESTNET } from '~/src/config/constants';
 
 // Shiki loads languages and themes using "fs" instead of "import", so Next.js
 // doesn't bundle them into production build. To work around, we manually copy
@@ -212,17 +213,20 @@ function getGraphQLCodeTabs(node: any) {
   const tsCode = h('code', codeProps, tsCodeRaw);
 
   const apolloImport = `import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+
   const apolloClient= new ApolloClient({
-  uri: 'https://beta-4.fuel.network/graphql',
+  uri: 'https://${FUEL_TESTNET}.fuel.network/graphql',
   cache: new InMemoryCache(),
   });\n\n`;
   const apolloContentValue = apolloImport + apolloContent?.value ?? '';
   const apolloRaw = prettier.format(apolloContentValue, prettierProps);
   const apolloCode = h('code', codeProps, apolloRaw);
 
-  const urlqImport = `import { createClient } from 'urql';
-  const urqlClient= createClient({
-    url: 'https://beta-4.fuel.network/graphql',
+  const urlqImport = `import { Client, cacheExchange, fetchExchange } from 'urql';
+  
+  const urqlClient = new Client({
+    url: 'https:/${FUEL_TESTNET}.fuel.network/graphql',
+    exchanges: [cacheExchange, fetchExchange],
   });\n\n`;
   const urlQContentValue = urlqImport + urqlContent?.value ?? '';
   const urlQRaw = prettier.format(urlQContentValue, prettierProps);

@@ -29,6 +29,8 @@ export default function getSortedLinks(config, docs) {
     o.toLowerCase().replaceAll('-', '_').replaceAll(' ', '_')
   );
 
+  const isLatest = docs[0].slug.includes('/latest/');
+
   for (let i = 0; i < docs.length; i++) {
     const doc = docs[i];
     let thisCategory = doc.category;
@@ -172,9 +174,14 @@ export default function getSortedLinks(config, docs) {
             key = match[1];
             catOrder = config[key];
           }
+          if (!catOrder) {
+            const newConfig = convertKeysToLowerCase(config);
+            catOrder = newConfig[key];
+          }
           catOrder = catOrder?.map((title) =>
             title.toLowerCase().replaceAll('-', '_').replaceAll(' ', '_')
           );
+
           const submenu = link.submenu.sort((a, b) => {
             const lowerA = a.label
               .toLowerCase()
@@ -184,6 +191,19 @@ export default function getSortedLinks(config, docs) {
               .toLowerCase()
               .replaceAll(' ', '_')
               .replaceAll('-', '_');
+
+            if (a.slug.includes('fuels-ts')) {
+              const pathLength = isLatest ? 4 : 3;
+              const isIndexA = a.slug.split('/').length === pathLength;
+              if (isIndexA) {
+                return -1;
+              }
+              const isIndexB = b.slug.split('/').length === pathLength;
+              if (isIndexB) {
+                return 1;
+              }
+            }
+
             const aIdx = catOrder ? catOrder.indexOf(lowerA) : 0;
             const bIdx = catOrder ? catOrder.indexOf(lowerB) : 0;
             const result = aIdx - bIdx;
@@ -194,4 +214,13 @@ export default function getSortedLinks(config, docs) {
     : links;
 
   return sortedLinks;
+}
+
+function convertKeysToLowerCase(obj) {
+  const newObj = {};
+  for (const key in obj) {
+    const lowerKey = key.toLowerCase();
+    newObj[lowerKey] = obj[key];
+  }
+  return newObj;
 }

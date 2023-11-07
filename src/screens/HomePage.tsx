@@ -9,6 +9,7 @@ import {
 } from '@fuel-ui/react';
 import Link from 'next/link';
 
+import { FAUCET_LINK } from '../config/constants';
 import type { GuideInfo } from '../pages/guides';
 
 import { GuideCard } from './GuidesPage';
@@ -41,6 +42,11 @@ export function HomePage({ guides, isLatest }: HomePageProps) {
                 isExternal
               >
                 Standard Library
+              </FuelLink>
+            </List.Item>
+            <List.Item>
+              <FuelLink href="https://sway-playground.org/" isExternal>
+                Sway Playground
               </FuelLink>
             </List.Item>
             <List.Item>
@@ -124,8 +130,13 @@ export function HomePage({ guides, isLatest }: HomePageProps) {
               </FuelLink>
             </List.Item>
             <List.Item>
-              <FuelLink href="https://faucet-beta-4.fuel.network/" isExternal>
+              <FuelLink href={FAUCET_LINK} isExternal>
                 Faucet
+              </FuelLink>
+            </List.Item>
+            <List.Item>
+              <FuelLink href="https://alpha.fuel.network/bridge/" isExternal>
+                Bridge
               </FuelLink>
             </List.Item>
           </List>

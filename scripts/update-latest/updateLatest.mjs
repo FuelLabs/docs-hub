@@ -9,6 +9,10 @@ import {
   createPR,
   fetchTag,
   fetchBranch,
+  getReleaseTimestamp,
+  gitResetCommit,
+  getCommitByTimestamp,
+  checkoutBranch,
 } from './gitUtils.mjs';
 
 export async function updateLatest(newVersions) {
@@ -50,6 +54,7 @@ async function updateSubmodules(newVersions) {
     'docs/latest/fuel-specs',
     'docs/latest/fuel-graphql-docs',
     'docs/latest/fuelup',
+    'docs/guides/docs/migration-guide/breaking-change-log',
   ];
   console.log('GOING TO UPDATE REGARDLESS');
   await Promise.all(
@@ -86,7 +91,6 @@ async function updateSubmodules(newVersions) {
             break;
           case 'wallet':
             submoduleName = 'docs/latest/fuels-wallet';
-            branch = 'release';
             break;
           default:
         }
@@ -96,12 +100,29 @@ async function updateSubmodules(newVersions) {
   }
 }
 
+// use the latest commit on the docs branch of fuels-ts
 export async function update(version, dir, branch) {
   await updateSubmodule(dir);
-  if (branch) {
-    await fetchBranch(branch, dir);
-    await switchToExistingBranch(branch, dir);
+  if (dir !== 'docs/latest/fuels-ts') {
+    await fetchTag(version, dir);
+    await checkoutVersion(version, dir);
   }
-  await fetchTag(version, dir);
-  await checkoutVersion(version, dir);
+  if (branch) {
+    let releaseTimestamp;
+    if (dir !== 'docs/latest/fuels-ts') {
+      releaseTimestamp = await getReleaseTimestamp(version, dir);
+      console.log('RELEASE TIMESTAMP:', releaseTimestamp);
+    }
+    await fetchBranch(branch, dir);
+    await checkoutBranch(branch, dir);
+    if (dir !== 'docs/latest/fuels-ts') {
+      const commitHash = await getCommitByTimestamp(
+        releaseTimestamp,
+        branch,
+        dir
+      );
+      console.log('COMMIT HASH:', commitHash);
+      await gitResetCommit(commitHash, dir);
+    }
+  }
 }

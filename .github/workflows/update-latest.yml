@@ -1,4 +1,4 @@
-name: Find Latest File
+name: Update Latest Versions
 
 on:
     schedule:
@@ -11,7 +11,7 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  find-latest-file:
+  update-latest-versions:
     runs-on: ubuntu-latest
 
     steps:

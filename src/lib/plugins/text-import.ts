@@ -7,6 +7,7 @@ import { remark } from 'remark';
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
 import type { Parent } from 'unist-util-visit/lib';
+import { FUEL_TESTNET } from '~/src/config/constants';
 
 export type CommentTypes = '<!--' | '{/*' | '//' | '/*';
 
@@ -112,6 +113,9 @@ export function textImport(options: Options = { filepath: '' }) {
         commentType
       );
       content = commentResult;
+      content = content
+        .replaceAll('{props.fuelTestnet}', FUEL_TESTNET)
+        .replaceAll('{props.fuelTestnetInlineCode}', '`' + FUEL_TESTNET + '`');
 
       const processor = remark();
       const ast = processor.parse(content);

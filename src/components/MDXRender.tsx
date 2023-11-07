@@ -6,6 +6,11 @@ import * as provider from '@mdx-js/react';
 import dynamic from 'next/dynamic';
 import { useMemo } from 'react';
 
+import {
+  FAUCET_LINK,
+  FUEL_TESTNET,
+  PLAYGROUND_LINK,
+} from '../config/constants';
 import { runtime } from '../lib/runtime';
 
 import { Blockquote } from './Blockquote';
@@ -55,7 +60,20 @@ export function MDXRender({ code, components }: MDXRenderProps) {
 
   return (
     <provider.MDXProvider components={{ ...components, ...mdxComponents }}>
-      <Content />
+      <Content
+        fuelTestnet={FUEL_TESTNET}
+        fuelTestnetInlineCode={<Code>{FUEL_TESTNET}</Code>}
+        faucetLink={
+          <Link href={FAUCET_LINK}>
+            <Code>{FUEL_TESTNET}</Code> faucet
+          </Link>
+        }
+        GQLPlaygroundLink={
+          <Link href={PLAYGROUND_LINK}>
+            <Code>{FUEL_TESTNET}</Code> graphQL playground
+          </Link>
+        }
+      />
     </provider.MDXProvider>
   );
 }

@@ -48,7 +48,11 @@ export function handleForcGenDocs(
 function transformContent(node: any, rootDir: string) {
   const fileName = node.value;
   const filePathName = fileName.replace(' ', '_').concat('.html');
-  const swayBuildFilePath = 'docs/builds/sway/master/book/forc';
+  const isLatest = thisFilePath.includes('/latest');
+
+  const swayBuildFilePath = isLatest
+    ? 'docs/latest/builds/sway/master/book/forc'
+    : 'docs/builds/sway/master/book/forc';
 
   const folders = thisFilePath.split('/forc/')[1].split('/');
   const lastPath = `${swayBuildFilePath}/${folders[0]}/${
