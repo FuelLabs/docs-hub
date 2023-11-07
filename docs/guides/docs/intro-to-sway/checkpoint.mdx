@@ -26,7 +26,7 @@ To format your contract, execute the command:
 <TestAction
 id="format-contract"
 action={{
-  name: 'runCommand', 
+  name: 'runCommand',
   commandFolder: 'guides-testing/fuel-project/contract'
 }}
 />
@@ -40,7 +40,7 @@ To compile your contract, navigate to the contract folder and run:
 <TestAction
 id="build-contract"
 action={{
-  name: 'runCommand', 
+  name: 'runCommand',
   commandFolder: 'guides-testing/fuel-project/contract'
 }}
 />
@@ -53,13 +53,13 @@ Congratulations! You've successfully written a full contract in Sway!
 
 Post-compilation, the system will automatically generate `abi.json`, `storage_slots.json`, and `contract.bin`. You can locate these files in the following directory:
 
-```
+```sh
 contract/out/debug/*
 ```
 
 ## Deploying the contract
 
-For detailed steps on deploying this contract, refer to the official Fuel developer quickstart guide: 
+For detailed steps on deploying this contract, refer to the official Fuel developer quickstart guide:
 [Deploy the Contract](/guides/quickstart/building-a-smart-contract/#deploy-the-contract)
 
 To deploy, use the following command if you've already set up the forc-wallet and have testnet funds in your account. If not, please follow the instructions above.

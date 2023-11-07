@@ -30,7 +30,7 @@ Our first function enables sellers to list an item for sale. They can specify th
   lang="sway"
 />
 
-### Updating storage
+### Updating list storage
 
 The initial step involves incrementing the `item_counter` in storage, which will serve as the item's ID. In Sway, the standard library provides `read()`, `write()`, and `try_read()` methods to access or manipulate contract storage. It's advisable to use `try_read()` when possible to prevent potential issues arising from accessing uninitialized storage. In this process, we read the current count of listed items, modify it, and then store the updated count back into storage.
 
@@ -164,7 +164,7 @@ Additionally, it's essential to ensure that the quantity of coins sent for the i
   lang="sway"
 />
 
-### Updating storage
+### Updating buy storage
 
 We can increase the item's `total_bought` field value and subsequently reinsert it into the `item_map`. This action will replace the earlier value with the revised item.
 
@@ -205,7 +205,6 @@ To get the details for an item, we can create a read-only function that returns 
   lang="sway"
 />
 
-
 To return a value in a function, you can use the `return` keyword, similar to JavaScript. Alternatively, you can omit the semicolon in the last line to return that value like in Rust. Although both methods are effective.
 
 ```sway
@@ -229,9 +228,9 @@ This method sets the owner's `Identity` for the contract but only once.
   lang="sway"
 />
 
-To ensure that this function can only be called once, specifically right after the contract's deployment, it's imperative that the owner's value remains set to `None`. We can achieve this verification using the `is_none` method, which assesses if an Option type is `None`. 
+To ensure that this function can only be called once, specifically right after the contract's deployment, it's imperative that the owner's value remains set to `None`. We can achieve this verification using the `is_none` method, which assesses if an Option type is `None`.
 
-It's also important to note the potential risk of [front running](https://scsfg.io/hackers/frontrunning/) in this context this code has not been audited. 
+It's also important to note the potential risk of [front running](https://scsfg.io/hackers/frontrunning/) in this context this code has not been audited.
 
 <CodeImport
   file="../../examples/intro-to-sway/contract/src/main.sw"

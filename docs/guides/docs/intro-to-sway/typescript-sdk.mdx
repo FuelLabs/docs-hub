@@ -15,7 +15,7 @@ Initialize a new React app with TypeScript in the same parent folder as your con
 <TestAction
 id="create-frontend"
 action={{
-  name: 'runCommand', 
+  name: 'runCommand',
   commandFolder: 'guides-testing/fuel-project'
 }}
 />
@@ -35,7 +35,7 @@ Next, install the fuels Typescript and wallet SDKs in the frontend folder:
 <TestAction
 id="frontend-npm-install"
 action={{
-  name: 'runCommand', 
+  name: 'runCommand',
   commandFolder: 'guides-testing/fuel-project/frontend'
 }}
 />
@@ -49,7 +49,7 @@ Generate types from your contract with `fuels typegen` by running:
 <TestAction
 id="frontend-gen-types"
 action={{
-  name: 'runCommand', 
+  name: 'runCommand',
   commandFolder: 'guides-testing/fuel-project/frontend'
 }}
 />
@@ -107,7 +107,7 @@ In the `App` function, we can call these hooks like this:
   lang="tsx"
 />
 
-Now we can check if the user has the fuel wallet installed and check if it's connected. 
+Now we can check if the user has the fuel wallet installed and check if it's connected.
 
 If the user doesn't have the `fuel` object in their window, we know that they don't have the Fuel wallet extension installed.
 If they have it installed, we can then check if the wallet is connected.
@@ -138,7 +138,6 @@ Next, we can use the `useMemo` hook to connect to our contract with the connecte
   commentType="//"
   lang="tsx"
 />
-
 
 Now we have our contract connection ready. You can console log the contract here to make sure this is working correctly.
 
@@ -197,8 +196,7 @@ We can set up the template for the function like this.
   lang="tsx"
 />
 
-
-To list an item, we'll create a form where the user can input the metadata string and price for the item they want to list. 
+To list an item, we'll create a form where the user can input the metadata string and price for the item they want to list.
 Let's start by adding some state variables for the `metadata` and `price`. We can also add a `status` variable to track the submit status.
 
 <CodeImport
@@ -217,7 +215,7 @@ Under the heading, add the code below for the form:
   lang="tsx"
 />
 
-Finally, we need to add the `handleSubmit` function. 
+Finally, we need to add the `handleSubmit` function.
 We can use the contract prop to call the `list_item` function and pass in the `price` and `metadata` from the form.
 
 <CodeImport
@@ -239,7 +237,7 @@ Then, replace where it says `Connected!` with the code below:
   lang="tsx"
 />
 
-Now, try listing an item to make sure this works. 
+Now, try listing an item to make sure this works.
 You should see the message `Item successfully listed!`.
 
 ### Show All Items
@@ -289,7 +287,7 @@ The item card will show the item details and a buy button to buy that item, so w
 
 ### Item Card
 
-Now let's create the item card component. 
+Now let's create the item card component.
 Create a new file called `ItemCard.tsx` in the components folder, and copy and paste the template code below.
 
 <CodeImport
@@ -375,4 +373,4 @@ Ensure that all your files are correctly configured by examining the code below.
   lang="tsx"
 />
 
-And that's it for the frontend! You just created a whole dapp on Fuel! 
+And that's it for the frontend! You just created a whole dapp on Fuel!

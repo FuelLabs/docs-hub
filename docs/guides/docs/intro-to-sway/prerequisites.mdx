@@ -16,20 +16,20 @@ Start with a new empty folder and name it `fuel-project`.
 
 <TestAction
 id="create-project-folder"
-action={{ 
-  name: 'runCommand', 
+action={{
+  name: 'runCommand',
   commandFolder: 'guides-testing'
 }}
 />
 
 ```sh
-$ mkdir fuel-project
+mkdir fuel-project
 ```
 
 Go into the `fuel-project` folder:
 
 ```sh
-$ cd fuel-project
+cd fuel-project
 ```
 
 Within your terminal start by creating a new sway project called `contract`:
@@ -37,29 +37,29 @@ Within your terminal start by creating a new sway project called `contract`:
 <TestAction
 id="create-contract"
 action={{
-  name: 'runCommand', 
+  name: 'runCommand',
   commandFolder: 'guides-testing/fuel-project'
 }}
 />
 
 ```sh
-$ forc new contract
+forc new contract
 ```
 
 Move into your contract folder:
 
 ```sh
-$ cd contract
+cd contract
 ```
 
-Open up the `contract` folder in VSCode, and inside the `src` folder you should see a file called `main.sw`. This is where you will write your Sway contract. 
+Open up the `contract` folder in VSCode, and inside the `src` folder you should see a file called `main.sw`. This is where you will write your Sway contract.
 
-Your project structure generated from the `forc` command should like this: 
+Your project structure generated from the `forc` command should like this:
 
 <TestAction
 id="contract-tree"
 action={{
-  name: 'runCommand', 
+  name: 'runCommand',
   commandFolder: 'guides-testing/fuel-project'
 }}
 />
@@ -92,5 +92,3 @@ action={{
 />
 
 The first line of the file is specifically reserved to inform the compiler whether we are writing a contract, script, predicate, or library. To designate the file as a contract, use the `contract` keyword.
-
-

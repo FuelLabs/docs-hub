@@ -13,16 +13,19 @@ parent:
 To create your own test template using Rust, follow these steps with `cargo-generate` in the contract project directory:
 
 1. Install `cargo-generate`:
+
 ```bash
 cargo install cargo-generate
 ```
 
+{/*markdownlint-disable*/}
 2. Generate the template:
+{/*markdownlint-disable*/}
 
 <TestAction
 id="cargo-generate-test"
 action={{
-  name: 'runCommand', 
+  name: 'runCommand',
   commandFolder: 'guides-testing/fuel-project/contract'
 }}
 />
@@ -31,8 +34,9 @@ action={{
 cargo generate --init fuellabs/sway templates/sway-test-rs --name contract
 ```
 
-{/* TODO: Remove this after cargo generate updates */}
+{/*TODO: Remove this after cargo generate updates*/}
 3. In the `cargo.toml` under `[dev-dependencies]` update the version of `fuels-rs` to 0.48.0:
+
 ```toml
 fuels = { version = "0.48", features = ["fuel-core-lib"] }
 ```
@@ -94,7 +98,7 @@ For this test case, we use the contract instance and use the SDK's `.with_accoun
   lang="rust"
 />
 
-### Setting Owner Once 
+### Setting Owner Once
 
 An edge case we need to be vigilant about is an attempt to set the owner twice. We certainly don't want unauthorized ownership transfer of our contract! To address this, we've included the following line in our Sway contract: `require(owner.is_none(), "owner already initialized");`
 This ensures the owner can only be set when it hasn't been previously established. To test this, we create a new contract instance: initially, we set the owner using wallet 1. Any subsequent attempt to set the owner with wallet 2 should be unsuccessful.
@@ -122,7 +126,7 @@ Following these transactions, we'll assess the balances of both wallets to confi
   lang="rust"
 />
 
-### Withdraw Owner Fees 
+### Withdraw Owner Fees
 
 Most importantly, as the creator of the marketplace, you need to ensure you're compensated. Similar to the previous tests, we'll invoke the relevant functions to make an exchange. This time, we'll verify if you can extract the difference in funds.
 
@@ -136,11 +140,13 @@ Most importantly, as the creator of the marketplace, you need to ensure you're c
 ## Running the Tests
 
 To run the test located in `tests/harness.rs`, use:
+
 ```bash
 cargo test
 ```
 
 If you wish to print outputs to the console during tests, execute:
+
 ```bash
 cargo test -- --nocapture
 ```
