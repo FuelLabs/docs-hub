@@ -74,7 +74,7 @@ export function Sidebar({
                   docSlug={doc && doc.slug}
                   version={
                     versions &&
-                    Object.values(versions).find((v) => v.name === key)
+                    Object.values(versions).find((v) => v.name.includes(key))
                   }
                 />
               </Box>
