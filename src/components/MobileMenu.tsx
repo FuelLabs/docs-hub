@@ -45,40 +45,43 @@ export function MobileMenu({
 
   return (
     <Box.Flex css={styles.root}>
-      <ThemeToggler />
-      <VersionDropdown isLatest={isLatest} />
       <Search title={title} isLatest={isLatest} />
-      <Drawer
-        isDismissable
-        isOpen={open}
-        side="right"
-        onClose={() => setOpen(false)}
-      >
-        <Drawer.Trigger>{drawerButton}</Drawer.Trigger>
 
-        <Drawer.Content css={styles.drawer}>
-          <Drawer.Body>
-            <Box.Flex css={styles.topContainer} justify={'space-between'}>
-              <Link href="/">
-                <FuelLogo size={30} />
-              </Link>
-              <Box.Flex gap="$4" align="center" css={styles.iconContainer}>
-                {drawerButton}
+      <Box.Stack direction="row" gap="$3">
+        <VersionDropdown isLatest={isLatest} />
+        <ThemeToggler />
+        <Drawer
+          isDismissable
+          isOpen={open}
+          side="right"
+          onClose={() => setOpen(false)}
+        >
+          <Drawer.Trigger>{drawerButton}</Drawer.Trigger>
+
+          <Drawer.Content css={styles.drawer}>
+            <Drawer.Body>
+              <Box.Flex css={styles.topContainer} justify={'space-between'}>
+                <Link href="/">
+                  <FuelLogo size={30} />
+                </Link>
+                <Box.Flex gap="$4" align="center" css={styles.iconContainer}>
+                  {drawerButton}
+                </Box.Flex>
               </Box.Flex>
-            </Box.Flex>
-            <Navigation active={active} />
+              <Navigation active={active} />
 
-            <Box css={styles.navContainer}>
-              <Sidebar
-                versions={versions}
-                allNavs={active.includes('guides') ? undefined : allNavs}
-                onClick={() => setOpen(false)}
-                isLatest={isLatest}
-              />
-            </Box>
-          </Drawer.Body>
-        </Drawer.Content>
-      </Drawer>
+              <Box css={styles.navContainer}>
+                <Sidebar
+                  versions={versions}
+                  allNavs={active.includes('guides') ? undefined : allNavs}
+                  onClick={() => setOpen(false)}
+                  isLatest={isLatest}
+                />
+              </Box>
+            </Drawer.Body>
+          </Drawer.Content>
+        </Drawer>
+      </Box.Stack>
     </Box.Flex>
   );
 }
@@ -86,7 +89,8 @@ export function MobileMenu({
 const styles = {
   root: cssObj({
     gap: '$1',
-    justifyContent: 'space-around',
+    width: '100%',
+    justifyContent: 'space-between',
     '@lg': {
       display: 'none',
     },
@@ -119,6 +123,11 @@ const styles = {
       borderTop: '1px solid $border',
       pt: '$4',
       mt: '$4',
+    },
+  }),
+  searchContainer: cssObj({
+    '.fuel_Box-flex': {
+      height: '36px',
     },
   }),
 };

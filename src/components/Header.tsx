@@ -29,21 +29,21 @@ export function Header({
   return (
     <Box as="header" css={styles.root}>
       <Box.Flex css={styles.header}>
-        {/* THIS GETS USED BY THE SEARCH INDEXER */}
-        <span
-          id="lvl0"
-          style={{ visibility: 'hidden', width: '0', height: '0' }}
-        >
-          {title}
-        </span>
-        <Box css={styles.desktop}>
-          <Navigation active={active} />
+        <Box css={{ ...styles.desktop, ...styles.searchContainer }}>
+          {/* THIS GETS USED BY THE SEARCH INDEXER */}
+          <span
+            id="lvl0"
+            style={{ visibility: 'hidden', width: '0', height: '0' }}
+          >
+            {title}
+          </span>
+          <Search title={title} isLatest={isLatest} />
         </Box>
         <Box css={styles.desktop}>
-          <Box.Stack direction="row" gap="$3" css={{ mr: '$3' }}>
-            <ThemeToggler />
+          <Navigation active={active} />
+          <Box.Stack direction="row" gap="$3">
             <VersionDropdown isLatest={isLatest} />
-            <Search title={title} />
+            <ThemeToggler />
           </Box.Stack>
         </Box>
         <MobileMenu
@@ -79,10 +79,10 @@ const styles = {
   header: cssObj({
     gap: '$1',
     py: '$3',
-    px: '$1',
+    px: '$3',
     alignItems: 'center',
     gridColumn: '1 / 4',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
 
     [`.${darkTheme.theme} &`]: {
       backgroundColor: '$bodyColor',
@@ -105,6 +105,10 @@ const styles = {
       gap: '$3',
       px: '$6',
     },
+
+    '@md': {
+      px: '$8',
+    },
   }),
   desktop: cssObj({
     display: 'none',
@@ -112,6 +116,11 @@ const styles = {
     '@lg': {
       display: 'flex',
       alignItems: 'center',
+    },
+  }),
+  searchContainer: cssObj({
+    '.fuel_Box-flex': {
+      height: '36px',
     },
   }),
 };
