@@ -28,6 +28,9 @@
 [submodule "docs/fuel-specs"]
 	path = docs/fuel-specs
 	url = https://github.com/FuelLabs/fuel-specs.git
+[submodule "docs/guides/examples/intro-to-sway"]
+	path = docs/guides/examples/intro-to-sway
+	url = https://github.com/FuelLabs/intro-to-sway.git
 [submodule "docs/latest/sway"]
 	path = docs/latest/sway
 	url = https://github.com/FuelLabs/sway.git
