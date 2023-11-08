@@ -387,26 +387,41 @@ function handleSubmenu(
     breadcrumbs.push({ label: 'Intro' });
   } else {
     const i = isLatest ? 2 : 1;
-    const l = hasIndex ? 1 : 2;
-    const link = '/' + splitSlug.slice(0, splitSlug.length - l).join('/');
-    breadcrumbs.push({
-      label: editLabel(splitSlug[i], shouldBeLowerCase),
-      link,
-    });
+    let l = hasIndex ? 1 : 2;
+    if (isGuide) {
+      l = l - 1;
+    }
+    if (!isGuide || splitSlug.length > 2) {
+      const link = '/' + splitSlug.slice(0, splitSlug.length - l).join('/');
+      breadcrumbs.push({
+        label: editLabel(splitSlug[i], shouldBeLowerCase),
+        link,
+      });
+    }
   }
 
-  if (!hasIndex) {
-    const i = isLatest ? 3 : 2;
-    const link = '/' + splitSlug.slice(0, splitSlug.length - 1).join('/');
-    breadcrumbs.push({
-      label: editLabel(splitSlug[i], shouldBeLowerCase),
-      link,
-    });
-    breadcrumbs.push({
-      label: editLabel(splitSlug[splitSlug.length - 1], shouldBeLowerCase),
-    });
+  if (!isGuide) {
+    if (!hasIndex) {
+      const i = isLatest ? 3 : 2;
+      const link = '/' + splitSlug.slice(0, splitSlug.length - 1).join('/');
+      breadcrumbs.push({
+        label: editLabel(splitSlug[i], shouldBeLowerCase),
+        link,
+      });
+      breadcrumbs.push({
+        label: editLabel(splitSlug[splitSlug.length - 1], shouldBeLowerCase),
+      });
+    } else {
+      breadcrumbs.push({ label: editLabel(thisCategory, shouldBeLowerCase) });
+    }
   } else {
-    breadcrumbs.push({ label: editLabel(thisCategory, shouldBeLowerCase) });
+    if (splitSlug.length > 2) {
+      breadcrumbs.push({
+        label: editLabel(splitSlug[splitSlug.length - 1], shouldBeLowerCase),
+      });
+    } else {
+      breadcrumbs.push({ label: editLabel(thisCategory, shouldBeLowerCase) });
+    }
   }
 
   const submenu = [
@@ -424,6 +439,5 @@ function handleSubmenu(
     isExternal,
     submenu,
     hasIndex,
-    // breadcrumbs,
   };
 }

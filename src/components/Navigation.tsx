@@ -2,7 +2,8 @@ import { cssObj } from '@fuel-ui/css';
 import { Box, ButtonLink } from '@fuel-ui/react';
 
 export function Navigation({ active }: { active: string }) {
-  const isGuidesActive = active.startsWith('guides');
+  const isGuidesActive =
+    active.startsWith('guides') || active.startsWith('/guides');
   return (
     <Box.Flex gap={'$3'}>
       <ButtonLink

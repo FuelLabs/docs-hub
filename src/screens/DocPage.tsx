@@ -40,7 +40,7 @@ export function DocScreen(props: DocPageProps) {
         <Box.Flex as="section" className="Layout--section">
           {doc && (
             <Box>
-              {navs && <Breadcrumb />}
+              <Breadcrumb />
               <MDXRender
                 code={props.code}
                 components={components}
