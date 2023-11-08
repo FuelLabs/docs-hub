@@ -12,14 +12,13 @@ import type { DocPageProps } from '../pages/[...slug]';
 
 export function DocScreen(props: DocPageProps) {
   const { doc, allNavs, allLatestNavs } = props;
-  const [mounted, setIsMounted] = useState<boolean>(false);
+  const [isLatest, setisLatest] = useState<boolean>(false);
   const version = useVersion();
 
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
+    setisLatest(version === 'Latest' || doc.isLatest);
+  }, [version, doc]);
 
-  const isLatest = mounted ? version === 'Latest' : doc.isLatest;
   const components = getComponents(doc.slug, doc.isLatest);
   const navs = doc.originalSlug.includes('guides')
     ? undefined
