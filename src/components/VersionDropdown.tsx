@@ -95,10 +95,20 @@ const styles = {
     },
     '&:hover': {
       border: 'none !important',
-      bg: '$gray4 !important',
+      'html[class="fuel_light-theme"] &': {
+        bg: '$gray4 !important',
+      },
+      'html[class="fuel_dark-theme"] &': {
+        bg: '#151718 !important',
+      },
     },
   }),
   triggerOpen: cssObj({
-    bg: '$gray4',
+    'html[class="fuel_light-theme"] &': {
+      bg: '$gray4 !important',
+    },
+    'html[class="fuel_dark-theme"] &': {
+      bg: '#151718 !important',
+    },
   }),
 };

@@ -5,7 +5,7 @@ export function Navigation({ active }: { active: string }) {
   const isGuidesActive =
     active.startsWith('guides') || active.startsWith('/guides');
   return (
-    <Box.Flex gap={'$3'}>
+    <Box.Flex gap={'$3'} css={styles.root}>
       <ButtonLink
         size="sm"
         leftIcon="FileDescription"
@@ -39,6 +39,9 @@ export function Navigation({ active }: { active: string }) {
 }
 
 const styles = {
+  root: cssObj({
+    mr: '$2',
+  }),
   navItem: cssObj({
     '&:hover': {
       'html[class="fuel_light-theme"] &': {

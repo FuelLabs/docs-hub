@@ -45,6 +45,7 @@ export type DocPageProps = {
   docLink?: SidebarLinkItem;
   theme: string;
   versions: Versions;
+  latestVersions: Versions;
 };
 
 export default function DocPage(props: DocPageProps) {
@@ -73,7 +74,8 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   );
   const allNavs = JSON.parse(readFileSync(allNavsPath, 'utf8'));
   const allLatestNavs = JSON.parse(readFileSync(allLatestNavsPath, 'utf8'));
-  const versions = getVersions(doc.item.isLatest);
+  const versions = getVersions(false);
+  const latestVersions = getVersions(true);
 
   return {
     props: {
@@ -85,6 +87,7 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
       links: doc.sidebarLinks(slug),
       docLink: doc.navLinks,
       versions,
+      latestVersions,
     },
   };
 };

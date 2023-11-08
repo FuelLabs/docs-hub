@@ -34,7 +34,7 @@ export function DocScreen(props: DocPageProps) {
         isClean={false}
         config={doc.docsConfig}
         isLatest={isLatest}
-        versions={props.versions}
+        versions={isLatest ? props.latestVersions : props.versions}
         allNavs={navs}
       >
         <Box.Flex as="section" className="Layout--section">
