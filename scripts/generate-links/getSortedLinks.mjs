@@ -20,7 +20,6 @@ export default function getSortedLinks(config, docs) {
   const isLatest = docs[0].slug.includes('/latest/');
   const links = createLinks(docs, isLatest);
   const sortedLinks = sortLinks(lcOrder, links, config, isLatest);
-
   return sortedLinks;
 }
 
@@ -375,13 +374,6 @@ function handleSubmenu(
   let subpath =
     splitSlug[1] === 'latest' ? `latest/${splitSlug[2]}` : splitSlug[1];
   subpath = subpath.replace('latest/guides', 'guides/latest');
-  const submenu = [
-    {
-      slug: finalSlug,
-      label: editLabel(title, shouldBeLowerCase),
-      isExternal,
-    },
-  ];
 
   const breadcrumbs = [
     { label: isGuide ? 'Guides' : 'Docs', link: isGuide ? '/guides' : '/' },
@@ -412,11 +404,19 @@ function handleSubmenu(
     });
     breadcrumbs.push({
       label: editLabel(splitSlug[splitSlug.length - 1], shouldBeLowerCase),
-      link: '/' + finalSlug,
     });
   } else {
     breadcrumbs.push({ label: editLabel(thisCategory, shouldBeLowerCase) });
   }
+
+  const submenu = [
+    {
+      slug: finalSlug,
+      label: editLabel(title, shouldBeLowerCase),
+      isExternal,
+      breadcrumbs,
+    },
+  ];
 
   return {
     subpath,
@@ -424,6 +424,6 @@ function handleSubmenu(
     isExternal,
     submenu,
     hasIndex,
-    breadcrumbs,
+    // breadcrumbs,
   };
 }

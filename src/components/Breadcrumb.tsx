@@ -62,6 +62,9 @@ const styles = {
     },
   }),
   label: cssObj({
+    a: {
+      fontWeight: '550',
+    },
     'a:hover': {
       textDecoration: 'none !important',
     },
