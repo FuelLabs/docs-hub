@@ -88,6 +88,16 @@ export const NAVIGATION: LinkObject[] = [
         link: 'https://fuellabs.github.io/sway/master/core/',
       },
       {
+        name: 'Sway Standards',
+        type: 'external-link',
+        link: 'https://github.com/FuelLabs/sway-standards/',
+      },
+      {
+        name: 'Sway Libraries',
+        type: 'external-link',
+        link: 'https://github.com/FuelLabs/sway-libs/',
+      },
+      {
         name: 'Tooling',
         type: 'category',
       },

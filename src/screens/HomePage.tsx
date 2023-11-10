@@ -65,6 +65,22 @@ export function HomePage({ guides, isLatest }: HomePageProps) {
                 Sway Core
               </FuelLink>
             </List.Item>
+            <List.Item>
+              <FuelLink
+                href="https://github.com/FuelLabs/sway-standards/"
+                isExternal
+              >
+                Sway Standards
+              </FuelLink>
+            </List.Item>
+            <List.Item>
+              <FuelLink
+                href="https://github.com/FuelLabs/sway-libs/"
+                isExternal
+              >
+                Sway Libraries
+              </FuelLink>
+            </List.Item>
           </List>
         </Box.Stack>
       </Box>
