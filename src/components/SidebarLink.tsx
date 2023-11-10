@@ -60,12 +60,13 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
 
 export const buttonStyles = {
   justifyContent: 'flex-start',
-  fontSize: '14.3px',
+  fontSize: '14.6px',
   pt: '$1',
   pb: 0,
   borderRadius: 0,
   '&:hover': {
     textDecoration: 'none',
+    cursor: 'pointer',
     color: '$semanticLinkPrimaryColor !important',
     '.fuel_Icon': {
       color: '$semanticLinkPrimaryColor !important',
