@@ -34,16 +34,18 @@ action={{
 cargo generate --init fuellabs/sway templates/sway-test-rs --name contract
 ```
 
-{/*TODO: Remove this after cargo generate updates*/}
-3. In the `cargo.toml` under `[dev-dependencies]` update the version of `fuels-rs` to 0.48.0:
-
-```toml
-fuels = { version = "0.48", features = ["fuel-core-lib"] }
-```
 
 ## Imports
 
 We will be changing the existing test file that has been generated. Firstly we need to change the imports. By importing the Fuel Rust SDK you will get majority of the functionalities housed within the prelude.
+
+<TestAction
+id="harness-import"
+action={{
+  name: 'writeToFile',
+  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs'
+}}
+/>
 
 <CodeImport
   file="../../examples/intro-to-sway/contract/tests/harness.rs"
@@ -53,6 +55,14 @@ We will be changing the existing test file that has been generated. Firstly we n
 />
 
 Always compile your contracts after making any changes. This ensures you're working with the most recent `contract-abi` that gets generated.
+
+<TestAction
+id="harness-abi"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs'
+}}
+/>
 
 <CodeImport
   file="../../examples/intro-to-sway/contract/tests/harness.rs"
@@ -64,6 +74,14 @@ Always compile your contracts after making any changes. This ensures you're work
 ## Initializing Functions
 
 When writing tests for Sway, two crucial objects are required: the contract instance and the wallets that interact with it. This helper function ensures a fresh start for every new test case so copy this into your test file. It will export the deployed contracts, the contract ID, and all the generated wallets for this purpose.
+
+<TestAction
+id="harness-instance"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs'
+}}
+/>
 
 <CodeImport
   file="../../examples/intro-to-sway/contract/tests/harness.rs"
@@ -91,6 +109,14 @@ Given the immutable nature of smart contracts, it's not only vital to test basic
 
 For this test case, we use the contract instance and use the SDK's `.with_account()` method. This lets us impersonate the first wallet. To check if the owner has been set correctly, we can see if the address given by the contract matches wallet 1's address. If you want to dig deeper, looking into the contract storage will show if wallet 1's address is stored properly.
 
+<TestAction
+id="harness-test-set-owner"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs'
+}}
+/>
+
 <CodeImport
   file="../../examples/intro-to-sway/contract/tests/harness.rs"
   comment="rs_test_set_owner"
@@ -102,6 +128,14 @@ For this test case, we use the contract instance and use the SDK's `.with_accoun
 
 An edge case we need to be vigilant about is an attempt to set the owner twice. We certainly don't want unauthorized ownership transfer of our contract! To address this, we've included the following line in our Sway contract: `require(owner.is_none(), "owner already initialized");`
 This ensures the owner can only be set when it hasn't been previously established. To test this, we create a new contract instance: initially, we set the owner using wallet 1. Any subsequent attempt to set the owner with wallet 2 should be unsuccessful.
+
+<TestAction
+id="harness-test-set-owner-once"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs'
+}}
+/>
 
 <CodeImport
   file="../../examples/intro-to-sway/contract/tests/harness.rs"
@@ -119,6 +153,14 @@ It's essential to test the basic functionalities of a smart contract to ensure i
 
 Following these transactions, we'll assess the balances of both wallets to confirm the successful execution of the transactions.
 
+<TestAction
+id="harness-test-buy-sell"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs'
+}}
+/>
+
 <CodeImport
   file="../../examples/intro-to-sway/contract/tests/harness.rs"
   comment="rs_test_list_and_buy_item"
@@ -130,6 +172,14 @@ Following these transactions, we'll assess the balances of both wallets to confi
 
 Most importantly, as the creator of the marketplace, you need to ensure you're compensated. Similar to the previous tests, we'll invoke the relevant functions to make an exchange. This time, we'll verify if you can extract the difference in funds.
 
+<TestAction
+id="harness-test-owner-withdraw"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs'
+}}
+/>
+
 <CodeImport
   file="../../examples/intro-to-sway/contract/tests/harness.rs"
   comment="rs_test_withdraw_funds"
@@ -140,6 +190,14 @@ Most importantly, as the creator of the marketplace, you need to ensure you're c
 ## Running the Tests
 
 To run the test located in `tests/harness.rs`, use:
+
+<TestAction
+id="cargo-test"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/contract'
+}}
+/>
 
 ```bash
 cargo test

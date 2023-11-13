@@ -41,7 +41,7 @@ action={{
 />
 
 ```sh
-npm install fuels@0.60.0 @fuel-wallet/sdk@0.13.0 @fuel-wallet/react@0.13.0 --save
+npm install fuels@0.66.1 @fuel-wallet/sdk@0.13.5 @fuel-wallet/react@0.13.7 --save
 ```
 
 Generate types from your contract with `fuels typegen` by running:
@@ -59,6 +59,14 @@ npx fuels typegen -i ../contract/out/debug/*-abi.json -o ./src/contracts
 ```
 
 Open the `src/App.tsx` file, and replace the boilerplate code with the template below:
+
+<TestAction
+id="frontend-gen-types"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/frontend/src/App.tsx'
+}}
+/>
 
 <CodeImport
   file="../../examples/intro-to-sway/frontend/src/App.tsx"
