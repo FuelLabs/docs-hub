@@ -3,8 +3,7 @@ import { cssObj } from '@fuel-ui/css';
 import { Box, Button, Icon } from '@fuel-ui/react';
 import type { ButtonLinkProps } from '@fuel-ui/react';
 import { useState } from 'react';
-
-import type { VersionItem } from '../pages/[...slug]';
+import type { VersionItem } from '~/src/types';
 
 import { SidebarLink } from './SidebarLink';
 import { SidebarSubmenu } from './SidebarSubmenu';
@@ -13,6 +12,7 @@ type SectionProps = {
   links: any;
   onClick?: ButtonLinkProps['onClick'];
   book: string;
+  bookName: string;
   docSlug: string | undefined;
   version?: VersionItem;
 };
@@ -21,6 +21,7 @@ export function SidebarSection({
   links,
   onClick,
   book,
+  bookName,
   docSlug,
   version,
 }: SectionProps) {
@@ -51,7 +52,7 @@ export function SidebarSection({
             rightIcon={isOpened ? Icon.is('ChevronUp') : Icon.is('ChevronDown')}
             iconSize={16}
           >
-            {book}
+            {bookName}
           </Button>
         </Box.Flex>
       )}

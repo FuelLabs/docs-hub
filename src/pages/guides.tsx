@@ -5,14 +5,12 @@ import { useState, useEffect } from 'react';
 
 import { Layout } from '../components/Layout';
 import { DOCS_DIRECTORY } from '../config/constants';
-import useTheme from '../hooks/useTheme';
 import { useVersion } from '../hooks/useVersion';
 import { GuidesPage } from '../screens/GuidesPage';
 
 export interface GuideInfo {
   title: string;
   description: string;
-  last_updated: string;
   featured: boolean;
   tags: string[];
 }
@@ -25,7 +23,6 @@ export interface GuidesProps {
 export default function Guides({ guides }: GuidesProps) {
   const [mounted, setIsMounted] = useState<boolean>(false);
   const version = useVersion();
-  const { theme } = useTheme();
 
   useEffect(() => {
     setIsMounted(true);
@@ -34,7 +31,7 @@ export default function Guides({ guides }: GuidesProps) {
   const isLatest = mounted && version === 'Latest';
 
   return (
-    <Layout title="Fuel Guides" isClean theme={theme} isLatest={isLatest}>
+    <Layout title="Fuel Guides" isClean isLatest={isLatest}>
       <GuidesPage isLatest={isLatest} guides={guides} />
     </Layout>
   );

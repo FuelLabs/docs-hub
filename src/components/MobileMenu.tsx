@@ -1,8 +1,7 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box, Drawer, IconButton, FuelLogo, Link, Icon } from '@fuel-ui/react';
 import { useState } from 'react';
-
-import type { NavOrder, Versions } from '../pages/[...slug]';
+import type { NavOrder, Versions } from '~/src/types';
 
 import { Navigation } from './Navigation';
 import Search from './Search';

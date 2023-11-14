@@ -66,3 +66,26 @@ export interface Component {
 export interface ComponentsList {
   [key: string]: Component[];
 }
+
+export interface NavOrder {
+  key: string;
+  sidebarName: string;
+  links: any[];
+}
+
+export type VersionItem = {
+  version: string;
+  name: string;
+  category: string;
+  url: string;
+};
+
+export type Versions = {
+  Forc: VersionItem;
+  Sway: VersionItem;
+  Fuelup: VersionItem;
+  Indexer: VersionItem;
+  'Fuel Rust SDK': VersionItem;
+  'Fuel TS SDK': VersionItem;
+  'Fuel Wallet': VersionItem;
+};

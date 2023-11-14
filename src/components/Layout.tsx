@@ -4,8 +4,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useRef, type ReactNode, useEffect } from 'react';
 
-import type { NavOrder, Versions } from '../pages/[...slug]';
-import type { Config } from '../types';
+import type { Config, NavOrder, Versions } from '../types';
 
 import { Header } from './Header';
 import { SidebarContainer } from './SidebarContainer';

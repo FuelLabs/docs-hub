@@ -25,6 +25,7 @@ export function SidebarSubmenu({
     label,
     slug: submenu![0].slug,
     isExternal,
+    breadcrumbs: [],
   };
 
   useEffect(() => {

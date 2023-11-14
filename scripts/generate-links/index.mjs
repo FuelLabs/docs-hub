@@ -43,13 +43,19 @@ async function main() {
       fs.writeFileSync(`${folderPath}/${key}.json`, json, 'utf-8');
       if (!key.includes('guides')) {
         if (key.includes('latest') || key === 'intro') {
+          const cleanKey = key.replace('latest-', '');
           allLatestOrders.push({
-            key: capitalize(key.replace('latest-', '')),
+            key: capitalize(cleanKey),
+            sidebarName: getSidebarName(cleanKey),
             links: sortedLinks,
           });
         }
         if (!key.includes('latest')) {
-          allOrders.push({ key: capitalize(key), links: sortedLinks });
+          allOrders.push({
+            key: capitalize(key),
+            sidebarName: getSidebarName(key),
+            links: sortedLinks,
+          });
         }
       }
     })
@@ -57,6 +63,27 @@ async function main() {
 
   handleAllOrders(allOrders, folderPath, 'all-orders');
   handleAllOrders(allLatestOrders, folderPath, 'all-latest-orders');
+}
+
+function getSidebarName(key) {
+  let newKey = key;
+  switch (key) {
+    case 'fuels-rs':
+      newKey = 'Rust SDK';
+      break;
+    case 'fuels-ts':
+      newKey = 'TypeScript SDK';
+      break;
+    case 'wallet':
+      newKey = 'Wallet SDK';
+      break;
+    case 'graphql':
+      newKey = 'GraphQL API';
+      break;
+    default:
+  }
+
+  return capitalize(newKey);
 }
 
 function handleAllOrders(allOrders, folderPath, filename) {
@@ -68,8 +95,8 @@ function handleAllOrders(allOrders, folderPath, filename) {
     'fuels-rs',
     'fuels-ts',
     'wallet',
-    'indexer',
     'graphql',
+    'indexer',
     'specs',
   ];
 

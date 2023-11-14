@@ -10,30 +10,7 @@ import { Doc } from '../lib/md-doc';
 import { Docs } from '../lib/md-docs';
 import { getVersions } from '../lib/versions';
 import { DocScreen } from '../screens/DocPage';
-import type { DocType, SidebarLinkItem } from '../types';
-
-export interface NavOrder {
-  key: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  links: any[];
-}
-
-export type VersionItem = {
-  version: string;
-  name: string;
-  category: string;
-  url: string;
-};
-
-export type Versions = {
-  Forc: VersionItem;
-  Sway: VersionItem;
-  Fuelup: VersionItem;
-  Indexer: VersionItem;
-  'Fuel Rust SDK': VersionItem;
-  'Fuel TS SDK': VersionItem;
-  'Fuel Wallet': VersionItem;
-};
+import type { DocType, NavOrder, SidebarLinkItem, Versions } from '../types';
 
 export type DocPageProps = {
   allNavs: NavOrder[];

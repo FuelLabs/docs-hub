@@ -41,14 +41,7 @@ export function Card({ guideInfo, cardInfo, cardName, isLatest }: CardProps) {
     >
       <FuelCard css={styles.card}>
         <FuelCard.Body>
-          {guideInfo && (
-            <Box.Flex gap={'$3'}>
-              {guideInfo.featured && (
-                <Text css={styles.featured}>Featured</Text>
-              )}
-              <Text css={styles.date}>{guideInfo.last_updated}</Text>
-            </Box.Flex>
-          )}
+          {guideInfo?.featured && <Text css={styles.featured}>Featured</Text>}
 
           <Heading
             iconSize={24}
@@ -100,9 +93,6 @@ const styles = {
     width: '100%',
     border: 'none',
     bg: '$transparent',
-  }),
-  date: cssObj({
-    fontSize: '$sm',
   }),
   featured: cssObj({
     color: '$intentsPrimary11',
