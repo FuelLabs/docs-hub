@@ -5,10 +5,7 @@ import { expect } from './fixtures';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let saved: any[] = [];
 
-export function checkIncrementAndReset(
-  initialIndex: number,
-  finalIndex: number
-) {
+export function checkIfIsIncremented(initialIndex: number, finalIndex: number) {
   console.log('INITIAL Index:', initialIndex);
   console.log('FINAL Index:', finalIndex);
   const savedInitial = saved[initialIndex];
