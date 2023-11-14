@@ -3,9 +3,12 @@ import type { Page } from '@playwright/test';
 import { expect } from './fixtures';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const saved: any[] = [];
+let saved: any[] = [];
 
-export function checkIfIsIncremented(initialIndex: number, finalIndex: number) {
+export function checkIncrementAndReset(
+  initialIndex: number,
+  finalIndex: number
+) {
   console.log('INITIAL Index:', initialIndex);
   console.log('FINAL Index:', finalIndex);
   const savedInitial = saved[initialIndex];
@@ -15,6 +18,7 @@ export function checkIfIsIncremented(initialIndex: number, finalIndex: number) {
   console.log('INITIAL:', initial);
   console.log('FINAL:', final);
   const isIncremented = final === initial + 1;
+  saved.length = 0;
   expect(isIncremented).toBeTruthy();
 }
 
