@@ -3,7 +3,7 @@ import type { Page } from '@playwright/test';
 import { expect } from './fixtures';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-let saved: any[] = [];
+const saved: any[] = [];
 
 export function checkIfIsIncremented(initialIndex: number, finalIndex: number) {
   console.log('INITIAL Index:', initialIndex);
