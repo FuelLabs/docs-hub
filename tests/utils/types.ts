@@ -9,6 +9,7 @@ export type Action =
   | Reload
   | GetByLocatorAndSave
   | ClickByRole
+  | WriteBySelector
   | WalletApprove
   | WalletApproveConnect
   | CheckIfIsIncremented;
@@ -89,6 +90,12 @@ export type ClickByRole = {
   name: 'clickByRole';
   role: string;
   elementName: string;
+};
+
+export type WriteBySelector = {
+  name: 'writeBySelector';
+  selector: string;
+  value: string;
 };
 
 // approves a pending transaction

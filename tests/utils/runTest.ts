@@ -81,6 +81,9 @@ export async function runTest(
           .getByRole(step['data-role'], { name: step['data-element-name'] })
           .click();
         break;
+      case 'writeBySelector':
+        await page.fill(step['data-selector'], 'hello world');
+        break;
       case 'walletApproveConnect':
         await walletConnect(context);
         break;

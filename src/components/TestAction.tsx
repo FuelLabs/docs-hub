@@ -50,6 +50,8 @@ export default function TestAction({ id, action }: TestActionProps) {
       data-element-name={
         action.name === 'clickByRole' ? action.elementName : null
       }
+      data-selector={action.name === 'writeBySelector' ? action.selector : null}
+      data-value={action.name === 'writeBySelector' ? action.value : null}
       data-initial-index={
         action.name === 'checkIfIsIncremented' ? action.initialIndex : null
       }
