@@ -4,26 +4,26 @@ import { setupFolders, startServers, stopServers } from './utils/setup';
 import { useFuelWallet } from './utils/wallet';
 
 test.describe('Guides', () => {
-  // test('dev quickstart', async ({ context, extensionId, page }) => {
-  //   const CONTRACT_PAGE_URL = 'guides/quickstart/building-a-smart-contract';
-  //   const FRONTEND_PAGE_URL = 'guides/quickstart/building-a-frontend';
+  test('dev quickstart', async ({ context, extensionId, page }) => {
+    const CONTRACT_PAGE_URL = 'guides/quickstart/building-a-smart-contract';
+    const FRONTEND_PAGE_URL = 'guides/quickstart/building-a-frontend';
 
-  //   // SETUP
-  //   stopServers();
-  //   await useFuelWallet(context, extensionId, page);
-  //   await setupFolders('fuel-project');
-  //   await startServers(page);
+    // SETUP
+    stopServers();
+    await useFuelWallet(context, extensionId, page);
+    await setupFolders('fuel-project');
+    await startServers(page);
 
-  //   // TEST CONTRACT
-  //   await runTest(page, context, CONTRACT_PAGE_URL);
+    // TEST CONTRACT
+    await runTest(page, context, CONTRACT_PAGE_URL);
 
-  //   // TEST FRONTEND
-  //   await runTest(page, context, FRONTEND_PAGE_URL);
+    // TEST FRONTEND
+    await runTest(page, context, FRONTEND_PAGE_URL);
 
-  //   // SHUT DOWN
-  //   stopServers();
-  //   context.close();
-  // });
+    // SHUT DOWN
+    stopServers();
+    context.close();
+  });
 
   test('intro to sway', async ({ context, extensionId, page }) => {
     const PREREQUISITES_PAGE_URL = 'guides/intro-to-sway/prerequisites';
@@ -40,19 +40,19 @@ test.describe('Guides', () => {
     // SETUP
     stopServers();
     await useFuelWallet(context, extensionId, page);
-    // await setupFolders('fuel-project');
+    await setupFolders('fuel-project');
     await startServers(page);
 
     // TEST CONTRACT
-    // await runTest(page, context, PREREQUISITES_PAGE_URL);
-    // await runTest(page, context, IMPORTS_PAGE_URL);
-    // await runTest(page, context, STRUCTS_PAGE_URL);
-    // await runTest(page, context, ABI_PAGE_URL);
-    // await runTest(page, context, STORAGE_PAGE_URL);
-    // await runTest(page, context, ERRORS_PAGE_URL);
-    // await runTest(page, context, FUNCTIONS_PAGE_URL);
-    // await runTest(page, context, CHECKPOINT_PAGE_URL);
-    // await runTest(page, context, FUELS_RS_PAGE_URL);
+    await runTest(page, context, PREREQUISITES_PAGE_URL);
+    await runTest(page, context, IMPORTS_PAGE_URL);
+    await runTest(page, context, STRUCTS_PAGE_URL);
+    await runTest(page, context, ABI_PAGE_URL);
+    await runTest(page, context, STORAGE_PAGE_URL);
+    await runTest(page, context, ERRORS_PAGE_URL);
+    await runTest(page, context, FUNCTIONS_PAGE_URL);
+    await runTest(page, context, CHECKPOINT_PAGE_URL);
+    await runTest(page, context, FUELS_RS_PAGE_URL);
     await runTest(page, context, FUELS_TS_PAGE_URL);
 
     // SHUT DOWN
