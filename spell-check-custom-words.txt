@@ -58,3 +58,6 @@ fuelTestnetInlineCode
 fuelTestnet
 faucetLink
 GQLPlaygroundLink
+api
+ethereum
+infura
