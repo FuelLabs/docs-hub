@@ -90,13 +90,13 @@ function handleAllOrders(allOrders, folderPath, filename) {
   const correctOrder = [
     'intro',
     'sway',
-    'fuelup',
-    'forc',
-    'fuels-rs',
     'fuels-ts',
+    'fuels-rs',
     'wallet',
     'graphql',
     'indexer',
+    'fuelup',
+    'forc',
     'specs',
   ];
 
