@@ -94,7 +94,7 @@ action={{
 
 ### Connecting to the contract
 
-Wrap your components with `FuelProvider` from `@fuel-wallet/react` to enable Fuel's custom React hooks for wallet functionalities.
+Wrap your components with `FuelProvider` from `@fuel-wallet/react` to enable Fuel's custom React hooks for wallet functionalities in `index.tsx`.
 
 <TestAction
 id="fe-index-all"
@@ -111,7 +111,7 @@ action={{
   lang="tsx"
 />
 
-At the top of the file, add your contract ID as a constant.
+At the top of the file, add your contract ID that you had earlier as a constant.
 
 <CodeImport
   file="../../examples/intro-to-sway/frontend/src/App.tsx"
@@ -284,7 +284,7 @@ action={{
   lang="tsx"
 />
 
-Finally, we need to add the `handleSubmit` function.
+We need to add the `handleSubmit` function.
 We can use the contract prop to call the `list_item` function and pass in the `price` and `metadata` from the form.
 
 <TestAction
@@ -674,7 +674,7 @@ action={{
 id="wait-after-connect2"
 action={{
   name: 'wait',
-  timeout: 1000
+  timeout: 5000
 }}
 />
 
