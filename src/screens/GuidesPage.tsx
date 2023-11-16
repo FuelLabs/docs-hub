@@ -1,6 +1,9 @@
 import { cssObj } from '@fuel-ui/css';
-import { Link as FuelLink, Box, Icon, Text } from '@fuel-ui/react';
+import { Box, Button } from '@fuel-ui/react';
+import { useState } from 'react';
+import { TAG_CATEGORIES } from '~/docs/guides/docs/categories';
 
+import { Card } from '../components/Card';
 import { Heading } from '../components/Heading';
 import type { GuideInfo } from '../pages/guides';
 
@@ -9,92 +12,81 @@ interface GuidesPageProps {
   isLatest: boolean;
 }
 
-interface GuideCardProps {
-  guideName: string;
-  guideInfo: GuideInfo;
-  // isLatest: boolean;
-}
-
-export function GuideCard({ guideName, guideInfo }: GuideCardProps) {
-  const cleanGuideName = guideName.replaceAll('_', '-');
-  return (
-    <Box key={guideName} css={styles.card}>
-      <Icon icon="Code" size={40} stroke={0.7} />
-      <Box.Stack>
-        <FuelLink href={`/guides/${cleanGuideName}`}>
-          <Heading as="h3">{guideInfo.title}</Heading>
-        </FuelLink>
-        <Text>{guideInfo.description}</Text>
-      </Box.Stack>
-    </Box>
-  );
-}
-
 export function GuidesPage({ guides }: GuidesPageProps) {
+  const [active, setActive] = useState<string>('all');
+
   return (
-    <Box css={styles.root}>
-      <Heading as="h1" data-rank="h1" id="fuel-docs">
-        Fuel Guides
+    <Box.Stack css={styles.root}>
+      <Heading as="h1" data-rank="h1" id="fuel-guides">
+        Guides
       </Heading>
-      <Box css={styles.cardList}>
+      <Box.Flex gap={'$3'} wrap={'wrap'} css={styles.categoryContainer}>
+        <Button
+          data-active={active === 'all'}
+          onClick={() => setActive('all')}
+          variant={'outlined'}
+          intent={'base'}
+          css={styles.category}
+          size={'sm'}
+        >
+          All Categories
+        </Button>
+        <Box.Centered>
+          <Box css={styles.separator}>&nbsp;</Box>
+        </Box.Centered>
+        {TAG_CATEGORIES.map((category) => (
+          <Button
+            key={category}
+            data-active={active === category}
+            onClick={() => setActive(category)}
+            variant={'outlined'}
+            intent={'base'}
+            css={styles.category}
+            size={'sm'}
+          >
+            {category}
+          </Button>
+        ))}
+      </Box.Flex>
+      <Box.Stack gap="$8">
         {Object.keys(guides).map((guideName) => {
           const guideInfo = guides[guideName];
-          return (
-            <GuideCard
-              key={guideName}
-              guideName={guideName}
-              guideInfo={guideInfo}
-              // isLatest={isLatest}
-            />
-          );
+          if (active === 'all' || guideInfo.tags.includes(active)) {
+            return (
+              <Card
+                key={guideName}
+                guideInfo={guideInfo}
+                cardName={guideName}
+              />
+            );
+          }
         })}
-      </Box>
-    </Box>
+      </Box.Stack>
+    </Box.Stack>
   );
 }
 
 const styles = {
   root: cssObj({
-    py: '$6',
-    px: '$6',
-
-    '@xl': {
-      px: '$14',
+    padding: '$2 $10 $10 $10',
+    '@md': {
+      padding: '$4 $40 $20 $40',
     },
   }),
-  cardList: cssObj({
-    display: 'grid',
-    gap: '$6',
-    py: '$8',
-
-    '@xl': {
-      gridTemplateColumns: 'repeat(2, minmax(300px, 1fr))',
-    },
+  separator: cssObj({
+    background: '$semanticLinkPrimaryColor',
+    height: '20px',
+    width: '1.5px',
   }),
-  card: cssObj({
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: '$6',
-    padding: '$4 $6 $6',
-    border: '1px solid $border',
-    borderRadius: '$md',
-
-    '& > .fuel_Icon': {
-      mt: '3px',
-      color: '$intentsBase8',
+  categoryContainer: cssObj({
+    marginBottom: '$10',
+  }),
+  category: cssObj({
+    '&:hover': {
+      border: '1px solid $semanticLinkPrimaryColor !important',
     },
-
-    h3: {
-      m: '$0',
-      pt: '$2',
-    },
-
-    '.fuel_List': {
-      mt: '$2',
-    },
-
-    '.fuel_ListItem a': {
-      color: '$textLink',
+    '&[data-active="true"]': {
+      border: '1px solid $semanticLinkPrimaryColor',
     },
   }),
 };

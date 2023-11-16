@@ -1,66 +1,144 @@
 import { cssObj } from '@fuel-ui/css';
 import type { ButtonLinkProps } from '@fuel-ui/react';
-import { Box, ButtonLink, Icon } from '@fuel-ui/react';
-import NextLink from 'next/link';
-import { useDocContext } from '~/src/hooks/useDocContext';
+import { Box, ButtonLink } from '@fuel-ui/react';
 
-import { styles as linkStyles, SidebarLink } from './SidebarLink';
-import { SidebarSubmenu } from './SidebarSubmenu';
+import { EXTERNAL_NAVIGATION_LINKS } from '../config/constants';
+import { useDocContext } from '../hooks/useDocContext';
+import type { SidebarLinkItem, NavOrder, Versions } from '../types';
 
-interface SidebarProps {
+import { SidebarLink, buttonStyles } from './SidebarLink';
+import { SidebarSection } from './SidebarSection';
+
+type SidebarProps = {
+  allNavs?: NavOrder[];
   onClick?: ButtonLinkProps['onClick'];
-}
+  parent?: {
+    label: string;
+    link: string;
+  };
+  links?: SidebarLinkItem[];
+  versions?: Versions;
+  isLatest: boolean;
+};
 
-export function Sidebar({ onClick }: SidebarProps) {
-  const { links, doc, versions } = useDocContext();
-  const version =
-    doc && doc.docsConfig ? versions[doc.docsConfig.title]?.version : null;
+export function Sidebar({
+  allNavs,
+  onClick,
+  versions,
+  isLatest,
+}: SidebarProps) {
+  const ctx = useDocContext();
+  const { links, doc } = ctx;
 
   return (
-    links && (
-      <Box.Stack as="nav" css={styles.root} className="Sidebar">
-        {doc.parent && (
-          <NextLink href={doc.parent.link} legacyBehavior passHref>
+    <Box.Stack as="nav" css={styles.root} className="Sidebar">
+      {!allNavs && (
+        <>
+          {doc.parent && (
             <ButtonLink
-              intent="base"
-              css={{ ...linkStyles.root, justifyContent: 'flex-start' }}
+              href={doc.parent.link}
+              intent={'base'}
+              leftIcon={'ArrowNarrowLeft'}
+              css={buttonStyles}
+              size={'sm'}
             >
-              <Icon
-                icon={Icon.is('ArrowBackUp')}
-                stroke={1}
-                color="textMuted"
-              />
-              Back to {doc.parent.label}
+              {doc.parent.label}
             </ButtonLink>
-          </NextLink>
-        )}
-        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-        {links.map((link: any, index: number) => {
-          return link.slug ? (
-            <SidebarLink onClick={onClick} key={link.slug} item={link} />
-          ) : (
-            <SidebarSubmenu
-              onClick={onClick}
-              key={link.subpath ? link.subpath + index : index}
-              slug={doc.slug}
-              category={doc.category}
-              {...link}
-            />
-          );
-        })}
-        {version && <Box css={styles.version}>Version: {version}</Box>}
-      </Box.Stack>
-    )
+          )}
+          <SidebarSection
+            book="guides"
+            bookName="guides"
+            links={links}
+            onClick={onClick}
+            docSlug={doc && doc.slug}
+          />
+        </>
+      )}
+
+      {allNavs && (
+        <>
+          {/* DOCS */}
+
+          {allNavs.map((navOrder) => {
+            const catIndex = isLatest ? 2 : 1;
+            let key = navOrder.links[0].slug.split('/')[catIndex];
+            if (key === 'sway') {
+              key = 'forc';
+            }
+            return (
+              <Box key={navOrder.key}>
+                <SidebarSection
+                  book={navOrder.key}
+                  bookName={navOrder.sidebarName}
+                  links={navOrder.links}
+                  onClick={onClick}
+                  docSlug={doc && doc.slug}
+                  version={
+                    versions &&
+                    Object.values(versions).find((v) => v.name.includes(key))
+                  }
+                />
+              </Box>
+            );
+          })}
+          <Box css={styles.links} />
+
+          {/* EXTERNAL LINKS */}
+          {EXTERNAL_NAVIGATION_LINKS.map((item) => (
+            <Box key={item.link}>
+              <SidebarLink
+                item={{
+                  slug: item.link,
+                  label: item.name,
+                  isExternal: true,
+                  breadcrumbs: [],
+                }}
+              />
+            </Box>
+          ))}
+        </>
+      )}
+    </Box.Stack>
   );
 }
 
 export const styles = {
   root: cssObj({
-    gap: '$1',
-    pb: '$4',
+    gap: '$3',
+    mb: '$32',
+    overflow: 'hidden',
+    wordBreak: 'break-word',
   }),
-  version: cssObj({
-    fontSize: '$sm',
-    padding: '20px 0 60px 0',
+  links: cssObj({
+    bg: '$intentsBase10',
+    height: '2px',
+    my: '$2',
+  }),
+  button: cssObj({
+    width: '100%',
+    justifyContent: 'flex-start',
+    py: '$2',
+    '&:hover': {
+      bg: '$intentsBase3 !important',
+    },
+  }),
+  sectionLink: cssObj({
+    '&:hover': {
+      color: '$intentsBase1 !important',
+      bg: '$semanticLinkPrimaryColor !important',
+      'html[class="fuel_light-theme"] &': {
+        color: '$intentsBase12 !important',
+        bg: '$green6 !important',
+      },
+      textDecoration: 'none',
+    },
+  }),
+  activeSectionLink: cssObj({
+    color: '$intentsBase1',
+    bg: '$semanticLinkPrimaryColor',
+    'html[class="fuel_light-theme"] &': {
+      color: '$intentsBase12',
+      bg: '$green6',
+    },
   }),
 };

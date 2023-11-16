@@ -19,6 +19,7 @@ export type Config = {
 export type DocType = {
   _raw: RawDocumentData;
   title: string;
+  originalSlug: string;
   slug: string;
   category?: string;
   pageLink: string;
@@ -29,6 +30,11 @@ export type DocType = {
   isLatest: boolean;
 };
 
+export type BreadCrumb = {
+  label: string;
+  link?: string;
+};
+
 export type SidebarLinkItem = {
   slug: string;
   isExternal: boolean;
@@ -36,6 +42,7 @@ export type SidebarLinkItem = {
   submenu?: SidebarLinkItem[];
   subpath?: string;
   label: string;
+  breadcrumbs: BreadCrumb[];
   prev?: SidebarLinkItem;
   next?: SidebarLinkItem;
 };
@@ -59,3 +66,26 @@ export interface Component {
 export interface ComponentsList {
   [key: string]: Component[];
 }
+
+export interface NavOrder {
+  key: string;
+  sidebarName: string;
+  links: any[];
+}
+
+export type VersionItem = {
+  version: string;
+  name: string;
+  category: string;
+  url: string;
+};
+
+export type Versions = {
+  Forc: VersionItem;
+  Sway: VersionItem;
+  Fuelup: VersionItem;
+  Indexer: VersionItem;
+  'Fuel Rust SDK': VersionItem;
+  'Fuel TS SDK': VersionItem;
+  'Fuel Wallet': VersionItem;
+};

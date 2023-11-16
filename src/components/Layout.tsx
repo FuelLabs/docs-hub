@@ -2,32 +2,40 @@ import { cssObj } from '@fuel-ui/css';
 import { Box, Grid } from '@fuel-ui/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { type ReactNode } from 'react';
+import { useRef, type ReactNode, useEffect } from 'react';
 
-import type { Config } from '../types';
+import type { Config, NavOrder, Versions } from '../types';
 
 import { Header } from './Header';
+import { SidebarContainer } from './SidebarContainer';
 
 type LayoutProps = {
   title?: string;
   children: ReactNode;
   isClean?: boolean;
-  hasHeadings?: boolean;
   config?: Config;
-  theme?: string;
-  category?: string | undefined;
   isLatest: boolean;
+  versions?: Versions;
+  allNavs?: NavOrder[];
 };
 
 export function Layout({
   title,
   children,
   isClean,
-  hasHeadings,
   config,
   isLatest,
+  versions,
+  allNavs,
 }: LayoutProps) {
   const router = useRouter();
+  const scrollContainer = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollContainer.current) {
+      scrollContainer.current.scrollTo({ top: 0 });
+    }
+  }, [router.asPath.split('#')[0]]);
 
   const titleText =
     title && router.pathname !== '/'
@@ -37,6 +45,12 @@ export function Layout({
   function getSlug() {
     return router.pathname.includes('/guides') ? 'guides' : '';
   }
+
+  const slug = config?.slug
+    ? config.slug.includes('guides/')
+      ? router.asPath
+      : config.slug
+    : getSlug();
 
   return (
     <>
@@ -74,17 +88,26 @@ export function Layout({
         ></meta>
       </Head>
       <Box css={styles.root}>
-        <Header
-          active={config?.slug ? config.slug : getSlug()}
-          title={config?.title}
-          isLatest={isLatest}
-        />
-        <Grid
-          data-headings={hasHeadings}
-          data-clean={Boolean(isClean)}
-          css={styles.grid}
-        >
-          {children}
+        <Grid data-clean={Boolean(isClean)} css={styles.grid}>
+          {!isClean && (
+            <Grid.Item>
+              <SidebarContainer
+                versions={versions}
+                allNavs={allNavs}
+                isLatest={isLatest}
+              />
+            </Grid.Item>
+          )}
+          <Grid.Item css={styles.right} ref={scrollContainer}>
+            <Header
+              active={slug}
+              title={config?.title}
+              isLatest={isLatest}
+              versions={versions}
+              allNavs={allNavs}
+            />
+            {children}
+          </Grid.Item>
         </Grid>
       </Box>
     </>
@@ -93,44 +116,48 @@ export function Layout({
 
 const styles = {
   root: cssObj({
+    position: 'fixed',
+    top: 0,
     width: '100vw',
-    minHeight: '100vh',
+    height: '100vh',
+    boxSizing: 'border-box',
+    overflow: 'hidden',
+    backgroundColor: '$bodyColor',
+    'html[class="fuel_light-theme"] &': {
+      backgroundColor: 'white',
+    },
+  }),
+  right: cssObj({
+    height: '100vh',
+    boxSizing: 'border-box',
+    overflowX: 'auto',
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
   }),
   grid: cssObj({
-    // Min height is 100vh - header height
-    minHeight: 'calc(100vh - 69px)',
-
+    position: 'sticky',
+    top: 0,
+    height: '100vh',
+    maxWidth: '1300px',
+    gridTemplateColumns: '1fr',
+    mx: 'auto',
+    boxSizing: 'border-box',
     '& .Layout--section': {
-      maxWidth: '1000px',
-      width: '100vw',
       boxSizing: 'border-box',
-      mx: 'auto',
+      padding: '0 $8 $8 $8',
+      display: 'block',
+
+      '@md': {
+        maxWidth: '736px',
+        mx: 'auto',
+      },
     },
 
-    '@xl': {
-      gridTemplateColumns: '250px 1fr',
-      gridColumnGap: '$24',
-      '& .Layout--section': {
-        width: 'calc(100vw - 442px)',
+    '@lg': {
+      '&[data-clean="false"]': {
+        gridTemplateColumns: '310px 1fr',
       },
-      '&[data-headings="true"]': {
-        gridTemplateColumns: '250px 1fr 220px',
-        '& .Layout--section': {
-          width: 'calc(100vw - 662px)',
-        },
-      },
-      '&[data-clean="true"]': {
-        gridTemplateColumns: '1fr',
-        '& .Layout--section': {
-          px: '$14',
-        },
-      },
-    },
-    '& .Layout--section a, & .Layout--section a:visited': {
-      color: 'currentColor',
-    },
-    '& .Layout--section *:first-child': {
-      mt: '$0',
     },
   }),
 };
