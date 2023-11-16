@@ -32,7 +32,7 @@ export function Sidebar({
 
   return (
     <Box.Stack as="nav" css={styles.root} className="Sidebar">
-      {!allNavs && (
+      {!allNavs && doc && (
         <>
           {doc.parent && (
             <ButtonLink
