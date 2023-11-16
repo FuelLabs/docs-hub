@@ -28,13 +28,30 @@ export class Doc {
   config: Config;
 
   constructor(slug: string[], mdDocs: MdDoc[]) {
-    const item = Docs.findDoc(slug, mdDocs);
+    const isIntroQuickstartContract =
+      slug[slug.length - 1] === 'quickstart-contract';
+    const isIntroQuickstartFrontend =
+      slug[slug.length - 1] === 'quickstart-frontend';
 
+    let actualSlug = slug;
+    if (isIntroQuickstartContract) {
+      actualSlug = ['guides', 'quickstart', 'building-a-smart-contract'];
+    } else if (isIntroQuickstartFrontend) {
+      actualSlug = ['guides', 'quickstart', 'building-a-frontend'];
+    }
+
+    const item = Docs.findDoc(actualSlug, mdDocs);
     if (!item) {
       throw new Error(`${slug} not found`);
     }
 
-    const config = this.#getConfig(item.slug);
+    if (isIntroQuickstartContract) {
+      item.title = 'Quickstart Contract';
+    } else if (isIntroQuickstartFrontend) {
+      item.title = 'Quickstart Frontend';
+    }
+
+    const config = this.#getConfig(slug.join('/'));
     const splitPath = item._raw.flattenedPath.split('/');
     splitPath.splice(0, 2);
     splitPath.pop();
@@ -44,10 +61,10 @@ export class Doc {
     this.md = item;
     this.config = config;
 
+    const split = item.slug.split('/');
     let category = item.category;
     if (!category && item.slug.includes('docs/')) {
       const isLatest = item.slug.includes('/latest/');
-      const split = item.slug.split('/');
       const index = isLatest ? 3 : 2;
       const isIndex = split.length === index;
       category = split[isIndex ? index - 1 : index].replaceAll('-', ' ');
@@ -56,6 +73,7 @@ export class Doc {
     const doc = {
       pageLink,
       _raw: item._raw,
+      originalSlug: slug.join('/'),
       slug: item.slug,
       title: this.#getTitle(item.title),
       parent: item.parent ?? null,
@@ -106,6 +124,7 @@ export class Doc {
         ...rehypePlugins,
         rehypeExtractHeadings({
           headings: this.item.headings,
+          slug: this.item.slug,
         }),
       ],
     });
@@ -150,22 +169,34 @@ export class Doc {
   }
 
   get navLinks() {
-    const slug = this.#parseSlug(this.item.slug);
-    const links = this.sidebarLinks(this.item.slug);
-    const flatLinks = links
-      .flatMap((i) => (i.submenu || i) as SidebarLinkItem | SidebarLinkItem[])
-      .map((i) => ({ ...i, slug: this.#parseSlug(i.slug) }));
+    const slug = this.#parseSlug(this.item.originalSlug);
+    const links = this.sidebarLinks(this.item.originalSlug);
 
-    const idx = flatLinks.findIndex((i) => {
+    const result = [];
+    for (const link of links) {
+      if (link.submenu) {
+        for (const subItem of link.submenu) {
+          const newItem = subItem;
+          (newItem.slug = this.#parseSlug(subItem.slug) ?? subItem.slug),
+            result.push(newItem);
+        }
+      } else {
+        const newItem = link;
+        (newItem.slug = this.#parseSlug(link.slug) ?? link.slug),
+          result.push(newItem);
+      }
+    }
+
+    const idx = result.findIndex((i) => {
       if (!i.slug) return false;
       return (
         `docs/${i.slug}`.startsWith(slug || '') || i.slug.startsWith(slug || '')
       );
     });
 
-    const prev = flatLinks[idx - 1] ?? null;
-    const next = idx + 1 < flatLinks.length ? flatLinks[idx + 1] ?? null : null;
-    const current = flatLinks[idx];
+    const prev = idx > 0 ? result[idx - 1] : null;
+    const next = idx + 1 < result.length ? result[idx + 1] : null;
+    const current = result[idx];
     const link = { prev, next, ...current };
     return link;
   }
@@ -196,7 +227,10 @@ export class Doc {
       plugins = plugins.concat([[codeExamples, { filepath }] as any]);
     } else if (this.md.slug.startsWith('docs/latest/graphql/')) {
       plugins = plugins.concat([[latestCodeExamples, { filepath }] as any]);
-    } else if (this.md.slug.includes('guides')) {
+    } else if (
+      this.md.slug.includes('guides') ||
+      this.md.slug.includes('/intro/')
+    ) {
       plugins = plugins.concat([[codeImport, { filepath }] as any]);
       plugins = plugins.concat([[textImport, { filepath }] as any]);
     }

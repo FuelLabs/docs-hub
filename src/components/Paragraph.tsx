@@ -11,8 +11,11 @@ const styles = {
   root: cssObj({
     mt: '$3',
     mb: '$3',
-    textSize: 'base',
+    fontSize: '16px',
     lineHeight: '1.7',
     wordWrap: 'break-word',
+    'html[class="fuel_light-theme"] &': {
+      color: '$intentsBase12',
+    },
   }),
 };
