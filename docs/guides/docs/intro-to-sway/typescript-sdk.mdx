@@ -129,7 +129,7 @@ Webhooks from the Fuel Wallet package are used in order to connect our wallet to
   lang="tsx"
 />
 
-The state variable called `wallets` with the `useState` hook will have the type `WalletLocked`.
+The `wallet` variable from the `useWallet` hook will have the type `FuelWalletLocked`.
 
 You can think of a locked wallet as a user wallet you can't sign transactions for, and an unlocked wallet as a wallet where you have the private key and are able to sign transactions.
 
