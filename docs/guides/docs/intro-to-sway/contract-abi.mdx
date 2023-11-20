@@ -29,7 +29,7 @@ action={{
 
 Don't be worried about understanding the specifics of each function at this moment. We will dive into detailed explanations in the "Functions" section.
 
-### Functions
+## Functions Structure
 
 A function is defined using the `fn` keyword. In Sway, snake case is the convention, so instead of naming a function `myFunction`, you would name it `my_function`.
 
@@ -37,4 +37,4 @@ If the function returns a value, its return type must be defined using a skinny 
 
 If a function either reads from or writes to storage, you need to specify the access level above the function using annotations like `#[storage(read)]` or `#[storage(read, write)]`.
 
-For functions that are expected to receive funds when called, such as the `buy_item` function, the `#[payable]` annotation should be used.
+For functions that are expected to receive funds when called, such as the `buy_item` function, the `#[payable]` annotation is required.

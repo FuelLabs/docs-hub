@@ -56,7 +56,7 @@ enum Result<T, E> {
 }
 ```
 
-In Sway, you can define a variable using either `let` or `const`. It's essential to declare types when they can't be automatically inferred by the compiler.
+In Sway, you can define a variable using either `let` or `const`.
 
 <CodeImport
   file="../../examples/intro-to-sway/contract/src/main.sw"
@@ -122,9 +122,9 @@ Next, we'll utilize the `require` statement to ensure the sent asset is the corr
 
 The `require` statement accepts two arguments: a condition, and a value that's logged when the condition is false. Should the condition evaluate as false, the entire transaction is rolled back, leaving no changes.
 
-In this case, the condition checks if the `asset_id` matches the `BASE_ASSET_ID`—the default asset associated with the base blockchain, imported from the standard library.
+In this case, the condition checks if the `asset_id` matches the `BASE_ASSET_ID`—the default asset associated with the base blockchain, imported from the standard library. For example, if the base blockchain is Ethereum, the base asset would be ETH.
 
-If there's a mismatch in the asset, or if, for instance, someone attempts to purchase an item using a different coin, we'll trigger the custom error previously defined, passing along the `asset_id`.
+If there's a mismatch in the asset, for instance, if someone attempts to purchase an item using a different coin, we'll trigger the custom error previously defined, passing along the `asset_id`.
 
 <CodeImport
   file="../../examples/intro-to-sway/contract/src/main.sw"
