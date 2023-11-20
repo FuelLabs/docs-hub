@@ -32,7 +32,7 @@ Our first function enables sellers to list an item for sale. They can specify th
 
 ### Updating list storage
 
-The initial step involves incrementing the `item_counter` in storage, which will serve as the item's ID. In Sway, the standard library provides `read()`, `write()`, and `try_read()` methods to access or manipulate contract storage. It's advisable to use `try_read()` when possible to prevent potential issues arising from accessing uninitialized storage. In this process, we read the current count of listed items, modify it, and then store the updated count back into storage.
+The initial step involves incrementing the `item_counter` in storage, which will serve as the item's ID. In Sway, all storage variables are contained within the `storage` keyword, ensuring clarity and preventing conflicts with other variable names. This also allows developers to easily track when and where storage is accessed or altered. The standard library in Sway provides `read()`, `write()`, and `try_read()` methods to access or manipulate contract storage. It's advisable to use `try_read()` when possible to prevent potential issues arising from accessing uninitialized storage. In this case, we read the current count of listed items, modify it, and then store the updated count back into storage, making use of the well-organized and conflict-free storage system.
 
 When a function returns an `Option` or `Result` type, we can use `unwrap()` to access its inner value. For instance, `try_read()` returns an `Option` type. If it yields `Some`, we get the contained value; but if it returns `None`, the contract call is immediately halted.
 

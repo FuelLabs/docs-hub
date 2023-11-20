@@ -53,6 +53,10 @@ function extractLines(
   }
 }
 
+function escapeRegExp(string: string): string {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 function extractCommentBlock(
   content: string,
   comment: string,
@@ -64,18 +68,26 @@ function extractCommentBlock(
   let lineEnd = -1;
   const anchorStack: string[] = [];
 
-  const endCommentType = getEndCommentType(commentType);
+  const endCommentType = getEndCommentType(commentType) || '';
 
-  const startAnchor = `${commentType} ANCHOR: ${comment}${endCommentType}`;
-  const endAnchor = `${commentType} ANCHOR_END: ${comment}${endCommentType}`;
+  const startAnchorRegex = new RegExp(
+    `${escapeRegExp(commentType)}\\s*ANCHOR\\s*:\\s*${escapeRegExp(
+      comment
+    )}\\s*${escapeRegExp(endCommentType)}`
+  );
+  const endAnchorRegex = new RegExp(
+    `${escapeRegExp(commentType)}\\s*ANCHOR_END\\s*:\\s*${escapeRegExp(
+      comment
+    )}\\s*${escapeRegExp(endCommentType)}`
+  );
 
   for (let i = 0; i < lines.length; i++) {
-    if (lines[i].includes(startAnchor)) {
+    if (startAnchorRegex.test(lines[i])) {
       if (lineStart === -1) {
         lineStart = i;
       }
       anchorStack.push('anchor');
-    } else if (lines[i].includes(endAnchor)) {
+    } else if (endAnchorRegex.test(lines[i])) {
       anchorStack.pop();
       if (anchorStack.length === 0 && lineEnd === -1) {
         lineEnd = i;

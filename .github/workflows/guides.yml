@@ -40,8 +40,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        # note: must match the names in test.spec.ts 
         guide:
-          - "dev quickstart"
+          - "dev quickstart" 
           - "intro to sway"
 
     steps:
