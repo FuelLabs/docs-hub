@@ -47,7 +47,7 @@ When a function returns an `Option` or `Result` type, we can use `unwrap()` to a
 
 Next, we'll retrieve the `Identity` of the account listing the item.
 
-To obtain the `Identity`, utilize the `msg_sender` function from the standard library. The `msg_sender` represents the address of the entity (be it a user address or another contract address) initiating the current function call. 
+To obtain the `Identity`, utilize the `msg_sender` function from the standard library. The `msg_sender` represents the address of the entity (be it a user address or another contract address) initiating the current function call.
 
 This function yields a `Result`, which is an enum type that can either be OK or an error. Use the `Result` type when anticipating a value that might result in an error. For example in the case of `msg_sender` when an external caller is involved and the coin input owners differ, identifying the caller becomes impossible. In such edge cases, an `Err(AuthError)` is returned.
 
