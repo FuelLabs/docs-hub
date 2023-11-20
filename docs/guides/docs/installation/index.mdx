@@ -44,20 +44,20 @@ toolchains and keep them updated. It makes building and maintaining Sway applica
 
 ### Running `fuelup-init`
 
-{/*ANCHOR: install_fuelup_command */}
+{/*install_fuelup:example:start*/}
 To install the Fuel toolchain, you'll use the `fuelup-init` script.
 This will install `forc`, `forc-client`, `forc-fmt`, `forc-lsp`, `forc-wallet` as well as `fuel-core` in `~/.fuelup/bin`.
-{/* ANCHOR_END: install_fuelup_command*/}
+{/*install_fuelup:example:end*/}
 
 👉 Just paste the following line in your terminal and press *Enter*.
 
-{/*install_fuelup_command:example:start*/}
+{/*ANCHOR: install_fuelup_command*/}
 
 ```sh
 curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh
 ```
 
-{/*install_fuelup_command:example:end*/}
+{/*ANCHOR_END: install_fuelup_command*/}
 
 > 🚧 Be aware that currently  we do not natively support Windows. If you wish to use `fuelup` on Windows, please use Windows Subsystem for Linux.
 
