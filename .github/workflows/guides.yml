@@ -33,13 +33,18 @@ jobs:
       - name: Lint Check
         run: markdownlint --config .markdownlint.yaml --ignore-path .markdownlintignore '**/*.mdx'
 
-  ## QUICKSTART TEST
-  quickstart-test:
+  ## QUICKSTART E2E TESTS
+  quickstart-e2e-tests:
     timeout-minutes: 30
-    name: build-quickstart-contract
+    name: Quickstart E2E Tests
     runs-on: ubuntu-latest
-    steps:
+    strategy:
+      matrix:
+        guide:
+          - "dev quickstart"
+          - "intro to sway"
 
+    steps:
     # SETUP
       - uses: actions/checkout@v3
         with:
@@ -74,29 +79,13 @@ jobs:
       - name: Set Default Beta-4 Toolchain
         run: fuelup toolchain install beta-4 && fuelup default beta-4
     
-    # BUILD & RUN QUICKSTART CONTRACT TEST
-      - name: Build Contract
-        run: forc build --path ./docs/guides/examples/quickstart/counter-contract
-      - name: Run contract tests
-        uses: actions-rs/cargo@v1
-        with:
-            command: test
-            args: --manifest-path ./docs/guides/examples/quickstart/counter-contract/Cargo.toml
-      - name: Check Cargo fmt & clippy
-        run: |
-            cd docs/guides/examples/quickstart/counter-contract
-            cargo fmt --all --check
-            cargo clippy --all-targets --all-features
-      
-      # RUN QUICKSTART "dev quickstart" E2E TEST
-      - name: Run Playwright tests for "dev quickstart"
-        run: xvfb-run --auto-servernum pnpm test:guides --grep "dev quickstart"
-      # RUN QUICKSTART "intro to sway" E2E TEST
-      - name: Run Playwright tests for "intro to sway"
-        run: xvfb-run --auto-servernum pnpm test:guides --grep "intro to sway"
+    # RUN E2E TESTS
+      - name: Run Playwright tests for ${{ matrix.guide }}
+        run: xvfb-run --auto-servernum pnpm test:guides --grep "${{ matrix.guide }}"
+
       - uses: actions/upload-artifact@v2
         if: always()
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.guide }}
           path: playwright-report/
           retention-days: 30
