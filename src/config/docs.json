@@ -1,4 +1,13 @@
 {
+  "intro": {
+    "title": "Intro",
+    "slug": "intro",
+    "repository": "https://github.com/FuelLabs/docs-hub",
+    "ogTags": {
+      "description": "Introduction to the Fuel Network",
+      "image": ""
+    }
+  },
   "guides": {
     "title": "Guides",
     "slug": "guides",

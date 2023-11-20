@@ -23,8 +23,8 @@ export default function App({ Component, pageProps }: AppProps) {
         <Provider>
           <style jsx global>{`
             :root {
-              --fonts-sans: ${inter.style.fontFamily};
-              --fonts-display: ${inter.style.fontFamily};
+              --fonts-sans: system-ui, ${inter.style.fontFamily}, sans-serif;
+              --fonts-display: system-ui, ${inter.style.fontFamily}, sans-serif;
               --fonts-mono: ${inconsolata.style.fontFamily};
             }
           `}</style>

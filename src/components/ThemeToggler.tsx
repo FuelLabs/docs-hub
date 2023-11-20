@@ -25,8 +25,8 @@ export default function ThemeToggler() {
 
   return (
     <Box ref={ref} data-theme={theme} css={styles.root} onClick={handleChange}>
-      <Icon icon="SunFilled" size={20} stroke={1.2} />
-      <Icon icon="MoonStars" size={20} stroke={1.2} />
+      <Icon icon="SunFilled" css={styles.icon} stroke={1.2} />
+      <Icon icon="MoonStars" css={styles.icon} stroke={1.2} />
     </Box>
   );
 }
@@ -72,6 +72,14 @@ const styles = {
         visibility: 'hidden',
         opacity: 0,
       },
+    },
+  }),
+  icon: cssObj({
+    height: '16px',
+    width: '16px',
+    '@sm': {
+      height: '20px',
+      width: '20px',
     },
   }),
 };

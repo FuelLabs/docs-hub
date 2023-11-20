@@ -11,12 +11,12 @@ export default function VersionDropdown({ isLatest }: { isLatest: boolean }) {
   const router = useRouter();
   const setVersion = useSetVersion();
   const splitPath = router.asPath.split('/');
-  const isDoc = router.asPath.includes('docs');
+  const isDoc =
+    router.asPath.includes('docs') && !router.asPath.includes('/intro/');
   const bookIndex = isLatest ? 3 : 2;
   return (
     <Dropdown isOpen={opened} onOpenChange={setOpened}>
       <Dropdown.Trigger
-        size="sm"
         intent="base"
         variant="outlined"
         css={
@@ -74,7 +74,10 @@ export default function VersionDropdown({ isLatest }: { isLatest: boolean }) {
 
 const styles = {
   menuItem: cssObj({
-    fontSize: '$sm',
+    fontSize: '$xs',
+    '@sm': {
+      fontSize: '$sm',
+    },
     justifyContent: 'space-between',
   }),
   dropdownMenu: cssObj({
@@ -84,12 +87,28 @@ const styles = {
   trigger: cssObj({
     border: 'none',
     height: '100%',
+    fontSize: '$xs',
+    width: '140px',
+    '@sm': {
+      fontSize: '$sm',
+      width: '154px',
+    },
     '&:hover': {
       border: 'none !important',
-      bg: '$gray4 !important',
+      'html[class="fuel_light-theme"] &': {
+        bg: '$gray4 !important',
+      },
+      'html[class="fuel_dark-theme"] &': {
+        bg: '#151718 !important',
+      },
     },
   }),
   triggerOpen: cssObj({
-    bg: '$gray4',
+    'html[class="fuel_light-theme"] &': {
+      bg: '$gray4 !important',
+    },
+    'html[class="fuel_dark-theme"] &': {
+      bg: '#151718 !important',
+    },
   }),
 };

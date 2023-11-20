@@ -1,24 +1,45 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box, Icon, Text } from '@fuel-ui/react';
+import { Box, Text } from '@fuel-ui/react';
 import NextLink from 'next/link';
-import type { DocType } from '~/src/types';
 
-type BreadcrumbProps = {
-  doc: DocType;
+import { useDocContext } from '../hooks/useDocContext';
+import { capitalize } from '../lib/str';
+
+type LabelProps = {
+  label: string;
 };
 
-export function Breadcrumb({ doc }: BreadcrumbProps) {
+function Label({ label }: LabelProps) {
+  return <Text as="span">{capitalize(label.replaceAll(/[_-]/g, ' '))}</Text>;
+}
+
+export function Breadcrumb() {
+  const ctx = useDocContext();
+  const { docLink } = ctx;
+  const breadcrumbs = docLink.breadcrumbs;
+
   return (
-    <Box.Flex css={styles.root}>
-      <Text as="span" rightIcon={Icon.is('CaretRight')}>
-        <NextLink href="/">Docs</NextLink>
-      </Text>
-      {doc.category && (
-        <Text as="span" rightIcon={Icon.is('CaretRight')}>
-          {doc.category}
-        </Text>
-      )}
-      <Text as="span">{doc.title}</Text>
+    <Box.Flex wrap={'wrap'} css={styles.root}>
+      {breadcrumbs &&
+        breadcrumbs.map((breadcrumb, index) => {
+          if (breadcrumb.link) {
+            return (
+              <Box css={styles.label} key={`${breadcrumb.label}`}>
+                <NextLink href={breadcrumb.link}>
+                  <Label label={breadcrumb.label} />
+                </NextLink>
+                {index < breadcrumbs.length - 1 && ' / '}
+              </Box>
+            );
+          } else {
+            return (
+              <Box key={`${index}-${breadcrumb.label}`}>
+                <Label label={breadcrumb.label} />
+                {index < breadcrumbs.length - 1 && ' / '}
+              </Box>
+            );
+          }
+        })}
     </Box.Flex>
   );
 }
@@ -26,14 +47,31 @@ export function Breadcrumb({ doc }: BreadcrumbProps) {
 const styles = {
   root: cssObj({
     alignItems: 'center',
+    mt: '$4',
     gap: '$2',
+    '@lg': {
+      display: 'none',
+    },
 
     span: {
-      color: '$intentsBase8',
+      color: '$intentsBase11',
       fontSize: '$sm',
     },
     '& > span:last-of-type': {
-      color: '$intentsBase10',
+      color: '$intentsBase9',
+    },
+  }),
+  label: cssObj({
+    a: {
+      fontWeight: '550',
+    },
+    'a:hover': {
+      textDecoration: 'none !important',
+    },
+    '.fuel_Text': {
+      '&:hover': {
+        color: '$semanticLinkPrimaryColor !important',
+      },
     },
   }),
 };

@@ -1,45 +1,49 @@
 import { readFileSync } from 'fs';
 import type { GetStaticProps } from 'next';
 import { join } from 'path';
-import { useState, useEffect } from 'react';
 
-import { Layout } from '../components/Layout';
+import { allMdDocs } from '../../.contentlayer/generated';
 import { DOCS_DIRECTORY } from '../config/constants';
-import { useVersion } from '../hooks/useVersion';
-import { HomePage } from '../screens/HomePage';
+import { Doc } from '../lib/md-doc';
+import { getVersions } from '../lib/versions';
 
-import type { GuidesProps } from './guides';
+import type { DocPageProps } from './[...slug]';
+import DocPage from './[...slug]';
 
-interface HomeProps extends GuidesProps {
-  theme: string;
-}
-
-export default function Home({ theme, guides }: HomeProps) {
-  const [mounted, setIsMounted] = useState<boolean>(false);
-  const version = useVersion();
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  const isLatest = mounted && version === 'Latest';
-
-  return (
-    <Layout title="Fuel Docs" isClean theme={theme} isLatest={isLatest}>
-      <HomePage guides={guides} isLatest={isLatest} />
-    </Layout>
-  );
+export default function HomePage(props: DocPageProps) {
+  return <DocPage {...props} />;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getStaticProps: GetStaticProps<any> = async () => {
-  const guidesPath = join(DOCS_DIRECTORY, `./guides/docs/guides.json`);
-  // const latestGuidesPath = join(
-  //   LATEST_DOCS_DIRECTORY,
-  //   `./guides/docs/guides.json`
-  // );
-  const guides = JSON.parse(readFileSync(guidesPath, 'utf8'));
-  // const latestGuides = JSON.parse(readFileSync(latestGuidesPath, 'utf8'));
+  const slugArray = ['docs', 'intro', 'what-is-fuel'];
+  const doc = new Doc(slugArray, allMdDocs);
+  const slug = slugArray.join('/');
+  const code = await doc.getCode();
+  const allNavsPath = join(
+    DOCS_DIRECTORY,
+    `../src/generated/sidebar-links/all-orders.json`
+  );
+  const allLatestNavsPath = join(
+    DOCS_DIRECTORY,
+    `../src/generated/sidebar-links/all-latest-orders.json`
+  );
+  const allNavs = JSON.parse(readFileSync(allNavsPath, 'utf8'));
+  const allLatestNavs = JSON.parse(readFileSync(allLatestNavsPath, 'utf8'));
+  const versions = getVersions(false);
+  const latestVersions = getVersions(true);
 
-  return { props: { guides } };
+  return {
+    props: {
+      allNavs,
+      allLatestNavs,
+      code,
+      md: doc.md,
+      doc: doc.item,
+      links: doc.sidebarLinks(slug),
+      docLink: doc.navLinks,
+      versions,
+      latestVersions,
+    },
+  };
 };

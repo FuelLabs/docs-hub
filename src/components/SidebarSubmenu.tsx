@@ -1,6 +1,7 @@
 import { cssObj } from '@fuel-ui/css';
 import type { ButtonLinkProps } from '@fuel-ui/react';
-import { Box, Icon, IconButton, List } from '@fuel-ui/react';
+import { Box, List } from '@fuel-ui/react';
+import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import type { SidebarLinkItem } from '~/src/types';
 
@@ -8,56 +9,48 @@ import { SidebarLink } from './SidebarLink';
 
 interface SidebarSubmenuProps extends SidebarLinkItem {
   onClick?: ButtonLinkProps['onClick'];
-  category: string;
 }
 
 export function SidebarSubmenu({
   label,
+  isExternal,
   hasIndex,
   submenu,
-  isExternal,
-  slug,
-  category,
   onClick,
 }: SidebarSubmenuProps) {
-  const [isOpened, setIsOpened] = useState<boolean>(
-    slug.includes('/guides/') || label.toLowerCase() === category
-  );
+  const pathname = usePathname();
+  const [isOpened, setIsOpened] = useState<boolean>();
+
   const thisItem = {
     label,
     slug: submenu![0].slug,
     isExternal,
+    breadcrumbs: [],
   };
 
   useEffect(() => {
-    if (slug.includes('/guides/')) {
+    if (pathname.includes('/guides/')) {
       setIsOpened(true);
     } else {
-      const active =
-        label.toLowerCase().replaceAll('-', ' ') ===
-        category.toLowerCase().replaceAll('-', ' ');
+      let actualSlug = thisItem.slug;
+      if (!hasIndex) {
+        const split = thisItem.slug.split('/');
+        split.pop();
+        actualSlug = split.join('/');
+      }
+      const active = pathname.startsWith(`/${actualSlug}/`);
       setIsOpened(active);
     }
-  }, [slug, label, category]);
+  }, [pathname]);
 
   return (
     <Box.Flex css={styles.root}>
-      <Box.Flex justify={'space-between'}>
-        <SidebarLink
-          intent="base"
-          onClick={onClick}
-          item={thisItem}
-          isActiveMenu={isOpened}
-        />
-        <IconButton
-          size="xs"
-          aria-label="Button"
-          intent="base"
-          variant="link"
-          onClick={() => setIsOpened(!isOpened)}
-          icon={isOpened ? Icon.is('ChevronUp') : Icon.is('ChevronDown')}
-        />
-      </Box.Flex>
+      <SidebarLink
+        intent="base"
+        onClick={onClick}
+        item={thisItem}
+        isActiveMenu={isOpened}
+      />
 
       {isOpened && (
         <List>
@@ -69,7 +62,6 @@ export function SidebarSubmenu({
                 </List.Item>
               );
             }
-            return <div key={index} />;
           })}
         </List>
       )}
@@ -80,28 +72,5 @@ export function SidebarSubmenu({
 const styles = {
   root: cssObj({
     flexDirection: 'column',
-
-    '.fuel_List': {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '$1',
-      mt: '$1',
-      pl: '$3',
-      ml: '$1',
-      borderLeft: '1px solid $border',
-    },
-    '.fuel_ListItem': {
-      width: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '$0',
-    },
-    '.fuel_ListItem a': {
-      display: 'block',
-      width: '100%',
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-    },
   }),
 };
