@@ -97,7 +97,7 @@ Note that using other network endpoints will result in the relayer failing to st
 Generate a new P2P key pairing by running the following command:
 
 ```sh
-$ fuel-core-keygen new --key-type peering
+fuel-core-keygen new --key-type peering
 {
   "peer_id":"16Uiu2HAm8kCaJaaKTujrSwdBxyCELTY979KYaP9YBkWVLTGTo7Bf",
   "secret":"361b3275a3dd4150ea4c786b8dff7822205331e56ac2e73c32b17cb295978c8c",
@@ -328,7 +328,7 @@ TODO Add `--enable-relayer` to list of arguments later
 */}
 
 ```sh
-$ fuel-core run \
+fuel-core run \
 --service-name {ANY_SERVICE_NAME} \
 --keypair {P2P_SECRET} \
 --relayer {RPC_ENDPOINT} \

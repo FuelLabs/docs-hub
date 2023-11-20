@@ -7,6 +7,10 @@
     "title": "Developer Quickstart",
     "description": "Get started by building a counter dApp in Fuel."
   },
+  "intro_to_sway": {
+    "title": "Introduction to Sway",
+    "description": "Learn Sway fundamentals by building a marketplace dApp."
+  },
   "running_a_node": {
     "title": "Running a Node",
     "description": "Run a local Fuel node."
@@ -14,9 +18,5 @@
   "migration_guide": {
     "title": "Migration Guide",
     "description": "Sway and SDK's breaking changes reference."
-  },
-  "intro_to_sway": {
-    "title": "Introduction to Sway",
-    "description": "Learn Sway fundamentals by building a marketplace dApp."
   }
 }

@@ -24,13 +24,13 @@ The Fuel toolchain is built on top of the Rust programming language. To install 
 
 Run the following command in your shell; this downloads and runs `rustup-init.sh`, which in turn downloads and runs the correct version of the `rustup-init` executable for your platform.
 
-{/*install_rust_command:example:start*/}
+{/* ANCHOR: install_rust_command */}
 
 ```console
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-{/*install_rust_command:example:end*/}
+{/* ANCHOR: install_rust_command */}
 
 Check the official Rust documentation to get more information on [installing the Rust toolchain](https://www.rust-lang.org/tools/install).
 
@@ -44,10 +44,10 @@ toolchains and keep them updated. It makes building and maintaining Sway applica
 
 ### Running `fuelup-init`
 
-{/*install_fuelup:example:start*/}
+{/* ANCHOR: install_fuelup_command */}
 To install the Fuel toolchain, you'll use the `fuelup-init` script.
 This will install `forc`, `forc-client`, `forc-fmt`, `forc-lsp`, `forc-wallet` as well as `fuel-core` in `~/.fuelup/bin`.
-{/*install_fuelup:example:end*/}
+{/* ANCHOR_END: install_fuelup_command */}
 
 👉 Just paste the following line in your terminal and press *Enter*.
 
@@ -142,13 +142,13 @@ To properly interact with the {props.fuelTestnetInlineCode} network it is necess
 👉 Run the following command to install the {props.fuelTestnetInlineCode} toolchain:
 {/*install_testnet:example:end*/}
 
-{/*install_testnet_command:example:start*/}
+{/* ANCHOR: install_testnet_command */}
 
 ```console
 fuelup toolchain install {props.fuelTestnet}
 ```
 
-{/*install_testnet_command:example:end*/}
+{/* ANCHOR_END: install_testnet_command */}
 
 If the toolchain was successfully installed, you will see this output:
 
@@ -162,13 +162,13 @@ The toolchain was installed correctly, however is not in use yet. Next, you need
 👉 Set {props.fuelTestnetInlineCode} as your default toolchain with the following command:
 {/*set_default_testnet:example:end*/}
 
-{/*set_default_testnet_command:example:start*/}
+{/* ANCHOR: set_default_testnet_command */}
 
 ```console
 fuelup default {props.fuelTestnet}
 ```
 
-{/*set_default_testnet_command:example:end*/}
+{/* ANCHOR_END: set_default_testnet_command */}
 
 You will get the following output indicating that you have successfully set {props.fuelTestnetInlineCode} as your default toolchain.
 

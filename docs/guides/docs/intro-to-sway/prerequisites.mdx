@@ -106,14 +106,6 @@ action={{
 forc new contract
 ```
 
-Move into your contract folder:
-
-```sh
-cd contract
-```
-
-Open up the `contract` folder in VSCode, and inside the `src` folder you should see a file called `main.sw`. This is where you will write your Sway contract.
-
 Your project structure generated from the `forc` command should like this:
 
 <TestAction
@@ -125,7 +117,7 @@ action={{
 />
 
 ```console
-$ tree contract
+tree contract
 contract
 ├── Forc.toml
 └── src
@@ -133,6 +125,14 @@ contract
 
 1 directory, 2 files
 ```
+
+Move into your contract folder:
+
+```sh
+cd contract
+```
+
+Open up the `contract` folder in VSCode, and inside the `src` folder you should see a file called `main.sw`. This is where you will write your Sway contract.
 
 Since we're creating a brand new contract you can delete everything in this file except for the `contract` keyword.
 
