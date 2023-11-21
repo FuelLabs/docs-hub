@@ -81,6 +81,9 @@ export async function runTest(
           .getByRole(step['data-role'], { name: step['data-element-name'] })
           .click();
         break;
+      case 'clickByTestId':
+        await page.getByTestId(step['data-testid']).click();
+        break;
       case 'writeBySelector':
         await page.fill(step['data-selector'], 'hello world');
         break;

@@ -9,6 +9,7 @@ export type Action =
   | Reload
   | GetByLocatorAndSave
   | ClickByRole
+  | ClickByTestId
   | WriteBySelector
   | WalletApprove
   | WalletApproveConnect
@@ -90,6 +91,11 @@ export type ClickByRole = {
   name: 'clickByRole';
   role: string;
   elementName: string;
+};
+
+export type ClickByTestId = {
+  name: 'clickByTestId';
+  testId: string;
 };
 
 export type WriteBySelector = {
