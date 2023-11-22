@@ -54,7 +54,7 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   const allLatestNavs = JSON.parse(readFileSync(allLatestNavsPath, 'utf8'));
   const versions = getVersions(false);
   const latestVersions = getVersions(true);
-  let fuelCoreVersion;
+  let fuelCoreVersion = null;
 
   if (slug.includes('guides/')) {
     fuelCoreVersion = getFuelCoreVersion();
