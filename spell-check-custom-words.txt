@@ -58,3 +58,4 @@ fuelTestnetInlineCode
 fuelTestnet
 faucetLink
 GQLPlaygroundLink
+xlarge
