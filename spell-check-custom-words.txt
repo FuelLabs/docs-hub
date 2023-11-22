@@ -59,3 +59,4 @@ fuelTestnet
 faucetLink
 GQLPlaygroundLink
 xlarge
+fuelCoreVersion
