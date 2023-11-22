@@ -94,6 +94,13 @@ function getIndexerVersion(docsDir: string) {
   };
 }
 
+export function getFuelCoreVersion() {
+  const filedir = join(DOCS_DIRECTORY, 'fuel-core/Cargo.toml');
+  const file = fs.readFileSync(filedir, 'utf-8');
+  const tomfile = toml.parse(file);
+  return tomfile.workspace.package.version;
+}
+
 export function getVersions(isLatest: boolean) {
   const docsDir = isLatest ? LATEST_DOCS_DIRECTORY : DOCS_DIRECTORY;
   const wallet = getWalletVersion(docsDir);

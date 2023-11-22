@@ -55,9 +55,15 @@ type MDXRenderProps = {
   code: string;
   components: Record<any, any>;
   isLatest: boolean;
+  fuelCoreVersion?: string;
 };
 
-export function MDXRender({ code, components, isLatest }: MDXRenderProps) {
+export function MDXRender({
+  code,
+  components,
+  isLatest,
+  fuelCoreVersion,
+}: MDXRenderProps) {
   const { default: Content } = useMemo(
     () => runSync(code, { ...runtime, ...provider }),
     [code]
@@ -82,6 +88,7 @@ export function MDXRender({ code, components, isLatest }: MDXRenderProps) {
             <Code>{FUEL_TESTNET}</Code> graphQL playground
           </Link>
         }
+        fuelCoreVersion={<Code>{fuelCoreVersion}</Code>}
       />
     </provider.MDXProvider>
   );
