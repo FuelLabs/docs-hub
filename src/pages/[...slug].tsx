@@ -8,7 +8,7 @@ import { DOCS_DIRECTORY } from '../config/constants';
 import useTheme from '../hooks/useTheme';
 import { Doc } from '../lib/md-doc';
 import { Docs } from '../lib/md-docs';
-import { getVersions } from '../lib/versions';
+import { getFuelCoreVersion, getVersions } from '../lib/versions';
 import { DocScreen } from '../screens/DocPage';
 import type { DocType, NavOrder, SidebarLinkItem, Versions } from '../types';
 
@@ -23,6 +23,7 @@ export type DocPageProps = {
   theme: string;
   versions: Versions;
   latestVersions: Versions;
+  fuelCoreVersion?: string;
 };
 
 export default function DocPage(props: DocPageProps) {
@@ -53,6 +54,11 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   const allLatestNavs = JSON.parse(readFileSync(allLatestNavsPath, 'utf8'));
   const versions = getVersions(false);
   const latestVersions = getVersions(true);
+  let fuelCoreVersion = null;
+
+  if (slug.includes('guides/')) {
+    fuelCoreVersion = getFuelCoreVersion();
+  }
 
   return {
     props: {
@@ -65,6 +71,7 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
       docLink: doc.navLinks,
       versions,
       latestVersions,
+      fuelCoreVersion,
     },
   };
 };

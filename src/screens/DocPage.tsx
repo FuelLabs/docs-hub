@@ -44,6 +44,7 @@ export function DocScreen(props: DocPageProps) {
                 code={props.code}
                 components={components}
                 isLatest={isLatest}
+                fuelCoreVersion={props.fuelCoreVersion}
               />
             </Box>
           )}

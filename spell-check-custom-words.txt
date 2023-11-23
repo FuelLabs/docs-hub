@@ -80,3 +80,9 @@ VSCode
 webhooks
 js
 npm
+fuelTestnetInlineCode
+fuelTestnet
+faucetLink
+GQLPlaygroundLink
+xlarge
+fuelCoreVersion
