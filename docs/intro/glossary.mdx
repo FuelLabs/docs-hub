@@ -212,7 +212,7 @@ A cryptographic key that is generated from its associated private key and can be
 
 A receipt is a data object that is emitted during a transaction and contains information about that transaction.
 
-## Re-entrancy attack
+## Reentrancy attack
 
 A type of attack in which the attacker is able to recursively call a contract function so that the function is exited before it is fully executed. This can result in the attacker being able to withdraw more funds than intended from a contract.
 
