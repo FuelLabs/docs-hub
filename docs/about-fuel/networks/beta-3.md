@@ -54,7 +54,7 @@ This installs the following components and versions:
 To set the `beta-3` toolchain as your default, run
 
 ```console
-$ fuelup default beta-3
+fuelup default beta-3
 default toolchain set to 'beta-3-aarch64-apple-darwin'
 ```
 

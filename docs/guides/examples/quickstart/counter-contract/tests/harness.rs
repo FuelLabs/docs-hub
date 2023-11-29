@@ -1,4 +1,4 @@
-// ANCHOR: contract-test-all
+/* ANCHOR: contract-test-all */
 use fuels::{prelude::*, types::ContractId};
 
 // Load abi from json
@@ -58,4 +58,4 @@ async fn test_increment() {
     assert_eq!(result.value, 1);
 }
 // ANCHOR_END: contract-test
-// ANCHOR_END: contract-test-all
+/* ANCHOR_END: contract-test-all */
