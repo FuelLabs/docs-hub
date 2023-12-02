@@ -28,7 +28,7 @@ Register-based VMs typically require fewer instructions to do the same work than
 
 ### The FuelVM is built with an atomic UTXO paradigm from the start
 
-Fuel uses a system of UTXOs which enable a more efficient system fo transfer and ownership of assets, where the accounts tree doesn't have to be rebuilt every time funds are transferred.
+Fuel uses a system of UTXOs which enables a more efficient system for transfer and ownership of assets, where the accounts tree doesn't have to be rebuilt every time funds are transferred.
 
 ### The FuelVM removes `approve`, `transferFrom`
 
