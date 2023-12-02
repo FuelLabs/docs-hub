@@ -2,7 +2,7 @@
 
 ## User Sovereignty with Fraud Proofs
 
-Fuel was designed and built specifically to be fraud-provable, which enable support for trust-minimized light clients. Trust minimized light clients and shared data availability enables trust minimized bridges to other modular execution layers, something impossible to achieve between L1s.
+Fuel was designed and built specifically to be fraud-provable, which enables support for trust-minimized light clients. Trust minimized light clients and shared data availability enable trust minimized bridges to other modular execution layers, something impossible to achieve between L1s.
 
 What this means in practice:
 
@@ -29,7 +29,7 @@ Fuel Labs has also developed the Fuel Toolchain: the full stack of tools for ena
 
 ![parallel transaction execution in the FuelVM](/images/fuel-parallel.png)
 
-Fuel brings scale to Ethereum without sacrificing decentralization.The FuelVM is designed to reduce wasteful processing of traditional blockchain virtual machine architectures, while vastly increasing the potential design space for developers. The FuelVM can use all the threads and cores of your CPU to validate transactions.
+Fuel brings scale to Ethereum without sacrificing decentralization. The FuelVM is designed to reduce wasteful processing of traditional blockchain virtual machine architectures, while vastly increasing the potential design space for developers. The FuelVM can use all the threads and cores of your CPU to validate transactions.
 
 ## Fuel Configurations
 
