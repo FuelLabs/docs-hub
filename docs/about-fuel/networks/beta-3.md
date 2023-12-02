@@ -10,7 +10,7 @@ Ethereum contracts (Goerli):
 
 "FuelERC20Gateway": `0x8083634a1A5092D3234657092e5CF74655191B8D`
 
-The ERC-20 Gateway contract on Georli Ethereum is at `0x8083634a1A5092D3234657092e5CF74655191B8D`.
+The ERC-20 Gateway contract on Goerli Ethereum is at `0x8083634a1A5092D3234657092e5CF74655191B8D`.
 
 Goerli block explorer: [https://goerli.etherscan.io/](https://goerli.etherscan.io/)
 
