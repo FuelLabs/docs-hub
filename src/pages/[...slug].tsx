@@ -1,32 +1,20 @@
+import { readFileSync } from 'fs';
 import type { GetStaticProps } from 'next';
+import { join } from 'path';
 
 import type { MdDoc } from '../../.contentlayer/generated';
 import { allMdDocs } from '../../.contentlayer/generated';
+import { DOCS_DIRECTORY } from '../config/constants';
 import useTheme from '../hooks/useTheme';
 import { Doc } from '../lib/md-doc';
 import { Docs } from '../lib/md-docs';
-import { getVersions } from '../lib/versions';
+import { getFuelCoreVersion, getVersions } from '../lib/versions';
 import { DocScreen } from '../screens/DocPage';
-import type { DocType, SidebarLinkItem } from '../types';
-
-export type VersionItem = {
-  version: string;
-  name: string;
-  category: string;
-  url: string;
-};
-
-export type Versions = {
-  Forc: VersionItem;
-  Sway: VersionItem;
-  Fuelup: VersionItem;
-  Indexer: VersionItem;
-  'Fuel Rust SDK': VersionItem;
-  'Fuel TS SDK': VersionItem;
-  'Fuel Wallet': VersionItem;
-};
+import type { DocType, NavOrder, SidebarLinkItem, Versions } from '../types';
 
 export type DocPageProps = {
+  allNavs: NavOrder[];
+  allLatestNavs: NavOrder[];
   code: string;
   md: MdDoc;
   doc: DocType;
@@ -34,6 +22,8 @@ export type DocPageProps = {
   docLink?: SidebarLinkItem;
   theme: string;
   versions: Versions;
+  latestVersions: Versions;
+  fuelCoreVersion?: string;
 };
 
 export default function DocPage(props: DocPageProps) {
@@ -52,16 +42,36 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   const doc = new Doc(slugArray, allMdDocs);
   const slug = slugArray.join('/');
   const code = await doc.getCode();
-  const versions = getVersions(doc.item.isLatest);
+  const allNavsPath = join(
+    DOCS_DIRECTORY,
+    `../src/generated/sidebar-links/all-orders.json`
+  );
+  const allLatestNavsPath = join(
+    DOCS_DIRECTORY,
+    `../src/generated/sidebar-links/all-latest-orders.json`
+  );
+  const allNavs = JSON.parse(readFileSync(allNavsPath, 'utf8'));
+  const allLatestNavs = JSON.parse(readFileSync(allLatestNavsPath, 'utf8'));
+  const versions = getVersions(false);
+  const latestVersions = getVersions(true);
+  let fuelCoreVersion = null;
+
+  if (slug.includes('guides/')) {
+    fuelCoreVersion = getFuelCoreVersion();
+  }
 
   return {
     props: {
+      allNavs,
+      allLatestNavs,
       code,
       md: doc.md,
       doc: doc.item,
       links: doc.sidebarLinks(slug),
       docLink: doc.navLinks,
       versions,
+      latestVersions,
+      fuelCoreVersion,
     },
   };
 };

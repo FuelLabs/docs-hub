@@ -167,6 +167,12 @@ export async function getDocs(key, order) {
         './guides/docs/migration-guide/breaking-change-log/breaking-changes-log.md',
       ];
       break;
+    case 'intro':
+      paths = [
+        // INTRO
+        './intro/*.mdx',
+      ];
+      break;
     // case 'latest-guides':
     //   paths = [
     //     // LATEST GUIDES

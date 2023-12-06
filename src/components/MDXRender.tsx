@@ -7,6 +7,8 @@ import dynamic from 'next/dynamic';
 import { useMemo } from 'react';
 
 import {
+  BRIDGE_LINK,
+  EXPLORER_LINK,
   FAUCET_LINK,
   FUEL_TESTNET,
   PLAYGROUND_LINK,
@@ -14,6 +16,7 @@ import {
 import { runtime } from '../lib/runtime';
 
 import { Blockquote } from './Blockquote';
+import { CardSection } from './CardSection';
 import { Code } from './Code';
 import { Divider } from './Divider';
 import { Heading } from './Heading';
@@ -45,14 +48,22 @@ export const mdxComponents = {
   hr: Divider,
   Box,
   Player,
+  CardSection,
 } as any;
 
 type MDXRenderProps = {
   code: string;
   components: Record<any, any>;
+  isLatest: boolean;
+  fuelCoreVersion?: string;
 };
 
-export function MDXRender({ code, components }: MDXRenderProps) {
+export function MDXRender({
+  code,
+  components,
+  isLatest,
+  fuelCoreVersion,
+}: MDXRenderProps) {
   const { default: Content } = useMemo(
     () => runSync(code, { ...runtime, ...provider }),
     [code]
@@ -61,6 +72,7 @@ export function MDXRender({ code, components }: MDXRenderProps) {
   return (
     <provider.MDXProvider components={{ ...components, ...mdxComponents }}>
       <Content
+        isLatest={isLatest}
         fuelTestnet={FUEL_TESTNET}
         fuelTestnetInlineCode={<Code>{FUEL_TESTNET}</Code>}
         faucetLink={
@@ -68,11 +80,15 @@ export function MDXRender({ code, components }: MDXRenderProps) {
             <Code>{FUEL_TESTNET}</Code> faucet
           </Link>
         }
+        faucetUrl={FAUCET_LINK}
+        explorerUrl={EXPLORER_LINK}
+        bridgeUrl={BRIDGE_LINK}
         GQLPlaygroundLink={
           <Link href={PLAYGROUND_LINK}>
             <Code>{FUEL_TESTNET}</Code> graphQL playground
           </Link>
         }
+        fuelCoreVersion={<Code>{fuelCoreVersion}</Code>}
       />
     </provider.MDXProvider>
   );

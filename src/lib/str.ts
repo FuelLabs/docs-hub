@@ -23,6 +23,7 @@ const specialCapsWords = [
   { word: 'api', newWord: 'API' },
   { word: 'abi', newWord: 'ABI' },
   { word: 'graphql', newWord: 'graphQL' },
+  { word: 'lsp', newWord: 'LSP' },
 ];
 
 export function capitalize(val: string): string {
@@ -45,21 +46,4 @@ export function capitalize(val: string): string {
     return word;
   });
   return capitalizedWords.join(' ');
-}
-
-export function isStringInTabs(str: string): boolean {
-  return (
-    str === 'home' ||
-    str === 'guides' ||
-    str === 'sway' ||
-    str === 'fuels-rs' ||
-    str === 'fuels-ts' ||
-    str === 'wallet' ||
-    str === 'graphql' ||
-    str === 'fuelup' ||
-    str === 'indexer' ||
-    str === 'specs' ||
-    // str === 'about-fuel' ||
-    str === 'forc'
-  );
 }

@@ -1,18 +1,32 @@
 {
   "installation": {
     "title": "Toolchain Installation",
-    "description": "Install the Fuel toolchain and binaries."
+    "description": "Install the Fuel toolchain and binaries.",
+    "featured": true,
+    "tags": ["Getting Started"]
   },
   "quickstart": {
     "title": "Developer Quickstart",
-    "description": "Get started by building a counter dApp in Fuel."
+    "description": "Get started by building a counter dApp in Fuel.",
+    "featured": true,
+    "tags": ["Getting Started", "Full Stack"]
+  },
+  "intro_to_sway": {
+    "title": "Introduction to Sway for Javascript developers",
+    "description": "Learn Sway fundamentals by building a marketplace dApp.",
+    "featured": false,
+    "tags": ["Full Stack"]
   },
   "running_a_node": {
     "title": "Running a Node",
-    "description": "Run a local Fuel node."
+    "description": "Run a local Fuel node.",
+    "featured": false,
+    "tags": ["fuel-core"]
   },
   "migration_guide": {
     "title": "Migration Guide",
-    "description": "Sway and SDK's breaking changes reference."
+    "description": "Sway and SDK's breaking changes reference.",
+    "featured": false,
+    "tags": []
   }
 }

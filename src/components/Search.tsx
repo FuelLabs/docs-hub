@@ -1,5 +1,7 @@
 import { DocSearch } from '@docsearch/react';
 import type { DocSearchHit } from '@docsearch/react/dist/esm/types';
+import { cssObj } from '@fuel-ui/css';
+import { Box, Text } from '@fuel-ui/react';
 import docsearch from '~/docsearch.json';
 
 import { NAVIGATION } from '../config/constants';
@@ -67,19 +69,55 @@ export default function Search({
   const transformItems = (items: DocSearchHit[]) => filter(items, isLatest);
 
   return (
-    <DocSearch
-      indexName={docsearch.index_name}
-      appId={process.env.NEXT_PUBLIC_ALGOLIA_APP_ID!}
-      apiKey={process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY!}
-      disableUserPersonalization={true}
-      transformItems={transformItems}
-      searchParameters={
-        title
-          ? {
-              optionalFilters: [`hierarchy.lvl0:${title}`],
-            }
-          : {}
-      }
-    />
+    <Box.Flex css={styles.container}>
+      <DocSearch
+        indexName={docsearch.index_name}
+        appId={process.env.NEXT_PUBLIC_ALGOLIA_APP_ID!}
+        apiKey={process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY!}
+        disableUserPersonalization={true}
+        transformItems={transformItems}
+        searchParameters={
+          title
+            ? {
+                optionalFilters: [`hierarchy.lvl0:${title}`],
+              }
+            : {}
+        }
+      />
+      <Box css={styles.textContainer}>
+        <Text>⌘K</Text>
+      </Box>
+    </Box.Flex>
   );
 }
+
+const styles = {
+  container: cssObj({
+    width: '100px',
+    '@sm': {
+      width: '150px',
+    },
+
+    '.DocSearch-Button': {
+      backgroundColor: '#151718',
+      'html[class="fuel_light-theme"] &': {
+        backgroundColor: '$gray4',
+      },
+    },
+  }),
+  textContainer: cssObj({
+    display: 'none',
+    '@sm': {
+      display: 'grid',
+      fontSize: '$sm',
+      left: '-40px',
+      position: 'relative',
+      placeItems: 'center',
+      border: '1px solid $border',
+      height: '24px',
+      borderRadius: '8px',
+      px: '$1',
+      my: 'auto',
+    },
+  }),
+};

@@ -42,8 +42,14 @@ const styles = {
       pl: '$1',
       lineHeight: '1.7',
       wordWrap: 'break-word',
+      'html[class="fuel_light-theme"] &': {
+        color: '$intentsBase12 !important',
+        '&::marker': {
+          color: '$intentsBase12',
+        },
+      },
       '&::marker': {
-        color: '$intentsBase10',
+        color: '$intentsBase11',
       },
     },
   }),
