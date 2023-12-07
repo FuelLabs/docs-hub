@@ -430,39 +430,11 @@ It's now time to deploy the contract to the testnet. We will show how to do this
 
 In order to deploy a contract, you need to have a wallet to sign the transaction and coins to pay for gas. First, we'll create a wallet.
 
-### Setup the Wallet CLI
-
-If you haven't deployed a contract before, you'll need to set up a local wallet with the forc-wallet plugin. `forc-wallet` is packaged alongside the default distributed toolchains when installed using fuelup, so you should already have this installed.
-
-You can initialize a new wallet with the command below:
-
-```sh
-forc wallet new
-```
-
-After typing in a password, be sure to save the mnemonic phrase that is output.
-
-Next, create a new wallet account with:
-
-```sh
-forc wallet account new
-```
-
-With this, you'll get a fuel address that looks something like this: `fuel1efz7lf36w9da9jekqzyuzqsfrqrlzwtt3j3clvemm6eru8fe9nvqj5kar8`. Save this address as you'll need it to sign transactions when we deploy the contract.
-
-If you need to list your accounts, you can run the command below:
-
-```sh
-forc wallet accounts
-```
-
-### Get Testnet Coins
-
-With your account address in hand, head to the {props.faucetLink} to get some coins sent to your wallet.
-
 ### Deploy To Testnet
 
-Now that you have a wallet, you can deploy with `forc deploy` and adding the `--testnet` to target the latest network:
+Now, you can deploy with `forc deploy` and adding the `--testnet` to target the latest network
+
+If you don't have a wallet installed, the terminal will help you to create one, then you can use the {props.faucetLink} to get some testnet coins.
 
 ```sh
 forc deploy --testnet
@@ -493,9 +465,9 @@ With this ID, you can also head to the [block explorer](https://fuellabs.github.
 >> 💡 **Note** Be aware tht the current block explorer only looks for: transaction Ids and account addresses. The new version of the block explorer allows to search by transaction, contract, account and block id.
 
 ```sh
-Contract deploy-to-beta-4 Deployed!
+Contract deploy-to-beta-5 Deployed!
 
-Network: https://beta-4.fuel.network
+Network: https://beta-5.fuel.network
 Contract ID: 0x8342d413de2a678245d9ee39f020795800c7e6a4ac5ff7daae275f533dc05e08
 Deployed in block 0x4ea52b6652836c499e44b7e42f7c22d1ed1f03cf90a1d94cd0113b9023dfa636
 ```
