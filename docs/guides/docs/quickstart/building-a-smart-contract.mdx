@@ -143,11 +143,11 @@ action={{
 }}
 />
 
-```console
+```sh
 tree counter-contract
 ```
 
-```console
+```sh
 counter-contract
 ├── Forc.toml
 └── src
@@ -260,11 +260,11 @@ action={{
 
 Navigate to your contract folder:
 
-```console
+```sh
 cd counter-contract
 ```
 
-```console
+```sh
 changed directory into `counter-contract`
 ```
 
@@ -278,11 +278,11 @@ action={{
 }}
 />
 
-```console
+```sh
 forc build
 ```
 
-```console
+```sh
   Compiled library "core".
   Compiled library "std".
   Compiled contract "counter-contract".
@@ -299,11 +299,11 @@ action={{
 }}
 />
 
-```console
+```sh
 tree .
 ```
 
-```console
+```sh
 .
 ├── Forc.lock
 ├── Forc.toml
@@ -326,11 +326,11 @@ We will start by adding a Rust integration test harness using a Cargo generate t
 
 Let's start by running the installation command:
 
-```console
+```sh
 cargo install cargo-generate
 ```
 
-```console
+```sh
  Updating crates.io index...
  installed package `cargo-generate v0.17.3`
 ```
@@ -347,11 +347,11 @@ action={{
 }}
 />
 
-```console
+```sh
 cargo generate --init fuellabs/sway templates/sway-test-rs --name counter-contract
 ```
 
-```console
+```sh
 ⚠️   Favorite `fuellabs/sway` not found in config, using it as a git repository: https://github.com/fuellabs/sway.git
 🔧   Destination: /home/user/path/to/counter-contract ...
 🔧   project-name: counter-contract ...
@@ -370,11 +370,11 @@ action={{
 }}
 />
 
-```console
+```sh
 tree .
 ```
 
-```console
+```sh
 .
 ├── Cargo.toml
 ├── Forc.lock
@@ -438,13 +438,13 @@ action={{
 
 Run `cargo test` in the terminal:
 
-```console
+```sh
 cargo test
 ```
 
 If all goes well, the output should look as follows:
 
-```console
+```sh
   ...
   running 2 tests
   test can_get_contract_id ... ok
@@ -464,7 +464,7 @@ If you haven't deployed a contract before, you'll need to set up a local wallet 
 
 You can initialize a new wallet with the command below:
 
-```console
+```sh
 forc wallet new
 ```
 
@@ -472,7 +472,7 @@ After typing in a password, be sure to save the mnemonic phrase that is output.
 
 Next, create a new wallet account with:
 
-```console
+```sh
 forc wallet account new
 ```
 
@@ -480,7 +480,7 @@ With this, you'll get a fuel address that looks something like this: `fuel1efz7l
 
 If you need to list your accounts, you can run the command below:
 
-```console
+```sh
 forc wallet accounts
 ```
 
@@ -492,7 +492,7 @@ With your account address in hand, head to the {props.faucetLink} to get some co
 
 Now that you have a wallet, you can deploy with `forc deploy` and adding the `--testnet` to target the latest network:
 
-```console
+```sh
 forc deploy --testnet
 ```
 
@@ -502,7 +502,7 @@ The terminal will ask for the password of the wallet:
 
 Once you unlocked the wallet, the terminal will show a list of the accounts of this wallet:
 
-```console
+```sh
 Account 0 -- fuel18caanqmumttfnm8qp0eq7u9yluydxtqmzuaqtzdjlsww5t2jmg9skutn8n:
   Asset ID                                                           Amount
   0000000000000000000000000000000000000000000000000000000000000000 499999940
@@ -518,7 +518,7 @@ Finally, you will get back the network endpoint where the contract was deployed,
 Save the `Contract ID`, as you'll need this later to connect the frontend.
 With this ID, you can also head to the [block explorer](https://fuellabs.github.io/block-explorer-v2/) to confirm the contract was deployed.
 
-```console
+```sh
 Contract deploy-to-beta-4 Deployed!
 
 Network: https://beta-4.fuel.network

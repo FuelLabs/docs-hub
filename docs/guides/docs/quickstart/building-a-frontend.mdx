@@ -32,7 +32,7 @@ Once you've installed the wallet, take the address of your wallet and use it to 
 
 To split our project's contract from frontend code, let's initialize our frontend project: assuming that your terminal is open at your contract's folder `/home/user/path/to/counter-contract` let's go back up one directory.
 
-```console
+```sh
 cd ..
 ```
 
@@ -46,13 +46,13 @@ action={{
 }}
 />
 
-```console
+```sh
 npx create-react-app frontend --template typescript
 ```
 
 The output should be similar to:
 
-```console
+```sh
 Success! Created frontend at Fuel/fuel-project/frontend
 ```
 
@@ -74,7 +74,7 @@ Also, it contains the routines for ABI TypeScript generation.
 
 Move into the `frontend` folder, then run:
 
-```console
+```sh
 cd frontend
 ```
 
@@ -88,13 +88,13 @@ action={{
 }}
 />
 
-```console
+```sh
 npm install fuels@0.60.0 @fuel-wallet/sdk@0.13.0 --save
 ```
 
 If the installation went correctly the result will be similar to this:
 
-```console
+```sh
 added 114 packages, and audited 115 packages in 9s
 ```
 
@@ -134,13 +134,13 @@ action={{
 }}
 />
 
-```console
+```sh
 npx fuels typegen -i ../counter-contract/out/debug/*-abi.json -o ./src/contracts
 ```
 
 A successful process should print and output like the following:
 
-```console
+```sh
 Generating files..
 
  - src/contracts/CounterContractAbi.d.ts
@@ -197,11 +197,11 @@ action={{
 }}
 />
 
-```console
+```sh
 npm start
 ```
 
-```console
+```sh
 Compiled successfully!
 
 You can now view frontend in the browser.
