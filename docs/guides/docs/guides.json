@@ -12,7 +12,7 @@
     "tags": ["Getting Started", "Full Stack"]
   },
   "intro_to_sway": {
-    "title": "Introduction to Sway for Javascript developers",
+    "title": "Introduction to Sway for JavaScript developers",
     "description": "Learn Sway fundamentals by building a marketplace dApp.",
     "featured": false,
     "tags": ["Full Stack"]
