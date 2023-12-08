@@ -34,6 +34,80 @@ action={{
 cargo generate --init fuellabs/sway templates/sway-test-rs --name contract
 ```
 
+For our test purposes, we will be using a different version than is used in this default template, so we need make a few small changes.
+
+First, in your `Cargo.toml` file, change the `fuels` version from `"0.53.0"` to `"0.48.0"`.
+Your `dev-dependencies` should look like this:
+
+<TestAction
+id="sdk-version"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/contract/Cargo.toml',
+  atLine: 10,
+  removeLines: [10],
+  useSetData: 'fuels = { version = "0.48.0", features = ["fuel-core-lib"] }'
+}}
+/>
+
+```toml
+[dev-dependencies]
+fuels = { version = "0.48.0", features = ["fuel-core-lib"] }
+tokio = { version = "1.12", features = ["rt", "macros"] }
+```
+
+Next, in your `tests/harness.rs` file, change delete the `unwrap();` on line 21 and add a `;` to the end of `await` on line 20.
+The `wallets` variable declaration should look like this:
+
+<TestAction
+id="modify-harness-wallets"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs',
+  atLine: 20,
+  removeLines: [20, 21],
+  useSetData: 'await;'
+}}
+/>
+
+```rust
+let mut wallets = launch_custom_provider_and_get_wallets(
+        WalletsConfig::new(
+            Some(1),             /* Single wallet */
+            Some(1),             /* Single coin (UTXO) */
+            Some(1_000_000_000), /* Amount per coin */
+        ),
+        None,
+        None,
+    )
+    .await;
+```
+
+Finally, change `TxPolicies::default()` on line 29 to `TxParameters::default()`.
+The `id` variable declaration should look like this:
+
+<TestAction
+id="modify-harness-id"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs',
+  atLine: 28,
+  removeLines: [28],
+  useSetData: '.deploy(&wallet, TxParameters::default())'
+}}
+/>
+
+```rust
+let id = Contract::load_from(
+        "./out/debug/contract.bin",
+        LoadConfiguration::default(),
+    )
+    .unwrap()
+    .deploy(&wallet, TxParameters::default())
+    .await
+    .unwrap();
+```
+
 ## Imports
 
 We will be changing the existing `harness.rs` test file that has been generated. Firstly we need to change the imports. By importing the Fuel Rust SDK you will get majority of the functionalities housed within the prelude.
