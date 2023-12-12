@@ -12,7 +12,7 @@ import type { GuideInfo } from '../pages/guides';
 
 export type CardInfo = {
   link: string;
-  latestLink?: string;
+  nightlyLink?: string;
   isExternal: boolean;
   heading: string;
   headingIcon?: string;
@@ -23,17 +23,17 @@ interface CardProps {
   guideInfo?: GuideInfo;
   cardInfo?: CardInfo;
   cardName: string;
-  isLatest?: boolean;
+  isNightly?: boolean;
 }
 
-export function Card({ guideInfo, cardInfo, cardName, isLatest }: CardProps) {
+export function Card({ guideInfo, cardInfo, cardName, isNightly }: CardProps) {
   return (
     <FuelLink
       href={
         guideInfo
           ? `/guides/${cardName.replaceAll('_', '-')}`
-          : isLatest && cardInfo?.latestLink
-          ? cardInfo?.latestLink
+          : isNightly && cardInfo?.nightlyLink
+          ? cardInfo?.nightlyLink
           : cardInfo?.link
       }
       isExternal={cardInfo ? cardInfo.isExternal : false}

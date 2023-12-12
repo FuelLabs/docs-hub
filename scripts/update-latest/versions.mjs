@@ -11,40 +11,40 @@ export function getExistingVersions() {
   };
 }
 
-export async function getLatestVersions() {
+export async function getNightlyVersions() {
   const versions = {};
-  versions.forc = await getLatestRelease('sway');
-  versions.indexer = await getLatestRelease('fuel-indexer');
-  versions.rust = await getLatestRelease('fuels-rs');
-  versions.ts = await getLatestRelease('fuels-ts');
-  versions.wallet = await getLatestRelease('fuels-wallet');
+  versions.forc = await getNightlyRelease('sway');
+  versions.indexer = await getNightlyRelease('fuel-indexer');
+  versions.rust = await getNightlyRelease('fuels-rs');
+  versions.ts = await getNightlyRelease('fuels-ts');
+  versions.wallet = await getNightlyRelease('fuels-wallet');
   return versions;
 }
 
 function getForcVersion() {
-  const forcfiledir = 'docs/latest/sway/forc-pkg/Cargo.toml';
+  const forcfiledir = 'docs/nightly/sway/forc-pkg/Cargo.toml';
   const forcfile = fs.readFileSync(forcfiledir, 'utf-8');
   const version = forcfile?.match(/version = "(.*)"/)?.[1];
   return version;
 }
 
 function getIndexerVersion() {
-  return getVersionFromTOMLFile('docs/latest/fuel-indexer/Cargo.toml');
+  return getVersionFromTOMLFile('docs/nightly/fuel-indexer/Cargo.toml');
 }
 
 function getTSSDKVersion() {
   return getVersionFromJSONFile(
-    'docs/latest/fuels-ts/packages/fuels/package.json'
+    'docs/nightly/fuels-ts/packages/fuels/package.json'
   );
 }
 
 function getRustSDKVersion() {
-  return getVersionFromTOMLFile('docs/latest/fuels-rs/Cargo.toml');
+  return getVersionFromTOMLFile('docs/nightly/fuels-rs/Cargo.toml');
 }
 
 function getWalletVersion() {
   return getVersionFromJSONFile(
-    'docs/latest/fuels-wallet/packages/sdk/package.json'
+    'docs/nightly/fuels-wallet/packages/sdk/package.json'
   );
 }
 
@@ -60,7 +60,7 @@ function getVersionFromTOMLFile(path) {
   return tomlFile.workspace.package.version;
 }
 
-async function getLatestRelease(repoName) {
+async function getNightlyRelease(repoName) {
   const url = `https://api.github.com/repos/FuelLabs/${repoName}/releases/latest`;
   const response = await fetch(url);
   const release = await response.json();

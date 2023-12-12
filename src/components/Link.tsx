@@ -14,7 +14,7 @@ function replaceInternalLinks(href: string, base: string) {
       .replace('https://fuellabs.github.io', '')
       .replace('/master/', '/')
       .replace('.html', '')
-      .replace('/latest', '')
+      .replace('/nightly', '')
       .replace('/index', '/')
       .replace('sway/book/', 'sway/');
     href = `/docs${href}`;

@@ -17,7 +17,7 @@ export interface GuideInfo {
 
 export interface GuidesProps {
   guides: { [key: string]: GuideInfo };
-  // latestGuides: { [key: string]: GuideInfo };
+  // nightlyGuides: { [key: string]: GuideInfo };
 }
 
 export default function Guides({ guides }: GuidesProps) {
@@ -28,11 +28,11 @@ export default function Guides({ guides }: GuidesProps) {
     setIsMounted(true);
   }, []);
 
-  const isLatest = mounted && version === 'Latest';
+  const isNightly = mounted && version === 'nightly';
 
   return (
-    <Layout title="Fuel Guides" isClean isLatest={isLatest}>
-      <GuidesPage isLatest={isLatest} guides={guides} />
+    <Layout title="Fuel Guides" isClean isNightly={isNightly}>
+      <GuidesPage isNightly={isNightly} guides={guides} />
     </Layout>
   );
 }
@@ -44,12 +44,12 @@ export const getStaticProps: GetStaticProps<any> = async () => {
     DOCS_DIRECTORY,
     `../src/generated/sidebar-links/all-orders.json`
   );
-  const allLatestNavsPath = join(
+  const allnightlyNavsPath = join(
     DOCS_DIRECTORY,
-    `../src/generated/sidebar-links/all-latest-orders.json`
+    `../src/generated/sidebar-links/all-nightly-orders.json`
   );
   const guides = JSON.parse(readFileSync(guidesPath, 'utf8'));
   const allNavs = JSON.parse(readFileSync(allNavsPath, 'utf8'));
-  const allLatestNavs = JSON.parse(readFileSync(allLatestNavsPath, 'utf8'));
-  return { props: { guides, allNavs, allLatestNavs } };
+  const allnightlyNavs = JSON.parse(readFileSync(allnightlyNavsPath, 'utf8'));
+  return { props: { guides, allNavs, allnightlyNavs } };
 };

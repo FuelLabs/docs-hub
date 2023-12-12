@@ -4,13 +4,13 @@ import { cssObj } from '@fuel-ui/css';
 import { Heading as FuelHeading, Icon } from '@fuel-ui/react';
 
 export function Heading({ children, ...props }: any) {
-  const isLatest = props['data-latest'];
+  const isNightly = props['data-nightly'];
   const paddingStyles = cssObj({
     [head([1])]: {
-      pt: isLatest ? '$24' : '$20',
+      pt: isNightly ? '$24' : '$20',
     },
     [head([2, 3, 4])]: {
-      pt: isLatest ? '108px' : '$16',
+      pt: isNightly ? '108px' : '$16',
     },
   });
   return (

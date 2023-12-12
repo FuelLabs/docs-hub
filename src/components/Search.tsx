@@ -6,13 +6,13 @@ import docsearch from '~/docsearch.json';
 
 import { NAVIGATION } from '../config/constants';
 
-function filter(items: DocSearchHit[], isLatest?: boolean) {
+function filter(items: DocSearchHit[], isNightly?: boolean) {
   const slugs: string[] = [];
   const newItems: DocSearchHit[] = [];
   const filtered = items.filter((item) => {
     if (
-      (!isLatest && item.url.includes('/latest/')) ||
-      (isLatest && !item.url.includes('/latest/'))
+      (!isNightly && item.url.includes('/nightly/')) ||
+      (isNightly && !item.url.includes('/nightly/'))
     ) {
       return false;
     }
@@ -61,12 +61,12 @@ function makeNewItem(item: DocSearchHit) {
 
 export default function Search({
   title,
-  isLatest,
+  isNightly,
 }: {
   title?: string;
-  isLatest?: boolean;
+  isNightly?: boolean;
 }) {
-  const transformItems = (items: DocSearchHit[]) => filter(items, isLatest);
+  const transformItems = (items: DocSearchHit[]) => filter(items, isNightly);
 
   return (
     <Box.Flex css={styles.container}>

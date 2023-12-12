@@ -4,16 +4,17 @@ import dynamic from 'next/dynamic';
 import type { ComponentType } from 'react';
 import * as GQLExamples from '~/docs/fuel-graphql-docs/examples';
 import * as FuelExamples from '~/docs/fuels-wallet/packages/docs/examples';
-import * as LatestGQLExamples from '~/docs/latest/fuel-graphql-docs/examples';
-import * as LatestFuelExamples from '~/docs/latest/fuels-wallet/packages/docs/examples';
+import * as nightlyGQLExamples from '~/docs/nightly/fuel-graphql-docs/examples';
+import * as nightlyFuelExamples from '~/docs/nightly/fuels-wallet/packages/docs/examples';
 import { TD, TH } from '~/src/components/Table';
 import TestAction from '~/src/components/TestAction';
 import { COMPONENTS as GQL_COMPONENTS } from '~/src/generated/components/graphql';
-import { COMPONENTS as LATEST_GQL_COMPONENTS } from '~/src/generated/components/latest-graphql';
-import { COMPONENTS as LATEST_WALLET_COMPONENTS } from '~/src/generated/components/latest-wallet';
 import { COMPONENTS as WALLET_COMPONENTS } from '~/src/generated/components/wallet';
 
 import type { ComponentsList } from '../types';
+
+import { COMPONENTS as nightly_GQL_COMPONENTS } from '~/src/generated/components/nightly-graphql';
+import { COMPONENTS as nightly_WALLET_COMPONENTS } from '~/src/generated/components/nightly-wallet';
 
 function loadComponent(imp: any, name?: string): ComponentType<object> {
   return dynamic(() => imp.then((mod: any) => (name ? mod[name] : mod)), {
@@ -28,11 +29,11 @@ export interface ComponentsObject {
     | Component
     | typeof GQLExamples
     | typeof FuelExamples
-    | typeof LatestGQLExamples
-    | typeof LatestFuelExamples;
+    | typeof nightlyGQLExamples
+    | typeof nightlyFuelExamples;
 }
 
-export function getComponents(docSlug: string, isLatest: boolean) {
+export function getComponents(docSlug: string, isNightly: boolean) {
   const components: ComponentsObject = {};
 
   function addComponents(list: ComponentsList) {
@@ -53,25 +54,25 @@ export function getComponents(docSlug: string, isLatest: boolean) {
     components.TestAction = TestAction;
   } else if (
     docSlug.includes('docs/wallet') ||
-    docSlug.includes('docs/latest/wallet')
+    docSlug.includes('docs/nightly/wallet')
   ) {
     components.td = TD;
     components.th = TH;
 
-    if (isLatest) {
-      components.Examples = LatestFuelExamples;
-      addComponents(LATEST_WALLET_COMPONENTS);
+    if (isNightly) {
+      components.Examples = nightlyFuelExamples;
+      addComponents(nightly_WALLET_COMPONENTS);
     } else {
       components.Examples = FuelExamples;
       addComponents(WALLET_COMPONENTS);
     }
   } else if (
     docSlug.includes('docs/graphql') ||
-    docSlug.includes('docs/latest/graphql')
+    docSlug.includes('docs/nightly/graphql')
   ) {
-    if (isLatest) {
-      components.GQLExamples = LatestGQLExamples;
-      addComponents(LATEST_GQL_COMPONENTS);
+    if (isNightly) {
+      components.GQLExamples = nightlyGQLExamples;
+      addComponents(nightly_GQL_COMPONENTS);
     } else {
       components.GQLExamples = GQLExamples;
       addComponents(GQL_COMPONENTS);

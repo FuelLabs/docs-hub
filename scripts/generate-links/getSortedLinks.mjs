@@ -4,26 +4,26 @@ import { capitalize } from './str.mjs';
 // won't be capitalized in the navigation sidebar
 const LOWER_CASE_NAV_PATHS = [
   'docs/forc/commands/',
-  'docs/latest/forc/commands/',
+  'docs/nightly/forc/commands/',
   'docs/forc/plugins/',
-  'docs/latest/forc/plugins/',
+  'docs/nightly/forc/plugins/',
   'docs/indexer/forc-index/',
-  'docs/latest/indexer/forc-index/',
+  'docs/nightly/indexer/forc-index/',
   'docs/indexer/forc-postgres/',
-  'docs/latest/indexer/forc-postgres/',
+  'docs/nightly/indexer/forc-postgres/',
 ];
 
 export default function getSortedLinks(config, docs) {
   const lcOrder = config.menu.map((o) =>
     o.toLowerCase().replaceAll('-', '_').replaceAll(' ', '_')
   );
-  const isLatest = docs[0].slug.includes('/latest/');
-  const links = createLinks(docs, isLatest);
-  const sortedLinks = sortLinks(lcOrder, links, config, isLatest);
+  const isNightly = docs[0].slug.includes('/nightly/');
+  const links = createLinks(docs, isNightly);
+  const sortedLinks = sortLinks(lcOrder, links, config, isNightly);
   return sortedLinks;
 }
 
-function createLinks(docs, isLatest) {
+function createLinks(docs, isNightly) {
   const links = [];
 
   for (let i = 0; i < docs.length; i++) {
@@ -39,7 +39,7 @@ function createLinks(docs, isLatest) {
 
     const finalSlug = doc.slug
       .toLowerCase()
-      .replace('latest/guides', 'guides/latest');
+      .replace('nightly/guides', 'guides/nightly');
     const isGuide = finalSlug.includes('guides');
 
     const splitSlug = finalSlug.split('/');
@@ -57,7 +57,7 @@ function createLinks(docs, isLatest) {
         finalSlug,
         splitSlug,
         shouldBeLowerCase,
-        isLatest,
+        isNightly,
         isExternal,
         isGuide
       );
@@ -76,7 +76,7 @@ function createLinks(docs, isLatest) {
         finalSlug,
         thisCategory,
         shouldBeLowerCase,
-        isLatest,
+        isNightly,
         splitSlug,
         isExternal,
         isGuide
@@ -92,7 +92,7 @@ function createLinks(docs, isLatest) {
       finalSlug,
       shouldBeLowerCase,
       isExternal,
-      isLatest,
+      isNightly,
       isGuide
     );
     links.push(newSubMenu);
@@ -101,7 +101,7 @@ function createLinks(docs, isLatest) {
   return links;
 }
 
-function sortLinks(lcOrder, links, config, isLatest) {
+function sortLinks(lcOrder, links, config, isNightly) {
   const sortedLinks = lcOrder
     ? links
         /** Sort first level links */
@@ -165,7 +165,7 @@ function sortLinks(lcOrder, links, config, isLatest) {
               .replaceAll('-', '_');
 
             if (a.slug.includes('fuels-ts')) {
-              const pathLength = isLatest ? 4 : 3;
+              const pathLength = isNightly ? 4 : 3;
               const isIndexA = a.slug.split('/').length === pathLength;
               if (isIndexA) {
                 return -1;
@@ -204,7 +204,7 @@ function updateSlug(docSlug, isExternal) {
 
   if (
     !slug.startsWith('guides') &&
-    !slug.startsWith('latest/guides') &&
+    !slug.startsWith('nightly/guides') &&
     !isExternal
   ) {
     slug = `docs/${slug}`;
@@ -236,11 +236,11 @@ function handleLink(
   slug,
   splitSlug,
   shouldBeLowerCase,
-  isLatest,
+  isNightly,
   isExternal,
   isGuide
 ) {
-  let newLabel = title.replace('latest/', '');
+  let newLabel = title.replace('nightly/', '');
   if (newLabel === 'index' || newLabel === 'README') {
     newLabel = splitSlug[splitSlug.length - 1];
   }
@@ -250,14 +250,14 @@ function handleLink(
     { label: isGuide ? 'Guides' : 'Docs', link: isGuide ? '/guides' : '/' },
   ];
 
-  if (isLatest) {
-    breadcrumbs.push({ label: 'Latest' });
+  if (isNightly) {
+    breadcrumbs.push({ label: 'Nightly' });
   }
 
   if (slug.includes('docs/intro/')) {
     breadcrumbs.push({ label: 'Intro' });
   } else {
-    const i = isLatest ? 2 : 1;
+    const i = isNightly ? 2 : 1;
     if (splitSlug.length > i + 1) {
       const link = '/' + splitSlug.slice(0, splitSlug.length - 1).join('/');
       breadcrumbs.push({
@@ -284,7 +284,7 @@ function handleSubmenuItem(
   slug,
   thisCategory,
   shouldBeLowerCase,
-  isLatest,
+  isNightly,
   splitSlug,
   isExternal,
   isGuide
@@ -311,15 +311,15 @@ function handleSubmenuItem(
     { label: isGuide ? 'Guides' : 'Docs', link: isGuide ? '/guides' : '/' },
   ];
 
-  if (isLatest) {
-    breadcrumbs.push({ label: 'Latest' });
+  if (isNightly) {
+    breadcrumbs.push({ label: 'Nightly' });
   }
 
   if (slug.includes('docs/intro/')) {
     breadcrumbs.push({ label: 'Intro' });
   } else {
-    const i = isLatest ? 2 : 1;
-    const l = isGuide ? 2 : isLatest ? 4 : 3;
+    const i = isNightly ? 2 : 1;
+    const l = isGuide ? 2 : isNightly ? 4 : 3;
     if (splitSlug.length > l) {
       const p = isGuide ? 1 : 2;
       const link1 = '/' + splitSlug.slice(0, splitSlug.length - p).join('/');
@@ -364,7 +364,7 @@ function handleSubmenu(
   finalSlug,
   shouldBeLowerCase,
   isExternal,
-  isLatest,
+  isNightly,
   isGuide
 ) {
   let hasIndex = false;
@@ -372,21 +372,21 @@ function handleSubmenu(
     hasIndex = true;
   }
   let subpath =
-    splitSlug[1] === 'latest' ? `latest/${splitSlug[2]}` : splitSlug[1];
-  subpath = subpath.replace('latest/guides', 'guides/latest');
+    splitSlug[1] === 'nightly' ? `nightly/${splitSlug[2]}` : splitSlug[1];
+  subpath = subpath.replace('nightly/guides', 'guides/nightly');
 
   const breadcrumbs = [
     { label: isGuide ? 'Guides' : 'Docs', link: isGuide ? '/guides' : '/' },
   ];
 
-  if (isLatest) {
-    breadcrumbs.push({ label: 'Latest' });
+  if (isNightly) {
+    breadcrumbs.push({ label: 'Nightly' });
   }
 
   if (slug.includes('docs/intro/')) {
     breadcrumbs.push({ label: 'Intro' });
   } else {
-    const i = isLatest ? 2 : 1;
+    const i = isNightly ? 2 : 1;
     let l = hasIndex ? 1 : 2;
     if (isGuide) {
       l = l - 1;
@@ -402,7 +402,7 @@ function handleSubmenu(
 
   if (!isGuide) {
     if (!hasIndex) {
-      const i = isLatest ? 3 : 2;
+      const i = isNightly ? 3 : 2;
       const link = '/' + splitSlug.slice(0, splitSlug.length - 1).join('/');
       breadcrumbs.push({
         label: editLabel(splitSlug[i], shouldBeLowerCase),

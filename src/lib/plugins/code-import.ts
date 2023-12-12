@@ -21,7 +21,7 @@ interface Block {
 
 function toAST(content: string) {
   return acorn.parse(content, {
-    ecmaVersion: 'latest',
+    ecmaVersion: 'nightly',
     sourceType: 'module',
   });
 }
