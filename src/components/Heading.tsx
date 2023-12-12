@@ -7,10 +7,10 @@ export function Heading({ children, ...props }: any) {
   const isNightly = props['data-nightly'];
   const paddingStyles = cssObj({
     [head([1])]: {
-      pt: isNightly ? '$24' : '$20',
+      scrollMarginTop: isNightly ? '$24' : '$20',
     },
     [head([2, 3, 4])]: {
-      pt: isNightly ? '108px' : '$16',
+      scrollMarginTop: isNightly ? '108px' : '$16',
     },
   });
   return (
@@ -33,7 +33,7 @@ const styles = {
 
     [`${head([1])}:first-of-type`]: {
       mb: '$8',
-      pt: '39px',
+      pt: '$2',
       position: 'relative',
       textSize: '5xl',
 
@@ -42,26 +42,25 @@ const styles = {
       },
     },
     [head([1, 2])]: {
+      pt: '$6',
       mb: '$5',
       pb: '$2',
       borderBottom: '1px solid $border',
     },
     [head([3])]: {
+      pt: '$4',
       mb: '$4',
-      textSize: '2xl',
+      textSize: 'xl',
     },
     [head([4, 5, 6])]: {
-      pt: '$6',
+      pt: '$2',
       mb: '$2',
-      textSize: 'xl',
+      textSize: 'lg',
     },
 
     [`${head([1, 2, 3, 4, 5, 6])} a, ${head([1, 2, 3, 4, 5, 6])} a:visited`]: {
       color: '$intentsBase12',
     },
-    // [`${head([1, 2])} a, ${head([1, 2, 3, 4, 5, 6])} a:visited`]: {
-    //   color: '$intentsBase12',
-    // },
 
     '& a': {
       color: 'currentColor',
