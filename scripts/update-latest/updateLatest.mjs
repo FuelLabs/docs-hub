@@ -9,9 +9,6 @@ import {
   createPR,
   fetchTag,
   fetchBranch,
-  getReleaseTimestamp,
-  gitResetCommit,
-  getCommitByTimestamp,
   checkoutBranch,
 } from './gitUtils.mjs';
 
@@ -108,21 +105,7 @@ export async function update(version, dir, branch) {
     await checkoutVersion(version, dir);
   }
   if (branch) {
-    let releaseTimestamp;
-    if (dir !== 'docs/nightly/fuels-ts') {
-      releaseTimestamp = await getReleaseTimestamp(version, dir);
-      console.log('RELEASE TIMESTAMP:', releaseTimestamp);
-    }
     await fetchBranch(branch, dir);
     await checkoutBranch(branch, dir);
-    if (dir !== 'docs/nightly/fuels-ts') {
-      const commitHash = await getCommitByTimestamp(
-        releaseTimestamp,
-        branch,
-        dir
-      );
-      console.log('COMMIT HASH:', commitHash);
-      await gitResetCommit(commitHash, dir);
-    }
   }
 }
