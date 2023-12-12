@@ -68,6 +68,16 @@ const nextConfig = {
         destination: '/guides/migration-guide/testnet-migration/',
         permanent: true,
       },
+      {
+        source: '/docs/latest/:slug*',
+        destination: '/docs/nightly/:slug*',
+        permanent: true,
+      },
+      {
+        source: '/guides/latest/:slug*',
+        destination: '/guides/nightly/:slug*',
+        permanent: true,
+      },
     ];
   },
   typescript: {
