@@ -6,10 +6,15 @@ export const FIELDS = ['title', 'slug', 'content', 'category'];
 
 export const FUEL_TESTNET = 'beta-4';
 export const FUEL_TESTNET_UPPER_CASE = 'Beta-4';
-export const FUEL_TESTNET_SNAKE_CASE = "beta_4"
+export const FUEL_TESTNET_SNAKE_CASE = 'beta_4';
 export const FAUCET_LINK = `https://faucet-${FUEL_TESTNET}.fuel.network/`;
 export const LW3_FAUCET_LINK = `https://learnweb3.io/faucets/fuel_${FUEL_TESTNET_SNAKE_CASE}`;
-export const THIRDPARTY_FAUCET_LINKS = [LW3_FAUCET_LINK];
+export const THIRDPARTY_FAUCET_LINKS = [
+  {
+    name: 'LearnWeb3',
+    link: LW3_FAUCET_LINK,
+  },
+];
 export const PLAYGROUND_LINK = `https://${FUEL_TESTNET}.fuel.network/playground/`;
 export const EXPLORER_LINK = 'https://fuellabs.github.io/block-explorer-v2/';
 export const BRIDGE_LINK = 'https://alpha.fuel.network/bridge';
@@ -42,9 +47,9 @@ export const EXTERNAL_NAVIGATION_LINKS: LinkObject[] = [
     link: 'https://faucet-beta-4.fuel.network/',
   },
   {
-    name: "LearnWeb3 Faucet",
+    name: 'LearnWeb3 Faucet',
     link: LW3_FAUCET_LINK,
-  }
+  },
 ];
 
 // TODO: replace this

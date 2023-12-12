@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import "plyr-react/plyr.css";
-import { Box } from "@fuel-ui/react";
-import { runSync } from "@mdx-js/mdx";
-import * as provider from "@mdx-js/react";
-import dynamic from "next/dynamic";
-import { useMemo } from "react";
+import 'plyr-react/plyr.css';
+import { Box } from '@fuel-ui/react';
+import { runSync } from '@mdx-js/mdx';
+import * as provider from '@mdx-js/react';
+import dynamic from 'next/dynamic';
+import { useMemo } from 'react';
 
 import {
   BRIDGE_LINK,
@@ -13,21 +13,21 @@ import {
   THIRDPARTY_FAUCET_LINKS,
   FUEL_TESTNET,
   PLAYGROUND_LINK,
-} from "../config/constants";
-import { runtime } from "../lib/runtime";
+} from '../config/constants';
+import { runtime } from '../lib/runtime';
 
-import { Blockquote } from "./Blockquote";
-import { CardSection } from "./CardSection";
-import { Code } from "./Code";
-import { Divider } from "./Divider";
-import { Heading } from "./Heading";
-import { Link } from "./Link";
-import { UL, OL } from "./List";
-import { Paragraph } from "./Paragraph";
-import { Pre } from "./Pre";
-import { Table } from "./Table";
+import { Blockquote } from './Blockquote';
+import { CardSection } from './CardSection';
+import { Code } from './Code';
+import { Divider } from './Divider';
+import { Heading } from './Heading';
+import { Link } from './Link';
+import { UL, OL } from './List';
+import { Paragraph } from './Paragraph';
+import { Pre } from './Pre';
+import { Table } from './Table';
 
-const Player = dynamic(() => import("./Player"), {
+const Player = dynamic(() => import('./Player'), {
   ssr: false,
 });
 
@@ -82,13 +82,16 @@ export function MDXRender({
           </Link>
         }
         thirdpartyFaucetLinks={
-          <ul>
-            {THIRDPARTY_FAUCET_LINKS.map((link) => (
-              <Link href={link}>
-                <Code>{FUEL_TESTNET}</Code> faucet
-              </Link>
+          <UL>
+            {THIRDPARTY_FAUCET_LINKS.map((tpFaucet) => (
+              <li key={tpFaucet.name}>
+                <Link href={tpFaucet.link}>
+                  {tpFaucet.name}
+                  <Code>{FUEL_TESTNET}</Code> faucet
+                </Link>
+              </li>
             ))}
-          </ul>
+          </UL>
         }
         faucetUrl={FAUCET_LINK}
         explorerUrl={EXPLORER_LINK}
