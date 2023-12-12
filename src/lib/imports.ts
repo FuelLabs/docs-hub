@@ -9,12 +9,11 @@ import * as nightlyFuelExamples from '~/docs/nightly/fuels-wallet/packages/docs/
 import { TD, TH } from '~/src/components/Table';
 import TestAction from '~/src/components/TestAction';
 import { COMPONENTS as GQL_COMPONENTS } from '~/src/generated/components/graphql';
+import { COMPONENTS as NIGHTLY_GQL_COMPONENTS } from '~/src/generated/components/nightly-graphql';
+import { COMPONENTS as NIGHTLY_WALLET_COMPONENTS } from '~/src/generated/components/nightly-wallet';
 import { COMPONENTS as WALLET_COMPONENTS } from '~/src/generated/components/wallet';
 
 import type { ComponentsList } from '../types';
-
-import { COMPONENTS as nightly_GQL_COMPONENTS } from '~/src/generated/components/nightly-graphql';
-import { COMPONENTS as nightly_WALLET_COMPONENTS } from '~/src/generated/components/nightly-wallet';
 
 function loadComponent(imp: any, name?: string): ComponentType<object> {
   return dynamic(() => imp.then((mod: any) => (name ? mod[name] : mod)), {
@@ -61,7 +60,7 @@ export function getComponents(docSlug: string, isNightly: boolean) {
 
     if (isNightly) {
       components.Examples = nightlyFuelExamples;
-      addComponents(nightly_WALLET_COMPONENTS);
+      addComponents(NIGHTLY_WALLET_COMPONENTS);
     } else {
       components.Examples = FuelExamples;
       addComponents(WALLET_COMPONENTS);
@@ -72,7 +71,7 @@ export function getComponents(docSlug: string, isNightly: boolean) {
   ) {
     if (isNightly) {
       components.GQLExamples = nightlyGQLExamples;
-      addComponents(nightly_GQL_COMPONENTS);
+      addComponents(NIGHTLY_GQL_COMPONENTS);
     } else {
       components.GQLExamples = GQLExamples;
       addComponents(GQL_COMPONENTS);
