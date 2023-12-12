@@ -1,5 +1,4 @@
 import fs from 'fs';
-import { join } from 'path';
 import toml from 'toml';
 
 export function getExistingVersions() {
@@ -12,28 +11,14 @@ export function getExistingVersions() {
   };
 }
 
-export async function getLatestVersions(latestFileName, dir) {
+export async function getLatestVersions() {
   const versions = {};
-  console.log('Most recently created file:', latestFileName);
-  const content = fs.readFileSync(join(dir, latestFileName), 'utf-8');
-  versions.forc = getVersionFromToolchainConfig(content, 'forc');
-  versions.indexer = getVersionFromToolchainConfig(content, 'fuel-indexer');
+  versions.forc = await getLatestRelease('sway');
+  versions.indexer = await getLatestRelease('fuel-indexer');
   versions.rust = await getLatestRelease('fuels-rs');
   versions.ts = await getLatestRelease('fuels-ts');
   versions.wallet = await getLatestRelease('fuels-wallet');
   return versions;
-}
-
-function getVersionFromToolchainConfig(content, pkgName) {
-  const pattern = new RegExp(
-    `pkg\\.${pkgName}.*?version\\s*=\\s*"([^"]+)"`,
-    's'
-  );
-  const matches = content.match(pattern);
-  if (!matches) {
-    throw `ERROR: ${pkgName} version not found!`;
-  }
-  return matches[1];
 }
 
 function getForcVersion() {
