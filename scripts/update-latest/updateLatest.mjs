@@ -50,7 +50,6 @@ async function updateSubmodules(newVersions) {
   const updateRegardless = [
     'docs/nightly/fuel-specs',
     'docs/nightly/fuel-graphql-docs',
-    'docs/nightly/fuelup',
     'docs/guides/docs/migration-guide/breaking-change-log',
   ];
   console.log('GOING TO UPDATE REGARDLESS');
@@ -61,7 +60,7 @@ async function updateSubmodules(newVersions) {
     })
   );
 
-  // update versions branches if new for sway, indexer, fuels-rs, & fuels-ts
+  // update versions branches if new for sway, indexer, fuelup, fuels-rs, & fuels-ts
   if (newVersions) {
     console.log('GOING TO UPDATE NIGHTLY TOOLCHAIN VERSIONS');
     await Promise.all(
@@ -88,6 +87,9 @@ async function updateSubmodules(newVersions) {
             break;
           case 'wallet':
             submoduleName = 'docs/nightly/fuels-wallet';
+            break;
+          case 'fuelup':
+            submoduleName = 'docs/nightly/fuelup';
             break;
           default:
         }
