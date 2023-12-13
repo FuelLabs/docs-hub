@@ -54,14 +54,14 @@ export const mdxComponents = {
 type MDXRenderProps = {
   code: string;
   components: Record<any, any>;
-  isLatest: boolean;
+  isNightly: boolean;
   fuelCoreVersion?: string;
 };
 
 export function MDXRender({
   code,
   components,
-  isLatest,
+  isNightly,
   fuelCoreVersion,
 }: MDXRenderProps) {
   const { default: Content } = useMemo(
@@ -72,7 +72,7 @@ export function MDXRender({
   return (
     <provider.MDXProvider components={{ ...components, ...mdxComponents }}>
       <Content
-        isLatest={isLatest}
+        isNightly={isNightly}
         fuelTestnet={FUEL_TESTNET}
         fuelTestnetInlineCode={<Code>{FUEL_TESTNET}</Code>}
         faucetLink={

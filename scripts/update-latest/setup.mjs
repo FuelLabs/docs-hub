@@ -9,8 +9,8 @@ export async function setup() {
   // setup git
   await setupUser();
 
-  // checkout the latest gh-pages branch of fuelup
-  const fuelupFolder = 'docs/latest/fuelup';
+  // checkout the nightly gh-pages branch of fuelup
+  const fuelupFolder = 'docs/nightly/fuelup';
   const publishBranch = 'gh-pages';
   await updateSubmodule(fuelupFolder);
   console.log('UPDATED FUELUP SUBMODLE');

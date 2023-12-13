@@ -6,8 +6,8 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
 import { codeImport as walletCodeImport } from '~/docs/fuels-wallet/packages/docs/src/lib/code-import';
-import { codeExamples as latestCodeExamples } from '~/docs/latest/fuel-graphql-docs/src/lib/code-examples';
-import { codeImport as latestWalletCodeImport } from '~/docs/latest/fuels-wallet/packages/docs/src/lib/code-import';
+import { codeExamples as nightlyCodeExamples } from '~/docs/nightly/fuel-graphql-docs/src/lib/code-examples';
+import { codeImport as nightlyWalletCodeImport } from '~/docs/nightly/fuels-wallet/packages/docs/src/lib/code-import';
 import { codeImport } from '~/src/lib/plugins/code-import';
 import { textImport } from '~/src/lib/plugins/text-import';
 
@@ -64,8 +64,8 @@ export class Doc {
     const split = item.slug.split('/');
     let category = item.category;
     if (!category && item.slug.includes('docs/')) {
-      const isLatest = item.slug.includes('/latest/');
-      const index = isLatest ? 3 : 2;
+      const isNightly = item.slug.includes('/nightly/');
+      const index = isNightly ? 3 : 2;
       const isIndex = split.length === index;
       category = split[isIndex ? index - 1 : index].replaceAll('-', ' ');
     }
@@ -84,14 +84,14 @@ export class Doc {
         ...config,
         slug: item.slug,
       },
-      isLatest: item.slug.includes('/latest/'),
+      isNightly: item.slug.includes('/nightly/'),
     } as DocType;
 
     this.item = doc;
   }
 
   #getConfig(slug: string): Config {
-    slug = slug.replace('docs/latest/', 'docs/');
+    slug = slug.replace('docs/nightly/', 'docs/');
     try {
       if (slug.startsWith('docs/')) {
         slug = slug.replace('docs/', '');
@@ -141,8 +141,8 @@ export class Doc {
   }
 
   sidebarLinks(slug: string) {
-    const configSlug = slug.includes('/latest/')
-      ? `latest-${this.config.slug}`
+    const configSlug = slug.includes('/nightly/')
+      ? `nightly-${this.config.slug}`
       : this.config.slug;
     let guideName = this.item.slug.split('/')[0];
     const linksPath = join(
@@ -151,11 +151,11 @@ export class Doc {
     );
     const links = JSON.parse(readFileSync(linksPath, 'utf8'));
     if (
-      (configSlug === 'guides' || configSlug === 'latest-guides') &&
+      (configSlug === 'guides' || configSlug === 'nightly-guides') &&
       guideName
     ) {
-      if (configSlug === 'latest-guides') {
-        guideName = `${guideName}/latest`;
+      if (configSlug === 'nightly-guides') {
+        guideName = `${guideName}/nightly`;
       }
       const slug = this.item.slug
         .replace(`${guideName}/`, '')
@@ -221,12 +221,14 @@ export class Doc {
 
     if (this.md.slug.startsWith('docs/wallet/')) {
       plugins = plugins.concat([[walletCodeImport, { filepath }] as any]);
-    } else if (this.md.slug.startsWith('docs/latest/wallet/')) {
-      plugins = plugins.concat([[latestWalletCodeImport, { filepath }] as any]);
+    } else if (this.md.slug.startsWith('docs/nightly/wallet/')) {
+      plugins = plugins.concat([
+        [nightlyWalletCodeImport, { filepath }] as any,
+      ]);
     } else if (this.md.slug.startsWith('docs/graphql/')) {
       plugins = plugins.concat([[codeExamples, { filepath }] as any]);
-    } else if (this.md.slug.startsWith('docs/latest/graphql/')) {
-      plugins = plugins.concat([[latestCodeExamples, { filepath }] as any]);
+    } else if (this.md.slug.startsWith('docs/nightly/graphql/')) {
+      plugins = plugins.concat([[nightlyCodeExamples, { filepath }] as any]);
     } else if (
       this.md.slug.includes('guides') ||
       this.md.slug.includes('/intro/')

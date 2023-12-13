@@ -27,7 +27,7 @@ export type DocType = {
   menu: string[];
   docsConfig: Config;
   parent?: { label: string; link: string };
-  isLatest: boolean;
+  isNightly: boolean;
 };
 
 export type BreadCrumb = {

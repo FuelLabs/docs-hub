@@ -18,14 +18,14 @@ type SidebarProps = {
   };
   links?: SidebarLinkItem[];
   versions?: Versions;
-  isLatest: boolean;
+  isNightly: boolean;
 };
 
 export function Sidebar({
   allNavs,
   onClick,
   versions,
-  isLatest,
+  isNightly,
 }: SidebarProps) {
   const ctx = useDocContext();
   const { links, doc } = ctx;
@@ -60,7 +60,7 @@ export function Sidebar({
           {/* DOCS */}
 
           {allNavs.map((navOrder) => {
-            const catIndex = isLatest ? 2 : 1;
+            const catIndex = isNightly ? 2 : 1;
             let key = navOrder.links[0].slug.split('/')[catIndex];
             if (key === 'sway') {
               key = 'forc';
