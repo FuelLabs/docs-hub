@@ -13,7 +13,7 @@ export function rehypeExtractHeadings({
 }) {
   return () => (tree: any) => {
     visit(tree, 'element', (node) => {
-      node.properties['data-latest'] = slug.includes('/latest');
+      node.properties['data-nightly'] = slug.includes('/nightly');
       const rank = headingRank(node);
       if (rank) {
         node.properties['data-rank'] = `h${rank}`;

@@ -52,34 +52,34 @@ const CONFIG = {
 };
 
 const forcLines = [];
-const latestForcLines = [];
+const nightlyForcLines = [];
 
 function handleOrder(orderType, filepath, orderName) {
   let betaOrders;
-  let latestOrders;
+  let nightlyOrders;
   const isJSON = orderType === 'json';
   const orderFile = getFile(filepath, false, isJSON);
-  const latestOrderFile = getFile(filepath, true, isJSON);
+  const nightlyOrderFile = getFile(filepath, true, isJSON);
   if (isJSON) {
     betaOrders = { order: orderFile };
-    latestOrders = { order: latestOrderFile };
+    nightlyOrders = { order: nightlyOrderFile };
   } else if (orderType === 'mdbook') {
     if (orderName === 'forc') {
       // FORC ORDER
       const newForcLines = forcLines.map(handleForcLines);
-      const newLatestForcLines = latestForcLines.map(handleForcLines);
+      const newNightlyForcLines = nightlyForcLines.map(handleForcLines);
       betaOrders = processSummary(newForcLines, 'forc');
-      latestOrders = processSummary(newLatestForcLines, 'forc');
+      nightlyOrders = processSummary(newNightlyForcLines, 'forc');
     } else {
       betaOrders = processSummary(orderFile.split(EOL), orderName);
-      latestOrders = processSummary(latestOrderFile.split(EOL), orderName);
+      nightlyOrders = processSummary(nightlyOrderFile.split(EOL), orderName);
     }
   } else if (orderType === 'vp') {
     betaOrders = processVPConfig(orderFile.split(EOL));
-    latestOrders = processVPConfig(latestOrderFile.split(EOL));
+    nightlyOrders = processVPConfig(nightlyOrderFile.split(EOL));
   }
 
-  return { betaOrders, latestOrders };
+  return { betaOrders, nightlyOrders };
 }
 
 export async function getOrders() {
@@ -90,13 +90,13 @@ export async function getOrders() {
     if (!['guides', 'intro'].includes(key)) {
       const bookOrder = handleOrder(book.type, book.path, key);
       orders[key] = bookOrder.betaOrders.order;
-      orders[`latest-${key}`] = bookOrder.latestOrders.order;
+      orders[`nightly-${key}`] = bookOrder.nightlyOrders.order;
       if (key === 'sway') {
         forcLines.push(...bookOrder.betaOrders.forcLines);
-        latestForcLines.push(...bookOrder.latestOrders.forcLines);
+        nightlyForcLines.push(...bookOrder.nightlyOrders.forcLines);
         const forcBookOrder = handleOrder(book.type, book.path, 'forc');
         orders.forc = forcBookOrder.betaOrders.order;
-        orders['latest-forc'] = forcBookOrder.latestOrders.order;
+        orders['nightly-forc'] = forcBookOrder.nightlyOrders.order;
       }
     } else {
       orders[key] = getFile(book.path, false, true);

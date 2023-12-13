@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from 'react';
 
 import { FUEL_TESTNET_UPPER_CASE } from '../config/constants';
 
-export type VersionCtx = typeof FUEL_TESTNET_UPPER_CASE | 'Latest';
+export type VersionCtx = typeof FUEL_TESTNET_UPPER_CASE | 'Nightly';
 
 const versionCtx = createContext<VersionCtx>(FUEL_TESTNET_UPPER_CASE);
 const setVersionCtx = createContext<(value: VersionCtx) => void>(() => {});

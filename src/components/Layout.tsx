@@ -14,7 +14,7 @@ type LayoutProps = {
   children: ReactNode;
   isClean?: boolean;
   config?: Config;
-  isLatest: boolean;
+  isNightly: boolean;
   versions?: Versions;
   allNavs?: NavOrder[];
 };
@@ -24,7 +24,7 @@ export function Layout({
   children,
   isClean,
   config,
-  isLatest,
+  isNightly,
   versions,
   allNavs,
 }: LayoutProps) {
@@ -94,7 +94,7 @@ export function Layout({
               <SidebarContainer
                 versions={versions}
                 allNavs={allNavs}
-                isLatest={isLatest}
+                isNightly={isNightly}
               />
             </Grid.Item>
           )}
@@ -102,7 +102,7 @@ export function Layout({
             <Header
               active={slug}
               title={config?.title}
-              isLatest={isLatest}
+              isNightly={isNightly}
               versions={versions}
               allNavs={allNavs}
             />

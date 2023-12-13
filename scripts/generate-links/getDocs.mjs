@@ -19,15 +19,15 @@ export async function getDocs(key, order) {
         '!./sway/docs/book/src/forc/**/*.md',
       ];
       break;
-    case 'latest-sway':
+    case 'nightly-sway':
       paths = [
         // SWAY DOCS
-        './latest/sway/docs/book/src/**/*.md',
+        './nightly/sway/docs/book/src/**/*.md',
         // IGNORE ALL SUMMARY PAGES
         '!**/SUMMARY.md',
         // IGNORE FORC PAGES
-        '!./latest/sway/docs/book/src/forc/*.md',
-        '!./latest/sway/docs/book/src/forc/**/*.md',
+        '!./nightly/sway/docs/book/src/forc/*.md',
+        '!./nightly/sway/docs/book/src/forc/**/*.md',
       ];
       break;
     case 'forc':
@@ -37,11 +37,11 @@ export async function getDocs(key, order) {
         './sway/docs/book/src/forc/**/*.md',
       ];
       break;
-    case 'latest-forc':
+    case 'nightly-forc':
       paths = [
         // FORC DOCS
-        './latest/sway/docs/book/src/forc/*.md',
-        './latest/sway/docs/book/src/forc/**/*.md',
+        './nightly/sway/docs/book/src/forc/*.md',
+        './nightly/sway/docs/book/src/forc/**/*.md',
       ];
       break;
     case 'fuels-rs':
@@ -53,11 +53,11 @@ export async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
-    case 'latest-fuels-rs':
+    case 'nightly-fuels-rs':
       paths = [
         // RUST SDK DOCS
-        './latest/fuels-rs/docs/src/**/*.md',
-        './latest/fuels-rs/docs/src/*.md',
+        './nightly/fuels-rs/docs/src/**/*.md',
+        './nightly/fuels-rs/docs/src/*.md',
         // IGNORE ALL SUMMARY PAGES
         '!**/SUMMARY.md',
       ];
@@ -70,12 +70,12 @@ export async function getDocs(key, order) {
         './fuels-ts/apps/docs/src/**/*.md',
       ];
       break;
-    case 'latest-fuels-ts':
+    case 'nightly-fuels-ts':
       paths = [
         // TS SDK DOCS
-        './latest/fuels-ts/apps/docs/src/*.md',
-        './latest/fuels-ts/apps/docs/src/**/*.md',
-        './latest/fuels-ts/apps/docs/src/**/*.md',
+        './nightly/fuels-ts/apps/docs/src/*.md',
+        './nightly/fuels-ts/apps/docs/src/**/*.md',
+        './nightly/fuels-ts/apps/docs/src/**/*.md',
       ];
       break;
     case 'wallet':
@@ -85,11 +85,11 @@ export async function getDocs(key, order) {
         './fuels-wallet/packages/docs/docs/*.mdx',
       ];
       break;
-    case 'latest-wallet':
+    case 'nightly-wallet':
       paths = [
         // WALLET DOCS
-        './latest/fuels-wallet/packages/docs/docs/**/*.mdx',
-        './latest/fuels-wallet/packages/docs/docs/*.mdx',
+        './nightly/fuels-wallet/packages/docs/docs/**/*.mdx',
+        './nightly/fuels-wallet/packages/docs/docs/*.mdx',
       ];
       break;
     case 'graphql':
@@ -99,11 +99,11 @@ export async function getDocs(key, order) {
         './fuel-graphql-docs/docs/**/*.mdx',
       ];
       break;
-    case 'latest-graphql':
+    case 'nightly-graphql':
       paths = [
         // GRAPHQL DOCS
-        './latest/fuel-graphql-docs/docs/*.mdx',
-        './latest/fuel-graphql-docs/docs/**/*.mdx',
+        './nightly/fuel-graphql-docs/docs/*.mdx',
+        './nightly/fuel-graphql-docs/docs/**/*.mdx',
       ];
       break;
     case 'fuelup':
@@ -115,11 +115,11 @@ export async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
-    case 'latest-fuelup':
+    case 'nightly-fuelup':
       paths = [
         // FUELUP DOCS
-        './latest/fuelup/docs/src/*.md',
-        './latest/fuelup/docs/src/**/*.md',
+        './nightly/fuelup/docs/src/*.md',
+        './nightly/fuelup/docs/src/**/*.md',
         // IGNORE ALL SUMMARY PAGES
         '!**/SUMMARY.md',
       ];
@@ -133,11 +133,11 @@ export async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
-    case 'latest-indexer':
+    case 'nightly-indexer':
       paths = [
         // INDEXER DOCS
-        './latest/fuel-indexer/docs/src/*.md',
-        './latest/fuel-indexer/docs/src/**/*.md',
+        './nightly/fuel-indexer/docs/src/*.md',
+        './nightly/fuel-indexer/docs/src/**/*.md',
         // IGNORE ALL SUMMARY PAGES
         '!**/SUMMARY.md',
       ];
@@ -151,11 +151,11 @@ export async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
-    case 'latest-specs':
+    case 'nightly-specs':
       paths = [
         // SPECS DOCS
-        './latest/fuel-specs/src/*.md',
-        './latest/fuel-specs/src/**/*.md',
+        './nightly/fuel-specs/src/*.md',
+        './nightly/fuel-specs/src/**/*.md',
         // IGNORE ALL SUMMARY PAGES
         '!**/SUMMARY.md',
       ];
@@ -173,16 +173,16 @@ export async function getDocs(key, order) {
         './intro/*.mdx',
       ];
       break;
-    // case 'latest-guides':
+    // case 'nightly-guides':
     //   paths = [
-    //     // LATEST GUIDES
-    //     // TODO: update guides to use latest
+    //     // NIGHTLY GUIDES
+    //     // TODO: update guides to use nightly
     //     './guides/**/*.mdx',
-    //     // './latest/guides/**/*.mdx',
+    //     // './nightly/guides/**/*.mdx',
     //   ];
     //   break;
     // case 'about-fuel':
-    // case 'latest-about-fuel':
+    // case 'nightly-about-fuel':
     //   paths = [
     //     // ABOUT FUEL DOCS
     //     './about-fuel/*.md',
