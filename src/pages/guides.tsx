@@ -28,7 +28,7 @@ export default function Guides({ guides }: GuidesProps) {
     setIsMounted(true);
   }, []);
 
-  const isNightly = mounted && version === 'nightly';
+  const isNightly = mounted && version === 'Nightly';
 
   return (
     <Layout title="Fuel Guides" isClean isNightly={isNightly}>
