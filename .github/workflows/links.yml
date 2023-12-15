@@ -5,7 +5,7 @@ on:
 
 jobs:
     check-links:
-        uses: FuelLabs/github-actions/.github/workflows/next-links.yml@master
+        uses: FuelLabs/github-actions/.github/workflows/next-links.yml@sarah/ignore-twitter-links
         with:
           status: ${{ github.event.deployment_status.state }}
           preview-url: ${{ github.event.deployment_status.environment_url }}
