@@ -86,9 +86,12 @@ export function handleExampleImports(
     if (paths.length > 1) exampleName = filePath.split(':').pop();
   } else if (node.type === 'text') {
     // handle ts-sdk docs example format
-    filePath = filePath.replace('<<< @/', '');
+    filePath = filePath.replace('<<< @/', '').replace('<<< @', '');
 
-    if (filePath.startsWith('docs-snippets')) {
+    if (
+      filePath.startsWith('docs-snippets') ||
+      filePath.startsWith('demo-fuels')
+    ) {
       filePath = `apps/${filePath}`;
     }
     const pathData = filePath.split('{');
