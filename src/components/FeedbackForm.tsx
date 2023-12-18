@@ -337,6 +337,7 @@ const styles = {
   textarea: cssObj({
     maxWidth: '95.5%',
     minWidth: '95.5%',
+    maxHeight: '200px',
     padding: '10px',
     backgroundColor: 'var(--colors-inputBaseBg)',
     border: '1px solid var(--colors-inputBaseBorder)',

@@ -7,13 +7,13 @@ import { Sidebar } from './Sidebar';
 interface SidebarContainerProps {
   allNavs?: NavOrder[];
   versions?: Versions;
-  isLatest: boolean;
+  isNightly: boolean;
 }
 
 export function SidebarContainer({
   allNavs,
   versions,
-  isLatest,
+  isNightly,
 }: SidebarContainerProps) {
   return (
     <Box css={styles.sidebar}>
@@ -24,7 +24,7 @@ export function SidebarContainer({
       </Box>
 
       <Box>
-        <Sidebar allNavs={allNavs} versions={versions} isLatest={isLatest} />
+        <Sidebar allNavs={allNavs} versions={versions} isNightly={isNightly} />
       </Box>
     </Box>
   );

@@ -13,7 +13,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
           ? imageName!.replaceAll('&&', '/')
           : imageName[0];
 
-      const imagePath = `${rootDir}/docs/fuels-wallet/packages/docs/public/${realName}.png`;
+      const isNightly = req.headers.referer?.includes('/nightly/');
+      const imagePath = `${rootDir}/docs/${
+        isNightly ? 'nightly/' : ''
+      }fuels-wallet/packages/docs/public/${realName}.png`;
 
       if (fs.existsSync(imagePath)) {
         res.setHeader('Content-Type', 'image/png');

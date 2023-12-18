@@ -14,7 +14,7 @@ interface HeaderProps {
   active: string;
   title?: string;
   allNavs?: NavOrder[];
-  isLatest: boolean;
+  isNightly: boolean;
   versions?: Versions;
 }
 
@@ -22,7 +22,7 @@ export function Header({
   active,
   title,
   allNavs,
-  isLatest,
+  isNightly,
   versions,
 }: HeaderProps) {
   return (
@@ -36,12 +36,12 @@ export function Header({
           >
             {title}
           </span>
-          <Search title={title} isLatest={isLatest} />
+          <Search title={title} isNightly={isNightly} />
         </Box>
         <Box css={styles.desktop}>
           <Navigation active={active} />
           <Box.Stack direction="row" gap="$3">
-            <VersionDropdown isLatest={isLatest} />
+            <VersionDropdown isNightly={isNightly} />
             <ThemeToggler />
           </Box.Stack>
         </Box>
@@ -49,14 +49,14 @@ export function Header({
           allNavs={allNavs}
           active={active}
           title={title}
-          isLatest={isLatest}
+          isNightly={isNightly}
           versions={versions}
         />
       </Box.Flex>
-      {isLatest && (
+      {isNightly && (
         <Alert css={styles.alert} direction="row" status="warning">
           <Alert.Description>
-            Latest versions may be unstable or not compatible across tooling.
+            Nightly versions may be unstable or not compatible across tooling.
           </Alert.Description>
         </Alert>
       )}

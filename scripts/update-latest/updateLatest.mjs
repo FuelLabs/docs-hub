@@ -9,15 +9,12 @@ import {
   createPR,
   fetchTag,
   fetchBranch,
-  getReleaseTimestamp,
-  gitResetCommit,
-  getCommitByTimestamp,
   checkoutBranch,
 } from './gitUtils.mjs';
 
-export async function updateLatest(newVersions) {
+export async function updateNightly(newVersions) {
   // fuelup checkout master
-  await switchToExistingBranch('master', 'docs/latest/fuelup');
+  await switchToExistingBranch('master', 'docs/nightly/fuelup');
 
   // create a new branch of docs-hub
   const date = new Date();
@@ -25,10 +22,10 @@ export async function updateLatest(newVersions) {
   const month = date.getMonth() + 1;
   const year = date.getFullYear();
   const formattedDate = `${day}-${month}-${year}`;
-  const branchName = `ci/latest-update-${formattedDate}`;
+  const branchName = `ci/nightly-update-${formattedDate}`;
   await switchToNewBranch(branchName);
 
-  // update latest submodules
+  // update nightly submodules
   console.log('UPDATING SUBMODULES', newVersions);
   await updateSubmodules(newVersions);
 
@@ -37,7 +34,7 @@ export async function updateLatest(newVersions) {
   const isDifferent = await checkDiff();
   console.log('IS DIFFERENT:', isDifferent);
   if (isDifferent) {
-    const title = 'chore: update latest docs';
+    const title = 'chore: update nightly docs';
 
     // add changes & commit
     await commitAll(title);
@@ -51,9 +48,8 @@ export async function updateLatest(newVersions) {
 async function updateSubmodules(newVersions) {
   // update everything that doesn't have a version
   const updateRegardless = [
-    'docs/latest/fuel-specs',
-    'docs/latest/fuel-graphql-docs',
-    'docs/latest/fuelup',
+    'docs/nightly/fuel-specs',
+    'docs/nightly/fuel-graphql-docs',
     'docs/guides/docs/migration-guide/breaking-change-log',
   ];
   console.log('GOING TO UPDATE REGARDLESS');
@@ -64,9 +60,9 @@ async function updateSubmodules(newVersions) {
     })
   );
 
-  // update versions branches if new for sway, indexer, fuels-rs, & fuels-ts
+  // update versions branches if new for sway, indexer, fuelup, fuels-rs, & fuels-ts
   if (newVersions) {
-    console.log('GOING TO UPDATE LATEST TOOLCHAIN VERSIONS');
+    console.log('GOING TO UPDATE NIGHTLY TOOLCHAIN VERSIONS');
     await Promise.all(
       Object.keys(newVersions).map(async (key) => {
         console.log('UPDATING SUB:', key);
@@ -76,21 +72,24 @@ async function updateSubmodules(newVersions) {
         let branch;
         switch (key) {
           case 'forc':
-            submoduleName = 'docs/latest/sway';
-            await update(version, 'docs/latest/builds/sway', 'gh-pages');
+            submoduleName = 'docs/nightly/sway';
+            await update(version, 'docs/nightly/builds/sway', 'gh-pages');
             break;
           case 'indexer':
-            submoduleName = 'docs/latest/fuel-indexer';
+            submoduleName = 'docs/nightly/fuel-indexer';
             break;
           case 'rust':
-            submoduleName = 'docs/latest/fuels-rs';
+            submoduleName = 'docs/nightly/fuels-rs';
             break;
           case 'ts':
-            submoduleName = 'docs/latest/fuels-ts';
+            submoduleName = 'docs/nightly/fuels-ts';
             branch = 'docs';
             break;
           case 'wallet':
-            submoduleName = 'docs/latest/fuels-wallet';
+            submoduleName = 'docs/nightly/fuels-wallet';
+            break;
+          case 'fuelup':
+            submoduleName = 'docs/nightly/fuelup';
             break;
           default:
         }
@@ -100,29 +99,15 @@ async function updateSubmodules(newVersions) {
   }
 }
 
-// use the latest commit on the docs branch of fuels-ts
+// use the nightly commit on the docs branch of fuels-ts
 export async function update(version, dir, branch) {
   await updateSubmodule(dir);
-  if (dir !== 'docs/latest/fuels-ts') {
+  if (dir !== 'docs/nightly/fuels-ts') {
     await fetchTag(version, dir);
     await checkoutVersion(version, dir);
   }
   if (branch) {
-    let releaseTimestamp;
-    if (dir !== 'docs/latest/fuels-ts') {
-      releaseTimestamp = await getReleaseTimestamp(version, dir);
-      console.log('RELEASE TIMESTAMP:', releaseTimestamp);
-    }
     await fetchBranch(branch, dir);
     await checkoutBranch(branch, dir);
-    if (dir !== 'docs/latest/fuels-ts') {
-      const commitHash = await getCommitByTimestamp(
-        releaseTimestamp,
-        branch,
-        dir
-      );
-      console.log('COMMIT HASH:', commitHash);
-      await gitResetCommit(commitHash, dir);
-    }
   }
 }

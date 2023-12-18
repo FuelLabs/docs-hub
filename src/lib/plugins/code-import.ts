@@ -138,7 +138,10 @@ function extractCommentBlock(
 function minWhitespace(lines: string[]): number {
   return lines
     .filter((line) => line.trim() !== '') // ignore blank lines
-    .map((line) => line.match(/^(\s*)/)[0].length)
+    .map((line) => {
+      const matchResult = line.match(/^(\s*)/);
+      return matchResult ? matchResult[0].length : 0;
+    })
     .reduce((min, curr) => Math.min(min, curr), Infinity);
 }
 

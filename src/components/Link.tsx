@@ -14,7 +14,7 @@ function replaceInternalLinks(href: string, base: string) {
       .replace('https://fuellabs.github.io', '')
       .replace('/master/', '/')
       .replace('.html', '')
-      .replace('/latest', '')
+      .replace('/nightly', '')
       .replace('/index', '/')
       .replace('sway/book/', 'sway/');
     href = `/docs${href}`;
@@ -32,6 +32,13 @@ function replaceInternalLinks(href: string, base: string) {
   if (href.startsWith('../')) {
     href = href.replace('../', `/${base}/`);
   }
+
+  // TODO: fix this at source
+  href = href.replace(
+    'docs/fuel-docs/quickstart/developer-quickstart',
+    '/guides/quickstart/'
+  );
+
   return href;
 }
 
