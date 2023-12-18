@@ -63,7 +63,13 @@ function getVersionFromJSONFile(path) {
 function getVersionFromTOMLFile(path) {
   const file = fs.readFileSync(path, 'utf-8');
   const tomlFile = toml.parse(file);
-  return tomlFile.workspace.package.version;
+  let version;
+  if (tomlFile.package) {
+    version = tomlFile.package.version;
+  } else {
+    version = tomlFile.workspace.package.version;
+  }
+  return version;
 }
 
 async function getNightlyRelease(repoName) {
