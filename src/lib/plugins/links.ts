@@ -87,10 +87,10 @@ function getNewUrl(node: any, dirname: string) {
     newUrl = `/${dir}/${newUrl}`;
   }
   newUrl = newUrl!.replace('/sway/forc/', '/forc/');
-  const isLatest = dirname.includes('/latest/');
+  const isNightly = dirname.includes('/nightly/');
   if (dirname.includes('fuel-graphql-docs')) {
-    newUrl = isLatest
-      ? newUrl.replace('/docs/', '/docs/latest/graphql/')
+    newUrl = isNightly
+      ? newUrl.replace('/docs/', '/docs/nightly/graphql/')
       : newUrl.replace('/docs/', '/docs/graphql/');
   }
   // TODO: add this for the wallet once wallet is updated past 13.0

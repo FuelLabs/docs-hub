@@ -12,7 +12,7 @@ async function main() {
   const folderPath = 'src/generated/sidebar-links';
   const orders = await getOrders();
   const allOrders = [];
-  const allLatestOrders = [];
+  const allNightlyOrders = [];
 
   await Promise.all(
     Object.keys(orders).map(async (key) => {
@@ -42,15 +42,15 @@ async function main() {
       }
       fs.writeFileSync(`${folderPath}/${key}.json`, json, 'utf-8');
       if (!key.includes('guides')) {
-        if (key.includes('latest') || key === 'intro') {
-          const cleanKey = key.replace('latest-', '');
-          allLatestOrders.push({
+        if (key.includes('nightly') || key === 'intro') {
+          const cleanKey = key.replace('nightly-', '');
+          allNightlyOrders.push({
             key: capitalize(cleanKey),
             sidebarName: getSidebarName(cleanKey),
             links: sortedLinks,
           });
         }
-        if (!key.includes('latest')) {
+        if (!key.includes('nightly')) {
           allOrders.push({
             key: capitalize(key),
             sidebarName: getSidebarName(key),
@@ -62,7 +62,7 @@ async function main() {
   );
 
   handleAllOrders(allOrders, folderPath, 'all-orders');
-  handleAllOrders(allLatestOrders, folderPath, 'all-latest-orders');
+  handleAllOrders(allNightlyOrders, folderPath, 'all-nightly-orders');
 }
 
 function getSidebarName(key) {

@@ -6,14 +6,14 @@ import { useState } from 'react';
 import { FUEL_TESTNET, FUEL_TESTNET_UPPER_CASE } from '../config/constants';
 import { useSetVersion } from '../hooks/useVersion';
 
-export default function VersionDropdown({ isLatest }: { isLatest: boolean }) {
+export default function VersionDropdown({ isNightly }: { isNightly: boolean }) {
   const [opened, setOpened] = useState(false);
   const router = useRouter();
   const setVersion = useSetVersion();
   const splitPath = router.asPath.split('/');
   const isDoc =
     router.asPath.includes('docs') && !router.asPath.includes('/intro/');
-  const bookIndex = isLatest ? 3 : 2;
+  const bookIndex = isNightly ? 3 : 2;
   return (
     <Dropdown isOpen={opened} onOpenChange={setOpened}>
       <Dropdown.Trigger
@@ -23,18 +23,18 @@ export default function VersionDropdown({ isLatest }: { isLatest: boolean }) {
           opened ? { ...styles.trigger, ...styles.triggerOpen } : styles.trigger
         }
       >
-        Version: {isLatest ? 'Latest' : FUEL_TESTNET_UPPER_CASE}
+        Version: {isNightly ? 'Nightly' : FUEL_TESTNET_UPPER_CASE}
       </Dropdown.Trigger>
       <Dropdown.Menu
-        disabledKeys={isLatest ? ['latest'] : [FUEL_TESTNET]}
+        disabledKeys={isNightly ? ['nightly'] : [FUEL_TESTNET]}
         css={styles.dropdownMenu}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onAction={(action: any) => {
           if (setVersion) {
             if (action === FUEL_TESTNET) {
               setVersion(FUEL_TESTNET_UPPER_CASE);
-            } else if (action === 'latest') {
-              setVersion('Latest');
+            } else if (action === 'nightly') {
+              setVersion('Nightly');
             }
             if (isDoc) {
               let book = splitPath[bookIndex];
@@ -44,7 +44,7 @@ export default function VersionDropdown({ isLatest }: { isLatest: boolean }) {
                 book = 'graphql/overview';
               }
               router.push(
-                `/docs/${action === 'latest' ? 'latest/' : ''}${book}`
+                `/docs/${action === 'nightly' ? 'nightly/' : ''}${book}`
               );
             }
           }
@@ -56,16 +56,16 @@ export default function VersionDropdown({ isLatest }: { isLatest: boolean }) {
           aria-label={FUEL_TESTNET}
         >
           <Text>{FUEL_TESTNET_UPPER_CASE}</Text>
-          {!isLatest && <Icon icon="Check" color="accent11" />}
+          {!isNightly && <Icon icon="Check" color="accent11" />}
         </Dropdown.MenuItem>
 
         <Dropdown.MenuItem
           css={styles.menuItem}
-          key="latest"
-          aria-label="latest"
+          key="nightly"
+          aria-label="nightly"
         >
-          <Text>Latest</Text>
-          {isLatest && <Icon icon="Check" color="accent11" />}
+          <Text>Nightly</Text>
+          {isNightly && <Icon icon="Check" color="accent11" />}
         </Dropdown.MenuItem>
       </Dropdown.Menu>
     </Dropdown>

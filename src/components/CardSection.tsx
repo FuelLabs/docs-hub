@@ -6,10 +6,10 @@ import { Card } from '../components/Card';
 
 interface CardSectionProps {
   cardsInfo: CardInfo[];
-  isLatest: boolean;
+  isNightly: boolean;
 }
 
-export function CardSection({ cardsInfo, isLatest }: CardSectionProps) {
+export function CardSection({ cardsInfo, isNightly }: CardSectionProps) {
   return (
     <Box css={styles.root}>
       <Grid css={styles.grid}>
@@ -19,7 +19,7 @@ export function CardSection({ cardsInfo, isLatest }: CardSectionProps) {
               <Card
                 cardName={card.heading}
                 cardInfo={card}
-                isLatest={isLatest}
+                isNightly={isNightly}
               />
             </Grid.Item>
           );

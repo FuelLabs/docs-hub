@@ -24,26 +24,26 @@ export const getStaticProps: GetStaticProps<any> = async () => {
     DOCS_DIRECTORY,
     `../src/generated/sidebar-links/all-orders.json`
   );
-  const allLatestNavsPath = join(
+  const allnightlyNavsPath = join(
     DOCS_DIRECTORY,
-    `../src/generated/sidebar-links/all-latest-orders.json`
+    `../src/generated/sidebar-links/all-nightly-orders.json`
   );
   const allNavs = JSON.parse(readFileSync(allNavsPath, 'utf8'));
-  const allLatestNavs = JSON.parse(readFileSync(allLatestNavsPath, 'utf8'));
+  const allnightlyNavs = JSON.parse(readFileSync(allnightlyNavsPath, 'utf8'));
   const versions = getVersions(false);
-  const latestVersions = getVersions(true);
+  const nightlyVersions = getVersions(true);
 
   return {
     props: {
       allNavs,
-      allLatestNavs,
+      allnightlyNavs,
       code,
       md: doc.md,
       doc: doc.item,
       links: doc.sidebarLinks(slug),
       docLink: doc.navLinks,
       versions,
-      latestVersions,
+      nightlyVersions,
     },
   };
 };

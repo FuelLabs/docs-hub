@@ -12,7 +12,7 @@ import VersionDropdown from './VersionDropdown';
 interface MobileMenuProps {
   active: string;
   title?: string;
-  isLatest: boolean;
+  isNightly: boolean;
   allNavs?: NavOrder[];
   versions?: Versions;
 }
@@ -20,7 +20,7 @@ interface MobileMenuProps {
 export function MobileMenu({
   active,
   title,
-  isLatest,
+  isNightly,
   allNavs,
   versions,
 }: MobileMenuProps) {
@@ -44,10 +44,10 @@ export function MobileMenu({
 
   return (
     <Box.Flex css={styles.root}>
-      <Search title={title} isLatest={isLatest} />
+      <Search title={title} isNightly={isNightly} />
 
       <Box.Stack direction="row" gap="$3">
-        <VersionDropdown isLatest={isLatest} />
+        <VersionDropdown isNightly={isNightly} />
         <ThemeToggler />
         <Drawer
           isDismissable
@@ -74,7 +74,7 @@ export function MobileMenu({
                   versions={versions}
                   allNavs={active.includes('guides') ? undefined : allNavs}
                   onClick={() => setOpen(false)}
-                  isLatest={isLatest}
+                  isNightly={isNightly}
                 />
               </Box>
             </Drawer.Body>
