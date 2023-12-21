@@ -270,6 +270,19 @@ function handleRustBooks(tree: Root, rootDir: string, dirname: string) {
     } else if (conditions.links(node)) {
       const newUrl = handleLinks(node, dirname);
       if (newUrl) node.url = newUrl;
+
+      if (node.url.includes('faucet-beta-3.fuel.network')) {
+        node.url = node.url.replace(
+          'faucet-beta-3.fuel.network',
+          'faucet-beta-4.fuel.network'
+        );
+        if (
+          node.children &&
+          node.children[0].value === 'faucet-beta-3.fuel.network'
+        ) {
+          node.children[0].value = 'faucet-beta-4.fuel.network';
+        }
+      }
     } else {
       const newValue = handleRustVersion(node, dirname);
       node.value = newValue;

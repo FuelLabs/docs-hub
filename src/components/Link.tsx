@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 function replaceInternalLinks(href: string, base: string) {
   if (
     href.startsWith('https://fuellabs.github.io') &&
-    !href.startsWith('https://fuellabs.github.io/block-explorer-v2/') &&
+    !href.includes('fuellabs.github.io/block-explorer-v2') &&
     !href.startsWith('https://fuellabs.github.io/sway/master/std/') &&
     !href.includes('LICENSE')
   ) {
@@ -16,9 +16,11 @@ function replaceInternalLinks(href: string, base: string) {
       .replace('/master/', '/')
       .replace('.html', '')
       .replace('/nightly', '')
-      .replace('/index', '/')
+      .replace(/\/index$/, '/')
       .replace('sway/book/', 'sway/')
+      .replace('sway/forc/', 'forc/')
       .replace('/fuel-specs/', '/specs/')
+      .replace(/\/v\d+\.\d+\.\d+\//, '/')
       .replace('/specs/vm', '/specs/fuel-vm');
     href = `/docs${href}`;
 
@@ -32,8 +34,16 @@ function replaceInternalLinks(href: string, base: string) {
       href = href.replace(`sway/${version}/forc`, 'forc');
     }
   }
+
   if (href.startsWith('../')) {
     href = href.replace('../', `/${base}/`);
+  }
+  if (href.startsWith('./../')) {
+    href = href.replace('./../', `/${base}/`);
+  }
+
+  if (!href.endsWith('/forc/plugins/forc_client/')) {
+    href = href.replace('/forc/plugins/forc_client/', '/forc/plugins/');
   }
 
   // TODO: fix this at source
@@ -45,7 +55,11 @@ function replaceInternalLinks(href: string, base: string) {
     .replace(
       'https://fuelbook.fuel.network/master/quickstart/developer-quickstart.html',
       '/guides/quickstart/'
-    );
+    )
+    .replace('specs/fuel-vm/instruction_set', 'specs/fuel-vm/instruction-set')
+    .replace('specs/protocol/tx_format', 'specs/tx-format/')
+    .replace('docs/fuelup/latest', 'docs/fuelup')
+    .replace('specs/protocol/id/contract', 'specs/identifiers/contract-id');
 
   return href;
 }

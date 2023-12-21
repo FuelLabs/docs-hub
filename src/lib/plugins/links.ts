@@ -58,7 +58,7 @@ function getNewUrl(node: any, dirname: string) {
   let newUrl;
   newUrl = node.url
     .replace('.md', '')
-    .replace('/index', '')
+    .replace(/\/index$/, '/')
     .replace('.html', '')
     .toLowerCase();
 
