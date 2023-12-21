@@ -19,7 +19,7 @@ import { rehypePlugins, remarkPlugins } from './md-plugins';
 import { rehypeExtractHeadings } from './plugins/toc';
 
 const isPreview = process.env.VERCEL_ENV === 'preview';
-const branchUrl = process.env.VERCEL_BRANCH_URL + '/';
+const branchUrl = `https://${process.env.VERCEL_BRANCH_URL}/`;
 
 const docConfigPath = join(DOCS_DIRECTORY, '../src/config/docs.json');
 const configFile = JSON.parse(readFileSync(docConfigPath, 'utf8'));
