@@ -95,6 +95,10 @@ function getNewUrl(node: any, dirname: string) {
   }
   // TODO: add this for the wallet once wallet is updated past 13.0
 
+  newUrl = newUrl
+    .replace('docs/nightly/introduction', 'docs/nightly/sway/introduction')
+    .replace('docs/introduction', 'docs/sway/introduction');
+
   return newUrl;
 }
 

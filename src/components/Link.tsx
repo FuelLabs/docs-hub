@@ -8,6 +8,7 @@ function replaceInternalLinks(href: string, base: string) {
   if (
     href.startsWith('https://fuellabs.github.io') &&
     !href.startsWith('https://fuellabs.github.io/block-explorer-v2/') &&
+    !href.startsWith('https://fuellabs.github.io/sway/master/std/') &&
     !href.includes('LICENSE')
   ) {
     href = href
@@ -16,7 +17,9 @@ function replaceInternalLinks(href: string, base: string) {
       .replace('.html', '')
       .replace('/nightly', '')
       .replace('/index', '/')
-      .replace('sway/book/', 'sway/');
+      .replace('sway/book/', 'sway/')
+      .replace('/fuel-specs/', '/specs/')
+      .replace('/specs/vm', '/specs/fuel-vm');
     href = `/docs${href}`;
 
     if (href.includes('fuels-ts/guide/')) {
@@ -34,10 +37,15 @@ function replaceInternalLinks(href: string, base: string) {
   }
 
   // TODO: fix this at source
-  href = href.replace(
-    'docs/fuel-docs/quickstart/developer-quickstart',
-    '/guides/quickstart/'
-  );
+  href = href
+    .replace(
+      'docs/fuel-docs/quickstart/developer-quickstart',
+      '/guides/quickstart/'
+    )
+    .replace(
+      'https://fuelbook.fuel.network/master/quickstart/developer-quickstart.html',
+      '/guides/quickstart/'
+    );
 
   return href;
 }
