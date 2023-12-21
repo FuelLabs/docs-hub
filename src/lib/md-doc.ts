@@ -18,9 +18,13 @@ import { Docs } from './md-docs';
 import { rehypePlugins, remarkPlugins } from './md-plugins';
 import { rehypeExtractHeadings } from './plugins/toc';
 
+const isPreview = process.env.VERCEL_ENV === 'preview';
+const branchUrl = process.env.VERCEL_BRANCH_URL;
+
 const docConfigPath = join(DOCS_DIRECTORY, '../src/config/docs.json');
 const configFile = JSON.parse(readFileSync(docConfigPath, 'utf8'));
-const BASE_URL = 'https://docs.fuel.network/';
+const BASE_URL =
+  isPreview && branchUrl ? branchUrl : 'https://docs.fuel.network/';
 
 export class Doc {
   md: MdDoc;
