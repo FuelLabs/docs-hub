@@ -240,7 +240,10 @@ function replaceInternalLinks(href: string, base: string) {
     !href.startsWith('https://fuellabs.github.io/sway/master/std/') &&
     !href.includes('LICENSE')
   ) {
-    href = href.replace('https://fuellabs.github.io', '');
+    href = href
+      .replace('https://fuellabs.github.io', '')
+      .replace('/master/', '/')
+      .replace('.html', '');
     href = `/docs${href}`;
 
     const isSwayVersion = href.match(/sway\/(v.+)\/forc/);
@@ -259,8 +262,6 @@ function replaceInternalLinks(href: string, base: string) {
   }
 
   href = href
-    .replace('/master/', '/')
-    .replace('.html', '')
     .replace('/nightly', '')
     .replace(/\/index$/, '/')
     .replace('sway/book/', 'sway/')
