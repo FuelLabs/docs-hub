@@ -7,7 +7,7 @@ const constantsPath = join(
   'docs/fuels-wallet/packages/docs/src/constants.ts'
 );
 const nightlyConstantsPath =
-  './docs/nightly/fuels-wallet/packages/docs/src/contants.ts';
+  'docs/nightly/fuels-wallet/packages/docs/src/constants.ts';
 
 const downloadVarName = 'DOWNLOAD_LINK';
 
