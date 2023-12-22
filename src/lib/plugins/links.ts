@@ -19,9 +19,10 @@ export function handleLinks(
   tree?: Root
 ) {
   let newUrl: string | null = null;
+  const base = dirname.split('/').splice(0, 2).join('/');
 
   if (node.type === 'html') {
-    handleHTMLLink(node, idx, parent, tree);
+    handleHTMLLink(node, base, idx, parent, tree);
   } else {
     if (!node.url.includes('http')) {
       newUrl = getNewUrl(node, dirname);
@@ -29,17 +30,18 @@ export function handleLinks(
     if (node.url.endsWith('CONTRIBUTING') && node.url.includes('github.com')) {
       newUrl = `${node.url}.md`;
     }
-    newUrl = handleTSLinks(newUrl);
+    const isNightly = dirname.includes('/nightly/');
+    newUrl = handleTSLinks(newUrl, isNightly);
   }
 
-  const base = dirname.split('/').splice(0, 2).join('/');
-
-  newUrl = replaceInternalLinks(newUrl ?? node.url, base);
+  if (newUrl || node.url) {
+    newUrl = replaceInternalLinks(newUrl ?? node.url, base);
+  }
 
   return newUrl;
 }
 
-function handleTSLinks(url: string | null) {
+function handleTSLinks(url: string | null, isNightly: boolean) {
   let newUrl = url;
   const duplicates = getTSAPIDuplicates();
   if (newUrl) {
@@ -52,8 +54,12 @@ function handleTSLinks(url: string | null) {
       }
     });
   }
+
   if (newUrl && newUrl.startsWith('/api/')) {
-    newUrl = newUrl.replace('/api/', '/docs/fuels-ts/');
+    newUrl = newUrl.replace(
+      '/api/',
+      `/docs/${isNightly ? '/nightly' : ''}fuels-ts/`
+    );
   }
   return newUrl;
 }
@@ -130,8 +136,6 @@ function getNewUrl(node: any, dirname: string) {
     );
   }
 
-  console.log(newUrl);
-
   return newUrl;
 }
 
@@ -160,11 +164,15 @@ function getTSUrl(input: string): { [key: string]: string } {
 
 function handleHTMLLink(
   node: any,
+  base: string,
   idx?: number | null,
   parent?: Parent<any, any>,
   tree?: Root
 ) {
-  const url = getUrl(node.value);
+  let url = getUrl(node.value);
+  if (url) {
+    url = replaceInternalLinks(url, base);
+  }
   if (
     url &&
     !node.value.includes(':href') &&
@@ -186,7 +194,7 @@ function handleHTMLLink(
     const newURLs = getTSUrl(scriptString.value);
 
     if (newURLs) {
-      handleNewURLs(newURLs, url, idx, parent);
+      handleNewURLs(newURLs, url, idx, parent, base);
     }
   }
 }
@@ -197,11 +205,13 @@ function handleNewURLs(
   },
   url: string,
   idx: number,
-  parent: Parent<any, any>
+  parent: Parent<any, any>,
+  base: string
 ) {
   let newURL = newURLs[url];
   if (newURL) {
     newURL = newURL.replace('/v${forc}', '').replace('/v${fuels}', '');
+    newURL = replaceInternalLinks(newURL, base);
     for (const [key, value] of Object.entries(pathsConfig)) {
       newURL = newURL.replaceAll(key, value as string);
     }
@@ -282,6 +292,5 @@ function replaceInternalLinks(href: string, base: string) {
     .replace('/packag/', '/package/')
     .replace('/index#', '#');
 
-  console.log('href', href);
   return href;
 }
