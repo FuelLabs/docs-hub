@@ -247,7 +247,6 @@ function replaceInternalLinks(href: string, base: string) {
     href = href
       .replace('https://fuellabs.github.io', '')
       .replace('/master/', '/')
-      .replace('/fuel-specs/', '/specs/')
       .replace('.html', '');
     href = `/docs${href}`;
 
@@ -294,7 +293,6 @@ function replaceInternalLinks(href: string, base: string) {
     .replace('specs/protocol/id/contract', 'specs/identifiers/contract-id')
     .replace('specs/protocol/abi', 'specs/abi')
     .replace('/packag/', '/packages/')
-    .replace('/fuel-indexer/', '/indexer/')
     .replace('standards/src_5', 'standards/src5-ownership')
     .replace('/index#', '#');
 
@@ -302,15 +300,16 @@ function replaceInternalLinks(href: string, base: string) {
     href = href.replace('/docs/', 'docs/');
   }
 
-  if (href.includes('fuels-ts')) {
-    href = href
-      .replace(/\/blob\/[^/]+/, '/tree/master')
-      .replace('/packages/api/', '/packages/interfaces/');
+  if (href.includes('github.com/FuelLabs/fuels-ts')) {
+    href = href.replace('/packages/api/', '/packages/interfaces/');
   }
 
-  href = href
-    .replace('fuels-ts/blob/5bf70bb2/', 'fuels-ts/blob/master/')
-    .replace('soliditylang.org/en/', 'soliditylang.org/en/latest/');
+  if (
+    !href.includes('soliditylang.org/en/latest/') &&
+    !href.includes('soliditylang.org/en/v0')
+  ) {
+    href = href.replace('soliditylang.org/en/', 'soliditylang.org/en/latest/');
+  }
 
   if (
     href ===
@@ -318,6 +317,12 @@ function replaceInternalLinks(href: string, base: string) {
   ) {
     href =
       'https://github.com/FuelLabs/fuels-wallet/blob/master/packages/sdk/src/config.ts';
+  }
+
+  if (!href.includes('github.com/FuelLabs')) {
+    href = href
+      .replace('/fuel-specs/', '/specs/')
+      .replace('/fuel-indexer/', '/indexer/');
   }
 
   return href;
