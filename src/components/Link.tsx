@@ -24,10 +24,6 @@ function replaceInternalLinks(href: string, base: string) {
       .replace('/specs/vm', '/specs/fuel-vm');
     href = `/docs${href}`;
 
-    if (href.includes('fuels-ts/guide/')) {
-      href = href.replace('fuels-ts/guide/', 'fuels-ts/');
-    }
-
     const isSwayVersion = href.match(/sway\/(v.+)\/forc/);
     if (isSwayVersion) {
       const version = isSwayVersion[1];
@@ -59,7 +55,8 @@ function replaceInternalLinks(href: string, base: string) {
     .replace('specs/fuel-vm/instruction_set', 'specs/fuel-vm/instruction-set')
     .replace('specs/protocol/tx_format', 'specs/tx-format/')
     .replace('docs/fuelup/latest', 'docs/fuelup')
-    .replace('specs/protocol/id/contract', 'specs/identifiers/contract-id');
+    .replace('specs/protocol/id/contract', 'specs/identifiers/contract-id')
+    .replace('/packag/', '/package/');
 
   return href;
 }

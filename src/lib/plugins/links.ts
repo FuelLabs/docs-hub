@@ -99,6 +99,31 @@ function getNewUrl(node: any, dirname: string) {
     .replace('docs/nightly/introduction', 'docs/nightly/sway/introduction')
     .replace('docs/introduction', 'docs/sway/introduction');
 
+  if (
+    newUrl !== '/docs/fuels-ts/guide/' &&
+    newUrl !== '/docs/nightly/fuels-ts/guide/'
+  ) {
+    newUrl = newUrl.replace('fuels-ts/guide/', 'fuels-ts/');
+  }
+
+  newUrl = newUrl.replace(
+    '/docs/dev/getting-started',
+    isNightly
+      ? '/docs/nightly/wallet/dev/getting-started'
+      : '/docs/wallet/dev/getting-started'
+  );
+
+  if (newUrl.includes('/docs/forc/../')) {
+    newUrl = newUrl.replace('/docs/forc/../', '/docs/sway/');
+  }
+
+  if (newUrl.startsWith('@repository')) {
+    newUrl = newUrl.replace(
+      '@repository',
+      'https://github.com/FuelLabs/fuels-wallet/blob/master'
+    );
+  }
+
   return newUrl;
 }
 
