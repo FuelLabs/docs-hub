@@ -1,5 +1,5 @@
 import patchFixWalletDownloadLink from './download-link.mjs';
-import patchFixWalletExamples from './wallet-patch-fixes/index.mjs';
+import patchFixWalletExamples from './wallet-examples.mjs';
 
 function main() {
   patchFixWalletExamples();
