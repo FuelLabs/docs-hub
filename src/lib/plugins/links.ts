@@ -271,7 +271,7 @@ function replaceInternalLinks(href: string, base: string) {
     .replace('sway/book/', 'sway/')
     .replace('sway/forc/', 'forc/')
     .replace(/\/v\d+\.\d+\.\d+\//, '/')
-    .replace('/specs/vm', '/specs/fuel-vm');
+    .replace('specs/vm', 'specs/fuel-vm');
 
   if (!href.endsWith('/forc/plugins/forc_client/')) {
     href = href.replace('/forc/plugins/forc_client/', '/forc/plugins/');
@@ -321,8 +321,8 @@ function replaceInternalLinks(href: string, base: string) {
 
   if (!href.includes('github.com/FuelLabs')) {
     href = href
-      .replace('/fuel-specs/', '/specs/')
-      .replace('/fuel-indexer/', '/indexer/');
+      .replace('/fuel-specs', '/specs')
+      .replace('/fuel-indexer', '/indexer');
   }
 
   return href;
