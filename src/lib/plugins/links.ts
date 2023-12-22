@@ -36,7 +36,7 @@ export function handleLinks(
     const isNightly = dirname.includes('/nightly/');
     newUrl = handleTSLinks(newUrl, isNightly);
     newUrl = replaceInternalLinks(newUrl ?? node.url, base);
-    newUrl = newUrl.replace('fuels-ts/blob/5bf70bb2/', 'fuels-ts/blob/master/');
+
     return newUrl;
   }
 }
@@ -247,6 +247,7 @@ function replaceInternalLinks(href: string, base: string) {
     href = href
       .replace('https://fuellabs.github.io', '')
       .replace('/master/', '/')
+      .replace('/fuel-specs/', '/specs/')
       .replace('.html', '');
     href = `/docs${href}`;
 
@@ -270,7 +271,6 @@ function replaceInternalLinks(href: string, base: string) {
     .replace(/\/index$/, '/')
     .replace('sway/book/', 'sway/')
     .replace('sway/forc/', 'forc/')
-    .replace('/fuel-specs/', '/specs/')
     .replace(/\/v\d+\.\d+\.\d+\//, '/')
     .replace('/specs/vm', '/specs/fuel-vm');
 
@@ -292,7 +292,10 @@ function replaceInternalLinks(href: string, base: string) {
     .replace('specs/protocol/tx_format', 'specs/tx-format/')
     .replace('docs/fuelup/latest', 'docs/fuelup')
     .replace('specs/protocol/id/contract', 'specs/identifiers/contract-id')
+    .replace('specs/protocol/abi', 'specs/abi')
     .replace('/packag/', '/packages/')
+    .replace('/fuel-indexer/', '/indexer/')
+    .replace('standards/src_5', 'standards/src5-ownership')
     .replace('/index#', '#');
 
   if (href.startsWith('/docs/')) {
@@ -303,6 +306,18 @@ function replaceInternalLinks(href: string, base: string) {
     href = href
       .replace(/\/blob\/[^/]+/, '/tree/master')
       .replace('/packages/api/', '/packages/interfaces/');
+  }
+
+  href = href
+    .replace('fuels-ts/blob/5bf70bb2/', 'fuels-ts/blob/master/')
+    .replace('soliditylang.org/en/', 'soliditylang.org/en/latest/');
+
+  if (
+    href ===
+    'https://github.com/FuelLabs/fuels-wallet/blob/master/packages/config/'
+  ) {
+    href =
+      'https://github.com/FuelLabs/fuels-wallet/blob/master/packages/sdk/src/config.ts';
   }
 
   return href;
