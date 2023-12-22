@@ -319,7 +319,7 @@ function replaceInternalLinks(href: string, base: string) {
       'https://github.com/FuelLabs/fuels-wallet/blob/master/packages/sdk/src/config.ts';
   }
 
-  if (!href.includes('github.com/FuelLabs')) {
+  if (!href.includes('github.com/FuelLabs') && !href.includes('docs.rs')) {
     href = href
       .replace('/fuel-specs', '/specs')
       .replace('/fuel-indexer', '/indexer');
