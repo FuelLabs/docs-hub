@@ -32,13 +32,9 @@ export function handleLinks(
     }
     const isNightly = dirname.includes('/nightly/');
     newUrl = handleTSLinks(newUrl, isNightly);
-  }
-
-  if (newUrl || node.url) {
     newUrl = replaceInternalLinks(newUrl ?? node.url, base);
+    return newUrl;
   }
-
-  return newUrl;
 }
 
 function handleTSLinks(url: string | null, isNightly: boolean) {
@@ -244,17 +240,7 @@ function replaceInternalLinks(href: string, base: string) {
     !href.startsWith('https://fuellabs.github.io/sway/master/std/') &&
     !href.includes('LICENSE')
   ) {
-    href = href
-      .replace('https://fuellabs.github.io', '')
-      .replace('/master/', '/')
-      .replace('.html', '')
-      .replace('/nightly', '')
-      .replace(/\/index$/, '/')
-      .replace('sway/book/', 'sway/')
-      .replace('sway/forc/', 'forc/')
-      .replace('/fuel-specs/', '/specs/')
-      .replace(/\/v\d+\.\d+\.\d+\//, '/')
-      .replace('/specs/vm', '/specs/fuel-vm');
+    href = href.replace('https://fuellabs.github.io', '');
     href = `/docs${href}`;
 
     const isSwayVersion = href.match(/sway\/(v.+)\/forc/);
@@ -266,10 +252,22 @@ function replaceInternalLinks(href: string, base: string) {
 
   if (href.startsWith('../')) {
     href = href.replace('../', `/${base}/`);
-  }
-  if (href.startsWith('./../')) {
+  } else if (href.startsWith('./../')) {
     href = href.replace('./../', `/${base}/`);
+  } else if (href.startsWith('./')) {
+    href = href.replace('./', `/${base}/`);
   }
+
+  href = href
+    .replace('/master/', '/')
+    .replace('.html', '')
+    .replace('/nightly', '')
+    .replace(/\/index$/, '/')
+    .replace('sway/book/', 'sway/')
+    .replace('sway/forc/', 'forc/')
+    .replace('/fuel-specs/', '/specs/')
+    .replace(/\/v\d+\.\d+\.\d+\//, '/')
+    .replace('/specs/vm', '/specs/fuel-vm');
 
   if (!href.endsWith('/forc/plugins/forc_client/')) {
     href = href.replace('/forc/plugins/forc_client/', '/forc/plugins/');
@@ -279,11 +277,11 @@ function replaceInternalLinks(href: string, base: string) {
   href = href
     .replace(
       'docs/fuel-docs/quickstart/developer-quickstart',
-      '/guides/quickstart/'
+      'guides/quickstart/'
     )
     .replace(
       'https://fuelbook.fuel.network/master/quickstart/developer-quickstart.html',
-      '/guides/quickstart/'
+      'guides/quickstart/'
     )
     .replace('specs/fuel-vm/instruction_set', 'specs/fuel-vm/instruction-set')
     .replace('specs/protocol/tx_format', 'specs/tx-format/')
@@ -291,6 +289,14 @@ function replaceInternalLinks(href: string, base: string) {
     .replace('specs/protocol/id/contract', 'specs/identifiers/contract-id')
     .replace('/packag/', '/package/')
     .replace('/index#', '#');
+
+  if (href === './commands/') {
+    href = 'docs/forc/commands/';
+  }
+
+  if (href.startsWith('/docs/')) {
+    href = href.replace('/docs/', 'docs/');
+  }
 
   return href;
 }
