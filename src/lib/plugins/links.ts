@@ -19,7 +19,10 @@ export function handleLinks(
   tree?: Root
 ) {
   let newUrl: string | null = null;
-  const base = dirname.split('/').splice(0, 2).join('/');
+  let base = dirname.split('/').splice(0, 2).join('/');
+  if (dirname.includes('sway/docs/book/src/forc')) {
+    base = 'docs/forc';
+  }
 
   if (node.type === 'html') {
     handleHTMLLink(node, base, idx, parent, tree);
@@ -33,6 +36,7 @@ export function handleLinks(
     const isNightly = dirname.includes('/nightly/');
     newUrl = handleTSLinks(newUrl, isNightly);
     newUrl = replaceInternalLinks(newUrl ?? node.url, base);
+    newUrl = newUrl.replace('fuels-ts/blob/5bf70bb2/', 'fuels-ts/blob/master/');
     return newUrl;
   }
 }
@@ -288,15 +292,17 @@ function replaceInternalLinks(href: string, base: string) {
     .replace('specs/protocol/tx_format', 'specs/tx-format/')
     .replace('docs/fuelup/latest', 'docs/fuelup')
     .replace('specs/protocol/id/contract', 'specs/identifiers/contract-id')
-    .replace('/packag/', '/package/')
+    .replace('/packag/', '/packages/')
     .replace('/index#', '#');
-
-  if (href === './commands/') {
-    href = 'docs/forc/commands/';
-  }
 
   if (href.startsWith('/docs/')) {
     href = href.replace('/docs/', 'docs/');
+  }
+
+  if (href.includes('fuels-ts')) {
+    href = href
+      .replace(/\/blob\/[^/]+/, '/tree/master')
+      .replace('/packages/api/', '/packages/interfaces/');
   }
 
   return href;
