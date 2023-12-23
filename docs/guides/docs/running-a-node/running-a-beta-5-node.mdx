@@ -87,7 +87,7 @@ parent:
 <CodeImport
   file="./running-a-beta-4-node.mdx"
   comment="infura_key"
-  commentType="{/*"
+  commentType="//"
   lang="sh"
   trim="true"
 />
@@ -97,7 +97,7 @@ parent:
 <CodeImport
   file="./running-a-beta-4-node.mdx"
   comment="alchemy_key"
-  commentType="{/*"
+  commentType="//"
   lang="sh"
   trim="true"
 />
@@ -121,7 +121,7 @@ parent:
 <CodeImport
   file="./running-a-beta-4-node.mdx"
   comment="generate_fuel_p2p_key_command"
-  commentType="{/*"
+  commentType="//"
   lang="sh"
   trim="true"
 />
@@ -138,7 +138,10 @@ parent:
 
 To run a local node with persistence, you must configure a `chainConfig.json` file. Here is the [specific configuration](https://github.com/FuelLabs/fuel-core/blob/v0.20.4/deployment/scripts/chainspec/beta_chainspec.json) for `beta-5`:
 
-{/*TODO: Add code for said above*/}
+<CodeImport
+  file="../../../fuel-core/deployment/scripts/chainspec/beta_chainspec.json"
+  lang="json"
+/>
 
 ## Running a Local Node
 
@@ -155,17 +158,17 @@ fuel-core run \
 --service-name {ANY_SERVICE_NAME} \
 --keypair {P2P_SECRET} \
 --relayer {ETH_RPC_ENDPOINT}\
---ip 127.0.0.1 --port 4000 --peering-port 30333 \
---db-path  ~/.fuel_beta4 \
+--ip 0.0.0.0 --port 4000 --peering-port 30333 \
+--db-path  ~/.fuel_beta5 \
 --chain ./chainConfig.json \
 --utxo-validation --poa-instant false --enable-p2p \
 --min-gas-price 1 --max-block-size 18874368  --max-transmit-size 18874368 \
 --bootstrap-nodes /dns4/p2p-beta-4.fuel.network/tcp/30333/p2p/16Uiu2HAm3xjsqASZ68KpaJPkPCMUiMgquhjyDHtxcVxVdFkMgRFf,/dns4/p2p-beta-4.fuel.network/tcp/30334/p2p/16Uiu2HAmJyoJ2HrtPRdBALMT8fs5Q25xVj57gZj5s6G6dzbHypoS \
 --sync-header-batch-size 1000 \
 --enable-relayer \
---relayer-v2-listening-contracts 0x03f2901Db5723639978deBed3aBA66d4EA03aF73 \
---relayer-da-deploy-height 4111672 \
---relayer-log-page-size 10000
+--relayer-v2-listening-contracts 0xE6B0E27F85abaCfC5149642c30F4BE9a878Aa4e9 \
+--relayer-da-deploy-height 8538323 \
+--relayer-log-page-size 2000
 ```
 
 <TextImport
@@ -177,7 +180,7 @@ fuel-core run \
 <CodeImport
   file="./running-a-beta-4-node.mdx"
   comment="fuel_core_help_command"
-  commentType="{/*"
+  commentType="//"
   lang="sh"
   trim="true"
 />
@@ -193,7 +196,7 @@ fuel-core run \
 <CodeImport
   file="./running-a-beta-4-node.mdx"
   comment="connecting_to_local_node_endpoint"
-  commentType="{/*"
+  commentType="//"
   lang="sh"
   trim="true"
 />
