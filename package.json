@@ -22,7 +22,7 @@
     "prettier:check": "prettier --check .",
     "prettier:format": "prettier --write .",
     "start": "next start",
-    "patch:wallet": "node scripts/wallet-examples.mjs",
+    "patch:wallet": "node scripts/wallet-patch-fixes/index.mjs",
     "test:guides": "npx playwright test tests/test.spec.ts",
     "test:guides:debug": "DEBUG=pw:api npx playwright test tests/test.spec.ts",
     "ts:check": "tsc --noEmit",
