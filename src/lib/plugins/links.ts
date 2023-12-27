@@ -266,7 +266,6 @@ function replaceInternalLinks(href: string, base: string) {
   }
 
   href = href
-    .replace('/nightly', '')
     .replace(/\/index$/, '/')
     .replace('sway/book/', 'sway/')
     .replace('sway/forc/', 'forc/')
