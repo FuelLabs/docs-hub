@@ -4,9 +4,30 @@ on:
     deployment_status
 
 jobs:
-    check-links:
+    check-guides-links:
         uses: FuelLabs/github-actions/.github/workflows/next-links.yml@master
         with:
           status: ${{ github.event.deployment_status.state }}
           preview-url: ${{ github.event.deployment_status.environment_url }}
           folder-path: docs/guides/docs
+
+    final-link-check:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Set up Python
+            uses: actions/setup-python@v3
+            with:
+              python-version: '3.x'
+      
+          - name: Set up env
+            run: |
+              python -m venv env
+              source env/bin/activate
+
+          - name: Install dependencies
+            run: |
+                pip install linkchecker
+
+          - name: Check All Links
+            run: |
+                linkchecker --check-extern --no-warnings --ignore-url=crates.io --ignore-url=127.0.0.1 --ignore-url=block-explorer-v2 --ignore-url=localhost: --ignore-url=infura.io --ignore-url=chainsecurity.com --ignore-url=-indexer.fuel.network --ignore-url=beta-4.fuel.network/graphql ${{ github.event.deployment_status.environment_url }}/sitemap.xml
