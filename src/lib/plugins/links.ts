@@ -20,6 +20,7 @@ export function handleLinks(
 ) {
   let newUrl: string | null = null;
   let base = dirname.split('/').splice(0, 2).join('/');
+  const isNightly = dirname.includes('/nightly/');
   if (dirname.includes('sway/docs/book/src/forc')) {
     base = 'docs/forc';
   }
@@ -33,9 +34,15 @@ export function handleLinks(
     if (node.url.endsWith('CONTRIBUTING') && node.url.includes('github.com')) {
       newUrl = `${node.url}.md`;
     }
-    const isNightly = dirname.includes('/nightly/');
     newUrl = handleTSLinks(newUrl, isNightly);
     newUrl = replaceInternalLinks(newUrl ?? node.url, base);
+    if (
+      isNightly &&
+      !newUrl.includes('/nightly/') &&
+      (newUrl.startsWith('docs/') || newUrl.startsWith('/docs/'))
+    ) {
+      newUrl = newUrl.replace('docs/', 'docs/nightly/');
+    }
 
     return newUrl;
   }
