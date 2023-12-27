@@ -13,7 +13,7 @@ export default function VersionDropdown({ isNightly }: { isNightly: boolean }) {
   const splitPath = router.asPath.split('/');
   const isDoc =
     router.asPath.includes('docs') && !router.asPath.includes('/intro/');
-  const bookIndex = isNightly ? 3 : 2;
+  const bookIndex = isNightly && router.asPath.includes('nightly') ? 3 : 2;
   return (
     <Dropdown isOpen={opened} onOpenChange={setOpened}>
       <Dropdown.Trigger

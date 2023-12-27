@@ -31,5 +31,7 @@ function processDirectory(directory) {
   });
 }
 
-processDirectory(examplesPath);
-processDirectory(nightlyExamplesPath);
+export default function patchFixWalletExamples() {
+  processDirectory(examplesPath);
+  processDirectory(nightlyExamplesPath);
+}

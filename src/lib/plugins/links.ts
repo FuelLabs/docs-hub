@@ -19,9 +19,14 @@ export function handleLinks(
   tree?: Root
 ) {
   let newUrl: string | null = null;
+  let base = dirname.split('/').splice(0, 2).join('/');
+  const isNightly = dirname.includes('/nightly/');
+  if (dirname.includes('sway/docs/book/src/forc')) {
+    base = 'docs/forc';
+  }
 
   if (node.type === 'html') {
-    handleHTMLLink(node, idx, parent, tree);
+    handleHTMLLink(node, base, idx, parent, tree);
   } else {
     if (!node.url.includes('http')) {
       newUrl = getNewUrl(node, dirname);
@@ -29,13 +34,21 @@ export function handleLinks(
     if (node.url.endsWith('CONTRIBUTING') && node.url.includes('github.com')) {
       newUrl = `${node.url}.md`;
     }
-    newUrl = handleTSLinks(newUrl);
-  }
+    newUrl = handleTSLinks(newUrl, isNightly);
+    newUrl = replaceInternalLinks(newUrl ?? node.url, base);
+    if (
+      isNightly &&
+      !newUrl.includes('/nightly/') &&
+      (newUrl.startsWith('docs/') || newUrl.startsWith('/docs/'))
+    ) {
+      newUrl = newUrl.replace('docs/', 'docs/nightly/');
+    }
 
-  return newUrl;
+    return newUrl;
+  }
 }
 
-function handleTSLinks(url: string | null) {
+function handleTSLinks(url: string | null, isNightly: boolean) {
   let newUrl = url;
   const duplicates = getTSAPIDuplicates();
   if (newUrl) {
@@ -48,8 +61,12 @@ function handleTSLinks(url: string | null) {
       }
     });
   }
+
   if (newUrl && newUrl.startsWith('/api/')) {
-    newUrl = newUrl.replace('/api/', '/docs/fuels-ts/');
+    newUrl = newUrl.replace(
+      '/api/',
+      `/docs/${isNightly ? '/nightly' : ''}fuels-ts/`
+    );
   }
   return newUrl;
 }
@@ -58,7 +75,7 @@ function getNewUrl(node: any, dirname: string) {
   let newUrl;
   newUrl = node.url
     .replace('.md', '')
-    .replace('/index', '')
+    .replace(/\/index$/, '/')
     .replace('.html', '')
     .toLowerCase();
 
@@ -95,6 +112,37 @@ function getNewUrl(node: any, dirname: string) {
   }
   // TODO: add this for the wallet once wallet is updated past 13.0
 
+  newUrl = newUrl
+    .replace('docs/nightly/introduction', 'docs/nightly/sway/introduction')
+    .replace('docs/introduction', 'docs/sway/introduction');
+
+  if (
+    newUrl !== '/docs/fuels-ts/guide/' &&
+    newUrl !== '/docs/nightly/fuels-ts/guide/'
+  ) {
+    newUrl = newUrl.replace('fuels-ts/guide/', 'fuels-ts/');
+  }
+
+  newUrl = newUrl
+    .replace(
+      '/docs/dev/getting-started',
+      isNightly
+        ? '/docs/nightly/wallet/dev/getting-started'
+        : '/docs/wallet/dev/getting-started'
+    )
+    .replace('/api/interfaces/index', '/api/interfaces/');
+
+  if (newUrl.includes('/docs/forc/../')) {
+    newUrl = newUrl.replace('/docs/forc/../', '/docs/sway/');
+  }
+
+  if (newUrl.startsWith('@repository')) {
+    newUrl = newUrl.replace(
+      '@repository',
+      'https://github.com/FuelLabs/fuels-wallet/blob/master'
+    );
+  }
+
   return newUrl;
 }
 
@@ -123,11 +171,15 @@ function getTSUrl(input: string): { [key: string]: string } {
 
 function handleHTMLLink(
   node: any,
+  base: string,
   idx?: number | null,
   parent?: Parent<any, any>,
   tree?: Root
 ) {
-  const url = getUrl(node.value);
+  let url = getUrl(node.value);
+  if (url) {
+    url = replaceInternalLinks(url, base);
+  }
   if (
     url &&
     !node.value.includes(':href') &&
@@ -149,7 +201,7 @@ function handleHTMLLink(
     const newURLs = getTSUrl(scriptString.value);
 
     if (newURLs) {
-      handleNewURLs(newURLs, url, idx, parent);
+      handleNewURLs(newURLs, url, idx, parent, base);
     }
   }
 }
@@ -160,11 +212,13 @@ function handleNewURLs(
   },
   url: string,
   idx: number,
-  parent: Parent<any, any>
+  parent: Parent<any, any>,
+  base: string
 ) {
   let newURL = newURLs[url];
   if (newURL) {
     newURL = newURL.replace('/v${forc}', '').replace('/v${fuels}', '');
+    newURL = replaceInternalLinks(newURL, base);
     for (const [key, value] of Object.entries(pathsConfig)) {
       newURL = newURL.replaceAll(key, value as string);
     }
@@ -188,4 +242,94 @@ function handleNewURLs(
       }
     });
   }
+}
+
+function replaceInternalLinks(href: string, base: string) {
+  if (
+    href.startsWith('https://fuellabs.github.io') &&
+    !href.includes('fuellabs.github.io/block-explorer-v2') &&
+    !href.startsWith('https://fuellabs.github.io/sway/master/std/') &&
+    !href.includes('LICENSE')
+  ) {
+    href = href
+      .replace('https://fuellabs.github.io', '')
+      .replace('/master/', '/')
+      .replace('.html', '');
+    href = `/docs${href}`;
+
+    const isSwayVersion = href.match(/sway\/(v.+)\/forc/);
+    if (isSwayVersion) {
+      const version = isSwayVersion[1];
+      href = href.replace(`sway/${version}/forc`, 'forc');
+    }
+  }
+
+  if (href.startsWith('../')) {
+    href = href.replace('../', `/${base}/`);
+  } else if (href.startsWith('./../')) {
+    href = href.replace('./../', `/${base}/`);
+  } else if (href.startsWith('./')) {
+    href = href.replace('./', `/${base}/`);
+  }
+
+  href = href
+    .replace(/\/index$/, '/')
+    .replace('sway/book/', 'sway/')
+    .replace('sway/forc/', 'forc/')
+    .replace(/\/v\d+\.\d+\.\d+\//, '/')
+    .replace('specs/vm', 'specs/fuel-vm');
+
+  if (!href.endsWith('/forc/plugins/forc_client/')) {
+    href = href.replace('/forc/plugins/forc_client/', '/forc/plugins/');
+  }
+
+  // TODO: fix this at source
+  href = href
+    .replace(
+      'docs/fuel-docs/quickstart/developer-quickstart',
+      'guides/quickstart/'
+    )
+    .replace(
+      'https://fuelbook.fuel.network/master/quickstart/developer-quickstart.html',
+      'guides/quickstart/'
+    )
+    .replace('specs/fuel-vm/instruction_set', 'specs/fuel-vm/instruction-set')
+    .replace('specs/protocol/tx_format', 'specs/tx-format/')
+    .replace('docs/fuelup/latest', 'docs/fuelup')
+    .replace('specs/protocol/id/contract', 'specs/identifiers/contract-id')
+    .replace('specs/protocol/abi', 'specs/abi')
+    .replace('/packag/', '/packages/')
+    .replace('standards/src_5', 'standards/src5-ownership')
+    .replace('/index#', '#');
+
+  if (href.startsWith('/docs/')) {
+    href = href.replace('/docs/', 'docs/');
+  }
+
+  if (href.includes('github.com/FuelLabs/fuels-ts')) {
+    href = href.replace('/packages/api/', '/packages/interfaces/');
+  }
+
+  if (
+    !href.includes('soliditylang.org/en/latest/') &&
+    !href.includes('soliditylang.org/en/v0')
+  ) {
+    href = href.replace('soliditylang.org/en/', 'soliditylang.org/en/latest/');
+  }
+
+  if (
+    href ===
+    'https://github.com/FuelLabs/fuels-wallet/blob/master/packages/config/'
+  ) {
+    href =
+      'https://github.com/FuelLabs/fuels-wallet/blob/master/packages/sdk/src/config.ts';
+  }
+
+  if (!href.includes('github.com/FuelLabs') && !href.includes('docs.rs')) {
+    href = href
+      .replace('/fuel-specs', '/specs')
+      .replace('/fuel-indexer', '/indexer');
+  }
+
+  return href;
 }
