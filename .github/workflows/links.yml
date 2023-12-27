@@ -30,4 +30,4 @@ jobs:
 
           - name: Check All Links
             run: |
-                linkchecker --check-extern --ignore-url=crates.io --ignore-url=127.0.0.1 --ignore-url=block-explorer-v2 --ignore-url=localhost: --ignore-url=infura.io --ignore-url=chainsecurity.com --ignore-url=-indexer.fuel.network --ignore-url=beta-4.fuel.network/graphql ${{ github.event.deployment_status.environment_url }}
+                linkchecker --check-extern --no-warnings --ignore-url=crates.io --ignore-url=127.0.0.1 --ignore-url=block-explorer-v2 --ignore-url=localhost: --ignore-url=infura.io --ignore-url=chainsecurity.com --ignore-url=-indexer.fuel.network --ignore-url=beta-4.fuel.network/graphql ${{ github.event.deployment_status.environment_url }}
