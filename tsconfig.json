@@ -14,7 +14,7 @@
       "~/*": [
         "./*",
         "./docs/fuels-wallet/packages/docs/*",
-        "./docs/latest/fuels-wallet/packages/docs/*",
+        "./docs/nightly/fuels-wallet/packages/docs/*",
         "../fuel-ui/design-system/react/src/*"
       ],
       "contentlayer/generated": ["./.contentlayer/generated"]

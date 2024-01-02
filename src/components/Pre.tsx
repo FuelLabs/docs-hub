@@ -71,7 +71,7 @@ const styles = {
 
     pre: {
       flex: 1,
-      mb: '$0 !important',
+      my: '$0 !important',
       padding: '$3 $5 $3',
       tabSize: '4',
       fontSize: '14px !important',
@@ -86,6 +86,7 @@ const styles = {
 
     'pre code': {
       all: 'unset',
+      pr: '$12',
     },
 
     h6: {

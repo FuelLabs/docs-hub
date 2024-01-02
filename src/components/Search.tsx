@@ -1,16 +1,18 @@
 import { DocSearch } from '@docsearch/react';
 import type { DocSearchHit } from '@docsearch/react/dist/esm/types';
+import { cssObj } from '@fuel-ui/css';
+import { Box, Text } from '@fuel-ui/react';
 import docsearch from '~/docsearch.json';
 
 import { NAVIGATION } from '../config/constants';
 
-function filter(items: DocSearchHit[], isLatest?: boolean) {
+function filter(items: DocSearchHit[], isNightly?: boolean) {
   const slugs: string[] = [];
   const newItems: DocSearchHit[] = [];
   const filtered = items.filter((item) => {
     if (
-      (!isLatest && item.url.includes('/latest/')) ||
-      (isLatest && !item.url.includes('/latest/'))
+      (!isNightly && item.url.includes('/nightly/')) ||
+      (isNightly && !item.url.includes('/nightly/'))
     ) {
       return false;
     }
@@ -59,27 +61,63 @@ function makeNewItem(item: DocSearchHit) {
 
 export default function Search({
   title,
-  isLatest,
+  isNightly,
 }: {
   title?: string;
-  isLatest?: boolean;
+  isNightly?: boolean;
 }) {
-  const transformItems = (items: DocSearchHit[]) => filter(items, isLatest);
+  const transformItems = (items: DocSearchHit[]) => filter(items, isNightly);
 
   return (
-    <DocSearch
-      indexName={docsearch.index_name}
-      appId={process.env.NEXT_PUBLIC_ALGOLIA_APP_ID!}
-      apiKey={process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY!}
-      disableUserPersonalization={true}
-      transformItems={transformItems}
-      searchParameters={
-        title
-          ? {
-              optionalFilters: [`hierarchy.lvl0:${title}`],
-            }
-          : {}
-      }
-    />
+    <Box.Flex css={styles.container}>
+      <DocSearch
+        indexName={docsearch.index_name}
+        appId={process.env.NEXT_PUBLIC_ALGOLIA_APP_ID!}
+        apiKey={process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY!}
+        disableUserPersonalization={true}
+        transformItems={transformItems}
+        searchParameters={
+          title
+            ? {
+                optionalFilters: [`hierarchy.lvl0:${title}`],
+              }
+            : {}
+        }
+      />
+      <Box css={styles.textContainer}>
+        <Text>⌘K</Text>
+      </Box>
+    </Box.Flex>
   );
 }
+
+const styles = {
+  container: cssObj({
+    width: '100px',
+    '@sm': {
+      width: '150px',
+    },
+
+    '.DocSearch-Button': {
+      backgroundColor: '#151718',
+      'html[class="fuel_light-theme"] &': {
+        backgroundColor: '$gray4',
+      },
+    },
+  }),
+  textContainer: cssObj({
+    display: 'none',
+    '@sm': {
+      display: 'grid',
+      fontSize: '$sm',
+      left: '-40px',
+      position: 'relative',
+      placeItems: 'center',
+      border: '1px solid $border',
+      height: '24px',
+      borderRadius: '8px',
+      px: '$1',
+      my: 'auto',
+    },
+  }),
+};

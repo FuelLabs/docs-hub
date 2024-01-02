@@ -3,23 +3,23 @@
 # List of directories to delete unused files from
 TARGET_DIRS=(
 "./docs/sway" 
-"./docs/latest/sway" 
+"./docs/nightly/sway" 
 "./docs/builds/sway" 
-"./docs/latest/builds/sway" 
+"./docs/nightly/builds/sway" 
 "./docs/fuel-indexer"
-"./docs/latest/fuel-indexer"
+"./docs/nightly/fuel-indexer"
 "./docs/fuelup"
-"./docs/latest/fuelup"
+"./docs/nightly/fuelup"
 "./docs/fuels-rs"
-"./docs/latest/fuels-rs"
+"./docs/nightly/fuels-rs"
 "./docs/fuels-ts"
-"./docs/latest/fuels-ts"
+"./docs/nightly/fuels-ts"
 "./docs/fuels-wallet"
-"./docs/latest/fuels-wallet"
+"./docs/nightly/fuels-wallet"
 )
 
 # File/folder names to exclude from deletion in each book
-EXCLUSIONS_sway=("Cargo.toml" "forc-pkg" "docs" "examples" "master")
+EXCLUSIONS_sway=("Cargo.toml" "forc-pkg" "sway-lib-std" "docs" "examples" "master")
 EXCLUSIONS_fuels_rs=("Cargo.toml" "docs" "examples" "packages")
 EXCLUSIONS_fuels_ts=("apps" "packages" "package.json")
 EXCLUSIONS_fuelup=("Cargo.toml" "docs")

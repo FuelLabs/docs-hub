@@ -6,11 +6,14 @@ import type { NodeHeading } from '~/src/types';
 
 export function rehypeExtractHeadings({
   headings,
+  slug,
 }: {
   headings: NodeHeading[];
+  slug: string;
 }) {
   return () => (tree: any) => {
     visit(tree, 'element', (node) => {
+      node.properties['data-nightly'] = slug.includes('/nightly');
       const rank = headingRank(node);
       if (rank) {
         node.properties['data-rank'] = `h${rank}`;

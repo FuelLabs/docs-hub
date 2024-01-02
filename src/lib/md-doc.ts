@@ -6,8 +6,8 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
 import { codeImport as walletCodeImport } from '~/docs/fuels-wallet/packages/docs/src/lib/code-import';
-import { codeExamples as latestCodeExamples } from '~/docs/latest/fuel-graphql-docs/src/lib/code-examples';
-import { codeImport as latestWalletCodeImport } from '~/docs/latest/fuels-wallet/packages/docs/src/lib/code-import';
+import { codeExamples as nightlyCodeExamples } from '~/docs/nightly/fuel-graphql-docs/src/lib/code-examples';
+import { codeImport as nightlyWalletCodeImport } from '~/docs/nightly/fuels-wallet/packages/docs/src/lib/code-import';
 import { codeImport } from '~/src/lib/plugins/code-import';
 import { textImport } from '~/src/lib/plugins/text-import';
 
@@ -18,9 +18,13 @@ import { Docs } from './md-docs';
 import { rehypePlugins, remarkPlugins } from './md-plugins';
 import { rehypeExtractHeadings } from './plugins/toc';
 
+const isPreview = process.env.VERCEL_ENV === 'preview';
+const branchUrl = `https://${process.env.VERCEL_BRANCH_URL}/`;
+
 const docConfigPath = join(DOCS_DIRECTORY, '../src/config/docs.json');
 const configFile = JSON.parse(readFileSync(docConfigPath, 'utf8'));
-const BASE_URL = 'https://docs.fuel.network/';
+const BASE_URL =
+  isPreview && branchUrl ? branchUrl : 'https://docs.fuel.network/';
 
 export class Doc {
   md: MdDoc;
@@ -28,13 +32,30 @@ export class Doc {
   config: Config;
 
   constructor(slug: string[], mdDocs: MdDoc[]) {
-    const item = Docs.findDoc(slug, mdDocs);
+    const isIntroQuickstartContract =
+      slug[slug.length - 1] === 'quickstart-contract';
+    const isIntroQuickstartFrontend =
+      slug[slug.length - 1] === 'quickstart-frontend';
 
+    let actualSlug = slug;
+    if (isIntroQuickstartContract) {
+      actualSlug = ['guides', 'quickstart', 'building-a-smart-contract'];
+    } else if (isIntroQuickstartFrontend) {
+      actualSlug = ['guides', 'quickstart', 'building-a-frontend'];
+    }
+
+    const item = Docs.findDoc(actualSlug, mdDocs);
     if (!item) {
       throw new Error(`${slug} not found`);
     }
 
-    const config = this.#getConfig(item.slug);
+    if (isIntroQuickstartContract) {
+      item.title = 'Quickstart Contract';
+    } else if (isIntroQuickstartFrontend) {
+      item.title = 'Quickstart Frontend';
+    }
+
+    const config = this.#getConfig(slug.join('/'));
     const splitPath = item._raw.flattenedPath.split('/');
     splitPath.splice(0, 2);
     splitPath.pop();
@@ -44,11 +65,11 @@ export class Doc {
     this.md = item;
     this.config = config;
 
+    const split = item.slug.split('/');
     let category = item.category;
     if (!category && item.slug.includes('docs/')) {
-      const isLatest = item.slug.includes('/latest/');
-      const split = item.slug.split('/');
-      const index = isLatest ? 3 : 2;
+      const isNightly = item.slug.includes('/nightly/');
+      const index = isNightly ? 3 : 2;
       const isIndex = split.length === index;
       category = split[isIndex ? index - 1 : index].replaceAll('-', ' ');
     }
@@ -56,6 +77,7 @@ export class Doc {
     const doc = {
       pageLink,
       _raw: item._raw,
+      originalSlug: slug.join('/'),
       slug: item.slug,
       title: this.#getTitle(item.title),
       parent: item.parent ?? null,
@@ -66,14 +88,14 @@ export class Doc {
         ...config,
         slug: item.slug,
       },
-      isLatest: item.slug.includes('/latest/'),
+      isNightly: item.slug.includes('/nightly/'),
     } as DocType;
 
     this.item = doc;
   }
 
   #getConfig(slug: string): Config {
-    slug = slug.replace('docs/latest/', 'docs/');
+    slug = slug.replace('docs/nightly/', 'docs/');
     try {
       if (slug.startsWith('docs/')) {
         slug = slug.replace('docs/', '');
@@ -106,6 +128,7 @@ export class Doc {
         ...rehypePlugins,
         rehypeExtractHeadings({
           headings: this.item.headings,
+          slug: this.item.slug,
         }),
       ],
     });
@@ -122,8 +145,8 @@ export class Doc {
   }
 
   sidebarLinks(slug: string) {
-    const configSlug = slug.includes('/latest/')
-      ? `latest-${this.config.slug}`
+    const configSlug = slug.includes('/nightly/')
+      ? `nightly-${this.config.slug}`
       : this.config.slug;
     let guideName = this.item.slug.split('/')[0];
     const linksPath = join(
@@ -132,11 +155,11 @@ export class Doc {
     );
     const links = JSON.parse(readFileSync(linksPath, 'utf8'));
     if (
-      (configSlug === 'guides' || configSlug === 'latest-guides') &&
+      (configSlug === 'guides' || configSlug === 'nightly-guides') &&
       guideName
     ) {
-      if (configSlug === 'latest-guides') {
-        guideName = `${guideName}/latest`;
+      if (configSlug === 'nightly-guides') {
+        guideName = `${guideName}/nightly`;
       }
       const slug = this.item.slug
         .replace(`${guideName}/`, '')
@@ -150,22 +173,34 @@ export class Doc {
   }
 
   get navLinks() {
-    const slug = this.#parseSlug(this.item.slug);
-    const links = this.sidebarLinks(this.item.slug);
-    const flatLinks = links
-      .flatMap((i) => (i.submenu || i) as SidebarLinkItem | SidebarLinkItem[])
-      .map((i) => ({ ...i, slug: this.#parseSlug(i.slug) }));
+    const slug = this.#parseSlug(this.item.originalSlug);
+    const links = this.sidebarLinks(this.item.originalSlug);
 
-    const idx = flatLinks.findIndex((i) => {
+    const result = [];
+    for (const link of links) {
+      if (link.submenu) {
+        for (const subItem of link.submenu) {
+          const newItem = subItem;
+          (newItem.slug = this.#parseSlug(subItem.slug) ?? subItem.slug),
+            result.push(newItem);
+        }
+      } else {
+        const newItem = link;
+        (newItem.slug = this.#parseSlug(link.slug) ?? link.slug),
+          result.push(newItem);
+      }
+    }
+
+    const idx = result.findIndex((i) => {
       if (!i.slug) return false;
       return (
         `docs/${i.slug}`.startsWith(slug || '') || i.slug.startsWith(slug || '')
       );
     });
 
-    const prev = flatLinks[idx - 1] ?? null;
-    const next = idx + 1 < flatLinks.length ? flatLinks[idx + 1] ?? null : null;
-    const current = flatLinks[idx];
+    const prev = idx > 0 ? result[idx - 1] : null;
+    const next = idx + 1 < result.length ? result[idx + 1] : null;
+    const current = result[idx];
     const link = { prev, next, ...current };
     return link;
   }
@@ -190,13 +225,18 @@ export class Doc {
 
     if (this.md.slug.startsWith('docs/wallet/')) {
       plugins = plugins.concat([[walletCodeImport, { filepath }] as any]);
-    } else if (this.md.slug.startsWith('docs/latest/wallet/')) {
-      plugins = plugins.concat([[latestWalletCodeImport, { filepath }] as any]);
+    } else if (this.md.slug.startsWith('docs/nightly/wallet/')) {
+      plugins = plugins.concat([
+        [nightlyWalletCodeImport, { filepath }] as any,
+      ]);
     } else if (this.md.slug.startsWith('docs/graphql/')) {
       plugins = plugins.concat([[codeExamples, { filepath }] as any]);
-    } else if (this.md.slug.startsWith('docs/latest/graphql/')) {
-      plugins = plugins.concat([[latestCodeExamples, { filepath }] as any]);
-    } else if (this.md.slug.includes('guides')) {
+    } else if (this.md.slug.startsWith('docs/nightly/graphql/')) {
+      plugins = plugins.concat([[nightlyCodeExamples, { filepath }] as any]);
+    } else if (
+      this.md.slug.includes('guides') ||
+      this.md.slug.includes('/intro/')
+    ) {
       plugins = plugins.concat([[codeImport, { filepath }] as any]);
       plugins = plugins.concat([[textImport, { filepath }] as any]);
     }

@@ -2,7 +2,7 @@ import fs from 'fs';
 import { join } from 'path';
 import toml from 'toml';
 
-import { DOCS_DIRECTORY, LATEST_DOCS_DIRECTORY } from '../config/constants';
+import { DOCS_DIRECTORY, NIGHTLY_DOCS_DIRECTORY } from '../config/constants';
 
 function itemFromPackageJson(docsDir: string, filename: string) {
   const file = fs.readFileSync(join(docsDir, filename), 'utf-8');
@@ -94,8 +94,15 @@ function getIndexerVersion(docsDir: string) {
   };
 }
 
-export function getVersions(isLatest: boolean) {
-  const docsDir = isLatest ? LATEST_DOCS_DIRECTORY : DOCS_DIRECTORY;
+export function getFuelCoreVersion() {
+  const filedir = join(DOCS_DIRECTORY, 'fuel-core/Cargo.toml');
+  const file = fs.readFileSync(filedir, 'utf-8');
+  const tomfile = toml.parse(file);
+  return tomfile.workspace.package.version;
+}
+
+export function getVersions(isNightly: boolean) {
+  const docsDir = isNightly ? NIGHTLY_DOCS_DIRECTORY : DOCS_DIRECTORY;
   const wallet = getWalletVersion(docsDir);
   const tsSDK = getTSSDKVersion(docsDir);
   const rust = getRustSDKVersion(docsDir);

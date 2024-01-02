@@ -1,0 +1,337 @@
+---
+title: Functions
+category: Intro to Sway
+parent:
+  label: All Guides
+  link: /guides
+---
+
+# Defining the Contract Functions
+
+Finally, it's time to compose our contract functions. Begin by copying and pasting the ABI we outlined earlier. It's crucial to ensure that the functions within the contract *exactly* align with the ABI; otherwise, the compiler will generate an error. Now, substitute the semicolons at the conclusion of each function with curly brackets. Also, modify `abi SwayStore` to `impl SwayStore for Contract`, as demonstrated below:
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/docs_hub_misc.sw"
+  comment="contract_skeleton"
+  commentType="//"
+  lang="sway"
+/>
+
+This guide will first show each of the completed functions above. Then, we'll break it down to explain each part, clarify specific syntax, and discuss fundamental concepts in Sway.
+
+## 1. Listing an item
+
+Our first function enables sellers to list an item for sale. They can specify the item's price and provide a string that references externally-stored data about the item.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="list_item_parent"
+  commentType="//"
+  lang="sway"
+/>
+
+### Updating list storage
+
+The initial step involves incrementing the `item_counter` in storage, which will serve as the item's ID. In Sway, all storage variables are contained within the `storage` keyword, ensuring clarity and preventing conflicts with other variable names. This also allows developers to easily track when and where storage is accessed or altered. The standard library in Sway provides `read()`, `write()`, and `try_read()` methods to access or manipulate contract storage. It's advisable to use `try_read()` when possible to prevent potential issues arising from accessing uninitialized storage. In this case, we read the current count of listed items, modify it, and then store the updated count back into storage, making use of the well-organized and conflict-free storage system.
+
+When a function returns an `Option` or `Result` type, we can use `unwrap()` to access its inner value. For instance, `try_read()` returns an `Option` type. If it yields `Some`, we get the contained value; but if it returns `None`, the contract call is immediately halted.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="list_item_increment"
+  commentType="//"
+  lang="sway"
+/>
+
+### Getting the message sender
+
+Next, we'll retrieve the `Identity` of the account listing the item.
+
+To obtain the `Identity`, utilize the `msg_sender` function from the standard library. The `msg_sender` represents the address of the entity (be it a user address or another contract address) initiating the current function call.
+
+This function yields a `Result`, which is an enum type that can either be OK or an error. Use the `Result` type when anticipating a value that might result in an error. For example in the case of `msg_sender` when an external caller is involved and the coin input owners differ, identifying the caller becomes impossible. In such edge cases, an `Err(AuthError)` is returned.
+
+```sway
+enum Result<T, E> {
+    Ok(T),
+    Err(E),
+}
+```
+
+In Sway, you can define a variable using either `let` or `const`.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="list_item_sender"
+  commentType="//"
+  lang="sway"
+/>
+
+To retrieve the inner value, you can use the `unwrap` method. It returns the contained value if the `Result` is OK and triggers a panic if the result indicates an error.
+
+### Creating a new item
+
+You can instantiate a new item using the `Item` struct. Use the `item_counter` value from storage as the ID, set the price and metadata based on the input parameters, and initialize `total_bought` to 0.
+
+Since the `owner` field requires an `Identity` type, you should utilize the sender value obtained from `msg_sender()`.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="list_item_new_item"
+  commentType="//"
+  lang="sway"
+/>
+
+### Updating a StorageMap
+
+Lastly, add the item to the `item_map` within storage using the `insert` method. Utilize the same ID for the key and designate the item as its corresponding value.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="list_item_insert"
+  commentType="//"
+  lang="sway"
+/>
+
+## 2. Buying an item
+
+Next, we aim to allow buyers to purchase listed items. To achieve this, we'll need to:
+
+1. Accept the desired item ID from the buyer as a function parameter.
+2. Ensure the buyer is paying the correct price with valid coins.
+3. Increase the `total_bought` count for that item.
+4. Deduct a contract fee from the item's cost and transfer the remaining amount to the seller.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="buy_item_parent"
+  commentType="//"
+  lang="sway"
+/>
+
+### Verifying payment
+
+We can use the `msg_asset_id` function from the standard library to obtain the asset ID of the coins being transferred in the transaction.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="buy_item_asset"
+  commentType="//"
+  lang="sway"
+/>
+
+Next, we'll utilize the `require` statement to ensure the sent asset is the correct one.
+
+The `require` statement accepts two arguments: a condition, and a value that's logged when the condition is false. Should the condition evaluate as false, the entire transaction is rolled back, leaving no changes.
+
+In this case, the condition checks if the `asset_id` matches the `BASE_ASSET_ID`—the default asset associated with the base blockchain, imported from the standard library. For example, if the base blockchain is Ethereum, the base asset would be ETH.
+
+If there's a mismatch in the asset, for instance, if someone attempts to purchase an item using a different coin, we'll trigger the custom error previously defined, passing along the `asset_id`.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="buy_item_require_not_base"
+  commentType="//"
+  lang="sway"
+/>
+
+Next, we can use the `msg_amount` function from the standard library to retrieve the quantity of coins transmitted by the buyer within the transaction.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="buy_item_msg_amount"
+  commentType="//"
+  lang="sway"
+/>
+
+To ensure the sent amount is not less than the item's price, we should retrieve the item details using the `item_id` parameter.
+
+To obtain a value for a specific key in a storage map, the `get` method is handy, wherein the key value is passed. For mapping storage access, the `try_read()` method is utilized. As this method produces a `Result` type, the `unwrap` method can be applied to extract the item value.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="buy_item_get_item"
+  commentType="//"
+  lang="sway"
+/>
+
+In Sway, all variables are immutable by default, whether declared with `let` or `const`. To modify the value of any variable, it must be declared mutable using the `mut` keyword. Since we plan to update the item's `total_bought` value, it should be defined as mutable.
+
+Additionally, it's essential to ensure that the quantity of coins sent for the item isn't less than the item's price.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="buy_item_require_ge_amount"
+  commentType="//"
+  lang="sway"
+/>
+
+### Updating buy storage
+
+We can increase the item's `total_bought` field value and subsequently reinsert it into the `item_map`. This action will replace the earlier value with the revised item.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="buy_item_require_update_storage"
+  commentType="//"
+  lang="sway"
+/>
+
+### Transferring payment
+
+Lastly, we can process the payment to the seller. It's recommended to transfer assets only after all storage modifications are completed to prevent [reentrancy attacks](/docs/sway/blockchain-development/calling_contracts/#handling-re-entrancy).
+
+For items reaching a specific price threshold, a fee can be deducted using a conditional `if` statement. The structure of `if` statements in Sway mirrors that in JavaScript except for the brackets `()`.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="buy_item_require_transferring_payment"
+  commentType="//"
+  lang="sway"
+/>
+
+In the aforementioned if-condition, we assess if the transmitted amount surpasses 100,000,000. For clarity in large numbers like `100000000`, we can represent it as `100_000_000`. If the foundational asset for this contract is ETH, this equates to 0.1 ETH given that Fuel uses a 9 decimal system.
+
+Should the amount exceed 0.1 ETH, a commission is determined and then deducted from the total.
+
+To facilitate the payment to the item's owner, the `transfer` function is utilized. This function, sourced from the standard library, requires three parameters: the Identity to which the coins are sent, the coin's asset ID, and the coin quantity for transfer.
+
+## 3. Get an item
+
+To get the details for an item, we can create a read-only function that returns the `Item` struct for a given item ID.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="get_item"
+  commentType="//"
+  lang="sway"
+/>
+
+To return a value in a function, you can use the `return` keyword, similar to JavaScript. Alternatively, you can omit the semicolon in the last line to return that value like in Rust. Although both methods are effective.
+
+```sway
+fn my_function(num: u64) -> u64{
+    // returning the num variable
+    return num;
+    
+    // this would also work:
+    num
+}
+```
+
+## 4. Initialize the owner
+
+This method sets the owner's `Identity` for the contract but only once.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="initialize_owner_parent"
+  commentType="//"
+  lang="sway"
+/>
+
+To ensure that this function can only be called once, specifically right after the contract's deployment, it's imperative that the owner's value remains set to `None`. We can achieve this verification using the `is_none` method, which assesses if an Option type is `None`.
+
+It's also important to note the potential risk of [front running](https://scsfg.io/hackers/frontrunning/) in this context this code has not been audited.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="initialize_owner_get_owner"
+  commentType="//"
+  lang="sway"
+/>
+
+To assign the `owner` as the message sender, it's necessary to transform the `Result` type into an `Option` type.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="initialize_owner_set_owner"
+  commentType="//"
+  lang="sway"
+/>
+
+Finally, we'll return the `Identity` of the message sender.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="initialize_owner_return_owner"
+  commentType="//"
+  lang="sway"
+/>
+
+## 5. Withdraw funds
+
+The `withdraw_funds` function permits the owner to withdraw any accumulated funds from the contract.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="withdraw_funds_parent"
+  commentType="//"
+  lang="sway"
+/>
+
+First, we'll ensure that the owner has been initialized to a specific address.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="withdraw_funds_set_owner"
+  commentType="//"
+  lang="sway"
+/>
+
+Next, we'll verify that the individual attempting to withdraw the funds is indeed the owner.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="withdraw_funds_require_owner"
+  commentType="//"
+  lang="sway"
+/>
+
+Additionally, we can confirm the availability of funds for withdrawal using the `this_balance` function from the standard library. This function returns the current balance of the contract.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="withdraw_funds_require_base_asset"
+  commentType="//"
+  lang="sway"
+/>
+
+Lastly, we'll transfer the entire balance of the contract to the owner.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="withdraw_funds_transfer_owner"
+  commentType="//"
+  lang="sway"
+/>
+
+## 6. Get the total items
+
+The final function we'll introduce is `get_count`. This straightforward getter function returns the value of the `item_counter` variable stored in the contract's storage.
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="get_count_parent"
+  commentType="//"
+  lang="sway"
+/>
+
+## Review
+
+The `SwayStore` contract implementation in your `main.sw` should now look like this, following everything else we have previously written:
+
+<TestAction
+id="sway-functions"
+action={{
+  name: 'writeToFile',
+  filepath: 'guides-testing/fuel-project/contract/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="implementation"
+  commentType="//"
+  lang="sway"
+/>

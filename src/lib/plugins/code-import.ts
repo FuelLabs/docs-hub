@@ -13,6 +13,12 @@ import { FUEL_TESTNET } from '~/src/config/constants';
 import { getEndCommentType } from './text-import';
 import type { CommentTypes } from './text-import';
 
+interface Block {
+  content: string;
+  lineStart: number;
+  lineEnd: number;
+}
+
 function toAST(content: string) {
   return acorn.parse(content, {
     ecmaVersion: 'latest',
@@ -47,60 +53,101 @@ function extractLines(
   }
 }
 
+function escapeRegExp(string: string): string {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 function extractCommentBlock(
   content: string,
   comment: string,
   commentType: CommentTypes,
   trim: string
-) {
+): Block {
   const lines = content.split(EOL);
-  let lineStart = 1;
-  let lineEnd = 1;
+  let lineStart = -1;
+  let lineEnd = -1;
+  const anchorStack: string[] = [];
 
-  const endCommentType = getEndCommentType(commentType);
+  const endCommentType = getEndCommentType(commentType) || '';
+
+  const startAnchorRegex = new RegExp(
+    `${escapeRegExp(commentType)}\\s*ANCHOR\\s*:\\s*${escapeRegExp(
+      comment
+    )}\\s*${escapeRegExp(endCommentType)}`
+  );
+  const endAnchorRegex = new RegExp(
+    `${escapeRegExp(commentType)}\\s*ANCHOR_END\\s*:\\s*${escapeRegExp(
+      comment
+    )}\\s*${escapeRegExp(endCommentType)}`
+  );
 
   for (let i = 0; i < lines.length; i++) {
-    const startLineA = `${commentType}ANCHOR:${comment}${endCommentType}`;
-    const endLineA = `${commentType}ANCHOR_END:${comment}${endCommentType}`;
-    const startLineB = `${commentType}${comment}:example:start${endCommentType}`;
-    const endLineB = `${commentType}${comment}:example:end${endCommentType}`;
-    const cleanLine = lines[i].replace(/\s+/g, '');
-    const start = cleanLine === startLineA || cleanLine === startLineB;
-    if (start) {
-      lineStart = i + 1;
-    } else {
-      const end = cleanLine === endLineA || cleanLine === endLineB;
-      if (end) {
+    if (startAnchorRegex.test(lines[i])) {
+      if (lineStart === -1) {
+        lineStart = i;
+      }
+      anchorStack.push('anchor');
+    } else if (endAnchorRegex.test(lines[i])) {
+      anchorStack.pop();
+      if (anchorStack.length === 0 && lineEnd === -1) {
         lineEnd = i;
+        break;
       }
     }
   }
 
-  if (trim === 'true') {
-    const startShift = lines[lineStart + 1].includes('```') ? 2 : 1;
-    const endShift = lines[lineEnd - 2].includes('```') ? 2 : 1;
-    lineStart = lineStart + startShift;
-    lineEnd = lineEnd - endShift;
-  }
-
-  if (lineStart < 0) {
+  // Check if lineStart and lineEnd were found, otherwise set to default
+  if (lineStart === -1) {
     lineStart = 0;
   }
-  if (lineEnd < 0) {
-    lineEnd = lines.length;
+  if (lineEnd === -1) {
+    lineEnd = lines.length - 1;
   }
 
-  const newLines = lines.slice(lineStart, lineEnd);
+  if (trim === 'true') {
+    // Adjust lineStart and lineEnd to exclude the anchor comments
+    // and the code block markers (```), if present.
+    lineStart =
+      lines.findIndex(
+        (line, index) => index > lineStart && line.includes('```')
+      ) + 1;
+    lineEnd = lines.findIndex(
+      (line, index) => index > lineStart && line.includes('```')
+    );
+    lineEnd = lineEnd === -1 ? lines.length : lineEnd;
+  }
 
-  const linesContent = newLines
-    .filter((line) => !line.includes('ANCHOR'))
-    .join('\n');
+  let newLines = lines.slice(lineStart, lineEnd);
+  newLines = newLines.filter((line) => !line.includes('ANCHOR'));
+
+  // Dedent the lines here:
+  const toDedent = minWhitespace(newLines);
+  if (toDedent > 0) {
+    newLines = dedent(newLines, toDedent);
+  }
+
+  const linesContent = newLines.join(EOL).replace(/\n{3,}/g, '\n\n');
 
   return {
-    content: linesContent,
+    content: linesContent.trim(),
     lineStart,
     lineEnd,
   };
+}
+
+function minWhitespace(lines: string[]): number {
+  return lines
+    .filter((line) => line.trim() !== '') // ignore blank lines
+    .map((line) => {
+      const matchResult = line.match(/^(\s*)/);
+      return matchResult ? matchResult[0].length : 0;
+    })
+    .reduce((min, curr) => Math.min(min, curr), Infinity);
+}
+
+function dedent(lines: string[], amount: number): string[] {
+  const regex = new RegExp(`^\\s{${amount}}`);
+  return lines.map((line) => line.replace(regex, ''));
 }
 
 function getLineOffsets(str: string) {

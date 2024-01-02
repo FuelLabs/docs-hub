@@ -180,6 +180,9 @@ function codeLanguage() {
       if (lang?.includes('sh')) {
         node.properties.className[0] = 'language-sh';
       }
+      if (lang?.includes('json')) {
+        node.properties.className[0] = 'language-json';
+      }
     });
   };
 }

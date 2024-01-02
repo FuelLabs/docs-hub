@@ -34,20 +34,50 @@ export function TH(props: any) {
 const styles = {
   root: cssObj({
     maxWidth: '100%',
+    wordWrap: 'anywhere',
   }),
   table: cssObj({
-    py: '$3',
-    px: '$4',
     mb: '$6',
+    'html[class="fuel_light-theme"] &': {
+      color: 'black',
+    },
     tableLayout: 'fixed',
-    background: '$intentsBase1',
-    borderRadius: '$lg',
+    borderRadius: '$sm',
     boxSizing: 'border-box',
-    border: '1px solid $intentsBase3',
+    border: '1px solid $border',
+    borderSpacing: '0px',
     width: '100%',
-    td: cssObj({
-      wordWrap: 'break-word',
-    }),
+    overflow: 'hidden',
+    td: {
+      borderTop: '1px solid $border',
+      py: '$1',
+      px: '$2',
+    },
+    thead: {
+      tr: {
+        'html[class="fuel_light-theme"] &': {
+          background: '$intentsBase8 !important',
+        },
+        background: '$intentsBase4 !important',
+      },
+      th: {
+        py: '$1',
+        px: '$2',
+        fontSize: '16px',
+      },
+    },
+    'tr:nth-child(even)': {
+      'html[class="fuel_light-theme"] &': {
+        background: '$intentsBase3',
+      },
+      background: 'rgb(26, 26, 26)',
+    },
+    'tr:nth-child(odd)': {
+      'html[class="fuel_light-theme"] &': {
+        background: '$transparent',
+      },
+      background: 'rgb(16, 16, 16)',
+    },
   }),
   td: cssObj({
     py: '$2',

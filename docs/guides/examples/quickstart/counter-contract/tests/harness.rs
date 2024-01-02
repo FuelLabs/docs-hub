@@ -1,4 +1,4 @@
-// ANCHOR: contract-test-all
+/* ANCHOR: contract-test-all */
 use fuels::{prelude::*, types::ContractId};
 
 // Load abi from json
@@ -18,7 +18,8 @@ async fn get_contract_instance() -> (MyContract<WalletUnlocked>, ContractId) {
         None,
         None,
     )
-    .await;
+    .await
+    .unwrap();
     let wallet = wallets.pop().unwrap();
 
     let id = Contract::load_from(
@@ -26,7 +27,7 @@ async fn get_contract_instance() -> (MyContract<WalletUnlocked>, ContractId) {
         LoadConfiguration::default(),
     )
     .unwrap()
-    .deploy(&wallet, TxParameters::default())
+    .deploy(&wallet, TxPolicies::default())
     .await
     .unwrap();
 
@@ -58,4 +59,4 @@ async fn test_increment() {
     assert_eq!(result.value, 1);
 }
 // ANCHOR_END: contract-test
-// ANCHOR_END: contract-test-all
+/* ANCHOR_END: contract-test-all */

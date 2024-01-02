@@ -83,7 +83,7 @@ export async function checkDiff() {
 export async function createPR(title, branchName) {
   const githubToken = process.env.GITHUB_TOKEN;
   const octokit = getOctokit(githubToken);
-  const body = 'This is an automated PR to update the latest docs.';
+  const body = 'This is an automated PR to update the nightly docs.';
 
   await octokit.pulls.create({
     owner: 'FuelLabs',
@@ -107,64 +107,4 @@ export const getVersionCommit = async (version, dir) => {
     },
   });
   return releaseCommit;
-};
-
-export const gitResetCommit = async (releaseCommit, dir) => {
-  await exec('git', ['reset', '--hard', releaseCommit], {
-    cwd: dir,
-  });
-};
-
-export const getReleaseTimestamp = async (version, dir) => {
-  try {
-    let releaseTimestamp = null;
-    await exec('git', ['log', '--format="%ct"', '-n', '1', `tags/${version}`], {
-      cwd: dir,
-      listeners: {
-        stdout: (data) => {
-          console.log('data.toString()', data.toString());
-          releaseTimestamp = parseInt(data.toString().trim().slice(1, -1), 10);
-        },
-      },
-    });
-    return releaseTimestamp;
-  } catch (error) {
-    console.error(
-      `Error getting commit timestamp for version ${version}: ${error.message}`
-    );
-    return null;
-  }
-};
-
-export const getCommitByTimestamp = async (timestamp, branch, dir) => {
-  try {
-    let closestCommitHash = '';
-    let commits = [];
-
-    // Fetch all commits in branch
-    await exec('git', ['log', '--format="%H %ct"', '--max-count=300', branch], {
-      cwd: dir,
-      listeners: {
-        stdout: (data) => {
-          const commitLines = data.toString().trim().split('\n');
-          commits = commits.concat(commitLines);
-        },
-      },
-    });
-
-    // Find a commit with a timestamp after the timestamp
-    for (let i = 0; i < commits.length; i++) {
-      const commit = commits[i];
-      const [commitHash, commitTimestamp] = commit.split(' ');
-      const cleanTS = parseInt(commitTimestamp.slice(0, -1));
-      if (cleanTS < timestamp) {
-        break;
-      }
-      closestCommitHash = commitHash.substr(1);
-    }
-
-    return closestCommitHash;
-  } catch (error) {
-    console.error(`Error finding commit by timestamp: ${error.message}`);
-  }
 };

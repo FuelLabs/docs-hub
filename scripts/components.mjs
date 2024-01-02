@@ -19,17 +19,17 @@ const GRAPHQL_COMPONENTS_CONFIG_PATH = path.join(
   './src/components.json'
 );
 
-const LATEST_GRAPHQL_BOOK_NAME = 'latest/fuel-graphql-docs';
-const LATEST_GRAPHQL_DIRECTORY = path.join(
+const NIGHTLY_GRAPHQL_BOOK_NAME = 'nightly/fuel-graphql-docs';
+const NIGHTLY_GRAPHQL_DIRECTORY = path.join(
   DOCS_DIRECTORY,
-  `./latest/${GRAPHQL_BOOK_NAME}`
+  `./nightly/${GRAPHQL_BOOK_NAME}`
 );
-const LATEST_GRAPHQL_DOCS_DIRECTORY = path.join(
-  LATEST_GRAPHQL_DIRECTORY,
+const NIGHTLY_GRAPHQL_DOCS_DIRECTORY = path.join(
+  NIGHTLY_GRAPHQL_DIRECTORY,
   './docs'
 );
-const LATEST_GRAPHQL_COMPONENTS_CONFIG_PATH = path.join(
-  LATEST_GRAPHQL_DIRECTORY,
+const NIGHTLY_GRAPHQL_COMPONENTS_CONFIG_PATH = path.join(
+  NIGHTLY_GRAPHQL_DIRECTORY,
   './src/components.json'
 );
 
@@ -45,21 +45,21 @@ const WALLET_COMPONENTS_CONFIG_PATH = path.join(
   './src/components.json'
 );
 
-const LATEST_WALLET_BOOK_NAME = 'latest/fuels-wallet';
-const LATEST_WALLET_PATH = path.join(
+const NIGHTLY_WALLET_BOOK_NAME = 'nightly/fuels-wallet';
+const NIGHTLY_WALLET_PATH = path.join(
   DOCS_DIRECTORY,
-  `latest/${WALLET_BOOK_NAME}`
+  `nightly/${WALLET_BOOK_NAME}`
 );
-const LATEST_WALLET_DIRECTORY = path.join(
+const NIGHTLY_WALLET_DIRECTORY = path.join(
   DOCS_DIRECTORY,
-  `./latest/${WALLET_BOOK_NAME}/packages/docs`
+  `./nightly/${WALLET_BOOK_NAME}/packages/docs`
 );
-const LATEST_WALLET_DOCS_DIRECTORY = path.join(
-  LATEST_WALLET_DIRECTORY,
+const NIGHTLY_WALLET_DOCS_DIRECTORY = path.join(
+  NIGHTLY_WALLET_DIRECTORY,
   './docs'
 );
-const LATEST_WALLET_COMPONENTS_CONFIG_PATH = path.join(
-  LATEST_WALLET_DIRECTORY,
+const NIGHTLY_WALLET_COMPONENTS_CONFIG_PATH = path.join(
+  NIGHTLY_WALLET_DIRECTORY,
   './src/components.json'
 );
 
@@ -78,11 +78,11 @@ async function main() {
     'graphql.ts'
   );
   await exportComponents(
-    LATEST_GRAPHQL_DIRECTORY,
-    LATEST_GRAPHQL_DOCS_DIRECTORY,
-    LATEST_GRAPHQL_BOOK_NAME,
-    LATEST_GRAPHQL_COMPONENTS_CONFIG_PATH,
-    'latest-graphql.ts'
+    NIGHTLY_GRAPHQL_DIRECTORY,
+    NIGHTLY_GRAPHQL_DOCS_DIRECTORY,
+    NIGHTLY_GRAPHQL_BOOK_NAME,
+    NIGHTLY_GRAPHQL_COMPONENTS_CONFIG_PATH,
+    'nightly-graphql.ts'
   );
   await exportComponents(
     WALLET_PATH,
@@ -92,11 +92,11 @@ async function main() {
     'wallet.ts'
   );
   await exportComponents(
-    LATEST_WALLET_PATH,
-    LATEST_WALLET_DOCS_DIRECTORY,
-    LATEST_WALLET_BOOK_NAME,
-    LATEST_WALLET_COMPONENTS_CONFIG_PATH,
-    'latest-wallet.ts'
+    NIGHTLY_WALLET_PATH,
+    NIGHTLY_WALLET_DOCS_DIRECTORY,
+    NIGHTLY_WALLET_BOOK_NAME,
+    NIGHTLY_WALLET_COMPONENTS_CONFIG_PATH,
+    'nightly-wallet.ts'
   );
 }
 
