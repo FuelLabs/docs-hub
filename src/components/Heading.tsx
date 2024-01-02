@@ -4,13 +4,13 @@ import { cssObj } from '@fuel-ui/css';
 import { Heading as FuelHeading, Icon } from '@fuel-ui/react';
 
 export function Heading({ children, ...props }: any) {
-  const isLatest = props['data-latest'];
+  const isNightly = props['data-nightly'];
   const paddingStyles = cssObj({
     [head([1])]: {
-      pt: isLatest ? '$24' : '$20',
+      scrollMarginTop: isNightly ? '$24' : '$20',
     },
     [head([2, 3, 4])]: {
-      pt: isLatest ? '108px' : '$16',
+      scrollMarginTop: isNightly ? '108px' : '$16',
     },
   });
   return (
@@ -42,26 +42,25 @@ const styles = {
       },
     },
     [head([1, 2])]: {
+      pt: '$6',
       mb: '$5',
       pb: '$2',
       borderBottom: '1px solid $border',
     },
     [head([3])]: {
+      pt: '$4',
       mb: '$4',
-      textSize: '2xl',
+      textSize: 'xl',
     },
     [head([4, 5, 6])]: {
-      pt: '$6',
+      pt: '$2',
       mb: '$2',
-      textSize: 'xl',
+      textSize: 'lg',
     },
 
     [`${head([1, 2, 3, 4, 5, 6])} a, ${head([1, 2, 3, 4, 5, 6])} a:visited`]: {
       color: '$intentsBase12',
     },
-    // [`${head([1, 2])} a, ${head([1, 2, 3, 4, 5, 6])} a:visited`]: {
-    //   color: '$intentsBase12',
-    // },
 
     '& a': {
       color: 'currentColor',

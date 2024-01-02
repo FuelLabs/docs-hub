@@ -68,6 +68,36 @@ const nextConfig = {
         destination: '/guides/migration-guide/testnet-migration/',
         permanent: true,
       },
+      {
+        source: '/docs/latest/:slug*',
+        destination: '/docs/nightly/:slug*',
+        permanent: true,
+      },
+      {
+        source: '/guides/latest/:slug*',
+        destination: '/guides/nightly/:slug*',
+        permanent: true,
+      },
+      {
+        source: '/docs/fuels-rs/contributing/',
+        destination: '/docs/fuels-rs/contributing/contributing/',
+        permanent: true,
+      },
+      {
+        source: '/docs/wallet/contributing/',
+        destination: '/docs/wallet/contributing/running-locally/',
+        permanent: true,
+      },
+      {
+        source: '/docs/wallet/dev/',
+        destination: '/docs/wallet/dev/getting-started/',
+        permanent: true,
+      },
+      {
+        source: '/docs/indexer/getting-started/',
+        destination: '/docs/indexer/getting-started/dependencies',
+        permanent: true,
+      },
     ];
   },
   typescript: {

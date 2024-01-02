@@ -5,7 +5,7 @@ import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
 import type { Parent } from 'unist-util-visit/lib';
 import { versions as beta4Versions } from '~/docs/fuels-ts/packages/versions/src';
-import { versions as latestVersions } from '~/docs/latest/fuels-ts/packages/versions/src';
+import { versions as nightlyVersions } from '~/docs/nightly/fuels-ts/packages/versions/src';
 
 import { handleForcGenDocs } from './forc-gen-docs';
 import { handleLinks } from './links';
@@ -77,8 +77,8 @@ export function handlePlugins() {
     const rootDir = process.cwd();
     const filepath = join(rootDir, file.data.rawDocumentData?.sourceFilePath);
     const dirname = file.data.rawDocumentData?.sourceFileDir;
-    const versions = filepath.includes('/latest/')
-      ? latestVersions
+    const versions = filepath.includes('/nightly/')
+      ? nightlyVersions
       : beta4Versions;
 
     if (filepath.includes('/fuel-graphql-docs/')) {
@@ -119,8 +119,8 @@ function handleGraphQLDocs(tree: Root, filepath: string, dirname: string) {
       if (newUrl) node.url = newUrl;
     } else {
       let url = node.attributes[0].value;
-      if (filepath.includes('latest')) {
-        url = url.replace('/docs/', '/docs/latest/graphql/');
+      if (filepath.includes('nightly')) {
+        url = url.replace('/docs/', '/docs/nightly/graphql/');
       } else {
         url = url.replace('/docs/', '/docs/graphql/');
       }
@@ -270,6 +270,19 @@ function handleRustBooks(tree: Root, rootDir: string, dirname: string) {
     } else if (conditions.links(node)) {
       const newUrl = handleLinks(node, dirname);
       if (newUrl) node.url = newUrl;
+
+      if (node.url.includes('faucet-beta-3.fuel.network')) {
+        node.url = node.url.replace(
+          'faucet-beta-3.fuel.network',
+          'faucet-beta-4.fuel.network'
+        );
+        if (
+          node.children &&
+          node.children[0].value === 'faucet-beta-3.fuel.network'
+        ) {
+          node.children[0].value = 'faucet-beta-4.fuel.network';
+        }
+      }
     } else {
       const newValue = handleRustVersion(node, dirname);
       node.value = newValue;

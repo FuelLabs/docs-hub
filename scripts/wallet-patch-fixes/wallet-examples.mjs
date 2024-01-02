@@ -2,7 +2,8 @@ import fs from 'fs';
 import path from 'path';
 
 const examplesPath = './docs/fuels-wallet/packages/docs/examples';
-const latestExamplesPath = './docs/latest/fuels-wallet/packages/docs/examples';
+const nightlyExamplesPath =
+  './docs/nightly/fuels-wallet/packages/docs/examples';
 
 const propToReplace = 'onPress';
 const replacementProp = 'onClick';
@@ -30,5 +31,7 @@ function processDirectory(directory) {
   });
 }
 
-processDirectory(examplesPath);
-processDirectory(latestExamplesPath);
+export default function patchFixWalletExamples() {
+  processDirectory(examplesPath);
+  processDirectory(nightlyExamplesPath);
+}

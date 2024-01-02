@@ -1,7 +1,7 @@
 import { join } from 'path';
 
 export const DOCS_DIRECTORY = join(process.cwd(), './docs');
-export const LATEST_DOCS_DIRECTORY = join(process.cwd(), './docs/latest');
+export const NIGHTLY_DOCS_DIRECTORY = join(process.cwd(), './docs/nightly');
 export const FIELDS = ['title', 'slug', 'content', 'category'];
 
 export const FUEL_TESTNET = 'beta-4';
