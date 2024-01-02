@@ -38,34 +38,6 @@ parent:
   trim="true"
 />
 
-<TextImport
-  file="../installation/index.mdx"
-  comment="install_testnet"
-  commentType="{/*"
-/>
-
-<CodeImport
-  file="../installation/index.mdx"
-  comment="install_testnet_command"
-  commentType="{/*"
-  lang="sh"
-  trim="true"
-/>
-
-<TextImport
-  file="../installation/index.mdx"
-  comment="set_default_testnet"
-  commentType="{/*"
-/>
-
-<CodeImport
-  file="../installation/index.mdx"
-  comment="set_default_testnet_command"
-  commentType="{/*"
-  lang="sh"
-  trim="true"
-/>
-
 {/*install_help:example:start*/}
 For more detailed instructions on installing `fuelup`, visit the [installation guide](/guides/installation).
 
@@ -143,11 +115,11 @@ action={{
 }}
 />
 
-```console
+```sh
 tree counter-contract
 ```
 
-```console
+```sh
 counter-contract
 ├── Forc.toml
 └── src
@@ -260,11 +232,11 @@ action={{
 
 Navigate to your contract folder:
 
-```console
+```sh
 cd counter-contract
 ```
 
-```console
+```sh
 changed directory into `counter-contract`
 ```
 
@@ -278,11 +250,11 @@ action={{
 }}
 />
 
-```console
+```sh
 forc build
 ```
 
-```console
+```sh
   Compiled library "core".
   Compiled library "std".
   Compiled contract "counter-contract".
@@ -299,11 +271,11 @@ action={{
 }}
 />
 
-```console
+```sh
 tree .
 ```
 
-```console
+```sh
 .
 ├── Forc.lock
 ├── Forc.toml
@@ -326,11 +298,11 @@ We will start by adding a Rust integration test harness using a Cargo generate t
 
 Let's start by running the installation command:
 
-```console
+```sh
 cargo install cargo-generate
 ```
 
-```console
+```sh
  Updating crates.io index...
  installed package `cargo-generate v0.17.3`
 ```
@@ -347,11 +319,11 @@ action={{
 }}
 />
 
-```console
+```sh
 cargo generate --init fuellabs/sway templates/sway-test-rs --name counter-contract
 ```
 
-```console
+```sh
 ⚠️   Favorite `fuellabs/sway` not found in config, using it as a git repository: https://github.com/fuellabs/sway.git
 🔧   Destination: /home/user/path/to/counter-contract ...
 🔧   project-name: counter-contract ...
@@ -370,11 +342,11 @@ action={{
 }}
 />
 
-```console
+```sh
 tree .
 ```
 
-```console
+```sh
 .
 ├── Cargo.toml
 ├── Forc.lock
@@ -438,13 +410,13 @@ action={{
 
 Run `cargo test` in the terminal:
 
-```console
+```sh
 cargo test
 ```
 
 If all goes well, the output should look as follows:
 
-```console
+```sh
   ...
   running 2 tests
   test can_get_contract_id ... ok
@@ -458,9 +430,13 @@ It's now time to deploy the contract to the testnet. We will show how to do this
 
 In order to deploy a contract, you need to have a wallet to sign the transaction and coins to pay for gas. `Fuelup` will guide you in this process.
 
-You can deploy with `forc deploy` and adding the `--testnet` to target the latest network:
+### Deploy To Testnet
 
-```console
+Now, you can deploy with `forc deploy` and adding the `--testnet` to target the latest network
+
+If you don't have a wallet installed, the terminal will help you to create one, then you can use the {props.faucetLink} to get some testnet coins.
+
+```sh
 forc deploy --testnet
 ```
 
@@ -470,7 +446,7 @@ The terminal will ask for the password of the wallet:
 
 Once you unlocked the wallet, the terminal will show a list of the accounts of this wallet:
 
-```console
+```sh
 Account 0 -- fuel18caanqmumttfnm8qp0eq7u9yluydxtqmzuaqtzdjlsww5t2jmg9skutn8n:
   Asset ID                                                           Amount
   0000000000000000000000000000000000000000000000000000000000000000 499999940
@@ -486,10 +462,12 @@ Finally, you will get back the network endpoint where the contract was deployed,
 Save the `Contract ID`, as you'll need this later to connect the frontend.
 With this ID, you can also head to the [block explorer](https://fuellabs.github.io/block-explorer-v2/) to confirm the contract was deployed.
 
-```console
-Contract deploy-to-beta-4 Deployed!
+>> 💡 **Note** Be aware the the current block explorer only looks for: transaction Ids and account addresses. The new version of the block explorer allows to search by transaction, contract, account and block id.
 
-Network: https://beta-4.fuel.network
+```sh
+Contract deploy-to-beta-5 Deployed!
+
+Network: https://beta-5.fuel.network
 Contract ID: 0x8342d413de2a678245d9ee39f020795800c7e6a4ac5ff7daae275f533dc05e08
 Deployed in block 0x4ea52b6652836c499e44b7e42f7c22d1ed1f03cf90a1d94cd0113b9023dfa636
 ```
