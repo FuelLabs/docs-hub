@@ -5,7 +5,8 @@ import { useAccount, useWallet } from "@fuel-wallet/react"
 import { CounterContractAbi__factory  } from "./sway-api"
 import type { CounterContractAbi } from "./sway-api";
 
-const CONTRACT_ID = "0x...."
+const CONTRACT_ID = 
+  "0x...";
 
 export default function Home() {
   const [contract, setContract] = useState<CounterContractAbi>();
@@ -15,21 +16,19 @@ export default function Home() {
   const isConnected = false;
 
   useEffect(() => {
-    async function updateCount(){
+    async function getInitialCount(){
       if(!contract && isConnected && wallet){
         const counterContract = CounterContractAbi__factory.connect(CONTRACT_ID, wallet);
+        await getCount(counterContract);
         setContract(counterContract);
-        await getCount();
       }
     }
     
-    updateCount();
+    getInitialCount();
   }, [isConnected, contract, wallet]);
 
-  async function getCount(){
-    if (!contract) return;
-
-    const { value } = await contract.functions
+  const getCount = async (counterContract: CounterContractAbi) => {
+    const { value } = await counterContract.functions
       .count()
       .txParams({
         gasPrice: 1,
@@ -50,7 +49,7 @@ export default function Home() {
         gasLimit: 10_000,
       })
       .call();
-    getCount();
+    await getCount(contract);
   };
 
   return (

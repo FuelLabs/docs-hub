@@ -14,7 +14,8 @@ This guide covers the following topics:
 
 1. [Installing Rust](#installing-rust)
 2. [Installing the Fuel toolchain using `fuelup`](#installing-the-fuel-toolchain-using-fuelup)
-3. [Setting up a default toolchain](#setting-up-a-default-toolchain)
+3. [Changing your default toolchain](#changing-your-default-toolchain)
+4. [Setting up a local wallet](#setting-up-a-local-wallet)
 
 ## Installing Rust
 
@@ -104,13 +105,13 @@ That will output your current `fuelup` version:
 fuelup 0.20.0
 ```
 
-## Setting up a default toolchain
+## Changing your default toolchain
 
-Just as in [Rust](https://rust-lang.github.io/rustup/concepts/toolchains.html), Fuel supports multiple toolchains. A toolchain is a collection of tools (such as the compiler, LSP, etc).
+Just as in [Rust](https://rust-lang.github.io/rustup/concepts/toolchains.html), Fuel supports multiple toolchains.
+A toolchain is a collection of tools (such as the compiler, LSP, etc).
 By default, `fuelup` includes a series of packages tested to work with each other, providing a reliable set of tools.
 
-In this case, we will install the `latest` toolchain, which is the stable toolchain compatible with the current {props.fuelTestnetInlineCode} network.
-For more information on {props.fuelTestnetInlineCode} check the [Fuel blog](https://fuel-labs.ghost.io/announcing-beta-4-testnet/) page.
+The default toolchain configured when you install `fuelup` is the `latest` toolchain, which is the stable toolchain compatible with the current {props.fuelTestnetInlineCode} network.
 
 ### Updating fuelup
 
@@ -233,6 +234,32 @@ forc-wallet : 0.45
 
 As you can see, the {props.fuelTestnetInlineCode} toolchain is active 🚀
 
+## Setting up a local wallet
+
+The `forc-wallet` plugin is packaged alongside the default distributed toolchains when installed using `fuelup`, so you should already have this installed if you've followed the instructions above.
+
+To initialize a new wallet with `forc-wallet`, you can run the command below:
+
+```console
+forc wallet new
+```
+
+After typing in a password, be sure to save the mnemonic phrase that is output.
+
+Next, create a new wallet account with:
+
+```console
+forc wallet account new
+```
+
+With this, you'll get a fuel address that looks something like this: `fuel1efz7lf36w9da9jekqzyuzqsfrqrlzwtt3j3clvemm6eru8fe9nvqj5kar8`.
+
+If you need to list your accounts, you can run the command below:
+
+```console
+forc wallet accounts
+```
+
 ## What's next?
 
 Now you are ready to start building with Fuel.
@@ -247,7 +274,7 @@ You can create your own set of specific versions, this is known as 'custom toolc
 
 > 👉 Visit the [Fuelup docs](/docs/fuelup/concepts/toolchains) to learn how to set up your own custom toolchains.
 
-### Build form source
+### Build from source
 
 You can always build the Fuel packages from source.
 

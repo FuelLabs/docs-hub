@@ -24,6 +24,7 @@ import { Link } from './Link';
 import { UL, OL } from './List';
 import { Paragraph } from './Paragraph';
 import { Pre } from './Pre';
+import { QuickstartCallout } from './QuickstartCallout';
 import { Table } from './Table';
 
 const Player = dynamic(() => import('./Player'), {
@@ -49,6 +50,7 @@ export const mdxComponents = {
   Box,
   Player,
   CardSection,
+  QuickstartCallout,
 } as any;
 
 type MDXRenderProps = {

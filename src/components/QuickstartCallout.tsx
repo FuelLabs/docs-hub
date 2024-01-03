@@ -1,11 +1,12 @@
+import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
 
 import { Code } from './Code';
 import { Pre } from './Pre';
 
-export default function QuickstartCallout() {
+export function QuickstartCallout() {
   return (
-    <Box>
+    <Box css={styles.container}>
       Want to skip the setup and just get started? Try our new scaffold CLI tool
       to generate a new Fuel project in seconds:
       <Pre>
@@ -14,3 +15,10 @@ export default function QuickstartCallout() {
     </Box>
   );
 }
+
+const styles = {
+  container: cssObj({
+    border: '1px solid #eaeaea',
+    py: '$4',
+  }),
+};
