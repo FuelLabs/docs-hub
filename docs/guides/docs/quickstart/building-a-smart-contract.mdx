@@ -8,8 +8,6 @@ parent:
 
 # Writing A Sway Smart Contract
 
-<QuickstartCallout/>
-
 ## Installation
 
 <TextImport
@@ -46,12 +44,19 @@ For more detailed instructions on installing `fuelup`, visit the [installation g
 > Having problems with this part? Post your question on our [forum](https://forum.fuel.network/). To help you as efficiently as possible, include the output of this command in your post: `fuelup show.`
 {/*install_help:example:end*/}
 
-If you're using VSCode, we recommend installing the following extensions:
-
-- Sway: Sway language support
-- rust-analyzer: Rust language support
+<TextImport
+  file="../installation/index.mdx"
+  comment="install_vscode_extensions"
+  commentType="{/*"
+/>
 
 ## Your First Sway Project
+
+<QuickstartCallout>
+```sh 
+pnpm create fuels
+```
+</QuickstartCallout>
 
 We'll build a simple counter contract with two functions: one to increment the counter, and one to return the value of the counter.
 
@@ -451,7 +456,7 @@ The terminal will ask for the password of the wallet:
 
 `Please provide the password of your encrypted wallet vault at "~/.fuel/wallets/.wallet":`
 
-Once you unlocked the wallet, the terminal will show a list of the accounts of this wallet:
+Once you have unlocked the wallet, the terminal will show a list of the accounts:
 
 ```sh
 Account 0 -- fuel18caanqmumttfnm8qp0eq7u9yluydxtqmzuaqtzdjlsww5t2jmg9skutn8n:

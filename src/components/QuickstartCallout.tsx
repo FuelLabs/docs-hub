@@ -1,24 +1,24 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box } from '@fuel-ui/react';
+import { Box, Icon } from '@fuel-ui/react';
+import type { ReactNode } from 'react';
 
-import { Code } from './Code';
-import { Pre } from './Pre';
-
-export function QuickstartCallout() {
+export function QuickstartCallout({ children }: { children: ReactNode }) {
   return (
     <Box css={styles.container}>
-      Want to skip the setup and just get started? Try our new scaffold CLI tool
-      to generate a new Fuel project in seconds:
-      <Pre>
-        <Code>pnpm create-fuels my-fuel-project</Code>
-      </Pre>
+      <Box.Flex gap={'$2'}>
+        <Icon icon={'Bulb'} color={'indigo10'} size={40} />
+        Want to skip this guide and just get started? Try our new scaffold CLI
+        tool to generate a full-stack counter dApp in seconds:
+      </Box.Flex>
+      {children}
     </Box>
   );
 }
 
 const styles = {
   container: cssObj({
-    border: '1px solid #eaeaea',
-    py: '$4',
+    border: '1px solid $indigo10',
+    borderRadius: '$md',
+    padding: '$4',
   }),
 };
