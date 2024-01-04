@@ -41,12 +41,12 @@ parent:
 {/*install_help:example:start*/}
 For more detailed instructions on installing `fuelup`, visit the [installation guide](/guides/installation).
 
-> Having problems with this part? Post your question on our [forum](https://forum.fuel.network/). To help you as efficiently as possible, include the output of this command in your post: `fuelup show.`
+> Having problems with this part? Post your question in our [forum](https://forum.fuel.network/).
 {/*install_help:example:end*/}
 
 <TextImport
   file="../installation/index.mdx"
-  comment="install_vscode_extensions"
+  comment="install_VSCode_extensions"
   commentType="{/*"
 />
 
@@ -146,6 +146,7 @@ counter-contract
 Open your project in a code editor and delete everything in `src/main.sw` apart from the first line.
 
 Every Sway file must start with a declaration of what type of program the file contains; here, we've declared that this file is a contract.
+You can learn more about Sway program types in the [Sway Book](/docs/sway/sway-program-types/).
 
 <TestAction
 id="program-type"
@@ -162,7 +163,8 @@ action={{
   lang="sway"
 />
 
-Next, we'll define a storage value. In our case, we have a single counter that we'll call `counter` of type 64-bit unsigned integer and initialize it to 0.
+Next, we'll define a storage value.
+In our case, we have a single counter that we'll call `counter` of type `u64` (a 64-bit unsigned integer) and initialize it to 0.
 
 <TestAction
 id="storage"
@@ -181,7 +183,12 @@ action={{
 
 ### ABI
 
-An ABI defines an interface for a contract. A contract must either define or import an ABI declaration. It is considered best practice to define your ABI in a separate library and import it into your contract because this allows callers of the contract to import and use the ABI in scripts to call your contract
+ABI stands for Application Binary Interface.
+An ABI defines an interface for a contract.
+A contract must either define or import an ABI declaration.
+
+It is considered best practice to define your ABI in a separate library and import it into your contract.
+This allows callers of the contract to import and use the ABI more easily.
 
 For simplicity, we will define the ABI directly in the contract file itself.
 
@@ -219,7 +226,7 @@ action={{
   lang="sway"
 />
 
-**Note**: `storage.counter.read()` is an implicit return and is equivalent to `return storage.counter.read();`.
+> `storage.counter.read()` is an implicit return and is equivalent to `return storage.counter.read();`.
 
 Here's what your code should look like so far:
 
@@ -248,10 +255,6 @@ Navigate to your contract folder:
 cd counter-contract
 ```
 
-```sh
-changed directory into `counter-contract`
-```
-
 Then run the following command to build your contract:
 
 <TestAction
@@ -270,7 +273,7 @@ forc build
   Compiled library "core".
   Compiled library "std".
   Compiled contract "counter-contract".
-  Bytecode size is 232 bytes.
+  Bytecode size: 1532 bytes.
 ```
 
 Let's have a look at the content of the `counter-contract` folder after building:
@@ -319,7 +322,7 @@ cargo install cargo-generate
  installed package `cargo-generate v0.17.3`
 ```
 
-> **Note**: You can learn more about cargo generate by visiting [its repository](https://github.com/cargo-generate/cargo-generate).
+> You can learn more about cargo generate by visiting [its repository](https://github.com/cargo-generate/cargo-generate).
 
 Now, let's generate the default test harness with the following:
 
@@ -378,10 +381,10 @@ tree .
 
 We have two new files!
 
-- The `Cargo.toml` is the manifest for our new test harness and specifies the required dependencies including `fuels` the Fuel Rust SDK.
+- The `Cargo.toml` is the manifest for our new test harness and specifies the required dependencies including `fuels` (the Fuel Rust SDK).
 - The `tests/harness.rs` contains some boilerplate test code to get us started, though doesn't call any contract methods just yet.
 
-Now that we have our default test harness, let's add some useful tests to it.
+Now that we have our default test harness, let's add a useful test to it.
 
 At the bottom of `test/harness.rs` below the `can_get_contract_id()` test, add the `test_increment` test function below to verify that the value of the counter gets incremented:
 

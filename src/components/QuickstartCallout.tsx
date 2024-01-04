@@ -6,7 +6,7 @@ export function QuickstartCallout({ children }: { children: ReactNode }) {
   return (
     <Box css={styles.container}>
       <Box.Flex gap={'$2'}>
-        <Icon icon={'Bulb'} color={'indigo10'} size={40} />
+        <Icon icon={'Bulb'} color={'indigo10'} size={42} />
         Want to skip this guide and just get started? Try our new scaffold CLI
         tool to generate a full-stack counter dApp in seconds:
       </Box.Flex>
@@ -17,8 +17,12 @@ export function QuickstartCallout({ children }: { children: ReactNode }) {
 
 const styles = {
   container: cssObj({
-    border: '1px solid $indigo10',
+    border: '2px solid $indigo10',
     borderRadius: '$md',
     padding: '$4',
+    'html[class="fuel_light-theme"] &': {
+      background: '$indigo3',
+      color: 'black',
+    },
   }),
 };

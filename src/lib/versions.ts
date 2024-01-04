@@ -101,6 +101,14 @@ export function getFuelCoreVersion() {
   return tomfile.workspace.package.version;
 }
 
+// returns the version of the node required by fuels-ts
+export function getNodeVersion() {
+  const filedir = join(DOCS_DIRECTORY, 'fuels-ts/packages/fuels/package.json');
+  const file = fs.readFileSync(filedir, 'utf-8');
+  const json = JSON.parse(file);
+  return json.engines.node;
+}
+
 export function getVersions(isNightly: boolean) {
   const docsDir = isNightly ? NIGHTLY_DOCS_DIRECTORY : DOCS_DIRECTORY;
   const wallet = getWalletVersion(docsDir);
