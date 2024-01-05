@@ -1,11 +1,11 @@
 import { checkIfNightlyIsNew } from './checkNightly.mjs';
-import { setup } from './setup.mjs';
+import { setupUser } from './gitUtils.mjs';
 import { updateNightly } from './updateNightly.mjs';
 
 main();
 
 async function main() {
-  await setup();
+  await setupUser();
   console.log('GETTING NEW VERSIONS');
   const newVersions = await checkIfNightlyIsNew();
   console.log('GOT NEW VERSIONS', newVersions);
