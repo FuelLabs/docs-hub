@@ -89,3 +89,5 @@ ethereum
 infura
 xlarge
 fuelCoreVersion
+nodeVersion
+nodeVersionMax
