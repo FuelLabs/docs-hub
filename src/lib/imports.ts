@@ -16,7 +16,6 @@ import { COMPONENTS as NIGHTLY_GQL_COMPONENTS } from '~/src/generated/components
 import { COMPONENTS as NIGHTLY_WALLET_COMPONENTS } from '~/src/generated/components/nightly-wallet';
 import { COMPONENTS as WALLET_COMPONENTS } from '~/src/generated/components/wallet';
 
-
 function loadComponent(imp: any, name?: string): ComponentType<object> {
   return dynamic(() => imp.then((mod: any) => (name ? mod[name] : mod)), {
     ssr: false,
