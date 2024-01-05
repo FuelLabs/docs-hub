@@ -8,12 +8,14 @@ import * as nightlyGQLExamples from '~/docs/nightly/fuel-graphql-docs/examples';
 import * as nightlyFuelExamples from '~/docs/nightly/fuels-wallet/packages/docs/examples';
 import { TD, TH } from '~/src/components/Table';
 import TestAction from '~/src/components/TestAction';
+
+import type { ComponentsList } from '../types';
+
 import { COMPONENTS as GQL_COMPONENTS } from '~/src/generated/components/graphql';
 import { COMPONENTS as NIGHTLY_GQL_COMPONENTS } from '~/src/generated/components/nightly-graphql';
 import { COMPONENTS as NIGHTLY_WALLET_COMPONENTS } from '~/src/generated/components/nightly-wallet';
 import { COMPONENTS as WALLET_COMPONENTS } from '~/src/generated/components/wallet';
 
-import type { ComponentsList } from '../types';
 
 function loadComponent(imp: any, name?: string): ComponentType<object> {
   return dynamic(() => imp.then((mod: any) => (name ? mod[name] : mod)), {
