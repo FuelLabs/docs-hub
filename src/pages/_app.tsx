@@ -14,13 +14,13 @@ export default function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <VersionProvider>
         <Provider>
-        <style jsx global>{`
-          :root {
-            --fonts-sans: system-ui, 'Inter', sans-serif;
-            --fonts-display: system-ui, 'Inter', sans-serif;
-            --fonts-mono: 'Inconsolata';
-          }
-        `}</style>
+          <style jsx global>{`
+            :root {
+              --fonts-sans: system-ui, 'Inter', sans-serif;
+              --fonts-display: system-ui, 'Inter', sans-serif;
+              --fonts-mono: 'Inconsolata';
+            }
+          `}</style>
           <Component {...pageProps} />
           <Analytics />
         </Provider>
