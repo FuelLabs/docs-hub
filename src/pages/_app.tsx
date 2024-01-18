@@ -3,16 +3,9 @@ import '../styles/docsearch.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Analytics } from '@vercel/analytics/react';
 import type { AppProps } from 'next/app';
-import { Inter, Source_Code_Pro } from 'next/font/google';
 
 import { Provider } from '../components/Provider';
 import { VersionProvider } from '../hooks/useVersion';
-
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-const inconsolata = Source_Code_Pro({
-  subsets: ['latin'],
-  variable: '--font-inconsolata',
-});
 
 const queryClient = new QueryClient();
 
@@ -21,13 +14,13 @@ export default function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <VersionProvider>
         <Provider>
-          <style jsx global>{`
-            :root {
-              --fonts-sans: system-ui, ${inter.style.fontFamily}, sans-serif;
-              --fonts-display: system-ui, ${inter.style.fontFamily}, sans-serif;
-              --fonts-mono: ${inconsolata.style.fontFamily};
-            }
-          `}</style>
+        <style jsx global>{`
+          :root {
+            --fonts-sans: 'Inter', system-ui, sans-serif;
+            --fonts-display: 'Inter', system-ui, sans-serif;
+            --fonts-mono: 'Inconsolata';
+          }
+        `}</style>
           <Component {...pageProps} />
           <Analytics />
         </Provider>
