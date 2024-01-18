@@ -16,8 +16,8 @@ export default function App({ Component, pageProps }: AppProps) {
         <Provider>
         <style jsx global>{`
           :root {
-            --fonts-sans: 'Inter', system-ui, sans-serif;
-            --fonts-display: 'Inter', system-ui, sans-serif;
+            --fonts-sans: system-ui, 'Inter', sans-serif;
+            --fonts-display: system-ui, 'Inter', sans-serif;
             --fonts-mono: 'Inconsolata';
           }
         `}</style>
