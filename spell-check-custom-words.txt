@@ -86,3 +86,5 @@ faucetLink
 GQLPlaygroundLink
 xlarge
 fuelCoreVersion
+nodeVersion
+nodeVersionMax
