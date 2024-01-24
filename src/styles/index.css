@@ -1,5 +1,24 @@
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inconsolata';
+  src: url('/fonts/Inconsolata-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --colors-preBg: #161616;
+  --fonts-sans: 'Inter', system-ui, sans-serif;
+  --fonts-display: 'Inter', system-ui, sans-serif;
+  --fonts-mono: 'Inconsolata';
 }
 
 html {
