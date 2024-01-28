@@ -124,24 +124,6 @@ export async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
-    case 'indexer':
-      paths = [
-        // INDEXER DOCS
-        './fuel-indexer/docs/src/*.md',
-        './fuel-indexer/docs/src/**/*.md',
-        // IGNORE ALL SUMMARY PAGES
-        '!**/SUMMARY.md',
-      ];
-      break;
-    case 'nightly-indexer':
-      paths = [
-        // INDEXER DOCS
-        './nightly/fuel-indexer/docs/src/*.md',
-        './nightly/fuel-indexer/docs/src/**/*.md',
-        // IGNORE ALL SUMMARY PAGES
-        '!**/SUMMARY.md',
-      ];
-      break;
     case 'specs':
       paths = [
         // SPECS DOCS
@@ -243,7 +225,6 @@ function removeDocsPath(path, duplicateAPICategories) {
     newPath.includes('/sway/') ||
     newPath.includes('/fuels-rs/') ||
     newPath.includes('/forc/') ||
-    newPath.includes('/indexer/') ||
     newPath.includes('/fuelup/') ||
     newPath.includes('/specs/')
   ) {

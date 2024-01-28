@@ -55,7 +55,7 @@ async function updateSubmodules(newVersions) {
     })
   );
 
-  // update versions branches if new for sway, indexer, fuelup, fuels-rs, & fuels-ts
+  // update versions branches if new for sway, fuelup, fuels-rs, & fuels-ts
   if (newVersions) {
     console.log('GOING TO UPDATE NIGHTLY TOOLCHAIN VERSIONS');
     await Promise.all(
@@ -69,9 +69,6 @@ async function updateSubmodules(newVersions) {
           case 'forc':
             submoduleName = 'docs/nightly/sway';
             await update(version, 'docs/nightly/builds/sway', 'gh-pages');
-            break;
-          case 'indexer':
-            submoduleName = 'docs/nightly/fuel-indexer';
             break;
           case 'rust':
             submoduleName = 'docs/nightly/fuels-rs';

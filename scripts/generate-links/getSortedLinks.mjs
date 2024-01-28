@@ -7,10 +7,6 @@ const LOWER_CASE_NAV_PATHS = [
   'docs/nightly/forc/commands/',
   'docs/forc/plugins/',
   'docs/nightly/forc/plugins/',
-  'docs/indexer/forc-index/',
-  'docs/nightly/indexer/forc-index/',
-  'docs/indexer/forc-postgres/',
-  'docs/nightly/indexer/forc-postgres/',
 ];
 
 export default function getSortedLinks(config, docs) {

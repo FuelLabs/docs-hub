@@ -90,10 +90,6 @@ export const NAVIGATION: any[] = [
         name: 'Forc',
         link: '/docs/forc',
       },
-      {
-        name: 'Indexer',
-        link: '/docs/indexer/',
-      },
       // {
       //   name: 'Fuel Nix',
       //   link: '/docs/nix/',

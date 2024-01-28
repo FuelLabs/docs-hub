@@ -74,7 +74,7 @@ const styles = {
       my: '$0 !important',
       padding: '$3 $5 $3',
       tabSize: '4',
-      fontSize: '14px !important',
+      fontSize: '16px !important',
       bg: 'transparent !important',
       borderRadius: '$default',
     },
