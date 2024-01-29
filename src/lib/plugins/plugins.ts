@@ -218,9 +218,6 @@ function handleTSDocs(
     if (
       // handle example code imports in mdbook repos and the TS SDK docs
       conditions.exampleImport(node) ||
-      // patch fix for fuels-ts code groups
-      // TODO: replace this with a code group component
-      (node.value && node.value.includes(':::')) ||
       // remove .md from mdBook links
       conditions.links(node) ||
       // handle TS book versions
@@ -234,8 +231,6 @@ function handleTSDocs(
     if (conditions.exampleImport(node)) {
       const content = handleExampleImports(node, dirname, rootDir, parent);
       node.value = content;
-    } else if (node.value && node.value.includes(':::')) {
-      node.value = '';
     } else if (conditions.links(node)) {
       const newUrl = handleLinks(node, dirname, idx, parent, tree);
       if (newUrl) node.url = newUrl;

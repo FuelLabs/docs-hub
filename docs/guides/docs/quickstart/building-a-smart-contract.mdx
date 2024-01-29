@@ -53,12 +53,15 @@ For more detailed instructions on installing `fuelup`, visit the [installation g
 ## Your First Sway Project
 
 <QuickstartCallout>
-```sh
-npm create fuels
-```
+
+<CodeTabs>
 ```sh
 pnpm create fuels
 ```
+```sh
+npm create fuels
+```
+</CodeTabs>
 </QuickstartCallout>
 
 We'll build a simple counter contract with two functions: one to increment the counter, and one to return the value of the counter.
@@ -478,7 +481,6 @@ Then you'll enter the number of the account of preference and press `Y` when pro
 
 Finally, you will get back the network endpoint where the contract was deployed, a `Contract ID` and the block where the transaction was signed.
 Save the `Contract ID`, as you'll need this later to connect the frontend.
-With this ID, you can also head to the [block explorer](TODO!!! NEW BLOCK EXPLORER LINK) to confirm the contract was deployed.
 
 ```sh
 Contract deploy-to-beta-5 Deployed!
@@ -487,10 +489,6 @@ Network: https://beta-5.fuel.network
 Contract ID: 0x8342d413de2a678245d9ee39f020795800c7e6a4ac5ff7daae275f533dc05e08
 Deployed in block 0x4ea52b6652836c499e44b7e42f7c22d1ed1f03cf90a1d94cd0113b9023dfa636
 ```
-
-<Box.Centered>
-MISSING!! TODO: NEED NEW BLOCK EXPLORER IMAGE HERE
-</Box.Centered>
 
 ### Congrats, you have completed your first smart contract on Fuel ⛽
 

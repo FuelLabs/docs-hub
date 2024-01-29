@@ -18,6 +18,7 @@ import { runtime } from '../lib/runtime';
 import { Blockquote } from './Blockquote';
 import { CardSection } from './CardSection';
 import { Code } from './Code';
+import { CodeTabs } from './CodeTabs';
 import { Divider } from './Divider';
 import { Heading } from './Heading';
 import { Link } from './Link';
@@ -51,6 +52,7 @@ export const mdxComponents = {
   Player,
   CardSection,
   QuickstartCallout,
+  CodeTabs,
 } as any;
 
 type MDXRenderProps = {

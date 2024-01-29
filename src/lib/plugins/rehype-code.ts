@@ -106,12 +106,6 @@ const getHighlighter: RehypeCodeOptions['getHighlighter'] = async (options) => {
   return highlighter;
 };
 
-function hasCodeGroup(node: any) {
-  return node.children?.some((n: any) =>
-    [':::', '::: code-group'].includes(n.value)
-  );
-}
-
 function isElement(value: any): value is Element {
   return value ? value.type === 'element' : false;
 }
@@ -127,32 +121,79 @@ function isCodeEl(node: any, parent: any) {
 /**
  * This plugin is used to group code blocks of fuels-ts together.
  */
+function processCodeGroup(nodes: any[]): any[] {
+  return nodes
+    .filter((n: any) => n.tagName === 'pre')
+    .map((pre: any) => {
+      const language =
+        pre.children?.[0]?.properties?.className?.[0].replace(
+          'language-',
+          ''
+        ) ?? '';
+      const code = pre.children?.[0]?.children
+        ?.map((child: any) => child.value)
+        .join('');
+
+      const child = h('code', { class: language }, code);
+
+      return {
+        type: 'element',
+        tagName: 'pre',
+        properties: {
+          language: language,
+          code: code,
+        },
+        children: [child],
+      };
+    });
+}
+
 function codeGroup() {
-  return function transformer(tree: Root) {
-    const range: number[] = [];
-    function findRange(node: any, idx: number) {
-      if (node.children?.length) {
-        node.children.forEach(findRange);
-      }
-      const isGroup = hasCodeGroup(node);
-      if (isGroup) {
-        range.push(idx);
+  return function transformer(tree: any) {
+    let i = 0;
+    while (i < tree.children.length) {
+      const node = tree.children[i];
+
+      if (hasCodeGroup(node)) {
+        const start = i;
+        i++;
+        // Find the end of the code group
+        while (
+          i < tree.children.length &&
+          !hasEndOfCodeGroup(tree.children[i])
+        ) {
+          i++;
+        }
+        const end = i + 1;
+        const codeGroupNodes = tree.children.slice(start, end);
+        const children = processCodeGroup(codeGroupNodes);
+        const codeTabsElement: any = {
+          type: 'mdxJsxFlowElement',
+          name: 'CodeTabs',
+          children: children,
+        };
+        tree.children.splice(start, end - start, codeTabsElement);
+      } else {
+        i++;
       }
     }
-    tree.children.forEach(findRange);
-
-    if (!range.length) return;
-    const [start, end] = range;
-    const nodes = tree.children.slice(start, end + 1);
-    const pres = nodes.filter((n: any) => n.tagName === 'pre');
-    const group = pres.flatMap((node: any) => node.children);
-    const first = pres?.[0] as any;
-    const language = first.children?.[0]?.properties?.className?.[0] ?? '';
-    const text = toText({ tagName: 'pre', type: 'element', children: group });
-    const children = h('code', { class: language }, text);
-    const newNode = h('pre', { 'data-language': language }, [children]);
-    tree.children.splice(start, nodes.length, newNode as any);
   };
+}
+
+function hasCodeGroup(node: any): boolean {
+  return (
+    node.children &&
+    node.children[0].type === 'text' &&
+    node.children[0].value.trim() === '::: code-group'
+  );
+}
+
+function hasEndOfCodeGroup(node: any): boolean {
+  return (
+    node.children &&
+    node.children[0].type === 'text' &&
+    node.children[0].value.trim() === ':::'
+  );
 }
 
 /**

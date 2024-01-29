@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { useAccount, useWallet } from "@fuel-wallet/react"
+import {
+  useConnectUI,
+  useIsConnected,
+  useWallet,
+  useAccount
+} from '@fuel-wallet/react';
 // Import the contract factory -- you can find the name in src/contracts/contracts/index.ts.
 // You can also do command + space and the compiler will suggest the correct name.
 import { CounterContractAbi__factory  } from "./sway-api"
@@ -11,13 +16,17 @@ const CONTRACT_ID =
 export default function Home() {
   const [contract, setContract] = useState<CounterContractAbi>();
   const [counter, setCounter] = useState<number>();
+  const { connect, setTheme, isConnecting } =
+    useConnectUI();
+  const { isConnected } = useIsConnected();
   const { account } = useAccount();
-  const { wallet } = useWallet({ address: account });
-  const isConnected = false;
+  const { wallet } = useWallet(account);
+
+  setTheme("dark");
 
   useEffect(() => {
     async function getInitialCount(){
-      if(!contract && isConnected && wallet){
+      if(isConnected && wallet){
         const counterContract = CounterContractAbi__factory.connect(CONTRACT_ID, wallet);
         await getCount(counterContract);
         setContract(counterContract);
@@ -25,46 +34,67 @@ export default function Home() {
     }
     
     getInitialCount();
-  }, [isConnected, contract, wallet]);
+  }, [isConnected, wallet]);
 
   const getCount = async (counterContract: CounterContractAbi) => {
-    const { value } = await counterContract.functions
+    try{
+      const { value } = await counterContract.functions
       .count()
       .txParams({
         gasPrice: 1,
-        gasLimit: 10_000,
+        gasLimit: 100_000,
       })
       .simulate();
-    setCounter(value.toNumber());
+      setCounter(value.toNumber());
+    } catch(error) {
+      console.error(error);
+    }
   }
 
   const onIncrementPressed = async () => {
     if (!contract) {
       return alert("Contract not loaded");
     }
-    await contract.functions
+    try {
+      await contract.functions
       .increment()
       .txParams({
         gasPrice: 1,
-        gasLimit: 10_000,
+        gasLimit: 100_000,
       })
       .call();
-    await getCount(contract);
+      await getCount(contract);
+    } catch(error) {
+      console.error(error);
+    }
   };
 
   return (
     <div style={styles.root}>
       <div style={styles.container}>
-        <h3 style={styles.label}>Counter</h3>
-        <div style={styles.counter}>
-          {counter ?? 0}
-        </div>
-        <button
-          onClick={onIncrementPressed}
+        {isConnected ? (
+          <>
+            <h3 style={styles.label}>Counter</h3>
+            <div style={styles.counter}>
+              {counter ?? 0}
+            </div>
+            <button
+            onClick={onIncrementPressed}
+            style={styles.button}
+            >
+              Increment Counter
+            </button>
+          </>
+        ) : (
+          <button
+          onClick={() => {
+            connect();
+          }}
           style={styles.button}
           >
-          Increment Counter
-        </button>
+            {isConnecting ? 'Connecting' : 'Connect'}
+          </button>
+        )}
       </div>
     </div>
   );
