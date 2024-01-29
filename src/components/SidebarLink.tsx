@@ -72,4 +72,7 @@ export const buttonStyles = {
       color: '$semanticLinkPrimaryColor !important',
     },
   },
+  '.fuel_Button:not([aria-disabled=true]):active': {
+    transform: 'none !important',
+  },
 };
