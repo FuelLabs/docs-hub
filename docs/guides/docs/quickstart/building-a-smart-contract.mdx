@@ -12,20 +12,6 @@ parent:
 
 <TextImport
   file="../installation/index.mdx"
-  comment="install_rust"
-  commentType="{/*"
-/>
-
-<CodeImport
-  file="../installation/index.mdx"
-  comment="install_rust_command"
-  commentType="{/*"
-  lang="sh"
-  trim="true"
-/>
-
-<TextImport
-  file="../installation/index.mdx"
   comment="install_fuelup"
   commentType="{/*"
 />
@@ -313,24 +299,28 @@ tree .
 
 We now have an `out` directory that contains our build artifacts such as the JSON representation of our ABI and the contract bytecode.
 
-## Testing your Contract
+## Testing your Contract with Rust
 
-We will start by adding a Rust integration test harness using a Cargo generate template. If this is your first time going through this quickstart, you'll need to install the `cargo generate` command. In the future, you can skip this step as it will already be installed.
+> Don't want to use test with Rust? Skip this section and jump to [Deploy the Contract](#deploy-the-contract).
 
-Let's start by running the installation command:
+We will start by adding a Rust integration test harness using a Cargo generate template.
+If you don't already have `Rust` installed, you can install it by running this command:
+
+<CodeImport
+  file="../installation/index.mdx"
+  comment="install_rust_command"
+  commentType="{/*"
+  lang="sh"
+  trim="true"
+/>
+
+Next, if you don't already have it installed, let's install [`cargo generate`](https://github.com/cargo-generate/cargo-generate):
 
 ```sh
 cargo install cargo-generate
 ```
 
-```sh
- Updating crates.io index...
- installed package `cargo-generate v0.17.3`
-```
-
-> You can learn more about cargo generate by visiting [its repository](https://github.com/cargo-generate/cargo-generate).
-
-Now, let's generate the default test harness with the following:
+Now, let's generate the default test harness with the following command:
 
 <TestAction
 id="cargo-generate-test"
