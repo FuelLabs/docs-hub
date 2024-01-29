@@ -183,8 +183,8 @@ function codeGroup() {
 function hasCodeGroup(node: any): boolean {
   return (
     node.children &&
-    node.children[0].type === 'text' &&
-    node.children[0].value.trim() === '::: code-group'
+    node.children[0]?.type === 'text' &&
+    node.children[0]?.value.trim() === '::: code-group'
   );
 }
 
