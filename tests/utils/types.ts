@@ -10,6 +10,7 @@ export type Action =
   | GetByLocatorAndSave
   | ClickByRole
   | ClickByTestId
+  | ClickByLocator
   | WriteBySelector
   | WalletApprove
   | WalletApproveConnect
@@ -86,7 +87,7 @@ export type GetByLocatorAndSave = {
 };
 
 // click an element by the role/name
-// refer to https://playwright.dev/
+// refer to https://playwright.dev/docs/locators#locate-by-role
 export type ClickByRole = {
   name: 'clickByRole';
   role: string;
@@ -96,6 +97,11 @@ export type ClickByRole = {
 export type ClickByTestId = {
   name: 'clickByTestId';
   testId: string;
+};
+
+export type ClickByLocator = {
+  name: 'clickByLocator';
+  locator: string;
 };
 
 export type WriteBySelector = {

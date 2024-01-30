@@ -1,9 +1,9 @@
 /* eslint-disable no-empty-pattern */
 // Use a test fixture to set the context so tests have access to the wallet extension.
+import { downloadFuel } from '@fuel-wallet/playwright-utils';
 import type { BrowserContext } from '@playwright/test';
 import { chromium, test as base } from '@playwright/test';
 
-import { downloadFuel } from './utils/downloadFuel';
 import { getExtensionsData } from './utils/getExtensionsData';
 import { waitForExtensions } from './utils/waitForExtenssions';
 
@@ -13,7 +13,7 @@ export const test = base.extend<{
 }>({
   context: async ({}, use) => {
     // download fuel wallet
-    const fuelPathExtension = await downloadFuel('0.13.0');
+    const fuelPathExtension = await downloadFuel('0.15.0');
     // prepare browser args
     const browserArgs = [
       `--disable-extensions-except=${fuelPathExtension}`,

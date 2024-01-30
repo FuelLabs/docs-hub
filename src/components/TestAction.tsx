@@ -51,6 +51,9 @@ export default function TestAction({ id, action }: TestActionProps) {
         action.name === 'clickByRole' ? action.elementName : null
       }
       data-testid={action.name === 'clickByTestId' ? action.testId : null}
+      data-click-by-locator={
+        action.name === 'clickByLocator' ? action.locator : null
+      }
       data-selector={action.name === 'writeBySelector' ? action.selector : null}
       data-value={action.name === 'writeBySelector' ? action.value : null}
       data-initial-index={

@@ -1,3 +1,4 @@
+import { clickByLocator } from './utils/button';
 import { test } from './utils/fixtures';
 import { runTest } from './utils/runTest';
 import { setupFolders, startServers, stopServers } from './utils/setup';

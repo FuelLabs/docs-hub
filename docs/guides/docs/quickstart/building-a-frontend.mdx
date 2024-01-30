@@ -81,6 +81,14 @@ cd frontend
 Install `fuels`, `@fuel-wallet/sdk`, and `@fuel-wallet/react`.
 
 <TestAction
+id="install-deps-tab"
+action={{
+  name: 'clickByLocator',
+  locator: '[id="radix-\\:r9\\:-trigger-npm"]'
+}}
+/>
+
+<TestAction
 id="install-deps"
 action={{
   name: 'runCommand',
@@ -90,7 +98,7 @@ action={{
 
 <CodeTabs>
 ```sh
-pnpm install fuels@0.71.1 @fuel-wallet/sdk @fuel-wallet/react
+pnpm add fuels@0.71.1 @fuel-wallet/sdk @fuel-wallet/react
 ```
 ```sh
 npm install fuels@0.71.1 @fuel-wallet/sdk @fuel-wallet/react
@@ -182,7 +190,7 @@ action={{
   file="../../examples/quickstart/frontend/src/index.tsx"
   lang="tsx"
   lineStart="13"
-  lineEnd="15"
+  lineEnd="19"
 />
 
 Next, change the file `fuel-project/frontend/src/App.tsx` to:
@@ -292,6 +300,15 @@ action={{
   name: 'clickByRole',
   role: "button",
   elementName: "Connect"
+}}
+/>
+
+<TestAction
+id="click-fuel-wallet-development"
+action={{
+  name: 'clickByRole',
+  role: "button",
+  elementName: "Fuel Wallet Development"
 }}
 />
 
