@@ -148,6 +148,37 @@ function processCodeGroup(nodes: any[]): any[] {
     });
 }
 
+function codeGroup2() {
+  return function transformer(tree: any) {
+    const nodes: any[] = [];
+    let start: number | null = null;
+    let end: number | null = null;
+    tree.children.forEach((node: any, index: number) => {
+      if (
+        node.children &&
+        node.children[0]?.type === 'text' &&
+        node.children[0]?.value.trim().startsWith(':::')
+      ) {
+        if (node.children[0]?.value.trim() === '::: code-group') {
+          end = null;
+          start = index;
+        } else if (start !== null) {
+          end = index;
+          const children = processCodeGroup(nodes);
+          const codeTabsElement: any = {
+            type: 'mdxJsxFlowElement',
+            name: 'CodeTabs',
+            children: children,
+          };
+          tree.children.splice(start, end - start + 1, codeTabsElement);
+        }
+      } else if (start !== null && end === null) {
+        nodes.push(node);
+      }
+    });
+  };
+}
+
 function codeGroup() {
   return function transformer(tree: any) {
     let i = 0;
@@ -366,6 +397,7 @@ const getRehypeCodeOptions = (): Partial<RehypeCodeOptions> => ({
 export const getMdxCode = (): PluggableList => [
   codeImport,
   codeGroup,
+  codeGroup2,
   codeLanguage,
   [rehypeCode, getRehypeCodeOptions()],
   addLines,
