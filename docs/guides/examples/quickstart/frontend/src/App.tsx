@@ -3,7 +3,6 @@ import {
   useConnectUI,
   useIsConnected,
   useWallet,
-  useAccount
 } from '@fuel-wallet/react';
 // Import the contract factory -- you can find the name in src/contracts/contracts/index.ts.
 // You can also do command + space and the compiler will suggest the correct name.
@@ -19,8 +18,7 @@ export default function Home() {
   const { connect, setTheme, isConnecting } =
     useConnectUI();
   const { isConnected } = useIsConnected();
-  const { account } = useAccount();
-  const { wallet } = useWallet(account);
+  const { wallet } = useWallet();
 
   setTheme("dark");
 
