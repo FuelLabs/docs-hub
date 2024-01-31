@@ -115,10 +115,11 @@ Generate a new P2P key pairing by running the following command:
 ```sh
 fuel-core-keygen new --key-type peering
 {
-  "peer_id":"16Uiu2HAm8kCaJaaKTujrSwdBxyCELTY979KYaP9YBkWVLTGTo7Bf",
-  "secret":"361b3275a3dd4150ea4c786b8dff7822205331e56ac2e73c32b17cb295978c8c",
-  "type":"p2p"
+  "peer_id":"16Uiu2HAmEtVt2nZjzpXcAH7dkPcFDiL3z7haj6x78Tj659Ri8nrs",
+  "secret":"b0ab3227974e06d236d265bd1077bb0522d38ead16c4326a5dff2f30edf88496",
+  "type":"peering"
 }
+### Do not share or lose this private key! Press any key to complete. ###
 ```
 
 {/*// ANCHOR_END: generate_fuel_p2p_key_command*/}
@@ -152,11 +153,11 @@ fuel-core run \
 --chain ./chainConfig.json \
 --utxo-validation --poa-instant false --enable-p2p \
 --min-gas-price 1 --max-block-size 18874368  --max-transmit-size 18874368 \
---reserved-nodes /dns4/p2p-beta-4.fuel.network/tcp/30333/p2p/16Uiu2HAm3xjsqASZ68KpaJPkPCMUiMgquhjyDHtxcVxVdFkMgRFf,/dns4/p2p-beta-4.fuel.network/tcp/30334/p2p/16Uiu2HAmJyoJ2HrtPRdBALMT8fs5Q25xVj57gZj5s6G6dzbHypoS \
+--reserved-nodes /dns4/p2p-beta-5.fuel.network/tcp/30333/p2p/16Uiu2HAmSMqLSibvGCvg8EFLrpnmrXw1GZ2ADX3U2c9ttQSvFtZX,/dns4/p2p-beta-5.fuel.network/tcp/30334/p2p/16Uiu2HAmVUHZ3Yimoh4fBbFqAb3AC4QR1cyo8bUF4qyi8eiUjpVP \
 --sync-header-batch-size 1000 \
 --enable-relayer \
---relayer-v2-listening-contracts 0xE6B0E27F85abaCfC5149642c30F4BE9a878Aa4e9 \
---relayer-da-deploy-height 8538323 \
+--relayer-v2-listening-contracts 0x557c5cE22F877d975C2cB13D0a961a182d740fD5 \
+--relayer-da-deploy-height 4867877 \
 --relayer-log-page-size 2000
 ```
 
