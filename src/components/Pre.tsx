@@ -1,7 +1,9 @@
 import type { ThemeUtilsCSS } from '@fuel-ui/css';
 import { cssObj } from '@fuel-ui/css';
 import { Box, Button, Icon, IconButton, Text, toast } from '@fuel-ui/react';
-import { useState, type ReactNode } from 'react';
+import { useState, type ReactNode, Children } from 'react';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import theme from 'react-syntax-highlighter/dist/cjs/styles/prism/night-owl';
 
 type PreProps = {
   children: ReactNode;
@@ -22,11 +24,19 @@ export function Pre({
 }: PreProps) {
   const [expanded, setExpanded] = useState(false);
   const needExpand = lines >= 32;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const codeEl: any = Children.toArray(children)[0];
+  const codeStr = codeEl?.props?.children || '';
+  const gqlCode =
+    typeof codeStr === 'string' && codeStr.endsWith('\n')
+      ? codeStr.slice(0, -1)
+      : codeStr;
 
   function handleCopy() {
+    const copiedCode = code ?? gqlCode;
     typeof window !== 'undefined' &&
-      code &&
-      navigator.clipboard.writeText(code);
+      copiedCode &&
+      navigator.clipboard.writeText(copiedCode);
     toast.success('Copied to clipboard');
   }
 
@@ -42,7 +52,18 @@ export function Pre({
         data-expanded={expanded}
         data-need-expand={needExpand}
       >
-        <pre {...props}>{children}</pre>
+        {!props['data-language'] ? (
+          <SyntaxHighlighter
+            language={'graphql'}
+            style={theme}
+            data-title={Boolean(title)}
+            {...props}
+          >
+            {gqlCode}
+          </SyntaxHighlighter>
+        ) : (
+          <pre {...props}>{children}</pre>
+        )}
       </Box>
       <Box css={styles.actions} data-expanded={expanded}>
         {needExpand && (
