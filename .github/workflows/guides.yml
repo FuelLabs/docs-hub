@@ -40,13 +40,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # note: must match the names in test.spec.ts 
         guide:
           - "dev quickstart" 
           - "intro to sway"
 
     steps:
-    # SETUP
+      # SETUP
       - uses: actions/checkout@v3
         with:
           submodules: 'true'
@@ -54,29 +53,24 @@ jobs:
         with:
           install: false
 
-    # INSTALLATIONS
+      # INSTALLATIONS
       - name: Install dependencies
         run: pnpm install
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
       - name: Install Rust
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@main
         with:
-          profile: minimal
           toolchain: stable
-          override: true
       - name: Install cargo-generate
-        uses: actions-rs/cargo@v1
-        with:
-            command: install
-            args: cargo-generate
+        run: cargo install cargo-generate
       - name: Install Fuelup
         run: |
             curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh
       - name: Modify Path
         run: echo "$HOME/.fuelup/bin:${GITHUB_PATH}" >> $GITHUB_PATH
     
-    # RUN E2E TESTS
+      # RUN E2E TESTS
       - name: Run Playwright tests for ${{ matrix.guide }}
         run: xvfb-run --auto-servernum pnpm test:guides --grep "${{ matrix.guide }}"
 
