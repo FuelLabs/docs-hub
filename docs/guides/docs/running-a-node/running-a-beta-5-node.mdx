@@ -1,0 +1,160 @@
+---
+title: Running a Beta-5 Node
+category: Running a Node
+parent:
+  label: Guides
+  link: /guides
+---
+
+# Running a local Fuel node connected to Beta-5 using P2P
+
+## Installation
+
+<TextImport
+  file="../installation/index.mdx"
+  comment="install_rust"
+  commentType="{/*"
+/>
+
+<CodeImport
+  file="../installation/index.mdx"
+  comment="install_rust_command"
+  commentType="{/*"
+  lang="sh"
+  trim="true"
+/>
+
+<TextImport
+  file="../installation/index.mdx"
+  comment="install_fuelup"
+  commentType="{/*"
+/>
+
+<CodeImport
+  file="../installation/index.mdx"
+  comment="install_fuelup_command"
+  commentType="{/*"
+  lang="sh"
+  trim="true"
+/>
+
+<TextImport
+  file="../quickstart/building-a-smart-contract.mdx"
+  comment="install_help"
+  commentType="{/*"
+/>
+
+## Getting a Sepolia (Ethereum Testnet) API Key
+
+{/*get_ethereum_api_key:example:start*/}
+An API key from any RPC provider that supports the Sepolia network will work. Relayers will help listen to events from the Ethereum network. We recommend either [Infura](https://www.infura.io/) or [Alchemy](https://www.alchemy.com/)
+
+The endpoints should look like the following:
+{/*get_ethereum_api_key:example:end*/}
+
+### Infura
+
+{/*// ANCHOR: infura_key*/}
+
+```sh
+https://sepolia.infura.io/v3/{YOUR_API_KEY}
+```
+
+{/*// ANCHOR_END: infura_key*/}
+
+### Alchemy
+
+{/*// ANCHOR: alchemy_key*/}
+
+```sh
+https://eth-sepolia.g.alchemy.com/v2/{YOUR_API_KEY}
+```
+
+{/*// ANCHOR_END: alchemy_key*/}
+
+{/*get_ethereum_api_key_end:example:start*/}
+Note that using other network endpoints will result in the relayer failing to start.
+{/*get_ethereum_api_key_end:example:end*/}
+
+## Generating a P2P Key
+
+{/*generate_fuel_p2p_key:example:start*/}
+Generate a new P2P key pairing by running the following command:
+{/*generate_fuel_p2p_key:example:end*/}
+
+{/*// ANCHOR: generate_fuel_p2p_key_command*/}
+
+```sh
+fuel-core-keygen new --key-type peering
+{
+  "peer_id":"16Uiu2HAmEtVt2nZjzpXcAH7dkPcFDiL3z7haj6x78Tj659Ri8nrs",
+  "secret":"b0ab3227974e06d236d265bd1077bb0522d38ead16c4326a5dff2f30edf88496",
+  "type":"peering"
+}
+### Do not share or lose this private key! Press any key to complete. ###
+```
+
+{/*// ANCHOR_END: generate_fuel_p2p_key_command*/}
+
+{/*generate_fuel_p2p_key_end:example:start*/}
+Make sure you save this somewhere safe so you don't need to generate a new key pair in the future.
+{/*generate_fuel_p2p_key_end:example:end*/}
+
+## Chain Configuration
+
+To run a local node with persistence, you must configure a `chainConfig.json` file. Here is the [specific configuration](https://github.com/FuelLabs/fuel-core/blob/v0.22.0/deployment/scripts/chainspec/beta_chainspec.json) for `beta-5`:
+
+<CodeImport
+  file="../../../fuel-core/deployment/scripts/chainspec/beta_chainspec.json"
+  lang="json"
+/>
+
+## Running a Local Node
+
+{/*running_a_local_node:example:start*/}
+Finally to put everything together to start the node, run the following command:
+{/*running_a_local_node:example:end*/}
+
+```sh
+fuel-core run \
+--service-name {ANY_SERVICE_NAME} \
+--keypair {P2P_SECRET} \
+--relayer {ETH_RPC_ENDPOINT}\
+--ip 0.0.0.0 --port 4000 --peering-port 30333 \
+--db-path  ~/.fuel_beta5 \
+--chain ./chainConfig.json \
+--utxo-validation --poa-instant false --enable-p2p \
+--min-gas-price 1 --max-block-size 18874368  --max-transmit-size 18874368 \
+--reserved-nodes /dns4/p2p-beta-5.fuel.network/tcp/30333/p2p/16Uiu2HAmSMqLSibvGCvg8EFLrpnmrXw1GZ2ADX3U2c9ttQSvFtZX,/dns4/p2p-beta-5.fuel.network/tcp/30334/p2p/16Uiu2HAmVUHZ3Yimoh4fBbFqAb3AC4QR1cyo8bUF4qyi8eiUjpVP \
+--sync-header-batch-size 1000 \
+--enable-relayer \
+--relayer-v2-listening-contracts 0x557c5cE22F877d975C2cB13D0a961a182d740fD5 \
+--relayer-da-deploy-height 4867877 \
+--relayer-log-page-size 2000
+```
+
+{/*running_a_local_node_end:example:start*/}
+For the full description details of each flag above, run:
+{/*running_a_local_node_end:example:end*/}
+
+{/*// ANCHOR: fuel_core_help_command*/}
+
+```sh
+fuel-core run --help
+```
+
+{/*// ANCHOR_END: fuel_core_help_command*/}
+
+## Connecting to the local node from a browser wallet
+
+{/*connecting_to_local_node:example:start*/}
+To connect to the local node using a browser wallet, import the network address as:
+{/*connecting_to_local_node:example:end*/}
+
+{/*// ANCHOR: connecting_to_local_node_endpoint*/}
+
+```sh
+http://0.0.0.0:4000/graphql
+```
+
+{/*// ANCHOR_END: connecting_to_local_node_endpoint*/}
