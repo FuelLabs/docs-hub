@@ -12,20 +12,6 @@ parent:
 
 <TextImport
   file="../installation/index.mdx"
-  comment="install_rust"
-  commentType="{/*"
-/>
-
-<CodeImport
-  file="../installation/index.mdx"
-  comment="install_rust_command"
-  commentType="{/*"
-  lang="sh"
-  trim="true"
-/>
-
-<TextImport
-  file="../installation/index.mdx"
   comment="install_fuelup"
   commentType="{/*"
 />
@@ -44,14 +30,18 @@ parent:
   commentType="{/*"
 />
 
-Additionally for this guide, ensure you're using Node.js/npm version {props.nodeVersion} or higher (up to Node.js {props.nodeVersionMax}).
+<TextImport
+  file="../installation/index.mdx"
+  comment="install_VSCode_extensions"
+  commentType="{/*"
+/>
+ 
+Additionally for this guide, ensure you're using Node.js/npm version {props.nodeVersion}.
 You can check your Node.js version with:
 
 ```sh
 node -v
 ```
-
-Update Node.js if your version is below {props.nodeVersion} or is at or above {props.nodeVersionMax}.
 
 ## Project Setup
 
