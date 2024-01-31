@@ -59,7 +59,7 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
       - name: Install Rust
-        uses: dtolnay/rust-toolchain@main
+        uses: dtolnay/rust-toolchain@master
         with:
           toolchain: stable
       - name: Install cargo-generate
