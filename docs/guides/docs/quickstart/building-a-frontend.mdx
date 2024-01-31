@@ -22,12 +22,14 @@ To build a frontend application for the counter contract, we'll do the following
 > Make sure your browser is using the latest version of chromium.
 
 Our frontend application will allow users to connect with a wallet, so you'll need to have a browser wallet installed.
+While the official wallet extension update is under review for the chrome webstore, we will use the Fuel Development Wallet to interact with the latest testnet.
 
-Before going to the next steps, install the Fuel Wallet [here](https://chrome.google.com/webstore/detail/fuel-wallet/dldjpboieedgcmpkchcjcbijingjcgok).
+Before going to the next steps, install the [Fuel Development Wallet](https://chromewebstore.google.com/detail/hcgmehahnlbhpilepakbdinkhhaackmc).
+{/* Before going to the next steps, install the Fuel Wallet [here](https://chrome.google.com/webstore/detail/fuel-wallet/dldjpboieedgcmpkchcjcbijingjcgok). */}
 
 If you have previously installed the wallet, make sure you have updated to the latest version.
 
-Once you've installed the wallet, take the address of your wallet and use it to get some coins from the {props.faucetLink}.
+Once you've installed the wallet, click the "Faucet" button to get some testnet tokens.
 
 ## Initialize a React project
 
@@ -76,7 +78,7 @@ Move into the `frontend` folder by running:
 cd frontend
 ```
 
-> `fuels` requires Node.js/npm version {props.nodeVersion} or higher (up to Node.js {props.nodeVersionMax}).
+> `fuels` requires Node version {props.nodeVersion}.
 
 Install `fuels`, `@fuel-wallet/sdk`, and `@fuel-wallet/react`.
 
@@ -98,10 +100,10 @@ action={{
 
 <CodeTabs>
 ```sh
-pnpm add fuels@0.72.0 @fuel-wallet/sdk @fuel-wallet/react
+pnpm add fuels@0.72.0 @fuel-wallet/sdk@0.15.1 @fuel-wallet/react@0.15.1
 ```
 ```sh
-npm install fuels@0.72.0 @fuel-wallet/sdk @fuel-wallet/react
+npm install fuels@0.72.0 @fuel-wallet/sdk@0.15.1 @fuel-wallet/react@0.15.1
 ```
 </CodeTabs>
 
@@ -159,6 +161,8 @@ Inside the `frontend/src` folder let's add code that interacts with our contract
 
 Because we'll be using `@fuel-wallet/react`, first we need to wrap our app with the `FuelProvider` component.
 Modify the file `fuel-project/frontend/src/index.tsx` so that the `App` component is wrapped with the `FuelProvider` component.
+
+To allow connection with the Development Wallet, we'll also need to enable `devMode` here.
 
 <TestAction
 id="app-code"
@@ -254,13 +258,16 @@ Note that the development build is not optimized.
 To create a production build, use npm run build.
 ```
 
+Click the "Connect" button and select "Fuel Wallet Development" to connect your wallet.
+Once connected, you should see the counter value and increment button:
+
 <Box.Centered>
 ![screenshot of the UI](/images/quickstart-frontend.png)
 </Box.Centered>
 
 ## You just built a fullstack dapp on Fuel! ⛽
 
-[Here is the repo for this project](https://github.com/FuelLabs/quickstart). If you run into any problems, a good first step is to compare your code to this repo and resolve any differences.
+[Here is the repo for this project](https://github.com/FuelLabs/docs-hub/tree/master/docs/guides/examples/quickstart). If you run into any problems, a good first step is to compare your code to this repo and resolve any differences.
 
 Tweet us [@fuel_network](https://twitter.com/fuel_network) letting us know you just built a dapp on Fuel, you might get invited to a private group of builders, be invited to the next Fuel dinner, get alpha on the project, or something 👀.
 

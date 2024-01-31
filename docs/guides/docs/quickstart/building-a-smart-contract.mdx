@@ -36,7 +36,7 @@ parent:
 
 ### Already have `fuelup` installed?
 
-If you already have `fuelup` installed, run the commands below to make sure you are on the most up-to-date `latest` toolchain.
+If you already have `fuelup` installed, run the commands below to make sure you are on the updated `latest` toolchain.
 
 ```sh
 fuelup self update
@@ -273,7 +273,7 @@ forc build
   Compiled library "core".
   Compiled library "std".
   Compiled contract "counter-contract".
-  Bytecode size: 1532 bytes.
+  Bytecode size: 84 bytes.
 ```
 
 Let's have a look at the content of the `counter-contract` folder after building:
@@ -445,15 +445,15 @@ If all goes well, the output should look as follows:
 
 ## Deploy the Contract
 
-It's now time to deploy the contract to the testnet. We will show how to do this using `forc` from the command line, but you can also do it using the [Rust SDK](/docs/fuels-rs/deploying) or the [TypeScript SDK](/docs/fuels-ts/contracts/deploying-contracts).
+It's now time to deploy . We will show how to do this using `forc` from the command line, but you can also do it using the [Rust SDK](/docs/fuels-rs/deploying) or the [TypeScript SDK](/docs/fuels-ts/contracts/deploying-contracts).
 
 In order to deploy a contract, you need to have a wallet to sign the transaction and coins to pay for gas. `Fuelup` will guide you in this process.
 
 ### Deploy To Testnet
 
-Now, you can deploy with `forc deploy` and adding the `--testnet` to target the latest network
+Now, you can deploy the contract to the latest testnet with the `forc deploy --testnet` command.
 
-If you don't have a wallet installed, the terminal will help you to create one, then you can use the {props.faucetLink} to get some testnet coins.
+If you don't have a wallet installed, the terminal will help you to create one. Then you can use the {props.faucetLink} to get some testnet coins.
 
 ```sh
 forc deploy --testnet
@@ -490,7 +490,7 @@ Deployed in block 0x4ea52b6652836c499e44b7e42f7c22d1ed1f03cf90a1d94cd0113b9023df
 
 ### Congrats, you have completed your first smart contract on Fuel ⛽
 
-[Here is the repo for this project](https://github.com/FuelLabs/quickstart). If you run into any problems, a good first step is to compare your code to this repo and resolve any differences.
+[Here is the repo for this project](https://github.com/FuelLabs/docs-hub/tree/master/docs/guides/examples/quickstart). If you run into any problems, a good first step is to compare your code to this repo and resolve any differences.
 
 Tweet us [@fuel_network](https://twitter.com/fuel_network) letting us know you just built a dapp on Fuel, you might get invited to a private group of builders, be invited to the next Fuel dinner, get alpha on the project, or something 👀.
 

@@ -13,7 +13,7 @@ export const test = base.extend<{
 }>({
   context: async ({}, use) => {
     // download fuel wallet
-    const fuelPathExtension = await downloadFuel('0.15.0');
+    const fuelPathExtension = await downloadFuel('0.15.1');
     // prepare browser args
     const browserArgs = [
       `--disable-extensions-except=${fuelPathExtension}`,

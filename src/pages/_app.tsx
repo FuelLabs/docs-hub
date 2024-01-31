@@ -12,7 +12,11 @@ const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <FuelProvider>
+    <FuelProvider
+      fuelConfig={{
+        devMode: true,
+      }}
+    >
       <QueryClientProvider client={queryClient}>
         <VersionProvider>
           <Provider>
