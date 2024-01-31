@@ -12,20 +12,6 @@ parent:
 
 <TextImport
   file="../installation/index.mdx"
-  comment="install_rust"
-  commentType="{/*"
-/>
-
-<CodeImport
-  file="../installation/index.mdx"
-  comment="install_rust_command"
-  commentType="{/*"
-  lang="sh"
-  trim="true"
-/>
-
-<TextImport
-  file="../installation/index.mdx"
   comment="install_fuelup"
   commentType="{/*"
 />
@@ -38,41 +24,39 @@ parent:
   trim="true"
 />
 
-<TextImport
-  file="../installation/index.mdx"
-  comment="install_testnet"
-  commentType="{/*"
-/>
-
-<CodeImport
-  file="../installation/index.mdx"
-  comment="install_testnet_command"
-  commentType="{/*"
-  lang="sh"
-  trim="true"
-/>
-
-<TextImport
-  file="../installation/index.mdx"
-  comment="set_default_testnet"
-  commentType="{/*"
-/>
-
-<CodeImport
-  file="../installation/index.mdx"
-  comment="set_default_testnet_command"
-  commentType="{/*"
-  lang="sh"
-  trim="true"
-/>
-
 {/*install_help:example:start*/}
-For more detailed instructions on installing `fuelup`, visit the [installation guide](/guides/installation).
-
-> Having problems with this part? Post your question on our [forum](https://forum.fuel.network/). To help you as efficiently as possible, include the output of this command in your post: `fuelup show.`
+> Having problems? Visit the [installation guide](/guides/installation) or post your question in our [forum](https://forum.fuel.network/).
 {/*install_help:example:end*/}
 
+<TextImport
+  file="../installation/index.mdx"
+  comment="install_VSCode_extensions"
+  commentType="{/*"
+/>
+
+### Already have `fuelup` installed?
+
+If you already have `fuelup` installed, run the commands below to make sure you are on the updated `latest` toolchain.
+
+```sh
+fuelup self update
+fuelup update
+fuelup default latest
+```
+
 ## Your First Sway Project
+
+<QuickstartCallout>
+
+<CodeTabs>
+```sh
+pnpm create fuels
+```
+```sh
+npm create fuels
+```
+</CodeTabs>
+</QuickstartCallout>
 
 We'll build a simple counter contract with two functions: one to increment the counter, and one to return the value of the counter.
 
@@ -143,11 +127,11 @@ action={{
 }}
 />
 
-```console
+```sh
 tree counter-contract
 ```
 
-```console
+```sh
 counter-contract
 ├── Forc.toml
 └── src
@@ -162,6 +146,7 @@ counter-contract
 Open your project in a code editor and delete everything in `src/main.sw` apart from the first line.
 
 Every Sway file must start with a declaration of what type of program the file contains; here, we've declared that this file is a contract.
+You can learn more about Sway program types in the [Sway Book](/docs/sway/sway-program-types/).
 
 <TestAction
 id="program-type"
@@ -178,7 +163,8 @@ action={{
   lang="sway"
 />
 
-Next, we'll define a storage value. In our case, we have a single counter that we'll call `counter` of type 64-bit unsigned integer and initialize it to 0.
+Next, we'll define a storage value.
+In our case, we have a single counter that we'll call `counter` of type `u64` (a 64-bit unsigned integer) and initialize it to 0.
 
 <TestAction
 id="storage"
@@ -197,7 +183,12 @@ action={{
 
 ### ABI
 
-An ABI defines an interface for a contract. A contract must either define or import an ABI declaration. It is considered best practice to define your ABI in a separate library and import it into your contract because this allows callers of the contract to import and use the ABI in scripts to call your contract
+ABI stands for Application Binary Interface.
+An ABI defines an interface for a contract.
+A contract must either define or import an ABI declaration.
+
+It is considered best practice to define your ABI in a separate library and import it into your contract.
+This allows callers of the contract to import and use the ABI more easily.
 
 For simplicity, we will define the ABI directly in the contract file itself.
 
@@ -235,7 +226,7 @@ action={{
   lang="sway"
 />
 
-**Note**: `storage.counter.read()` is an implicit return and is equivalent to `return storage.counter.read();`.
+> `storage.counter.read()` is an implicit return and is equivalent to `return storage.counter.read();`.
 
 Here's what your code should look like so far:
 
@@ -260,12 +251,8 @@ action={{
 
 Navigate to your contract folder:
 
-```console
+```sh
 cd counter-contract
-```
-
-```console
-changed directory into `counter-contract`
 ```
 
 Then run the following command to build your contract:
@@ -278,15 +265,15 @@ action={{
 }}
 />
 
-```console
+```sh
 forc build
 ```
 
-```console
+```sh
   Compiled library "core".
   Compiled library "std".
   Compiled contract "counter-contract".
-  Bytecode size is 232 bytes.
+  Bytecode size: 84 bytes.
 ```
 
 Let's have a look at the content of the `counter-contract` folder after building:
@@ -299,11 +286,11 @@ action={{
 }}
 />
 
-```console
+```sh
 tree .
 ```
 
-```console
+```sh
 .
 ├── Forc.lock
 ├── Forc.toml
@@ -320,24 +307,28 @@ tree .
 
 We now have an `out` directory that contains our build artifacts such as the JSON representation of our ABI and the contract bytecode.
 
-## Testing your Contract
+## Testing your Contract with Rust
 
-We will start by adding a Rust integration test harness using a Cargo generate template. If this is your first time going through this quickstart, you'll need to install the `cargo generate` command. In the future, you can skip this step as it will already be installed.
+> Don't want to test with Rust? Skip this section and jump to [Deploy the Contract](#deploy-the-contract).
 
-Let's start by running the installation command:
+We will start by adding a Rust integration test harness using a Cargo generate template.
+If you don't already have `Rust` installed, you can install it by running this command:
 
-```console
+<CodeImport
+  file="../installation/index.mdx"
+  comment="install_rust_command"
+  commentType="{/*"
+  lang="sh"
+  trim="true"
+/>
+
+Next, if you don't already have it installed, let's install [`cargo generate`](https://github.com/cargo-generate/cargo-generate):
+
+```sh
 cargo install cargo-generate
 ```
 
-```console
- Updating crates.io index...
- installed package `cargo-generate v0.17.3`
-```
-
-> **Note**: You can learn more about cargo generate by visiting [its repository](https://github.com/cargo-generate/cargo-generate).
-
-Now, let's generate the default test harness with the following:
+Now, let's generate the default test harness with the following command:
 
 <TestAction
 id="cargo-generate-test"
@@ -347,11 +338,11 @@ action={{
 }}
 />
 
-```console
+```sh
 cargo generate --init fuellabs/sway templates/sway-test-rs --name counter-contract
 ```
 
-```console
+```sh
 ⚠️   Favorite `fuellabs/sway` not found in config, using it as a git repository: https://github.com/fuellabs/sway.git
 🔧   Destination: /home/user/path/to/counter-contract ...
 🔧   project-name: counter-contract ...
@@ -370,11 +361,11 @@ action={{
 }}
 />
 
-```console
+```sh
 tree .
 ```
 
-```console
+```sh
 .
 ├── Cargo.toml
 ├── Forc.lock
@@ -394,10 +385,10 @@ tree .
 
 We have two new files!
 
-- The `Cargo.toml` is the manifest for our new test harness and specifies the required dependencies including `fuels` the Fuel Rust SDK.
+- The `Cargo.toml` is the manifest for our new test harness and specifies the required dependencies including `fuels` (the Fuel Rust SDK).
 - The `tests/harness.rs` contains some boilerplate test code to get us started, though doesn't call any contract methods just yet.
 
-Now that we have our default test harness, let's add some useful tests to it.
+Now that we have our default test harness, let's add a useful test to it.
 
 At the bottom of `test/harness.rs` below the `can_get_contract_id()` test, add the `test_increment` test function below to verify that the value of the counter gets incremented:
 
@@ -438,13 +429,13 @@ action={{
 
 Run `cargo test` in the terminal:
 
-```console
+```sh
 cargo test
 ```
 
 If all goes well, the output should look as follows:
 
-```console
+```sh
   ...
   running 2 tests
   test can_get_contract_id ... ok
@@ -454,45 +445,17 @@ If all goes well, the output should look as follows:
 
 ## Deploy the Contract
 
-It's now time to deploy the contract to the testnet. We will show how to do this using `forc` from the command line, but you can also do it using the [Rust SDK](/docs/fuels-rs/deploying) or the [TypeScript SDK](/docs/fuels-ts/contracts/deploying-contracts).
+It's now time to deploy . We will show how to do this using `forc` from the command line, but you can also do it using the [Rust SDK](/docs/fuels-rs/deploying) or the [TypeScript SDK](/docs/fuels-ts/contracts/deploying-contracts).
 
-In order to deploy a contract, you need to have a wallet to sign the transaction and coins to pay for gas. First, we'll create a wallet.
-
-### Setup the Wallet CLI
-
-If you haven't deployed a contract before, you'll need to set up a local wallet with the forc-wallet plugin. `forc-wallet` is packaged alongside the default distributed toolchains when installed using fuelup, so you should already have this installed.
-
-You can initialize a new wallet with the command below:
-
-```console
-forc wallet new
-```
-
-After typing in a password, be sure to save the mnemonic phrase that is output.
-
-Next, create a new wallet account with:
-
-```console
-forc wallet account new
-```
-
-With this, you'll get a fuel address that looks something like this: `fuel1efz7lf36w9da9jekqzyuzqsfrqrlzwtt3j3clvemm6eru8fe9nvqj5kar8`. Save this address as you'll need it to sign transactions when we deploy the contract.
-
-If you need to list your accounts, you can run the command below:
-
-```console
-forc wallet accounts
-```
-
-### Get Testnet Coins
-
-With your account address in hand, head to the {props.faucetLink} to get some coins sent to your wallet.
+In order to deploy a contract, you need to have a wallet to sign the transaction and coins to pay for gas. `Fuelup` will guide you in this process.
 
 ### Deploy To Testnet
 
-Now that you have a wallet, you can deploy with `forc deploy` and adding the `--testnet` to target the latest network:
+Now, you can deploy the contract to the latest testnet with the `forc deploy --testnet` command.
 
-```console
+If you don't have a wallet installed, the terminal will help you to create one. Then you can use the {props.faucetLink} to get some testnet coins.
+
+```sh
 forc deploy --testnet
 ```
 
@@ -500,9 +463,9 @@ The terminal will ask for the password of the wallet:
 
 `Please provide the password of your encrypted wallet vault at "~/.fuel/wallets/.wallet":`
 
-Once you unlocked the wallet, the terminal will show a list of the accounts of this wallet:
+Once you have unlocked the wallet, the terminal will show a list of the accounts:
 
-```console
+```sh
 Account 0 -- fuel18caanqmumttfnm8qp0eq7u9yluydxtqmzuaqtzdjlsww5t2jmg9skutn8n:
   Asset ID                                                           Amount
   0000000000000000000000000000000000000000000000000000000000000000 499999940
@@ -516,23 +479,18 @@ Then you'll enter the number of the account of preference and press `Y` when pro
 
 Finally, you will get back the network endpoint where the contract was deployed, a `Contract ID` and the block where the transaction was signed.
 Save the `Contract ID`, as you'll need this later to connect the frontend.
-With this ID, you can also head to the [block explorer](https://fuellabs.github.io/block-explorer-v2/) to confirm the contract was deployed.
 
-```console
-Contract deploy-to-beta-4 Deployed!
+```sh
+Contract deploy-to-beta-5 Deployed!
 
-Network: https://beta-4.fuel.network
+Network: https://beta-5.fuel.network
 Contract ID: 0x8342d413de2a678245d9ee39f020795800c7e6a4ac5ff7daae275f533dc05e08
 Deployed in block 0x4ea52b6652836c499e44b7e42f7c22d1ed1f03cf90a1d94cd0113b9023dfa636
 ```
 
-<Box.Centered>
-![block explorer](/images/block-explorer.png)
-</Box.Centered>
-
 ### Congrats, you have completed your first smart contract on Fuel ⛽
 
-[Here is the repo for this project](https://github.com/FuelLabs/quickstart). If you run into any problems, a good first step is to compare your code to this repo and resolve any differences.
+[Here is the repo for this project](https://github.com/FuelLabs/docs-hub/tree/master/docs/guides/examples/quickstart). If you run into any problems, a good first step is to compare your code to this repo and resolve any differences.
 
 Tweet us [@fuel_network](https://twitter.com/fuel_network) letting us know you just built a dapp on Fuel, you might get invited to a private group of builders, be invited to the next Fuel dinner, get alpha on the project, or something 👀.
 

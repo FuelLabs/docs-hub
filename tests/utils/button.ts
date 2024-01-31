@@ -9,6 +9,10 @@ export function getButtonByText(page: Page, selector: string | RegExp) {
   return page.locator('button').getByText(selector);
 }
 
+export async function clickByLocator(page: Page, locator: string) {
+  await page.locator(locator).click();
+}
+
 export async function clickCopyButton(page: Page, id: string) {
   let clipboardText = { text: '', output: '' };
   const selector = `#${id} + div > div > div > button[aria-label="Copy to Clipboard"]`;

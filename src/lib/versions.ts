@@ -82,23 +82,19 @@ function getForcVersion(docsDir: string) {
   };
 }
 
-function getIndexerVersion(docsDir: string) {
-  const filedir = join(docsDir, 'fuel-indexer/Cargo.toml');
-  const file = fs.readFileSync(filedir, 'utf-8');
-  const tomfile = toml.parse(file);
-  return {
-    name: 'fuel-indexer',
-    category: 'Indexer',
-    version: tomfile.workspace.package.version,
-    url: tomfile.workspace.package.repository,
-  };
-}
-
 export function getFuelCoreVersion() {
   const filedir = join(DOCS_DIRECTORY, 'fuel-core/Cargo.toml');
   const file = fs.readFileSync(filedir, 'utf-8');
   const tomfile = toml.parse(file);
   return tomfile.workspace.package.version;
+}
+
+// returns the version of the node required by fuels-ts
+export function getNodeVersion() {
+  const filedir = join(DOCS_DIRECTORY, 'fuels-ts/packages/fuels/package.json');
+  const file = fs.readFileSync(filedir, 'utf-8');
+  const json = JSON.parse(file);
+  return json.engines.node;
 }
 
 export function getVersions(isNightly: boolean) {
@@ -108,13 +104,11 @@ export function getVersions(isNightly: boolean) {
   const rust = getRustSDKVersion(docsDir);
   const fuelup = getFuelupVersion(docsDir);
   const forc = getForcVersion(docsDir);
-  const indexer = getIndexerVersion(docsDir);
 
   return {
     Forc: forc,
     Sway: forc,
     Fuelup: fuelup,
-    'Fuel Indexer': indexer,
     'Fuel Rust SDK': rust,
     'Fuel TS SDK': tsSDK,
     'Fuel Wallet': wallet,

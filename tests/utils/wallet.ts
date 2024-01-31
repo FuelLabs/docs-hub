@@ -51,7 +51,7 @@ export async function walletSetup(
   await signupPage
     .locator('h2')
     .getByText('Wallet created successfully')
-    .waitFor({ state: 'visible', timeout: 9000 });
+    .waitFor({ state: 'visible', timeout: 20000 });
 
   await signupPage.close();
 }

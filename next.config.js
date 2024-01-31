@@ -93,11 +93,6 @@ const nextConfig = {
         destination: '/docs/wallet/dev/getting-started/',
         permanent: true,
       },
-      {
-        source: '/docs/indexer/getting-started/',
-        destination: '/docs/indexer/getting-started/dependencies',
-        permanent: true,
-      },
     ];
   },
   typescript: {

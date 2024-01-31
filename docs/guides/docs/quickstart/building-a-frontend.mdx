@@ -8,35 +8,38 @@ parent:
 
 # Building a Frontend to Interact With Your Contract
 
-To build out our frontend application, we'll do the following:
+To build a frontend application for the counter contract, we'll do the following:
 
 1. [**Install the Fuel Browser Wallet.**](#install-the-fuel-browser-wallet)
 2. [**Initialize a React project.**](#initialize-a-react-project)
 3. [**Install the `fuels` SDK dependency.**](#install-the-fuels-sdk-dependency)
-4. [**Write our frontend code.**](#modify-the-app)
-5. [**Run our project.**](#run-your-project)
+4. [**Generate contract types.**](#generate-contract-types)
+5. [**Write our frontend code.**](#modify-the-app)
+6. [**Run our project.**](#run-your-project)
 
 ## Install the Fuel Browser Wallet
 
-> Note: Make sure your browser is using the latest version of chromium.
+> Make sure your browser is using the latest version of chromium.
 
-Our front end application will need to interact with the Fuel Network, so we'll need to have a browser wallet installed for us to do so.
+Our frontend application will allow users to connect with a wallet, so you'll need to have a browser wallet installed.
+While the official wallet extension update is under review for the chrome web store, we will use the Fuel Development Wallet to interact with the latest testnet.
 
-Before going to the next steps, install the Fuel Wallet [here](https://chrome.google.com/webstore/detail/fuel-wallet/dldjpboieedgcmpkchcjcbijingjcgok).
+Before going to the next steps, install the [Fuel Development Wallet](https://chromewebstore.google.com/detail/hcgmehahnlbhpilepakbdinkhhaackmc).
+{/*Before going to the next steps, install the Fuel Wallet [here](https://chrome.google.com/webstore/detail/fuel-wallet/dldjpboieedgcmpkchcjcbijingjcgok).*/}
 
 If you have previously installed the wallet, make sure you have updated to the latest version.
 
-Once you've installed the wallet, take the address of your wallet and use it to get some coins from the {props.faucetLink}.
+Once you've installed the wallet, click the "Faucet" button to get some testnet tokens.
 
 ## Initialize a React project
 
 To split our project's contract from frontend code, let's initialize our frontend project: assuming that your terminal is open at your contract's folder `/home/user/path/to/counter-contract` let's go back up one directory.
 
-```console
+```sh
 cd ..
 ```
 
-Now, initialize a react project using [`Create React App`](https://create-react-app.dev/).
+Now, initialize a React project with TypeScript using [`Create React App`](https://create-react-app.dev/).
 
 <TestAction
 id="create-react-app"
@@ -46,39 +49,46 @@ action={{
 }}
 />
 
-```console
+```sh
 npx create-react-app frontend --template typescript
 ```
 
-The output should be similar to:
+The output should be similar to this:
 
-```console
+```sh
 Success! Created frontend at Fuel/fuel-project/frontend
 ```
 
-You should now have your outer folder, `fuel-project`, with two folders inside: `counter-contract` and `frontend`
+You should now have two folders inside your `fuel-project` folder: `counter-contract` and `frontend`.
 
 <Box.Centered>
 ![project folder structure](/images/quickstart-folder-structure.png)
 </Box.Centered>
 
-### Install the `fuels` SDK dependency
+## Install the `fuels` SDK dependency
 
-The `fuels` umbrella package includes all the main tools you need for your frontend; `Wallet`, `Contracts`, `Providers`, and more.
-
-Also, it contains the routines for ABI TypeScript generation.
-
-> ABI stands for Application Binary Interface. ABIs inform the application the interface to interact with the VM, in other words, they provide info to the APP such as what methods a contract has, what params, types it expects, etc...
+The `fuels` package includes all the main tools you need to interact with your Sway programs and the Fuel network.
+The `@fuel-wallet/sdk` and `@fuel-wallet/react` packages include everything you need to interact with user wallets.
 
 ### Installing
 
-Move into the `frontend` folder, then run:
+Move into the `frontend` folder by running:
 
-```console
+```sh
 cd frontend
 ```
 
-Install `fuels` and `@fuel-wallet/sdk`.
+> `fuels` requires Node version {props.nodeVersion}.
+
+Install `fuels`, `@fuel-wallet/sdk`, and `@fuel-wallet/react`.
+
+<TestAction
+id="install-deps-tab"
+action={{
+  name: 'clickByLocator',
+  locator: '[id="radix-\\:r9\\:-trigger-npm"]'
+}}
+/>
 
 <TestAction
 id="install-deps"
@@ -88,41 +98,37 @@ action={{
 }}
 />
 
-```console
-npm install fuels@0.60.0 @fuel-wallet/sdk@0.13.0 --save
+<CodeTabs>
+```sh
+pnpm add fuels@0.72.0 @fuel-wallet/sdk@0.15.1 @fuel-wallet/react@0.15.1
 ```
-
-If the installation went correctly the result will be similar to this:
-
-```console
-added 114 packages, and audited 115 packages in 9s
+```sh
+npm install fuels@0.72.0 @fuel-wallet/sdk@0.15.1 @fuel-wallet/react@0.15.1
 ```
+</CodeTabs>
 
-Next, update the TypeScript configuration at `tsconfig.json` to add the Fuel Wallet types:
+## Generate contract types
+
+The `fuels init` command generates a `fuels.config.json` file that is used by the SDK to generate contract types.
+Use the `contracts` flag to define where your contract folder is located, and the `output` flag to define where you want the generated files to be created.
+
+Run the command below in your frontend folder to generate the config file:
 
 <TestAction
-id="config-types"
+id="fuels_config"
 action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/fuel-project/frontend/tsconfig.json',
-  atLine: 3,
-  useSetData: ' "types": ["@fuel-wallet/sdk"],'
+  name: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/frontend'
 }}
 />
 
-```json
-{
-  "compilerOptions": {
-    "types": ["@fuel-wallet/sdk"]
-  }
-}
+```sh
+npx fuels init --contracts ../counter-contract/ --output ./src/sway-api
 ```
 
-### Generating contract types
-
-To make it easier to interact with our contract we use `fuels typegen` command to interpret the output ABI JSON from our contract, and generate Typescript definitions based on it. This JSON was created when we executed the `forc build` command to compile our Sway Contract into binary.
-
-If you see the folder `fuel-project/counter-contract/out` you will be able to see the ABI JSON there. If you want to learn more, read the [ABI spec](/docs/specs/abi/).
+Now that you have a `fuels.config.json` file, you can use the `fuels build` command to rebuild your contract and generate types.
+Running this command will interpret the output ABI JSON from your contract and generate the correct TypeScript definitions.
+If you see the folder `fuel-project/counter-contract/out` you will be able to see the ABI JSON there.
 
 Inside the `fuel-project/frontend` directory run:
 
@@ -134,30 +140,64 @@ action={{
 }}
 />
 
-```console
-npx fuels typegen -i ../counter-contract/out/debug/*-abi.json -o ./src/contracts
+```sh
+npx fuels build
 ```
 
 A successful process should print and output like the following:
 
-```console
-Generating files..
-
- - src/contracts/CounterContractAbi.d.ts
- - src/contracts/factories/CounterContractAbi__factory.ts
- - src/contracts/index.ts
-
-Done.⚡
+```sh
+Building..
+Building Sway programs using built-in 'forc' binary
+Generating types..
+🎉  Build completed successfully!
 ```
 
-Now you should be able to find a new folder `fuel-project/frontend/src/contracts`. This folder was auto-generated by our `fuels typegen` command, and these files abstract the work we would need to do to create a contract instance, and generate a complete TypeScript interface to the Contract, making it easier to develop.
+Now you should be able to find a new folder `fuel-project/frontend/src/sway-api`.
 
-### Modify the App
+## Modify the App
 
 Inside the `frontend/src` folder let's add code that interacts with our contract.
-Change the file `fuel-project/frontend/src/App.tsx` to:
 
-File: `./frontend/src/App.tsx`
+Because we'll be using `@fuel-wallet/react`, first we need to wrap our app with the `FuelProvider` component.
+Modify the file `fuel-project/frontend/src/index.tsx` so that the `App` component is wrapped with the `FuelProvider` component.
+
+To allow connection with the Development Wallet, we'll also need to enable `devMode` here.
+
+<TestAction
+id="app-code"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/index.tsx',
+  atLine: 6,
+}}
+/>
+
+<CodeImport
+  file="../../examples/quickstart/frontend/src/index.tsx"
+  lang="tsx"
+  lineStart="6"
+  lineEnd="6"
+/>
+
+<TestAction
+id="app-code"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/index.tsx',
+  atLine: 13,
+  removeLines: [13],
+}}
+/>
+
+<CodeImport
+  file="../../examples/quickstart/frontend/src/index.tsx"
+  lang="tsx"
+  lineStart="13"
+  lineEnd="19"
+/>
+
+Next, change the file `fuel-project/frontend/src/App.tsx` to:
 
 <TestAction
 id="app-code"
@@ -181,11 +221,11 @@ action={{
   filepath: 'guides-testing/fuel-project/frontend/src/App.tsx',
   atLine: 9,
   removeLines: [9],
-  useSetData: '  "0xa0f2b97f32300d7360b5632e682c1508b326da9a00fbe755646d3809aec90672";'
+  useSetData: '  "0x78218d62429082ccf3f6a8a36155aaf771508c632c0855f8fe2d51d6f7baec73";'
 }}
 />
 
-### Run your project
+## Run your project
 
 Inside the `fuel-project/frontend` directory run:
 
@@ -197,11 +237,16 @@ action={{
 }}
 />
 
-```console
+<CodeTabs>
+```sh
+pnpm start
+```
+```sh
 npm start
 ```
+</CodeTabs>
 
-```console
+```sh
 Compiled successfully!
 
 You can now view frontend in the browser.
@@ -213,24 +258,28 @@ Note that the development build is not optimized.
 To create a production build, use npm run build.
 ```
 
+Click the "Connect" button and select "Fuel Wallet Development" to connect your wallet.
+Once connected, you should see the counter value and increment button:
+
 <Box.Centered>
-![screenshot of the UI](/images/quickstart-dapp-screenshot.png)
+![screenshot of the UI](/images/quickstart-frontend.png)
 </Box.Centered>
 
-### You just built a fullstack dapp on Fuel! ⛽
+## You just built a fullstack dapp on Fuel! ⛽
 
-[Here is the repo for this project](https://github.com/FuelLabs/quickstart). If you run into any problems, a good first step is to compare your code to this repo and resolve any differences.
+[Here is the repo for this project](https://github.com/FuelLabs/docs-hub/tree/master/docs/guides/examples/quickstart). If you run into any problems, a good first step is to compare your code to this repo and resolve any differences.
 
 Tweet us [@fuel_network](https://twitter.com/fuel_network) letting us know you just built a dapp on Fuel, you might get invited to a private group of builders, be invited to the next Fuel dinner, get alpha on the project, or something 👀.
 
 ### Updating The Contract
 
-If you make changes to your contract, here are the steps you should take to get your frontend and contract back in sync:
+To develop and test faster, we recommend using the [`fuels dev` command](/docs/fuels-ts/cli/commands/#fuels-dev) to start a local node and automatically redeploy and generate types for your contract on each change.
 
-- In your contract directory, run `forc build`
-- In your contract directory, redeploy the contract by running this command and following the same steps as above to sign the transaction with your wallet: `forc deploy --testnet`
-- In your frontend directory, re-run this command: `npx fuels typegen -i ../counter-contract/out/debug/*-abi.json -o ./src/contracts`
-- In your `fuel-project/frontend` directory, update the contract ID in your `App.tsx` file
+Once you're ready to redeploy your contract to the testnet, here are the steps you should take to get your frontend and contract back in sync:
+
+- In your frontend directory, re-run this command: `npx fuels build`.
+- In your contract directory, redeploy the contract by running this command and following the same steps as above to sign the transaction with your wallet: `forc deploy --testnet`.
+- In your frontend directory, update the contract ID in your `App.tsx` file.
 
 ## Need Help?
 
@@ -258,6 +307,15 @@ action={{
   name: 'clickByRole',
   role: "button",
   elementName: "Connect"
+}}
+/>
+
+<TestAction
+id="click-fuel-wallet-development"
+action={{
+  name: 'clickByRole',
+  role: "button",
+  elementName: "Fuel Wallet Development"
 }}
 />
 

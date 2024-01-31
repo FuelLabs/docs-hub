@@ -21,10 +21,6 @@ const CONFIG = {
     type: 'mdbook',
     path: './fuelup/docs/src/SUMMARY.md',
   },
-  indexer: {
-    type: 'mdbook',
-    path: './fuel-indexer/docs/src/SUMMARY.md',
-  },
   specs: {
     type: 'mdbook',
     path: './fuel-specs/src/SUMMARY.md',

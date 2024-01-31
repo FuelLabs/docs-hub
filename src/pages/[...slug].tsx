@@ -8,7 +8,11 @@ import { DOCS_DIRECTORY } from '../config/constants';
 import useTheme from '../hooks/useTheme';
 import { Doc } from '../lib/md-doc';
 import { Docs } from '../lib/md-docs';
-import { getFuelCoreVersion, getVersions } from '../lib/versions';
+import {
+  getFuelCoreVersion,
+  getVersions,
+  getNodeVersion,
+} from '../lib/versions';
 import { DocScreen } from '../screens/DocPage';
 import type { DocType, NavOrder, SidebarLinkItem, Versions } from '../types';
 
@@ -24,6 +28,8 @@ export type DocPageProps = {
   versions: Versions;
   nightlyVersions: Versions;
   fuelCoreVersion?: string;
+  nodeVersion?: string;
+  nodeVersionMax?: string;
 };
 
 export default function DocPage(props: DocPageProps) {
@@ -55,9 +61,14 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   const versions = getVersions(false);
   const nightlyVersions = getVersions(true);
   let fuelCoreVersion = null;
+  let nodeVersion = null;
+  let nodeVersionMax = null;
 
-  if (slug.includes('guides/')) {
+  if (slug.includes('guides/') || slug.includes('/intro/quickstart')) {
     fuelCoreVersion = getFuelCoreVersion();
+    nodeVersion = getNodeVersion().substring(1);
+    const majorVersionMax = parseInt(nodeVersion.substring(0, 2)) + 1;
+    nodeVersionMax = `${majorVersionMax}.0.0`;
   }
 
   return {
@@ -72,6 +83,8 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
       versions,
       nightlyVersions,
       fuelCoreVersion,
+      nodeVersion,
+      nodeVersionMax,
     },
   };
 };

@@ -80,15 +80,6 @@
       "image": ""
     }
   },
-  "indexer": {
-    "title": "Fuel Indexer",
-    "slug": "indexer",
-    "repository": "https://github.com/FuelLabs/fuel-indexer",
-    "ogTags": {
-      "description": "Official documentation for the Fuel indexer",
-      "image": ""
-    }
-  },
   "specs": {
     "title": "Fuel Specs",
     "slug": "specs",

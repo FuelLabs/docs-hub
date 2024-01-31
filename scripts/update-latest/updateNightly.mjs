@@ -1,6 +1,5 @@
 import {
   switchToNewBranch,
-  switchToExistingBranch,
   updateSubmodule,
   checkoutVersion,
   checkDiff,
@@ -13,9 +12,6 @@ import {
 } from './gitUtils.mjs';
 
 export async function updateNightly(newVersions) {
-  // fuelup checkout master
-  await switchToExistingBranch('master', 'docs/nightly/fuelup');
-
   // create a new branch of docs-hub
   const date = new Date();
   const day = date.getDate();
@@ -52,7 +48,6 @@ async function updateSubmodules(newVersions) {
     'docs/nightly/fuel-graphql-docs',
     'docs/guides/docs/migration-guide/breaking-change-log',
   ];
-  console.log('GOING TO UPDATE REGARDLESS');
   await Promise.all(
     updateRegardless.map(async (sub) => {
       console.log('UPDATING SUB:', sub);
@@ -60,7 +55,7 @@ async function updateSubmodules(newVersions) {
     })
   );
 
-  // update versions branches if new for sway, indexer, fuelup, fuels-rs, & fuels-ts
+  // update versions branches if new for sway, fuelup, fuels-rs, & fuels-ts
   if (newVersions) {
     console.log('GOING TO UPDATE NIGHTLY TOOLCHAIN VERSIONS');
     await Promise.all(
@@ -74,9 +69,6 @@ async function updateSubmodules(newVersions) {
           case 'forc':
             submoduleName = 'docs/nightly/sway';
             await update(version, 'docs/nightly/builds/sway', 'gh-pages');
-            break;
-          case 'indexer':
-            submoduleName = 'docs/nightly/fuel-indexer';
             break;
           case 'rust':
             submoduleName = 'docs/nightly/fuels-rs';

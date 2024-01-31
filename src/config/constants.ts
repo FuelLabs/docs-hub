@@ -4,10 +4,11 @@ export const DOCS_DIRECTORY = join(process.cwd(), './docs');
 export const NIGHTLY_DOCS_DIRECTORY = join(process.cwd(), './docs/nightly');
 export const FIELDS = ['title', 'slug', 'content', 'category'];
 
-export const FUEL_TESTNET = 'beta-4';
-export const FUEL_TESTNET_UPPER_CASE = 'Beta-4';
+export const FUEL_TESTNET = 'beta-5';
+export const FUEL_TESTNET_UPPER_CASE = 'Beta-5';
 export const FAUCET_LINK = `https://faucet-${FUEL_TESTNET}.fuel.network/`;
 export const PLAYGROUND_LINK = `https://${FUEL_TESTNET}.fuel.network/playground/`;
+// TODO: UPDATE THIS WITH NEW EXPLOERER LINK
 export const EXPLORER_LINK = 'https://fuellabs.github.io/block-explorer-v2/';
 export const BRIDGE_LINK = 'https://alpha.fuel.network/bridge';
 
@@ -36,7 +37,7 @@ export const EXTERNAL_NAVIGATION_LINKS: LinkObject[] = [
   },
   {
     name: 'Faucet',
-    link: 'https://faucet-beta-4.fuel.network/',
+    link: 'https://faucet-beta-5.fuel.network/',
   },
 ];
 
@@ -88,10 +89,6 @@ export const NAVIGATION: any[] = [
       {
         name: 'Forc',
         link: '/docs/forc',
-      },
-      {
-        name: 'Indexer',
-        link: '/docs/indexer/',
       },
       // {
       //   name: 'Fuel Nix',

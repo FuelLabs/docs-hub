@@ -326,9 +326,7 @@ function replaceInternalLinks(href: string, base: string) {
   }
 
   if (!href.includes('github.com/FuelLabs') && !href.includes('docs.rs')) {
-    href = href
-      .replace('/fuel-specs', '/specs')
-      .replace('/fuel-indexer', '/indexer');
+    href = href.replace('/fuel-specs', '/specs');
   }
 
   return href;

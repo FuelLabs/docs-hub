@@ -94,7 +94,6 @@ function handleAllOrders(allOrders, folderPath, filename) {
     'fuels-rs',
     'wallet',
     'graphql',
-    'indexer',
     'fuelup',
     'forc',
     'specs',
