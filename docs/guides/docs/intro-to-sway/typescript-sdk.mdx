@@ -70,6 +70,16 @@ If you see the folder `fuel-project/counter-contract/out` you will be able to se
 Inside the `fuel-project/frontend` directory run:
 
 <TestAction
+id="modify-fuels-config"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/fuels.config.ts',
+  atLine: 4,
+  useSetData: "  useBuiltinForc: false,"
+}}
+/>
+
+<TestAction
 id="typegen"
 action={{
   name: 'runCommand',
@@ -642,7 +652,7 @@ action={{
 id="wait-after-connect"
 action={{
   name: 'wait',
-  timeout: 1000
+  timeout: 5000
 }}
 />
 
@@ -674,7 +684,7 @@ action={{
 id="wait-after-approve"
 action={{
   name: 'wait',
-  timeout: 1000
+  timeout: 3000
 }}
 />
 
@@ -689,24 +699,7 @@ action={{
 id="wait-after-reload"
 action={{
   name: 'wait',
-  timeout: 1000
-}}
-/>
-
-<TestAction
-id="click-connect-button2"
-action={{
-  name: 'clickByRole',
-  role: "button",
-  elementName: "Connect"
-}}
-/>
-
-<TestAction
-id="wait-after-connect2"
-action={{
-  name: 'wait',
-  timeout: 5000
+  timeout: 8000
 }}
 />
 
