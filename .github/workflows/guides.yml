@@ -61,7 +61,7 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
       - name: Install cargo-generate
-        run: cargo install cargo-generate --version 0.18.3
+        run: cargo install cargo-generate --locked
       - name: Install Fuelup
         run: |
             curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh
