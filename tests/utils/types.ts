@@ -11,6 +11,7 @@ export type Action =
   | ClickByRole
   | ClickByTestId
   | ClickByLocator
+  | ClickByLabel
   | WriteBySelector
   | WalletApprove
   | WalletApproveConnect
@@ -102,6 +103,11 @@ export type ClickByTestId = {
 export type ClickByLocator = {
   name: 'clickByLocator';
   locator: string;
+};
+
+export type ClickByLabel = {
+  name: 'clickByLabel';
+  label: string;
 };
 
 export type WriteBySelector = {

@@ -83,14 +83,6 @@ cd frontend
 Install `fuels`, `@fuel-wallet/sdk`, and `@fuel-wallet/react`.
 
 <TestAction
-id="install-deps-tab"
-action={{
-  name: 'clickByLocator',
-  locator: '[id="radix-\\:r9\\:-trigger-npm"]'
-}}
-/>
-
-<TestAction
 id="install-deps"
 action={{
   name: 'runCommand',
@@ -98,14 +90,9 @@ action={{
 }}
 />
 
-<CodeTabs>
-```sh
-pnpm add fuels@0.72.0 @fuel-wallet/sdk@0.15.1 @fuel-wallet/react@0.15.1
-```
 ```sh
 npm install fuels@0.72.0 @fuel-wallet/sdk@0.15.1 @fuel-wallet/react@0.15.1
 ```
-</CodeTabs>
 
 ## Generate contract types
 
@@ -167,7 +154,7 @@ Modify the file `fuel-project/frontend/src/index.tsx` so that the `App` componen
 To allow connection with the Development Wallet, we'll also need to enable `devMode` here.
 
 <TestAction
-id="app-code"
+id="provider-import"
 action={{
   name: 'modifyFile',
   filepath: 'guides-testing/fuel-project/frontend/src/index.tsx',
@@ -183,7 +170,7 @@ action={{
 />
 
 <TestAction
-id="app-code"
+id="fuel-wallet-provider"
 action={{
   name: 'modifyFile',
   filepath: 'guides-testing/fuel-project/frontend/src/index.tsx',
@@ -217,12 +204,12 @@ action={{
 Finally, replace the value of the `CONTRACT_ID` variable at the top of your `App.tsx` file with the address of the contract you just deployed.
 
 <TestAction
-id="app-code"
+id="app-contract-id"
 action={{
   name: 'modifyFile',
   filepath: 'guides-testing/fuel-project/frontend/src/App.tsx',
-  atLine: 9,
-  removeLines: [9],
+  atLine: 13,
+  removeLines: [13],
   useSetData: '  "0x78218d62429082ccf3f6a8a36155aaf771508c632c0855f8fe2d51d6f7baec73";'
 }}
 />
@@ -239,14 +226,9 @@ action={{
 }}
 />
 
-<CodeTabs>
-```sh
-pnpm start
-```
 ```sh
 npm start
 ```
-</CodeTabs>
 
 ```sh
 Compiled successfully!
@@ -313,11 +295,10 @@ action={{
 />
 
 <TestAction
-id="click-fuel-wallet-development"
+id="click-fuel-wallet"
 action={{
-  name: 'clickByRole',
-  role: "button",
-  elementName: "Fuel Wallet Development"
+  name: 'clickByLabel',
+  label: 'Connect to Fuel Wallet'
 }}
 />
 
@@ -340,8 +321,7 @@ action={{
 id="get-initial-count"
 action={{
   name: 'getByLocator-save',
-  locator: "h3",
-  removeFromValue: "Counter: "
+  locator: "h3 ~ div",
 }}
 />
 
@@ -388,8 +368,7 @@ action={{
 id="get-final-count"
 action={{
   name: 'getByLocator-save',
-  locator: "h3",
-  removeFromValue: "Counter: "
+  locator: "h3 ~ div",
 }}
 />
 

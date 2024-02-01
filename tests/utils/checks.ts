@@ -22,7 +22,7 @@ export function checkIfIsIncremented(initialIndex: number, finalIndex: number) {
 export async function getByLocator(
   page: Page,
   locator: string,
-  removeFromValue: string
+  removeFromValue: string | null | undefined
 ) {
   const locatorVals = await page.locator(locator).allInnerTexts();
   let locatorVal = locatorVals[0];

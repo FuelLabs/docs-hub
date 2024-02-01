@@ -1,6 +1,6 @@
 import type { BrowserContext, Page } from '@playwright/test';
 
-import { clickByLocator } from './button';
+import { clickByLocator, clickByLabel } from './button';
 import { checkIfIsIncremented, getByLocator } from './checks';
 import { compareFiles, compareToFile, writeToFile, modifyFile } from './files';
 import { getTestActions } from './getTestActions';
@@ -87,6 +87,9 @@ export async function runTest(
         break;
       case 'clickByLocator':
         await clickByLocator(page, step['data-click-by-locator']);
+        break;
+      case 'clickByLabel':
+        await clickByLabel(page, step['data-click-by-label']);
         break;
       case 'writeBySelector':
         await page.fill(step['data-selector'], 'hello world');

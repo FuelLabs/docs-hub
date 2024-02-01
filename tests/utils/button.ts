@@ -13,6 +13,10 @@ export async function clickByLocator(page: Page, locator: string) {
   await page.locator(locator).click();
 }
 
+export async function clickByLabel(page: Page, label: string) {
+  await page.getByLabel(label, { exact: true }).click();
+}
+
 export async function clickCopyButton(page: Page, id: string) {
   let clipboardText = { text: '', output: '' };
   const selector = `#${id} + div > div > div > button[aria-label="Copy to Clipboard"]`;
