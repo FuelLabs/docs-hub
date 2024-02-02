@@ -1,7 +1,7 @@
 import type { BrowserContext, Page } from '@playwright/test';
 
 import { clickByLocator, clickByLabel } from './button';
-import { checkIfIsIncremented, getByLocator } from './checks';
+import { checkIfIsIncremented, checkValue, getByLocator } from './checks';
 import { compareFiles, compareToFile, writeToFile, modifyFile } from './files';
 import { getTestActions } from './getTestActions';
 import { runCommand } from './runCommand';
@@ -105,6 +105,9 @@ export async function runTest(
           parseInt(step['data-initial-index']),
           parseInt(step['data-final-index'])
         );
+        break;
+      case 'checkValue':
+        checkValue(parseInt(step['data-index']), step['data-check-value']);
         break;
       default:
         console.log('STEP NOT FOUND:', step);

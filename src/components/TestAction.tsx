@@ -63,6 +63,8 @@ export default function TestAction({ id, action }: TestActionProps) {
       data-final-index={
         action.name === 'checkIfIsIncremented' ? action.finalIndex : null
       }
+      data-index={action.name === 'checkValue' ? action.index : null}
+      data-check-value={action.name === 'checkValue' ? action.value : null}
     />
   );
 }

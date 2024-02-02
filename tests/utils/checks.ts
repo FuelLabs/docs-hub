@@ -19,6 +19,14 @@ export function checkIfIsIncremented(initialIndex: number, finalIndex: number) {
   expect(isIncremented).toBeTruthy();
 }
 
+export function checkValue(index: number, value: string) {
+  console.log('INDEX:', index);
+  console.log('EXPECTED VALUE:', value);
+  const savedValue = saved[index];
+  console.log('ACTUAL VALUE:', savedValue);
+  expect(savedValue).toEqual(value);
+}
+
 export async function getByLocator(
   page: Page,
   locator: string,

@@ -15,7 +15,8 @@ export type Action =
   | WriteBySelector
   | WalletApprove
   | WalletApproveConnect
-  | CheckIfIsIncremented;
+  | CheckIfIsIncremented
+  | CheckValue;
 
 // runs a command
 export type RunCommand = {
@@ -129,4 +130,10 @@ export type CheckIfIsIncremented = {
   name: 'checkIfIsIncremented';
   initialIndex: number;
   finalIndex: number;
+};
+
+export type CheckValue = {
+  name: 'checkValue';
+  index: number;
+  value: string;
 };

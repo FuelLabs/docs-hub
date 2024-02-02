@@ -657,16 +657,7 @@ action={{
 />
 
 <TestAction
-id="get-initial-count"
-action={{
-  name: 'getByLocator-save',
-  locator: "h3",
-  removeFromValue: "Total Bought: "
-}}
-/>
-
-<TestAction
-id="click-list-item-button"
+id="click-buy-item-button"
 action={{
   name: 'clickByTestId',
   testId: "buy-button-1"
@@ -684,39 +675,31 @@ action={{
 id="wait-after-approve"
 action={{
   name: 'wait',
-  timeout: 3000
+  timeout: 5000
 }}
 />
 
 <TestAction
-id="reload-after-approve"
-action={{
-  name: 'reload',
-}}
-/>
-
-<TestAction
-id="wait-after-reload"
-action={{
-  name: 'wait',
-  timeout: 8000
-}}
-/>
-
-<TestAction
-id="get-final-count"
+id="check-text"
 action={{
   name: 'getByLocator-save',
-  locator: "h3",
-  removeFromValue: "Total Bought: "
+  locator: "h3 ~ div",
 }}
 />
 
 <TestAction
-id="check-count"
+id="wait-after-buy"
 action={{
-  name: 'checkIfIsIncremented',
-  initialIndex: 0,
-  finalIndex: 1
+  name: 'wait',
+  timeout: 10000
+}}
+/>
+
+<TestAction
+id="check-if-purchased"
+action={{
+  name: 'checkValue',
+  index: 0,
+  value: 'Purchased ✅'
 }}
 />
