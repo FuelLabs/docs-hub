@@ -699,7 +699,24 @@ action={{
 id="wait-after-reload"
 action={{
   name: 'wait',
-  timeout: 8000
+  timeout: 1000
+}}
+/>
+
+<TestAction
+id="click-connect-button2"
+action={{
+  name: 'clickByRole',
+  role: "button",
+  elementName: "Connect"
+}}
+/>
+
+<TestAction
+id="wait-after-connect2"
+action={{
+  name: 'wait',
+  timeout: 5000
 }}
 />
 
