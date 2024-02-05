@@ -5,7 +5,6 @@ export default createConfig({
         '../counter-contract',
   ],
   output: './src/sway-api',
-  useBuiltinForc: false,
 });
 
 /**
