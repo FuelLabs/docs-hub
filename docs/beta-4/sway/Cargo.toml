@@ -1,0 +1,57 @@
+[workspace]
+resolver = "2"
+members = [
+    "forc",
+    "forc-pkg",
+    "forc-plugins/forc-client",
+    "forc-plugins/forc-doc",
+    "forc-plugins/forc-fmt",
+    "forc-plugins/forc-lsp",
+    "forc-plugins/forc-tx",
+    "forc-test",
+    "forc-tracing",
+    "forc-util",
+    "scripts/mdbook-forc-documenter",
+    "sway-ast",
+    "sway-core",
+    "sway-error",
+    "sway-ir",
+    "sway-ir/sway-ir-macros",
+    "sway-lsp",
+    "sway-parse",
+    "sway-types",
+    "sway-utils",
+    "swayfmt",
+    "test",
+]
+exclude = [
+    "examples/*",
+    "swayfmt/test_macros",
+    "forc-test/test_data"
+]
+
+[workspace.dependencies]
+# Dependencies from the `fuel-core` repository:
+fuel-core-client = { version = "0.20.3", default-features = false }
+
+# Dependencies from the `fuel-vm` repository:
+fuel-asm = "0.35.3"
+fuel-crypto = "0.35.3"
+fuel-types = "0.35.3"
+fuel-tx = "0.35.3"
+fuel-vm = "0.35.3"
+
+# Dependencies from the `fuels-rs` repository:
+fuels-core = "0.45"
+fuels-accounts = "0.45"
+
+# Dependencies from the `forc-wallet` repository:
+forc-wallet = "0.2.5"
+
+[workspace.package]
+edition = "2021"
+authors = ["Fuel Labs <contact@fuel.sh>"]
+homepage = "https://fuel.network/"
+license = "Apache-2.0"
+repository = "https://github.com/FuelLabs/sway"
+

@@ -1,0 +1,105 @@
+
+> @fuel-ts/utils@0.69.1 build /Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/packages/utils
+> tsup
+
+CLI Building entry: {"index":"src/index.ts","test-utils":"src/test-utils.ts"}
+CLI Using tsconfig: tsconfig.json
+CLI tsup v6.7.0
+CLI Using tsup config: /Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/packages/utils/tsup.config.ts
+CLI Target: es2022
+CLI Cleaning output folder
+CJS Build start
+ESM Build start
+IIFE Build start
+✘ [ERROR] Could not resolve "ethers"
+
+    src/utils/concat.ts:2:29:
+      2 │ import { getBytesCopy } from 'ethers';
+        ╵                              ~~~~~~~~
+
+  You can mark the path "ethers" as external to exclude it from the bundle, which will remove this error.
+
+✘ [ERROR] Could not resolve "@fuel-ts/errors"
+
+    src/utils/normalizeString.ts:1:37:
+      1 │ import { ErrorCode, FuelError } from '@fuel-ts/errors';
+        ╵                                      ~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@fuel-ts/errors" as external to exclude it from the bundle, which will remove this error.
+
+✘ [ERROR] Could not resolve "@fuel-ts/errors"
+
+    src/utils/arrayify.ts:1:37:
+      1 │ import { FuelError, ErrorCode } from '@fuel-ts/errors';
+        ╵                                      ~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@fuel-ts/errors" as external to exclude it from the bundle, which will remove this error.
+
+✘ [ERROR] Could not resolve "ethers"
+
+    src/utils/hexlify.ts:2:25:
+      2 │ import { getBytes } from 'ethers';
+        ╵                          ~~~~~~~~
+
+  You can mark the path "ethers" as external to exclude it from the bundle, which will remove this error.
+
+✘ [ERROR] Could not resolve "ethers"
+
+    src/test-utils/getForcProject.ts:1:24:
+      1 │ import { hexlify } from 'ethers';
+        ╵                         ~~~~~~~~
+
+  You can mark the path "ethers" as external to exclude it from the bundle, which will remove this error.
+
+IIFE Build failed
+Error: Build failed with 5 errors:
+src/test-utils/getForcProject.ts:1:24: ERROR: Could not resolve "ethers"
+src/utils/arrayify.ts:1:37: ERROR: Could not resolve "@fuel-ts/errors"
+src/utils/concat.ts:2:29: ERROR: Could not resolve "ethers"
+src/utils/hexlify.ts:2:25: ERROR: Could not resolve "ethers"
+src/utils/normalizeString.ts:1:37: ERROR: Could not resolve "@fuel-ts/errors"
+    at failureErrorWithLog (/Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/node_modules/.pnpm/esbuild@0.17.19/node_modules/esbuild/lib/main.js:1636:15)
+    at /Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/node_modules/.pnpm/esbuild@0.17.19/node_modules/esbuild/lib/main.js:1048:25
+    at runOnEndCallbacks (/Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/node_modules/.pnpm/esbuild@0.17.19/node_modules/esbuild/lib/main.js:1471:45)
+    at buildResponseToResult (/Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/node_modules/.pnpm/esbuild@0.17.19/node_modules/esbuild/lib/main.js:1046:7)
+    at /Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/node_modules/.pnpm/esbuild@0.17.19/node_modules/esbuild/lib/main.js:1075:16
+    at responseCallbacks.<computed> (/Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/node_modules/.pnpm/esbuild@0.17.19/node_modules/esbuild/lib/main.js:697:9)
+    at handleIncomingPacket (/Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/node_modules/.pnpm/esbuild@0.17.19/node_modules/esbuild/lib/main.js:752:9)
+    at Socket.readFromStdout (/Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/node_modules/.pnpm/esbuild@0.17.19/node_modules/esbuild/lib/main.js:673:7)
+    at Socket.emit (node:events:514:28)
+    at addChunk (node:internal/streams/readable:324:12)
+✘ [ERROR] Could not resolve "@fuel-ts/errors"
+
+    src/utils/normalizeString.ts:1:37:
+      1 │ import { ErrorCode, FuelError } from '@fuel-ts/errors';
+        ╵                                      ~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@fuel-ts/errors" as external to exclude it from the bundle, which will remove this error.
+
+✘ [ERROR] Could not resolve "@fuel-ts/errors"
+
+    src/utils/arrayify.ts:1:37:
+      1 │ import { FuelError, ErrorCode } from '@fuel-ts/errors';
+        ╵                                      ~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@fuel-ts/errors" as external to exclude it from the bundle, which will remove this error.
+
+✘ [ERROR] Could not resolve "@fuel-ts/errors"
+
+    src/utils/normalizeString.ts:1:37:
+      1 │ import { ErrorCode, FuelError } from '@fuel-ts/errors';
+        ╵                                      ~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@fuel-ts/errors" as external to exclude it from the bundle, which will remove this error.
+
+✘ [ERROR] Could not resolve "@fuel-ts/errors"
+
+    src/utils/arrayify.ts:1:37:
+      1 │ import { FuelError, ErrorCode } from '@fuel-ts/errors';
+        ╵                                      ~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@fuel-ts/errors" as external to exclude it from the bundle, which will remove this error.
+
+ESM Build failed
+CJS Build failed
+ ELIFECYCLE  Command failed with exit code 1.

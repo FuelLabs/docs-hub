@@ -1,0 +1,7 @@
+node_modules
+*.js
+*.html
+dist
+.eslintrc.js
+.next
+docs

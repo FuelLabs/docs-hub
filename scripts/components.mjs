@@ -11,6 +11,7 @@ import { visit } from 'unist-util-visit';
 const DOCS_DIRECTORY = path.join(process.cwd(), './docs');
 const OUTPUT_FOLDER = 'src/generated/components';
 
+// GRAPHQL DOCS COMPONENTS
 const GRAPHQL_BOOK_NAME = 'fuel-graphql-docs';
 const GRAPHQL_DIRECTORY = path.join(DOCS_DIRECTORY, `./${GRAPHQL_BOOK_NAME}`);
 const GRAPHQL_DOCS_DIRECTORY = path.join(GRAPHQL_DIRECTORY, './docs');
@@ -19,7 +20,7 @@ const GRAPHQL_COMPONENTS_CONFIG_PATH = path.join(
   './src/components.json'
 );
 
-const NIGHTLY_GRAPHQL_BOOK_NAME = 'nightly/fuel-graphql-docs';
+// NIGHTLY GRAPHQL DOCS COMPONENTS
 const NIGHTLY_GRAPHQL_DIRECTORY = path.join(
   DOCS_DIRECTORY,
   `./nightly/${GRAPHQL_BOOK_NAME}`
@@ -33,6 +34,21 @@ const NIGHTLY_GRAPHQL_COMPONENTS_CONFIG_PATH = path.join(
   './src/components.json'
 );
 
+// BETA-4 GRAPHQL DOCS COMPONENTS
+const BETA_4_GRAPHQL_DIRECTORY = path.join(
+  DOCS_DIRECTORY,
+  `./beta-4/${GRAPHQL_BOOK_NAME}`
+);
+const BETA_4_GRAPHQL_DOCS_DIRECTORY = path.join(
+  BETA_4_GRAPHQL_DIRECTORY,
+  './docs'
+);
+const BETA_4_GRAPHQL_COMPONENTS_CONFIG_PATH = path.join(
+  BETA_4_GRAPHQL_DIRECTORY,
+  './src/components.json'
+);
+
+// WALLET COMPONENTS
 const WALLET_BOOK_NAME = 'fuels-wallet';
 const WALLET_PATH = path.join(DOCS_DIRECTORY, WALLET_BOOK_NAME);
 const WALLET_DIRECTORY = path.join(
@@ -45,7 +61,7 @@ const WALLET_COMPONENTS_CONFIG_PATH = path.join(
   './src/components.json'
 );
 
-const NIGHTLY_WALLET_BOOK_NAME = 'nightly/fuels-wallet';
+// NIGHTLY WALLET COMPONENTS
 const NIGHTLY_WALLET_PATH = path.join(
   DOCS_DIRECTORY,
   `nightly/${WALLET_BOOK_NAME}`
@@ -63,6 +79,24 @@ const NIGHTLY_WALLET_COMPONENTS_CONFIG_PATH = path.join(
   './src/components.json'
 );
 
+// BETA-4 WALLET COMPONENTS
+const BETA_4_WALLET_PATH = path.join(
+  DOCS_DIRECTORY,
+  `beta-4/${WALLET_BOOK_NAME}`
+);
+const BETA_4_WALLET_DIRECTORY = path.join(
+  DOCS_DIRECTORY,
+  `./beta-4/${WALLET_BOOK_NAME}/packages/docs`
+);
+const BETA_4_WALLET_DOCS_DIRECTORY = path.join(
+  BETA_4_WALLET_DIRECTORY,
+  './docs'
+);
+const BETA_4_WALLET_COMPONENTS_CONFIG_PATH = path.join(
+  BETA_4_WALLET_DIRECTORY,
+  './src/components.json'
+);
+
 const completedExports = [];
 const completedObjects = [];
 
@@ -70,6 +104,7 @@ async function main() {
   if (!fs.existsSync(path.join(process.cwd(), OUTPUT_FOLDER))) {
     fs.mkdirSync(path.join(process.cwd(), OUTPUT_FOLDER), { recursive: true });
   }
+  // GRAPHQL DOCS COMPONENTS
   await exportComponents(
     GRAPHQL_DIRECTORY,
     GRAPHQL_DOCS_DIRECTORY,
@@ -77,13 +112,23 @@ async function main() {
     GRAPHQL_COMPONENTS_CONFIG_PATH,
     'graphql.ts'
   );
+  // NIGHTLY GRAPHQL DOCS COMPONENTS
   await exportComponents(
     NIGHTLY_GRAPHQL_DIRECTORY,
     NIGHTLY_GRAPHQL_DOCS_DIRECTORY,
-    NIGHTLY_GRAPHQL_BOOK_NAME,
+    `nightly/${GRAPHQL_BOOK_NAME}`,
     NIGHTLY_GRAPHQL_COMPONENTS_CONFIG_PATH,
     'nightly-graphql.ts'
   );
+  // BETA-4 GRAPHQL DOCS COMPONENTS
+  await exportComponents(
+    BETA_4_GRAPHQL_DIRECTORY,
+    BETA_4_GRAPHQL_DOCS_DIRECTORY,
+    `beta-4/${GRAPHQL_BOOK_NAME}`,
+    BETA_4_GRAPHQL_COMPONENTS_CONFIG_PATH,
+    'beta-4-graphql.ts'
+  );
+  // WALLET COMPONENTS
   await exportComponents(
     WALLET_PATH,
     WALLET_DOCS_DIRECTORY,
@@ -91,12 +136,21 @@ async function main() {
     WALLET_COMPONENTS_CONFIG_PATH,
     'wallet.ts'
   );
+  // NIGHTLY WALLET COMPONENTS
   await exportComponents(
     NIGHTLY_WALLET_PATH,
     NIGHTLY_WALLET_DOCS_DIRECTORY,
-    NIGHTLY_WALLET_BOOK_NAME,
+    `nightly/${WALLET_BOOK_NAME}`,
     NIGHTLY_WALLET_COMPONENTS_CONFIG_PATH,
     'nightly-wallet.ts'
+  );
+  // BETA-4 WALLET COMPONENTS
+  await exportComponents(
+    BETA_4_WALLET_PATH,
+    BETA_4_WALLET_DOCS_DIRECTORY,
+    `beta-4/${WALLET_BOOK_NAME}`,
+    BETA_4_WALLET_COMPONENTS_CONFIG_PATH,
+    'beta-4-wallet.ts'
   );
 }
 

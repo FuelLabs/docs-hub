@@ -1,0 +1,6 @@
+{
+  "extends": ["plugin:@fuels/next"],
+  "rules": {
+    "import/no-unresolved": "off"
+  }
+}

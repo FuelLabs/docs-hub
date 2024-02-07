@@ -1,0 +1,20 @@
+
+> @fuel-ts/providers@0.69.1 prebuild /Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/packages/providers
+> pnpm build:operations
+
+
+> @fuel-ts/providers@0.69.1 build:operations /Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/packages/providers
+> pnpm graphql-codegen
+
+[STARTED] Parse Configuration
+[SUCCESS] Parse Configuration
+[STARTED] Generate outputs
+[STARTED] Generate to ./src/__generated__/operations.ts
+[STARTED] Load GraphQL schemas
+[SUCCESS] Load GraphQL schemas
+[STARTED] Load GraphQL documents
+[SUCCESS] Load GraphQL documents
+[STARTED] Generate
+[SUCCESS] Generate
+[SUCCESS] Generate to ./src/__generated__/operations.ts
+[SUCCESS] Generate outputs

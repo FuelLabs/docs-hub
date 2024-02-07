@@ -1,0 +1,31 @@
+
+> @fuel-ts/crypto@0.69.1 build /Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/packages/crypto
+> tsup
+
+CLI Building entry: src/index.ts
+CLI Using tsconfig: tsconfig.json
+CLI tsup v6.7.0
+CLI Using tsup config: /Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/packages/crypto/tsup.config.ts
+CLI Building entry: src/index.ts, src/index.browser.ts
+CLI Using tsconfig: tsconfig.json
+CLI tsup v6.7.0
+CLI Using tsup config: /Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/packages/crypto/tsup.config.ts
+CLI Target: es2022
+CLI Target: es2022
+CLI Cleaning output folder
+CJS Build start
+CLI Cleaning output folder
+ESM Build start
+CJS dist/index.js     5.90 KB
+CJS dist/index.js.map 8.32 KB
+CJS ⚡️ Build success in 17ms
+ESM dist/index.mjs             3.95 KB
+ESM dist/index.browser.mjs     6.02 KB
+ESM dist/index.mjs.map         7.89 KB
+ESM dist/index.browser.mjs.map 11.99 KB
+ESM ⚡️ Build success in 17ms
+
+> @fuel-ts/crypto@0.69.1 postbuild /Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/packages/crypto
+> tsx ../../scripts/postbuild.ts
+
+ ELIFECYCLE  Command failed.

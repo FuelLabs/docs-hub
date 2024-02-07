@@ -51,6 +51,7 @@ const MdDoc = defineDocumentType(() => ({
 }));
 
 const includeDirs = [
+  // DEFAULT DOCS & GUIDES
   'docs/sway/docs/book/src',
   'docs/fuelup/docs/src',
   'docs/fuels-rs/docs/src',
@@ -60,8 +61,7 @@ const includeDirs = [
   'docs/fuels-wallet/packages/docs/docs',
   'docs/guides/docs',
   'docs/intro',
-  // 'docs/fuel-nix/book/src',
-  // 'docs/about-fuel',
+  // NIGHTLY DOCS
   'docs/nightly/sway/docs/book/src',
   'docs/nightly/fuelup/docs/src',
   'docs/nightly/fuels-rs/docs/src',
@@ -69,34 +69,37 @@ const includeDirs = [
   'docs/nightly/fuel-specs/src',
   'docs/nightly/fuel-graphql-docs/docs',
   'docs/nightly/fuels-wallet/packages/docs/docs',
-  // 'docs/nightly/guides/docs',
-  // 'docs/nightly/about-fuel',
+  // BETA-4 DOCS
+  'docs/beta-4/sway/docs/book/src',
+  'docs/beta-4/fuels-rs/docs/src',
+  'docs/beta-4/fuels-ts/apps/docs/src',
+  'docs/beta-4/fuel-specs/src',
+  'docs/beta-4/fuel-graphql-docs/docs',
+  'docs/beta-4/fuels-wallet/packages/docs/docs',
+  'docs/beta-4/guides/docs',
 ];
 
 const excludeDirs = [
+  // DEFAULT DOCS & GUIDES
   'docs/guides/docs/guides.json',
   'docs/guides/docs/nav.json',
-  'docs/intro/nav.json',
-  // 'docs/about-fuel/nav.json',
-  'docs/sway/docs/book/src/SUMMARY.md',
-  'docs/sway/docs/book/src/forc/commands/forc_deploy.md',
-  'docs/sway/docs/book/src/forc/commands/forc_run.md',
-  'docs/fuelup/docs/src/SUMMARY.md',
-  'docs/fuels-rs/docs/src/SUMMARY.md',
-  'docs/fuel-specs/src/SUMMARY.md',
-  // 'docs/nightly/guides/docs/guides.json',
-  // 'docs/nightly/guides/docs/nav.json',
-  // 'docs/nightly/about-fuel/nav.json',
-  'docs/nightly/sway/docs/book/src/SUMMARY.md',
-  'docs/nightly/sway/docs/book/src/forc/commands/forc_deploy.md',
-  'docs/nightly/sway/docs/book/src/forc/commands/forc_run.md',
-  'docs/nightly/fuelup/docs/src/SUMMARY.md',
-  'docs/nightly/fuels-rs/docs/src/SUMMARY.md',
-  'docs/nightly/fuel-specs/src/SUMMARY.md',
-  // 'docs/fuel-nix/book/src/SUMMARY.md',
   'docs/guides/docs/migration-guide/breaking-change-log/README.md',
   'docs/guides/docs/migration-guide/breaking-change-log/package.json',
   'docs/guides/docs/migration-guide/breaking-change-log/pnpm-lock.yaml',
+  'docs/intro/nav.json',
+  'docs/sway/docs/book/src/SUMMARY.md',
+  'docs/fuelup/docs/src/SUMMARY.md',
+  'docs/fuels-rs/docs/src/SUMMARY.md',
+  'docs/fuel-specs/src/SUMMARY.md',
+  // NIGHTLY DOCS
+  'docs/nightly/sway/docs/book/src/SUMMARY.md',
+  'docs/nightly/fuelup/docs/src/SUMMARY.md',
+  'docs/nightly/fuels-rs/docs/src/SUMMARY.md',
+  'docs/nightly/fuel-specs/src/SUMMARY.md',
+  // BETA-4 DOCS
+  'docs/beta-4/sway/docs/book/src/SUMMARY.md',
+  'docs/beta-4/fuels-rs/docs/src/SUMMARY.md',
+  'docs/beta-4/fuel-specs/src/SUMMARY.md',
 ];
 
 export default makeSource({
