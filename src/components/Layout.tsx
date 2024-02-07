@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useRef, type ReactNode, useEffect } from 'react';
 
-import type { Config, NavOrder, Versions } from '../types';
+import type { Config, NavOrder, VersionSet, Versions } from '../types';
 
 import { Header } from './Header';
 import { SidebarContainer } from './SidebarContainer';
@@ -14,7 +14,7 @@ type LayoutProps = {
   children: ReactNode;
   isClean?: boolean;
   config?: Config;
-  isNightly: boolean;
+  versionSet: VersionSet;
   versions?: Versions;
   allNavs?: NavOrder[];
 };
@@ -24,7 +24,7 @@ export function Layout({
   children,
   isClean,
   config,
-  isNightly,
+  versionSet,
   versions,
   allNavs,
 }: LayoutProps) {
@@ -94,7 +94,7 @@ export function Layout({
               <SidebarContainer
                 versions={versions}
                 allNavs={allNavs}
-                isNightly={isNightly}
+                versionSet={versionSet}
               />
             </Grid.Item>
           )}
@@ -102,7 +102,7 @@ export function Layout({
             <Header
               active={slug}
               title={config?.title}
-              isNightly={isNightly}
+              versionSet={versionSet}
               versions={versions}
               allNavs={allNavs}
             />

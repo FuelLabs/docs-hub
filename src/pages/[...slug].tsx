@@ -19,6 +19,7 @@ import type { DocType, NavOrder, SidebarLinkItem, Versions } from '../types';
 export type DocPageProps = {
   allNavs: NavOrder[];
   allnightlyNavs: NavOrder[];
+  allBeta4Navs: NavOrder[];
   code: string;
   md: MdDoc;
   doc: DocType;
@@ -27,6 +28,7 @@ export type DocPageProps = {
   theme: string;
   versions: Versions;
   nightlyVersions: Versions;
+  beta4Versions: Versions;
   fuelCoreVersion?: string;
   nodeVersion?: string;
   nodeVersionMax?: string;
@@ -56,10 +58,16 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
     DOCS_DIRECTORY,
     `../src/generated/sidebar-links/all-nightly-orders.json`
   );
+  const allBeta4NavsPath = join(
+    DOCS_DIRECTORY,
+    `../src/generated/sidebar-links/all-beta-4-orders.json`
+  );
   const allNavs = JSON.parse(readFileSync(allNavsPath, 'utf8'));
   const allnightlyNavs = JSON.parse(readFileSync(allnightlyNavsPath, 'utf8'));
-  const versions = getVersions(false);
-  const nightlyVersions = getVersions(true);
+  const allBeta4Navs = JSON.parse(readFileSync(allBeta4NavsPath, 'utf8'));
+  const versions = getVersions('default');
+  const nightlyVersions = getVersions('nightly');
+  const beta4Versions = getVersions('beta-4');
   let fuelCoreVersion = null;
   let nodeVersion = null;
   let nodeVersionMax = null;
@@ -75,6 +83,7 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
     props: {
       allNavs,
       allnightlyNavs,
+      allBeta4Navs,
       code,
       md: doc.md,
       doc: doc.item,
@@ -82,6 +91,7 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
       docLink: doc.navLinks,
       versions,
       nightlyVersions,
+      beta4Versions,
       fuelCoreVersion,
       nodeVersion,
       nodeVersionMax,

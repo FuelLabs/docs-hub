@@ -71,6 +71,7 @@ const includeDirs = [
   'docs/nightly/fuels-wallet/packages/docs/docs',
   // BETA-4 DOCS
   'docs/beta-4/sway/docs/book/src',
+  'docs/beta-4/fuelup/docs/src',
   'docs/beta-4/fuels-rs/docs/src',
   'docs/beta-4/fuels-ts/apps/docs/src',
   'docs/beta-4/fuel-specs/src',
@@ -98,6 +99,7 @@ const excludeDirs = [
   'docs/nightly/fuel-specs/src/SUMMARY.md',
   // BETA-4 DOCS
   'docs/beta-4/sway/docs/book/src/SUMMARY.md',
+  'docs/beta-4/fuelup/docs/src/SUMMARY.md',
   'docs/beta-4/fuels-rs/docs/src/SUMMARY.md',
   'docs/beta-4/fuel-specs/src/SUMMARY.md',
 ];

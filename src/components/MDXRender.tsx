@@ -14,6 +14,7 @@ import {
   PLAYGROUND_LINK,
 } from '../config/constants';
 import { runtime } from '../lib/runtime';
+import type { VersionSet } from '../types';
 
 import { Blockquote } from './Blockquote';
 import { CardSection } from './CardSection';
@@ -58,7 +59,7 @@ export const mdxComponents = {
 type MDXRenderProps = {
   code: string;
   components: Record<any, any>;
-  isNightly: boolean;
+  versionSet: VersionSet;
   fuelCoreVersion?: string;
   nodeVersion?: string;
   nodeVersionMax?: string;
@@ -67,7 +68,7 @@ type MDXRenderProps = {
 export function MDXRender({
   code,
   components,
-  isNightly,
+  versionSet,
   fuelCoreVersion,
   nodeVersion,
   nodeVersionMax,
@@ -80,7 +81,7 @@ export function MDXRender({
   return (
     <provider.MDXProvider components={{ ...components, ...mdxComponents }}>
       <Content
-        isNightly={isNightly}
+        versionSet={versionSet}
         fuelTestnet={FUEL_TESTNET}
         fuelTestnetInlineCode={<Code>{FUEL_TESTNET}</Code>}
         faucetLink={

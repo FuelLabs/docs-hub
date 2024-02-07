@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import { EOL } from 'os';
 import path from 'path';
 import type { Parent } from 'unist-util-visit/lib';
+import type { VersionSet } from '~/src/types';
 
 function extractCommentBlock(content: string, comment: string | null) {
   const lines = content.split(EOL);
@@ -77,7 +78,12 @@ export function handleExampleImports(
 
   let exampleName = null;
   let paths = [];
-  const isNightly = dirname.includes('docs/nightly/');
+  let versionSet: VersionSet = 'default';
+  if (dirname.includes('docs/nightly/')) {
+    versionSet = 'nightly';
+  } else if (dirname.includes('docs/beta-4/')) {
+    versionSet = 'beta-4';
+  }
 
   if (node.type === 'code') {
     // handle mdbook docs example format
@@ -106,9 +112,9 @@ export function handleExampleImports(
     filePath = paths[0];
   }
 
-  const bookPathIndex = isNightly ? 2 : 1;
+  const bookPathIndex = versionSet === 'default' ? 1 : 2;
   const bookPath = dirname.split('/')[bookPathIndex];
-  const docsPath = isNightly ? 'docs/nightly/' : 'docs/';
+  const docsPath = versionSet === 'default' ? 'docs/' : `docs/${versionSet}/`;
   let fileAbsPath = path.resolve(
     path.join(rootDir, `${docsPath}${bookPath}/`),
     filePath

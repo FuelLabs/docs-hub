@@ -2,7 +2,12 @@ import fs from 'fs';
 import { join } from 'path';
 import toml from 'toml';
 
-import { DOCS_DIRECTORY, NIGHTLY_DOCS_DIRECTORY } from '../config/constants';
+import {
+  DOCS_DIRECTORY,
+  NIGHTLY_DOCS_DIRECTORY,
+  BETA_4_DOCS_DIRECTORY,
+} from '../config/constants';
+import type { VersionSet } from '../types';
 
 function itemFromPackageJson(docsDir: string, filename: string) {
   const file = fs.readFileSync(join(docsDir, filename), 'utf-8');
@@ -97,8 +102,13 @@ export function getNodeVersion() {
   return json.engines.node;
 }
 
-export function getVersions(isNightly: boolean) {
-  const docsDir = isNightly ? NIGHTLY_DOCS_DIRECTORY : DOCS_DIRECTORY;
+export function getVersions(versionSet: VersionSet) {
+  let docsDir = DOCS_DIRECTORY;
+  if (versionSet === 'nightly') {
+    docsDir = NIGHTLY_DOCS_DIRECTORY;
+  } else if (versionSet === 'beta-4') {
+    docsDir = BETA_4_DOCS_DIRECTORY;
+  }
   const wallet = getWalletVersion(docsDir);
   const tsSDK = getTSSDKVersion(docsDir);
   const rust = getRustSDKVersion(docsDir);

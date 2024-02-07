@@ -5,15 +5,28 @@ import { useState } from 'react';
 
 import { FUEL_TESTNET, FUEL_TESTNET_UPPER_CASE } from '../config/constants';
 import { useSetVersion } from '../hooks/useVersion';
+import type { VersionSet } from '../types';
 
-export default function VersionDropdown({ isNightly }: { isNightly: boolean }) {
+export default function VersionDropdown({
+  versionSet,
+}: {
+  versionSet: VersionSet;
+}) {
   const [opened, setOpened] = useState(false);
   const router = useRouter();
   const setVersion = useSetVersion();
   const splitPath = router.asPath.split('/');
   const isDoc =
     router.asPath.includes('docs') && !router.asPath.includes('/intro/');
-  const bookIndex = isNightly && router.asPath.includes('nightly') ? 3 : 2;
+  const bookIndex =
+    versionSet !== 'default' &&
+    (router.asPath.includes('nightly') || router.asPath.includes('beta-4'))
+      ? 3
+      : 2;
+  const version =
+    versionSet === 'default'
+      ? FUEL_TESTNET_UPPER_CASE
+      : versionSet.charAt(0).toUpperCase() + versionSet.slice(1);
   return (
     <Dropdown isOpen={opened} onOpenChange={setOpened}>
       <Dropdown.Trigger
@@ -23,18 +36,18 @@ export default function VersionDropdown({ isNightly }: { isNightly: boolean }) {
           opened ? { ...styles.trigger, ...styles.triggerOpen } : styles.trigger
         }
       >
-        Version: {isNightly ? 'Nightly' : FUEL_TESTNET_UPPER_CASE}
+        Version: {version}
       </Dropdown.Trigger>
       <Dropdown.Menu
-        disabledKeys={isNightly ? ['nightly'] : [FUEL_TESTNET]}
+        disabledKeys={versionSet === 'default' ? [FUEL_TESTNET] : [versionSet]}
         css={styles.dropdownMenu}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onAction={(action: any) => {
           if (setVersion) {
             if (action === FUEL_TESTNET) {
               setVersion(FUEL_TESTNET_UPPER_CASE);
-            } else if (action === 'nightly') {
-              setVersion('Nightly');
+            } else if (version === 'Nightly' || version === 'Beta-4') {
+              setVersion(version);
             }
             if (isDoc) {
               let book = splitPath[bookIndex];
@@ -56,7 +69,16 @@ export default function VersionDropdown({ isNightly }: { isNightly: boolean }) {
           aria-label={FUEL_TESTNET}
         >
           <Text>{FUEL_TESTNET_UPPER_CASE}</Text>
-          {!isNightly && <Icon icon="Check" color="accent11" />}
+          {versionSet === 'default' && <Icon icon="Check" color="accent11" />}
+        </Dropdown.MenuItem>
+
+        <Dropdown.MenuItem
+          css={styles.menuItem}
+          key="beta-4"
+          aria-label="beta-4"
+        >
+          <Text>Beta-4</Text>
+          {versionSet === 'beta-4' && <Icon icon="Check" color="accent11" />}
         </Dropdown.MenuItem>
 
         <Dropdown.MenuItem
@@ -65,7 +87,7 @@ export default function VersionDropdown({ isNightly }: { isNightly: boolean }) {
           aria-label="nightly"
         >
           <Text>Nightly</Text>
-          {isNightly && <Icon icon="Check" color="accent11" />}
+          {versionSet === 'nightly' && <Icon icon="Check" color="accent11" />}
         </Dropdown.MenuItem>
       </Dropdown.Menu>
     </Dropdown>

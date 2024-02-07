@@ -4,9 +4,10 @@ import { join } from 'path';
 import { useState, useEffect } from 'react';
 
 import { Layout } from '../components/Layout';
-import { DOCS_DIRECTORY } from '../config/constants';
+import { DOCS_DIRECTORY, FUEL_TESTNET_UPPER_CASE } from '../config/constants';
 import { useVersion } from '../hooks/useVersion';
 import { GuidesPage } from '../screens/GuidesPage';
+import type { VersionSet } from '../types';
 
 export interface GuideInfo {
   title: string;
@@ -17,7 +18,6 @@ export interface GuideInfo {
 
 export interface GuidesProps {
   guides: { [key: string]: GuideInfo };
-  // nightlyGuides: { [key: string]: GuideInfo };
 }
 
 export default function Guides({ guides }: GuidesProps) {
@@ -28,11 +28,18 @@ export default function Guides({ guides }: GuidesProps) {
     setIsMounted(true);
   }, []);
 
-  const isNightly = mounted && version === 'Nightly';
+  let versionSet: VersionSet = 'default';
+  if (mounted && version !== FUEL_TESTNET_UPPER_CASE) {
+    if (version === 'Nightly') {
+      versionSet = 'nightly';
+    } else {
+      versionSet = 'beta-4';
+    }
+  }
 
   return (
-    <Layout title="Fuel Guides" isClean isNightly={isNightly}>
-      <GuidesPage isNightly={isNightly} guides={guides} />
+    <Layout title="Fuel Guides" isClean versionSet={versionSet}>
+      <GuidesPage versionSet={versionSet} guides={guides} />
     </Layout>
   );
 }

@@ -68,10 +68,18 @@ export class Doc {
     const split = item.slug.split('/');
     let category = item.category;
     if (!category && item.slug.includes('docs/')) {
-      const isNightly = item.slug.includes('/nightly/');
-      const index = isNightly ? 3 : 2;
+      const isNotDefault =
+        item.slug.includes('/nightly/') || item.slug.includes('/beta-4/');
+      const index = isNotDefault ? 3 : 2;
       const isIndex = split.length === index;
       category = split[isIndex ? index - 1 : index].replaceAll('-', ' ');
+    }
+
+    let versionSet = 'default';
+    if (item.slug.includes('/nightly/')) {
+      versionSet = 'nightly';
+    } else if (item.slug.includes('/beta-4/')) {
+      versionSet = 'beta-4';
     }
 
     const doc = {
@@ -88,7 +96,7 @@ export class Doc {
         ...config,
         slug: item.slug,
       },
-      isNightly: item.slug.includes('/nightly/'),
+      versionSet,
     } as DocType;
 
     this.item = doc;

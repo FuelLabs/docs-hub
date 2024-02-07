@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { Root } from 'remark-gfm';
 import type { Parent } from 'unist-util-visit/lib';
+import type { VersionSet } from '~/src/types';
 
 import { DOCS_DIRECTORY } from '../../config/constants';
 import type { DuplicateAPIItem } from '../ts-api';
@@ -20,7 +21,13 @@ export function handleLinks(
 ) {
   let newUrl: string | null = null;
   let base = dirname.split('/').splice(0, 2).join('/');
-  const isNightly = dirname.includes('/nightly/');
+  let versionSet: VersionSet = 'default';
+  if (dirname.includes('/nightly/')) {
+    versionSet = 'nightly';
+  } else if (dirname.includes('/beta-4/')) {
+    versionSet = 'beta-4';
+  }
+
   if (dirname.includes('sway/docs/book/src/forc')) {
     base = 'docs/forc';
   }
@@ -29,26 +36,33 @@ export function handleLinks(
     handleHTMLLink(node, base, idx, parent, tree);
   } else {
     if (!node.url.includes('http')) {
-      newUrl = getNewUrl(node, dirname);
+      newUrl = getNewUrl(node, dirname, versionSet);
     }
     if (node.url.endsWith('CONTRIBUTING') && node.url.includes('github.com')) {
       newUrl = `${node.url}.md`;
     }
-    newUrl = handleTSLinks(newUrl, isNightly);
+    newUrl = handleTSLinks(newUrl, versionSet);
     newUrl = replaceInternalLinks(newUrl ?? node.url, base);
     if (
-      isNightly &&
+      versionSet === 'nightly' &&
       !newUrl.includes('/nightly/') &&
       (newUrl.startsWith('docs/') || newUrl.startsWith('/docs/'))
     ) {
       newUrl = newUrl.replace('docs/', 'docs/nightly/');
+    }
+    if (
+      versionSet === 'beta-4' &&
+      !newUrl.includes('/beta-4/') &&
+      (newUrl.startsWith('docs/') || newUrl.startsWith('/docs/'))
+    ) {
+      newUrl = newUrl.replace('docs/', 'docs/beta-4/');
     }
 
     return newUrl;
   }
 }
 
-function handleTSLinks(url: string | null, isNightly: boolean) {
+function handleTSLinks(url: string | null, versionSet: VersionSet) {
   let newUrl = url;
   const duplicates = getTSAPIDuplicates();
   if (newUrl) {
@@ -65,13 +79,13 @@ function handleTSLinks(url: string | null, isNightly: boolean) {
   if (newUrl && newUrl.startsWith('/api/')) {
     newUrl = newUrl.replace(
       '/api/',
-      `/docs/${isNightly ? '/nightly' : ''}fuels-ts/`
+      `/docs/${versionSet === 'default' ? '' : `/${versionSet}`}/fuels-ts/`
     );
   }
   return newUrl;
 }
 
-function getNewUrl(node: any, dirname: string) {
+function getNewUrl(node: any, dirname: string, versionSet: VersionSet) {
   let newUrl;
   newUrl = node.url
     .replace('.md', '')
@@ -104,11 +118,11 @@ function getNewUrl(node: any, dirname: string) {
     newUrl = `/${dir}/${newUrl}`;
   }
   newUrl = newUrl!.replace('/sway/forc/', '/forc/');
-  const isNightly = dirname.includes('/nightly/');
   if (dirname.includes('fuel-graphql-docs')) {
-    newUrl = isNightly
-      ? newUrl.replace('/docs/', '/docs/nightly/graphql/')
-      : newUrl.replace('/docs/', '/docs/graphql/');
+    newUrl =
+      versionSet === 'default'
+        ? newUrl.replace('/docs/', '/docs/graphql/')
+        : newUrl.replace('/docs/', `/docs/${versionSet}/graphql/`);
   }
   // TODO: add this for the wallet once wallet is updated past 13.0
 
@@ -126,9 +140,9 @@ function getNewUrl(node: any, dirname: string) {
   newUrl = newUrl
     .replace(
       '/docs/dev/getting-started',
-      isNightly
-        ? '/docs/nightly/wallet/dev/getting-started'
-        : '/docs/wallet/dev/getting-started'
+      versionSet === 'default'
+        ? '/docs/wallet/dev/getting-started'
+        : `/docs/${versionSet}/wallet/dev/getting-started`
     )
     .replace('/api/interfaces/index', '/api/interfaces/');
 

@@ -1,5 +1,6 @@
 import fs from 'fs';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import type { VersionSet } from '~/src/types';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
@@ -13,9 +14,14 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
           ? imageName!.replaceAll('&&', '/')
           : imageName[0];
 
-      const isNightly = req.headers.referer?.includes('/nightly/');
+      let versionSet: VersionSet = 'default';
+      if (req.headers.referer?.includes('/nightly/')) {
+        versionSet = 'nightly';
+      } else if (req.headers.referer?.includes('/beta-4/')) {
+        versionSet = 'beta-4';
+      }
       const imagePath = `${rootDir}/docs/${
-        isNightly ? 'nightly/' : ''
+        versionSet === 'default' ? '' : versionSet
       }fuels-wallet/packages/docs/public/${realName}.png`;
 
       if (fs.existsSync(imagePath)) {

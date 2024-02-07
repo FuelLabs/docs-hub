@@ -8,15 +8,17 @@ const constantsPath = join(
 );
 const nightlyConstantsPath =
   'docs/nightly/fuels-wallet/packages/docs/src/constants.ts';
+const beta4ConstantsPath =
+  'docs/beta4/fuels-wallet/packages/docs/src/constants.ts';
 
 const downloadVarName = 'DOWNLOAD_LINK';
 
-function getWalletVersion(isNightly) {
+function getWalletVersion(version) {
   const file = readFileSync(
     join(
       process.cwd(),
       `docs/${
-        isNightly ? 'nightly/' : ''
+        version === 'default' ? '' : `${version}/`
       }fuels-wallet/packages/app/package.json`
     ),
     'utf-8'
@@ -25,7 +27,7 @@ function getWalletVersion(isNightly) {
   return json.version;
 }
 
-function handleConstantsFile(filePath, isNightly) {
+function handleConstantsFile(filePath, version) {
   const file = readFileSync(filePath, 'utf8');
 
   let lines = file.split(EOL);
@@ -44,7 +46,7 @@ function handleConstantsFile(filePath, isNightly) {
     }
   }
 
-  const walletVersion = getWalletVersion(isNightly);
+  const walletVersion = getWalletVersion(version);
 
   if (start !== undefined && end !== undefined && walletVersion) {
     let modifiedContent = `export const DOWNLOAD_LINK = 'https://next-wallet.fuel.network/app/fuel-wallet-${walletVersion}.zip';`;
@@ -59,6 +61,7 @@ function handleConstantsFile(filePath, isNightly) {
 }
 
 export default function patchFixWalletDownloadLink() {
-  handleConstantsFile(constantsPath, false);
-  handleConstantsFile(nightlyConstantsPath, true);
+  handleConstantsFile(constantsPath, 'default');
+  handleConstantsFile(nightlyConstantsPath, 'nightly');
+  handleConstantsFile(beta4ConstantsPath, 'beta-4');
 }

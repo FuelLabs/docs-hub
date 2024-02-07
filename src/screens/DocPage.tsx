@@ -9,22 +9,41 @@ import { MDXRender } from '../components/MDXRender';
 import { useVersion } from '../hooks/useVersion';
 import { getComponents } from '../lib/imports';
 import type { DocPageProps } from '../pages/[...slug]';
+import type { VersionSet } from '../types';
 
 export function DocScreen(props: DocPageProps) {
-  const { doc, allNavs, allnightlyNavs } = props;
-  const [isNightly, setIsNightly] = useState<boolean>(false);
+  const { doc, allNavs, allnightlyNavs, allBeta4Navs } = props;
+  const [versionSet, setVersionSet] = useState<VersionSet>('default');
   const version = useVersion();
 
   useEffect(() => {
-    setIsNightly(version === 'Nightly' || doc.isNightly);
+    if (version === 'Nightly' || doc.versionSet === 'nightly') {
+      setVersionSet('nightly');
+    } else if (version === 'Beta-4' || doc.versionSet === 'beta-4') {
+      setVersionSet('beta-4');
+    }
   }, [version, doc]);
 
-  const components = getComponents(doc.slug, doc.isNightly);
-  const navs = doc.originalSlug.includes('guides')
-    ? undefined
-    : isNightly
-    ? allnightlyNavs
-    : allNavs;
+  const components = getComponents(doc.slug, doc.versionSet);
+  let navs = undefined;
+  if (!doc.originalSlug.includes('guides')) {
+    if (versionSet === 'nightly') {
+      navs = allnightlyNavs;
+    } else if (versionSet === 'beta-4') {
+      navs = allBeta4Navs;
+    } else {
+      navs = allNavs;
+    }
+  }
+
+  let versions = props.versions;
+  if (versionSet !== 'default') {
+    if (versionSet === 'nightly') {
+      versions = props.nightlyVersions;
+    } else {
+      versions = props.beta4Versions;
+    }
+  }
 
   return (
     <DocProvider {...props}>
@@ -32,8 +51,8 @@ export function DocScreen(props: DocPageProps) {
         title={doc?.title}
         isClean={false}
         config={doc.docsConfig}
-        isNightly={isNightly}
-        versions={isNightly ? props.nightlyVersions : props.versions}
+        versionSet={versionSet}
+        versions={versions}
         allNavs={navs}
       >
         <Box.Flex as="section" className="Layout--section">
@@ -43,7 +62,7 @@ export function DocScreen(props: DocPageProps) {
               <MDXRender
                 code={props.code}
                 components={components}
-                isNightly={isNightly}
+                versionSet={versionSet}
                 fuelCoreVersion={props.fuelCoreVersion}
                 nodeVersion={props.nodeVersion}
                 nodeVersionMax={props.nodeVersionMax}

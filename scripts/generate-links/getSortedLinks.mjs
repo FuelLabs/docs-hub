@@ -5,8 +5,10 @@ import { capitalize } from './str.mjs';
 const LOWER_CASE_NAV_PATHS = [
   'docs/forc/commands/',
   'docs/nightly/forc/commands/',
+  'docs/beta-4/forc/commands/',
   'docs/forc/plugins/',
   'docs/nightly/forc/plugins/',
+  'docs/beta-4/forc/plugins/',
 ];
 
 export default function getSortedLinks(config, docs) {
@@ -14,12 +16,13 @@ export default function getSortedLinks(config, docs) {
     o.toLowerCase().replaceAll('-', '_').replaceAll(' ', '_')
   );
   const isNightly = docs[0].slug.includes('/nightly/');
-  const links = createLinks(docs, isNightly);
-  const sortedLinks = sortLinks(lcOrder, links, config, isNightly);
+  const isBeta4 = docs[0].slug.includes('/beta-4/');
+  const links = createLinks(docs, isNightly, isBeta4);
+  const sortedLinks = sortLinks(lcOrder, links, config, isNightly, isBeta4);
   return sortedLinks;
 }
 
-function createLinks(docs, isNightly) {
+function createLinks(docs, isNightly, isBeta4) {
   const links = [];
 
   for (let i = 0; i < docs.length; i++) {
@@ -35,7 +38,8 @@ function createLinks(docs, isNightly) {
 
     const finalSlug = doc.slug
       .toLowerCase()
-      .replace('nightly/guides', 'guides/nightly');
+      .replace('nightly/guides', 'guides/nightly')
+      .replace('beta-4/guides', 'guides/beta-4');
     const isGuide = finalSlug.includes('guides');
 
     const splitSlug = finalSlug.split('/');
@@ -55,7 +59,8 @@ function createLinks(docs, isNightly) {
         shouldBeLowerCase,
         isNightly,
         isExternal,
-        isGuide
+        isGuide,
+        isBeta4
       );
       links.push(newLink);
       continue;
@@ -75,7 +80,8 @@ function createLinks(docs, isNightly) {
         isNightly,
         splitSlug,
         isExternal,
-        isGuide
+        isGuide,
+        isBeta4
       );
       continue;
     }
@@ -89,7 +95,8 @@ function createLinks(docs, isNightly) {
       shouldBeLowerCase,
       isExternal,
       isNightly,
-      isGuide
+      isGuide,
+      isBeta4
     );
     links.push(newSubMenu);
   }
@@ -97,7 +104,7 @@ function createLinks(docs, isNightly) {
   return links;
 }
 
-function sortLinks(lcOrder, links, config, isNightly) {
+function sortLinks(lcOrder, links, config, isNightly, isBeta4) {
   const sortedLinks = lcOrder
     ? links
         /** Sort first level links */
@@ -161,7 +168,7 @@ function sortLinks(lcOrder, links, config, isNightly) {
               .replaceAll('-', '_');
 
             if (a.slug.includes('fuels-ts')) {
-              const pathLength = isNightly ? 4 : 3;
+              const pathLength = isNightly || isBeta4 ? 4 : 3;
               const isIndexA = a.slug.split('/').length === pathLength;
               if (isIndexA) {
                 return -1;
@@ -201,6 +208,7 @@ function updateSlug(docSlug, isExternal) {
   if (
     !slug.startsWith('guides') &&
     !slug.startsWith('nightly/guides') &&
+    !slug.startsWith('beta-4/guides') &&
     !isExternal
   ) {
     slug = `docs/${slug}`;
@@ -234,9 +242,10 @@ function handleLink(
   shouldBeLowerCase,
   isNightly,
   isExternal,
-  isGuide
+  isGuide,
+  isBeta4
 ) {
-  let newLabel = title.replace('nightly/', '');
+  let newLabel = title.replace('nightly/', '').replace('beta-4/', '');
   if (newLabel === 'index' || newLabel === 'README') {
     newLabel = splitSlug[splitSlug.length - 1];
   }
@@ -248,12 +257,14 @@ function handleLink(
 
   if (isNightly) {
     breadcrumbs.push({ label: 'Nightly' });
+  } else if (isBeta4) {
+    breadcrumbs.push({ label: 'Beta-4' });
   }
 
   if (slug.includes('docs/intro/')) {
     breadcrumbs.push({ label: 'Intro' });
   } else {
-    const i = isNightly ? 2 : 1;
+    const i = isNightly || isBeta4 ? 2 : 1;
     if (splitSlug.length > i + 1) {
       const link = '/' + splitSlug.slice(0, splitSlug.length - 1).join('/');
       breadcrumbs.push({
@@ -283,7 +294,8 @@ function handleSubmenuItem(
   isNightly,
   splitSlug,
   isExternal,
-  isGuide
+  isGuide,
+  isBeta4
 ) {
   const submenu = links[categoryIdx].submenu || [];
   let newLabel = title;
@@ -309,13 +321,15 @@ function handleSubmenuItem(
 
   if (isNightly) {
     breadcrumbs.push({ label: 'Nightly' });
+  } else if (isBeta4) {
+    breadcrumbs.push({ label: 'Beta-4' });
   }
 
   if (slug.includes('docs/intro/')) {
     breadcrumbs.push({ label: 'Intro' });
   } else {
-    const i = isNightly ? 2 : 1;
-    const l = isGuide ? 2 : isNightly ? 4 : 3;
+    const i = isNightly || isBeta4 ? 2 : 1;
+    const l = isGuide ? 2 : isNightly || isBeta4 ? 4 : 3;
     if (splitSlug.length > l) {
       const p = isGuide ? 1 : 2;
       const link1 = '/' + splitSlug.slice(0, splitSlug.length - p).join('/');
@@ -361,15 +375,25 @@ function handleSubmenu(
   shouldBeLowerCase,
   isExternal,
   isNightly,
-  isGuide
+  isGuide,
+  isBeta4
 ) {
   let hasIndex = false;
   if (thisCategory === title) {
     hasIndex = true;
   }
-  let subpath =
-    splitSlug[1] === 'nightly' ? `nightly/${splitSlug[2]}` : splitSlug[1];
-  subpath = subpath.replace('nightly/guides', 'guides/nightly');
+  let subpath;
+  if (splitSlug[1] === 'nightly') {
+    subpath = `nightly/${splitSlug[2]}`;
+  } else if (splitSlug[1] === 'beta-4') {
+    subpath = `beta-4/${splitSlug[2]}`;
+  } else {
+    subpath = splitSlug[1];
+  }
+
+  subpath = subpath
+    .replace('nightly/guides', 'guides/nightly')
+    .replace('beta-4/guides', 'guides/beta-4');
 
   const breadcrumbs = [
     { label: isGuide ? 'Guides' : 'Docs', link: isGuide ? '/guides' : '/' },
@@ -377,12 +401,14 @@ function handleSubmenu(
 
   if (isNightly) {
     breadcrumbs.push({ label: 'Nightly' });
+  } else if (isBeta4) {
+    breadcrumbs.push({ label: 'Beta-4' });
   }
 
   if (slug.includes('docs/intro/')) {
     breadcrumbs.push({ label: 'Intro' });
   } else {
-    const i = isNightly ? 2 : 1;
+    const i = isNightly || isBeta4 ? 2 : 1;
     let l = hasIndex ? 1 : 2;
     if (isGuide) {
       l = l - 1;
@@ -398,7 +424,7 @@ function handleSubmenu(
 
   if (!isGuide) {
     if (!hasIndex) {
-      const i = isNightly ? 3 : 2;
+      const i = isNightly || isBeta4 ? 3 : 2;
       const link = '/' + splitSlug.slice(0, splitSlug.length - 1).join('/');
       breadcrumbs.push({
         label: editLabel(splitSlug[i], shouldBeLowerCase),

@@ -4,7 +4,7 @@ import { Box, ButtonLink } from '@fuel-ui/react';
 
 import { EXTERNAL_NAVIGATION_LINKS } from '../config/constants';
 import { useDocContext } from '../hooks/useDocContext';
-import type { SidebarLinkItem, NavOrder, Versions } from '../types';
+import type { SidebarLinkItem, NavOrder, Versions, VersionSet } from '../types';
 
 import { SidebarLink, buttonStyles } from './SidebarLink';
 import { SidebarSection } from './SidebarSection';
@@ -18,14 +18,14 @@ type SidebarProps = {
   };
   links?: SidebarLinkItem[];
   versions?: Versions;
-  isNightly: boolean;
+  versionSet: VersionSet;
 };
 
 export function Sidebar({
   allNavs,
   onClick,
   versions,
-  isNightly,
+  versionSet,
 }: SidebarProps) {
   const ctx = useDocContext();
   const { links, doc } = ctx;
@@ -60,7 +60,7 @@ export function Sidebar({
           {/* DOCS */}
 
           {allNavs.map((navOrder) => {
-            const catIndex = isNightly ? 2 : 1;
+            const catIndex = versionSet === 'default' ? 1 : 2;
             let key = navOrder.links[0].slug.split('/')[catIndex];
             if (key === 'sway') {
               key = 'forc';

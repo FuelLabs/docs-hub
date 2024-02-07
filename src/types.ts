@@ -16,6 +16,8 @@ export type Config = {
   };
 };
 
+export type VersionSet = 'default' | 'nightly' | 'beta-4';
+
 export type DocType = {
   _raw: RawDocumentData;
   title: string;
@@ -27,7 +29,7 @@ export type DocType = {
   menu: string[];
   docsConfig: Config;
   parent?: { label: string; link: string };
-  isNightly: boolean;
+  versionSet: VersionSet;
 };
 
 export type BreadCrumb = {

@@ -13,6 +13,7 @@ async function main() {
   const orders = await getOrders();
   const allOrders = [];
   const allNightlyOrders = [];
+  const allBeta4Orders = [];
 
   await Promise.all(
     Object.keys(orders).map(async (key) => {
@@ -50,7 +51,15 @@ async function main() {
             links: sortedLinks,
           });
         }
-        if (!key.includes('nightly')) {
+        if (key.includes('beta-4') || key === 'intro') {
+          const cleanKey = key.replace('beta-4-', '');
+          allBeta4Orders.push({
+            key: capitalize(cleanKey),
+            sidebarName: getSidebarName(cleanKey),
+            links: sortedLinks,
+          });
+        }
+        if (!key.includes('nightly') && !key.includes('beta-4')) {
           allOrders.push({
             key: capitalize(key),
             sidebarName: getSidebarName(key),
@@ -63,6 +72,7 @@ async function main() {
 
   handleAllOrders(allOrders, folderPath, 'all-orders');
   handleAllOrders(allNightlyOrders, folderPath, 'all-nightly-orders');
+  handleAllOrders(allBeta4Orders, folderPath, 'all-beta-4-orders');
 }
 
 function getSidebarName(key) {
