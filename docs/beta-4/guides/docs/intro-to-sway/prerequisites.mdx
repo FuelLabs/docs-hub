@@ -1,0 +1,167 @@
+---
+title: Prerequisites
+category: Intro to Sway
+parent:
+  label: All Guides
+  link: /guides
+---
+
+# Prerequisites
+
+## Installation
+
+<TextImport
+  file="../installation/index.mdx"
+  comment="install_rust"
+  commentType="{/*"
+/>
+
+<CodeImport
+  file="../installation/index.mdx"
+  comment="install_rust_command"
+  commentType="{/*"
+  lang="sh"
+  trim="true"
+/>
+
+<TextImport
+  file="../installation/index.mdx"
+  comment="install_fuelup"
+  commentType="{/*"
+/>
+
+<CodeImport
+  file="../installation/index.mdx"
+  comment="install_fuelup_command"
+  commentType="{/*"
+  lang="sh"
+  trim="true"
+/>
+
+<TextImport
+  file="../installation/index.mdx"
+  comment="install_testnet"
+  commentType="{/*"
+/>
+
+<CodeImport
+  file="../installation/index.mdx"
+  comment="install_testnet_command"
+  commentType="{/*"
+  lang="sh"
+  trim="true"
+/>
+
+<TextImport
+  file="../installation/index.mdx"
+  comment="set_default_testnet"
+  commentType="{/*"
+/>
+
+<CodeImport
+  file="../installation/index.mdx"
+  comment="set_default_testnet_command"
+  commentType="{/*"
+  lang="sh"
+  trim="true"
+/>
+
+<TextImport
+  file="../quickstart/building-a-smart-contract.mdx"
+  comment="install_help"
+  commentType="{/*"
+/>
+
+Additionally for this guide, ensure you're using Node.js/npm version `18.14.1` or higher (up to node.js `19.0.0`). Check your Node.js version with:
+
+```console
+node -v
+```
+
+Update node.js if your version is below `18.14.1`.
+
+## Project Setup
+
+Start with a new empty folder and name it `fuel-project`.
+
+<TestAction
+id="create-project-folder"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing'
+}}
+/>
+
+```sh
+mkdir fuel-project
+```
+
+Go into the `fuel-project` folder:
+
+```sh
+cd fuel-project
+```
+
+Within your terminal start by creating a new sway project called `contract`:
+
+<TestAction
+id="create-contract"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project'
+}}
+/>
+
+```sh
+forc new contract
+```
+
+Your project structure generated from the `forc` command should like this:
+
+<TestAction
+id="contract-tree"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project'
+}}
+/>
+
+```console
+tree contract
+```
+
+```console
+contract
+├── Forc.toml
+└── src
+    └── main.sw
+
+1 directory, 2 files
+```
+
+Move into your contract folder:
+
+```sh
+cd contract
+```
+
+Open up the `contract` folder in VSCode, and inside the `src` folder you should see a file called `main.sw`. This is where you will write your Sway contract.
+
+Since we're creating a brand new contract you can delete everything in this file except for the `contract` keyword.
+
+<TestAction
+id="sway-program-type"
+action={{
+  name: 'writeToFile',
+  filepath: 'guides-testing/fuel-project/contract/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file="../../examples/intro-to-sway/contract/src/main.sw"
+  comment="contract"
+  commentType="//"
+  lang="sway"
+/>
+
+The first line of the file is specifically reserved to inform the compiler whether we are writing a contract, script, predicate, or library. To designate the file as a contract, use the `contract` keyword.

@@ -1,0 +1,157 @@
+---
+title: Running a Beta-4 Node
+category: Running a Node
+parent:
+  label: All Guides
+  link: /guides
+---
+
+# Running a local Fuel node connected to Beta-4 using P2P
+
+## Installation
+
+<TextImport
+  file="../installation/index.mdx"
+  comment="install_rust"
+  commentType="{/*"
+/>
+
+<CodeImport
+  file="../installation/index.mdx"
+  comment="install_rust_command"
+  commentType="{/*"
+  lang="sh"
+  trim="true"
+/>
+
+<TextImport
+  file="../installation/index.mdx"
+  comment="install_fuelup"
+  commentType="{/*"
+/>
+
+<CodeImport
+  file="../installation/index.mdx"
+  comment="install_fuelup_command"
+  commentType="{/*"
+  lang="sh"
+  trim="true"
+/>
+
+<TextImport
+  file="../installation/index.mdx"
+  comment="install_testnet"
+  commentType="{/*"
+/>
+
+<CodeImport
+  file="../installation/index.mdx"
+  comment="install_testnet_command"
+  commentType="{/*"
+  lang="sh"
+  trim="true"
+/>
+
+<TextImport
+  file="../installation/index.mdx"
+  comment="set_default_testnet"
+  commentType="{/*"
+/>
+
+<CodeImport
+  file="../installation/index.mdx"
+  comment="set_default_testnet_command"
+  commentType="{/*"
+  lang="sh"
+  trim="true"
+/>
+
+<TextImport
+  file="../quickstart/building-a-smart-contract.mdx"
+  comment="install_help"
+  commentType="{/*"
+/>
+
+## Getting a Sepolia (Ethereum Testnet) API Key
+
+An API key from any RPC provider that supports the Sepolia network will work. Relayers will help listen to events from the Ethereum network. We recommend either [Infura](https://www.infura.io/) or [Alchemy](https://www.alchemy.com/)
+
+The endpoints should look like the following
+
+### Infura
+
+```sh
+https://sepolia.infura.io/v3/{YOUR_API_KEY}
+```
+
+### Alchemy
+
+```sh
+https://eth-sepolia.g.alchemy.com/v2/{YOUR_API_KEY}
+```
+
+Note that using other network endpoints will result in the relayer failing to start.
+
+## Generating a P2P Key
+
+Generate a new P2P key pairing by running the following command:
+
+```sh
+fuel-core-keygen new --key-type peering
+{
+  "peer_id":"16Uiu2HAm8kCaJaaKTujrSwdBxyCELTY979KYaP9YBkWVLTGTo7Bf",
+  "secret":"361b3275a3dd4150ea4c786b8dff7822205331e56ac2e73c32b17cb295978c8c",
+  "type":"p2p"
+}
+```
+
+Make sure you save this somewhere safe so you don't need to generate a new key pair in the future.
+
+## Chain Configuration
+
+To run a local node with persistence, you must configure a `chainConfig.json` file. Here is the [specific configuration](https://github.com/FuelLabs/fuel-core/blob/v0.20.4/deployment/scripts/chainspec/beta_chainspec.json) for `beta-4`:
+
+<CodeImport
+  file="../../../fuel-core/deployment/scripts/chainspec/beta_chainspec.json"
+  lang="json"
+/>
+
+## Running a Local Node
+
+Finally to put everything together to start the node, run the following command:
+
+{/*
+TODO Add `--enable-relayer` to list of arguments later
+*/}
+
+```sh
+fuel-core run \
+--service-name {ANY_SERVICE_NAME} \
+--keypair {P2P_SECRET} \
+--relayer {RPC_ENDPOINT} \
+--ip 0.0.0.0 --port 4000 --peering_port 30333 \
+--db-path  ~/.fuel_beta4 \
+--chain ./chainConfig.json \
+--utxo-validation --poa-instant false --network beta-4 --enable-p2p \
+--min-gas-price 1 --max_block_size 18874368  --max_transmit_size 18874368 \
+--bootstrap_nodes /dns4/p2p-beta-4.fuel.network/tcp/30333/p2p/16Uiu2HAm3xjsqASZ68KpaJPkPCMUiMgquhjyDHtxcVxVdFkMgRFf,/dns4/p2p-beta-4.fuel.network/tcp/30334/p2p/16Uiu2HAmJyoJ2HrtPRdBALMT8fs5Q25xVj57gZj5s6G6dzbHypoS \
+--sync_max_get_header 100 --sync_max_get_txns 100 \
+--relayer-v2-listening-contracts 0x03f2901Db5723639978deBed3aBA66d4EA03aF73 \
+--relayer-da-finalization 4 \
+--relayer-da-deploy-height 4111672 \
+--relayer-log-page-size 2000
+```
+
+For the full description details of each flag above, run:
+
+```sh
+fuel-core run --help
+```
+
+## Connecting to the local node from a browser wallet
+
+To connect to the local node using a browser wallet, import the network address as:
+
+```sh
+http://127.0.0.1:4000/graphql
+```

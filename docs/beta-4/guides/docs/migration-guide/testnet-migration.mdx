@@ -1,0 +1,319 @@
+---
+title: Testnet Migration 
+category: Migration Guide
+parent:
+  label: All Guides
+  link: /guides
+---
+
+# Testnet Migration
+
+This guide focuses on the transition from the end of tool support for `beta-3` to the start of `beta-4`.
+
+- [Fuelup v0.19.5](https://github.com/FuelLabs/fuelup/releases/tag/v0.19.5)
+- [Sway v0.45.0](https://github.com/FuelLabs/sway/releases/tag/v0.45.0)
+- [TS SDK v0.57.0](https://github.com/FuelLabs/fuels-ts/releases/tag/v0.57.0)
+- [Rust SDK v0.47.0](https://github.com/FuelLabs/fuels-rs/releases/tag/v0.47.0)
+- [Wallet SDK v0.12.3](https://github.com/FuelLabs/fuels-wallet/releases/tag/v0.12.3)
+
+## Fuelup Toolchain
+
+Update to the latest version of `fuelup`:
+
+```sh
+fuelup self update
+```
+
+Install the `beta-4` toolchain:
+
+```sh
+fuelup toolchain install beta-4
+```
+
+Set the `beta-4` toolchain as your default:
+
+```sh
+fuelup default beta-4
+```
+
+You will get this output if everything went as intended:
+
+```sh
+default toolchain set to 'beta-4-aarch64-apple-darwin'
+```
+
+## Wallet
+
+If you have already installed the Fuel Wallet extension, make sure the extension is up-to-date.
+
+If you haven't already installed the Fuel Wallet, you can install it [here](https://chrome.google.com/webstore/detail/fuel-wallet/dldjpboieedgcmpkchcjcbijingjcgok).
+
+## Sway
+
+Integer types no longer implicitly cast to each other. Here are some examples of the changes:
+
+```sway
+// BEFORE - BETA 3
+let y1: u16 = 4u8
+
+// AFTER - BETA 4
+let y1: u16 = 4u8.as_u16()
+```
+
+```sway
+// BEFORE - BETA 3
+let y3: u16 = 4u32
+
+// AFTER - BETA 4
+let y3: u16 = 4u32.try_as_u16().unwrap()
+```
+
+The standard library introduced `read()`, `write()`, and `try_read()` methods to contract storage. Use `try_read()` when possible to avoid potential issues with accessing uninitialized storage:
+
+```sway
+// BEFORE - BETA 3
+let owner = storage.owner;
+
+// AFTER - BETA 4
+let owner = storage.owner.try_read().unwrap();
+```
+
+```sway
+// BEFORE - BETA 3
+storage.item_counter += 1;
+
+// AFTER - BETA 4
+storage.item_counter.write(storage.item_counter.read() + 1);
+```
+
+Function signatures in the standard library have changed:
+
+```sway
+// BEFORE - BETA 3
+mint_to(amount, recipient);
+
+// AFTER - BETA 4
+mint_to(recipient, ZERO_B256, 1_000_000_000);
+```
+
+```sway
+// BEFORE - BETA 3
+transfer(amount, asset_id, recipient);
+
+// AFTER - BETA 4
+transfer(recipient, asset_id, amount);
+```
+
+Multi-token support, akin to Ethereum's ERC-1155, has now been natively introduced. This advancement enables the creation and destruction of unique subsidiary tokens within a single contract. These modifications will be incorporated into the standard library as `std::token`. Actions involving `burning` and `minting` now necessitate the `sub_id` of the token. Function signatures in the standard library have changed:
+
+```sway
+pub fn construct_asset_id(contract_id: ContractId, sub_id: SubId) -> AssetId {
+    sha256((contract_id, sub_id))
+}
+```
+
+Additionally, `AssetId` doesn't equate to `ContractId`. Instead, it's calculated in alignment with the aforementioned changes:
+
+```sway
+// BEFORE - BETA 3
+IncorrectAssetId: ContractId;
+
+// AFTER - BETA 4
+IncorrectAssetId: AssetId;
+```
+
+Changes `disable_panic_on_overflow()` function to return the flags set
+prior to calling the function:
+
+```sway
+// BEFORE - BETA 3
+pub fn disable_panic_on_overflow() 
+
+// AFTER - BETA 4
+pub fn disable_panic_on_overflow() -> u64
+```
+
+## TS SDK
+
+The `rawPayload` property has been deprecated from the `Receipt` struct.
+
+For more details on the schema modification, please refer to the schema [here](https://graphql-docs.fuel.network/docs/reference/objects/#receipt).
+
+```typescript
+// BEFORE - BETA 3
+const receipt = new ReceiptCoder().decode(arrayify(gqlReceipt.rawPayload), 0)[0];
+
+// AFTER - BETA 4
+const receipt = assembleReceiptByType(gqlReceipt);
+```
+
+The `.simulate()` method replacing `.get()` is tailored for read-only calls and testing potential blockchain changes without committing them, while `.call()` should be used for actions that modify the blockchain's state, keeping in mind that state-altering methods using `.call()` will consume resources.
+
+```typescript
+// BEFORE - BETA 3
+let { value } = await contract.functions.get_count().get();
+
+// AFTER - BETA 4
+let { value } = await contract.functions.get_count().simulate();
+```
+
+The `addResourceInputsAndOutputs` function has been renamed to `addResources`, streamlining its name.
+
+```typescript
+// BEFORE - BETA 3
+request.addResourceInputsAndOutputs(resources);
+
+// AFTER - BETA 4
+request.addResources(resources);
+```
+
+Similarly, `addPredicateResourcesInputsAndOutputs` is now more concisely known as `addPredicateResources`.
+The reason we have a distinct method for adding predicate resources is that the creation of predicate inputs mandates the presence of both the predicate’s bytes and data bytes.
+With these methods, there’s no longer a need to manually create and set up an instance of a `ScriptTransactionRequest`, simplifying the process further.
+
+```typescript
+// BEFORE - BETA 3
+const predicateInputs: TransactionRequestInput[] = predicateUtxos.map((utxo) => ({
+  id: utxo.id,
+  type: InputType.Coin,
+  amount: utxo.amount,
+  assetId: utxo.assetId,
+  owner: utxo.owner.toB256(),
+  txPointer: '0x00000000000000000000000000000000',
+  witnessIndex: 0,
+  maturity: 0,
+  predicate: predicate.bytes,
+  predicateData: predicate.predicateData,
+}));
+
+// AFTER - BETA 4
+request.addPredicateResources(predicateUtxos, predicate.bytes, predicate.predicateData)
+```
+
+## Rust SDK
+
+When providing contract IDs or addresses to contract functions, `.into()` is not longer needed:
+
+```rust
+// BEFORE - BETA 3
+let response = contract_methods
+    .transfer_coins_to_output(1_000_000, contract_id.into(), address.into())
+    .append_variable_outputs(1)
+    .call()
+    .await?;
+
+// AFTER - BETA 4
+let response = contract_methods
+    .transfer_coins_to_output(1_000_000, contract_id, address)
+    .append_variable_outputs(1)
+    .call()
+    .await?;
+```
+
+`setup_contract_test` has been changed to `setup_program_test`.
+
+The command to generate bindings with Abigen has been modified; previously, it was `Abigen(name="...")`, but now it requires the program type and should be written as `Abigen(Program_Type(name="..."))`:
+
+```rust
+// BEFORE - BETA 3
+setup_contract_test!(
+    Wallets("wallet"),
+    Abigen(name="MyContract", abi="some_folder")
+);
+
+// AFTER - BETA 4
+setup_program_test!(
+    Wallets("wallet"),
+    Abigen(Contract(name = "MyContract", project = "some_folder")
+        // Other Program Types 
+        // Abigen(Script(name = "MyScript", project = "some_folder"))
+        // Abigen(Predicate(name = "MyPredicate", project = "some_folder"))
+    )
+);
+```
+
+Now supporting String types, there have been slight modifications if you directly use `ParamTypes`:
+
+```rust
+// BEFORE - BETA 3
+ParamType::String(len) => Self::decode_string_array(bytes, *len),
+
+ParamType::StdString => Self::decode_std_string(bytes),
+
+// AFTER - BETA 4
+ParamType::StringArray(len) => Self::decode_string_array(bytes, *len),
+
+ParamType::String => Self::decode_std_string(bytes),
+```
+
+Contract deployment no longer takes contract binary and deploy configurations as a parameter but is instead loaded in:
+
+```rust
+// BEFORE - BETA 3
+let id = Contract::deploy(
+    "./out/debug/contract.bin",
+    &wallet,
+    DeployConfiguration::default(),
+)
+.await?;
+
+// AFTER - BETA 4
+let storage_config =
+StorageConfiguration::load_from("out/debug/contract-storage_slots.json").unwrap();
+
+let load_config = LoadConfiguration::default().set_storage_configuration(storage_config);
+
+let id = Contract::load_from(
+    "./out/debug/contract.bin", load_config
+)?
+.deploy(&wallet, TxParameters::default())
+.await?;
+```
+
+Now, `send_transaction(&tx)` immediately returns the transaction ID, which is used to retrieve the receipts:
+
+```rust
+// BEFORE - BETA 3
+let receipts = self.try_provider()?.send_transaction(&tx).await?;
+
+// AFTER - BETA 4
+let tx_id = self.try_provider()?.send_transaction(&tx).await?;
+let receipts = provider.get_receipts(&tx_id).await?;
+```
+
+The `produce_blocks` function has been updated to no longer need time parameters:
+
+```rust
+// BEFORE - BETA 3
+provider
+    .produce_blocks(100, Some(Utc.timestamp_opt(100, 0).unwrap()))
+    .await?;
+
+// AFTER - BETA 4
+provider
+    .produce_blocks(blocks_to_produce.into(), None)
+```
+
+`AssetId` and `ContractId` are no longer under the `tx` package and has since been moved to the `prelude`:
+
+```rust
+// BEFORE - BETA 3
+use fuels::{prelude::*, tx::AssetId, tx::ContractId};
+
+// AFTER - BETA 4
+use fuels::{prelude::*}
+```
+
+Default parameter functions now start with `with_*` instead of `set_*`:
+
+```rust
+/* BEFORE - BETA 3 */
+let call_params = CallParameters::default().set_storage_configuration(price);
+
+let call_params = CallParameters::default().set_amount(price);
+
+/* AFTER - BETA 4 */
+let call_params = CallParameters::default().with_storage_configuration(price);
+
+let call_params = CallParameters::default().with_amount(price);
+```

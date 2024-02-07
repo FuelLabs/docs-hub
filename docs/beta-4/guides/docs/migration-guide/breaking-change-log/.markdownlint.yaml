@@ -1,0 +1,6 @@
+'default': true # Default state for all rules
+'MD013': false # Disable rule for line length
+'MD024': false # Disable rule for duplicate headings
+'MD033': false # Disable rule banning inline HTML
+'MD034': false # Disable rule banning bare urls
+'MD025': { 'front_matter_title': '' } # Without this, the title and h1 are considered two h1s

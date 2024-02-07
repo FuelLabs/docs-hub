@@ -1,0 +1,73 @@
+---
+title: Fuel Github Codespace
+category: Installation
+parent:
+  label: All Guides
+  link: /guides
+---
+
+# Github Codespace
+
+## Introduction
+
+The way to think about [Github Codespaces](https://github.com/features/codespaces) is essentially VSCode in a browser. It’s a remote development environment that is extremely easy to spin up. While not all VS Code plugins are supported, the Sway LSP plugin is supported and works out of the box.
+
+## How to set up for a new repo
+
+1. Create a `devcontainer.json` file. The easiest way is by navigating to the repo and clicking Code → … → Configure dev container
+
+    <Box.Centered>
+    ![dev container walkthrough](/images/dev-container.gif)
+    </Box.Centered>
+
+2. Edit the file to include the following features:
+
+    ```json
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:1": {},
+        "ghcr.io/FuelLabs/devcontainer-features/fuelup:1.0.1": {},
+    }
+    ```
+
+3. Add any plugins that you want to be installed for this repo under “customizations”.
+
+    ```json
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "fuellabs.sway-vscode-plugin"
+            ]
+        }
+    }
+    ```
+
+    Here are examples that include the Sway LSP plugin.
+
+    3.1. [`https://github.com/FuelLabs/sway/blob/master/.devcontainer/devcontainer.json`](https://github.com/FuelLabs/sway/blob/master/.devcontainer/devcontainer.json)
+
+    3.2. [`https://github.com/FuelLabs/quickstart/blob/master/.devcontainer/devcontainer.json`](https://github.com/FuelLabs/quickstart/blob/master/.devcontainer/devcontainer.json)
+
+## How to start a codespace
+
+1. Navigate to the repo that has Github Codespaces configured.
+2. Choose Code → Create codespace on master
+
+    <Box.Centered>
+    ![Create codespace walkthrough](/images/create-codespace.gif)
+    </Box.Centered>
+
+3. This will open a new tab with your codespace. It can take several minutes to start up.
+
+    3.1.  You now have a fully functional remote development environment with the Fuel toolchain installed! You can use `forc` to build and deploy Sway code, or `fuelup` to manage the toolchain version. You also have the Sway LSP plugin with full feature support for Sway, like syntax highlighting, hover docs, go-to definitions, etc.
+
+    3.2. Note: if you are working on a large repository and find the codespace is running slow, you can configure it to use a larger instance by clicking Code → … → change machine type on a running instance, or starting a new instance with Code → … → New with options.
+
+### Pricing & billing
+
+You will be required to enter billing information, however there is a substantial free tier.
+
+## What's next?
+
+Now you are ready to start building with Fuel.
+
+👉 Check out the [quickstart guide](/guides/quickstart) to deploy your first smart contract.

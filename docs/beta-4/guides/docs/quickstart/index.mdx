@@ -1,0 +1,39 @@
+---
+title: Quickstart
+category: Quickstart
+parent:
+  label: All Guides
+  link: /guides
+---
+
+# Developer Quickstart
+
+This guide will walk developers through writing a smart contract in Sway, a simple test, deploying to Fuel, and building a frontend.
+
+Before we begin, it may be helpful to understand the terminology that will be used throughout the docs and how they relate to each other:
+
+- **Fuel**: the Fuel blockchain.
+- **FuelVM**: the virtual machine powering Fuel.
+- **Sway**: the domain-specific language crafted for the FuelVM; it is inspired by Rust.
+- **Forc**: the build system and package manager for Sway, similar to Cargo for Rust.
+
+## Understand Sway Program Types
+
+There are four types of Sway programs:
+
+- `contract`
+- `predicate`
+- `script`
+- `library`
+
+The main features of a smart contract that differentiate it from scripts or predicates are that it is callable and stateful.
+
+A script is runnable bytecode on the chain which can call contracts to perform some task. It does not represent ownership of any resources and it cannot be called by a contract.
+
+See [the chapter on program types](/docs/sway/sway-program-types) for more information.
+
+A few pieces of info that will be helpful before moving on:
+
+- This guide was created using VSCode as the code editor.
+- Download the Sway language extension in VSCode to get syntax highlighting, keyboard shortcuts, and more.
+- Download the rust-analyzer extension in VSCode to get syntax highlighting, code completion, and more.

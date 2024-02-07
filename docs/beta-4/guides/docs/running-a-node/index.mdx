@@ -1,0 +1,51 @@
+---
+title: Running a Node
+category: Running a Node
+parent:
+  label: All Guides
+  link: /guides
+---
+
+# Running a Node
+
+This guide is designed to swiftly introduce you to the process of running a local node for the Fuel blockchain.
+
+## What is a Node?
+
+In the context of the Fuel blockchain, a node, often referred to as a 'client', is a piece of software that downloads and maintains a copy of the Fuel blockchain. It verifies the authenticity of every block and transaction, ensuring that your copy is always up-to-date and in sync with the network.
+
+For the latest version of the Fuel client, please visit [here](https://github.com/FuelLabs/fuel-core).
+
+## Understanding the Fuel Network's Beta Testnet Consensus Mechanism
+
+The Fuel network's beta testnets operates on a Proof of Authority (PoA) consensus mechanism. Here's a brief overview:
+
+**Validators**: In PoA, there are specific entities, known as validators or "authorities", who are given the responsibility to create new blocks and validate transactions. Unlike other consensus mechanisms like Proof of Work (PoW) or Proof of Stake (PoS), where validators are chosen based on computational power or stake, PoA validators are selected based on their reputation and trustworthiness within the network.
+
+**Benefits** of PoA: PoA offers faster transaction times and requires less computational power, making it energy-efficient. The network's security and integrity are maintained by the trustworthiness of the selected validators.
+
+## Why Run Your Own Node?
+
+Running your own node provides several advantages:
+
+1. **Query Freedom:** By hosting your own node, you can execute a higher number of queries without encountering any rate limits.
+2. **Network Independence:** Having your own node ensures that you're not reliant on third-party services, giving you full control over your interactions with the Fuel blockchain.
+
+## Hardware Requirements
+
+|  Hardware  | Minimum  | Recommended |
+|------------|----------|-------------|
+|  Processor |  2 Cores |  8 Cores    |
+|  Memory    |  4 GB    |  12 GB      |
+|  Storage   |  30 GB   |  100 GB     |
+
+For low API traffic, an AWS m5.large should be more than sufficient. However, we recommend an AWS m5.4xlarge instance to match the configuration we use for running the network.
+
+> For regular tasks such as deploying simple contracts and testing contract interactions locally, there is no need to meet all the hardware requirements below.
+
+## Getting Started
+
+Depending on your requirements, you can opt for one of the following setups:
+
+1. [Run a Local Fuel Network Node:](/guides/running-a-node/running-a-local-node) This setup allows you to run a node that operates solely on your local environment.
+2. [Connect to the Beta 4 Fuel Network:](/guides/running-a-node/running-a-beta-4-node) With this setup, your local node will connect and sync with the beta4 version of the Fuel network.
