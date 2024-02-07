@@ -77,7 +77,7 @@ const includeDirs = [
   'docs/beta-4/fuel-specs/src',
   'docs/beta-4/fuel-graphql-docs/docs',
   'docs/beta-4/fuels-wallet/packages/docs/docs',
-  'docs/beta-4/guides/docs',
+  // 'docs/beta-4/guides/docs',
 ];
 
 const excludeDirs = [

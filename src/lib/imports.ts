@@ -3,22 +3,21 @@
 import dynamic from 'next/dynamic';
 import type { ComponentType } from 'react';
 import * as beta4GQLExamples from '~/docs/beta-4/fuel-graphql-docs/examples';
-import * as beta4FuelExamples from '~/docs/beta-4/fuels-wallet/packages/docs/examples';
+// import * as beta4FuelExamples from '~/docs/beta-4/fuels-wallet/packages/docs/examples';
 import * as GQLExamples from '~/docs/fuel-graphql-docs/examples';
 import * as FuelExamples from '~/docs/fuels-wallet/packages/docs/examples';
 import * as nightlyGQLExamples from '~/docs/nightly/fuel-graphql-docs/examples';
 import * as nightlyFuelExamples from '~/docs/nightly/fuels-wallet/packages/docs/examples';
 import { TD, TH } from '~/src/components/Table';
 import TestAction from '~/src/components/TestAction';
+import { COMPONENTS as BETA_4_GQL_COMPONENTS } from '~/src/generated/components/beta-4-graphql';
+import { COMPONENTS as BETA_4_WALLET_COMPONENTS } from '~/src/generated/components/beta-4-wallet';
 import { COMPONENTS as GQL_COMPONENTS } from '~/src/generated/components/graphql';
 import { COMPONENTS as NIGHTLY_GQL_COMPONENTS } from '~/src/generated/components/nightly-graphql';
 import { COMPONENTS as NIGHTLY_WALLET_COMPONENTS } from '~/src/generated/components/nightly-wallet';
 import { COMPONENTS as WALLET_COMPONENTS } from '~/src/generated/components/wallet';
 
 import type { ComponentsList, VersionSet } from '../types';
-
-import { COMPONENTS as BETA_4_GQL_COMPONENTS } from '~/src/generated/components/beta-4-graphql';
-import { COMPONENTS as BETA_4_WALLET_COMPONENTS } from '~/src/generated/components/beta-4-wallet';
 
 function loadComponent(imp: any, name?: string): ComponentType<object> {
   return dynamic(() => imp.then((mod: any) => (name ? mod[name] : mod)), {
@@ -35,8 +34,8 @@ export interface ComponentsObject {
     | typeof FuelExamples
     | typeof nightlyGQLExamples
     | typeof nightlyFuelExamples
-    | typeof beta4GQLExamples
-    | typeof beta4FuelExamples;
+    | typeof beta4GQLExamples;
+  // | typeof beta4FuelExamples;
 }
 
 export function getComponents(docSlug: string, versionSet: VersionSet) {
@@ -69,7 +68,7 @@ export function getComponents(docSlug: string, versionSet: VersionSet) {
       components.Examples = nightlyFuelExamples;
       addComponents(NIGHTLY_WALLET_COMPONENTS);
     } else if (versionSet === 'beta-4') {
-      components.Examples = beta4FuelExamples;
+      // components.Examples = beta4FuelExamples;
       addComponents(BETA_4_WALLET_COMPONENTS);
     } else {
       components.Examples = FuelExamples;
