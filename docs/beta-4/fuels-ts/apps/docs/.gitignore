@@ -1,6 +1,0 @@
-.vitepress/cache
-.vitepress/.temp
-
-.typedoc/api-links.json
-
-src/api

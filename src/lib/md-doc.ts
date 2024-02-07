@@ -103,7 +103,9 @@ export class Doc {
   }
 
   #getConfig(slug: string): Config {
-    slug = slug.replace('docs/nightly/', 'docs/');
+    slug = slug
+      .replace('docs/nightly/', 'docs/')
+      .replace('docs/beta-4/', 'docs/');
     try {
       if (slug.startsWith('docs/')) {
         slug = slug.replace('docs/', '');
@@ -153,9 +155,12 @@ export class Doc {
   }
 
   sidebarLinks(slug: string) {
-    const configSlug = slug.includes('/nightly/')
-      ? `nightly-${this.config.slug}`
-      : this.config.slug;
+    let configSlug = this.config.slug;
+    if (slug.includes('/nightly/')) {
+      configSlug = `nightly-${this.config.slug}`;
+    } else if (slug.includes('/beta-4/')) {
+      configSlug = `beta-4-${this.config.slug}`;
+    }
     let guideName = this.item.slug.split('/')[0];
     const linksPath = join(
       DOCS_DIRECTORY,
@@ -163,11 +168,15 @@ export class Doc {
     );
     const links = JSON.parse(readFileSync(linksPath, 'utf8'));
     if (
-      (configSlug === 'guides' || configSlug === 'nightly-guides') &&
+      (configSlug === 'guides' ||
+        configSlug === 'nightly-guides' ||
+        configSlug === 'beta-4-guides') &&
       guideName
     ) {
       if (configSlug === 'nightly-guides') {
         guideName = `${guideName}/nightly`;
+      } else if (configSlug === 'beta-4-guides') {
+        guideName = `${guideName}/beta-4`;
       }
       const slug = this.item.slug
         .replace(`${guideName}/`, '')
