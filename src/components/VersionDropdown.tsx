@@ -1,7 +1,7 @@
 import { cssObj } from '@fuel-ui/css';
 import { Dropdown, Text, Icon } from '@fuel-ui/react';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { FUEL_TESTNET, FUEL_TESTNET_UPPER_CASE } from '../config/constants';
 import { useSetVersion } from '../hooks/useVersion';
@@ -13,6 +13,15 @@ export default function VersionDropdown({
   versionSet: VersionSet;
 }) {
   const [opened, setOpened] = useState(false);
+  const [activeVersion, setActiveVersion] = useState<
+    typeof FUEL_TESTNET_UPPER_CASE | 'Nightly' | 'Beta-4'
+  >(
+    versionSet === 'default'
+      ? FUEL_TESTNET_UPPER_CASE
+      : versionSet === 'nightly'
+      ? 'Nightly'
+      : 'Beta-4'
+  );
   const router = useRouter();
   const setVersion = useSetVersion();
   const splitPath = router.asPath.split('/');
@@ -23,10 +32,17 @@ export default function VersionDropdown({
     (router.asPath.includes('nightly') || router.asPath.includes('beta-4'))
       ? 3
       : 2;
-  const version =
-    versionSet === 'default'
-      ? FUEL_TESTNET_UPPER_CASE
-      : versionSet.charAt(0).toUpperCase() + versionSet.slice(1);
+
+  useEffect(() => {
+    setActiveVersion(
+      versionSet === 'default'
+        ? FUEL_TESTNET_UPPER_CASE
+        : versionSet === 'nightly'
+        ? 'Nightly'
+        : 'Beta-4'
+    );
+  }, [versionSet]);
+
   return (
     <Dropdown isOpen={opened} onOpenChange={setOpened}>
       <Dropdown.Trigger
@@ -36,7 +52,7 @@ export default function VersionDropdown({
           opened ? { ...styles.trigger, ...styles.triggerOpen } : styles.trigger
         }
       >
-        Version: {version}
+        Version: {activeVersion}
       </Dropdown.Trigger>
       <Dropdown.Menu
         disabledKeys={versionSet === 'default' ? [FUEL_TESTNET] : [versionSet]}
@@ -46,8 +62,11 @@ export default function VersionDropdown({
           if (setVersion) {
             if (action === FUEL_TESTNET) {
               setVersion(FUEL_TESTNET_UPPER_CASE);
-            } else if (version === 'Nightly' || version === 'Beta-4') {
-              setVersion(version);
+            } else if (
+              activeVersion === 'Nightly' ||
+              activeVersion === 'Beta-4'
+            ) {
+              setVersion(activeVersion);
             }
             if (isDoc) {
               let book = splitPath[bookIndex];
@@ -56,9 +75,11 @@ export default function VersionDropdown({
               } else if (book === 'graphql') {
                 book = 'graphql/overview';
               }
-              router.push(
-                `/docs/${action === 'nightly' ? 'nightly/' : ''}${book}`
-              );
+              const link = `/docs/${
+                action === FUEL_TESTNET ? '' : `${action}/`
+              }${book}`;
+              console.log('LINK:', link);
+              router.push(link);
             }
           }
         }}

@@ -21,6 +21,8 @@ export function DocScreen(props: DocPageProps) {
       setVersionSet('nightly');
     } else if (version === 'Beta-4' || doc.versionSet === 'beta-4') {
       setVersionSet('beta-4');
+    } else {
+      setVersionSet('default');
     }
   }, [version, doc]);
 
