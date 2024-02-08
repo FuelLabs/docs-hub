@@ -1,4 +1,4 @@
-import { Fuel } from '@fuel-wallet/sdk';
+import { Fuel } from 'beta-4-wallet-sdk';
 import { useState, useEffect } from 'react';
 
 const fuelSDK = new Fuel();

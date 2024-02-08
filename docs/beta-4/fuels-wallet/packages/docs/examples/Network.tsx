@@ -3,7 +3,7 @@ import { cssObj } from '@fuel-ui/css';
 import { Button, Box, Tag, Text } from '@fuel-ui/react';
 import { useState } from 'react';
 
-import type { FuelProviderConfig } from '../../types/src';
+import type { FuelProviderConfig } from '../../../types/src';
 import { ExampleBox } from '../src/components/ExampleBox';
 import { useFuel } from '../src/hooks/useFuel';
 import { useIsConnected } from '../src/hooks/useIsConnected';
@@ -31,7 +31,7 @@ export function Network() {
     <ExampleBox error={errorMessage}>
       <Box.Stack css={styles.root}>
         <Button
-          onPress={handleGetNetwork}
+          onClick={handleGetNetwork}
           isLoading={isLoadingNetwork}
           isDisabled={isLoadingNetwork || !fuel}
         >

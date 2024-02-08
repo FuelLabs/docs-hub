@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { cssObj } from '@fuel-ui/css';
 import { Box, Button, Tag } from '@fuel-ui/react';
-import type { Asset } from '@fuel-wallet/sdk';
+import type { Asset } from 'beta-4-wallet-sdk';
 import { useState } from 'react';
 
 import { ExampleBox } from '../src/components/ExampleBox';
@@ -31,7 +31,7 @@ export function ListAssets() {
     <ExampleBox error={errorMessage}>
       <Box.Stack css={styles.root}>
         <Button
-          onPress={handleGetAssets}
+          onClick={handleGetAssets}
           isLoading={isLoadingAssets}
           isDisabled={isLoadingAssets || !fuel}
         >

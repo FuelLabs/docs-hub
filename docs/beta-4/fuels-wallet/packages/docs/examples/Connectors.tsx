@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { Box, Button, Input } from '@fuel-ui/react';
 import { useEffect, useState } from 'react';
-import type { FuelWalletConnector } from '~/../types/src';
+import type { FuelWalletConnector } from '../.././../types/src';
 import { ExampleBox } from '~/src/components/ExampleBox';
 import { useFuel } from '~/src/hooks/useFuel';
 import { useLoading } from '~/src/hooks/useLoading';
@@ -103,14 +103,14 @@ export function Connectors() {
       </Input>
       <Box.Flex gap="$4">
         <Button
-          onPress={handleConnect}
+          onClick={handleConnect}
           isLoading={isConnecting}
           isDisabled={isConnecting || connected || !fuel}
         >
           {connected ? 'Connected' : 'Connect'}
         </Button>
         <Button
-          onPress={handleDisconnect}
+          onClick={handleDisconnect}
           isLoading={isDisconnecting}
           isDisabled={isDisconnecting || !connected || !fuel}
         >
