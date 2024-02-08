@@ -91,3 +91,4 @@ xlarge
 fuelCoreVersion
 nodeVersion
 nodeVersionMax
+versionSet
