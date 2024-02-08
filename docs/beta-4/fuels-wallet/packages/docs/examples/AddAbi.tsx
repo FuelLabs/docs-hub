@@ -2,7 +2,7 @@
 import { cssObj } from '@fuel-ui/css';
 import { Input, Box, Button, Link, Text, Tag } from '@fuel-ui/react';
 import { useState } from 'react';
-import type { AbiMap } from '~/../types/src';
+import type { AbiMap } from '../../../types/src';
 import { ExampleBox } from '~/src/components/ExampleBox';
 import { useFuel } from '~/src/hooks/useFuel';
 import { useIsConnected } from '~/src/hooks/useIsConnected';
