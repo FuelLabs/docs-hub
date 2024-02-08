@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic';
 import type { ComponentType } from 'react';
 import * as beta4GQLExamples from '~/docs/beta-4/fuel-graphql-docs/examples';
-// import * as beta4FuelExamples from '~/docs/beta-4/fuels-wallet/packages/docs/examples';
+import * as beta4FuelExamples from '~/docs/beta-4/fuels-wallet/packages/docs/examples';
 import * as GQLExamples from '~/docs/fuel-graphql-docs/examples';
 import * as FuelExamples from '~/docs/fuels-wallet/packages/docs/examples';
 import * as nightlyGQLExamples from '~/docs/nightly/fuel-graphql-docs/examples';
@@ -34,8 +34,8 @@ export interface ComponentsObject {
     | typeof FuelExamples
     | typeof nightlyGQLExamples
     | typeof nightlyFuelExamples
-    | typeof beta4GQLExamples;
-  // | typeof beta4FuelExamples;
+    | typeof beta4GQLExamples
+    | typeof beta4FuelExamples;
 }
 
 export function getComponents(docSlug: string, versionSet: VersionSet) {
@@ -65,7 +65,7 @@ export function getComponents(docSlug: string, versionSet: VersionSet) {
       components.Examples = nightlyFuelExamples;
       addComponents(NIGHTLY_WALLET_COMPONENTS);
     } else if (versionSet === 'beta-4') {
-      // components.Examples = beta4FuelExamples;
+      components.Examples = beta4FuelExamples;
       addComponents(BETA_4_WALLET_COMPONENTS);
     } else {
       components.Examples = FuelExamples;

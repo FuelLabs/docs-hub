@@ -5,7 +5,7 @@ import { getBlockExplorerLink, getGasConfig } from '@fuel-wallet/sdk';
 import type { BN } from 'fuels';
 import { BaseAssetId, bn, Address, DECIMAL_UNITS } from 'fuels';
 import { useMemo, useState } from 'react';
-import { useAssets } from '~/src/hooks/useAssets';
+import { useAssets } from '../src/hooks/useAssets';
 
 import { ExampleBox } from '../src/components/ExampleBox';
 import { useFuel } from '../src/hooks/useFuel';
@@ -90,7 +90,7 @@ export function Transfer() {
           </Box>
           <Box>
             <Button
-              onPress={() => amount && sendTransaction(amount, addr, assetId)}
+              onClick={() => amount && sendTransaction(amount, addr, assetId)}
               isLoading={sendingTransaction}
               isDisabled={sendingTransaction || !fuel}
             >

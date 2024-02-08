@@ -52,6 +52,7 @@
     "acorn-walk": "^8.2.0",
     "adm-zip": "^0.5.10",
     "airtable": "^0.12.2",
+    "beta-4-wallet-sdk": "npm:@fuel-wallet/sdk@0.13.0",
     "contentlayer": "^0.3.4",
     "cookie": "^0.5.0",
     "dotenv": "^16.3.1",
