@@ -11,8 +11,10 @@ import {
   EXPLORER_LINK,
   BETA_4_EXPLORER_LINK,
   FAUCET_LINK,
+  BETA_4_FAUCET_LINK,
   FUEL_TESTNET,
   PLAYGROUND_LINK,
+  BETA_4_PLAYGROUND_LINK,
 } from '../config/constants';
 import { runtime } from '../lib/runtime';
 import type { VersionSet } from '../types';
@@ -83,20 +85,27 @@ export function MDXRender({
     <provider.MDXProvider components={{ ...components, ...mdxComponents }}>
       <Content
         versionSet={versionSet}
-        fuelTestnet={FUEL_TESTNET}
+        fuelTestnet={versionSet === 'beta-4' ? 'beta-4' : FUEL_TESTNET}
         fuelTestnetInlineCode={<Code>{FUEL_TESTNET}</Code>}
         faucetLink={
-          <Link href={FAUCET_LINK}>
-            <Code>{FUEL_TESTNET}</Code> faucet
+          <Link
+            href={versionSet === 'beta-4' ? BETA_4_FAUCET_LINK : FAUCET_LINK}
+          >
+            <Code>{versionSet === 'beta-4' ? 'beta-4' : FUEL_TESTNET}</Code>{' '}
+            faucet
           </Link>
         }
-        faucetUrl={FAUCET_LINK}
+        faucetUrl={versionSet === 'beta-4' ? BETA_4_FAUCET_LINK : FAUCET_LINK}
         explorerUrl={
           versionSet === 'beta-4' ? BETA_4_EXPLORER_LINK : EXPLORER_LINK
         }
         bridgeUrl={BRIDGE_LINK}
         GQLPlaygroundLink={
-          <Link href={PLAYGROUND_LINK}>
+          <Link
+            href={
+              versionSet === 'beta-4' ? BETA_4_PLAYGROUND_LINK : PLAYGROUND_LINK
+            }
+          >
             <Code>{FUEL_TESTNET}</Code> graphQL playground
           </Link>
         }
