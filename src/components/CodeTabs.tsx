@@ -6,7 +6,6 @@ interface CodeTabsProps {
 }
 
 export function CodeTabs(props: CodeTabsProps) {
-  // console.log('HERE');
   if (props.children) {
     return (
       <Tabs css={styles.root} defaultValue="pnpm">

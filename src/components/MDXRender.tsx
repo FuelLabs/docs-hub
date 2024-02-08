@@ -23,6 +23,7 @@ import { Blockquote } from './Blockquote';
 import { CardSection } from './CardSection';
 import { Code } from './Code';
 import { CodeTabs } from './CodeTabs';
+import { ConditionalContent } from './ConditionalContent';
 import { Divider } from './Divider';
 import { Heading } from './Heading';
 import { Link } from './Link';
@@ -57,6 +58,7 @@ export const mdxComponents = {
   CardSection,
   QuickstartCallout,
   CodeTabs,
+  ConditionalContent,
 } as any;
 
 type MDXRenderProps = {

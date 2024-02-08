@@ -93,6 +93,11 @@ const nextConfig = {
         destination: '/docs/wallet/dev/getting-started/',
         permanent: true,
       },
+      {
+        source: '/guides/running-a-node/running-a-beta-4-node/',
+        destination: '/guides/running-a-node/running-a-testnet-node/',
+        permanent: true,
+      },
     ];
   },
   typescript: {
