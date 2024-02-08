@@ -1,0 +1,4 @@
+
+> @fuel-ts/versions@0.69.1 prebuild /Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/packages/versions
+> tsx ./scripts/rewriteVersions.ts
+
