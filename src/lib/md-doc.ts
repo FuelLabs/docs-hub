@@ -7,7 +7,9 @@ import { join } from 'path';
 import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
 import { codeImport as walletCodeImport } from '~/docs/fuels-wallet/packages/docs/src/lib/code-import';
 import { codeExamples as nightlyCodeExamples } from '~/docs/nightly/fuel-graphql-docs/src/lib/code-examples';
+import { codeExamples as beta4CodeExamples } from '~/docs/beta-4/fuel-graphql-docs/src/lib/code-examples';
 import { codeImport as nightlyWalletCodeImport } from '~/docs/nightly/fuels-wallet/packages/docs/src/lib/code-import';
+import { codeImport as beta4WalletCodeImport } from '~/docs/beta-4/fuels-wallet/packages/docs/src/lib/code-import';
 import { codeImport } from '~/src/lib/plugins/code-import';
 import { textImport } from '~/src/lib/plugins/text-import';
 
@@ -240,20 +242,23 @@ export class Doc {
     const filepath = this.md._raw.sourceFilePath;
     let plugins = [addRawDocumentToVFile(this.md._raw), ...remarkPlugins];
 
-    if (this.md.slug.startsWith('docs/wallet/')) {
+    const slug = this.md.slug;
+
+    if (slug.startsWith('docs/wallet/')) {
       plugins = plugins.concat([[walletCodeImport, { filepath }] as any]);
-    } else if (this.md.slug.startsWith('docs/nightly/wallet/')) {
+    } else if (slug.startsWith('docs/nightly/wallet/')) {
       plugins = plugins.concat([
         [nightlyWalletCodeImport, { filepath }] as any,
       ]);
-    } else if (this.md.slug.startsWith('docs/graphql/')) {
+    } else if (slug.startsWith('docs/beta-4/wallet/')) {
+      plugins = plugins.concat([[beta4WalletCodeImport, { filepath }] as any]);
+    } else if (slug.startsWith('docs/graphql/')) {
       plugins = plugins.concat([[codeExamples, { filepath }] as any]);
-    } else if (this.md.slug.startsWith('docs/nightly/graphql/')) {
+    } else if (slug.startsWith('docs/nightly/graphql/')) {
       plugins = plugins.concat([[nightlyCodeExamples, { filepath }] as any]);
-    } else if (
-      this.md.slug.includes('guides') ||
-      this.md.slug.includes('/intro/')
-    ) {
+    } else if (slug.startsWith('docs/beta-4/graphql/')) {
+      plugins = plugins.concat([[beta4CodeExamples, { filepath }] as any]);
+    } else if (slug.includes('guides') || slug.includes('/intro/')) {
       plugins = plugins.concat([[codeImport, { filepath }] as any]);
       plugins = plugins.concat([[textImport, { filepath }] as any]);
     }

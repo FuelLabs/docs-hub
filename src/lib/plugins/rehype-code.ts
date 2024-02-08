@@ -282,15 +282,18 @@ function getGraphQLCodeTabs(node: any) {
   const tsContent = node.attributes?.find(findProp('__ts_content'));
   const apolloContent = node.attributes?.find(findProp('__apollo_content'));
   const urqlContent = node.attributes?.find(findProp('__urql_content'));
+  const filepath = node.attributes?.find(findProp('__filepath'));
 
   const tsCodeContent = tsContent?.value ?? '';
   const tsCodeRaw = prettier.format(tsCodeContent, prettierProps);
   const tsCode = h('code', codeProps, tsCodeRaw);
 
+  const testnet = filepath.value.includes('/beta-4/') ? 'beta-4' : FUEL_TESTNET;
+
   const apolloImport = `import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 
   const apolloClient= new ApolloClient({
-  uri: 'https://${FUEL_TESTNET}.fuel.network/graphql',
+  uri: 'https://${testnet}.fuel.network/graphql',
   cache: new InMemoryCache(),
   });\n\n`;
   const apolloContentValue = apolloImport + apolloContent?.value ?? '';
@@ -300,7 +303,7 @@ function getGraphQLCodeTabs(node: any) {
   const urlqImport = `import { Client, cacheExchange, fetchExchange } from 'urql';
   
   const urqlClient = new Client({
-    url: 'https:/${FUEL_TESTNET}.fuel.network/graphql',
+    url: 'https:/${testnet}.fuel.network/graphql',
     exchanges: [cacheExchange, fetchExchange],
   });\n\n`;
   const urlQContentValue = urlqImport + urqlContent?.value ?? '';

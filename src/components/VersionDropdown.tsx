@@ -34,13 +34,14 @@ export default function VersionDropdown({
       : 2;
 
   useEffect(() => {
-    setActiveVersion(
+    const newActiveVersion =
       versionSet === 'default'
         ? FUEL_TESTNET_UPPER_CASE
         : versionSet === 'nightly'
         ? 'Nightly'
-        : 'Beta-4'
-    );
+        : 'Beta-4';
+    console.log('NEW ACTIVE VERSION:', newActiveVersion);
+    setActiveVersion(newActiveVersion);
   }, [versionSet]);
 
   return (
@@ -60,13 +61,13 @@ export default function VersionDropdown({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onAction={(action: any) => {
           if (setVersion) {
+            console.log('action:', action);
             if (action === FUEL_TESTNET) {
               setVersion(FUEL_TESTNET_UPPER_CASE);
-            } else if (
-              activeVersion === 'Nightly' ||
-              activeVersion === 'Beta-4'
-            ) {
-              setVersion(activeVersion);
+            } else if (action === 'beta-4') {
+              setVersion('Beta-4');
+            } else {
+              setVersion('Nightly');
             }
             if (isDoc) {
               let book = splitPath[bookIndex];
@@ -78,7 +79,6 @@ export default function VersionDropdown({
               const link = `/docs/${
                 action === FUEL_TESTNET ? '' : `${action}/`
               }${book}`;
-              console.log('LINK:', link);
               router.push(link);
             }
           }
