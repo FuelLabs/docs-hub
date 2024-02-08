@@ -1,5 +1,5 @@
 {
-  "extends": "./tsconfig.base.json",
+  "extends": "@fuels/ts-config/base.json",
   "compilerOptions": {
     "types": ["@fuel-wallet/sdk"],
     "plugins": [{ "name": "next" }],

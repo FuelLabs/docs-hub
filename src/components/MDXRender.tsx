@@ -9,6 +9,7 @@ import { useMemo } from 'react';
 import {
   BRIDGE_LINK,
   EXPLORER_LINK,
+  BETA_4_EXPLORER_LINK,
   FAUCET_LINK,
   FUEL_TESTNET,
   PLAYGROUND_LINK,
@@ -90,7 +91,9 @@ export function MDXRender({
           </Link>
         }
         faucetUrl={FAUCET_LINK}
-        explorerUrl={EXPLORER_LINK}
+        explorerUrl={
+          versionSet === 'beta-4' ? BETA_4_EXPLORER_LINK : EXPLORER_LINK
+        }
         bridgeUrl={BRIDGE_LINK}
         GQLPlaygroundLink={
           <Link href={PLAYGROUND_LINK}>

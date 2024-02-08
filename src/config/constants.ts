@@ -10,6 +10,8 @@ export const FUEL_TESTNET_UPPER_CASE = 'Beta-5';
 export const FAUCET_LINK = `https://faucet-${FUEL_TESTNET}.fuel.network/`;
 export const PLAYGROUND_LINK = `https://${FUEL_TESTNET}.fuel.network/playground/`;
 export const EXPLORER_LINK = 'https://app.fuel.network/';
+export const BETA_4_EXPLORER_LINK =
+  'https://fuellabs.github.io/block-explorer-v2/beta-4/';
 export const BRIDGE_LINK = 'https://alpha.fuel.network/bridge';
 
 export type LinkObject = {

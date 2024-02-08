@@ -40,7 +40,7 @@
     "@fuel-wallet/playwright-utils": "^0.13.10",
     "@fuel-wallet/react": "0.15.2",
     "@fuel-wallet/sdk": "0.15.2",
-    "@fuels/eslint-plugin": "^0.0.8",
+    "@fuels/eslint-plugin": "^0.15.1",
     "@fuels/prettier-config": "^0.0.8",
     "@fuels/ts-config": "^0.0.8",
     "@mdx-js/mdx": "^2.3.0",
