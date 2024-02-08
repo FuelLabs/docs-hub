@@ -40,7 +40,7 @@ forc deploy --unsigned --node-url 127.0.0.1:4000/graphql
 ## Chain Configuration
 
 To modify the initial state of the chain, you must configure a `chainConfig.json` file.
-Here is an example of what that looks like using version {props.fuelCoreVersion} of `fuel-core`:
+Here is an example of what that looks like using version {props.versionSet === '0.20.4' ? 'beta-4' : props.fuelCoreVersion} of `fuel-core`:
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
 <CodeImport
