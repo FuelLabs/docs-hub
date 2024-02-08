@@ -57,10 +57,7 @@ export function getComponents(docSlug: string, versionSet: VersionSet) {
 
   if (docSlug.includes('guides/')) {
     components.TestAction = TestAction;
-  } else if (
-    docSlug.includes('docs/wallet') ||
-    docSlug.includes('docs/nightly/wallet')
-  ) {
+  } else if (docSlug.includes('/wallet/')) {
     components.td = TD;
     components.th = TH;
 
@@ -74,10 +71,7 @@ export function getComponents(docSlug: string, versionSet: VersionSet) {
       components.Examples = FuelExamples;
       addComponents(WALLET_COMPONENTS);
     }
-  } else if (
-    docSlug.includes('docs/graphql') ||
-    docSlug.includes('docs/nightly/graphql')
-  ) {
+  } else if (docSlug.includes('/graphql/')) {
     if (versionSet === 'nightly') {
       components.GQLExamples = nightlyGQLExamples;
       addComponents(NIGHTLY_GQL_COMPONENTS);
