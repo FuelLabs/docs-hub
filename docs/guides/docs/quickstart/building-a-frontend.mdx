@@ -102,15 +102,19 @@ action={{
 />
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
+
 ```sh
 npm install fuels@0.73.0 @fuel-wallet/sdk@0.15.2 @fuel-wallet/react@0.15.2
 ```
+
 </ConditionalContent>
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['beta-4']}>
+
 ```sh
 npm install fuels@0.60.0 @fuel-wallet/sdk@0.13.10
 ```
+
 </ConditionalContent>
 
 ## Generate contract types
@@ -307,6 +311,7 @@ You can now view frontend in the browser.
 Note that the development build is not optimized.
 To create a production build, use npm run build.
 ```
+
 <ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
 Click the "Connect" button and select "Fuel Wallet Development" to connect your wallet.
 Once connected, you should see the counter value and increment button:
@@ -339,12 +344,14 @@ To develop and test faster, we recommend using the [`fuels dev` command](/docs/f
 Once you're ready to redeploy your contract to the testnet, here are the steps you should take to get your frontend and contract back in sync:
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
+
 - In your frontend directory, re-run this command: `npx fuels build`.
 - In your contract directory, redeploy the contract by running this command and following the same steps as above to sign the transaction with your wallet: `forc deploy --testnet`.
 - In your frontend directory, update the contract ID in your `App.tsx` file.
 </ConditionalContent>
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['beta-4']}>
+
 - In your contract directory, run `forc build`
 - In your contract directory, redeploy the contract by running this command and following the same steps as above to sign the transaction with your wallet: `forc deploy --testnet`
 - In your frontend directory, re-run this command: `npx fuels typegen -i ../counter-contract/out/debug/*-abi.json -o ./src/contracts`

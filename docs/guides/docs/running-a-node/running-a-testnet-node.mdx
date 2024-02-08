@@ -53,6 +53,7 @@ You can do this by running the commands below:
 fuelup toolchain install beta-4
 fuelup default beta-4
 ```
+
 </ConditionalContent>
 
 ## Getting a Sepolia (Ethereum Testnet) API Key
@@ -105,9 +106,11 @@ fuel-core-keygen new --key-type peering
 }
 ### Do not share or lose this private key! Press any key to complete. ###
 ```
+
 </ConditionalContent>
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['beta-4']}>
+
 ```sh
 fuel-core-keygen new --key-type peering
 {
@@ -116,6 +119,7 @@ fuel-core-keygen new --key-type peering
   "type":"p2p"
 }
 ```
+
 </ConditionalContent>
 
 {/*// ANCHOR_END: generate_fuel_p2p_key_command*/}
@@ -153,6 +157,7 @@ Finally to put everything together to start the node, run the following command:
 {/*running_a_local_node:example:end*/}
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
+
 ```sh
 fuel-core run \
 --service-name {ANY_SERVICE_NAME} \
@@ -170,9 +175,11 @@ fuel-core run \
 --relayer-da-deploy-height 4867877 \
 --relayer-log-page-size 2000
 ```
+
 </ConditionalContent>
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['beta-4']}>
+
 ```sh
 fuel-core run \
 --service-name {ANY_SERVICE_NAME} \
@@ -190,6 +197,7 @@ fuel-core run \
 --relayer-da-deploy-height 4111672 \
 --relayer-log-page-size 2000
 ```
+
 </ConditionalContent>
 
 {/*running_a_local_node_end:example:start*/}
