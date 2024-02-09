@@ -34,7 +34,7 @@ Before going to the next steps, install the Fuel Wallet [here](https://chrome.go
 
 If you have previously installed the wallet, make sure you have updated to the latest version.
 
-Once you've installed the wallet, click the "Faucet" button to get some testnet tokens.
+Once you've setup your wallet, click the "Faucet" button in the wallet to get some testnet tokens.
 
 ## Initialize a React project
 
@@ -112,9 +112,28 @@ npm install fuels@0.73.0 @fuel-wallet/sdk@0.15.2 @fuel-wallet/react@0.15.2
 <ConditionalContent versionSet={props.versionSet} showForVersions={['beta-4']}>
 
 ```sh
-npm install fuels@0.60.0 @fuel-wallet/sdk@0.13.10
+npm install fuels@0.67.0 @fuel-wallet/sdk@0.13.10
 ```
 
+Next, update the TypeScript configuration at `tsconfig.json` to add the Fuel Wallet types:
+
+<TestAction
+id="config-types"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/tsconfig.json',
+  atLine: 3,
+  useSetData: ' "types": ["@fuel-wallet/sdk"],'
+}}
+/>
+
+```json
+{
+  "compilerOptions": {
+    "types": ["@fuel-wallet/sdk"]
+  }
+}
+```
 </ConditionalContent>
 
 ## Generate contract types
@@ -344,16 +363,14 @@ To develop and test faster, we recommend using the [`fuels dev` command](/docs/f
 Once you're ready to redeploy your contract to the testnet, here are the steps you should take to get your frontend and contract back in sync:
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
-
 - In your frontend directory, re-run this command: `npx fuels build`.
 - In your contract directory, redeploy the contract by running this command and following the same steps as above to sign the transaction with your wallet: `forc deploy --testnet`.
 - In your frontend directory, update the contract ID in your `App.tsx` file.
 </ConditionalContent>
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['beta-4']}>
-
 - In your contract directory, run `forc build`
-- In your contract directory, redeploy the contract by running this command and following the same steps as above to sign the transaction with your wallet: `forc deploy --testnet`
+- In your contract directory, redeploy the contract by running this command and following the same steps as above to sign the transaction with your wallet: `forc deploy --node-url https://beta-4.fuel.network/graphql --gas-price 1 `
 - In your frontend directory, re-run this command: `npx fuels typegen -i ../counter-contract/out/debug/*-abi.json -o ./src/contracts`
 - In your frontend directory, update the contract ID in your `App.tsx` file
 </ConditionalContent>
