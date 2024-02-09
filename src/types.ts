@@ -16,6 +16,8 @@ export type Config = {
   };
 };
 
+export type VersionSet = 'default' | 'nightly' | 'beta-4';
+
 export type DocType = {
   _raw: RawDocumentData;
   title: string;
@@ -27,7 +29,7 @@ export type DocType = {
   menu: string[];
   docsConfig: Config;
   parent?: { label: string; link: string };
-  isNightly: boolean;
+  versionSet: VersionSet;
 };
 
 export type BreadCrumb = {
@@ -84,7 +86,6 @@ export type Versions = {
   Forc: VersionItem;
   Sway: VersionItem;
   Fuelup: VersionItem;
-  Indexer: VersionItem;
   'Fuel Rust SDK': VersionItem;
   'Fuel TS SDK': VersionItem;
   'Fuel Wallet': VersionItem;

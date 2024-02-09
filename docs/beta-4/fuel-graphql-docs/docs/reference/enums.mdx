@@ -1,0 +1,62 @@
+---
+title: Enums
+category: Reference
+---
+
+# Enums
+
+## `ReceiptType`
+
+The receipt type inidicating what kind of transaction generated the receipt.
+
+`CALL`:
+The receipt was generated from a contract call.
+
+`RETURN`:
+The receipt was generated from a transaction that returned without data.
+
+`RETURN_DATA`:
+The receipt was generated from a transaction that returned data.
+
+`PANIC`:
+The receipt was generated from a failed contract call that panicked.
+
+`REVERT`:
+The receipt was generated from a failed contract call that reverted.
+
+`LOG`:
+The receipt was generated from a log in the contract. The Log receipt is generated for non-reference types, namely bool, u8, u16, u32, and u64.
+
+`LOG_DATA`:
+The receipt was generated from a log in the contract. LogData is generated for reference types which include all types except for the non_reference types mentioned above.
+
+`TRANSFER`:
+The receipt was generated from a transaction that transferred coins to a contract.
+
+`TRANSFER_OUT`:
+The receipt was generated from a transaction that transferred coins to an address (rather than a contract).
+
+`SCRIPT_RESULT`:
+The receipt was generated from a script.
+
+`MESSAGE_OUT`:
+The receipt was generated from a message.
+
+`MINT`:
+The receipt was generated from a mint.
+
+`BURN`:
+The receipt was generated from a burn.
+
+## `ReturnType`
+
+The type of return response for a transaction
+
+`RETURN`:
+Indicates the transaction returned without any data.
+
+`RETURN_DATA`:
+Indicates the transaction returned some data.
+
+`REVERT`:
+Indicates the transaction reverted.

@@ -51,6 +51,10 @@ export default function TestAction({ id, action }: TestActionProps) {
         action.name === 'clickByRole' ? action.elementName : null
       }
       data-testid={action.name === 'clickByTestId' ? action.testId : null}
+      data-click-by-locator={
+        action.name === 'clickByLocator' ? action.locator : null
+      }
+      data-click-by-label={action.name === 'clickByLabel' ? action.label : null}
       data-selector={action.name === 'writeBySelector' ? action.selector : null}
       data-value={action.name === 'writeBySelector' ? action.value : null}
       data-initial-index={
@@ -59,6 +63,8 @@ export default function TestAction({ id, action }: TestActionProps) {
       data-final-index={
         action.name === 'checkIfIsIncremented' ? action.finalIndex : null
       }
+      data-index={action.name === 'checkValue' ? action.index : null}
+      data-check-value={action.name === 'checkValue' ? action.value : null}
     />
   );
 }

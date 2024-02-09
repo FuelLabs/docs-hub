@@ -6,13 +6,14 @@ import { TAG_CATEGORIES } from '~/docs/guides/docs/categories';
 import { Card } from '../components/Card';
 import { Heading } from '../components/Heading';
 import type { GuideInfo } from '../pages/guides';
+import type { VersionSet } from '../types';
 
 interface GuidesPageProps {
   guides: { [key: string]: GuideInfo };
-  isNightly: boolean;
+  versionSet: VersionSet;
 }
 
-export function GuidesPage({ guides }: GuidesPageProps) {
+export function GuidesPage({ guides, versionSet }: GuidesPageProps) {
   const [active, setActive] = useState<string>('all');
 
   return (
@@ -57,6 +58,7 @@ export function GuidesPage({ guides }: GuidesPageProps) {
                 key={guideName}
                 guideInfo={guideInfo}
                 cardName={guideName}
+                versionSet={versionSet}
               />
             );
           }

@@ -17,15 +17,6 @@
       "image": ""
     }
   },
-  "about-fuel": {
-    "title": "About Fuel",
-    "slug": "about-fuel",
-    "repository": "https://github.com/FuelLabs/docs-hub",
-    "ogTags": {
-      "description": "Learn about Fuel Network",
-      "image": ""
-    }
-  },
   "sway": {
     "title": "Sway",
     "slug": "sway",
@@ -77,15 +68,6 @@
     "repository": "https://github.com/FuelLabs/fuelup",
     "ogTags": {
       "description": "Official documentation for fuelup",
-      "image": ""
-    }
-  },
-  "indexer": {
-    "title": "Fuel Indexer",
-    "slug": "indexer",
-    "repository": "https://github.com/FuelLabs/fuel-indexer",
-    "ogTags": {
-      "description": "Official documentation for the Fuel indexer",
       "image": ""
     }
   },

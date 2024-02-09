@@ -2,7 +2,12 @@ import fs from 'fs';
 import { join } from 'path';
 import toml from 'toml';
 
-import { DOCS_DIRECTORY, NIGHTLY_DOCS_DIRECTORY } from '../config/constants';
+import {
+  DOCS_DIRECTORY,
+  NIGHTLY_DOCS_DIRECTORY,
+  BETA_4_DOCS_DIRECTORY,
+} from '../config/constants';
+import type { VersionSet } from '../types';
 
 function itemFromPackageJson(docsDir: string, filename: string) {
   const file = fs.readFileSync(join(docsDir, filename), 'utf-8');
@@ -82,18 +87,6 @@ function getForcVersion(docsDir: string) {
   };
 }
 
-function getIndexerVersion(docsDir: string) {
-  const filedir = join(docsDir, 'fuel-indexer/Cargo.toml');
-  const file = fs.readFileSync(filedir, 'utf-8');
-  const tomfile = toml.parse(file);
-  return {
-    name: 'fuel-indexer',
-    category: 'Indexer',
-    version: tomfile.workspace.package.version,
-    url: tomfile.workspace.package.repository,
-  };
-}
-
 export function getFuelCoreVersion() {
   const filedir = join(DOCS_DIRECTORY, 'fuel-core/Cargo.toml');
   const file = fs.readFileSync(filedir, 'utf-8');
@@ -101,20 +94,31 @@ export function getFuelCoreVersion() {
   return tomfile.workspace.package.version;
 }
 
-export function getVersions(isNightly: boolean) {
-  const docsDir = isNightly ? NIGHTLY_DOCS_DIRECTORY : DOCS_DIRECTORY;
+// returns the version of the node required by fuels-ts
+export function getNodeVersion() {
+  const filedir = join(DOCS_DIRECTORY, 'fuels-ts/packages/fuels/package.json');
+  const file = fs.readFileSync(filedir, 'utf-8');
+  const json = JSON.parse(file);
+  return json.engines.node;
+}
+
+export function getVersions(versionSet: VersionSet) {
+  let docsDir = DOCS_DIRECTORY;
+  if (versionSet === 'nightly') {
+    docsDir = NIGHTLY_DOCS_DIRECTORY;
+  } else if (versionSet === 'beta-4') {
+    docsDir = BETA_4_DOCS_DIRECTORY;
+  }
   const wallet = getWalletVersion(docsDir);
   const tsSDK = getTSSDKVersion(docsDir);
   const rust = getRustSDKVersion(docsDir);
   const fuelup = getFuelupVersion(docsDir);
   const forc = getForcVersion(docsDir);
-  const indexer = getIndexerVersion(docsDir);
 
   return {
     Forc: forc,
     Sway: forc,
     Fuelup: fuelup,
-    'Fuel Indexer': indexer,
     'Fuel Rust SDK': rust,
     'Fuel TS SDK': tsSDK,
     'Fuel Wallet': wallet,

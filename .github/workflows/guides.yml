@@ -53,32 +53,20 @@ jobs:
       - uses: ./.github/actions/setup-node
         with:
           install: false
+      - uses: dtolnay/rust-toolchain@stable
 
     # INSTALLATIONS
       - name: Install dependencies
         run: pnpm install
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
-      - name: Install Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
       - name: Install cargo-generate
-        uses: actions-rs/cargo@v1
-        with:
-            command: install
-            args: cargo-generate
+        run: cargo install cargo-generate --locked
       - name: Install Fuelup
         run: |
             curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh
       - name: Modify Path
         run: echo "$HOME/.fuelup/bin:${GITHUB_PATH}" >> $GITHUB_PATH
-      
-    # CONFIGURE FUEL TOOLCHAIN
-      - name: Set Default Beta-4 Toolchain
-        run: fuelup toolchain install beta-4 && fuelup default beta-4
     
     # RUN E2E TESTS
       - name: Run Playwright tests for ${{ matrix.guide }}

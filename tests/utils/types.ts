@@ -10,10 +10,13 @@ export type Action =
   | GetByLocatorAndSave
   | ClickByRole
   | ClickByTestId
+  | ClickByLocator
+  | ClickByLabel
   | WriteBySelector
   | WalletApprove
   | WalletApproveConnect
-  | CheckIfIsIncremented;
+  | CheckIfIsIncremented
+  | CheckValue;
 
 // runs a command
 export type RunCommand = {
@@ -86,7 +89,7 @@ export type GetByLocatorAndSave = {
 };
 
 // click an element by the role/name
-// refer to https://playwright.dev/
+// refer to https://playwright.dev/docs/locators#locate-by-role
 export type ClickByRole = {
   name: 'clickByRole';
   role: string;
@@ -96,6 +99,16 @@ export type ClickByRole = {
 export type ClickByTestId = {
   name: 'clickByTestId';
   testId: string;
+};
+
+export type ClickByLocator = {
+  name: 'clickByLocator';
+  locator: string;
+};
+
+export type ClickByLabel = {
+  name: 'clickByLabel';
+  label: string;
 };
 
 export type WriteBySelector = {
@@ -117,4 +130,10 @@ export type CheckIfIsIncremented = {
   name: 'checkIfIsIncremented';
   initialIndex: number;
   finalIndex: number;
+};
+
+export type CheckValue = {
+  name: 'checkValue';
+  index: number;
+  value: string;
 };

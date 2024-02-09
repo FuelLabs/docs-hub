@@ -41,7 +41,6 @@ export function fixIndent() {
     const rootDir = process.cwd();
     const fullpath = join(rootDir, file.data.rawDocumentData?.sourceFilePath);
     const isSway = fullpath.includes('sway');
-    const isIndexer = fullpath.includes('/fuel-indexer/');
     const isFuelsTs = fullpath.includes('fuels-ts');
 
     visit(tree, '', (node: any) => {
@@ -72,7 +71,7 @@ export function fixIndent() {
               })
               // parsing code blocks with 8 spaces indentation
               .map((line: string) => {
-                if (isSway || isIndexer) return line;
+                if (isSway) return line;
                 if (line.match(/^\s{8}/)) {
                   return line.replace(/^\s{8}/, '');
                 }

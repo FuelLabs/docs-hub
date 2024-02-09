@@ -1,19 +1,19 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box, FuelLogo, Link } from '@fuel-ui/react';
-import type { NavOrder, Versions } from '~/src/types';
+import type { NavOrder, Versions, VersionSet } from '~/src/types';
 
 import { Sidebar } from './Sidebar';
 
 interface SidebarContainerProps {
   allNavs?: NavOrder[];
   versions?: Versions;
-  isNightly: boolean;
+  versionSet: VersionSet;
 }
 
 export function SidebarContainer({
   allNavs,
   versions,
-  isNightly,
+  versionSet,
 }: SidebarContainerProps) {
   return (
     <Box css={styles.sidebar}>
@@ -24,7 +24,11 @@ export function SidebarContainer({
       </Box>
 
       <Box>
-        <Sidebar allNavs={allNavs} versions={versions} isNightly={isNightly} />
+        <Sidebar
+          allNavs={allNavs}
+          versions={versions}
+          versionSet={versionSet}
+        />
       </Box>
     </Box>
   );

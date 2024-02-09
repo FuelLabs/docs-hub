@@ -30,6 +30,17 @@ export async function getDocs(key, order) {
         '!./nightly/sway/docs/book/src/forc/**/*.md',
       ];
       break;
+    case 'beta-4-sway':
+      paths = [
+        // SWAY DOCS
+        './beta-4/sway/docs/book/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+        // IGNORE FORC PAGES
+        '!./beta-4/sway/docs/book/src/forc/*.md',
+        '!./beta-4/sway/docs/book/src/forc/**/*.md',
+      ];
+      break;
     case 'forc':
       paths = [
         // FORC DOCS
@@ -42,6 +53,13 @@ export async function getDocs(key, order) {
         // FORC DOCS
         './nightly/sway/docs/book/src/forc/*.md',
         './nightly/sway/docs/book/src/forc/**/*.md',
+      ];
+      break;
+    case 'beta-4-forc':
+      paths = [
+        // FORC DOCS
+        './beta-4/sway/docs/book/src/forc/*.md',
+        './beta-4/sway/docs/book/src/forc/**/*.md',
       ];
       break;
     case 'fuels-rs':
@@ -62,6 +80,15 @@ export async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
+    case 'beta-4-fuels-rs':
+      paths = [
+        // RUST SDK DOCS
+        './beta-4/fuels-rs/docs/src/**/*.md',
+        './beta-4/fuels-rs/docs/src/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
     case 'fuels-ts':
       paths = [
         // TS SDK DOCS
@@ -78,6 +105,14 @@ export async function getDocs(key, order) {
         './nightly/fuels-ts/apps/docs/src/**/*.md',
       ];
       break;
+    case 'beta-4-fuels-ts':
+      paths = [
+        // TS SDK DOCS
+        './beta-4/fuels-ts/apps/docs/src/*.md',
+        './beta-4/fuels-ts/apps/docs/src/**/*.md',
+        './beta-4/fuels-ts/apps/docs/src/**/*.md',
+      ];
+      break;
     case 'wallet':
       paths = [
         // WALLET DOCS
@@ -92,6 +127,13 @@ export async function getDocs(key, order) {
         './nightly/fuels-wallet/packages/docs/docs/*.mdx',
       ];
       break;
+    case 'beta-4-wallet':
+      paths = [
+        // WALLET DOCS
+        './beta-4/fuels-wallet/packages/docs/docs/**/*.mdx',
+        './beta-4/fuels-wallet/packages/docs/docs/*.mdx',
+      ];
+      break;
     case 'graphql':
       paths = [
         // GRAPHQL DOCS
@@ -104,6 +146,13 @@ export async function getDocs(key, order) {
         // GRAPHQL DOCS
         './nightly/fuel-graphql-docs/docs/*.mdx',
         './nightly/fuel-graphql-docs/docs/**/*.mdx',
+      ];
+      break;
+    case 'beta-4-graphql':
+      paths = [
+        // GRAPHQL DOCS
+        './beta-4/fuel-graphql-docs/docs/*.mdx',
+        './beta-4/fuel-graphql-docs/docs/**/*.mdx',
       ];
       break;
     case 'fuelup':
@@ -124,20 +173,11 @@ export async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
-    case 'indexer':
+    case 'beta-4-fuelup':
       paths = [
-        // INDEXER DOCS
-        './fuel-indexer/docs/src/*.md',
-        './fuel-indexer/docs/src/**/*.md',
-        // IGNORE ALL SUMMARY PAGES
-        '!**/SUMMARY.md',
-      ];
-      break;
-    case 'nightly-indexer':
-      paths = [
-        // INDEXER DOCS
-        './nightly/fuel-indexer/docs/src/*.md',
-        './nightly/fuel-indexer/docs/src/**/*.md',
+        // FUELUP DOCS
+        './beta-4/fuelup/docs/src/*.md',
+        './beta-4/fuelup/docs/src/**/*.md',
         // IGNORE ALL SUMMARY PAGES
         '!**/SUMMARY.md',
       ];
@@ -160,6 +200,15 @@ export async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
+    case 'beta-4-specs':
+      paths = [
+        // SPECS DOCS
+        './beta-4/fuel-specs/src/*.md',
+        './beta-4/fuel-specs/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
     case 'guides':
       paths = [
         // GUIDES
@@ -173,23 +222,8 @@ export async function getDocs(key, order) {
         './intro/*.mdx',
       ];
       break;
-    // case 'nightly-guides':
-    //   paths = [
-    //     // NIGHTLY GUIDES
-    //     // TODO: update guides to use nightly
-    //     './guides/**/*.mdx',
-    //     // './nightly/guides/**/*.mdx',
-    //   ];
-    //   break;
-    // case 'about-fuel':
-    // case 'nightly-about-fuel':
-    //   paths = [
-    //     // ABOUT FUEL DOCS
-    //     './about-fuel/*.md',
-    //     './about-fuel/**/*.md',
-    //   ];
-    //   break;
     default:
+      console.log('NO KEY FOUND IN getDocs');
       break;
   }
 
@@ -243,7 +277,6 @@ function removeDocsPath(path, duplicateAPICategories) {
     newPath.includes('/sway/') ||
     newPath.includes('/fuels-rs/') ||
     newPath.includes('/forc/') ||
-    newPath.includes('/indexer/') ||
     newPath.includes('/fuelup/') ||
     newPath.includes('/specs/')
   ) {

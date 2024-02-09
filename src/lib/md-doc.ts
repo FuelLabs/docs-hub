@@ -7,7 +7,9 @@ import { join } from 'path';
 import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
 import { codeImport as walletCodeImport } from '~/docs/fuels-wallet/packages/docs/src/lib/code-import';
 import { codeExamples as nightlyCodeExamples } from '~/docs/nightly/fuel-graphql-docs/src/lib/code-examples';
+import { codeExamples as beta4CodeExamples } from '~/docs/beta-4/fuel-graphql-docs/src/lib/code-examples';
 import { codeImport as nightlyWalletCodeImport } from '~/docs/nightly/fuels-wallet/packages/docs/src/lib/code-import';
+import { codeImport as beta4WalletCodeImport } from '~/docs/beta-4/fuels-wallet/packages/docs/src/lib/code-import';
 import { codeImport } from '~/src/lib/plugins/code-import';
 import { textImport } from '~/src/lib/plugins/text-import';
 
@@ -68,10 +70,18 @@ export class Doc {
     const split = item.slug.split('/');
     let category = item.category;
     if (!category && item.slug.includes('docs/')) {
-      const isNightly = item.slug.includes('/nightly/');
-      const index = isNightly ? 3 : 2;
+      const isNotDefault =
+        item.slug.includes('/nightly/') || item.slug.includes('/beta-4/');
+      const index = isNotDefault ? 3 : 2;
       const isIndex = split.length === index;
       category = split[isIndex ? index - 1 : index].replaceAll('-', ' ');
+    }
+
+    let versionSet = 'default';
+    if (item.slug.includes('/nightly/')) {
+      versionSet = 'nightly';
+    } else if (item.slug.includes('/beta-4/')) {
+      versionSet = 'beta-4';
     }
 
     const doc = {
@@ -88,14 +98,16 @@ export class Doc {
         ...config,
         slug: item.slug,
       },
-      isNightly: item.slug.includes('/nightly/'),
+      versionSet,
     } as DocType;
 
     this.item = doc;
   }
 
   #getConfig(slug: string): Config {
-    slug = slug.replace('docs/nightly/', 'docs/');
+    slug = slug
+      .replace('docs/nightly/', 'docs/')
+      .replace('docs/beta-4/', 'docs/');
     try {
       if (slug.startsWith('docs/')) {
         slug = slug.replace('docs/', '');
@@ -145,9 +157,12 @@ export class Doc {
   }
 
   sidebarLinks(slug: string) {
-    const configSlug = slug.includes('/nightly/')
-      ? `nightly-${this.config.slug}`
-      : this.config.slug;
+    let configSlug = this.config.slug;
+    if (slug.includes('/nightly/')) {
+      configSlug = `nightly-${this.config.slug}`;
+    } else if (slug.includes('/beta-4/')) {
+      configSlug = `beta-4-${this.config.slug}`;
+    }
     let guideName = this.item.slug.split('/')[0];
     const linksPath = join(
       DOCS_DIRECTORY,
@@ -155,11 +170,15 @@ export class Doc {
     );
     const links = JSON.parse(readFileSync(linksPath, 'utf8'));
     if (
-      (configSlug === 'guides' || configSlug === 'nightly-guides') &&
+      (configSlug === 'guides' ||
+        configSlug === 'nightly-guides' ||
+        configSlug === 'beta-4-guides') &&
       guideName
     ) {
       if (configSlug === 'nightly-guides') {
         guideName = `${guideName}/nightly`;
+      } else if (configSlug === 'beta-4-guides') {
+        guideName = `${guideName}/beta-4`;
       }
       const slug = this.item.slug
         .replace(`${guideName}/`, '')
@@ -223,20 +242,23 @@ export class Doc {
     const filepath = this.md._raw.sourceFilePath;
     let plugins = [addRawDocumentToVFile(this.md._raw), ...remarkPlugins];
 
-    if (this.md.slug.startsWith('docs/wallet/')) {
+    const slug = this.md.slug;
+
+    if (slug.startsWith('docs/wallet/')) {
       plugins = plugins.concat([[walletCodeImport, { filepath }] as any]);
-    } else if (this.md.slug.startsWith('docs/nightly/wallet/')) {
+    } else if (slug.startsWith('docs/nightly/wallet/')) {
       plugins = plugins.concat([
         [nightlyWalletCodeImport, { filepath }] as any,
       ]);
-    } else if (this.md.slug.startsWith('docs/graphql/')) {
+    } else if (slug.startsWith('docs/beta-4/wallet/')) {
+      plugins = plugins.concat([[beta4WalletCodeImport, { filepath }] as any]);
+    } else if (slug.startsWith('docs/graphql/')) {
       plugins = plugins.concat([[codeExamples, { filepath }] as any]);
-    } else if (this.md.slug.startsWith('docs/nightly/graphql/')) {
+    } else if (slug.startsWith('docs/nightly/graphql/')) {
       plugins = plugins.concat([[nightlyCodeExamples, { filepath }] as any]);
-    } else if (
-      this.md.slug.includes('guides') ||
-      this.md.slug.includes('/intro/')
-    ) {
+    } else if (slug.startsWith('docs/beta-4/graphql/')) {
+      plugins = plugins.concat([[beta4CodeExamples, { filepath }] as any]);
+    } else if (slug.includes('guides') || slug.includes('/intro/')) {
       plugins = plugins.concat([[codeImport, { filepath }] as any]);
       plugins = plugins.concat([[textImport, { filepath }] as any]);
     }

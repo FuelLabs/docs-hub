@@ -22,9 +22,6 @@
 [submodule "docs/fuelup"]
 	path = docs/fuelup
 	url = https://github.com/FuelLabs/fuelup.git
-[submodule "docs/fuel-indexer"]
-	path = docs/fuel-indexer
-	url = https://github.com/FuelLabs/fuel-indexer.git
 [submodule "docs/fuel-specs"]
 	path = docs/fuel-specs
 	url = https://github.com/FuelLabs/fuel-specs.git
@@ -61,6 +58,3 @@
 [submodule "docs/nightly/fuelup"]
 	path = docs/nightly/fuelup
 	url = https://github.com/FuelLabs/fuelup.git
-[submodule "docs/nightly/fuel-indexer"]
-	path = docs/nightly/fuel-indexer
-	url = https://github.com/FuelLabs/fuel-indexer.git

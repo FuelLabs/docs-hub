@@ -8,13 +8,18 @@ import { DOCS_DIRECTORY } from '../config/constants';
 import useTheme from '../hooks/useTheme';
 import { Doc } from '../lib/md-doc';
 import { Docs } from '../lib/md-docs';
-import { getFuelCoreVersion, getVersions } from '../lib/versions';
+import {
+  getFuelCoreVersion,
+  getVersions,
+  getNodeVersion,
+} from '../lib/versions';
 import { DocScreen } from '../screens/DocPage';
 import type { DocType, NavOrder, SidebarLinkItem, Versions } from '../types';
 
 export type DocPageProps = {
   allNavs: NavOrder[];
   allnightlyNavs: NavOrder[];
+  allBeta4Navs: NavOrder[];
   code: string;
   md: MdDoc;
   doc: DocType;
@@ -23,7 +28,10 @@ export type DocPageProps = {
   theme: string;
   versions: Versions;
   nightlyVersions: Versions;
+  beta4Versions: Versions;
   fuelCoreVersion?: string;
+  nodeVersion?: string;
+  nodeVersionMax?: string;
 };
 
 export default function DocPage(props: DocPageProps) {
@@ -50,20 +58,32 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
     DOCS_DIRECTORY,
     `../src/generated/sidebar-links/all-nightly-orders.json`
   );
+  const allBeta4NavsPath = join(
+    DOCS_DIRECTORY,
+    `../src/generated/sidebar-links/all-beta-4-orders.json`
+  );
   const allNavs = JSON.parse(readFileSync(allNavsPath, 'utf8'));
   const allnightlyNavs = JSON.parse(readFileSync(allnightlyNavsPath, 'utf8'));
-  const versions = getVersions(false);
-  const nightlyVersions = getVersions(true);
+  const allBeta4Navs = JSON.parse(readFileSync(allBeta4NavsPath, 'utf8'));
+  const versions = getVersions('default');
+  const nightlyVersions = getVersions('nightly');
+  const beta4Versions = getVersions('beta-4');
   let fuelCoreVersion = null;
+  let nodeVersion = null;
+  let nodeVersionMax = null;
 
-  if (slug.includes('guides/')) {
+  if (slug.includes('guides/') || slug.includes('/intro/quickstart')) {
     fuelCoreVersion = getFuelCoreVersion();
+    nodeVersion = getNodeVersion().substring(1);
+    const majorVersionMax = parseInt(nodeVersion.substring(0, 2)) + 1;
+    nodeVersionMax = `${majorVersionMax}.0.0`;
   }
 
   return {
     props: {
       allNavs,
       allnightlyNavs,
+      allBeta4Navs,
       code,
       md: doc.md,
       doc: doc.item,
@@ -71,7 +91,10 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
       docLink: doc.navLinks,
       versions,
       nightlyVersions,
+      beta4Versions,
       fuelCoreVersion,
+      nodeVersion,
+      nodeVersionMax,
     },
   };
 };

@@ -5,14 +5,17 @@ import { Box, Text } from '@fuel-ui/react';
 import docsearch from '~/docsearch.json';
 
 import { NAVIGATION } from '../config/constants';
+import type { VersionSet } from '../types';
 
-function filter(items: DocSearchHit[], isNightly?: boolean) {
+function filter(items: DocSearchHit[], versionSet: VersionSet) {
   const slugs: string[] = [];
   const newItems: DocSearchHit[] = [];
   const filtered = items.filter((item) => {
     if (
-      (!isNightly && item.url.includes('/nightly/')) ||
-      (isNightly && !item.url.includes('/nightly/'))
+      (versionSet === 'default' && item.url.includes('/nightly/')) ||
+      item.url.includes('/beta-4/') ||
+      (versionSet === 'nightly' && !item.url.includes('/nightly/')) ||
+      (versionSet === 'beta-4' && !item.url.includes('/beta-4/'))
     ) {
       return false;
     }
@@ -61,12 +64,12 @@ function makeNewItem(item: DocSearchHit) {
 
 export default function Search({
   title,
-  isNightly,
+  versionSet,
 }: {
-  title?: string;
-  isNightly?: boolean;
+  title: string | undefined;
+  versionSet: VersionSet;
 }) {
-  const transformItems = (items: DocSearchHit[]) => filter(items, isNightly);
+  const transformItems = (items: DocSearchHit[]) => filter(items, versionSet);
 
   return (
     <Box.Flex css={styles.container}>
