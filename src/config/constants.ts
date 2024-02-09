@@ -14,7 +14,7 @@ export const BETA_4_PLAYGROUND_LINK = `https://beta-4.fuel.network/playground/`;
 export const EXPLORER_LINK = 'https://app.fuel.network/';
 export const BETA_4_EXPLORER_LINK =
   'https://fuellabs.github.io/block-explorer-v2/beta-4/';
-export const BRIDGE_LINK = 'https://alpha.fuel.network/bridge';
+export const BRIDGE_LINK = 'https://app.fuel.network/portal/bridge';
 
 export type LinkObject = {
   name: string;

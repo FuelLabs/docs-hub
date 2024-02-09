@@ -54,8 +54,28 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/docs/nightly/wallet/',
+        destination: '/docs/nightly/wallet/install/',
+        permanent: true,
+      },
+      {
+        source: '/docs/beta-4/wallet/',
+        destination: '/docs/beta-4/wallet/install/',
+        permanent: true,
+      },
+      {
         source: '/docs/graphql/',
         destination: '/docs/graphql/overview/',
+        permanent: true,
+      },
+      {
+        source: '/docs/nightly/graphql/',
+        destination: '/docs/nightly/graphql/overview/',
+        permanent: true,
+      },
+      {
+        source: '/docs/beta-4/graphql/',
+        destination: '/docs/beta-4/graphql/overview/',
         permanent: true,
       },
       {
