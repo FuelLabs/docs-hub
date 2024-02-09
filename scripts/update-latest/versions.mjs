@@ -4,7 +4,6 @@ import toml from 'toml';
 export function getExistingVersions() {
   return {
     forc: getForcVersion(),
-    indexer: getIndexerVersion(),
     rust: getRustSDKVersion(),
     ts: getTSSDKVersion(),
     wallet: getWalletVersion(),
@@ -15,7 +14,6 @@ export function getExistingVersions() {
 export async function getNightlyVersions() {
   const versions = {};
   versions.forc = await getNightlyRelease('sway');
-  versions.indexer = await getNightlyRelease('fuel-indexer');
   versions.rust = await getNightlyRelease('fuels-rs');
   versions.ts = await getNightlyRelease('fuels-ts');
   versions.wallet = await getNightlyRelease('fuels-wallet');
@@ -28,10 +26,6 @@ function getForcVersion() {
   const forcfile = fs.readFileSync(forcfiledir, 'utf-8');
   const version = forcfile?.match(/version = "(.*)"/)?.[1];
   return version;
-}
-
-function getIndexerVersion() {
-  return getVersionFromTOMLFile('docs/nightly/fuel-indexer/Cargo.toml');
 }
 
 function getFuelupVersion() {

@@ -8,6 +8,10 @@ parent:
 
 # Introduction to Sway Language for JavaScript Developers
 
+<ConditionalContent versionSet={props.versionSet} showForVersions={['beta-4']}>
+> Note: This guide uses the `beta-5` toolchain and `beta-5` compatible versions.
+</ConditionalContent>
+
 If you're familiar with JavaScript and have a basic understanding of blockchain fundamentals, you can swiftly grasp how to build full-stack decentralized applications on Fuel using Sway. Once you get a handle on Sway's essentials, you'll be able to begin building your own dapp.
 
 Within this tutorial, we will be crafting a Sway contract for an online marketplace similar to Amazon, where:
@@ -40,5 +44,3 @@ What truly distinguishes Sway is the exceptional suite of tools built around it.
 🦀 [Fuel's Rust SDK](https://docs.fuel.network/docs/fuels-rs/): Test and interact with your Sway contracts using Rust.
 
 ⚡ [Fuel's TypeScript SDK](https://docs.fuel.network/docs/fuels-ts/): Test and interact with your Sway contracts using TypeScript.
-
-🔭 [Fuel Indexer](https://docs.fuel.network/docs/indexer/): Craft your own indexer to organize and query on-chain data.

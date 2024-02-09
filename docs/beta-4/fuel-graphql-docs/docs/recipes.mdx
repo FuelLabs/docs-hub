@@ -1,0 +1,497 @@
+---
+title: Recipes
+---
+
+# Recipes
+
+You can see and test the example queries and mutations below.
+Click the "Run" button to run the query above it and see the response.
+Click the "TypeScript", "Apollo Client", or "urql" buttons to see code examples.
+
+- [Get an asset balance of an address](#get-an-asset-balance-of-an-address)
+- [List all asset balances of an address](#list-all-asset-balances-of-an-address)
+- [List all transactions from an address](#list-all-transactions-from-an-address)
+- [List the latest transactions](#list-the-latest-transactions)
+- [Get an asset balance of a contract](#get-an-asset-balance-of-a-contract)
+- [List all asset balances of a contract](#list-all-asset-balances-of-a-contract)
+- [List the latest blocks](#list-the-latest-blocks)
+- [Get block information by height](#get-block-information-by-height)
+- [List all messages owned by address](#list-all-messages-owned-by-address)
+- [Dry run a transaction](#dry-run-a-transaction)
+- [Submit a transaction](#submit-a-transaction)
+- [More Examples](#more-examples)
+
+## Get an asset balance of an address
+
+```graphql
+query Balance($address: Address, $assetId: AssetId) {
+  balance(owner: $address, assetId: $assetId) {
+    owner
+    amount
+    assetId
+  }
+}
+```
+
+Variables:
+
+```json
+{
+  "address": "0xf65d6448a273b531ee942c133bb91a6f904c7d7f3104cdaf6b9f7f50d3518871",
+  "assetId": "0x0000000000000000000000000000000000000000000000000000000000000000"
+}
+```
+
+<GQLExamples.Balance />
+
+{' '}
+<CodeExamples
+  file="../examples/tests/balance.test.ts"
+  ts_testCase="get balance with ts"
+  apollo_testCase="get balance with apollo"
+  urql_testCase="get balance with urql"
+/>
+
+## List all asset balances of an address
+
+```graphql
+query Balances($filter: BalanceFilterInput) {
+  balances(filter: $filter, first: 5) {
+    nodes {
+      amount
+      assetId
+    }
+  }
+}
+```
+
+Variables:
+
+```json
+{
+  "filter": {
+    "owner": "0xf65d6448a273b531ee942c133bb91a6f904c7d7f3104cdaf6b9f7f50d3518871"
+  }
+}
+```
+
+<GQLExamples.Balances />
+
+<CodeExamples
+  file="../examples/tests/balances.test.ts"
+  ts_testCase="get balances with ts"
+  apollo_testCase="get balances with apollo"
+  urql_testCase="get balances with urql"
+/>
+
+## List all transactions from an address
+
+```graphql
+query Transactions($address: Address) {
+  transactionsByOwner(owner: $address, first: 5) {
+    nodes {
+      id
+      inputs {
+        __typename
+        ... on InputCoin {
+          owner
+          utxoId
+          amount
+          assetId
+        }
+        ... on InputContract {
+          utxoId
+          contract {
+            id
+          }
+        }
+        ... on InputMessage {
+          messageId
+          sender
+          recipient
+          amount
+          data
+        }
+      }
+      outputs {
+        __typename
+        ... on CoinOutput {
+          to
+          amount
+          assetId
+        }
+        ... on ContractOutput {
+          inputIndex
+          balanceRoot
+          stateRoot
+        }
+        ... on MessageOutput {
+          recipient
+          amount
+        }
+        ... on ChangeOutput {
+          to
+          amount
+          assetId
+        }
+        ... on VariableOutput {
+          to
+          amount
+          assetId
+        }
+        ... on ContractCreated {
+          contract {
+            id
+          }
+          stateRoot
+        }
+      }
+      status {
+        __typename
+        ... on FailureStatus {
+          reason
+          programState {
+            returnType
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+Variables:
+
+```json
+{
+  "address": "0xf65d6448a273b531ee942c133bb91a6f904c7d7f3104cdaf6b9f7f50d3518871"
+}
+```
+
+<GQLExamples.Transactions />
+
+<CodeExamples
+  file="../examples/tests/transactions-by-owner.test.ts"
+  ts_testCase="get transactions with ts"
+  apollo_testCase="get transactions with apollo"
+  urql_testCase="get transactions with urql"
+/>
+
+## List the latest transactions
+
+```graphql
+query LatestTransactions {
+  transactions(last: 5) {
+    nodes {
+      id
+      inputs {
+        __typename
+        ... on InputCoin {
+          owner
+          utxoId
+          amount
+          assetId
+        }
+        ... on InputContract {
+          utxoId
+          contract {
+            id
+          }
+        }
+        ... on InputMessage {
+          messageId
+          sender
+          recipient
+          amount
+          data
+        }
+      }
+      outputs {
+        __typename
+        ... on CoinOutput {
+          to
+          amount
+          assetId
+        }
+        ... on ContractOutput {
+          inputIndex
+          balanceRoot
+          stateRoot
+        }
+        ... on MessageOutput {
+          recipient
+          amount
+        }
+        ... on ChangeOutput {
+          to
+          amount
+          assetId
+        }
+        ... on VariableOutput {
+          to
+          amount
+          assetId
+        }
+        ... on ContractCreated {
+          contract {
+            id
+          }
+          stateRoot
+        }
+      }
+      status {
+        __typename
+        ... on FailureStatus {
+          reason
+          programState {
+            returnType
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+<GQLExamples.LatestTransactions />
+
+<CodeExamples
+  file="../examples/tests/latest-transactions.test.ts"
+  ts_testCase="get latest transactions with ts"
+  apollo_testCase="get latest transactions with apollo"
+  urql_testCase="get latest transactions with urql"
+/>
+
+## Get an asset balance of a contract
+
+```graphql
+query ContractBalance($contract: ContractId, $asset: AssetId) {
+  contractBalance(contract: $contract, asset: $asset) {
+    contract
+    amount
+    assetId
+  }
+}
+```
+
+Variables:
+
+```json
+{
+  "contract": "0xc9a5366c269438d294ef942bc962dd2e6c86121e3bca00192723eb7eb58fa87d",
+  "asset": "0x0000000000000000000000000000000000000000000000000000000000000000"
+}
+```
+
+<GQLExamples.ContractBalance />
+
+<CodeExamples
+  file="../examples/tests/contract-balance.test.ts"
+  ts_testCase="get contract balance with ts"
+  apollo_testCase="get contract balance with apollo"
+  urql_testCase="get contract balance with urql"
+/>
+
+## List all asset balances of a contract
+
+```graphql
+query ContractBalances($filter: ContractBalanceFilterInput!) {
+  contractBalances(filter: $filter, first: 5) {
+    nodes {
+      amount
+      assetId
+    }
+  }
+}
+```
+
+Variables:
+
+```json
+{
+  "filter": {
+    "contract": "0x0a98320d39c03337401a4e46263972a9af6ce69ec2f35a5420b1bd35784c74b1"
+  }
+}
+```
+
+<GQLExamples.ContractBalances />
+
+<CodeExamples
+  file="../examples/tests/contract-balances.test.ts"
+  ts_testCase="get contract balances with ts"
+  apollo_testCase="get contract balances with apollo"
+  urql_testCase="get contract balances with urql"
+/>
+
+## List the latest blocks
+
+```graphql
+query LatestBlocks {
+  blocks(last: 5) {
+    nodes {
+      id
+      transactions {
+        id
+        inputAssetIds
+        inputs {
+          __typename
+          ... on InputCoin {
+            owner
+            utxoId
+            amount
+            assetId
+          }
+          ... on InputContract {
+            utxoId
+            contract {
+              id
+            }
+          }
+          ... on InputMessage {
+            messageId
+            sender
+            recipient
+            amount
+            data
+          }
+        }
+        outputs {
+          __typename
+          ... on CoinOutput {
+            to
+            amount
+            assetId
+          }
+          ... on ContractOutput {
+            inputIndex
+            balanceRoot
+            stateRoot
+          }
+          ... on MessageOutput {
+            recipient
+            amount
+          }
+          ... on ChangeOutput {
+            to
+            amount
+            assetId
+          }
+          ... on VariableOutput {
+            to
+            amount
+            assetId
+          }
+          ... on ContractCreated {
+            contract {
+              id
+            }
+            stateRoot
+          }
+        }
+        gasPrice
+      }
+    }
+  }
+}
+```
+
+<GQLExamples.LatestBlocks />
+
+<CodeExamples
+  file="../examples/tests/latest-blocks.test.ts"
+  ts_testCase="get latest blocks with ts"
+  apollo_testCase="get latest blocks with apollo"
+  urql_testCase="get latest blocks with urql"
+/>
+
+## Get block information by height
+
+```graphql
+query Block($height: U64) {
+  block(height: $height) {
+    id
+  }
+}
+```
+
+Variables:
+
+```json
+{
+  "height": "378485"
+}
+```
+
+<GQLExamples.BlockByHeight />
+
+<CodeExamples
+  file="../examples/tests/block.test.ts"
+  ts_testCase="get block info with ts"
+  apollo_testCase="get block info with apollo"
+  urql_testCase="get block info with urql"
+/>
+
+## List all messages owned by address
+
+```graphql
+query MessageInfo($address: Address) {
+  messages(owner: $address, first: 5) {
+    nodes {
+      amount
+      sender
+      recipient
+      nonce
+      data
+      daHeight
+    }
+  }
+}
+```
+
+Variables:
+
+```json
+{
+  "address": "0xf65d6448a273b531ee942c133bb91a6f904c7d7f3104cdaf6b9f7f50d3518871"
+}
+```
+
+<GQLExamples.MessageInfo />
+
+<CodeExamples
+  file="../examples/tests/messages.test.ts"
+  ts_testCase="get messages with ts"
+  apollo_testCase="get messages with apollo"
+  urql_testCase="get messages with urql"
+/>
+
+## Dry run a transaction
+
+```graphql
+mutation DryRun($encodedTransaction: HexString!, $utxoValidation: Boolean) {
+  dryRun(tx: $encodedTransaction, utxoValidation: $utxoValidation) {
+    receiptType
+    data
+    rawPayload
+  }
+}
+```
+
+## Submit a transaction
+
+```graphql
+mutation submit($encodedTransaction: HexString!) {
+  submit(tx: $encodedTransaction) {
+    id
+  }
+}
+```
+
+## More Examples
+
+You can find more examples of how we use this API in our GitHub:
+
+[Block Explorer](https://github.com/FuelLabs/block-explorer-v2/)
+
+[Fuels Typescript SDK](https://github.com/FuelLabs/fuels-ts/)

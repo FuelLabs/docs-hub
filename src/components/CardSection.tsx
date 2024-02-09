@@ -3,13 +3,14 @@ import { Box, Grid } from '@fuel-ui/react';
 
 import type { CardInfo } from '../components/Card';
 import { Card } from '../components/Card';
+import type { VersionSet } from '../types';
 
 interface CardSectionProps {
   cardsInfo: CardInfo[];
-  isNightly: boolean;
+  versionSet: VersionSet;
 }
 
-export function CardSection({ cardsInfo, isNightly }: CardSectionProps) {
+export function CardSection({ cardsInfo, versionSet }: CardSectionProps) {
   return (
     <Box css={styles.root}>
       <Grid css={styles.grid}>
@@ -19,7 +20,7 @@ export function CardSection({ cardsInfo, isNightly }: CardSectionProps) {
               <Card
                 cardName={card.heading}
                 cardInfo={card}
-                isNightly={isNightly}
+                versionSet={versionSet}
               />
             </Grid.Item>
           );

@@ -23,7 +23,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-node
-      - run: pnpm audit --prod
+        with:
+          install: false
+      - run: |
+          pnpm install
+          pnpm audit --prod
 
   lint:
     name: Lint
@@ -36,9 +40,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Node
-        uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/setup-node
+        with:
+          install: false
 
       - name: Run lint
         run: |
+          pnpm install
           pnpm check:prod

@@ -30,7 +30,7 @@ Let's go into the frontend folder:
 cd frontend
 ```
 
-Next, install the fuels Typescript and wallet SDKs in the frontend folder:
+Next, install the `fuels` TypeScript and wallet SDKs in the frontend folder:
 
 <TestAction
 id="frontend-npm-install"
@@ -41,13 +41,18 @@ action={{
 />
 
 ```sh
-npm install fuels@0.66.1 @fuel-wallet/sdk@0.13.7 @fuel-wallet/react@0.13.7 --save
+npm install fuels@0.73.0 @fuel-wallet/sdk@0.15.2 @fuel-wallet/react@0.15.2
 ```
 
-Generate types from your contract with `fuels typegen` by running:
+## Generate contract types
+
+The `fuels init` command generates a `fuels.config.json` file that is used by the SDK to generate contract types.
+Use the `contracts` flag to define where your contract folder is located, and the `output` flag to define where you want the generated files to be created.
+
+Run the command below in your frontend folder to generate the config file:
 
 <TestAction
-id="frontend-gen-types"
+id="fuels_config"
 action={{
   name: 'runCommand',
   commandFolder: 'guides-testing/fuel-project/frontend'
@@ -55,8 +60,49 @@ action={{
 />
 
 ```sh
-npx fuels typegen -i ../contract/out/debug/*-abi.json -o ./src/contracts
+npx fuels init --contracts ../contract/ --output ./src/contracts
 ```
+
+Now that you have a `fuels.config.json` file, you can use the `fuels build` command to rebuild your contract and generate types.
+Running this command will interpret the output ABI JSON from your contract and generate the correct TypeScript definitions.
+If you see the folder `fuel-project/counter-contract/out` you will be able to see the ABI JSON there.
+
+Inside the `fuel-project/frontend` directory run:
+
+<TestAction
+id="modify-fuels-config"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/fuels.config.ts',
+  atLine: 4,
+  useSetData: "  useBuiltinForc: false,"
+}}
+/>
+
+<TestAction
+id="typegen"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/frontend'
+}}
+/>
+
+```sh
+npx fuels build
+```
+
+A successful process should print and output like the following:
+
+```sh
+Building..
+Building Sway programs using built-in 'forc' binary
+Generating types..
+🎉  Build completed successfully!
+```
+
+> If you're having any issues with this part, try adding `useBuiltinForc: false` to your `fuels.config.ts` config file to make sure it's using the same version of `forc` as your default toolchain.
+
+Now you should be able to find a new folder `fuel-project/frontend/src/contracts`.
 
 Open the `src/App.tsx` file, and replace the boilerplate code with the template below:
 
@@ -104,6 +150,7 @@ action={{
 ### Connecting to the contract
 
 Wrap your components with `FuelProvider` from `@fuel-wallet/react` to enable Fuel's custom React hooks for wallet functionalities in `index.tsx`.
+To allow connection with the Development Wallet, we'll also need to enable `devMode` here.
 
 <TestAction
 id="fe-index-all"
@@ -149,9 +196,6 @@ The `useMemo` hook is used to connect to our contract with the connected wallet.
   lang="tsx"
 />
 
-If the user doesn't have the `fuel` object in their window, we know that they don't have the Fuel wallet extension installed.
-If they have it installed, we can then check if the wallet is connected.
-
 <CodeImport
   file="../../examples/intro-to-sway/frontend/src/App.tsx"
   comment="fe_fuel_obj"
@@ -170,15 +214,6 @@ We use another state variable called `active` that we can use to toggle between 
 <CodeImport
   file="../../examples/intro-to-sway/frontend/src/App.tsx"
   comment="fe_state_active"
-  commentType="//"
-  lang="tsx"
-/>
-
-Below the header, we added a nav section to toggle between the two options.
-
-<CodeImport
-  file="../../examples/intro-to-sway/frontend/src/App.tsx"
-  comment="fe_ui_state_active"
   commentType="//"
   lang="tsx"
 />
@@ -555,11 +590,11 @@ action={{
 }}
 />
 
-```console
+```sh
 npm start
 ```
 
-```console
+```sh
 Compiled successfully!
 
 You can now view frontend in the browser.
@@ -599,6 +634,14 @@ action={{
 />
 
 <TestAction
+id="click-fuel-wallet"
+action={{
+  name: 'clickByLabel',
+  label: 'Connect to Fuel Wallet'
+}}
+/>
+
+<TestAction
 id="approve-connect"
 action={{
   name: 'walletApproveConnect',
@@ -609,21 +652,12 @@ action={{
 id="wait-after-connect"
 action={{
   name: 'wait',
-  timeout: 1000
+  timeout: 5000
 }}
 />
 
 <TestAction
-id="get-initial-count"
-action={{
-  name: 'getByLocator-save',
-  locator: "h3",
-  removeFromValue: "Total Bought: "
-}}
-/>
-
-<TestAction
-id="click-list-item-button"
+id="click-buy-item-button"
 action={{
   name: 'clickByTestId',
   testId: "buy-button-1"
@@ -641,56 +675,31 @@ action={{
 id="wait-after-approve"
 action={{
   name: 'wait',
-  timeout: 1000
-}}
-/>
-
-<TestAction
-id="reload-after-approve"
-action={{
-  name: 'reload',
-}}
-/>
-
-<TestAction
-id="wait-after-reload"
-action={{
-  name: 'wait',
-  timeout: 1000
-}}
-/>
-
-<TestAction
-id="click-connect-button2"
-action={{
-  name: 'clickByRole',
-  role: "button",
-  elementName: "Connect"
-}}
-/>
-
-<TestAction
-id="wait-after-connect2"
-action={{
-  name: 'wait',
   timeout: 5000
 }}
 />
 
 <TestAction
-id="get-final-count"
+id="check-text"
 action={{
   name: 'getByLocator-save',
-  locator: "h3",
-  removeFromValue: "Total Bought: "
+  locator: "h3 ~ div",
 }}
 />
 
 <TestAction
-id="check-count"
+id="wait-after-buy"
 action={{
-  name: 'checkIfIsIncremented',
-  initialIndex: 0,
-  finalIndex: 1
+  name: 'wait',
+  timeout: 15000
+}}
+/>
+
+<TestAction
+id="check-if-purchased"
+action={{
+  name: 'checkValue',
+  index: 0,
+  value: 'Purchased ✅'
 }}
 />

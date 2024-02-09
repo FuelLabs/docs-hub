@@ -1,6 +1,7 @@
 import type { BrowserContext, Page } from '@playwright/test';
 
-import { checkIfIsIncremented, getByLocator } from './checks';
+import { clickByLocator, clickByLabel } from './button';
+import { checkIfIsIncremented, checkValue, getByLocator } from './checks';
 import { compareFiles, compareToFile, writeToFile, modifyFile } from './files';
 import { getTestActions } from './getTestActions';
 import { runCommand } from './runCommand';
@@ -84,6 +85,12 @@ export async function runTest(
       case 'clickByTestId':
         await page.getByTestId(step['data-testid']).click();
         break;
+      case 'clickByLocator':
+        await clickByLocator(page, step['data-click-by-locator']);
+        break;
+      case 'clickByLabel':
+        await clickByLabel(page, step['data-click-by-label']);
+        break;
       case 'writeBySelector':
         await page.fill(step['data-selector'], 'hello world');
         break;
@@ -98,6 +105,9 @@ export async function runTest(
           parseInt(step['data-initial-index']),
           parseInt(step['data-final-index'])
         );
+        break;
+      case 'checkValue':
+        checkValue(parseInt(step['data-index']), step['data-check-value']);
         break;
       default:
         console.log('STEP NOT FOUND:', step);

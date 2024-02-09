@@ -1,7 +1,7 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box, Drawer, IconButton, FuelLogo, Link, Icon } from '@fuel-ui/react';
 import { useState } from 'react';
-import type { NavOrder, Versions } from '~/src/types';
+import type { NavOrder, Versions, VersionSet } from '~/src/types';
 
 import { Navigation } from './Navigation';
 import Search from './Search';
@@ -12,7 +12,7 @@ import VersionDropdown from './VersionDropdown';
 interface MobileMenuProps {
   active: string;
   title?: string;
-  isNightly: boolean;
+  versionSet: VersionSet;
   allNavs?: NavOrder[];
   versions?: Versions;
 }
@@ -20,7 +20,7 @@ interface MobileMenuProps {
 export function MobileMenu({
   active,
   title,
-  isNightly,
+  versionSet,
   allNavs,
   versions,
 }: MobileMenuProps) {
@@ -44,10 +44,10 @@ export function MobileMenu({
 
   return (
     <Box.Flex css={styles.root}>
-      <Search title={title} isNightly={isNightly} />
+      <Search title={title} versionSet={versionSet} />
 
       <Box.Stack direction="row" gap="$3">
-        <VersionDropdown isNightly={isNightly} />
+        <VersionDropdown versionSet={versionSet} />
         <ThemeToggler />
         <Drawer
           isDismissable
@@ -74,7 +74,7 @@ export function MobileMenu({
                   versions={versions}
                   allNavs={active.includes('guides') ? undefined : allNavs}
                   onClick={() => setOpen(false)}
-                  isNightly={isNightly}
+                  versionSet={versionSet}
                 />
               </Box>
             </Drawer.Body>

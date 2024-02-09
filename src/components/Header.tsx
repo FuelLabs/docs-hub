@@ -1,7 +1,7 @@
 import { cssObj } from '@fuel-ui/css';
 import { Alert, Box, darkTheme, lightTheme } from '@fuel-ui/react';
 import dynamic from 'next/dynamic';
-import type { NavOrder, Versions } from '~/src/types';
+import type { NavOrder, VersionSet, Versions } from '~/src/types';
 
 import { MobileMenu } from './MobileMenu';
 import { Navigation } from './Navigation';
@@ -14,7 +14,7 @@ interface HeaderProps {
   active: string;
   title?: string;
   allNavs?: NavOrder[];
-  isNightly: boolean;
+  versionSet: VersionSet;
   versions?: Versions;
 }
 
@@ -22,7 +22,7 @@ export function Header({
   active,
   title,
   allNavs,
-  isNightly,
+  versionSet,
   versions,
 }: HeaderProps) {
   return (
@@ -36,12 +36,12 @@ export function Header({
           >
             {title}
           </span>
-          <Search title={title} isNightly={isNightly} />
+          <Search title={title} versionSet={versionSet} />
         </Box>
         <Box css={styles.desktop}>
           <Navigation active={active} />
           <Box.Stack direction="row" gap="$3">
-            <VersionDropdown isNightly={isNightly} />
+            <VersionDropdown versionSet={versionSet} />
             <ThemeToggler />
           </Box.Stack>
         </Box>
@@ -49,11 +49,11 @@ export function Header({
           allNavs={allNavs}
           active={active}
           title={title}
-          isNightly={isNightly}
+          versionSet={versionSet}
           versions={versions}
         />
       </Box.Flex>
-      {isNightly && (
+      {versionSet === 'nightly' && (
         <Alert css={styles.alert} direction="row" status="warning">
           <Alert.Description>
             Nightly versions may be unstable or not compatible across tooling.

@@ -6,6 +6,7 @@ import { EOL } from 'os';
 import path from 'path';
 import remarkParse from 'remark-parse';
 import { unified } from 'unified';
+import type { VersionSet } from '~/src/types';
 
 const files = new Map<string, string>();
 const oldContentMap = new Map<string, string>();
@@ -48,11 +49,19 @@ export function handleForcGenDocs(
 function transformContent(node: any, rootDir: string) {
   const fileName = node.value;
   const filePathName = fileName.replace(' ', '_').concat('.html');
-  const isNightly = thisFilePath.includes('/nightly');
+  let versionSet: VersionSet = 'default';
+  if (thisFilePath.includes('/nightly')) {
+    versionSet = 'nightly';
+  } else if (thisFilePath.includes('/beta-4')) {
+    versionSet = 'beta-4';
+  }
 
-  const swayBuildFilePath = isNightly
-    ? 'docs/nightly/builds/sway/master/book/forc'
-    : 'docs/builds/sway/master/book/forc';
+  let swayBuildFilePath = '/builds/sway/master/book/forc';
+  if (versionSet === 'default') {
+    swayBuildFilePath = `docs${swayBuildFilePath}`;
+  } else {
+    swayBuildFilePath = `docs/${versionSet}${swayBuildFilePath}`;
+  }
 
   const folders = thisFilePath.split('/forc/')[1].split('/');
   const lastPath = `${swayBuildFilePath}/${folders[0]}/${

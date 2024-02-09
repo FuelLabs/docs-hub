@@ -84,5 +84,11 @@ fuelTestnetInlineCode
 fuelTestnet
 faucetLink
 GQLPlaygroundLink
+api
+ethereum
+infura
 xlarge
 fuelCoreVersion
+nodeVersion
+nodeVersionMax
+versionSet

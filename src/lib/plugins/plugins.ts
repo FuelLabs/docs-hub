@@ -4,7 +4,8 @@ import { join } from 'path';
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
 import type { Parent } from 'unist-util-visit/lib';
-import { versions as beta4Versions } from '~/docs/fuels-ts/packages/versions/src';
+import { versions as beta4Versions } from '~/docs/beta-4/fuels-ts/packages/versions/src';
+import { versions as defaultVersions } from '~/docs/fuels-ts/packages/versions/src';
 import { versions as nightlyVersions } from '~/docs/nightly/fuels-ts/packages/versions/src';
 
 import { handleForcGenDocs } from './forc-gen-docs';
@@ -77,9 +78,12 @@ export function handlePlugins() {
     const rootDir = process.cwd();
     const filepath = join(rootDir, file.data.rawDocumentData?.sourceFilePath);
     const dirname = file.data.rawDocumentData?.sourceFileDir;
-    const versions = filepath.includes('/nightly/')
-      ? nightlyVersions
-      : beta4Versions;
+    let versions = defaultVersions;
+    if (filepath.includes('/nightly/')) {
+      versions = nightlyVersions;
+    } else if (filepath.includes('/beta-4/')) {
+      versions = beta4Versions;
+    }
 
     if (filepath.includes('/fuel-graphql-docs/')) {
       handleGraphQLDocs(tree, filepath, dirname);
@@ -92,7 +96,6 @@ export function handlePlugins() {
     } else if (filepath.includes('/fuels-rs/')) {
       handleRustBooks(tree, rootDir, dirname);
     } else if (
-      filepath.includes('/fuel-indexer/') ||
       filepath.includes('/fuelup/') ||
       filepath.includes('/fuel-specs/')
     ) {
@@ -271,16 +274,17 @@ function handleRustBooks(tree: Root, rootDir: string, dirname: string) {
       const newUrl = handleLinks(node, dirname);
       if (newUrl) node.url = newUrl;
 
+      // TODO: remove this once the rust book is updated
       if (node.url.includes('faucet-beta-3.fuel.network')) {
         node.url = node.url.replace(
           'faucet-beta-3.fuel.network',
-          'faucet-beta-4.fuel.network'
+          'faucet-beta-5.fuel.network'
         );
         if (
           node.children &&
           node.children[0].value === 'faucet-beta-3.fuel.network'
         ) {
-          node.children[0].value = 'faucet-beta-4.fuel.network';
+          node.children[0].value = 'faucet-beta-5.fuel.network';
         }
       }
     } else {

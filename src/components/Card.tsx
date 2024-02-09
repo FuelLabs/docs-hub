@@ -9,10 +9,12 @@ import {
 } from '@fuel-ui/react';
 
 import type { GuideInfo } from '../pages/guides';
+import type { VersionSet } from '../types';
 
 export type CardInfo = {
   link: string;
   nightlyLink?: string;
+  beta4Link?: string;
   isExternal: boolean;
   heading: string;
   headingIcon?: string;
@@ -23,19 +25,23 @@ interface CardProps {
   guideInfo?: GuideInfo;
   cardInfo?: CardInfo;
   cardName: string;
-  isNightly?: boolean;
+  versionSet: VersionSet;
 }
 
-export function Card({ guideInfo, cardInfo, cardName, isNightly }: CardProps) {
+export function Card({ guideInfo, cardInfo, cardName, versionSet }: CardProps) {
+  let href = '';
+  if (guideInfo) {
+    href = `/guides/${cardName.replaceAll('_', '-')}`;
+  } else if (versionSet === 'nightly' && cardInfo?.nightlyLink) {
+    href = cardInfo?.nightlyLink;
+  } else if (versionSet === 'beta-4' && cardInfo?.beta4Link) {
+    href = cardInfo?.beta4Link;
+  } else {
+    href = cardInfo?.link ?? '';
+  }
   return (
     <FuelLink
-      href={
-        guideInfo
-          ? `/guides/${cardName.replaceAll('_', '-')}`
-          : isNightly && cardInfo?.nightlyLink
-          ? cardInfo?.nightlyLink
-          : cardInfo?.link
-      }
+      href={href}
       isExternal={cardInfo ? cardInfo.isExternal : false}
       css={styles.root}
     >

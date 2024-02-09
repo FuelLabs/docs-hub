@@ -1,109 +1,134 @@
 import { useEffect, useState } from "react";
-import "./App.css";
-// Import the contract factory -- you can find the name in index.ts.
+import {
+  useConnectUI,
+  useIsConnected,
+  useWallet,
+} from '@fuel-wallet/react';
+// Import the contract factory -- you can find the name in src/contracts/contracts/index.ts.
 // You can also do command + space and the compiler will suggest the correct name.
-import { CounterContractAbi__factory } from "./contracts";
+import { CounterContractAbi__factory  } from "./sway-api"
+import type { CounterContractAbi } from "./sway-api";
 
-// The address of the contract deployed the Fuel testnet
-const CONTRACT_ID =
+const CONTRACT_ID = 
   "0x...";
 
-function App() {
-  const [connected, setConnected] = useState<boolean>(false);
-  const [account, setAccount] = useState<string>("");
-  const [counter, setCounter] = useState<number>(0);
-  const [loaded, setLoaded] = useState(false);
+export default function Home() {
+  const [contract, setContract] = useState<CounterContractAbi>();
+  const [counter, setCounter] = useState<number>();
+  const { connect, setTheme, isConnecting } =
+    useConnectUI();
+  const { isConnected } = useIsConnected();
+  const { wallet } = useWallet();
+
+  setTheme("dark");
 
   useEffect(() => {
-    setTimeout(() => {
-      checkConnection();
-      setLoaded(true);
-    }, 200)
-    if (connected) getCount();
-  }, [connected])
-
-  async function connect() {
-    if (window.fuel) {
-      try {
-        await window.fuel.connect();
-        const [account] = await window.fuel.accounts();
-        setAccount(account);
-        setConnected(true);
-      } catch (err) {
-        console.log("error connecting: ", err);
+    async function getInitialCount(){
+      if(isConnected && wallet){
+        const counterContract = CounterContractAbi__factory.connect(CONTRACT_ID, wallet);
+        await getCount(counterContract);
+        setContract(counterContract);
       }
     }
-  }
+    
+    getInitialCount();
+  }, [isConnected, wallet]);
 
-  async function checkConnection() {
-    if (window.fuel) {
-      const isConnected = await window.fuel.isConnected();
-      if (isConnected) {
-        const [account] = await window.fuel.accounts();
-        setAccount(account);
-        setConnected(true);
-      }
-    }
-  }
-
-  async function getCount() {
-    if (window.fuel) {
-      const wallet = await window.fuel.getWallet(account);
-      const contract = CounterContractAbi__factory.connect(CONTRACT_ID, wallet);
-      const { value } = await contract.functions.count().simulate();
+  const getCount = async (counterContract: CounterContractAbi) => {
+    try{
+      const { value } = await counterContract.functions
+      .count()
+      .txParams({
+        gasPrice: 1,
+        gasLimit: 100_000,
+      })
+      .simulate();
       setCounter(value.toNumber());
+    } catch(error) {
+      console.error(error);
     }
   }
 
-  async function increment() {
-    if (window.fuel) {
-      const wallet = await window.fuel.getWallet(account);
-      const contract = CounterContractAbi__factory.connect(CONTRACT_ID, wallet);
-      // Creates a transactions to call the increment function
-      // because it creates a TX and updates the contract state this requires the wallet to have enough coins to cover the costs and also to sign the Transaction
-      try {
-        await contract.functions.increment().txParams({ gasPrice: 1 }).call();
-        getCount();
-      } catch (err) {
-        console.log("error sending transaction...", err);
-      }
+  const onIncrementPressed = async () => {
+    if (!contract) {
+      return alert("Contract not loaded");
     }
-  }
-
-  if (!loaded) return null
+    try {
+      await contract.functions
+      .increment()
+      .txParams({
+        gasPrice: 1,
+        gasLimit: 100_000,
+      })
+      .call();
+      await getCount(contract);
+    } catch(error) {
+      console.error(error);
+    }
+  };
 
   return (
-    <>
-      <div className="App">
-        {
-          connected ? (
-            <>
-              <h3>Counter: {counter}</h3>
-              <button style={buttonStyle} onClick={increment}>
-                Increment
-              </button>
-            </>
-          ) : (
-            <button style={buttonStyle} onClick={connect}>Connect</button>
-          )
-        }
+    <div style={styles.root}>
+      <div style={styles.container}>
+        {isConnected ? (
+          <>
+            <h3 style={styles.label}>Counter</h3>
+            <div style={styles.counter}>
+              {counter ?? 0}
+            </div>
+            <button
+            onClick={onIncrementPressed}
+            style={styles.button}
+            >
+              Increment Counter
+            </button>
+          </>
+        ) : (
+          <button
+          onClick={() => {
+            connect();
+          }}
+          style={styles.button}
+          >
+            {isConnecting ? 'Connecting' : 'Connect'}
+          </button>
+        )}
       </div>
-    </>
+    </div>
   );
 }
 
-export default App;
-
-const buttonStyle = {
-  borderRadius: "48px",
-  marginTop: "10px",
-  backgroundColor: "#03ffc8",
-  fontSize: "20px",
-  fontWeight: "600",
-  color: "rgba(0, 0, 0, .88)",
-  border: "none",
-  outline: "none",
-  height: "60px",
-  width: "400px",
-  cursor: "pointer"
+const styles = {
+  root: {
+    display: 'grid',
+    placeItems: 'center',
+    height: '100vh',
+    width: '100vw',
+    backgroundColor: "black",
+  } as React.CSSProperties,
+  container: {
+    color: "#ffffffec",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  } as React.CSSProperties,
+  label: {
+    fontSize: "28px",
+  },
+  counter: {
+    color: "#a0a0a0",
+    fontSize: "48px",
+  },
+  button: {
+    borderRadius: "8px",
+    marginTop: "24px",
+    backgroundColor: "#707070",
+    fontSize: "16px",
+    color: "#ffffffec",
+    border: "none",
+    outline: "none",
+    height: "60px",
+    padding: "0 1rem",
+    cursor: "pointer"
+  },
 }

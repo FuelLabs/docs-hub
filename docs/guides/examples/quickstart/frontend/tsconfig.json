@@ -18,8 +18,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "types": ["@fuel-wallet/sdk"]
+    "jsx": "react-jsx"
   },
   "include": [
     "src"

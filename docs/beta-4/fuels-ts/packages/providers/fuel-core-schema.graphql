@@ -1,0 +1,1009 @@
+scalar Address
+
+scalar AssetId
+
+type Balance {
+  owner: Address!
+  amount: U64!
+  assetId: AssetId!
+}
+
+type BalanceConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+
+  """
+  A list of edges.
+  """
+  edges: [BalanceEdge!]!
+
+  """
+  A list of nodes.
+  """
+  nodes: [Balance!]!
+}
+
+"""
+An edge in a connection.
+"""
+type BalanceEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge
+  """
+  node: Balance!
+}
+
+input BalanceFilterInput {
+  """
+  Filter coins based on the `owner` field
+  """
+  owner: Address!
+}
+
+type Block {
+  id: BlockId!
+  header: Header!
+  consensus: Consensus!
+  transactions: [Transaction!]!
+}
+
+type BlockConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+
+  """
+  A list of edges.
+  """
+  edges: [BlockEdge!]!
+
+  """
+  A list of nodes.
+  """
+  nodes: [Block!]!
+}
+
+"""
+An edge in a connection.
+"""
+type BlockEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge
+  """
+  node: Block!
+}
+
+scalar BlockId
+
+scalar Bytes32
+
+type ChainInfo {
+  name: String!
+  latestBlock: Block!
+  baseChainHeight: U32!
+  peerCount: Int!
+  consensusParameters: ConsensusParameters!
+  gasCosts: GasCosts!
+}
+
+type ChangeOutput {
+  to: Address!
+  amount: U64!
+  assetId: AssetId!
+}
+
+type Coin {
+  utxoId: UtxoId!
+  owner: Address!
+  amount: U64!
+  assetId: AssetId!
+  maturity: U32!
+
+  """
+  TxPointer - the height of the block this coin was created in
+  """
+  blockCreated: U32!
+
+  """
+  TxPointer - the index of the transaction that created this coin
+  """
+  txCreatedIdx: U64!
+}
+
+type CoinConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+
+  """
+  A list of edges.
+  """
+  edges: [CoinEdge!]!
+
+  """
+  A list of nodes.
+  """
+  nodes: [Coin!]!
+}
+
+"""
+An edge in a connection.
+"""
+type CoinEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge
+  """
+  node: Coin!
+}
+
+input CoinFilterInput {
+  """
+  Returns coins owned by the `owner`.
+  """
+  owner: Address!
+
+  """
+  Returns coins only with `asset_id`.
+  """
+  assetId: AssetId
+}
+
+type CoinOutput {
+  to: Address!
+  amount: U64!
+  assetId: AssetId!
+}
+
+"""
+The schema analog of the [`coins::CoinType`].
+"""
+union CoinType = Coin | MessageCoin
+
+union Consensus = Genesis | PoAConsensus
+
+type ConsensusParameters {
+  contractMaxSize: U64!
+  maxInputs: U64!
+  maxOutputs: U64!
+  maxWitnesses: U64!
+  maxGasPerTx: U64!
+  maxScriptLength: U64!
+  maxScriptDataLength: U64!
+  maxStorageSlots: U64!
+  maxPredicateLength: U64!
+  maxPredicateDataLength: U64!
+  maxGasPerPredicate: U64!
+  gasPriceFactor: U64!
+  gasPerByte: U64!
+  maxMessageDataLength: U64!
+  chainId: U64!
+}
+
+type Contract {
+  id: ContractId!
+  bytecode: HexString!
+  salt: Salt!
+}
+
+type ContractBalance {
+  contract: ContractId!
+  amount: U64!
+  assetId: AssetId!
+}
+
+type ContractBalanceConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+
+  """
+  A list of edges.
+  """
+  edges: [ContractBalanceEdge!]!
+
+  """
+  A list of nodes.
+  """
+  nodes: [ContractBalance!]!
+}
+
+"""
+An edge in a connection.
+"""
+type ContractBalanceEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge
+  """
+  node: ContractBalance!
+}
+
+input ContractBalanceFilterInput {
+  """
+  Filter assets based on the `contractId` field
+  """
+  contract: ContractId!
+}
+
+type ContractCreated {
+  contract: Contract!
+  stateRoot: Bytes32!
+}
+
+scalar ContractId
+
+type ContractOutput {
+  inputIndex: Int!
+  balanceRoot: Bytes32!
+  stateRoot: Bytes32!
+}
+
+type DependentCost {
+  base: U64!
+  depPerUnit: U64!
+}
+
+input ExcludeInput {
+  """
+  Utxos to exclude from the selection.
+  """
+  utxos: [UtxoId!]!
+
+  """
+  Messages to exclude from the selection.
+  """
+  messages: [Nonce!]!
+}
+
+type FailureStatus {
+  block: Block!
+  time: Tai64Timestamp!
+  reason: String!
+  programState: ProgramState
+}
+
+type GasCosts {
+  add: U64!
+  addi: U64!
+  aloc: U64!
+  and: U64!
+  andi: U64!
+  bal: U64!
+  bhei: U64!
+  bhsh: U64!
+  burn: U64!
+  cb: U64!
+  cfei: U64!
+  cfsi: U64!
+  croo: U64!
+  div: U64!
+  divi: U64!
+  ecr1: U64!
+  eck1: U64!
+  ed19: U64!
+  eq: U64!
+  exp: U64!
+  expi: U64!
+  flag: U64!
+  gm: U64!
+  gt: U64!
+  gtf: U64!
+  ji: U64!
+  jmp: U64!
+  jne: U64!
+  jnei: U64!
+  jnzi: U64!
+  jmpf: U64!
+  jmpb: U64!
+  jnzf: U64!
+  jnzb: U64!
+  jnef: U64!
+  jneb: U64!
+  k256: U64!
+  lb: U64!
+  log: U64!
+  lt: U64!
+  lw: U64!
+  mcpi: U64!
+  mint: U64!
+  mlog: U64!
+  modOp: U64!
+  modi: U64!
+  moveOp: U64!
+  movi: U64!
+  mroo: U64!
+  mul: U64!
+  muli: U64!
+  mldv: U64!
+  noop: U64!
+  not: U64!
+  or: U64!
+  ori: U64!
+  ret: U64!
+  rvrt: U64!
+  s256: U64!
+  sb: U64!
+  scwq: U64!
+  sll: U64!
+  slli: U64!
+  srl: U64!
+  srli: U64!
+  srw: U64!
+  sub: U64!
+  subi: U64!
+  sw: U64!
+  sww: U64!
+  swwq: U64!
+  time: U64!
+  tr: U64!
+  tro: U64!
+  wdcm: U64!
+  wqcm: U64!
+  wdop: U64!
+  wqop: U64!
+  wdml: U64!
+  wqml: U64!
+  wddv: U64!
+  wqdv: U64!
+  wdmd: U64!
+  wqmd: U64!
+  wdam: U64!
+  wqam: U64!
+  wdmm: U64!
+  wqmm: U64!
+  xor: U64!
+  xori: U64!
+  call: DependentCost!
+  ccp: DependentCost!
+  csiz: DependentCost!
+  ldc: DependentCost!
+  logd: DependentCost!
+  mcl: DependentCost!
+  mcli: DependentCost!
+  mcp: DependentCost!
+  meq: DependentCost!
+  retd: DependentCost!
+  smo: DependentCost!
+  srwq: DependentCost!
+}
+
+type Genesis {
+  """
+  The chain configs define what consensus type to use, what settlement layer to use,
+  rules of block validity, etc.
+  """
+  chainConfigHash: Bytes32!
+
+  """
+  The Binary Merkle Tree root of all genesis coins.
+  """
+  coinsRoot: Bytes32!
+
+  """
+  The Binary Merkle Tree root of state, balances, contracts code hash of each contract.
+  """
+  contractsRoot: Bytes32!
+
+  """
+  The Binary Merkle Tree root of all genesis messages.
+  """
+  messagesRoot: Bytes32!
+}
+
+type Header {
+  """
+  Hash of the header
+  """
+  id: BlockId!
+
+  """
+  The layer 1 height of messages and events to include since the last layer 1 block number.
+  """
+  daHeight: U64!
+
+  """
+  Number of transactions in this block.
+  """
+  transactionsCount: U64!
+
+  """
+  Number of message receipts in this block.
+  """
+  messageReceiptCount: U64!
+
+  """
+  Merkle root of transactions.
+  """
+  transactionsRoot: Bytes32!
+
+  """
+  Merkle root of message receipts in this block.
+  """
+  messageReceiptRoot: Bytes32!
+
+  """
+  Fuel block height.
+  """
+  height: U32!
+
+  """
+  Merkle root of all previous block header hashes.
+  """
+  prevRoot: Bytes32!
+
+  """
+  The block producer time.
+  """
+  time: Tai64Timestamp!
+
+  """
+  Hash of the application header.
+  """
+  applicationHash: Bytes32!
+}
+
+scalar HexString
+
+union Input = InputCoin | InputContract | InputMessage
+
+type InputCoin {
+  utxoId: UtxoId!
+  owner: Address!
+  amount: U64!
+  assetId: AssetId!
+  txPointer: TxPointer!
+  witnessIndex: Int!
+  maturity: U32!
+  predicateGasUsed: U64!
+  predicate: HexString!
+  predicateData: HexString!
+}
+
+type InputContract {
+  utxoId: UtxoId!
+  balanceRoot: Bytes32!
+  stateRoot: Bytes32!
+  txPointer: TxPointer!
+  contract: Contract!
+}
+
+type InputMessage {
+  sender: Address!
+  recipient: Address!
+  amount: U64!
+  nonce: Nonce!
+  witnessIndex: Int!
+  predicateGasUsed: U64!
+  data: HexString!
+  predicate: HexString!
+  predicateData: HexString!
+}
+
+type MerkleProof {
+  proofSet: [Bytes32!]!
+  proofIndex: U64!
+}
+
+type Message {
+  amount: U64!
+  sender: Address!
+  recipient: Address!
+  nonce: Nonce!
+  data: HexString!
+  daHeight: U64!
+}
+
+type MessageCoin {
+  sender: Address!
+  recipient: Address!
+  nonce: Nonce!
+  amount: U64!
+  assetId: AssetId!
+  daHeight: U64!
+}
+
+type MessageConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+
+  """
+  A list of edges.
+  """
+  edges: [MessageEdge!]!
+
+  """
+  A list of nodes.
+  """
+  nodes: [Message!]!
+}
+
+"""
+An edge in a connection.
+"""
+type MessageEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge
+  """
+  node: Message!
+}
+
+scalar MessageId
+
+type MessageProof {
+  messageProof: MerkleProof!
+  blockProof: MerkleProof!
+  messageBlockHeader: Header!
+  commitBlockHeader: Header!
+  sender: Address!
+  recipient: Address!
+  nonce: Nonce!
+  amount: U64!
+  data: HexString!
+}
+
+enum MessageState {
+  UNSPENT
+  SPENT
+  NOT_FOUND
+}
+
+type MessageStatus {
+  state: MessageState!
+}
+
+type Mutation {
+  """
+  Execute a dry-run of the transaction using a fork of current state, no changes are committed.
+  """
+  dryRun(tx: HexString!, utxoValidation: Boolean): [Receipt!]!
+
+  """
+  Submits transaction to the `TxPool`.
+
+  Returns submitted transaction if the transaction is included in the `TxPool` without problems.
+  """
+  submit(tx: HexString!): Transaction!
+
+  """
+  Sequentially produces `blocks_to_produce` blocks. The first block starts with
+  `start_timestamp`. If the block production in the [`crate::service::Config`] is
+  `Trigger::Interval { block_time }`, produces blocks with `block_time ` intervals between
+  them. The `start_timestamp` is the timestamp in seconds.
+  """
+  produceBlocks(startTimestamp: Tai64Timestamp, blocksToProduce: U64!): U32!
+}
+
+type NodeInfo {
+  utxoValidation: Boolean!
+  vmBacktrace: Boolean!
+  minGasPrice: U64!
+  maxTx: U64!
+  maxDepth: U64!
+  nodeVersion: String!
+}
+
+scalar Nonce
+
+union Output =
+    CoinOutput
+  | ContractOutput
+  | ChangeOutput
+  | VariableOutput
+  | ContractCreated
+
+"""
+Information about pagination in a connection
+"""
+type PageInfo {
+  """
+  When paginating backwards, are there more items?
+  """
+  hasPreviousPage: Boolean!
+
+  """
+  When paginating forwards, are there more items?
+  """
+  hasNextPage: Boolean!
+
+  """
+  When paginating backwards, the cursor to continue.
+  """
+  startCursor: String
+
+  """
+  When paginating forwards, the cursor to continue.
+  """
+  endCursor: String
+}
+
+type PoAConsensus {
+  """
+  Gets the signature of the block produced by `PoA` consensus.
+  """
+  signature: Signature!
+}
+
+type ProgramState {
+  returnType: ReturnType!
+  data: HexString!
+}
+
+type Query {
+  balance(
+    """
+    address of the owner
+    """
+    owner: Address!
+
+    """
+    asset_id of the coin
+    """
+    assetId: AssetId!
+  ): Balance!
+  balances(
+    filter: BalanceFilterInput!
+    first: Int
+    after: String
+    last: Int
+    before: String
+  ): BalanceConnection!
+  block(
+    """
+    ID of the block
+    """
+    id: BlockId
+
+    """
+    Height of the block
+    """
+    height: U64
+  ): Block
+  blocks(first: Int, after: String, last: Int, before: String): BlockConnection!
+  chain: ChainInfo!
+  transaction(
+    """
+    The ID of the transaction
+    """
+    id: TransactionId!
+  ): Transaction
+  transactions(
+    first: Int
+    after: String
+    last: Int
+    before: String
+  ): TransactionConnection!
+  transactionsByOwner(
+    owner: Address!
+    first: Int
+    after: String
+    last: Int
+    before: String
+  ): TransactionConnection!
+
+  """
+  Estimate the predicate gas for the provided transaction
+  """
+  estimatePredicates(tx: HexString!): Transaction!
+
+  """
+  Returns true when the GraphQL API is serving requests.
+  """
+  health: Boolean!
+
+  """
+  Gets the coin by `utxo_id`.
+  """
+  coin(
+    """
+    The ID of the coin
+    """
+    utxoId: UtxoId!
+  ): Coin
+
+  """
+  Gets all unspent coins of some `owner` maybe filtered with by `asset_id` per page.
+  """
+  coins(
+    filter: CoinFilterInput!
+    first: Int
+    after: String
+    last: Int
+    before: String
+  ): CoinConnection!
+
+  """
+  For each `query_per_asset`, get some spendable coins(of asset specified by the query) owned by
+  `owner` that add up at least the query amount. The returned coins can be spent.
+  The number of coins is optimized to prevent dust accumulation.
+
+  The query supports excluding and maximum the number of coins.
+
+  Returns:
+  The list of spendable coins per asset from the query. The length of the result is
+  the same as the length of `query_per_asset`. The ordering of assets and `query_per_asset`
+  is the same.
+  """
+  coinsToSpend(
+    """
+    The `Address` of the coins owner.
+    """
+    owner: Address!
+
+    """
+    The list of requested assets` coins with asset ids, `target` amount the user
+    wants to reach, and the `max` number of coins in the selection. Several
+    entries with the same asset id are not allowed.
+    """
+    queryPerAsset: [SpendQueryElementInput!]!
+
+    """
+    The excluded coins from the selection.
+    """
+    excludedIds: ExcludeInput
+  ): [[CoinType!]!]!
+  contract(
+    """
+    ID of the Contract
+    """
+    id: ContractId!
+  ): Contract
+  contractBalance(contract: ContractId!, asset: AssetId!): ContractBalance!
+  contractBalances(
+    filter: ContractBalanceFilterInput!
+    first: Int
+    after: String
+    last: Int
+    before: String
+  ): ContractBalanceConnection!
+  nodeInfo: NodeInfo!
+  messages(
+    """
+    address of the owner
+    """
+    owner: Address
+    first: Int
+    after: String
+    last: Int
+    before: String
+  ): MessageConnection!
+  messageProof(
+    transactionId: TransactionId!
+    messageId: MessageId!
+    commitBlockId: BlockId
+    commitBlockHeight: U32
+  ): MessageProof
+  messageStatus(nonce: Nonce!): MessageStatus!
+}
+
+type Receipt {
+  contract: Contract
+  pc: U64
+  is: U64
+  to: Contract
+  toAddress: Address
+  amount: U64
+  assetId: AssetId
+  gas: U64
+  param1: U64
+  param2: U64
+  val: U64
+  ptr: U64
+  digest: Bytes32
+  reason: U64
+  ra: U64
+  rb: U64
+  rc: U64
+  rd: U64
+  len: U64
+  receiptType: ReceiptType!
+  result: U64
+  gasUsed: U64
+  data: HexString
+  sender: Address
+  recipient: Address
+  nonce: Nonce
+  contractId: ContractId
+  subId: Bytes32
+}
+
+enum ReceiptType {
+  CALL
+  RETURN
+  RETURN_DATA
+  PANIC
+  REVERT
+  LOG
+  LOG_DATA
+  TRANSFER
+  TRANSFER_OUT
+  SCRIPT_RESULT
+  MESSAGE_OUT
+  MINT
+  BURN
+}
+
+enum ReturnType {
+  RETURN
+  RETURN_DATA
+  REVERT
+}
+
+scalar Salt
+
+scalar Signature
+
+input SpendQueryElementInput {
+  """
+  Identifier of the asset to spend.
+  """
+  assetId: AssetId!
+
+  """
+  Target amount for the query.
+  """
+  amount: U64!
+
+  """
+  The maximum number of currencies for selection.
+  """
+  max: U64
+}
+
+type SqueezedOutStatus {
+  reason: String!
+}
+
+type SubmittedStatus {
+  time: Tai64Timestamp!
+}
+
+type Subscription {
+  """
+  Returns a stream of status updates for the given transaction id.
+  If the current status is [`TransactionStatus::Success`], [`TransactionStatus::SqueezedOut`]
+  or [`TransactionStatus::Failed`] the stream will return that and end immediately.
+  If the current status is [`TransactionStatus::Submitted`] this will be returned
+  and the stream will wait for a future update.
+
+  This stream will wait forever so it's advised to use within a timeout.
+
+  It is possible for the stream to miss an update if it is polled slower
+  then the updates arrive. In such a case the stream will close without
+  a status. If this occurs the stream can simply be restarted to return
+  the latest status.
+  """
+  statusChange(
+    """
+    The ID of the transaction
+    """
+    id: TransactionId!
+  ): TransactionStatus!
+
+  """
+  Submits transaction to the `TxPool` and await either confirmation or failure.
+  """
+  submitAndAwait(tx: HexString!): TransactionStatus!
+}
+
+type SuccessStatus {
+  block: Block!
+  time: Tai64Timestamp!
+  programState: ProgramState
+}
+
+scalar Tai64Timestamp
+
+type Transaction {
+  id: TransactionId!
+  inputAssetIds: [AssetId!]
+  inputContracts: [Contract!]
+  gasPrice: U64
+  gasLimit: U64
+  maturity: U32
+  txPointer: TxPointer
+  isScript: Boolean!
+  isCreate: Boolean!
+  isMint: Boolean!
+  inputs: [Input!]
+  outputs: [Output!]!
+  witnesses: [HexString!]
+  receiptsRoot: Bytes32
+  status: TransactionStatus
+  receipts: [Receipt!]
+  script: HexString
+  scriptData: HexString
+  bytecodeWitnessIndex: Int
+  bytecodeLength: U64
+  salt: Salt
+  storageSlots: [HexString!]
+
+  """
+  Return the transaction bytes using canonical encoding
+  """
+  rawPayload: HexString!
+}
+
+type TransactionConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+
+  """
+  A list of edges.
+  """
+  edges: [TransactionEdge!]!
+
+  """
+  A list of nodes.
+  """
+  nodes: [Transaction!]!
+}
+
+"""
+An edge in a connection.
+"""
+type TransactionEdge {
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge
+  """
+  node: Transaction!
+}
+
+scalar TransactionId
+
+union TransactionStatus =
+    SubmittedStatus
+  | SuccessStatus
+  | SqueezedOutStatus
+  | FailureStatus
+
+scalar TxPointer
+
+scalar U32
+
+scalar U64
+
+scalar UtxoId
+
+type VariableOutput {
+  to: Address!
+  amount: U64!
+  assetId: AssetId!
+}
