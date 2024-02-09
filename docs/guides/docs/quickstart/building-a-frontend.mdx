@@ -134,6 +134,7 @@ action={{
   }
 }
 ```
+
 </ConditionalContent>
 
 ## Generate contract types
@@ -363,14 +364,16 @@ To develop and test faster, we recommend using the [`fuels dev` command](/docs/f
 Once you're ready to redeploy your contract to the testnet, here are the steps you should take to get your frontend and contract back in sync:
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
+
 - In your frontend directory, re-run this command: `npx fuels build`.
 - In your contract directory, redeploy the contract by running this command and following the same steps as above to sign the transaction with your wallet: `forc deploy --testnet`.
 - In your frontend directory, update the contract ID in your `App.tsx` file.
 </ConditionalContent>
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['beta-4']}>
+
 - In your contract directory, run `forc build`
-- In your contract directory, redeploy the contract by running this command and following the same steps as above to sign the transaction with your wallet: `forc deploy --node-url https://beta-4.fuel.network/graphql --gas-price 1 `
+- In your contract directory, redeploy the contract by running this command and following the same steps as above to sign the transaction with your wallet: `forc deploy --node-url https://beta-4.fuel.network/graphql --gas-price 1`
 - In your frontend directory, re-run this command: `npx fuels typegen -i ../counter-contract/out/debug/*-abi.json -o ./src/contracts`
 - In your frontend directory, update the contract ID in your `App.tsx` file
 </ConditionalContent>
