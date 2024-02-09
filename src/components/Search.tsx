@@ -10,10 +10,11 @@ import type { VersionSet } from '../types';
 function filter(items: DocSearchHit[], versionSet: VersionSet) {
   const slugs: string[] = [];
   const newItems: DocSearchHit[] = [];
+  console.log('versionSet:', versionSet);
   const filtered = items.filter((item) => {
     if (
-      (versionSet === 'default' && item.url.includes('/nightly/')) ||
-      item.url.includes('/beta-4/') ||
+      (versionSet === 'default' &&
+        (item.url.includes('/nightly/') || item.url.includes('/beta-4/'))) ||
       (versionSet === 'nightly' && !item.url.includes('/nightly/')) ||
       (versionSet === 'beta-4' && !item.url.includes('/beta-4/'))
     ) {
