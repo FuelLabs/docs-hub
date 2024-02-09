@@ -10,7 +10,6 @@ import type { VersionSet } from '../types';
 function filter(items: DocSearchHit[], versionSet: VersionSet) {
   const slugs: string[] = [];
   const newItems: DocSearchHit[] = [];
-  console.log('versionSet:', versionSet);
   const filtered = items.filter((item) => {
     if (
       (versionSet === 'default' &&
