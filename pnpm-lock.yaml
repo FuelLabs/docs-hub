@@ -52,8 +52,8 @@ dependencies:
     specifier: ^0.0.8
     version: 0.0.8(prettier@2.8.0)
   '@fuels/ts-config':
-    specifier: ^0.0.8
-    version: 0.0.8(typescript@5.2.2)
+    specifier: ^0.15.1
+    version: 0.15.1(typescript@5.2.2)
   '@mdx-js/mdx':
     specifier: ^2.3.0
     version: 2.3.0
@@ -1990,8 +1990,8 @@ packages:
       prettier: 2.8.0
     dev: false
 
-  /@fuels/ts-config@0.0.8(typescript@5.2.2):
-    resolution: {integrity: sha512-tMk6O76eklZ+0tdr04UZ6GNkeQd1DE0SNm0rj6k3kOtcqNMv7XkcrfuKmCprQzKeeJKLhEFLbPK/LXytvDUcsw==}
+  /@fuels/ts-config@0.15.1(typescript@5.2.2):
+    resolution: {integrity: sha512-I8wKvUXcIsoAInjrbfWCz6mSER5OZePXC0JGIVJao9YuJFvr0COhRJP1ZlK1o++6Z917hXDcIV7hhiB1J/qs7w==}
     peerDependencies:
       typescript: 5.2.2
     dependencies:

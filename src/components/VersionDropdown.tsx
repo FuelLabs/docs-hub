@@ -40,7 +40,6 @@ export default function VersionDropdown({
         : versionSet === 'nightly'
         ? 'Nightly'
         : 'Beta-4';
-    console.log('NEW ACTIVE VERSION:', newActiveVersion);
     setActiveVersion(newActiveVersion);
   }, [versionSet]);
 
@@ -61,7 +60,6 @@ export default function VersionDropdown({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onAction={(action: any) => {
           if (setVersion) {
-            console.log('action:', action);
             if (action === FUEL_TESTNET) {
               setVersion(FUEL_TESTNET_UPPER_CASE);
             } else if (action === 'beta-4') {
