@@ -1,0 +1,1 @@
+{"version":3,"file":"sparseMerkleProof.d.ts","sourceRoot":"","sources":["../../../src/sparse/types/sparseMerkleProof.ts"],"names":[],"mappings":"AACA,cAAM,iBAAiB;IACrB,SAAS,EAAE,MAAM,EAAE,CAAC;IACpB,qBAAqB,EAAE,MAAM,CAAC;IAC9B,WAAW,EAAE,MAAM,CAAC;gBAER,SAAS,EAAE,MAAM,EAAE,EAAE,qBAAqB,EAAE,MAAM,EAAE,WAAW,EAAE,MAAM;CAKpF;AAED,eAAe,iBAAiB,CAAC"}

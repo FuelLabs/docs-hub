@@ -56,6 +56,8 @@ var ErrorCode = /* @__PURE__ */ ((ErrorCode2) => {
   ErrorCode2["INVALID_TRANSACTION_STATUS"] = "invalid-transaction-status";
   ErrorCode2["INVALID_TRANSACTION_TYPE"] = "invalid-transaction-type";
   ErrorCode2["TRANSACTION_ERROR"] = "transaction-error";
+  ErrorCode2["INVALID_POLICY_TYPE"] = "invalid-policy-type";
+  ErrorCode2["DUPLICATED_POLICY"] = "duplicated-policy";
   ErrorCode2["INVALID_RECEIPT_TYPE"] = "invalid-receipt-type";
   ErrorCode2["INVALID_WORD_LIST"] = "invalid-word-list";
   ErrorCode2["INVALID_MNEMONIC"] = "invalid-mnemonic";

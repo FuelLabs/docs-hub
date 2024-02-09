@@ -1,8 +1,8 @@
-import type { BytesLike } from '@ethersproject/bytes';
-import { hexlify } from '@ethersproject/bytes';
 import { BaseAssetId } from '@fuel-ts/address/configs';
 import type { BigNumberish, BN } from '@fuel-ts/math';
 import { bn } from '@fuel-ts/math';
+import { hexlify } from 'ethers';
+import type { BytesLike } from 'ethers';
 
 export type CoinQuantityLike =
   | [amount: BigNumberish, assetId?: BytesLike, max?: BigNumberish]
@@ -29,4 +29,24 @@ export const coinQuantityfy = (coinQuantityLike: CoinQuantityLike): CoinQuantity
     amount: bn(amount),
     max: max ? bn(max) : undefined,
   };
+};
+
+export interface IAddAmountToAssetParams {
+  assetId: string;
+  amount: BN;
+  coinQuantities: CoinQuantity[];
+}
+
+export const addAmountToAsset = (params: IAddAmountToAssetParams): CoinQuantity[] => {
+  const { amount, assetId, coinQuantities } = params;
+
+  const assetIdx = coinQuantities.findIndex((coinQuantity) => coinQuantity.assetId === assetId);
+
+  if (assetIdx !== -1) {
+    coinQuantities[assetIdx].amount = coinQuantities[assetIdx].amount.add(amount);
+  } else {
+    coinQuantities.push({ assetId, amount });
+  }
+
+  return coinQuantities;
 };

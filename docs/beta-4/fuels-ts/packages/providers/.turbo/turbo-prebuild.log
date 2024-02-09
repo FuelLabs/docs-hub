@@ -1,9 +1,9 @@
 
-> @fuel-ts/providers@0.69.1 prebuild /Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/packages/providers
+> @fuel-ts/providers@0.69.1 prebuild /Users/sarah/Documents/GitHub/fuels-ts/packages/providers
 > pnpm build:operations
 
 
-> @fuel-ts/providers@0.69.1 build:operations /Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/packages/providers
+> @fuel-ts/providers@0.69.1 build:operations /Users/sarah/Documents/GitHub/fuels-ts/packages/providers
 > pnpm graphql-codegen
 
 [STARTED] Parse Configuration

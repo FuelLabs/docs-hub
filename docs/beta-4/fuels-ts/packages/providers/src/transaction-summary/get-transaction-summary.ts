@@ -1,7 +1,7 @@
-import { arrayify } from '@ethersproject/bytes';
 import { ErrorCode, FuelError } from '@fuel-ts/errors';
 import { bn } from '@fuel-ts/math';
 import { TransactionCoder } from '@fuel-ts/transactions';
+import { getBytesCopy } from 'ethers';
 
 import type {
   GqlGetTransactionsByOwnerQueryVariables,
@@ -39,25 +39,26 @@ export async function getTransactionSummary<TTransactionType = void>(
   }
 
   const [decodedTransaction] = new TransactionCoder().decode(
-    arrayify(gqlTransaction.rawPayload),
+    getBytesCopy(gqlTransaction.rawPayload),
     0
   );
 
   const receipts = gqlTransaction.receipts?.map(processGqlReceipt) || [];
 
   const {
-    consensusParameters: { gasPerByte, gasPriceFactor },
-  } = await provider.getChain();
+    consensusParameters: { gasPerByte, gasPriceFactor, maxInputs },
+  } = provider.getChain();
 
   const transactionInfo = assembleTransactionSummary<TTransactionType>({
     id: gqlTransaction.id,
     receipts,
     transaction: decodedTransaction,
-    transactionBytes: arrayify(gqlTransaction.rawPayload),
+    transactionBytes: getBytesCopy(gqlTransaction.rawPayload),
     gqlTransactionStatus: gqlTransaction.status,
     gasPerByte: bn(gasPerByte),
     gasPriceFactor: bn(gasPriceFactor),
     abiMap,
+    maxInputs,
   });
 
   return {
@@ -81,6 +82,7 @@ export async function getTransactionSummaryFromRequest<TTransactionType = void>(
   const { receipts } = await provider.call(transactionRequest);
 
   const { gasPerByte, gasPriceFactor } = provider.getGasConfig();
+  const maxInputs = provider.getChain().consensusParameters.maxInputs;
 
   const transaction = transactionRequest.toTransaction();
   const transactionBytes = transactionRequest.toTransactionBytes();
@@ -92,6 +94,7 @@ export async function getTransactionSummaryFromRequest<TTransactionType = void>(
     abiMap,
     gasPerByte,
     gasPriceFactor,
+    maxInputs,
   });
 
   return transactionSummary;
@@ -119,15 +122,15 @@ export async function getTransactionsSummaries(
   const { edges, pageInfo } = transactionsByOwner;
 
   const {
-    consensusParameters: { gasPerByte, gasPriceFactor },
-  } = await provider.getChain();
+    consensusParameters: { gasPerByte, gasPriceFactor, maxInputs },
+  } = provider.getChain();
 
   const transactions = edges.map((edge) => {
     const { node: gqlTransaction } = edge;
 
     const { id, rawPayload, receipts: gqlReceipts, status } = gqlTransaction;
 
-    const [decodedTransaction] = new TransactionCoder().decode(arrayify(rawPayload), 0);
+    const [decodedTransaction] = new TransactionCoder().decode(getBytesCopy(rawPayload), 0);
 
     const receipts = gqlReceipts?.map(processGqlReceipt) || [];
 
@@ -135,11 +138,12 @@ export async function getTransactionsSummaries(
       id,
       receipts,
       transaction: decodedTransaction,
-      transactionBytes: arrayify(rawPayload),
+      transactionBytes: getBytesCopy(rawPayload),
       gqlTransactionStatus: status,
       abiMap,
       gasPerByte,
       gasPriceFactor,
+      maxInputs,
     });
 
     const output: TransactionResult = {

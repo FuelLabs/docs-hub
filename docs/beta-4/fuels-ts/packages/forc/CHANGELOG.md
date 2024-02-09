@@ -1,5 +1,27 @@
 # Change Log
 
+## 0.67.0
+
+## 0.66.1
+
+## 0.66.0
+
+## 0.65.0
+
+## 0.64.1
+
+## 0.64.0
+
+### Minor Changes
+
+- Updated forc version, by [@camsjams](https://github.com/camsjams) (See [#1343](https://github.com/FuelLabs/fuels-ts/pull/1343))
+
+## 0.63.0
+
+## 0.62.0
+
+## 0.61.0
+
 ## 0.60.0
 
 ## 0.59.0

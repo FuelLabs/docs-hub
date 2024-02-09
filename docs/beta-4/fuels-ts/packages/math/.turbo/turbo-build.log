@@ -1,45 +1,32 @@
 
-> @fuel-ts/math@0.69.1 build /Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/packages/math
+> @fuel-ts/math@0.69.1 build /Users/sarah/Documents/GitHub/fuels-ts/packages/math
 > tsup
 
 CLI Building entry: {"index":"src/index.ts","configs":"src/configs.ts"}
 CLI Using tsconfig: tsconfig.json
 CLI tsup v6.7.0
-CLI Using tsup config: /Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/packages/math/tsup.config.ts
+CLI Using tsup config: /Users/sarah/Documents/GitHub/fuels-ts/packages/math/tsup.config.ts
 CLI Target: es2022
 CLI Cleaning output folder
 CJS Build start
 ESM Build start
 IIFE Build start
-✘ [ERROR] Could not resolve "@fuel-ts/errors"
-
-    src/bn.ts:1:37:
-      1 │ import { ErrorCode, FuelError } from '@fuel-ts/errors';
-        ╵                                      ~~~~~~~~~~~~~~~~~
-
-  You can mark the path "@fuel-ts/errors" as external to exclude it from the bundle, which will remove this error.
-
-IIFE Build failed
-Error: Build failed with 1 error:
-src/bn.ts:1:37: ERROR: Could not resolve "@fuel-ts/errors"
-    at failureErrorWithLog (/Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/node_modules/.pnpm/esbuild@0.17.19/node_modules/esbuild/lib/main.js:1636:15)
-    at /Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/node_modules/.pnpm/esbuild@0.17.19/node_modules/esbuild/lib/main.js:1048:25
-    at runOnEndCallbacks (/Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/node_modules/.pnpm/esbuild@0.17.19/node_modules/esbuild/lib/main.js:1471:45)
-    at buildResponseToResult (/Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/node_modules/.pnpm/esbuild@0.17.19/node_modules/esbuild/lib/main.js:1046:7)
-    at /Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/node_modules/.pnpm/esbuild@0.17.19/node_modules/esbuild/lib/main.js:1075:16
-    at responseCallbacks.<computed> (/Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/node_modules/.pnpm/esbuild@0.17.19/node_modules/esbuild/lib/main.js:697:9)
-    at handleIncomingPacket (/Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/node_modules/.pnpm/esbuild@0.17.19/node_modules/esbuild/lib/main.js:752:9)
-    at Socket.readFromStdout (/Users/sarah/Documents/GitHub/docs-hub/docs/fuels-ts/node_modules/.pnpm/esbuild@0.17.19/node_modules/esbuild/lib/main.js:673:7)
-    at Socket.emit (node:events:514:28)
-    at addChunk (node:internal/streams/readable:324:12)
-CJS dist/index.js       8.88 KB
-CJS dist/configs.js     1.30 KB
-CJS dist/configs.js.map 311.00 B
-CJS dist/index.js.map   16.21 KB
-CJS ⚡️ Build success in 18ms
+ESM dist/index.mjs       7.11 KB
 ESM dist/configs.mjs     209.00 B
-ESM dist/index.mjs       6.93 KB
+ESM dist/index.mjs.map   16.32 KB
 ESM dist/configs.mjs.map 257.00 B
-ESM dist/index.mjs.map   15.94 KB
-ESM ⚡️ Build success in 18ms
- ELIFECYCLE  Command failed with exit code 1.
+ESM ⚡️ Build success in 20ms
+CJS dist/configs.js     1.30 KB
+CJS dist/index.js       9.06 KB
+CJS dist/configs.js.map 311.00 B
+CJS dist/index.js.map   16.59 KB
+CJS ⚡️ Build success in 21ms
+IIFE dist/configs.global.js     178.00 B
+IIFE dist/index.global.js       193.74 KB
+IIFE dist/configs.global.js.map 259.00 B
+IIFE dist/index.global.js.map   320.06 KB
+IIFE ⚡️ Build success in 36ms
+
+> @fuel-ts/math@0.69.1 postbuild /Users/sarah/Documents/GitHub/fuels-ts/packages/math
+> tsx ../../scripts/postbuild.ts
+

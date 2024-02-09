@@ -1,11 +1,8 @@
-import type { BytesLike } from '@ethersproject/bytes';
-import { arrayify, hexlify } from '@ethersproject/bytes';
-import type { Network } from '@ethersproject/networks';
 import { Address } from '@fuel-ts/address';
 import { ErrorCode, FuelError } from '@fuel-ts/errors';
 import type { AbstractAddress } from '@fuel-ts/interfaces';
 import type { BN } from '@fuel-ts/math';
-import { max, bn } from '@fuel-ts/math';
+import { bn, max } from '@fuel-ts/math';
 import type { Transaction } from '@fuel-ts/transactions';
 import {
   InputType,
@@ -13,10 +10,10 @@ import {
   InputMessageCoder,
   TransactionCoder,
 } from '@fuel-ts/transactions';
-import { print } from 'graphql';
+import { checkFuelCoreVersionCompatibility } from '@fuel-ts/versions';
+import type { BytesLike } from 'ethers';
+import { getBytesCopy, hexlify, Network } from 'ethers';
 import { GraphQLClient } from 'graphql-request';
-import type { Client } from 'graphql-sse';
-import { createClient } from 'graphql-sse';
 import { clone } from 'ramda';
 
 import { getSdk as getOperationsSdk } from './__generated__/operations';
@@ -40,7 +37,14 @@ import { transactionRequestify, ScriptTransactionRequest } from './transaction-r
 import type { TransactionResultReceipt } from './transaction-response';
 import { TransactionResponse } from './transaction-response';
 import { processGqlReceipt } from './transaction-summary/receipt';
-import { calculateTransactionFee, fromUnixToTai64, getReceiptsWithMissingData } from './utils';
+import {
+  calculateTransactionFee,
+  calculateTxChargeableBytes,
+  fromUnixToTai64,
+  getGasUsedFromReceipts,
+  getReceiptsWithMissingData,
+} from './utils';
+import { mergeQuantities } from './utils/merge-quantities';
 
 const MAX_RETRIES = 10;
 
@@ -122,10 +126,13 @@ export type NodeInfoAndConsensusParameters = {
 
 // #region cost-estimation-1
 export type TransactionCost = {
+  requiredQuantities: CoinQuantity[];
+  receipts: TransactionResultReceipt[];
   minGasPrice: BN;
   gasPrice: BN;
   gasUsed: BN;
-  fee: BN;
+  minFee: BN;
+  maxFee: BN;
 };
 // #endregion cost-estimation-1
 
@@ -192,19 +199,14 @@ export type FetchRequestOptions = {
   body: string;
 };
 
-export type CustomFetch<R extends Response = Response> = (
-  url: string,
-  options: FetchRequestOptions,
-  providerOptions?: Partial<Omit<ProviderOptions<R>, 'fetch'>>
-) => Promise<R>;
 /*
  * Provider initialization options
  */
-export type ProviderOptions<FetchResponse extends Response = Response> = {
-  fetch: CustomFetch<FetchResponse> | undefined;
-  cacheUtxo: number | undefined;
-  timeout: number | undefined;
+export type ProviderOptions = {
+  fetch?: (url: string, options: FetchRequestOptions) => Promise<unknown>;
+  cacheUtxo?: number;
 };
+
 /**
  * Provider Call transaction params
  */
@@ -226,29 +228,16 @@ type NodeInfoCache = Record<string, NodeInfo>;
  * A provider for connecting to a node
  */
 export default class Provider {
-  operations!: ReturnType<typeof getOperationsSdk>;
-  #subscriptionClient!: Client;
-
+  operations: ReturnType<typeof getOperationsSdk>;
   cache?: MemoryCache;
-  options: ProviderOptions = {
-    timeout: undefined,
-    cacheUtxo: undefined,
-    fetch: undefined,
-  };
 
-  private static getFetchFn(options: ProviderOptions) {
-    return options.fetch !== undefined
-      ? options.fetch
-      : (url: string, request: FetchRequestOptions) =>
-          fetch(url, {
-            ...request,
-            signal:
-              options.timeout !== undefined ? AbortSignal.timeout(options.timeout) : undefined,
-          });
+  static clearChainAndNodeCaches() {
+    Provider.nodeInfoCache = {};
+    Provider.chainInfoCache = {};
   }
 
-  static chainInfoCache: ChainInfoCache = {};
-  static nodeInfoCache: NodeInfoCache = {};
+  private static chainInfoCache: ChainInfoCache = {};
+  private static nodeInfoCache: NodeInfoCache = {};
 
   /**
    * Constructor to initialize a Provider.
@@ -261,11 +250,10 @@ export default class Provider {
   protected constructor(
     /** GraphQL endpoint of the Fuel node */
     public url: string,
-    options: Partial<ProviderOptions> = {}
+    public options: ProviderOptions = {}
   ) {
-    this.options = { ...this.options, ...options };
-    this.createOperations();
-    this.cache = this.options.cacheUtxo ? new MemoryCache(this.options.cacheUtxo) : undefined;
+    this.operations = this.createOperations(url, options);
+    this.cache = options.cacheUtxo ? new MemoryCache(options.cacheUtxo) : undefined;
   }
 
   /**
@@ -273,7 +261,7 @@ export default class Provider {
    * @param url - GraphQL endpoint of the Fuel node
    * @param options - Additional options for the provider
    */
-  static async create(url: string, options: Partial<ProviderOptions> = {}) {
+  static async create(url: string, options: ProviderOptions = {}) {
     const provider = new Provider(url, options);
     await provider.fetchChainAndNodeInfo();
     return provider;
@@ -326,38 +314,39 @@ export default class Provider {
   /**
    * Updates the URL for the provider and fetches the consensus parameters for the new URL, if needed.
    */
-  async switchUrl(url: string) {
+  async connect(url: string, options?: ProviderOptions) {
     this.url = url;
-    this.createOperations();
+    this.operations = this.createOperations(url, options ?? this.options);
     await this.fetchChainAndNodeInfo();
   }
 
   /**
-   * Retrieves and caches chain and node information if not already cached.
-   *
-   * - Checks the cache for existing chain and node information based on the current URL.
-   * - If not found in cache, fetches the information, caches it, and then returns the data.
+   * Fetches both the chain and node information, saves it to the cache, and return it.
    *
    * @returns NodeInfo and Chain
    */
   async fetchChainAndNodeInfo() {
-    let nodeInfo = Provider.nodeInfoCache[this.url];
-    let chain = Provider.chainInfoCache[this.url];
+    const chain = await this.fetchChain();
+    const nodeInfo = await this.fetchNode();
 
-    if (!nodeInfo) {
-      nodeInfo = await this.fetchNode();
-      Provider.nodeInfoCache[this.url] = nodeInfo;
-    }
-
-    if (!chain) {
-      chain = await this.fetchChain();
-      Provider.chainInfoCache[this.url] = chain;
-    }
+    Provider.ensureClientVersionIsSupported(nodeInfo);
 
     return {
       chain,
       nodeInfo,
     };
+  }
+
+  private static ensureClientVersionIsSupported(nodeInfo: NodeInfo) {
+    const { isMajorSupported, isMinorSupported, supportedVersion } =
+      checkFuelCoreVersionCompatibility(nodeInfo.nodeVersion);
+
+    if (!isMajorSupported || !isMinorSupported) {
+      throw new FuelError(
+        FuelError.CODES.UNSUPPORTED_FUEL_CLIENT_VERSION,
+        `Fuel client version: ${nodeInfo.nodeVersion}, Supported version: ${supportedVersion}`
+      );
+    }
   }
 
   /**
@@ -367,77 +356,10 @@ export default class Provider {
    * @param options - Additional options for the provider
    * @returns The operation SDK object
    */
-  private createOperations() {
-    const fetchFn = Provider.getFetchFn(this.options);
-    const gqlClient = new GraphQLClient(this.url, {
-      fetch: (nodeUrl: string, request: FetchRequestOptions) =>
-        fetchFn(nodeUrl, request, this.options),
-    });
-
-    if (this.#subscriptionClient) this.#subscriptionClient.dispose();
-    this.#subscriptionClient = Provider.createSubscriptionClient(this.url, fetchFn, this.options);
-
-    // @ts-expect-error This is due to this function being generic and us using multiple libraries. Its type is specified when calling a specific operation via provider.operations.xyz.
-    this.operations = getOperationsSdk((query, vars) => {
-      const isSubscription =
-        (query.definitions.find((x) => x.kind === 'OperationDefinition') as { operation: string })
-          ?.operation === 'subscription';
-      if (isSubscription) {
-        return this.#subscriptionClient.iterate({
-          query: print(query),
-          variables: vars as Record<string, unknown>,
-        });
-      }
-
-      return gqlClient.request(query, vars);
-    });
-  }
-
-  private static createSubscriptionClient(
-    url: string,
-    fetchFn: ReturnType<typeof Provider.getFetchFn>,
-    options: ProviderOptions
-  ) {
-    return createClient({
-      url: `${url}-sub`,
-      onMessage: (msg) => {
-        /*
-          This is the only place where I've managed to wedge in error throwing
-          without the error being converted to the graphql-sse library's NetworkError or being silently ignored.
-          These are errors returned from the node as a field of the `data` property with a 200 response code,
-          so they aren't treated as errors by the graphql-sse library.
-          This function (onMessage) gets called after a fetch but before message processing.
-          So the fetchFn below gets called first, the node returns errors, then this function is called.
-          The _isError property is added in the response processing in the fetchFn as a way to differentiate between errors and successful responses.
-          See here: https://github.com/enisdenjo/graphql-sse/blob/370ec133f8ca9c7b763a6ca0223c756a09169c59/src/client.ts#L872
-        */
-        if ((msg.data as { _isError: boolean })._isError) {
-          throw new FuelError(ErrorCode.FUEL_NODE_ERROR, JSON.stringify(msg.data?.errors));
-        }
-      },
-      fetchFn: async (
-        subscriptionUrl: string,
-        request: FetchRequestOptions & { signal: AbortSignal }
-      ) => Provider.adaptSubscriptionResponse(await fetchFn(subscriptionUrl, request, options)),
-    });
-  }
-
-  /**
-    The subscription response processing serves two purposes:
-    1. To add an `event` field which is mandated by the graphql-sse library (not by the SSE protocol)
-    (see [the library's protocol](https://github.com/enisdenjo/graphql-sse/blob/master/PROTOCOL.md))
-    2. To process the node's response because it's a different format to the types generated by graphql-codegen.
-  */
-  private static async adaptSubscriptionResponse(originalResponse: Response): Promise<Response> {
-    const originalResponseText = await originalResponse.text();
-    const originalResponseData = JSON.parse(originalResponseText.split('data:')[1]);
-    const data = originalResponseData.data;
-    const errors = originalResponseData.errors;
-
-    let text = 'event:next';
-    text += `\ndata:${JSON.stringify(data ?? { _isError: true, errors })}`;
-    text += '\n\n';
-    return new Response(text, originalResponse);
+  private createOperations(url: string, options: ProviderOptions = {}) {
+    this.url = url;
+    const gqlClient = new GraphQLClient(url, options.fetch ? { fetch: options.fetch } : undefined);
+    return getOperationsSdk(gqlClient);
   }
 
   /**
@@ -460,10 +382,12 @@ export default class Provider {
    * @returns A promise that resolves to the network configuration object
    */
   async getNetwork(): Promise<Network> {
-    return Promise.resolve({
-      name: 'fuelv2',
-      chainId: 0xdeadbeef,
-    });
+    const {
+      name,
+      consensusParameters: { chainId },
+    } = await this.getChain();
+    const network = new Network(name, chainId.toNumber());
+    return Promise.resolve(network);
   }
 
   /**
@@ -483,7 +407,8 @@ export default class Provider {
    */
   async fetchNode(): Promise<NodeInfo> {
     const { nodeInfo } = await this.operations.getNodeInfo();
-    return {
+
+    const processedNodeInfo: NodeInfo = {
       maxDepth: bn(nodeInfo.maxDepth),
       maxTx: bn(nodeInfo.maxTx),
       minGasPrice: bn(nodeInfo.minGasPrice),
@@ -491,6 +416,10 @@ export default class Provider {
       utxoValidation: nodeInfo.utxoValidation,
       vmBacktrace: nodeInfo.vmBacktrace,
     };
+
+    Provider.nodeInfoCache[this.url] = processedNodeInfo;
+
+    return processedNodeInfo;
   }
 
   /**
@@ -500,7 +429,12 @@ export default class Provider {
    */
   async fetchChain(): Promise<ChainInfo> {
     const { chain } = await this.operations.getChain();
-    return processGqlChain(chain);
+
+    const processedChain = processGqlChain(chain);
+
+    Provider.chainInfoCache[this.url] = processedChain;
+
+    return processedChain;
   }
 
   /**
@@ -548,18 +482,18 @@ export default class Provider {
     // #endregion Provider-sendTransaction
 
     const encodedTransaction = hexlify(transactionRequest.toTransactionBytes());
-    const { gasUsed, minGasPrice } = await this.getTransactionCost(transactionRequest, 0);
+    const { gasUsed, minGasPrice } = await this.getTransactionCost(transactionRequest);
 
     // Fail transaction before submit to avoid submit failure
     // Resulting in lost of funds on a OutOfGas situation.
     if (bn(gasUsed).gt(bn(transactionRequest.gasLimit))) {
       throw new FuelError(
-        ErrorCode.GAS_PRICE_TOO_LOW,
+        ErrorCode.GAS_LIMIT_TOO_LOW,
         `Gas limit '${transactionRequest.gasLimit}' is lower than the required: '${gasUsed}'.`
       );
     } else if (bn(minGasPrice).gt(bn(transactionRequest.gasPrice))) {
       throw new FuelError(
-        ErrorCode.GAS_LIMIT_TOO_LOW,
+        ErrorCode.GAS_PRICE_TOO_LOW,
         `Gas price '${transactionRequest.gasPrice}' is lower than the required: '${minGasPrice}'.`
       );
     }
@@ -613,7 +547,7 @@ export default class Provider {
 
     const estimatedTransaction = transactionRequest;
     const [decodedTransaction] = new TransactionCoder().decode(
-      arrayify(response.estimatePredicates.rawPayload),
+      getBytesCopy(response.estimatePredicates.rawPayload),
       0
     );
 
@@ -724,39 +658,67 @@ export default class Provider {
    */
   async getTransactionCost(
     transactionRequestLike: TransactionRequestLike,
-    tolerance: number = 0.2
+    forwardingQuantities: CoinQuantity[] = []
   ): Promise<TransactionCost> {
-    const transactionRequest = transactionRequestify(clone(transactionRequestLike));
+    const clonedTransactionRequest = transactionRequestify(clone(transactionRequestLike));
+
+    const { gasLimit } = clonedTransactionRequest;
+    let { gasPrice } = clonedTransactionRequest;
     const { minGasPrice, gasPerByte, gasPriceFactor, maxGasPerTx } = this.getGasConfig();
-    const gasPrice = max(transactionRequest.gasPrice, minGasPrice);
-    const margin = 1 + tolerance;
 
-    // Set gasLimit to the maximum of the chain
-    // and gasPrice to 0 for measure
-    // Transaction without arrive to OutOfGas
-    transactionRequest.gasLimit = maxGasPerTx;
-    transactionRequest.gasPrice = bn(0);
+    gasPrice = max(gasPrice, minGasPrice);
 
-    // Execute dryRun not validated transaction to query gasUsed
-    const { receipts } = await this.call(transactionRequest);
-    const transaction = transactionRequest.toTransaction();
+    // Getting coin quantities from amounts being transferred
+    const coinOutputsQuantitites = clonedTransactionRequest.getCoinOutputsQuantities();
+    // Combining coin quantities from amounts being transferred and forwarding to contracts
+    const allQuantities = mergeQuantities(coinOutputsQuantitites, forwardingQuantities);
+    // Funding transaction with fake utxos
+    clonedTransactionRequest.fundWithFakeUtxos(allQuantities);
 
-    const { fee, gasUsed } = calculateTransactionFee({
+    const transactionBytes = clonedTransactionRequest.toTransactionBytes();
+    const chargeableBytes = calculateTxChargeableBytes({
+      transactionBytes,
+      transactionWitnesses: new TransactionCoder().decode(transactionBytes, 0)[0].witnesses,
+    });
+
+    let gasUsed = bn(0);
+    let receipts: TransactionResultReceipt[] = [];
+    const isTransactionCreate = clonedTransactionRequest.type === TransactionType.Create;
+
+    // Transactions of type Create does not consume any gas so we can the dryRun
+    if (!isTransactionCreate) {
+      /**
+       * Setting the gasPrice to 0 on a dryRun will result in no fees being charged.
+       * This simplifies the funding with fake utxos, since the coin quantities required
+       * will only be amounts being transferred (coin outputs) and amounts being forwarded
+       * to contract calls.
+       */
+      clonedTransactionRequest.gasPrice = bn(0);
+      clonedTransactionRequest.gasLimit = maxGasPerTx;
+
+      // Executing dryRun with fake utxos to get gasUsed
+      const result = await this.call(clonedTransactionRequest);
+      receipts = result.receipts;
+      gasUsed = getGasUsedFromReceipts(receipts);
+    }
+
+    const { minFee, maxFee } = calculateTransactionFee({
       gasPrice,
-      transactionBytes: transactionRequest.toTransactionBytes(),
-      transactionWitnesses: transaction?.witnesses || [],
       gasPerByte,
       gasPriceFactor,
-      transactionType: transaction.type,
-      receipts,
-      margin,
+      chargeableBytes,
+      gasLimit,
+      gasUsed,
     });
 
     return {
+      requiredQuantities: allQuantities,
       minGasPrice,
+      receipts,
       gasPrice,
       gasUsed,
-      fee,
+      minFee,
+      maxFee,
     };
   }
 
@@ -948,7 +910,7 @@ export default class Provider {
       time: block.header.time,
       transactionIds: block.transactions.map((tx) => tx.id),
       transactions: block.transactions.map(
-        (tx) => new TransactionCoder().decode(arrayify(tx.rawPayload), 0)?.[0]
+        (tx) => new TransactionCoder().decode(getBytesCopy(tx.rawPayload), 0)?.[0]
       ),
     };
   }
@@ -967,7 +929,7 @@ export default class Provider {
       return null;
     }
     return new TransactionCoder().decode(
-      arrayify(transaction.rawPayload),
+      getBytesCopy(transaction.rawPayload),
       0
     )?.[0] as Transaction<TTransactionType>;
   }

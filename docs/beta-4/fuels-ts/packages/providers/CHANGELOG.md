@@ -1,5 +1,72 @@
 # Change Log
 
+## 0.67.0
+
+### Minor Changes
+
+- ensure transfer to contract transactions returns operation transfer asset, by [@Torres-ssf](https://github.com/Torres-ssf) (See [#1400](https://github.com/FuelLabs/fuels-ts/pull/1400))
+- 🐞 Fixing transaction funding, by [@Torres-ssf](https://github.com/Torres-ssf) (See [#1372](https://github.com/FuelLabs/fuels-ts/pull/1372))
+
+## 0.66.1
+
+### Patch Changes
+
+- Adjusting package manager configs, by [@arboleya](https://github.com/arboleya) (See [#1415](https://github.com/FuelLabs/fuels-ts/pull/1415))
+
+## 0.66.0
+
+### Minor Changes
+
+- made calculateTransactionFee to return minFee and maxFee, by [@Torres-ssf](https://github.com/Torres-ssf) (See [#1383](https://github.com/FuelLabs/fuels-ts/pull/1383))
+
+### Patch Changes
+
+- You can now pass in `ProviderOptions` to `Provider.connect`, by [@LuizAsFight](https://github.com/LuizAsFight) (See [#1388](https://github.com/FuelLabs/fuels-ts/pull/1388))
+
+## 0.65.0
+
+### Minor Changes
+
+- 🐞 fix how transaction fee is calculated, by [@Torres-ssf](https://github.com/Torres-ssf) (See [#1307](https://github.com/FuelLabs/fuels-ts/pull/1307))
+
+### Patch Changes
+
+- Upgrading `fuel-core` to `0.20.8`, by [@arboleya](https://github.com/arboleya) (See [#1376](https://github.com/FuelLabs/fuels-ts/pull/1376))
+
+## 0.64.1
+
+## 0.64.0
+
+### Patch Changes
+
+- Rearrange error messages regarding insufficient tx params, by [@danielbate](https://github.com/danielbate) (See [#1352](https://github.com/FuelLabs/fuels-ts/pull/1352))
+
+## 0.63.0
+
+### Patch Changes
+
+- refactor: purge usage of `arrayify` from ethers v5 in favor of `getBytes` from ethers v6, by [@danielbate](https://github.com/danielbate) (See [#1255](https://github.com/FuelLabs/fuels-ts/pull/1255))
+
+## 0.62.0
+
+### Minor Changes
+
+- Reverted GraphQL subscriptions, thus removing `Provider.operations.statusChange`, by [@nedsalk](https://github.com/nedsalk) (See [#1333](https://github.com/FuelLabs/fuels-ts/pull/1333))
+
+## 0.61.0
+
+### Minor Changes
+
+- rename Provider switchUrl to connect, by [@Torres-ssf](https://github.com/Torres-ssf) (See [#1294](https://github.com/FuelLabs/fuels-ts/pull/1294))
+- Check mismatch of fuel client version and supported version: throw on major/minor mismatch, warn on patch mismatch, by [@nedsalk](https://github.com/nedsalk) (See [#1287](https://github.com/FuelLabs/fuels-ts/pull/1287))
+
+### Patch Changes
+
+- 🐞 Fixed the TransferOut and Transfer receipts, by [@matt-user](https://github.com/matt-user) (See [#1328](https://github.com/FuelLabs/fuels-ts/pull/1328))
+- remove console warn, by [@camsjams](https://github.com/camsjams) (See [#1323](https://github.com/FuelLabs/fuels-ts/pull/1323))
+- refactor: purge the usage of the hardcoded constant `VM_TX_MEMORY`, by [@Dhaiwat10](https://github.com/Dhaiwat10) (See [#1318](https://github.com/FuelLabs/fuels-ts/pull/1318))
+- On the `Provider` class, make `nodeInfoCache` and `chainInfoCache` private fields, by [@Dhaiwat10](https://github.com/Dhaiwat10) (See [#1303](https://github.com/FuelLabs/fuels-ts/pull/1303))
+
 ## 0.60.0
 
 ### Minor Changes

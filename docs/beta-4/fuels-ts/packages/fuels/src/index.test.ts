@@ -2,6 +2,9 @@ import * as fuels from './index';
 
 describe('index.js', () => {
   test('should export everything', () => {
+    expect(fuels.hexlify).toBeTruthy();
+    expect(fuels.arrayify).toBeTruthy();
+
     expect(fuels.Interface).toBeTruthy();
     expect(fuels.Address).toBeTruthy();
     expect(fuels.Contract).toBeTruthy();
@@ -13,5 +16,8 @@ describe('index.js', () => {
     expect(fuels.ScriptResultDecoderError).toBeTruthy();
     expect(fuels.Script).toBeTruthy();
     expect(fuels.FunctionInvocationScope).toBeTruthy();
+    expect(fuels.arrayify).toBeTruthy();
+    expect(fuels.hexlify).toBeTruthy();
+    expect(fuels.concat).toBeTruthy();
   });
 });

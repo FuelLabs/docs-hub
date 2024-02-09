@@ -1,5 +1,35 @@
 # @fuel-ts/fuel-core
 
+## 0.67.0
+
+## 0.66.1
+
+## 0.66.0
+
+## 0.65.0
+
+### Patch Changes
+
+- Upgrading `fuel-core` to `0.20.8`, by [@arboleya](https://github.com/arboleya) (See [#1376](https://github.com/FuelLabs/fuels-ts/pull/1376))
+
+## 0.64.1
+
+## 0.64.0
+
+## 0.63.0
+
+### Minor Changes
+
+- upgrade fuel-core to 0.20.7, by [@Torres-ssf](https://github.com/Torres-ssf) (See [#1357](https://github.com/FuelLabs/fuels-ts/pull/1357))
+
+## 0.62.0
+
+## 0.61.0
+
+### Patch Changes
+
+- Upgrading `fuel-core` to `0.20.6`, by [@arboleya](https://github.com/arboleya) (See [#1327](https://github.com/FuelLabs/fuels-ts/pull/1327))
+
 ## 0.60.0
 
 ## 0.59.0

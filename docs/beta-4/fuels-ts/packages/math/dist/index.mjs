@@ -26,6 +26,7 @@ function toFixed(value, options) {
 
 // src/bn.ts
 var BN = class extends BnJs {
+  MAX_U64 = "0xFFFFFFFFFFFFFFFF";
   constructor(value, base, endian) {
     if (BN.isBN(value)) {
       super(value.toArray(), base, endian);
@@ -190,6 +191,12 @@ var BN = class extends BnJs {
       div: new BN(div?.toArray()),
       mod: new BN(mod?.toArray())
     };
+  }
+  maxU64() {
+    return this.gte(this.MAX_U64) ? new BN(this.MAX_U64) : this;
+  }
+  normalizeZeroToOne() {
+    return this.isZero() ? new BN(1) : this;
   }
   // END ANCHOR: OVERRIDES to avoid losing references
 };

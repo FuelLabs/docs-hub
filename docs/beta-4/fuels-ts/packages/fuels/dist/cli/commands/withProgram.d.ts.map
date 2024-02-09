@@ -1,0 +1,1 @@
+{"version":3,"file":"withProgram.d.ts","sourceRoot":"","sources":["../../../src/cli/commands/withProgram.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,OAAO,EAAE,MAAM,WAAW,CAAC;AAEzC,OAAO,KAAK,EAAE,QAAQ,EAAE,MAAM,UAAU,CAAC;AAGzC,wBAAgB,WAAW,CAAC,KAAK,SAAS,QAAQ,EAChD,OAAO,EAAE,OAAO,EAChB,QAAQ,EAAE,KAAK,EACf,EAAE,EAAE,CAAC,OAAO,EAAE,OAAO,KAAK,IAAI,uBAS/B"}

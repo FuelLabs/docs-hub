@@ -1,5 +1,51 @@
 # Change Log
 
+## 0.67.0
+
+### Minor Changes
+
+- 🐞 Fixing transaction funding, by [@Torres-ssf](https://github.com/Torres-ssf) (See [#1372](https://github.com/FuelLabs/fuels-ts/pull/1372))
+
+## 0.66.1
+
+### Patch Changes
+
+- Adjusting package manager configs, by [@arboleya](https://github.com/arboleya) (See [#1415](https://github.com/FuelLabs/fuels-ts/pull/1415))
+
+## 0.66.0
+
+### Minor Changes
+
+- 🐞 fix transferToContract for amounts higher than u16, by [@Torres-ssf](https://github.com/Torres-ssf) (See [#1395](https://github.com/FuelLabs/fuels-ts/pull/1395))
+
+## 0.65.0
+
+### Patch Changes
+
+- 🐞 Fixed usage of process, by [@camsjams](https://github.com/camsjams) (See [#1378](https://github.com/FuelLabs/fuels-ts/pull/1378))
+
+## 0.64.1
+
+## 0.64.0
+
+### Minor Changes
+
+- Added support for integration testing on live node, by [@camsjams](https://github.com/camsjams) (See [#1324](https://github.com/FuelLabs/fuels-ts/pull/1324))
+
+## 0.63.0
+
+### Patch Changes
+
+- refactor: purge usage of `arrayify` from ethers v5 in favor of `getBytes` from ethers v6, by [@danielbate](https://github.com/danielbate) (See [#1255](https://github.com/FuelLabs/fuels-ts/pull/1255))
+
+## 0.62.0
+
+## 0.61.0
+
+### Patch Changes
+
+- 🐞 fix: launchNode will create a GENESIS_KEY if not already set, by [@dmihal](https://github.com/dmihal) (See [#1305](https://github.com/FuelLabs/fuels-ts/pull/1305))
+
 ## 0.60.0
 
 ### Minor Changes

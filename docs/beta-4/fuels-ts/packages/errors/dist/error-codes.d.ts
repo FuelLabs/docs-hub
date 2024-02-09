@@ -51,6 +51,8 @@ export declare enum ErrorCode {
     INVALID_TRANSACTION_STATUS = "invalid-transaction-status",
     INVALID_TRANSACTION_TYPE = "invalid-transaction-type",
     TRANSACTION_ERROR = "transaction-error",
+    INVALID_POLICY_TYPE = "invalid-policy-type",
+    DUPLICATED_POLICY = "duplicated-policy",
     INVALID_RECEIPT_TYPE = "invalid-receipt-type",
     INVALID_WORD_LIST = "invalid-word-list",
     INVALID_MNEMONIC = "invalid-mnemonic",

@@ -15,10 +15,12 @@ export enum ErrorCode {
   TYPE_ID_NOT_FOUND = 'type-id-not-found',
   BIN_FILE_NOT_FOUND = 'bin-file-not-found',
   CODER_NOT_FOUND = 'coder-not-found',
+  INVALID_DATA = 'invalid-data',
   FUNCTION_NOT_FOUND = 'function-not-found',
 
   // address
   INVALID_BECH32_ADDRESS = 'invalid-bech32-address',
+  INVALID_EVM_ADDRESS = 'invalid-evm-address',
 
   // provider
   INVALID_URL = 'invalid-url',
@@ -74,6 +76,7 @@ export enum ErrorCode {
   // chain
   LATEST_BLOCK_UNAVAILABLE = 'latest-block-unavailable',
   ERROR_BUILDING_BLOCK_EXPLORER_URL = 'error-building-block-explorer-url',
+  UNSUPPORTED_FUEL_CLIENT_VERSION = 'unsupported-fuel-client-version',
 
   // docs
   VITEPRESS_PLUGIN_ERROR = 'vitepress-plugin-error',
@@ -84,9 +87,6 @@ export enum ErrorCode {
   // script
   SCRIPT_REVERTED = 'script-reverted',
   SCRIPT_RETURN_INVALID_TYPE = 'script-return-invalid-type',
-
-  // general
-  FUEL_NODE_ERROR = 'fuel-node-error',
 
   // coder
   // ...

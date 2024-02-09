@@ -1,0 +1,1 @@
+{"version":3,"file":"sparseMerkleSolidityNode.d.ts","sourceRoot":"","sources":["../../../src/sparse/types/sparseMerkleSolidityNode.ts"],"names":[],"mappings":"AAEA,cAAM,wBAAwB;IAC5B,MAAM,EAAE,MAAM,CAAC;IACf,MAAM,EAAE,MAAM,CAAC;IACf,YAAY,EAAE,MAAM,CAAC;IACrB,aAAa,EAAE,MAAM,CAAC;IACtB,GAAG,EAAE,MAAM,CAAC;IACZ,QAAQ,EAAE,MAAM,CAAC;gBAEL,OAAO,EAAE,MAAM;CAwB5B;AAED,eAAe,wBAAwB,CAAC"}

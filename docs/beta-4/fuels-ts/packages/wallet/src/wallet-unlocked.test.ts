@@ -1,13 +1,18 @@
-import type { BytesLike } from '@ethersproject/bytes';
 import { randomBytes } from '@fuel-ts/crypto';
 import { hashMessage, hashTransaction } from '@fuel-ts/hasher';
-import type { CallResult, TransactionRequest, TransactionResponse } from '@fuel-ts/providers';
+import type {
+  CallResult,
+  TransactionRequest,
+  TransactionResponse,
+  TransactionRequestLike,
+} from '@fuel-ts/providers';
 import { Provider } from '@fuel-ts/providers';
 import * as providersMod from '@fuel-ts/providers';
 import { Signer } from '@fuel-ts/signer';
 import sendTransactionTest from '@fuel-ts/testcases/src/sendTransaction.json';
 import signMessageTest from '@fuel-ts/testcases/src/signMessage.json';
 import signTransactionTest from '@fuel-ts/testcases/src/signTransaction.json';
+import type { BytesLike } from 'ethers';
 
 import { BaseWalletUnlocked } from './base-unlocked-wallet';
 import { FUEL_NETWORK_URL } from './configs';
@@ -65,9 +70,8 @@ describe('WalletUnlocked', () => {
     const wallet = new WalletUnlocked(signTransactionTest.privateKey, provider);
     const transactionRequest = signTransactionTest.transaction;
     const signedTransaction = await wallet.signTransaction(transactionRequest);
-    const populatedTransaction = await wallet.populateTransactionWitnessesSignature(
-      transactionRequest
-    );
+    const populatedTransaction =
+      await wallet.populateTransactionWitnessesSignature(transactionRequest);
 
     expect(populatedTransaction.witnesses?.[0]).toBe(signedTransaction);
   });
@@ -98,7 +102,7 @@ describe('WalletUnlocked', () => {
     // Intercept Provider.sendTransaction to collect signature
     const spy = jest
       .spyOn(wallet.provider, 'sendTransaction')
-      .mockImplementation(async (transaction) => {
+      .mockImplementation(async (transaction: TransactionRequestLike) => {
         signature = transaction.witnesses?.[0];
         return Promise.resolve({} as TransactionResponse);
       });

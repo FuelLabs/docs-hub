@@ -1,7 +1,10 @@
 import { BaseAssetId } from '@fuel-ts/address/configs';
+import { toHex } from '@fuel-ts/math';
 import { Provider } from '@fuel-ts/providers';
+import { Signer } from '@fuel-ts/signer';
 import { spawn } from 'child_process';
 import { randomUUID } from 'crypto';
+import { hexlify } from 'ethers';
 import fsSync from 'fs';
 import fs from 'fs/promises';
 import os from 'os';
@@ -31,15 +34,17 @@ export type LaunchNodeResult = Promise<{
   port: string;
 }>;
 
+// #region launchNode-launchNodeOptions
 /**
  * Launches a fuel-core node.
  * @param chainConfigPath - path to the chain configuration file.
  * @param consensusKey - the consensus key to use.
  * @param ip - the ip to bind to. (optional, defaults to 0.0.0.0)
  * @param port - the port to bind to. (optional, defaults to 4000 or the next available port)
- * @param args - additional arguments to pass to fuel-core
+ * @param args - additional arguments to pass to fuel-core.
  * @param useSystemFuelCore - whether to use the system fuel-core binary or the one provided by the \@fuel-ts/fuel-core package.
  * */
+// #endregion launchNode-launchNodeOptions
 export const launchNode = async ({
   chainConfigPath,
   consensusKey = '0xa449b1ffee0e2205fa924c6740cc48b3b473aa28587df6dab12abc245d1f5298',
@@ -75,8 +80,33 @@ export const launchNode = async ({
         fsSync.mkdirSync(tempDirPath, { recursive: true });
       }
       const tempChainConfigFilePath = path.join(tempDirPath, '.chainConfig.json');
+
+      let chainConfig = defaultChainConfig;
+
+      // If there's no genesis key, generate one and some coins to the genesis block.
+      if (!process.env.GENESIS_SECRET) {
+        const pk = Signer.generatePrivateKey();
+        const signer = new Signer(pk);
+        process.env.GENESIS_SECRET = hexlify(pk);
+
+        chainConfig = {
+          ...defaultChainConfig,
+          initial_state: {
+            ...defaultChainConfig.initial_state,
+            coins: [
+              ...defaultChainConfig.initial_state.coins,
+              {
+                owner: signer.address.toHexString(),
+                amount: toHex(1_000_000_000),
+                asset_id: BaseAssetId,
+              },
+            ],
+          },
+        };
+      }
+
       // Write a temporary chain configuration file.
-      await fs.writeFile(tempChainConfigFilePath, JSON.stringify(defaultChainConfig), 'utf8');
+      await fs.writeFile(tempChainConfigFilePath, JSON.stringify(chainConfig), 'utf8');
 
       chainConfigPathToUse = tempChainConfigFilePath;
     }

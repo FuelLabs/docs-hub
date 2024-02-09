@@ -1,4 +1,4 @@
-import type { Contract } from 'fuels';
+import type { Contract, Provider } from 'fuels';
 import { BN } from 'fuels';
 
 import { SnippetProjectEnum } from '../../../projects';
@@ -6,9 +6,11 @@ import { createAndDeployContractFromProject } from '../../utils';
 
 describe(__filename, () => {
   let contract: Contract;
+  let provider: Provider;
 
   beforeAll(async () => {
     contract = await createAndDeployContractFromProject(SnippetProjectEnum.LOG_VALUES);
+    provider = contract.provider;
   });
 
   it('should successfully execute contract call with forwarded amount', async () => {
@@ -18,7 +20,12 @@ describe(__filename, () => {
     const value3 = 'Fuel';
     const value4 = [1, 2, 3];
 
-    const { logs } = await contract.functions.log_values(value1, value2, value3, value4).call();
+    const { minGasPrice, maxGasPerTx } = provider.getGasConfig();
+
+    const { logs } = await contract.functions
+      .log_values(value1, value2, value3, value4)
+      .txParams({ gasPrice: minGasPrice, gasLimit: maxGasPerTx })
+      .call();
 
     expect(new BN(logs[0]).toNumber()).toBe(value1);
     expect(logs[1]).toBe(value2);

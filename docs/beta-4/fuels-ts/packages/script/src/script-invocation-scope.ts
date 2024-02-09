@@ -13,7 +13,7 @@ import { ByteArrayCoder } from '@fuel-ts/transactions';
 
 export class ScriptInvocationScope<
   TArgs extends Array<any> = Array<any>,
-  TReturn = any
+  TReturn = any,
 > extends FunctionInvocationScope<TArgs, TReturn> {
   scriptRequest!: ScriptRequest<TArgs, TReturn>;
 
@@ -57,6 +57,9 @@ export class ScriptInvocationScope<
     assert(this.program.account, 'Provider is required!');
 
     const transactionRequest = await this.getTransactionRequest();
+    const { maxFee } = await this.getTransactionCost();
+    await this.fundWithRequiredCoins(maxFee);
+
     const response = await this.program.account.sendTransaction(transactionRequest);
 
     return FunctionInvocationResult.build<T>(

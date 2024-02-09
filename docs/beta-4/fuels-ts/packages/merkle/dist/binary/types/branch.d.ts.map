@@ -1,0 +1,1 @@
+{"version":3,"file":"branch.d.ts","sourceRoot":"","sources":["../../../src/binary/types/branch.ts"],"names":[],"mappings":"AAAA,cAAM,kBAAkB;IACtB,KAAK,EAAE,MAAM,EAAE,CAAC;IAChB,GAAG,EAAE,MAAM,CAAC;IACZ,KAAK,EAAE,MAAM,CAAC;gBAEF,KAAK,EAAE,MAAM,EAAE,EAAE,GAAG,EAAE,MAAM,EAAE,KAAK,EAAE,MAAM;CAKxD;AAED,eAAe,kBAAkB,CAAC"}

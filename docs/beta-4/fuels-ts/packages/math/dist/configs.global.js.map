@@ -1,0 +1,1 @@
+{"version":3,"sources":["../src/configs.ts"],"sourcesContent":["export const DEFAULT_PRECISION = 9;\nexport const DEFAULT_MIN_PRECISION = 3;\nexport const DECIMAL_UNITS = 9;\n"],"mappings":";;;AAAO,MAAM,oBAAoB;AAC1B,MAAM,wBAAwB;AAC9B,MAAM,gBAAgB;","names":[]}

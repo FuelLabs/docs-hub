@@ -60,6 +60,25 @@ export default defineConfig({
         link: '/guide/',
         items: [
           {
+            text: 'CLI',
+            link: '/guide/cli/',
+            collapsed: true,
+            items: [
+              {
+                text: 'Commands',
+                link: '/guide/cli/commands',
+              },
+              {
+                text: 'Config File',
+                link: '/guide/cli/config-file',
+              },
+              {
+                text: 'Built-in Binaries',
+                link: '/guide/cli/built-in-binaries',
+              },
+            ],
+          },
+          {
             text: 'Types',
             link: '/guide/types/',
             collapsed: true,
@@ -89,12 +108,20 @@ export default defineConfig({
                 link: '/guide/types/bits512',
               },
               {
+                text: 'Bytes',
+                link: '/guide/types/bytes',
+              },
+              {
                 text: 'Bytes32',
                 link: '/guide/types/bytes32',
               },
               {
                 text: 'String',
                 link: '/guide/types/string',
+              },
+              {
+                text: 'Std String',
+                link: '/guide/types/std-string',
               },
               {
                 text: 'Enums',
@@ -107,6 +134,10 @@ export default defineConfig({
               {
                 text: 'Tuples',
                 link: '/guide/types/tuples',
+              },
+              {
+                text: 'Raw Slice',
+                link: '/guide/types/raw-slice',
               },
               {
                 text: 'Structs',
@@ -346,6 +377,10 @@ export default defineConfig({
               {
                 text: 'Testing with Jest',
                 link: '/guide/testing/testing-with-jest',
+              },
+              {
+                text: 'Setting Up a Custom Chain',
+                link: '/guide/testing/setting-up-a-custom-chain',
               },
               {
                 text: 'Tweaking the Blockchain',

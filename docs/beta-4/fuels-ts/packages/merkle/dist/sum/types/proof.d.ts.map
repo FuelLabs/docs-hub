@@ -1,0 +1,1 @@
+{"version":3,"file":"proof.d.ts","sourceRoot":"","sources":["../../../src/sum/types/proof.ts"],"names":[],"mappings":"AACA,cAAM,KAAK;IACT,SAAS,EAAE,MAAM,EAAE,CAAC;IACpB,QAAQ,EAAE,MAAM,EAAE,CAAC;gBAEP,SAAS,EAAE,MAAM,EAAE,EAAE,IAAI,EAAE,MAAM,EAAE;CAIhD;AAED,eAAe,KAAK,CAAC"}

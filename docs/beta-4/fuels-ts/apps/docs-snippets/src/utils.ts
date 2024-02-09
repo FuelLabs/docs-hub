@@ -20,33 +20,30 @@ export const getTestWallet = async (seedQuantities?: CoinQuantityLike[]) => {
   // instantiate the genesis wallet with its secret key
   const genesisWallet = new WalletUnlocked(process.env.GENESIS_SECRET || '0x01', provider);
 
-  // define the quantity of assets to transfer to the test wallet
-  const quantities: CoinQuantityLike[] = seedQuantities || [
-    {
-      amount: 1_000_000,
-      assetId: BaseAssetId,
-    },
-  ];
-
-  // retrieve resources needed to spend the specified quantities
-  const resources = await genesisWallet.getResourcesToSpend(quantities);
-
   // create a new test wallet
   const testWallet = Wallet.generate({ provider });
+
+  const { minGasPrice } = provider.getGasConfig();
 
   // create a transaction request to transfer resources to the test wallet
   const request = new ScriptTransactionRequest({
     gasLimit: 10000,
-    gasPrice: 1,
+    gasPrice: minGasPrice,
   });
 
-  // add the UTXO inputs to the transaction request
-  request.addResources(resources);
-
   // add the transaction outputs (coins to be sent to the test wallet)
-  quantities
+  (seedQuantities || [[1_000_000, BaseAssetId]])
     .map(coinQuantityfy)
     .forEach(({ amount, assetId }) => request.addCoinOutput(testWallet.address, amount, assetId));
+
+  // get the cost of the transaction
+  const { minFee, requiredQuantities, gasUsed } =
+    await genesisWallet.provider.getTransactionCost(request);
+
+  request.gasLimit = gasUsed;
+
+  // funding the transaction with the required quantities
+  await genesisWallet.fund(request, requiredQuantities, minFee);
 
   // execute the transaction, transferring resources to the test wallet
   const response = await genesisWallet.sendTransaction(request);
@@ -66,8 +63,12 @@ export const createAndDeployContractFromProject = async (
 
   const contractFactory = new ContractFactory(binHexlified, abiContents, wallet);
 
+  const { minGasPrice } = wallet.provider.getGasConfig();
+
   return contractFactory.deployContract({
     storageSlots,
+    gasPrice: minGasPrice,
+    gasLimit: 0,
   });
 };
 

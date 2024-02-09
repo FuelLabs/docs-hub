@@ -1,6 +1,7 @@
+import { expectToBeInRange } from '@fuel-ts/utils/test-utils';
 import { generateTestWallet } from '@fuel-ts/wallet/test-utils';
 import { readFileSync } from 'fs';
-import type { WalletUnlocked } from 'fuels';
+import type { BN, WalletUnlocked } from 'fuels';
 import {
   BaseAssetId,
   ContractFactory,
@@ -12,7 +13,7 @@ import {
 } from 'fuels';
 import { join } from 'path';
 
-import contractAbi from '../../fixtures/forc-projects/call-test-contract/out/debug/call-test-abi.json';
+import contractAbi from '../../fixtures/forc-projects/call-test-contract/out/debug/call-test-contract-abi.json';
 import liquidityPoolAbi from '../../fixtures/forc-projects/liquidity-pool/out/debug/liquidity-pool-abi.json';
 import predicateAbiMainArgsStruct from '../../fixtures/forc-projects/predicate-main-args-struct/out/debug/predicate-main-args-struct-abi.json';
 import predicateBytesStruct from '../../fixtures/forc-projects/predicate-struct';
@@ -22,7 +23,10 @@ import type { Validation } from '../types/predicate';
 import { fundPredicate, setupContractWithConfig } from './utils/predicate';
 
 const contractBytes = readFileSync(
-  join(__dirname, '../../fixtures/forc-projects/call-test-contract/out/debug/call-test.bin')
+  join(
+    __dirname,
+    '../../fixtures/forc-projects/call-test-contract/out/debug/call-test-contract.bin'
+  )
 );
 
 const liquidityPoolBytes = readFileSync(
@@ -34,10 +38,14 @@ describe('Predicate', () => {
     let wallet: WalletUnlocked;
     let receiver: WalletUnlocked;
     let provider: Provider;
+    let gasPrice: BN;
+    beforeAll(async () => {
+      provider = await Provider.create(FUEL_NETWORK_URL);
+      gasPrice = provider.getGasConfig().minGasPrice;
+    });
 
     beforeEach(async () => {
-      provider = await Provider.create(FUEL_NETWORK_URL);
-      wallet = await generateTestWallet(provider, [[1_000_000, BaseAssetId]]);
+      wallet = await generateTestWallet(provider, [[2_000_000, BaseAssetId]]);
       receiver = await generateTestWallet(provider);
     });
 
@@ -48,7 +56,7 @@ describe('Predicate', () => {
         cache: true,
       });
       const contract = await setupContract();
-      const amountToPredicate = 100_000;
+      const amountToPredicate = 500_000;
       const predicate = new Predicate<[Validation]>(
         predicateBytesTrue,
         provider,
@@ -63,6 +71,7 @@ describe('Predicate', () => {
         .callParams({
           forward: [500, BaseAssetId],
         })
+        .txParams({ gasPrice })
         .call();
 
       expect(value.toString()).toEqual('500');
@@ -72,13 +81,13 @@ describe('Predicate', () => {
     });
 
     it('calls a predicate and uses proceeds for a contract call', async () => {
-      const initialReceiverBalance = toNumber(await receiver.getBalance());
-
       const contract = await new ContractFactory(
         liquidityPoolBytes,
         liquidityPoolAbi,
         wallet
-      ).deployContract();
+      ).deployContract({ gasPrice });
+
+      const initialReceiverBalance = toNumber(await receiver.getBalance());
 
       // calling the contract with the receiver account (no resources)
       contract.account = receiver;
@@ -91,14 +100,14 @@ describe('Predicate', () => {
             forward: [100, BaseAssetId],
           })
           .txParams({
-            gasPrice: 1,
+            gasPrice,
           })
           .call()
       ).rejects.toThrow(/not enough coins to fit the target/);
 
       // setup predicate
-      const amountToPredicate = 100;
-      const amountToReceiver = 50;
+      const amountToPredicate = 700_000;
+      const amountToReceiver = 200_000;
       const predicate = new Predicate<[Validation]>(
         predicateBytesStruct,
         provider,
@@ -118,41 +127,50 @@ describe('Predicate', () => {
           has_account: true,
           total_complete: 100,
         })
-        .transfer(receiver.address, amountToReceiver);
+        .transfer(receiver.address, amountToReceiver, BaseAssetId, { gasPrice });
 
-      await tx.waitForResult();
+      const { fee: predicateTxFee } = await tx.waitForResult();
 
       // calling the contract with the receiver account (with resources)
-      const gasPrice = 1;
       const contractAmount = 10;
-
-      await contract.functions.set_base_token(BaseAssetId).call();
-      await expect(
-        contract.functions
-          .deposit({
-            value: receiver.address.toB256(),
-          })
-          .callParams({
-            forward: [contractAmount, BaseAssetId],
-          })
-          .txParams({
-            gasPrice,
-          })
-          .call()
-      ).resolves.toBeTruthy();
+      const {
+        transactionResult: { fee: receiverTxFee1 },
+      } = await contract.functions.set_base_token(BaseAssetId).txParams({ gasPrice }).call();
+      const {
+        transactionResult: { fee: receiverTxFee2 },
+      } = await contract.functions
+        .deposit({
+          value: receiver.address.toB256(),
+        })
+        .callParams({
+          forward: [contractAmount, BaseAssetId],
+        })
+        .txParams({
+          gasPrice,
+        })
+        .call();
 
       const finalReceiverBalance = toNumber(await receiver.getBalance());
       const remainingPredicateBalance = toNumber(await predicate.getBalance());
 
-      expect(initialReceiverBalance).toBe(0);
+      const expectedFinalReceiverBalance =
+        initialReceiverBalance +
+        amountToReceiver -
+        contractAmount -
+        // ajusting margin of error in transaction fee calculation
+        (receiverTxFee1.toNumber() - 1) -
+        (receiverTxFee2.toNumber() - 1);
 
-      expect(initialReceiverBalance + amountToReceiver).toEqual(
-        finalReceiverBalance + contractAmount + gasPrice
-      );
+      expect(expectedFinalReceiverBalance).toEqual(finalReceiverBalance);
 
-      expect(remainingPredicateBalance).toEqual(
-        amountToPredicate + initialPredicateBalance - amountToReceiver
-      );
+      const expectedFinalPredicateBalance =
+        initialPredicateBalance + amountToPredicate - amountToReceiver - predicateTxFee.toNumber();
+
+      expectToBeInRange({
+        value: expectedFinalPredicateBalance,
+        min: remainingPredicateBalance - 1,
+        max: remainingPredicateBalance + 1,
+      });
     });
   });
 });

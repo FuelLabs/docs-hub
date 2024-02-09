@@ -2444,6 +2444,8 @@
     ErrorCode2["INVALID_TRANSACTION_STATUS"] = "invalid-transaction-status";
     ErrorCode2["INVALID_TRANSACTION_TYPE"] = "invalid-transaction-type";
     ErrorCode2["TRANSACTION_ERROR"] = "transaction-error";
+    ErrorCode2["INVALID_POLICY_TYPE"] = "invalid-policy-type";
+    ErrorCode2["DUPLICATED_POLICY"] = "duplicated-policy";
     ErrorCode2["INVALID_RECEIPT_TYPE"] = "invalid-receipt-type";
     ErrorCode2["INVALID_WORD_LIST"] = "invalid-word-list";
     ErrorCode2["INVALID_MNEMONIC"] = "invalid-mnemonic";
@@ -2466,8 +2468,8 @@
   var import_semver = __toESM(require_semver2(), 1);
   function getBuiltinVersions() {
     return {
-      FORC: "0.46.1",
-      FUEL_CORE: "0.20.8",
+      FORC: "0.48.1",
+      FUEL_CORE: "0.22.0",
       FUELS: "0.69.1"
     };
   }

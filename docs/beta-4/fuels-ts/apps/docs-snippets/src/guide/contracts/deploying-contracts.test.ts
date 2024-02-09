@@ -12,11 +12,8 @@ describe(__filename, () => {
 
   beforeAll(async () => {
     const wallet = await getTestWallet();
-
     PRIVATE_KEY = wallet.privateKey;
-
     projectsPath = join(__dirname, '../../../projects');
-
     contractName = SnippetProjectEnum.ECHO_VALUES;
   });
 
@@ -43,7 +40,9 @@ describe(__filename, () => {
     // #region contract-setup-3
     const factory = new ContractFactory(byteCode, abi, wallet);
 
-    const contract = await factory.deployContract();
+    const { minGasPrice: gasPrice } = wallet.provider.getGasConfig();
+
+    const contract = await factory.deployContract({ gasPrice });
     // #endregion contract-setup-3
 
     // #region contract-setup-4

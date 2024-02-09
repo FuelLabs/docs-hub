@@ -1,5 +1,35 @@
 # Change Log
 
+## 0.67.0
+
+## 0.66.1
+
+### Patch Changes
+
+- Adjusting package manager configs, by [@arboleya](https://github.com/arboleya) (See [#1415](https://github.com/FuelLabs/fuels-ts/pull/1415))
+
+## 0.66.0
+
+## 0.65.0
+
+## 0.64.1
+
+## 0.64.0
+
+## 0.63.0
+
+### Patch Changes
+
+- refactor: purge usage of `arrayify` from ethers v5 in favor of `getBytes` from ethers v6, by [@danielbate](https://github.com/danielbate) (See [#1255](https://github.com/FuelLabs/fuels-ts/pull/1255))
+
+## 0.62.0
+
+## 0.61.0
+
+### Patch Changes
+
+- refactor: purge the usage of the hardcoded constant `VM_TX_MEMORY`, by [@Dhaiwat10](https://github.com/Dhaiwat10) (See [#1318](https://github.com/FuelLabs/fuels-ts/pull/1318))
+
 ## 0.60.0
 
 ## 0.59.0

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { arrayify, concat } from '@ethersproject/bytes';
 import { WORD_SIZE, U64Coder, B256Coder, ASSET_ID_LEN, CONTRACT_ID_LEN } from '@fuel-ts/abi-coder';
 import { BaseAssetId, ZeroBytes32 } from '@fuel-ts/address/configs';
 import { ErrorCode, FuelError } from '@fuel-ts/errors';
 import type { AbstractAddress } from '@fuel-ts/interfaces';
+import type { BN } from '@fuel-ts/math';
 import { bn, toNumber } from '@fuel-ts/math';
 import type {
   CallResult,
@@ -12,15 +12,17 @@ import type {
   TransactionResultReturnReceipt,
 } from '@fuel-ts/providers';
 import { ReceiptType } from '@fuel-ts/transactions';
+import { concat } from '@fuel-ts/utils';
 import * as asm from '@fuels/vm-asm';
+import { getBytesCopy } from 'ethers';
 
 import { InstructionSet } from './instruction-set';
 import type { EncodedScriptCall, ScriptResult } from './script-request';
 import {
   decodeCallResult,
   ScriptRequest,
-  SCRIPT_DATA_BASE_OFFSET,
   POINTER_DATA_OFFSET,
+  calculateScriptDataBaseOffset,
 } from './script-request';
 import type { ContractCall, InvocationScopeLike } from './types';
 
@@ -153,12 +155,12 @@ const scriptResultDecoder =
           return [new U64Coder().encode((receipt as TransactionResultReturnReceipt).val)];
         }
         if (receipt.type === ReceiptType.ReturnData) {
-          const encodedScriptReturn = arrayify(receipt.data);
+          const encodedScriptReturn = getBytesCopy(receipt.data);
           if (isOutputDataHeap && isReturnType(filtered[index + 1]?.type)) {
             const nextReturnData: TransactionResultReturnDataReceipt = filtered[
               index + 1
             ] as TransactionResultReturnDataReceipt;
-            return concat([encodedScriptReturn, arrayify(nextReturnData.data)]);
+            return concat([encodedScriptReturn, getBytesCopy(nextReturnData.data)]);
           }
 
           return [encodedScriptReturn];
@@ -202,7 +204,8 @@ const getFunctionOutputInfos = (functionScopes: InvocationScopeLike[]): CallOutp
   });
 
 export const getContractCallScript = (
-  functionScopes: InvocationScopeLike[]
+  functionScopes: InvocationScopeLike[],
+  maxInputs: BN
 ): ScriptRequest<ContractCall[], Uint8Array[]> =>
   new ScriptRequest<ContractCall[], Uint8Array[]>(
     // Script to call the contract, start with stub size matching length of calls
@@ -224,7 +227,8 @@ export const getContractCallScript = (
       const paddedInstructionsLength = callInstructionsLength + paddingLength;
 
       // get total data offset AFTER all scripts
-      const dataOffset = SCRIPT_DATA_BASE_OFFSET + paddedInstructionsLength;
+      const dataOffset =
+        calculateScriptDataBaseOffset(maxInputs.toNumber()) + paddedInstructionsLength;
 
       // The data for each call is ordered into segments
       const paramOffsets: CallOpcodeParamsOffset[] = [];
@@ -280,7 +284,7 @@ export const getContractCallScript = (
         }
 
         /// 7. Encoded arguments (optional) (variable length)
-        const args = arrayify(call.data);
+        const args = getBytesCopy(call.data);
         scriptData.push(args);
 
         // move offset for next call

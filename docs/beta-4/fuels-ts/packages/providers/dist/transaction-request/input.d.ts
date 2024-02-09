@@ -1,0 +1,59 @@
+import type { BigNumberish } from '@fuel-ts/math';
+import type { Input } from '@fuel-ts/transactions';
+import { InputType } from '@fuel-ts/transactions';
+import type { BytesLike } from 'ethers';
+export type CoinTransactionRequestInput = {
+    type: InputType.Coin;
+    /** UTXO ID */
+    id: BytesLike;
+    /** Owning address or script hash */
+    owner: BytesLike;
+    /** Amount of coins */
+    amount: BigNumberish;
+    /** Asset ID of the coins */
+    assetId: BytesLike;
+    /** Points to the TX whose output is being spent. (TxPointer) */
+    txPointer: BytesLike;
+    /** Index of witness that authorizes spending the coin */
+    witnessIndex: number;
+    /** UTXO being spent must have been created at least this many blocks ago */
+    maturity?: number;
+    /** Gas used by predicate */
+    predicateGasUsed?: BigNumberish;
+    /** Predicate bytecode */
+    predicate?: BytesLike;
+    /** Predicate input data (parameters) */
+    predicateData?: BytesLike;
+};
+export type MessageTransactionRequestInput = {
+    type: InputType.Message;
+    /** Address of sender */
+    sender: BytesLike;
+    /** Address of recipient */
+    recipient: BytesLike;
+    /** Amount of coins */
+    amount: BigNumberish;
+    /** Index of witness that authorizes the message */
+    witnessIndex: number;
+    /** Unique nonce of message */
+    nonce: BytesLike;
+    /** Gas used by predicate */
+    predicateGasUsed?: BigNumberish;
+    /** Predicate bytecode */
+    predicate?: BytesLike;
+    /** Predicate input data (parameters) */
+    predicateData?: BytesLike;
+    /** data of message */
+    data?: BytesLike;
+};
+export type ContractTransactionRequestInput = {
+    type: InputType.Contract;
+    /** Points to the TX whose output is being spent. (TxPointer) */
+    txPointer: BytesLike;
+    /** Contract ID */
+    contractId: BytesLike;
+};
+export type TransactionRequestInput = CoinTransactionRequestInput | ContractTransactionRequestInput | MessageTransactionRequestInput;
+/** @hidden */
+export declare const inputify: (value: TransactionRequestInput) => Input;
+//# sourceMappingURL=input.d.ts.map

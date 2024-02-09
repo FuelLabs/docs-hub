@@ -1,6 +1,7 @@
+import { expectToBeInRange } from '@fuel-ts/utils/test-utils';
 import { generateTestWallet } from '@fuel-ts/wallet/test-utils';
 import { readFileSync } from 'fs';
-import type { BigNumberish, WalletUnlocked } from 'fuels';
+import type { BN, BigNumberish, WalletUnlocked } from 'fuels';
 import { toNumber, BaseAssetId, Script, Provider, Predicate, FUEL_NETWORK_URL } from 'fuels';
 import { join } from 'path';
 
@@ -20,11 +21,13 @@ describe('Predicate', () => {
     let wallet: WalletUnlocked;
     let receiver: WalletUnlocked;
     let provider: Provider;
+    let gasPrice: BN;
 
     beforeEach(async () => {
       provider = await Provider.create(FUEL_NETWORK_URL);
       wallet = await generateTestWallet(provider, [[5_000_000, BaseAssetId]]);
       receiver = await generateTestWallet(provider);
+      gasPrice = provider.getGasConfig().minGasPrice;
     });
 
     it('calls a predicate and uses proceeds for a script call', async () => {
@@ -38,13 +41,13 @@ describe('Predicate', () => {
       // calling the script with the receiver account (no resources)
       const scriptInput = 1;
       scriptInstance.account = receiver;
-      await expect(scriptInstance.functions.main(scriptInput).call()).rejects.toThrow(
-        /not enough coins to fit the target/
-      );
+      await expect(
+        scriptInstance.functions.main(scriptInput).txParams({ gasPrice }).call()
+      ).rejects.toThrow(/not enough coins to fit the target/);
 
       // setup predicate
-      const amountToPredicate = 100;
-      const amountToReceiver = 50;
+      const amountToPredicate = 500_000;
+      const amountToReceiver = 110_000;
       const predicate = new Predicate<[Validation]>(
         predicateBytesStruct,
         provider,
@@ -64,23 +67,37 @@ describe('Predicate', () => {
           has_account: true,
           total_complete: 100,
         })
-        .transfer(receiver.address, amountToReceiver);
+        .transfer(receiver.address, amountToReceiver, BaseAssetId, { gasPrice });
 
-      await tx.waitForResult();
+      const { fee: predicateTxFee } = await tx.waitForResult();
+
+      const {
+        transactionResult: { fee: receiverTxFee },
+      } = await scriptInstance.functions.main(scriptInput).txParams({ gasPrice }).call();
 
       const finalReceiverBalance = toNumber(await receiver.getBalance());
 
-      // calling the script with the receiver account (with resources)
-      await expect(scriptInstance.functions.main(scriptInput).call()).resolves.toBeTruthy();
-
       const remainingPredicateBalance = toNumber(await predicate.getBalance());
 
-      expect(toNumber(initialReceiverBalance)).toBe(0);
-      expect(initialReceiverBalance + amountToReceiver).toEqual(finalReceiverBalance);
+      const expectedReceiverBalance =
+        initialReceiverBalance + amountToReceiver - receiverTxFee.toNumber();
 
-      expect(remainingPredicateBalance).toEqual(
-        amountToPredicate + initialPredicateBalance - amountToReceiver
-      );
+      expect(toNumber(initialReceiverBalance)).toBe(0);
+
+      expectToBeInRange({
+        value: finalReceiverBalance,
+        min: expectedReceiverBalance - 1,
+        max: expectedReceiverBalance + 1,
+      });
+
+      const predicateExpectedBalance =
+        amountToPredicate + initialPredicateBalance - amountToReceiver - predicateTxFee.toNumber();
+
+      expectToBeInRange({
+        value: remainingPredicateBalance,
+        min: predicateExpectedBalance - 1,
+        max: predicateExpectedBalance + 1,
+      });
     });
   });
 });

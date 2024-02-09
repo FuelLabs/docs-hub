@@ -1,4 +1,4 @@
-import type { Contract } from 'fuels';
+import type { Contract, Provider } from 'fuels';
 import { BaseAssetId, BN, ContractFactory } from 'fuels';
 
 import { getSnippetProjectArtifacts, SnippetProjectEnum } from '../../../projects';
@@ -8,9 +8,12 @@ describe(__filename, () => {
   let echoContract: Contract;
   let counterContract: Contract;
   let contextContract: Contract;
+  let provider: Provider;
 
   beforeAll(async () => {
     const wallet = await getTestWallet();
+    provider = wallet.provider;
+    const { minGasPrice: gasPrice } = provider.getGasConfig();
 
     const counterArtifacts = getSnippetProjectArtifacts(SnippetProjectEnum.COUNTER);
     const echoArtifacts = getSnippetProjectArtifacts(SnippetProjectEnum.ECHO_VALUES);
@@ -32,21 +35,25 @@ describe(__filename, () => {
       wallet
     );
 
-    echoContract = await factory1.deployContract();
+    echoContract = await factory1.deployContract({ gasPrice });
     counterContract = await factory2.deployContract({
       storageSlots: counterArtifacts.storageSlots,
+      gasPrice,
     });
-    contextContract = await factory3.deployContract();
+    contextContract = await factory3.deployContract({ gasPrice });
   });
 
   it('should successfully submit multiple calls from the same contract function', async () => {
     // #region multicall-1
+    const { minGasPrice } = provider.getGasConfig();
+
     const { value: results } = await counterContract
       .multiCall([
         counterContract.functions.get_count(),
         counterContract.functions.increment_count(2),
         counterContract.functions.increment_count(4),
       ])
+      .txParams({ gasPrice: minGasPrice })
       .call();
 
     const initialValue = new BN(results[0]).toNumber();
@@ -60,11 +67,15 @@ describe(__filename, () => {
 
   it('should successfully submit multiple calls from different contracts functions', async () => {
     // #region multicall-2
-    const chain = echoContract.multiCall([
-      echoContract.functions.echo_u8(17),
-      counterContract.functions.get_count(),
-      counterContract.functions.increment_count(5),
-    ]);
+    const { minGasPrice } = provider.getGasConfig();
+
+    const chain = echoContract
+      .multiCall([
+        echoContract.functions.echo_u8(17),
+        counterContract.functions.get_count(),
+        counterContract.functions.increment_count(5),
+      ])
+      .txParams({ gasPrice: minGasPrice });
 
     const { value: results } = await chain.call();
 
@@ -79,6 +90,8 @@ describe(__filename, () => {
 
   it('should successfully submit multiple calls from different contracts functions', async () => {
     // #region multicall-3
+    const { minGasPrice } = provider.getGasConfig();
+
     const { value: results } = await contextContract
       .multiCall([
         echoContract.functions.echo_u8(10),
@@ -86,6 +99,7 @@ describe(__filename, () => {
           forward: [100, BaseAssetId],
         }),
       ])
+      .txParams({ gasPrice: minGasPrice })
       .call();
 
     const echoedValue = results[0];
