@@ -222,6 +222,12 @@ export async function getDocs(key, order) {
         './intro/*.mdx',
       ];
       break;
+    case 'contributing':
+      paths = [
+        // CONTRIBUTING
+        './contributing/*.mdx',
+      ];
+      break;
     default:
       console.log('NO KEY FOUND IN getDocs');
       break;

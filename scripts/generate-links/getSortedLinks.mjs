@@ -263,6 +263,8 @@ function handleLink(
 
   if (slug.includes('docs/intro/')) {
     breadcrumbs.push({ label: 'Intro' });
+  } else if (slug.includes('docs/contributing/')) {
+    breadcrumbs.push({ label: 'Contributing' });
   } else {
     const i = isNightly || isBeta4 ? 2 : 1;
     if (splitSlug.length > i + 1) {
@@ -327,6 +329,8 @@ function handleSubmenuItem(
 
   if (slug.includes('docs/intro/')) {
     breadcrumbs.push({ label: 'Intro' });
+  } else if (slug.includes('docs/contributing/')) {
+    breadcrumbs.push({ label: 'Contributing' });
   } else {
     const i = isNightly || isBeta4 ? 2 : 1;
     const l = isGuide ? 2 : isNightly || isBeta4 ? 4 : 3;
@@ -407,6 +411,8 @@ function handleSubmenu(
 
   if (slug.includes('docs/intro/')) {
     breadcrumbs.push({ label: 'Intro' });
+  } else if (slug.includes('docs/contributing/')) {
+    breadcrumbs.push({ label: 'Contributing' });
   } else {
     const i = isNightly || isBeta4 ? 2 : 1;
     let l = hasIndex ? 1 : 2;

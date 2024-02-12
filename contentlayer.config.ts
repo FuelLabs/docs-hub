@@ -61,6 +61,7 @@ const includeDirs = [
   'docs/fuels-wallet/packages/docs/docs',
   'docs/guides/docs',
   'docs/intro',
+  'docs/contributing',
   // NIGHTLY DOCS
   'docs/nightly/sway/docs/book/src',
   'docs/nightly/fuelup/docs/src',
@@ -88,6 +89,7 @@ const excludeDirs = [
   'docs/guides/docs/migration-guide/breaking-change-log/package.json',
   'docs/guides/docs/migration-guide/breaking-change-log/pnpm-lock.yaml',
   'docs/intro/nav.json',
+  'docs/contributing/nav.json',
   'docs/sway/docs/book/src/SUMMARY.md',
   'docs/fuelup/docs/src/SUMMARY.md',
   'docs/fuels-rs/docs/src/SUMMARY.md',

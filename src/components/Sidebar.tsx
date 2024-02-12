@@ -90,7 +90,7 @@ export function Sidebar({
                 item={{
                   slug: item.link,
                   label: item.name,
-                  isExternal: true,
+                  isExternal: item.link.includes('http'),
                   breadcrumbs: [],
                 }}
               />
