@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { readFileSync } from 'fs';
 import * as fs from 'fs/promises';
 import { toText } from 'hast-util-to-text';
 import { h } from 'hastscript';
@@ -393,7 +394,9 @@ function addNumberOfLines() {
 }
 
 const getRehypeCodeOptions = (): Partial<RehypeCodeOptions> => ({
-  theme: 'dracula',
+  theme: JSON.parse(
+    readFileSync(`${getShikiPath()}/themes/dracula.json`, 'utf-8')
+  ),
   getHighlighter,
 });
 
