@@ -247,6 +247,17 @@
   },
   "tokenColors": [
     {
+      "scope": [
+        "punctuation.definition.attribute.sway",
+        "keyword.operator.attribute.inner.sway",
+        "punctuation.brackets.attribute.sway",
+        "meta.attribute.sway"
+      ],
+      "settings": {
+        "foreground": "#6d6d6d"
+      }
+    },
+    {
       "scope": ["emphasis"],
       "settings": {
         "fontStyle": "italic"
