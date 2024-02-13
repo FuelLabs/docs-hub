@@ -12,6 +12,8 @@
     "dev": "./scripts/dev.sh",
     "docs:clean": "sh ./scripts/clean-build-files.sh",
     "docs:sync": "sh ./scripts/sync-repos.sh",
+    "docs:update:nightly": "node scripts/update-latest/index.mjs --nightly",
+    "docs:update:from-config": "node scripts/update-latest/index.mjs --from-config",
     "export": "DOCS_DIST=${DOCS_DIST:=dist} next export -o $DOCS_DIST",
     "generate:links": "node scripts/generate-links/index.mjs",
     "generate:components": "node scripts/components.mjs",

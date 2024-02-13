@@ -27,4 +27,4 @@ jobs:
     - name: Run Script
       run: |
         pnpm install
-        node scripts/update-latest/index.mjs
+        pnpm docs:update:nightly --setup-git-user
