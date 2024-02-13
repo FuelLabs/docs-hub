@@ -1,4 +1,4 @@
 {
     "menu": ["Contributing"],
-    "contributing": ["General"]
+    "contributing": ["General", "Documentation", "Guides", "Style Guide", "Versions", "GitHub Workflows"]
 }

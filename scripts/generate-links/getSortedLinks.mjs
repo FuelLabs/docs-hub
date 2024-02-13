@@ -1,4 +1,5 @@
-import { capitalize } from './str.mjs';
+import { editLabel } from './editLabel.mjs';
+import { getBreadcrumbs } from './getBreadcrumbs.mjs';
 
 // doc slugs that start with a path in this array
 // won't be capitalized in the navigation sidebar
@@ -40,7 +41,7 @@ function createLinks(docs, isNightly, isBeta4) {
       .toLowerCase()
       .replace('nightly/guides', 'guides/nightly')
       .replace('beta-4/guides', 'guides/beta-4');
-    const isGuide = finalSlug.includes('guides');
+    const isGuide = finalSlug.startsWith('guides');
 
     const splitSlug = finalSlug.split('/');
 
@@ -225,16 +226,6 @@ function convertKeysToLowerCase(obj) {
   return newObj;
 }
 
-function editLabel(label, shouldBeLowerCase) {
-  let newLabel = label
-    .replaceAll(/[_-]/g, ' ')
-    .replace(/(b|B)eta (\d+)/, (_, p1, p2) => `${p1}eta-${p2}`);
-  if (!shouldBeLowerCase) {
-    newLabel = capitalize(newLabel);
-  }
-  return newLabel;
-}
-
 function handleLink(
   title,
   slug,
@@ -251,32 +242,18 @@ function handleLink(
   }
   const label = editLabel(newLabel, shouldBeLowerCase);
 
-  const breadcrumbs = [
-    { label: isGuide ? 'Guides' : 'Docs', link: isGuide ? '/guides' : '/' },
-  ];
-
-  if (isNightly) {
-    breadcrumbs.push({ label: 'Nightly' });
-  } else if (isBeta4) {
-    breadcrumbs.push({ label: 'Beta-4' });
-  }
-
-  if (slug.includes('docs/intro/')) {
-    breadcrumbs.push({ label: 'Intro' });
-  } else if (slug.includes('docs/contributing/')) {
-    breadcrumbs.push({ label: 'Contributing' });
-  } else {
-    const i = isNightly || isBeta4 ? 2 : 1;
-    if (splitSlug.length > i + 1) {
-      const link = '/' + splitSlug.slice(0, splitSlug.length - 1).join('/');
-      breadcrumbs.push({
-        label: editLabel(splitSlug[i], shouldBeLowerCase),
-        link,
-      });
-    }
-  }
-
-  breadcrumbs.push({ label });
+  const breadcrumbs = getBreadcrumbs(
+    isGuide,
+    isNightly,
+    isBeta4,
+    slug,
+    'link',
+    false,
+    splitSlug,
+    shouldBeLowerCase,
+    null,
+    label
+  );
 
   return {
     slug,
@@ -317,48 +294,18 @@ function handleSubmenuItem(
 
   const label = editLabel(newLabel, shouldBeLowerCase);
 
-  const breadcrumbs = [
-    { label: isGuide ? 'Guides' : 'Docs', link: isGuide ? '/guides' : '/' },
-  ];
-
-  if (isNightly) {
-    breadcrumbs.push({ label: 'Nightly' });
-  } else if (isBeta4) {
-    breadcrumbs.push({ label: 'Beta-4' });
-  }
-
-  if (slug.includes('docs/intro/')) {
-    breadcrumbs.push({ label: 'Intro' });
-  } else if (slug.includes('docs/contributing/')) {
-    breadcrumbs.push({ label: 'Contributing' });
-  } else {
-    const i = isNightly || isBeta4 ? 2 : 1;
-    const l = isGuide ? 2 : isNightly || isBeta4 ? 4 : 3;
-    if (splitSlug.length > l) {
-      const p = isGuide ? 1 : 2;
-      const link1 = '/' + splitSlug.slice(0, splitSlug.length - p).join('/');
-      breadcrumbs.push({
-        label: editLabel(splitSlug[i], shouldBeLowerCase),
-        link: link1,
-      });
-    }
-
-    if (!isGuide) {
-      const link2 = '/' + splitSlug.slice(0, splitSlug.length - 1).join('/');
-      let label;
-      if (splitSlug.length < l + 1) {
-        label = editLabel(splitSlug[i], shouldBeLowerCase);
-      } else {
-        label = editLabel(splitSlug[i + 1], shouldBeLowerCase);
-      }
-      breadcrumbs.push({
-        label,
-        link: link2,
-      });
-    }
-  }
-
-  breadcrumbs.push({ label });
+  const breadcrumbs = getBreadcrumbs(
+    isGuide,
+    isNightly,
+    isBeta4,
+    slug,
+    'submenuItem',
+    false,
+    splitSlug,
+    shouldBeLowerCase,
+    thisCategory,
+    label
+  );
 
   submenu.push({
     slug,
@@ -382,75 +329,20 @@ function handleSubmenu(
   isGuide,
   isBeta4
 ) {
-  let hasIndex = false;
-  if (thisCategory === title) {
-    hasIndex = true;
-  }
-  let subpath;
-  if (splitSlug[1] === 'nightly') {
-    subpath = `nightly/${splitSlug[2]}`;
-  } else if (splitSlug[1] === 'beta-4') {
-    subpath = `beta-4/${splitSlug[2]}`;
-  } else {
-    subpath = splitSlug[1];
-  }
-
-  subpath = subpath
-    .replace('nightly/guides', 'guides/nightly')
-    .replace('beta-4/guides', 'guides/beta-4');
-
-  const breadcrumbs = [
-    { label: isGuide ? 'Guides' : 'Docs', link: isGuide ? '/guides' : '/' },
-  ];
-
-  if (isNightly) {
-    breadcrumbs.push({ label: 'Nightly' });
-  } else if (isBeta4) {
-    breadcrumbs.push({ label: 'Beta-4' });
-  }
-
-  if (slug.includes('docs/intro/')) {
-    breadcrumbs.push({ label: 'Intro' });
-  } else if (slug.includes('docs/contributing/')) {
-    breadcrumbs.push({ label: 'Contributing' });
-  } else {
-    const i = isNightly || isBeta4 ? 2 : 1;
-    let l = hasIndex ? 1 : 2;
-    if (isGuide) {
-      l = l - 1;
-    }
-    if (!isGuide || splitSlug.length > 2) {
-      const link = '/' + splitSlug.slice(0, splitSlug.length - l).join('/');
-      breadcrumbs.push({
-        label: editLabel(splitSlug[i], shouldBeLowerCase),
-        link,
-      });
-    }
-  }
-
-  if (!isGuide) {
-    if (!hasIndex) {
-      const i = isNightly || isBeta4 ? 3 : 2;
-      const link = '/' + splitSlug.slice(0, splitSlug.length - 1).join('/');
-      breadcrumbs.push({
-        label: editLabel(splitSlug[i], shouldBeLowerCase),
-        link,
-      });
-      breadcrumbs.push({
-        label: editLabel(splitSlug[splitSlug.length - 1], shouldBeLowerCase),
-      });
-    } else {
-      breadcrumbs.push({ label: editLabel(thisCategory, shouldBeLowerCase) });
-    }
-  } else {
-    if (splitSlug.length > 2) {
-      breadcrumbs.push({
-        label: editLabel(splitSlug[splitSlug.length - 1], shouldBeLowerCase),
-      });
-    } else {
-      breadcrumbs.push({ label: editLabel(thisCategory, shouldBeLowerCase) });
-    }
-  }
+  const hasIndex = thisCategory === title;
+  const subpath = getSubmenuSubpath(splitSlug);
+  const breadcrumbs = getBreadcrumbs(
+    isGuide,
+    isNightly,
+    isBeta4,
+    slug,
+    'submenu',
+    hasIndex,
+    splitSlug,
+    shouldBeLowerCase,
+    thisCategory,
+    null
+  );
 
   const submenu = [
     {
@@ -468,4 +360,21 @@ function handleSubmenu(
     submenu,
     hasIndex,
   };
+}
+
+function getSubmenuSubpath(splitSlug) {
+  let subpath;
+  if (splitSlug[1] === 'nightly') {
+    subpath = `nightly/${splitSlug[2]}`;
+  } else if (splitSlug[1] === 'beta-4') {
+    subpath = `beta-4/${splitSlug[2]}`;
+  } else {
+    subpath = splitSlug[1];
+  }
+
+  subpath = subpath
+    .replace('nightly/guides', 'guides/nightly')
+    .replace('beta-4/guides', 'guides/beta-4');
+
+  return subpath;
 }

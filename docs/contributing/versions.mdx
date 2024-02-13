@@ -1,0 +1,41 @@
+---
+title: Versions
+category: Contributing
+parent:
+  label: All Docs
+  link: /
+---
+
+# Versions
+
+There are two version set of the docs available in the `docs-hub`: the default versions that are compatible with the `latest` toolchain and testnet, and the `nightly` versions, which reflect the latest releases on GitHub. 
+
+## Updating the Nightly Versions
+
+There is a Github action that runs every Monday and Thursday to update the `nightly` versions of the docs.
+
+You can also update the nightly versions locally by running the command below:
+
+```sh
+TODO
+```
+
+The `nightly` versions should be kept at the latest release on GitHub for each tool.
+
+## Updating the Default Versions
+
+To change the versions for the books, update the config file and run this command:
+
+```sh
+TODO
+```
+
+The Sway & `forc` versions should match what is on the `latest`  toolchain.
+
+The version of the wallet SDK should match the version of the Fuel Wallet extension.
+
+The version of the Rust SDK should be the latest release that is compatible with the default version of `forc`.
+
+The version of the TypeScript SDK should be the latest release that is compatible with the default version of `forc` and the Fuel wallet.
+
+The version of the GraphQL API and Specs books should reflect the version of `fuel-core` used in the latest testnet.
