@@ -26,7 +26,9 @@ export default function VersionDropdown({
   const setVersion = useSetVersion();
   const splitPath = router.asPath.split('/');
   const isDoc =
-    router.asPath.includes('docs') && !router.asPath.includes('/intro/');
+    router.asPath.includes('docs') &&
+    !router.asPath.includes('/intro/') &&
+    !router.asPath.includes('docs/fuelup');
   const bookIndex =
     versionSet !== 'default' &&
     (router.asPath.includes('nightly') || router.asPath.includes('beta-4'))

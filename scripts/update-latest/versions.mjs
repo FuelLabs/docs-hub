@@ -29,7 +29,7 @@ function getForcVersion() {
 }
 
 function getFuelupVersion() {
-  return getVersionFromTOMLFile('docs/nightly/fuelup/Cargo.toml');
+  return getVersionFromTOMLFile('docs/fuelup/Cargo.toml');
 }
 
 function getTSSDKVersion() {

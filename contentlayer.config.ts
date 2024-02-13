@@ -63,7 +63,6 @@ const includeDirs = [
   'docs/intro',
   // NIGHTLY DOCS
   'docs/nightly/sway/docs/book/src',
-  'docs/nightly/fuelup/docs/src',
   'docs/nightly/fuels-rs/docs/src',
   'docs/nightly/fuels-ts/apps/docs/src',
   'docs/nightly/fuel-specs/src',
@@ -71,13 +70,11 @@ const includeDirs = [
   'docs/nightly/fuels-wallet/packages/docs/docs',
   // BETA-4 DOCS
   'docs/beta-4/sway/docs/book/src',
-  'docs/beta-4/fuelup/docs/src',
   'docs/beta-4/fuels-rs/docs/src',
   'docs/beta-4/fuels-ts/apps/docs/src',
   'docs/beta-4/fuel-specs/src',
   'docs/beta-4/fuel-graphql-docs/docs',
   'docs/beta-4/fuels-wallet/packages/docs/docs',
-  // 'docs/beta-4/guides/docs',
 ];
 
 const excludeDirs = [
@@ -94,12 +91,10 @@ const excludeDirs = [
   'docs/fuel-specs/src/SUMMARY.md',
   // NIGHTLY DOCS
   'docs/nightly/sway/docs/book/src/SUMMARY.md',
-  'docs/nightly/fuelup/docs/src/SUMMARY.md',
   'docs/nightly/fuels-rs/docs/src/SUMMARY.md',
   'docs/nightly/fuel-specs/src/SUMMARY.md',
   // BETA-4 DOCS
   'docs/beta-4/sway/docs/book/src/SUMMARY.md',
-  'docs/beta-4/fuelup/docs/src/SUMMARY.md',
   'docs/beta-4/fuels-rs/docs/src/SUMMARY.md',
   'docs/beta-4/fuel-specs/src/SUMMARY.md',
 ];
