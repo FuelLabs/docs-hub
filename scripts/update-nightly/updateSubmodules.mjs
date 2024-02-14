@@ -1,13 +1,14 @@
 import {
   updateSubmodule,
-  checkoutVersion,
+  checkout,
   checkDiff,
   commitAll,
   push,
   createPR,
   fetchTag,
   fetchBranch,
-  checkoutBranch,
+  getCommitFromTitle,
+  getVersionCommit,
 } from './gitUtils.mjs';
 
 export async function handleNewPR(branchName, isNightly) {
@@ -91,11 +92,28 @@ async function updateDocs(versions, isNightly) {
 export async function update(version, dir, branch) {
   await updateSubmodule(dir);
   if (branch) {
+    let title;
+    if (dir.includes('fuels-ts')) {
+      title = `docs: API docs - ${version}`;
+    } else if (dir.includes('builds/sway')) {
+      const versionCommit = await getVersionCommit(version, dir);
+      title = `deploy: ${versionCommit}`;
+    }
+
     await fetchBranch(branch, dir);
-    await checkoutBranch(branch, dir);
-    // TODO: get version at the branch
+
+    if (title) {
+      console.log('GETTING COMMIT FROM TITLE:', title);
+      let commit = null;
+      commit = await getCommitFromTitle(title, dir);
+      if (commit) {
+        await checkout(commit, dir);
+      }
+    } else {
+      await checkout(branch, dir);
+    }
   } else {
     await fetchTag(version, dir);
-    await checkoutVersion(version, dir);
+    await checkout(version, dir);
   }
 }
