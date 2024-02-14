@@ -1,4 +1,4 @@
-name: Update Latest Versions
+name: Update Nightly Versions
 
 on:
     schedule:
@@ -11,7 +11,7 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  update-latest-versions:
+  update-nightly-versions:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,4 +27,4 @@ jobs:
     - name: Run Script
       run: |
         pnpm install
-        node scripts/update-latest/index.mjs
+        pnpm docs:update:nightly --from-workflow

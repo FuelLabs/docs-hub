@@ -44,14 +44,8 @@ export const switchToNewBranch = async (branch, dir) => {
   });
 };
 
-export const checkoutVersion = async (version, dir) => {
-  await exec('git', ['checkout', version], {
-    cwd: dir,
-  });
-};
-
-export const checkoutBranch = async (branch, dir) => {
-  await exec('git', ['checkout', branch], {
+export const checkout = async (i, dir) => {
+  await exec('git', ['checkout', i], {
     cwd: dir,
   });
 };
@@ -96,15 +90,49 @@ export async function createPR(title, branchName) {
   });
 }
 
-export const getVersionCommit = async (version, dir) => {
-  let releaseCommit = '';
-  await exec(`git rev-list -n 1 tags/${version}`, [], {
+export const getVersionCommit = async (versionTag, dir) => {
+  let commitHash = '';
+  const options = {
     cwd: dir,
     listeners: {
       stdout: (data) => {
-        releaseCommit = data.toString().trim();
+        commitHash += data.toString().trim();
       },
     },
-  });
+  };
+  await exec('git', ['rev-list', '-n', '1', `tags/${versionTag}`], options);
+
+  return commitHash;
+};
+
+export const getCommitFromTitle = async (commitTitle, dir) => {
+  let releaseCommit = '';
+  const shellCommand = `git log --all --grep="${commitTitle}" --pretty=format:'%H' | head -n 1`;
+
+  const options = {
+    cwd: dir,
+    listeners: {
+      stdout: (data) => {
+        releaseCommit += data.toString().trim();
+      },
+    },
+  };
+
+  await exec('bash', ['-c', shellCommand], options);
+
   return releaseCommit;
+};
+
+export const createNewBranch = async (isNightly) => {
+  // create a new branch of docs-hub
+  const date = new Date();
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+  const branchName = `ci/${
+    isNightly ? 'nightly' : 'default'
+  }-update-${formattedDate}`;
+  await switchToNewBranch(branchName);
+  return branchName;
 };
