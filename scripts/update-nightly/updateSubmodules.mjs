@@ -93,7 +93,7 @@ export async function update(version, dir, branch) {
   if (branch) {
     await fetchBranch(branch, dir);
     await checkoutBranch(branch, dir);
-    // TODO: get old version at the branch
+    // TODO: get version at the branch
   } else {
     await fetchTag(version, dir);
     await checkoutVersion(version, dir);

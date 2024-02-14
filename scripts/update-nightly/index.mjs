@@ -1,7 +1,8 @@
-import { checkIfNightlyIsNew } from './checkNightly.mjs';
+// import { checkIfNightlyIsNew } from './checkNightly.mjs';
 // import { setupUser, createNewBranch } from './gitUtils.mjs';
 import { getExistingVersions } from './versions.mjs';
 import { checkDefault } from './checkDefault.mjs';
+import { updateSubmodules } from './updateSubmodules.mjs';
 // import { updateSubmdoules, handleNewPR } from './updateSubmodules.mjs';
 
 main();
@@ -24,12 +25,12 @@ async function main() {
     newDefaultVersions = await checkDefault(existingVersions.default);
   }
 
-  const newNightlyVersions = await checkIfNightlyIsNew(
-    existingVersions.nightly
-  );
+  // const newNightlyVersions = await checkIfNightlyIsNew(
+  //   existingVersions.nightly
+  // );
 
   console.log('newDefaultVersions:', newDefaultVersions);
-  console.log('newNightlyVersions:', newNightlyVersions);
+  // console.log('newNightlyVersions:', newNightlyVersions);
 
   // if (isWorkflow) {
   //   // create a new branch of docs-hub
@@ -37,6 +38,7 @@ async function main() {
   //   branchName = await createNewBranch(isNightly);
   // }
 
+  await updateSubmodules(newDefaultVersions, null);
   // await updateSubmdoules(newDefaultVersions, newNightlyVersions);
 
   // if (isWorkflow) {

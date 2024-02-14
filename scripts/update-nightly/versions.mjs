@@ -8,13 +8,13 @@ export function getExistingVersions() {
     rust: getRustSDKVersion(false),
     ts: getTSSDKVersion(false),
     wallet: getWalletVersion(false),
-    fuelup: getFuelupVersion(),
   };
   versions.nightly = {
     forc: getForcVersion(true),
     rust: getRustSDKVersion(true),
     ts: getTSSDKVersion(true),
     wallet: getWalletVersion(true),
+    fuelup: getFuelupVersion(),
   };
 
   return versions;
