@@ -80,10 +80,8 @@ function getVersionFromTOMLFile(path) {
 }
 
 async function getNightlyRelease(repoName) {
-  console.log('REPO NAME:', repoName);
   const url = `https://api.github.com/repos/FuelLabs/${repoName}/releases/latest`;
   const response = await fetch(url);
   const release = await response.json();
-  console.log('release:', release);
   return release.tag_name.replace('v', '');
 }

@@ -1,9 +1,8 @@
-// import { checkIfNightlyIsNew } from './checkNightly.mjs';
-// import { setupUser, createNewBranch } from './gitUtils.mjs';
+import { checkIfNightlyIsNew } from './checkNightly.mjs';
+import { setupUser, createNewBranch } from './gitUtils.mjs';
 import { getExistingVersions } from './versions.mjs';
 import { checkDefault } from './checkDefault.mjs';
-import { updateSubmodules } from './updateSubmodules.mjs';
-// import { updateSubmdoules, handleNewPR } from './updateSubmodules.mjs';
+import { updateSubmodules, handleNewPR } from './updateSubmodules.mjs';
 
 main();
 
@@ -11,39 +10,35 @@ async function main() {
   const isWorkflow = process.argv.includes('--from-workflow');
   const isNightly = process.argv.includes('--nightly');
 
-  // let branchName = null;
+  let branchName = null;
   let newDefaultVersions = null;
   const existingVersions = getExistingVersions();
-  // console.log('EXISTING VERSIONS:', existingVersions);
+  console.log('EXISTING VERSIONS:', existingVersions);
 
   if (isWorkflow) {
     console.log('SETTING UP GIT USER');
-    // await setupUser();
+    await setupUser();
   }
 
   if (!isNightly) {
     newDefaultVersions = await checkDefault(existingVersions.default);
   }
 
-  // const newNightlyVersions = await checkIfNightlyIsNew(
-  //   existingVersions.nightly
-  // );
+  const newNightlyVersions = await checkIfNightlyIsNew(
+    existingVersions.nightly
+  );
 
-  console.log('newDefaultVersions:', newDefaultVersions);
-  // console.log('newNightlyVersions:', newNightlyVersions);
+  if (isWorkflow) {
+    // create a new branch of docs-hub
+    console.log('CREATING A NEW BRANCH');
+    branchName = await createNewBranch(isNightly);
+  }
 
-  // if (isWorkflow) {
-  //   // create a new branch of docs-hub
-  //   console.log('CREATING A NEW BRANCH');
-  //   branchName = await createNewBranch(isNightly);
-  // }
+  await updateSubmodules(newDefaultVersions, newNightlyVersions);
 
-  await updateSubmodules(newDefaultVersions, null);
-  // await updateSubmdoules(newDefaultVersions, newNightlyVersions);
-
-  // if (isWorkflow) {
-  //   // create a new PR
-  //   console.log('CREATING A NEW PR');
-  //   await handleNewPR(branchName, isNightly);
-  // }
+  if (isWorkflow) {
+    // create a new PR
+    console.log('CREATING A NEW PR');
+    await handleNewPR(branchName, isNightly);
+  }
 }
