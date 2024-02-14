@@ -2,13 +2,22 @@ import fs from 'fs';
 import toml from 'toml';
 
 export function getExistingVersions() {
-  return {
-    forc: getForcVersion(),
-    rust: getRustSDKVersion(),
-    ts: getTSSDKVersion(),
-    wallet: getWalletVersion(),
+  const versions = {};
+  versions.default = {
+    forc: getForcVersion(false),
+    rust: getRustSDKVersion(false),
+    ts: getTSSDKVersion(false),
+    wallet: getWalletVersion(false),
+  };
+  versions.nightly = {
+    forc: getForcVersion(true),
+    rust: getRustSDKVersion(true),
+    ts: getTSSDKVersion(true),
+    wallet: getWalletVersion(true),
     fuelup: getFuelupVersion(),
   };
+
+  return versions;
 }
 
 export async function getNightlyVersions() {
@@ -21,30 +30,34 @@ export async function getNightlyVersions() {
   return versions;
 }
 
-function getForcVersion() {
-  const forcfiledir = 'docs/nightly/sway/forc-pkg/Cargo.toml';
+function getForcVersion(isNightly) {
+  const forcfiledir = `docs${
+    isNightly ? '/nightly' : ''
+  }/sway/forc-pkg/Cargo.toml`;
   const forcfile = fs.readFileSync(forcfiledir, 'utf-8');
   const version = forcfile?.match(/version = "(.*)"/)?.[1];
   return version;
 }
 
 function getFuelupVersion() {
-  return getVersionFromTOMLFile('docs/nightly/fuelup/Cargo.toml');
+  return getVersionFromTOMLFile('docs/fuelup/Cargo.toml');
 }
 
-function getTSSDKVersion() {
+function getTSSDKVersion(isNightly) {
   return getVersionFromJSONFile(
-    'docs/nightly/fuels-ts/packages/fuels/package.json'
+    `docs${isNightly ? '/nightly' : ''}/fuels-ts/packages/fuels/package.json`
   );
 }
 
-function getRustSDKVersion() {
-  return getVersionFromTOMLFile('docs/nightly/fuels-rs/Cargo.toml');
+function getRustSDKVersion(isNightly) {
+  return getVersionFromTOMLFile(
+    `docs${isNightly ? '/nightly' : ''}/fuels-rs/Cargo.toml`
+  );
 }
 
-function getWalletVersion() {
+function getWalletVersion(isNightly) {
   return getVersionFromJSONFile(
-    'docs/nightly/fuels-wallet/packages/sdk/package.json'
+    `docs${isNightly ? '/nightly' : ''}/fuels-wallet/packages/sdk/package.json`
   );
 }
 

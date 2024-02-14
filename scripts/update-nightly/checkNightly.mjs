@@ -1,8 +1,8 @@
-import { getExistingVersions, getNightlyVersions } from './versions.mjs';
+import { getNightlyVersions } from './versions.mjs';
 
-export async function checkIfNightlyIsNew() {
+export async function checkIfNightlyIsNew(existingVersions) {
+  console.log('CHECKING FOR CHANGES IN NIGHTLY VERSIONS...');
   let updatedVersions = null;
-  const existingVersions = getExistingVersions();
   const nightlyVersions = await getNightlyVersions();
   updatedVersions = checkIfVersionsAreDifferent(
     existingVersions,
@@ -12,8 +12,7 @@ export async function checkIfNightlyIsNew() {
 }
 
 function checkIfVersionsAreDifferent(existingVersions, nightlyVersions) {
-  console.log('NIGHTLY VERSIONS:', nightlyVersions);
-  console.log('EXISTING VERSIONS:', existingVersions);
+  // console.log('NIGHTLY VERSIONS:', nightlyVersions);
   let newVersions = null;
   for (const key of Object.keys(existingVersions)) {
     if (existingVersions[key] !== nightlyVersions[key]) {

@@ -45,7 +45,7 @@ async function main() {
       if (!key.includes('guides') && key !== 'contributing') {
         if (
           key.includes('nightly') ||
-          ['intro', 'contributing'].includes(key)
+          ['intro', 'contributing', 'fuelup'].includes(key)
         ) {
           const cleanKey = key.replace('nightly-', '');
           allNightlyOrders.push({
@@ -54,7 +54,7 @@ async function main() {
             links: sortedLinks,
           });
         }
-        if (key.includes('beta-4') || key === 'intro') {
+        if (key.includes('beta-4') || key === 'intro' || key === 'fuelup') {
           const cleanKey = key.replace('beta-4-', '');
           allBeta4Orders.push({
             key: capitalize(cleanKey),

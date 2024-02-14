@@ -164,24 +164,6 @@ export async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
-    case 'nightly-fuelup':
-      paths = [
-        // FUELUP DOCS
-        './nightly/fuelup/docs/src/*.md',
-        './nightly/fuelup/docs/src/**/*.md',
-        // IGNORE ALL SUMMARY PAGES
-        '!**/SUMMARY.md',
-      ];
-      break;
-    case 'beta-4-fuelup':
-      paths = [
-        // FUELUP DOCS
-        './beta-4/fuelup/docs/src/*.md',
-        './beta-4/fuelup/docs/src/**/*.md',
-        // IGNORE ALL SUMMARY PAGES
-        '!**/SUMMARY.md',
-      ];
-      break;
     case 'specs':
       paths = [
         // SPECS DOCS
