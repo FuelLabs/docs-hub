@@ -2,13 +2,22 @@ import fs from 'fs';
 import toml from 'toml';
 
 export function getExistingVersions() {
-  return {
-    forc: getForcVersion(),
-    rust: getRustSDKVersion(),
-    ts: getTSSDKVersion(),
-    wallet: getWalletVersion(),
+  const versions = {};
+  versions.default = {
+    forc: getForcVersion(false),
+    rust: getRustSDKVersion(false),
+    ts: getTSSDKVersion(false),
+    wallet: getWalletVersion(false),
     fuelup: getFuelupVersion(),
   };
+  versions.nightly = {
+    forc: getForcVersion(true),
+    rust: getRustSDKVersion(true),
+    ts: getTSSDKVersion(true),
+    wallet: getWalletVersion(true),
+  };
+
+  return versions;
 }
 
 export async function getNightlyVersions() {
@@ -21,8 +30,10 @@ export async function getNightlyVersions() {
   return versions;
 }
 
-function getForcVersion() {
-  const forcfiledir = 'docs/nightly/sway/forc-pkg/Cargo.toml';
+function getForcVersion(isNightly) {
+  const forcfiledir = `docs${
+    isNightly ? '/nightly' : ''
+  }/sway/forc-pkg/Cargo.toml`;
   const forcfile = fs.readFileSync(forcfiledir, 'utf-8');
   const version = forcfile?.match(/version = "(.*)"/)?.[1];
   return version;
@@ -32,19 +43,21 @@ function getFuelupVersion() {
   return getVersionFromTOMLFile('docs/fuelup/Cargo.toml');
 }
 
-function getTSSDKVersion() {
+function getTSSDKVersion(isNightly) {
   return getVersionFromJSONFile(
-    'docs/nightly/fuels-ts/packages/fuels/package.json'
+    `docs${isNightly ? '/nightly' : ''}/fuels-ts/packages/fuels/package.json`
   );
 }
 
-function getRustSDKVersion() {
-  return getVersionFromTOMLFile('docs/nightly/fuels-rs/Cargo.toml');
+function getRustSDKVersion(isNightly) {
+  return getVersionFromTOMLFile(
+    `docs${isNightly ? '/nightly' : ''}/fuels-rs/Cargo.toml`
+  );
 }
 
-function getWalletVersion() {
+function getWalletVersion(isNightly) {
   return getVersionFromJSONFile(
-    'docs/nightly/fuels-wallet/packages/sdk/package.json'
+    `docs${isNightly ? '/nightly' : ''}/fuels-wallet/packages/sdk/package.json`
   );
 }
 
@@ -67,8 +80,10 @@ function getVersionFromTOMLFile(path) {
 }
 
 async function getNightlyRelease(repoName) {
+  console.log('REPO NAME:', repoName);
   const url = `https://api.github.com/repos/FuelLabs/${repoName}/releases/latest`;
   const response = await fetch(url);
   const release = await response.json();
+  console.log('release:', release);
   return release.tag_name.replace('v', '');
 }

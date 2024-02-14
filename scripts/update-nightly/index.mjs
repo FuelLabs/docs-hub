@@ -1,0 +1,47 @@
+import { checkIfNightlyIsNew } from './checkNightly.mjs';
+// import { setupUser, createNewBranch } from './gitUtils.mjs';
+import { getExistingVersions } from './versions.mjs';
+import { checkDefault } from './checkDefault.mjs';
+// import { updateSubmdoules, handleNewPR } from './updateSubmodules.mjs';
+
+main();
+
+async function main() {
+  const isWorkflow = process.argv.includes('--from-workflow');
+  const isNightly = process.argv.includes('--nightly');
+
+  // let branchName = null;
+  let newDefaultVersions = null;
+  const existingVersions = getExistingVersions();
+  // console.log('EXISTING VERSIONS:', existingVersions);
+
+  if (isWorkflow) {
+    console.log('SETTING UP GIT USER');
+    // await setupUser();
+  }
+
+  if (!isNightly) {
+    newDefaultVersions = await checkDefault(existingVersions.default);
+  }
+
+  const newNightlyVersions = await checkIfNightlyIsNew(
+    existingVersions.nightly
+  );
+
+  console.log('newDefaultVersions:', newDefaultVersions);
+  console.log('newNightlyVersions:', newNightlyVersions);
+
+  // if (isWorkflow) {
+  //   // create a new branch of docs-hub
+  //   console.log('CREATING A NEW BRANCH');
+  //   branchName = await createNewBranch(isNightly);
+  // }
+
+  // await updateSubmdoules(newDefaultVersions, newNightlyVersions);
+
+  // if (isWorkflow) {
+  //   // create a new PR
+  //   console.log('CREATING A NEW PR');
+  //   await handleNewPR(branchName, isNightly);
+  // }
+}
