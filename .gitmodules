@@ -55,6 +55,3 @@
 [submodule "docs/nightly/fuels-wallet"]
 	path = docs/nightly/fuels-wallet
 	url = https://github.com/FuelLabs/fuels-wallet.git
-[submodule "docs/nightly/fuelup"]
-	path = docs/nightly/fuelup
-	url = https://github.com/FuelLabs/fuelup.git

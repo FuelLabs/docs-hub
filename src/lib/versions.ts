@@ -58,8 +58,8 @@ export function getRustSDKVersion(docsDir: string) {
   };
 }
 
-function getFuelupVersion(docsDir: string) {
-  const filedir = join(docsDir, 'fuelup/Cargo.toml');
+function getFuelupVersion() {
+  const filedir = join(DOCS_DIRECTORY, 'fuelup/Cargo.toml');
   const file = fs.readFileSync(filedir, 'utf-8');
   const tomfile = toml.parse(file);
 
@@ -112,7 +112,7 @@ export function getVersions(versionSet: VersionSet) {
   const wallet = getWalletVersion(docsDir);
   const tsSDK = getTSSDKVersion(docsDir);
   const rust = getRustSDKVersion(docsDir);
-  const fuelup = getFuelupVersion(docsDir);
+  const fuelup = getFuelupVersion();
   const forc = getForcVersion(docsDir);
 
   return {

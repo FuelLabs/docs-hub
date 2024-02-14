@@ -43,7 +43,7 @@ async function main() {
       }
       fs.writeFileSync(`${folderPath}/${key}.json`, json, 'utf-8');
       if (!key.includes('guides')) {
-        if (key.includes('nightly') || key === 'intro') {
+        if (key.includes('nightly') || key === 'intro' || key === 'fuelup') {
           const cleanKey = key.replace('nightly-', '');
           allNightlyOrders.push({
             key: capitalize(cleanKey),
@@ -51,7 +51,7 @@ async function main() {
             links: sortedLinks,
           });
         }
-        if (key.includes('beta-4') || key === 'intro') {
+        if (key.includes('beta-4') || key === 'intro' || key === 'fuelup') {
           const cleanKey = key.replace('beta-4-', '');
           allBeta4Orders.push({
             key: capitalize(cleanKey),
