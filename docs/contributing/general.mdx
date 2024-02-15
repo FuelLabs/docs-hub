@@ -8,7 +8,7 @@ parent:
 
 # General
 
-You can find the repository for this website on [GitHub](https://github.com/FuelLabs/docs-hub/tree/master).
+You can find the repository for this website on [GitHub](https://github.com/FuelLabs/docs-hub/tree/master). For instructions on how to run the repository locally, see the [README](https://github.com/FuelLabs/docs-hub/blob/master/README.md).
 
 ## Contribution flow
 
@@ -18,6 +18,18 @@ This is a rough outline of what a contributor's workflow looks like:
 - Make your changes, and commit your work.
 - Run tests and make sure all tests pass.
 - Push your changes to a branch in your fork of the repository and submit a pull request.
+  - Use one of the following tags in the title of your PR:
+    - `feat:` - A new feature
+    - `fix:` - A bug fix
+    - `docs:` - Documentation only changes
+    - `style:` - Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+    - `refactor:` - A code change that neither fixes a bug nor adds a feature
+    - `perf:` - A code change that improves performance
+    - `test:` - Adding missing tests or correcting existing tests
+    - `build:` - Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
+    - `ci:` - Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
+    - `chore:` - Other changes that don't modify `src` or test files
+    - `revert:` - Reverts a previous commit
 - Complete the contributor agreement on the PR if it is not already completed.
 - Your PR will be reviewed and some changes may be requested.
   - Once you've made changes, your PR must be re-reviewed and approved.
@@ -28,10 +40,22 @@ This is a rough outline of what a contributor's workflow looks like:
 
 ### Linking issues
 
-If the pull request resolves an open issue, and you want GitHub to close the issue automatically after the PR is merged into the default branch, you can use the syntax `KEYWORD #ISSUE-NUMBER` like this:
+If the pull request resolves the relevant issues, and you want GitHub to close these issues automatically after it merged into the default branch, you can use the syntax (`KEYWORD #ISSUE-NUMBER`) like this:
 
-```text
+```md
 close #123
+```
+
+If the pull request links an issue but does not close it, you can use the keyword `ref` like this:
+
+```md
+ref #456
+```
+
+Multiple issues should use full syntax for each issue and separate by a comma, like:
+
+```md
+close #123, ref #456
 ```
 
 ## Reporting Bugs

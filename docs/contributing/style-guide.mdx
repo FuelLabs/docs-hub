@@ -14,7 +14,7 @@ This style guide is a set of guidelines for writing and editing documentation. I
 
 ### Writing
 
-- Use a friendly & conversational tone of voice.
+- Use a friendly and conversational tone of voice.
 - Use an active voice (vs. a passive voice).
 - Avoid long paragraphs or sentences.
 - Always use accurate and verified information.
@@ -39,12 +39,13 @@ This style guide is a set of guidelines for writing and editing documentation. I
 
 ### Code
 
-- Use code examples whenever possible. Always specify the language of a code block.
+- Use code examples whenever possible.
+- Always specify the language of a code block.
 - Avoid hard-coded examples, and instead import code examples from code that is routinely tested.
+- Use comments to define code examples to be imported instead of line numbers that may change.
 - Always wrap inline code in backticks.
 - Always use code fences when showing commands and separate commands from console outputs. The user should be able to copy and paste the entire code in the code fence.
 - Use descriptive variable names in code examples. Don’t use `foo` , `bar` , `baz` , etc.
-- Use comments to define code examples to be imported instead of line numbers that may change.
 
 ### Organizing Information
 
@@ -63,7 +64,7 @@ This style guide is a set of guidelines for writing and editing documentation. I
 
 ## Guides
 
-If you are editing or writing a guide or the `intro` section, follow these additional guidelines:
+If you are writing for a guide or the `intro` section, follow these additional guidelines:
 
 ### Components
 
@@ -86,3 +87,6 @@ You can then use these variables within a guide like so:
 ```mdx
 The faucet URL is {props.faucetUrl}
 ```
+
+Which would render as:
+The faucet URL is {props.faucetUrl}
