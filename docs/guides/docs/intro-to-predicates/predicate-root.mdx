@@ -1,0 +1,39 @@
+---
+title: Predicate Root
+category: Intro to Predicates
+parent:
+  label: All Guides
+  link: /guides
+---
+
+# Predicate Root
+
+Let's pause here for a moment and build the predicate at the root of the predicate folder.
+
+<TestAction
+id="build-predicate"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/multisig-predicate/predicate'
+}}
+/>
+
+```sh
+forc build
+```
+
+Unlike building a contract, constructing the predicate generates an additional piece of information: an address that is hashed from the predicate code of your templated project, known as the **predicate root**. Since this process is cryptographic, any changes to the code will result in a change in the predicate root.
+
+Since everyone is starting with the exact same templated code, the predicate root should be exactly this:
+
+```sh
+0x531b05021ee1ee564e6528cf6aaeb730a9adc5adc6a4e07b3c727f9fb9bf1460
+```
+
+Looking at the predicate, you can immediately notice several differences. There is no ABI or implementation, but simply a main function that returns true or false. And, of course, the predicate keyword is used to identify that the program is a predicate.
+
+Notice that we have not "deployed" anything on the Fuel blockchain, yet we already have an address that we can interact with. It is important to remember this:
+
+> Predicates are created, not deployed.
+
+Now that we have a basic understanding of what a predicate is, we can start writing our predicate.

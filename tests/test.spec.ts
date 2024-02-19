@@ -59,4 +59,23 @@ test.describe('Guides', () => {
     stopServers();
     context.close();
   });
+
+  test('intro to predicates', async ({ context, extensionId, page }) => {
+    const PREREQUISITES_PAGE_URL = 'guides/intro-to-predicates/prerequisites';
+    const PREDICATE_ROOT_PAGE_URL = 'guides/intro-to-predicates/predicate-root';
+
+    // SETUP
+    stopServers();
+    await useFuelWallet(context, extensionId, page);
+    await setupFolders('fuel-project');
+    await startServers(page);
+
+    // TEST CONTRACT
+    await runTest(page, context, PREREQUISITES_PAGE_URL);
+    await runTest(page, context, PREDICATE_ROOT_PAGE_URL);
+
+    // SHUT DOWN
+    stopServers();
+    context.close();
+  });
 });
