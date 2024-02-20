@@ -35,9 +35,10 @@ cargo generate --init fuellabs/sway templates/sway-test-rs --name sway-store
 ```
 
 ## Logging
+
 We previously covered imports and setting up the predicate in an earlier introduction to Sway tutorial, specifically in the [Rust testing section](https://docs.fuel.network/guides/intro-to-sway/rust-sdk/). If you haven't checked that out yet, I highly recommend doing so.
 
-Copy and paste the rust test below: 
+Copy and paste the rust test below:
 
 <TestAction
 id="sway-program-type"
@@ -54,7 +55,7 @@ action={{
   lang="sway"
 />
 
-Now, I want to draw your attention to a specific portion of the code here: 
+Now, I want to draw your attention to a specific portion of the code here:
 
 <CodeImport
   file="../../examples/intro-to-predicates/script-test-example/tests/harness.rs"
@@ -63,10 +64,9 @@ Now, I want to draw your attention to a specific portion of the code here:
   lang="sway"
 />
 
-We can now call `decode_logs` to extract our secret number, something we weren't able to do when testing with predicates. 
+We can now call `decode_logs` to extract our secret number, something we weren't able to do when testing with predicates.
 
-
-To enable print outputs to appear in the console during tests, you can use the `nocapture` flag. 
+To enable print outputs to appear in the console during tests, you can use the `nocapture` flag.
 
 <TestAction
 id="cargo-test"
