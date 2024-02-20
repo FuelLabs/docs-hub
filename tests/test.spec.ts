@@ -63,6 +63,12 @@ test.describe('Guides', () => {
   test('intro to predicates', async ({ context, extensionId, page }) => {
     const PREREQUISITES_PAGE_URL = 'guides/intro-to-predicates/prerequisites';
     const PREDICATE_ROOT_PAGE_URL = 'guides/intro-to-predicates/predicate-root';
+    const IMPORTS_PAGE_URL = 'guides/intro-to-predicates/imports';
+    const CONFIGURABLES_PAGE_URL = 'guides/intro-to-predicates/configurables';
+    const SIGNATURE_VERIFICATION_PAGE_URL =
+      'guides/intro-to-predicates/signature-verification';
+    const MAIN_PAGE_URL = 'guides/intro-to-predicates/main';
+    const CHECKPOINT_PAGE_URL = 'guides/intro-to-predicates/checkpoint';
 
     // SETUP
     stopServers();
@@ -73,6 +79,11 @@ test.describe('Guides', () => {
     // TEST CONTRACT
     await runTest(page, context, PREREQUISITES_PAGE_URL);
     await runTest(page, context, PREDICATE_ROOT_PAGE_URL);
+    await runTest(page, context, IMPORTS_PAGE_URL);
+    await runTest(page, context, CONFIGURABLES_PAGE_URL);
+    await runTest(page, context, SIGNATURE_VERIFICATION_PAGE_URL);
+    await runTest(page, context, MAIN_PAGE_URL);
+    await runTest(page, context, CHECKPOINT_PAGE_URL);
 
     // SHUT DOWN
     stopServers();
