@@ -1,0 +1,76 @@
+---
+title: Rust Testing
+category: Intro to Predicates
+parent:
+  label: All Guides
+  link: /guides
+---
+
+# Testing the predicate
+
+Let's jump back into our MultiSig project again!
+
+```sh
+cd ../../multisig-predicate/predicate
+```
+
+## Generating a Test Template in Rust
+
+Again follow these steps with `cargo-generate` in the predicate project directory like we did previously:
+
+1. Install `cargo-generate`:
+
+```bash
+cargo install cargo-generate --locked
+```
+
+{/*markdownlint-disable*/}
+2. Generate the template:
+{/*markdownlint-disable*/}
+
+<TestAction
+id="cargo-generate-test"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/contract'
+}}
+/>
+
+```bash
+cargo generate --init fuellabs/sway templates/sway-test-rs --name sway-store
+```
+
+## Checkpoint
+
+If you have followed the previous steps correctly, your `harness.rs` test file should look like this:
+
+<CodeImport
+  file="../../examples/intro-to-predicates/predicate/tests/harness.rs"
+  comment="all"
+  commentType="//"
+  lang="rust"
+/>
+
+## Running the Tests
+
+To run the test located in `tests/harness.rs`, use:
+
+<TestAction
+id="cargo-test"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/contract'
+}}
+/>
+
+```sh
+cargo test
+```
+
+If you want to print outputs to the console during tests, use the `nocapture` flag:
+
+```sh
+cargo test -- --nocapture
+```
+
+
