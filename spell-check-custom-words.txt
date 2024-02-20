@@ -103,3 +103,6 @@ cryptographically
 Configurables
 multisig
 multisigs
+broadcasted
+configurables
+DeFi

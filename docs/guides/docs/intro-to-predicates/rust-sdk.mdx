@@ -106,7 +106,9 @@ The three key setup steps include:
   lang="rust"
 />
 
+{/*markdownlint-disable*/}
 2. Setting up the default token (zeroth address) and loading some tokens into each wallet.
+{/*markdownlint-disable*/}
 
 <CodeImport
   file="../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs"
@@ -115,7 +117,9 @@ The three key setup steps include:
   lang="rust"
 />
 
+{/*markdownlint-disable*/}
 3. Preparing the network to broadcast our transaction, enabling us to successfully unlock the tokens from the predicate later.
+{/*markdownlint-disable*/}
 
 <CodeImport
   file="../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs"
@@ -152,7 +156,7 @@ action={{
 3. Extracting the tokens when needed by building a transaction and getting the original wallets to sign it.
 4. Broadcasting the transaction to unlock the funds from the predicate.
 
-For step 1, as mentioned earlier, when we configure the number of required signatures (up to 3) and the 3 addresses that will safeguard our funds. Importing the ABI will automatically load a `PredicateNameConfigurable` type. In our case, that will be `MultiSigConfigurables`. There will be a corresponding with_configurable function to help you load each configurable. In our case, `with_REQUIRED_SIGNATURES` and `with_SIGNERS` are both loaded in! 
+For step 1, as mentioned earlier, when we configure the number of required signatures (up to 3) and the 3 addresses that will safeguard our funds. Importing the ABI will automatically load a `PredicateNameConfigurable` type. In our case, that will be `MultiSigConfigurables`. There will be a corresponding with_configurable function to help you load each configurable. In our case, `with_REQUIRED_SIGNATURES` and `with_SIGNERS` are both loaded in!
 
 How convenient!
 
@@ -279,6 +283,6 @@ If you want to print outputs to the console during tests, use the `nocapture` fl
 cargo test -- --nocapture
 ```
 
-Congratulations on making it this far! We've confirmed that our Multisig works. 
+Congratulations on making it this far! We've confirmed that our Multisig works.
 
 Predicates aren't meant to be intimidating. State-minimized DeFi applications should be the standard, rather than resorting to gas golfing or writing assembly code for these optimizations. Now that you have predicates in your toolbox, go out and explore what other state-minimized DeFi applications you can build!
