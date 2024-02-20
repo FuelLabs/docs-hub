@@ -69,6 +69,10 @@ test.describe('Guides', () => {
       'guides/intro-to-predicates/signature-verification';
     const MAIN_PAGE_URL = 'guides/intro-to-predicates/main';
     const CHECKPOINT_PAGE_URL = 'guides/intro-to-predicates/checkpoint';
+    const SCRIPT_DEBUG_PAGE_URL =
+      'guides/intro-to-predicates/debugging-with-scripts';
+    const SCRIPT_LOGS_PAGE_URL =
+      'guides/intro-to-predicates/debugging-with-scripts-rust';
 
     // SETUP
     stopServers();
@@ -84,6 +88,10 @@ test.describe('Guides', () => {
     await runTest(page, context, SIGNATURE_VERIFICATION_PAGE_URL);
     await runTest(page, context, MAIN_PAGE_URL);
     await runTest(page, context, CHECKPOINT_PAGE_URL);
+
+    // TEST RUST
+    await runTest(page, context, SCRIPT_DEBUG_PAGE_URL);
+    await runTest(page, context, SCRIPT_LOGS_PAGE_URL);
 
     // SHUT DOWN
     stopServers();
