@@ -41,7 +41,7 @@ action={{
 />
 
 ```sh
-forc new --predicate predicate-script-logging
+forc new --predicate predicate
 ```
 
 Copy and paste this new predicate in your `src/main.sw`. Attempting to build this predicate will result in an error, indicating that logging is an invalid operation.
@@ -85,7 +85,7 @@ Now, if we attempt to build our script, it should compile without any issues.
 id="build-predicate"
 action={{
   name: 'runCommand',
-  commandFolder: 'guides-testing/multisig-predicate/predicate'
+  commandFolder: 'guides-testing/predicate-script-logging/predicate'
 }}
 />
 
