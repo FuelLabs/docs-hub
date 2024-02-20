@@ -30,10 +30,15 @@ Since everyone is starting with the exact same templated code, the predicate roo
 0x531b05021ee1ee564e6528cf6aaeb730a9adc5adc6a4e07b3c727f9fb9bf1460
 ```
 
-Looking at the predicate, you can immediately notice several differences. There is no ABI or implementation, but simply a main function that returns true or false. And, of course, the predicate keyword is used to identify that the program is a predicate.
+Looking at the predicate, you can immediately notice several differences. There is no ABI or implementation, but simply a main function that returns true or false.
+
+<CodeImport
+  file="../../examples/intro-to-predicates/predicate-template/src/main.sw"
+  comment="all"
+  commentType="//"
+  lang="sway"
+/>
 
 Notice that we have not "deployed" anything on the Fuel blockchain, yet we already have an address that we can interact with. It is important to remember this:
 
 > Predicates are created, not deployed.
-
-Now that we have a basic understanding of what a predicate is, we can start writing our predicate.
