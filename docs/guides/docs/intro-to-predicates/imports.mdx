@@ -19,7 +19,7 @@ action={{
 />
 
 <CodeImport
-  file="../../examples/intro-to-predicates/predicate/src/main.sw"
+  file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"
   comment="predicate"
   commentType="//"
   lang="sway"
@@ -36,7 +36,7 @@ action={{
 />
 
 <CodeImport
-  file="../../examples/intro-to-predicates/predicate/src/main.sw"
+  file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"
   comment="import_parent"
   commentType="//"
   lang="sway"
@@ -47,7 +47,7 @@ action={{
 To construct the MultiSig, it's essential for us to obtain three specific components from the transaction through the standard library:
 
 <CodeImport
-  file="../../examples/intro-to-predicates/predicate/src/main.sw"
+  file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"
   comment="import_tx"
   commentType="//"
   lang="sway"
@@ -62,7 +62,7 @@ To construct the MultiSig, it's essential for us to obtain three specific compon
 From the constants library, we'll be using `ZERO_B256` as a placeholder.
 
 <CodeImport
-  file="../../examples/intro-to-predicates/predicate/src/main.sw"
+  file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"
   comment="import_zero_b256"
   commentType="//"
   lang="sway"
@@ -73,7 +73,7 @@ From the constants library, we'll be using `ZERO_B256` as a placeholder.
 We'll need `b512` because signatures are of type `b512`.
 
 <CodeImport
-  file="../../examples/intro-to-predicates/predicate/src/main.sw"
+  file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"
   comment="import_b512"
   commentType="//"
   lang="sway"
@@ -90,7 +90,7 @@ signing_address = ec_recover_address(signed_data, original_data)
 This step is crucial for safeguarding the funds and ensuring that only the correct wallets can provide the necessary signatures.
 
 <CodeImport
-  file="../../examples/intro-to-predicates/predicate/src/main.sw"
+  file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"
   comment="import_ecr"
   commentType="//"
   lang="sway"

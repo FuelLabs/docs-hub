@@ -21,27 +21,15 @@ cd ../..
 and create a separate project called `predicate-script-logging`.
 
 <TestAction
-id="create-project-folder-debug"
-action={{
-  name: 'runCommand',
-  commandFolder: 'guides-testing'
-}}
-/>
-
-```sh
-mkdir predicate-script-logging
-```
-
-<TestAction
 id="create-predicate-script-logging"
 action={{
   name: 'runCommand',
-  commandFolder: 'guides-testing/predicate-script-logging'
+  commandFolder: 'guides-testing/'
 }}
 />
 
 ```sh
-forc new --predicate predicate
+forc new --predicate predicate-script-logging
 ```
 
 Copy and paste this new predicate in your `src/main.sw`. Attempting to build this predicate will result in an error, indicating that logging is an invalid operation.
@@ -56,7 +44,7 @@ Copy and paste this new predicate in your `src/main.sw`. Attempting to build thi
 However, let's try switching the program type from a `predicate` to a `script`.
 
 <CodeImport
-  file="../../examples/intro-to-predicates/script-test-example/src/main.sw"
+  file="../../examples/intro-to-predicates/predicate-script-logging/src/main.sw"
   comment="program_type"
   commentType="//"
   lang="sway"
@@ -68,12 +56,12 @@ Your code should now look like this:
 id="sway-program-type"
 action={{
   name: 'writeToFile',
-  filepath: 'guides-testing/predicate-script-logging/predicate/src/main.sw'
+  filepath: 'guides-testing/predicate-script-logging/src/main.sw'
 }}
 />
 
 <CodeImport
-  file="../../examples/intro-to-predicates/script-test-example/src/main.sw"
+  file="../../examples/intro-to-predicates/predicate-script-logging/src/main.sw"
   comment="all"
   commentType="//"
   lang="sway"
@@ -85,7 +73,7 @@ Now, if we attempt to build our script, it should compile without any issues.
 id="build-predicate"
 action={{
   name: 'runCommand',
-  commandFolder: 'guides-testing/predicate-script-logging/predicate'
+  commandFolder: 'guides-testing/predicate-script-logging/'
 }}
 />
 

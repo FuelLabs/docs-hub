@@ -21,7 +21,7 @@ action={{
 />
 
 <CodeImport
-  file="../../examples/intro-to-predicates/predicate/src/main.sw"
+  file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"
   comment="signature_verification_parent"
   commentType="//"
   lang="sway"
@@ -38,7 +38,7 @@ As mentioned earlier, we will utilize the transaction witnesses and the transact
    - Address Matching: After recovering the address, the function checks if this address matches the address of the `i`th signer in the `SIGNERS` list. If a match is found, it means the signature from one of the signers has been successfully verified, and the function returns `1`.
 
   <CodeImport
-    file="../../examples/intro-to-predicates/predicate/src/main.sw"
+    file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"
     comment="verification_loop"
     commentType="//"
     lang="sway"

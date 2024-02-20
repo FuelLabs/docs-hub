@@ -26,7 +26,7 @@ cargo install cargo-generate --locked
 id="cargo-generate-test"
 action={{
   name: 'runCommand',
-  commandFolder: 'guides-testing/predicate-script-logging/predicate'
+  commandFolder: 'guides-testing/predicate-script-logging/'
 }}
 />
 
@@ -44,12 +44,12 @@ Copy and paste the rust test below:
 id="sway-program-type"
 action={{
   name: 'writeToFile',
-  filepath: 'guides-testing/predicate-script-logging/predicate/tests/harness.rs'
+  filepath: 'guides-testing/predicate-script-logging/tests/harness.rs'
 }}
 />
 
 <CodeImport
-  file="../../examples/intro-to-predicates/script-test-example/tests/harness.rs"
+  file="../../examples/intro-to-predicates/predicate-script-logging/tests/harness.rs"
   comment="all"
   commentType="//"
   lang="sway"
@@ -58,7 +58,7 @@ action={{
 Now, I want to draw your attention to a specific portion of the code here:
 
 <CodeImport
-  file="../../examples/intro-to-predicates/script-test-example/tests/harness.rs"
+  file="../../examples/intro-to-predicates/predicate-script-logging/tests/harness.rs"
   comment="logs"
   commentType="//"
   lang="sway"
@@ -72,7 +72,7 @@ To enable print outputs to appear in the console during tests, you can use the `
 id="cargo-test"
 action={{
   name: 'runCommand',
-  commandFolder: 'guides-testing/predicate-script-logging/predicate'
+  commandFolder: 'guides-testing/predicate-script-logging/'
 }}
 />
 
