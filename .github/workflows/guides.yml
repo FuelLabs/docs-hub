@@ -42,8 +42,8 @@ jobs:
       matrix:
         # note: must match the names in test.spec.ts 
         guide:
-          # - "dev quickstart" 
-          # - "intro to sway"
+          - "dev quickstart" 
+          - "intro to sway"
           - "intro to predicates"
 
     steps:
