@@ -37,13 +37,15 @@ As mentioned earlier, we will utilize the transaction witnesses and the transact
 
    - Address Matching: After recovering the address, the function checks if this address matches the address of the `i`th signer in the `SIGNERS` list. If a match is found, it means the signature from one of the signers has been successfully verified, and the function returns `1`.
 
-<CodeImport
-  file="../../examples/intro-to-predicates/predicate/src/main.sw"
-  comment="verification_loop"
-  commentType="//"
-  lang="sway"
-/>
+  <CodeImport
+    file="../../examples/intro-to-predicates/predicate/src/main.sw"
+    comment="verification_loop"
+    commentType="//"
+    lang="sway"
+  />
 
+{/*markdownlint-disable*/}
 3. Return Value: The function returns `1` if a matching signature is found for the `i`th signer, indicating successful verification. If no matching signature is found after checking up to three signatures, the function returns `0`, indicating that the signature for the `i`th signer could not be verified.
+{/*markdownlint-disable*/}
 
 This allows for flexible signature verification, accommodating scenarios where signatures from the required signers can be presented in any order and ensuring that each signature is uniquely accounted for without allowing duplicates from the same wallet.
