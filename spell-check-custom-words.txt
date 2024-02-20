@@ -92,3 +92,7 @@ fuelCoreVersion
 nodeVersion
 nodeVersionMax
 versionSet
+cryptographic
+scalability
+deterministically
+templated
