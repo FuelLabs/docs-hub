@@ -22,7 +22,7 @@ An in-memory node does not persist the blockchain state anywhere, it is only sto
 To spin-up a local in-memory Fuel node, run the following command:
 
 ```sh
-fuel-core run --db-type in-memory
+fuel-core run --db-type in-memory --debug
 ```
 
 To deploy a contract to the local node, run the following command:
@@ -59,7 +59,7 @@ Here is an example of what that looks like using version {props.versionSet === '
 To start the node with a custom configuration, you can use the command below:
 
 ```sh
-fuel-core run --chain ./chainConfig.json --db-type in-memory
+fuel-core run --chain ./chainConfig.json --db-type in-memory --debug
 ```
 
 To find an example chain configuration file for a specific `fuel-core` version, refer to the [`fuel-core`](https://github.com/FuelLabs/fuel-core/tree/master/deployment/scripts/chainspec) repo.
@@ -80,7 +80,7 @@ To run a local node with persistence a chain configuration file is required.
 To start the node, run the following command:
 
 ```sh
-fuel-core run --ip 127.0.0.1 --port 4000 --chain ./chainConfig.json --db-path ./.fueldb
+fuel-core run --ip 127.0.0.1 --port 4000 --chain ./chainConfig.json --db-path ./.fueldb --debug
 ```
 
 ## Connecting to the local node from a browser wallet
