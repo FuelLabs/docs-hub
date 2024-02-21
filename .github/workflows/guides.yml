@@ -64,7 +64,7 @@ jobs:
         run: cargo install cargo-generate --locked
       - name: Install Fuelup
         run: |
-          curl https://fuel.network/install | sh
+          curl https://install.fuel.network | sh
       - name: Modify Path
         run: echo "$HOME/.fuelup/bin:${GITHUB_PATH}" >> $GITHUB_PATH
     
