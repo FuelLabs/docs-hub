@@ -92,3 +92,4 @@ fuelCoreVersion
 nodeVersion
 nodeVersionMax
 versionSet
+onboarding
