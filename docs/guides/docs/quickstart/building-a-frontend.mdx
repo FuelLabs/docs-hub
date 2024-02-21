@@ -24,12 +24,23 @@ To build a frontend application for the counter contract, we'll do the following
 Our frontend application will allow users to connect with a wallet, so you'll need to have a browser wallet installed.
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
-While the official wallet extension update is under review for the chrome web store, we will use the Fuel Development Wallet to interact with the latest testnet.
-Before going to the next steps, install the [Fuel Development Wallet](https://chromewebstore.google.com/detail/hcgmehahnlbhpilepakbdinkhhaackmc).
+Before going to the next steps, install the Fuel Wallet [here](https://chrome.google.com/webstore/detail/fuel-wallet/dldjpboieedgcmpkchcjcbijingjcgok).
 </ConditionalContent>
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['beta-4']}>
-Before going to the next steps, install the Fuel Wallet [here](https://chrome.google.com/webstore/detail/fuel-wallet/dldjpboieedgcmpkchcjcbijingjcgok).
+Because the current version of the wallet is only compatible with `beta-5`, we'll need to use an older version. Follow the steps below to install the `beta-4` compatible version of the wallet:
+
+1. Download the [Fuel Wallet zip file](https://github.com/FuelLabs/fuels-wallet/releases/download/v0.13.10/fuel-wallet-0.13.10.zip).
+2. Open Chrome or Brave.
+3. Open the extensions page. It can be done by:
+    - Clicking on settings -> extensions or;
+4. Access brave://extensions/ or chrome://extensions/.
+5. Enable the "Developer mode" switch on the top right.
+6. Load `fuel-wallet.zip` by:
+    - Dragging your downloaded Fuel wallet file and dropping it in the extensions page, or
+    - Clicking on Load unpacked and selecting the file.
+7. If all goes right, an onboarding page will instantly open.
+
 </ConditionalContent>
 
 If you have previously installed the wallet, make sure you have updated to the latest version.
@@ -231,7 +242,8 @@ Inside the `frontend/src` folder let's add code that interacts with our contract
 Because we'll be using `@fuel-wallet/react`, first we need to wrap our app with the `FuelProvider` component.
 Modify the file `fuel-project/frontend/src/index.tsx` so that the `App` component is wrapped with the `FuelProvider` component.
 
-To allow connection with the Development Wallet, we'll also need to enable `devMode` here.
+For development purposes `devMode` is also enabled here.
+This allows users to connect with the Fuel Development Wallet as well.
 
 <TestAction
 id="provider-import"
