@@ -44,6 +44,7 @@ jobs:
         guide:
           - "dev quickstart" 
           - "intro to sway"
+          - "intro to predicates"
 
     steps:
     # SETUP
