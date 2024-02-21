@@ -1,0 +1,56 @@
+---
+title: Checkpoint
+category: Intro to Predicates
+parent:
+  label: All Guides
+  link: /guides
+---
+
+# Checkpoint
+
+If you have followed the steps properly, your predicate `main.sw` should look like the code below:
+
+<CodeImport
+  file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"
+  comment="all"
+  commentType="//"
+  lang="sway"
+/>
+
+## Building the predicate
+
+To format your contract, execute the command:
+
+<TestAction
+id="format-predicate"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/multisig-predicate/predicate'
+}}
+/>
+
+```sh
+forc fmt
+```
+
+To get the predicate root, go to the predicate folder and run:
+
+<TestAction
+id="build-predicate"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/multisig-predicate/predicate'
+}}
+/>
+
+```sh
+forc build
+```
+
+Your predicate root should be exactly:
+
+```sh
+0x9cdce04cdb323e5982bbd0c07f667c6ea2b97781a8ce6f3e2d96c0e1b5acde73
+```
+
+That's it! You've created your first **stateless** decentralized application, and we didn't even have to deploy it!

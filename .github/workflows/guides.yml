@@ -44,6 +44,7 @@ jobs:
         guide:
           - "dev quickstart" 
           - "intro to sway"
+          - "intro to predicates"
 
     steps:
     # SETUP
@@ -64,7 +65,7 @@ jobs:
         run: cargo install cargo-generate --locked
       - name: Install Fuelup
         run: |
-            curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh
+          curl https://install.fuel.network | sh
       - name: Modify Path
         run: echo "$HOME/.fuelup/bin:${GITHUB_PATH}" >> $GITHUB_PATH
     

@@ -1,0 +1,30 @@
+---
+title: Configurables
+category: Intro to Predicates
+parent:
+  label: All Guides
+  link: /guides
+---
+
+# Configurables
+
+Configurables are special constants that can be modified at compile time. This is where we can define the signers responsible for protecting the funds in the predicate as well as the number of signatures required.
+
+This information can later be configured with SDKs before building a transaction.
+
+<TestAction
+id="sway-configurable"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"
+  comment="configurable"
+  commentType="//"
+  lang="sway"
+/>
+
+Imagine you are a multisig provider assisting businesses and users in setting up their own multisigs. You wouldn't want to hard-code these details every time but rather provide a few parameters that users can configure themselves.
