@@ -1,0 +1,97 @@
+---
+title: Imports
+category: Intro to Predicates
+parent:
+  label: All Guides
+  link: /guides
+---
+
+# Imports
+
+The predicate keyword is used to identify that the program is a predicate.
+
+<TestAction
+id="sway-program-type"
+action={{
+  name: 'writeToFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"
+  comment="predicate"
+  commentType="//"
+  lang="sway"
+/>
+
+We're going to utilize the [Sway standard library](https://github.com/FuelLabs/sway/tree/master/sway-lib-std) in our predicate. Delete the template code except for the predicate keyword and copy in the imports below:
+
+<TestAction
+id="sway-import"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"
+  comment="import_parent"
+  commentType="//"
+  lang="sway"
+/>
+
+## Transactions
+
+To construct the MultiSig, it's essential for us to obtain three specific components from the transaction through the standard library:
+
+<CodeImport
+  file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"
+  comment="import_tx"
+  commentType="//"
+  lang="sway"
+/>
+
+1. Transaction Witness Data: We'll use this to attach signatures on the transaction.
+2. Transaction Witness Count: This will help us determine the number of signatures attached.
+3. Transaction ID: The hash of the transaction.
+
+## Constants
+
+From the constants library, we'll be using `ZERO_B256` as a placeholder.
+
+<CodeImport
+  file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"
+  comment="import_zero_b256"
+  commentType="//"
+  lang="sway"
+/>
+
+## Signatures
+
+We'll need `b512` because signatures are of type `b512`.
+
+<CodeImport
+  file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"
+  comment="import_b512"
+  commentType="//"
+  lang="sway"
+/>
+
+## Elliptical Curve
+
+Lastly, we will be using `ec_recover_address`, short for elliptical curve recovery address. It's a function that allows us to cryptographically recover the address that signed a piece of data:
+
+```rust
+signing_address = ec_recover_address(signed_data, original_data)
+```
+
+This step is crucial for safeguarding the funds and ensuring that only the correct wallets can provide the necessary signatures.
+
+<CodeImport
+  file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"
+  comment="import_ecr"
+  commentType="//"
+  lang="sway"
+/>

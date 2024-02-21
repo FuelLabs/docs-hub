@@ -1,0 +1,28 @@
+---
+title: Main
+category: Intro to Predicates
+parent:
+  label: All Guides
+  link: /guides
+---
+
+# Main
+
+Now that we have all the components, let's put them together!
+
+We simply call the function across all the multisigs, tallying the number of valid signatures to see if it meets the threshold set in the configuration. It must return true or false in order to determine if assets can be unlocked.
+
+<TestAction
+id="sway-main"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"
+  comment="main"
+  commentType="//"
+  lang="sway"
+/>
