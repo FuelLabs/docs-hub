@@ -151,7 +151,7 @@ action={{
 ## Generate contract types
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
-The `fuels init` command generates a `fuels.config.json` file that is used by the SDK to generate contract types.
+The `fuels init` command generates a `fuels.config.ts` file that is used by the SDK to generate contract types.
 Use the `contracts` flag to define where your contract folder is located, and the `output` flag to define where you want the generated files to be created.
 
 Run the command below in your frontend folder to generate the config file:
@@ -168,7 +168,7 @@ action={{
 npx fuels init --contracts ../counter-contract/ --output ./src/sway-api
 ```
 
-Now that you have a `fuels.config.json` file, you can use the `fuels build` command to rebuild your contract and generate types.
+Now that you have a `fuels.config.ts` file, you can use the `fuels build` command to rebuild your contract and generate types.
 Running this command will interpret the output ABI JSON from your contract and generate the correct TypeScript definitions.
 If you see the folder `fuel-project/counter-contract/out` you will be able to see the ABI JSON there.
 
