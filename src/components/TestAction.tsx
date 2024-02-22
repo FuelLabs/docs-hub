@@ -1,9 +1,11 @@
 import type { Action } from '~/tests/utils/types';
 
+// ANCHOR: test-action-props
 export type TestActionProps = {
   id: string;
   action: Action;
 };
+// ANCHOR_END: test-action-props
 
 export default function TestAction({ id, action }: TestActionProps) {
   return (

@@ -42,8 +42,11 @@ async function main() {
         fs.mkdirSync(folderPath, { recursive: true });
       }
       fs.writeFileSync(`${folderPath}/${key}.json`, json, 'utf-8');
-      if (!key.includes('guides')) {
-        if (key.includes('nightly') || key === 'intro' || key === 'fuelup') {
+      if (!key.includes('guides') && key !== 'contributing') {
+        if (
+          key.includes('nightly') ||
+          ['intro', 'contributing', 'fuelup'].includes(key)
+        ) {
           const cleanKey = key.replace('nightly-', '');
           allNightlyOrders.push({
             key: capitalize(cleanKey),
