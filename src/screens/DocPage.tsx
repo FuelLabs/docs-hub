@@ -28,7 +28,10 @@ export function DocScreen(props: DocPageProps) {
 
   const components = getComponents(doc.slug, doc.versionSet);
   let navs = undefined;
-  if (!doc.originalSlug.includes('guides')) {
+  if (
+    !doc.originalSlug.includes('guides') &&
+    !doc.originalSlug.includes('docs/contributing')
+  ) {
     if (versionSet === 'nightly') {
       navs = allnightlyNavs;
     } else if (versionSet === 'beta-4') {

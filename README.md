@@ -6,20 +6,14 @@
 
 To begin, make sure you have installed the following dependencies:
 
-- [Node.js 18.14.1 or latest stable](https://nodejs.org/en/). We recommend using [nvm](https://github.com/nvm-sh/nvm) to install.
-- [PNPM v7.18.2 or latest stable](https://pnpm.io/installation/)
+- [Node.js 18.18.1 or latest stable](https://nodejs.org/en/). We recommend using [nvm](https://github.com/nvm-sh/nvm) to install.
+- [PNPM v8.6.11 or latest stable](https://pnpm.io/installation/)
 
-### Cloning the Repository
+### Clone the Repository
 
 ```sh
 git clone --recursive https://github.com/FuelLabs/docs-hub
 cd docs-hub
-```
-
-If your project's documentation does not reside on the default branch, open the `.gitmodules` file and add/change the `branch = ...` field to point to the corresponding branch. Make sure you update the submodule by using the new branch:
-
-```sh
-git submodule update --remote [SUBMODULE]
 ```
 
 ### Install Dependencies
