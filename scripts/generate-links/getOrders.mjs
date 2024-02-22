@@ -41,6 +41,10 @@ const CONFIG = {
     type: 'json',
     path: './intro/nav.json',
   },
+  contributing: {
+    type: 'json',
+    path: './contributing/nav.json',
+  },
 };
 
 const forcLines = [];
@@ -94,7 +98,7 @@ export async function getOrders() {
 
   Object.keys(CONFIG).forEach((key) => {
     const book = CONFIG[key];
-    if (!['guides', 'intro'].includes(key)) {
+    if (!['guides', 'intro', 'contributing'].includes(key)) {
       const bookOrder = handleOrder(book.type, book.path, key);
       orders[key] = bookOrder.betaOrders.order;
       if (key !== 'fuelup') {

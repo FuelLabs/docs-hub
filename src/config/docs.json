@@ -8,6 +8,15 @@
       "image": ""
     }
   },
+  "contributing": {
+    "title": "Contributing",
+    "slug": "contributing",
+    "repository": "https://github.com/FuelLabs/docs-hub",
+    "ogTags": {
+      "description": "Contribution guide for the Fuel Docs",
+      "image": ""
+    }
+  },
   "guides": {
     "title": "Guides",
     "slug": "guides",
