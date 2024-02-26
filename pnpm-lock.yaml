@@ -82,9 +82,6 @@ dependencies:
   airtable:
     specifier: ^0.12.2
     version: 0.12.2
-  beta-4-wallet-sdk:
-    specifier: npm:@fuel-wallet/sdk@0.13.0
-    version: /@fuel-wallet/sdk@0.13.0(dexie@3.2.4)(fuels@0.73.0)
   contentlayer:
     specifier: ^0.3.4
     version: 0.3.4(esbuild@0.19.11)
@@ -1906,22 +1903,6 @@ packages:
       - '@types/react-dom'
       - react-dom
       - react-native
-    dev: false
-
-  /@fuel-wallet/sdk@0.13.0(dexie@3.2.4)(fuels@0.73.0):
-    resolution: {integrity: sha512-I3UjZtsHP8EC/kaGRCAW/UV3a6om1f8mkqp4ECDx/w9JL75H0q4VII8R6223a1msx0Vk+47mHDv99W8SYLFpHA==}
-    peerDependencies:
-      fuels: '>=0.58.0'
-    dependencies:
-      '@types/chrome': 0.0.243
-      dexie-observable: 4.0.1-beta.13(dexie@3.2.4)
-      events: 3.3.0
-      fuels: 0.73.0
-      json-rpc-2.0: 1.7.0
-      uuid: 9.0.1
-      xstate: 4.38.2
-    transitivePeerDependencies:
-      - dexie
     dev: false
 
   /@fuel-wallet/sdk@0.15.2(dexie@3.2.4)(fuels@0.73.0):
@@ -5021,13 +5002,6 @@ packages:
       '@types/node': 20.5.9
     dev: false
 
-  /@types/chrome@0.0.243:
-    resolution: {integrity: sha512-4PHv0kxxxpZFHWPBiJJ9TWH8kbx0567j1b2djnhpJjpiSGNI7UKkz7dSEECBtQ0B3N5nQTMwSB/5IopkWGAbEA==}
-    dependencies:
-      '@types/filesystem': 0.0.32
-      '@types/har-format': 1.2.12
-    dev: false
-
   /@types/chrome@0.0.245:
     resolution: {integrity: sha512-bBdONkLO8wMbJK6iG0Q8ShFuh67Grnod+5OpClJaa8MuKJXP/Kjl3f8wRYeMOnQ0Q8HDgpUlopu8bvl9siR8/A==}
     dependencies:
@@ -5059,12 +5033,15 @@ packages:
     resolution: {integrity: sha512-Yuf4jR5YYMR2DVgwuCiP11s0xuVRyPKmz8vo6HBY3CGdeMj8af93CFZX+T82+VD1+UqHOxTq31lO7MI7lepBtQ==}
     dependencies:
       '@types/filewriter': 0.0.29
+    dev: true
 
   /@types/filewriter@0.0.29:
     resolution: {integrity: sha512-BsPXH/irW0ht0Ji6iw/jJaK8Lj3FJemon2gvEqHKpCdDCeemHa+rI3WBGq5z7cDMZgoLjY40oninGxqk+8NzNQ==}
+    dev: true
 
   /@types/har-format@1.2.12:
     resolution: {integrity: sha512-P20p/YBrqUBmzD6KhIQ8EiY4/RRzlekL4eCvfQnulFPfjmiGxKIoyCeI7qam5I7oKH3P8EU4ptEi0EfyGoLysw==}
+    dev: true
 
   /@types/hast@2.3.5:
     resolution: {integrity: sha512-SvQi0L/lNpThgPoleH53cdjB3y9zpLlVjRbqB3rH8hx1jiRSBGAhyjV3H+URFjNVRqt2EdYNrbZE5IsGlNfpRg==}
