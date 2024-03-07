@@ -11,10 +11,10 @@ export const FAUCET_LINK = `https://faucet-${FUEL_TESTNET}.fuel.network/`;
 export const BETA_4_FAUCET_LINK = `https://faucet-beta-4.fuel.network/`;
 export const PLAYGROUND_LINK = `https://${FUEL_TESTNET}.fuel.network/playground/`;
 export const BETA_4_PLAYGROUND_LINK = `https://beta-4.fuel.network/playground/`;
-export const EXPLORER_LINK = 'https://app.fuel.network/';
+export const EXPLORER_LINK = 'https://next-app.fuel.network/';
 export const BETA_4_EXPLORER_LINK =
   'https://fuellabs.github.io/block-explorer-v2/beta-4/';
-export const BRIDGE_LINK = 'https://app.fuel.network/portal/bridge';
+export const BRIDGE_LINK = 'https://next-app.fuel.network/bridge';
 
 export type LinkObject = {
   name: string;
