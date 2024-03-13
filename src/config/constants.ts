@@ -133,7 +133,7 @@ export const NAVIGATION: any[] = [
         link: '/docs/graphql/overview/',
       },
       {
-        name: 'Specs',
+        name: 'Specifications',
         link: '/docs/specs',
       },
       {

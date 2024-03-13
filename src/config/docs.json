@@ -81,7 +81,7 @@
     }
   },
   "specs": {
-    "title": "Fuel Specs",
+    "title": "Fuel Specifications",
     "slug": "specs",
     "repository": "https://github.com/FuelLabs/fuel-specs",
     "ogTags": {

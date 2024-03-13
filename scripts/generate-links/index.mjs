@@ -101,6 +101,9 @@ function getSidebarName(key) {
     case 'graphql':
       newKey = 'GraphQL API';
       break;
+    case 'specs':
+      newKey = 'Specifications';
+      break;
     default:
   }
 
