@@ -95,7 +95,7 @@ const styles = {
       my: '$0 !important',
       padding: '$3 $5 $3',
       tabSize: '4',
-      fontSize: '16px !important',
+      fontSize: '14px !important',
       bg: 'transparent !important',
       borderRadius: '$default',
     },
