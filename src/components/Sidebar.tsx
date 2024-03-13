@@ -8,6 +8,7 @@ import type { SidebarLinkItem, NavOrder, Versions, VersionSet } from '../types';
 
 import { SidebarLink, buttonStyles } from './SidebarLink';
 import { SidebarSection } from './SidebarSection';
+import { FeedbackForm } from './FeedbackForm';
 
 type SidebarProps = {
   allNavs?: NavOrder[];
@@ -100,6 +101,7 @@ export function Sidebar({
               />
             </Box>
           ))}
+          <FeedbackForm />
         </>
       )}
     </Box.Stack>

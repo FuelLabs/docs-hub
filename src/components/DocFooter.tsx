@@ -1,16 +1,7 @@
 import { cssObj } from '@fuel-ui/css';
-import {
-  Text,
-  Box,
-  Icon,
-  Link as FuelLink,
-  Button,
-  Grid,
-} from '@fuel-ui/react';
+import { Text, Box, Button, Grid } from '@fuel-ui/react';
 import NextLink from 'next/link';
 import { useDocContext } from '~/src/hooks/useDocContext';
-
-import { FeedbackForm } from './FeedbackForm';
 
 export function PrevAndNextLinks() {
   const { docLink } = useDocContext();
@@ -63,19 +54,6 @@ export function PrevAndNextLinks() {
 export function DocFooter() {
   return (
     <Box css={styles.root} as="footer">
-      <Box.Flex css={styles.feedbackContainer}>
-        <FeedbackForm />
-        <Box.Flex gap={'6px'} css={styles.forum}>
-          <Icon icon={'HelpCircle'} stroke={1} color="intentsBase12" />
-          <FuelLink
-            css={styles.forumLink}
-            href="https://forum.fuel.network/"
-            isExternal
-          >
-            Ask a question in the forum.
-          </FuelLink>
-        </Box.Flex>
-      </Box.Flex>
       <PrevAndNextLinks />
     </Box>
   );

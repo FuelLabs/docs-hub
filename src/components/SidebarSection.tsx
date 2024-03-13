@@ -28,8 +28,10 @@ export function SidebarSection({
   const [isOpened, setIsOpened] = useState<boolean | undefined>(
     book === 'guides' ||
       docSlug?.includes(book.toLowerCase()) ||
-      (book === 'Intro' && docSlug?.includes('guides/quickstart/'))
+      (book === 'Intro' &&
+        (docSlug?.includes('guides/quickstart/') || !docSlug))
   );
+
   const isGuide = book === 'guides';
   const bookHasIndex =
     book?.toLowerCase().replaceAll(/[_-]/g, ' ') ===

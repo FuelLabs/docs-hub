@@ -10,13 +10,14 @@ import {
   Dialog,
   toast,
   Alert,
-  IconButton,
+  // IconButton,
   Spinner,
 } from '@fuel-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import { buttonStyles } from './SidebarLink';
 
 type FormData = {
   helpful: 'true' | 'false' | null;
@@ -31,7 +32,7 @@ export function FeedbackForm() {
     handleSubmit,
     watch,
     reset,
-    setValue,
+    // setValue,
     formState: { errors },
   } = useForm<FormData>();
   const isHelpful = watch('helpful');
@@ -221,31 +222,16 @@ export function FeedbackForm() {
     <Box>
       <Dialog isOpen={dialogIsOpen} onOpenChange={setDialogIsOpen}>
         <Box.Flex align="center" gap={'6px'} css={styles.container}>
-          <IconButton
-            aria-label="Thumbs Up"
-            icon="ThumbUp"
-            size="sm"
-            intent="base"
-            variant="ghost"
-            css={styles.ratingButton}
+          <Button
+            intent={'primary'}
+            variant={'link'}
+            css={{ ...buttonStyles, ...styles.feedback }}
             onClick={() => {
               setDialogIsOpen(true);
-              setValue('helpful', 'true');
             }}
-          />
-          <IconButton
-            aria-label="Thumbs Down"
-            icon="ThumbDown"
-            size="sm"
-            intent="base"
-            variant="ghost"
-            css={styles.ratingButton}
-            onClick={() => {
-              setDialogIsOpen(true);
-              setValue('helpful', 'false');
-            }}
-          />
-          <Text css={styles.text}>Was this page helpful?</Text>
+          >
+            Feedback
+          </Button>
         </Box.Flex>
         <Dialog.Content>
           <Dialog.Close onClick={closeForm} />
@@ -280,6 +266,10 @@ const styles = {
     'html[class="fuel_light-theme"] &': {
       color: '$intentsBase12',
     },
+  }),
+  feedback: cssObj({
+    color: '$semanticLinkBaseColor',
+    ml: '$3',
   }),
   buttonLabel: cssObj({
     padding: '8px 16px',
@@ -346,9 +336,6 @@ const styles = {
     fontFamily: 'var(--fonts-display)',
   }),
   container: cssObj({
-    justifyContent: 'center',
-    '@sm': {
-      justifyContent: 'flex-start',
-    },
+    justifyContent: 'flex-start',
   }),
 };

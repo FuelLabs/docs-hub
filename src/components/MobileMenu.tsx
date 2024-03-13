@@ -3,11 +3,9 @@ import { Box, Drawer, IconButton, FuelLogo, Link, Icon } from '@fuel-ui/react';
 import { useState } from 'react';
 import type { NavOrder, Versions, VersionSet } from '~/src/types';
 
-import { Navigation } from './Navigation';
 import Search from './Search';
 import { Sidebar } from './Sidebar';
-import ThemeToggler from './ThemeToggler';
-import VersionDropdown from './VersionDropdown';
+import { Navigation } from './Navigation';
 
 interface MobileMenuProps {
   active: string;
@@ -46,9 +44,8 @@ export function MobileMenu({
     <Box.Flex css={styles.root}>
       <Search title={title} versionSet={versionSet} />
 
-      <Box.Stack direction="row" gap="$3">
-        <VersionDropdown versionSet={versionSet} />
-        <ThemeToggler />
+      <Box.Stack direction="row" gap="$3" css={styles.box}>
+        <Navigation versionSet={versionSet} />
         <Drawer
           isDismissable
           isOpen={open}
@@ -67,12 +64,11 @@ export function MobileMenu({
                   {drawerButton}
                 </Box.Flex>
               </Box.Flex>
-              <Navigation active={active} />
 
               <Box css={styles.navContainer}>
                 <Sidebar
                   versions={versions}
-                  allNavs={active.includes('guides') ? undefined : allNavs}
+                  allNavs={active.includes('guides/') ? undefined : allNavs}
                   onClick={() => setOpen(false)}
                   versionSet={versionSet}
                 />
@@ -128,5 +124,8 @@ const styles = {
     '.fuel_Box-flex': {
       height: '36px',
     },
+  }),
+  box: cssObj({
+    pl: '$1',
   }),
 };

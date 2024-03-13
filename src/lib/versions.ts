@@ -124,3 +124,11 @@ export function getVersions(versionSet: VersionSet) {
     'Fuel Wallet': wallet,
   };
 }
+
+export function getAllVersions() {
+  const versions = getVersions('default');
+  const nightlyVersions = getVersions('nightly');
+  const beta4Versions = getVersions('beta-4');
+
+  return { versions, nightlyVersions, beta4Versions };
+}

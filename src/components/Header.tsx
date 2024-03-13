@@ -5,9 +5,7 @@ import type { NavOrder, VersionSet, Versions } from '~/src/types';
 
 import { MobileMenu } from './MobileMenu';
 import { Navigation } from './Navigation';
-import VersionDropdown from './VersionDropdown';
 
-const ThemeToggler = dynamic(() => import('./ThemeToggler'), { ssr: false });
 const Search = dynamic(() => import('./Search'), { ssr: false });
 
 interface HeaderProps {
@@ -39,11 +37,7 @@ export function Header({
           <Search title={title} versionSet={versionSet} />
         </Box>
         <Box css={styles.desktop}>
-          <Navigation active={active} />
-          <Box.Stack direction="row" gap="$3">
-            <VersionDropdown versionSet={versionSet} />
-            <ThemeToggler />
-          </Box.Stack>
+          <Navigation versionSet={versionSet} />
         </Box>
         <MobileMenu
           allNavs={allNavs}

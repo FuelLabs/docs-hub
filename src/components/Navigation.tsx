@@ -1,48 +1,35 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box, ButtonLink } from '@fuel-ui/react';
+import VersionDropdown from './VersionDropdown';
+import type { VersionSet } from '../types';
+import dynamic from 'next/dynamic';
 
-export function Navigation({ active }: { active: string }) {
-  const isGuidesActive =
-    active.startsWith('guides') || active.startsWith('/guides');
+const ThemeToggler = dynamic(() => import('./ThemeToggler'), { ssr: false });
+
+export function Navigation({ versionSet }: { versionSet: VersionSet }) {
   return (
-    <Box.Flex gap={'$3'} css={styles.root}>
+    <Box.Stack direction="row" gap="$3">
       <ButtonLink
         size="sm"
-        leftIcon="FileDescription"
-        leftIconAriaLabel="documentation"
+        href={'https://forum.fuel.network/'}
         intent="base"
-        href={'/'}
-        css={
-          !isGuidesActive
-            ? { ...styles.navItem, ...styles.active }
-            : styles.navItem
-        }
+        css={styles.navItem}
+        isExternal={true}
       >
-        Documentation
+        Forum
       </ButtonLink>
-      <ButtonLink
-        size="sm"
-        leftIcon="Book2"
-        leftIconAriaLabel="documentation"
-        href={'/guides'}
-        intent="base"
-        css={
-          isGuidesActive
-            ? { ...styles.navItem, ...styles.active }
-            : styles.navItem
-        }
-      >
-        Guides
-      </ButtonLink>
-    </Box.Flex>
+      <VersionDropdown versionSet={versionSet} />
+      <ThemeToggler />
+    </Box.Stack>
   );
 }
 
 const styles = {
-  root: cssObj({
-    mr: '$2',
-  }),
   navItem: cssObj({
+    display: 'none',
+    '@sm': {
+      display: 'flex',
+    },
     '&:hover': {
       'html[class="fuel_light-theme"] &': {
         color: '#009957 !important',
@@ -55,12 +42,6 @@ const styles = {
       '.fuel_Icon': {
         color: '$semanticLinkPrimaryColor !important',
       },
-    },
-  }),
-  active: cssObj({
-    color: '$semanticLinkPrimaryColor',
-    '.fuel_Icon': {
-      color: '$semanticLinkPrimaryColor',
     },
   }),
 };

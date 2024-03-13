@@ -33,7 +33,7 @@ export const getStaticProps: GetStaticProps<any> = async () => {
     `../src/generated/sidebar-links/all-beta-4-orders.json`
   );
   const allNavs = JSON.parse(readFileSync(allNavsPath, 'utf8'));
-  const allnightlyNavs = JSON.parse(readFileSync(allnightlyNavsPath, 'utf8'));
+  const allNightlyNavs = JSON.parse(readFileSync(allnightlyNavsPath, 'utf8'));
   const allBeta4Navs = JSON.parse(readFileSync(allBeta4NavsPath, 'utf8'));
   const versions = getVersions('default');
   const nightlyVersions = getVersions('nightly');
@@ -42,7 +42,7 @@ export const getStaticProps: GetStaticProps<any> = async () => {
   return {
     props: {
       allNavs,
-      allnightlyNavs,
+      allNightlyNavs,
       allBeta4Navs,
       code,
       md: doc.md,

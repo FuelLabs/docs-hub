@@ -10,9 +10,10 @@ import { useVersion } from '../hooks/useVersion';
 import { getComponents } from '../lib/imports';
 import type { DocPageProps } from '../pages/[...slug]';
 import type { VersionSet } from '../types';
+import { getActiveNav } from '../lib/getActiveNav';
 
 export function DocScreen(props: DocPageProps) {
-  const { doc, allNavs, allnightlyNavs, allBeta4Navs } = props;
+  const { doc, allNavs, allNightlyNavs, allBeta4Navs } = props;
   const [versionSet, setVersionSet] = useState<VersionSet>('default');
   const version = useVersion();
 
@@ -27,19 +28,13 @@ export function DocScreen(props: DocPageProps) {
   }, [version, doc]);
 
   const components = getComponents(doc.slug, doc.versionSet);
-  let navs = undefined;
-  if (
-    !doc.originalSlug.includes('guides') &&
-    !doc.originalSlug.includes('docs/contributing')
-  ) {
-    if (versionSet === 'nightly') {
-      navs = allnightlyNavs;
-    } else if (versionSet === 'beta-4') {
-      navs = allBeta4Navs;
-    } else {
-      navs = allNavs;
-    }
-  }
+  const navs = getActiveNav(
+    versionSet,
+    allNavs,
+    allNightlyNavs,
+    allBeta4Navs,
+    doc
+  );
 
   let versions = props.versions;
   if (versionSet !== 'default') {

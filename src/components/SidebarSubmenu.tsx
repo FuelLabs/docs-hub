@@ -29,7 +29,7 @@ export function SidebarSubmenu({
   };
 
   useEffect(() => {
-    if (pathname.includes('/guides/')) {
+    if (pathname.includes('/guides/') && pathname !== '/guides/') {
       setIsOpened(true);
     } else {
       let actualSlug = thisItem.slug;
