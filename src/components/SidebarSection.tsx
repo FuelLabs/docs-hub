@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { cssObj } from '@fuel-ui/css';
-import { Box, Button, Icon } from '@fuel-ui/react';
+import { Box, Button, ButtonLink, Icon } from '@fuel-ui/react';
 import type { ButtonLinkProps } from '@fuel-ui/react';
 import { useState } from 'react';
 import type { VersionItem } from '~/src/types';
@@ -36,6 +36,20 @@ export function SidebarSection({
   const bookHasIndex =
     book?.toLowerCase().replaceAll(/[_-]/g, ' ') ===
     links[0].label.toLowerCase().replaceAll(/[_-]/g, ' ');
+
+  let githubLink = '';
+  if (!version && book !== 'Intro') {
+    switch (book) {
+      case 'GraphQL':
+        githubLink = 'https://github.com/FuelLabs/fuel-core';
+        break;
+      case 'Specs':
+        githubLink = 'https://github.com/FuelLabs/fuel-specs';
+        break;
+      default:
+        break;
+    }
+  }
 
   function toggle() {
     setIsOpened((s) => !s);
@@ -86,8 +100,16 @@ export function SidebarSection({
           </Box.VStack>
         </Box>
       )}
-      {isOpened && version && (
-        <Box css={styles.version}>Version: {version.version}</Box>
+      {isOpened && book !== 'Intro' && (
+        <ButtonLink
+          href={version ? version.url : githubLink}
+          leftIcon={'BrandGithubFilled'}
+          size={'sm'}
+          css={styles.version}
+          isExternal
+        >
+          {version && <>Version: {version.version}</>}
+        </ButtonLink>
       )}
     </>
   );
@@ -101,6 +123,15 @@ const styles = {
     position: 'relative',
     mt: '$2',
     mb: '$6',
+  }),
+  icon: cssObj({
+    color: '$intentsBase10',
+    'html[class="fuel_light-theme"] &': {
+      color: '$gray11',
+    },
+    '&:hover': {
+      color: '$accent8',
+    },
   }),
   version: cssObj({
     fontSize: '$sm',
