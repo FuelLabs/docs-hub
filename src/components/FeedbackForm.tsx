@@ -270,6 +270,9 @@ const styles = {
   feedback: cssObj({
     color: '$semanticLinkBaseColor',
     ml: '$3',
+    'html[class="fuel_light-theme"] &': {
+      color: '$intentsBase12',
+    },
   }),
   buttonLabel: cssObj({
     padding: '8px 16px',

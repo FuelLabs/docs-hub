@@ -131,13 +131,21 @@ export class Doc {
 
   async getCode() {
     const doc = this.md;
+    const codeLight = await this.getCodeForTheme('light', doc);
+    const codeDark = await this.getCodeForTheme('dark', doc);
+
+    return { light: String(codeLight), dark: String(codeDark) };
+  }
+
+  async getCodeForTheme(theme: 'light' | 'dark', doc: MdDoc) {
+    const plugins = rehypePlugins(theme);
     const code = await compile(doc.body.raw, {
       outputFormat: 'function-body',
       format: doc._raw.contentType === 'markdown' ? 'md' : 'mdx',
       providerImportSource: '@mdx-js/react',
       remarkPlugins: this.#remarkPlugins(),
       rehypePlugins: [
-        ...rehypePlugins,
+        ...plugins,
         rehypeExtractHeadings({
           headings: this.item.headings,
           slug: this.item.slug,
@@ -145,7 +153,7 @@ export class Doc {
       ],
     });
 
-    return String(code);
+    return code;
   }
 
   slugForSitemap() {

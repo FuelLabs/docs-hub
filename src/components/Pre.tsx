@@ -144,6 +144,9 @@ const styles = {
   wrapper: cssObj({
     borderRadius: '$default',
     background: 'var(--colors-preBg)',
+    'html[class="fuel_light-theme"] &': {
+      background: '#f6f7f6',
+    },
 
     '&[data-need-expand=false]': {
       overflowY: 'auto',
@@ -202,9 +205,13 @@ const styles = {
     },
   }),
   copyIcon: cssObj({
+    'html[class="fuel_light-theme"] &': {
+      background: '$gray6 !important',
+      border: '1px solid $gray8',
+    },
     '.fuel_Icon': {
       'html[class="fuel_light-theme"] &': {
-        color: '$gray6 !important',
+        color: 'black !important',
       },
     },
   }),

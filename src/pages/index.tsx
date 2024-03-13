@@ -19,7 +19,7 @@ export const getStaticProps: GetStaticProps<any> = async () => {
   const slugArray = ['docs', 'intro', 'what-is-fuel'];
   const doc = new Doc(slugArray, allMdDocs);
   const slug = slugArray.join('/');
-  const code = await doc.getCode();
+  const { light, dark } = await doc.getCode();
   const allNavsPath = join(
     DOCS_DIRECTORY,
     `../src/generated/sidebar-links/all-orders.json`
@@ -44,7 +44,8 @@ export const getStaticProps: GetStaticProps<any> = async () => {
       allNavs,
       allNightlyNavs,
       allBeta4Navs,
-      code,
+      codeLight: light,
+      codeDark: dark,
       md: doc.md,
       doc: doc.item,
       links: doc.sidebarLinks(slug),

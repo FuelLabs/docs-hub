@@ -393,19 +393,24 @@ function addNumberOfLines() {
   };
 }
 
-const getRehypeCodeOptions = (): Partial<RehypeCodeOptions> => ({
-  theme: JSON.parse(
-    readFileSync(`${getShikiPath()}/themes/dracula.json`, 'utf-8')
-  ),
-  getHighlighter,
-});
+const getRehypeCodeOptions = (
+  theme: 'light' | 'dark'
+): Partial<RehypeCodeOptions> => {
+  const themeFileName: string = theme === 'light' ? 'github-light' : 'dracula';
+  return {
+    theme: JSON.parse(
+      readFileSync(`${getShikiPath()}/themes/${themeFileName}.json`, 'utf-8')
+    ),
+    getHighlighter,
+  };
+};
 
-export const getMdxCode = (): PluggableList => [
+export const getMdxCode = (theme: 'light' | 'dark'): PluggableList => [
   codeImport,
   codeGroup,
   codeGroup2,
   codeLanguage,
-  [rehypeCode, getRehypeCodeOptions()],
+  [rehypeCode, getRehypeCodeOptions(theme)],
   addLines,
   addRawCode,
   addNumberOfLines,

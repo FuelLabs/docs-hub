@@ -11,11 +11,14 @@ import { getComponents } from '../lib/imports';
 import type { DocPageProps } from '../pages/[...slug]';
 import type { VersionSet } from '../types';
 import { getActiveNav } from '../lib/getActiveNav';
+import useTheme from '../hooks/useTheme';
 
 export function DocScreen(props: DocPageProps) {
   const { doc, allNavs, allNightlyNavs, allBeta4Navs } = props;
   const [versionSet, setVersionSet] = useState<VersionSet>('default');
   const version = useVersion();
+  const { theme } = useTheme();
+  console.log('theme', theme);
 
   useEffect(() => {
     if (version === 'Nightly' || doc.versionSet === 'nightly') {
@@ -60,7 +63,7 @@ export function DocScreen(props: DocPageProps) {
             <Box>
               <Breadcrumb />
               <MDXRender
-                code={props.code}
+                code={theme === 'light' ? props.codeLight : props.codeDark}
                 components={components}
                 versionSet={versionSet}
                 fuelCoreVersion={props.fuelCoreVersion}

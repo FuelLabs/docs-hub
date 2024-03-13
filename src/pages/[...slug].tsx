@@ -18,7 +18,8 @@ export type DocPageProps = {
   allNavs: NavOrder[];
   allNightlyNavs: NavOrder[];
   allBeta4Navs: NavOrder[];
-  code: string;
+  codeLight: string;
+  codeDark: string;
   md: MdDoc;
   doc: DocType;
   links: SidebarLinkItem[];
@@ -47,7 +48,7 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   const slugArray = params?.slug as string[];
   const doc = new Doc(slugArray, allMdDocs);
   const slug = slugArray.join('/');
-  const code = await doc.getCode();
+  const { light, dark } = await doc.getCode();
   const { allNavs, allNightlyNavs, allBeta4Navs } = getNavs();
   const { versions, nightlyVersions, beta4Versions } = getAllVersions();
   let fuelCoreVersion = null;
@@ -66,7 +67,8 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
       allNavs,
       allNightlyNavs,
       allBeta4Navs,
-      code,
+      codeLight: light,
+      codeDark: dark,
       md: doc.md,
       doc: doc.item,
       links: doc.sidebarLinks(slug),
