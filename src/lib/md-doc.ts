@@ -59,10 +59,19 @@ export class Doc {
 
     const config = this.#getConfig(slug.join('/'));
     const splitPath = item._raw.flattenedPath.split('/');
-    splitPath.splice(0, 2);
-    splitPath.pop();
+    let fileType = 'md';
+
+    if(item._raw.flattenedPath.includes('docs/intro') || item._raw.flattenedPath.includes('docs/wallet')){
+      fileType = 'mdx'
+    }
     const actualPath = '/tree/master/' + splitPath.join('/');
-    const pageLink = `${config.repository}${actualPath}`;
+    const pageLink = `${config.repository}${actualPath}.${fileType}`;
+
+    console.log("*****************************")
+    console.log("item._raw.flattenedPath:", item._raw.flattenedPath)
+    console.log("splitPath:", splitPath)
+    console.log("config.repository:", config.repository)
+    console.log("actualPath", actualPath)
 
     this.md = item;
     this.config = config;

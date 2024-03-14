@@ -1,5 +1,5 @@
 import { cssObj } from '@fuel-ui/css';
-import { Text, Box, Button, Grid } from '@fuel-ui/react';
+import { Text, Box, Button, Grid, ButtonLink } from '@fuel-ui/react';
 import NextLink from 'next/link';
 import { useDocContext } from '~/src/hooks/useDocContext';
 
@@ -52,9 +52,23 @@ export function PrevAndNextLinks() {
 }
 
 export function DocFooter() {
+  const { doc } = useDocContext();
+
   return (
     <Box css={styles.root} as="footer">
       <PrevAndNextLinks />
+
+      <Box.Flex justify={'flex-end'} css={styles.feedbackContainer}>
+        <ButtonLink
+          leftIcon={'BrandGithubFilled'}
+          size={'sm'}
+          css={styles.githubLink}
+          href={doc.pageLink}
+          isExternal
+        >
+          Edit this page
+        </ButtonLink>
+      </Box.Flex>
     </Box>
   );
 }
@@ -103,28 +117,29 @@ const styles = {
   label: cssObj({
     color: '$textInverse',
   }),
+  githubLink: cssObj({
+    border: '1px solid $border',
+    px: '$2',
+    color: '$textColor',
+    '&:hover': {
+      textDecoration: 'none',
+      bg: '$border !important',
+      color: '$textColor',
+    },
+    'html[class="fuel_light-theme"] &': {
+      color: 'black',
+      '&:hover': {
+        color: 'black',
+      },
+    },
+  }),
   feedbackContainer: cssObj({
-    my: '$4',
+    mt: '$8',
     py: '$4',
     gap: '$4',
-    borderTop: '1px solid $border',
-    borderBottom: '1px solid $border',
     flexDirection: 'column',
     '@sm': {
       flexDirection: 'row',
-      justifyContent: 'space-between',
-    },
-  }),
-  forumLink: cssObj({
-    color: '$intentsBase11 !important',
-    'html[class="fuel_light-theme"] &': {
-      color: '$intentsBase12 !important',
-    },
-  }),
-  forum: cssObj({
-    justifyContent: 'center',
-    '@sm': {
-      justifyContent: 'flex-start',
     },
   }),
 };
