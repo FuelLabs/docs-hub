@@ -125,6 +125,9 @@ const styles = {
       textDecoration: 'none',
       bg: '$border !important',
       color: '$textColor !important',
+      '.fuel_Icon': {
+        color: '$textColor !important',
+      },
     },
     'html[class="fuel_light-theme"] &': {
       color: 'black',

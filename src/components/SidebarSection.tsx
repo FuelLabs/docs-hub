@@ -100,7 +100,7 @@ export function SidebarSection({
           </Box.VStack>
         </Box>
       )}
-      {isOpened && book !== 'Intro' && (
+      {isOpened && book !== 'Intro' && book !== 'guides' && (
         <ButtonLink
           href={version ? version.url : githubLink}
           leftIcon={'BrandGithubFilled'}

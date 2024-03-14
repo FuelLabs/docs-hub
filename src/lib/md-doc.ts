@@ -62,7 +62,7 @@ export class Doc {
     let fileType = '.md';
 
     if (
-      item._raw.flattenedPath.includes('docs/intro') ||
+      config.repository.includes('docs-hub') ||
       config.repository.includes('graphql-docs') ||
       config.repository.includes('wallet')
     ) {
@@ -91,7 +91,12 @@ export class Doc {
         .replace('docs/sway/', '')
         .replace('docs/fuel-specs/', '');
 
-    const pageLink = `${config.repository}${actualPath}${fileType}`;
+    let pageLink = `${config.repository}${actualPath}${fileType}`;
+
+    if (pageLink.includes('breaking-change-log/breaking-changes-log')) {
+      pageLink =
+        'https://github.com/FuelLabs/breaking-change-log/blob/master/breaking-changes-log.md';
+    }
 
     this.md = item;
     this.config = config;
