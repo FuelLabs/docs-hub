@@ -58,17 +58,19 @@ export function DocFooter() {
     <Box css={styles.root} as="footer">
       <PrevAndNextLinks />
 
-      <Box.Flex justify={'flex-end'} css={styles.feedbackContainer}>
-        <ButtonLink
-          leftIcon={'BrandGithubFilled'}
-          size={'sm'}
-          css={styles.githubLink}
-          href={doc.pageLink}
-          isExternal
-        >
-          Edit this page
-        </ButtonLink>
-      </Box.Flex>
+      {!doc.pageLink.includes('docs/beta-4') && (
+        <Box.Flex justify={'flex-end'} css={styles.feedbackContainer}>
+          <ButtonLink
+            leftIcon={'BrandGithubFilled'}
+            size={'sm'}
+            css={styles.githubLink}
+            href={doc.pageLink}
+            isExternal
+          >
+            Edit this page
+          </ButtonLink>
+        </Box.Flex>
+      )}
     </Box>
   );
 }

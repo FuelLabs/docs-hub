@@ -83,6 +83,7 @@ export class Doc {
       `/tree/${branch}/` +
       splitPath
         .join('/')
+        .replace('/nightly/', '/')
         .replace('docs/fuels-ts/', '')
         .replace('docs/fuels-rs/', '')
         .replace('docs/fuels-wallet/', '')
