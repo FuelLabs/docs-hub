@@ -59,19 +59,39 @@ export class Doc {
 
     const config = this.#getConfig(slug.join('/'));
     const splitPath = item._raw.flattenedPath.split('/');
-    let fileType = 'md';
+    let fileType = '.md';
 
-    if(item._raw.flattenedPath.includes('docs/intro') || item._raw.flattenedPath.includes('docs/wallet')){
-      fileType = 'mdx'
+    if (
+      item._raw.flattenedPath.includes('docs/intro') ||
+      config.repository.includes('graphql-docs') ||
+      config.repository.includes('wallet')
+    ) {
+      fileType = '.mdx';
     }
-    const actualPath = '/tree/master/' + splitPath.join('/');
-    const pageLink = `${config.repository}${actualPath}.${fileType}`;
 
-    console.log("*****************************")
-    console.log("item._raw.flattenedPath:", item._raw.flattenedPath)
-    console.log("splitPath:", splitPath)
-    console.log("config.repository:", config.repository)
-    console.log("actualPath", actualPath)
+    if (
+      item._raw.sourceFileName === 'index.md' ||
+      item._raw.sourceFileName === 'index.mdx'
+    ) {
+      fileType = '/index' + fileType;
+    }
+
+    const branch = config.repository.includes('graphql-docs')
+      ? 'main'
+      : 'master';
+    const actualPath =
+      `/tree/${branch}/` +
+      splitPath
+        .join('/')
+        .replace('docs/fuels-ts/', '')
+        .replace('docs/fuels-rs/', '')
+        .replace('docs/fuels-wallet/', '')
+        .replace('docs/fuelup/', '')
+        .replace('docs/fuel-graphql-docs/', '')
+        .replace('docs/sway/', '')
+        .replace('docs/fuel-specs/', '');
+
+    const pageLink = `${config.repository}${actualPath}${fileType}`;
 
     this.md = item;
     this.config = config;

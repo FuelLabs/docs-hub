@@ -81,21 +81,21 @@ export function MDXRender({
   nodeVersion,
   nodeVersionMax,
 }: MDXRenderProps) {
-  const [code, setCode] = useState<string>(codeDark);
+  const [isMounted, setIsMounted] = useState<boolean>(false);
   const { theme } = useTheme();
 
   const { default: Content } = useMemo(
-    () => runSync(code, { ...runtime, ...provider }),
-    [code]
+    () =>
+      runSync(isMounted && theme === 'light' ? codeLight : codeDark, {
+        ...runtime,
+        ...provider,
+      }),
+    [codeDark, codeLight, theme]
   );
 
   useEffect(() => {
-    if (theme === 'light') {
-      setCode(codeLight);
-    } else {
-      setCode(codeDark);
-    }
-  }, [theme]);
+    setIsMounted(true);
+  }, []);
 
   return (
     <provider.MDXProvider components={{ ...components, ...mdxComponents }}>

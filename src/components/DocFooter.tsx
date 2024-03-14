@@ -124,12 +124,12 @@ const styles = {
     '&:hover': {
       textDecoration: 'none',
       bg: '$border !important',
-      color: '$textColor',
+      color: '$textColor !important',
     },
     'html[class="fuel_light-theme"] &': {
       color: 'black',
       '&:hover': {
-        color: 'black',
+        color: 'black !important',
         '.fuel_Icon': {
           color: 'black',
         },

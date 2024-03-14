@@ -141,6 +141,12 @@ const styles = {
     'html[class="fuel_light-theme"] &': {
       color: '$intentsBase12 !important',
     },
+    '.fuel_Icon': {
+      color: '$textColor',
+      'html[class="fuel_light-theme"] &': {
+        color: '$intentsBase12 !important',
+      },
+    },
   }),
   listItem: cssObj({
     position: 'relative',

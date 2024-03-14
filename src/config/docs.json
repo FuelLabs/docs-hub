@@ -65,7 +65,7 @@
   "graphql": {
     "title": "Fuel GraphQL API",
     "slug": "graphql",
-    "repository": "https://github.com/FuelLabs/fuels-wallet",
+    "repository": "https://github.com/FuelLabs/fuel-graphql-docs",
     "ogTags": {
       "description": "Official documentation for the Fuel GraphQL API",
       "image": ""
