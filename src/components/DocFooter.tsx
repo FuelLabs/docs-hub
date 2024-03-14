@@ -130,7 +130,13 @@ const styles = {
       color: 'black',
       '&:hover': {
         color: 'black',
+        '.fuel_Icon': {
+          color: 'black',
+        },
       },
+    },
+    '.fuel_Icon': {
+      color: '$textColor',
     },
   }),
   feedbackContainer: cssObj({

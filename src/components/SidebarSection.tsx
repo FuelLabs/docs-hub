@@ -137,6 +137,7 @@ const styles = {
     fontSize: '$sm',
     pl: '$4',
     mb: '$8',
+    color: '$textColor',
     'html[class="fuel_light-theme"] &': {
       color: '$intentsBase12 !important',
     },

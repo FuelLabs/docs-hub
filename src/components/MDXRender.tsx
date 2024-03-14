@@ -86,7 +86,7 @@ export function MDXRender({
 
   const { default: Content } = useMemo(
     () => runSync(code, { ...runtime, ...provider }),
-    [theme, code]
+    [code]
   );
 
   useEffect(() => {
