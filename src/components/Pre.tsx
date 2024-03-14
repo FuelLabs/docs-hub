@@ -176,6 +176,11 @@ const styles = {
         borderBottomRightRadius: '$default',
         background:
           'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%)',
+
+        'html[class="fuel_light-theme"] &': {
+          background:
+            'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%)',
+        },
       },
       '&[data-expanded=false]': {
         maxHeight: '300px',
@@ -195,12 +200,27 @@ const styles = {
       fontSize: '$xs',
       border: '1px solid $whiteA6',
 
-      '&, &:hover': {
-        color: '$whiteA10 !important',
-        bg: '$preBg !important',
+      'html[class="fuel_light-theme"] &': {
+        color: 'black',
+        borderColor: '$border',
+        bg: '$border',
+        '&, &:hover': {
+          color: 'black',
+          bg: '$border',
+        },
+        '&:hover': {
+          borderColor: 'white',
+        },
       },
-      '&:hover': {
-        borderColor: '$whiteA9 !important',
+
+      'html[class="fuel_dark-theme"] &': {
+        '&, &:hover': {
+          color: '$whiteA10 !important',
+          bg: '$preBg !important',
+        },
+        '&:hover': {
+          borderColor: '$whiteA9 !important',
+        },
       },
     },
   }),

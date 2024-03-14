@@ -4,7 +4,7 @@ import { Box } from '@fuel-ui/react';
 import { runSync } from '@mdx-js/mdx';
 import * as provider from '@mdx-js/react';
 import dynamic from 'next/dynamic';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import {
   BRIDGE_LINK,
@@ -32,6 +32,7 @@ import { Paragraph } from './Paragraph';
 import { Pre } from './Pre';
 import { QuickstartCallout } from './QuickstartCallout';
 import { Table } from './Table';
+import useTheme from '../hooks/useTheme';
 
 const Player = dynamic(() => import('./Player'), {
   ssr: false,
@@ -62,7 +63,8 @@ export const mdxComponents = {
 } as any;
 
 type MDXRenderProps = {
-  code: string;
+  codeLight: string;
+  codeDark: string;
   components: Record<any, any>;
   versionSet: VersionSet;
   fuelCoreVersion?: string;
@@ -71,17 +73,29 @@ type MDXRenderProps = {
 };
 
 export function MDXRender({
-  code,
+  codeLight,
+  codeDark,
   components,
   versionSet,
   fuelCoreVersion,
   nodeVersion,
   nodeVersionMax,
 }: MDXRenderProps) {
+  const [code, setCode] = useState<string>(codeDark);
+  const { theme } = useTheme();
+
   const { default: Content } = useMemo(
     () => runSync(code, { ...runtime, ...provider }),
-    [code]
+    [theme, code]
   );
+
+  useEffect(() => {
+    if (theme === 'light') {
+      setCode(codeLight);
+    } else {
+      setCode(codeDark);
+    }
+  }, [theme]);
 
   return (
     <provider.MDXProvider components={{ ...components, ...mdxComponents }}>
