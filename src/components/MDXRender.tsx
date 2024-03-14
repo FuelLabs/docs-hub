@@ -90,7 +90,7 @@ export function MDXRender({
         ...runtime,
         ...provider,
       }),
-    [codeDark, codeLight, theme]
+    [codeDark, codeLight, theme, isMounted]
   );
 
   useEffect(() => {
