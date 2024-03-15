@@ -155,15 +155,15 @@ export async function getDocs(key, order) {
         './beta-4/fuel-graphql-docs/docs/**/*.mdx',
       ];
       break;
-    case 'fuelup':
-      paths = [
-        // FUELUP DOCS
-        './fuelup/docs/src/*.md',
-        './fuelup/docs/src/**/*.md',
-        // IGNORE ALL SUMMARY PAGES
-        '!**/SUMMARY.md',
-      ];
-      break;
+    // case 'fuelup':
+    //   paths = [
+    //     // FUELUP DOCS
+    //     './fuelup/docs/src/*.md',
+    //     './fuelup/docs/src/**/*.md',
+    //     // IGNORE ALL SUMMARY PAGES
+    //     '!**/SUMMARY.md',
+    //   ];
+    //   break;
     case 'specs':
       paths = [
         // SPECS DOCS

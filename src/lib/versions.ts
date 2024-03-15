@@ -58,18 +58,18 @@ export function getRustSDKVersion(docsDir: string) {
   };
 }
 
-function getFuelupVersion() {
-  const filedir = join(DOCS_DIRECTORY, 'fuelup/Cargo.toml');
-  const file = fs.readFileSync(filedir, 'utf-8');
-  const tomfile = toml.parse(file);
+// function getFuelupVersion() {
+//   const filedir = join(DOCS_DIRECTORY, 'fuelup/Cargo.toml');
+//   const file = fs.readFileSync(filedir, 'utf-8');
+//   const tomfile = toml.parse(file);
 
-  return {
-    name: 'fuelup',
-    category: 'Fuelup',
-    version: tomfile.package.version,
-    url: tomfile.package.repository,
-  };
-}
+//   return {
+//     name: 'fuelup',
+//     category: 'Fuelup',
+//     version: tomfile.package.version,
+//     url: tomfile.package.repository,
+//   };
+// }
 
 function getForcVersion(docsDir: string) {
   const swayfile = join(docsDir, 'sway/Cargo.toml');
@@ -112,13 +112,13 @@ export function getVersions(versionSet: VersionSet) {
   const wallet = getWalletVersion(docsDir);
   const tsSDK = getTSSDKVersion(docsDir);
   const rust = getRustSDKVersion(docsDir);
-  const fuelup = getFuelupVersion();
+  // const fuelup = getFuelupVersion();
   const forc = getForcVersion(docsDir);
 
   return {
     Forc: forc,
     Sway: forc,
-    Fuelup: fuelup,
+    // Fuelup: fuelup,
     'Fuel Rust SDK': rust,
     'Fuel TS SDK': tsSDK,
     'Fuel Wallet': wallet,

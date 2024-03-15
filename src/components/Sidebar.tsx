@@ -62,9 +62,9 @@ export function Sidebar({
 
           {allNavs.map((navOrder) => {
             const catIndex =
-              versionSet === 'default' ||
-              navOrder.links[0].slug.includes('docs/fuelup')
-                ? 1
+              versionSet === 'default'
+                ? // navOrder.links[0].slug.includes('docs/fuelup')
+                  1
                 : 2;
             let key = navOrder.links[0].slug.split('/')[catIndex];
             if (key === 'sway') {

@@ -14,7 +14,7 @@ export function getExistingVersions() {
     rust: getRustSDKVersion(true),
     ts: getTSSDKVersion(true),
     wallet: getWalletVersion(true),
-    fuelup: getFuelupVersion(),
+    // fuelup: getFuelupVersion(),
   };
 
   return versions;
@@ -26,7 +26,7 @@ export async function getNightlyVersions() {
   versions.rust = await getNightlyRelease('fuels-rs');
   versions.ts = await getNightlyRelease('fuels-ts');
   versions.wallet = await getNightlyRelease('fuels-wallet');
-  versions.fuelup = await getNightlyRelease('fuelup');
+  // versions.fuelup = await getNightlyRelease('fuelup');
   return versions;
 }
 
@@ -39,9 +39,9 @@ function getForcVersion(isNightly) {
   return version;
 }
 
-function getFuelupVersion() {
-  return getVersionFromTOMLFile('docs/fuelup/Cargo.toml');
-}
+// function getFuelupVersion() {
+//   return getVersionFromTOMLFile('docs/fuelup/Cargo.toml');
+// }
 
 function getTSSDKVersion(isNightly) {
   return getVersionFromJSONFile(
