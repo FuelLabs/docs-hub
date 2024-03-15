@@ -32,6 +32,8 @@ import { Paragraph } from './Paragraph';
 import { Pre } from './Pre';
 import { QuickstartCallout } from './QuickstartCallout';
 import { Table } from './Table';
+import { FuelnautCards } from './Fuelnaut/FuelnautCards';
+import { FuelnautLevel } from './Fuelnaut/FuelnautLevel';
 
 const Player = dynamic(() => import('./Player'), {
   ssr: false,
@@ -59,6 +61,8 @@ export const mdxComponents = {
   QuickstartCallout,
   CodeTabs,
   ConditionalContent,
+  FuelnautCards,
+  FuelnautLevel,
 } as any;
 
 type MDXRenderProps = {

@@ -15,6 +15,8 @@ import {
 } from '../lib/versions';
 import { DocScreen } from '../screens/DocPage';
 import type { DocType, NavOrder, SidebarLinkItem, Versions } from '../types';
+import type { FuelnautLevel } from '../config/fuelnautLevels';
+import { LEVELS_CONFIG } from '../config/fuelnautLevels';
 
 export type DocPageProps = {
   allNavs: NavOrder[];
@@ -32,7 +34,14 @@ export type DocPageProps = {
   fuelCoreVersion?: string;
   nodeVersion?: string;
   nodeVersionMax?: string;
+  fuelnautProps: FuelnautProps;
 };
+
+interface FuelnautProps {
+  level: FuelnautLevel;
+  abiJSON: string;
+  base64Bytecode: string;
+}
 
 export default function DocPage(props: DocPageProps) {
   const { theme } = useTheme();
@@ -79,6 +88,29 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
     nodeVersionMax = `${majorVersionMax}.0.0`;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const fuelnautProps: any = {};
+
+  if (slug.includes('guides/fuelnaut/')) {
+    console.log('SLUG:', slugArray[slugArray.length - 1]);
+    const levelKey = slugArray[slugArray.length - 1];
+    const level = LEVELS_CONFIG[levelKey];
+    fuelnautProps.level = level;
+    const fuelnautPath = join(DOCS_DIRECTORY, `guides/examples/fuelnaut`);
+    const byteCodePath = join(
+      fuelnautPath,
+      `${level.key}/out/debug/${level.key}.bin`
+    );
+    const bytecode = readFileSync(byteCodePath);
+    const abiJSONPath = join(
+      fuelnautPath,
+      `${level.key}/out/debug/${level.key}-abi.json`
+    );
+    fuelnautProps.abiJSON = JSON.parse(readFileSync(abiJSONPath, 'utf8'));
+
+    fuelnautProps.base64Bytecode = bytecode.toString('base64');
+  }
+
   return {
     props: {
       allNavs,
@@ -95,6 +127,7 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
       fuelCoreVersion,
       nodeVersion,
       nodeVersionMax,
+      fuelnautProps: fuelnautProps as FuelnautProps,
     },
   };
 };

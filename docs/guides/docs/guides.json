@@ -2,13 +2,13 @@
   "installation": {
     "title": "Toolchain Installation",
     "description": "Install the Fuel toolchain and binaries.",
-    "featured": true,
+    "featured": false,
     "tags": ["Getting Started"]
   },
   "quickstart": {
     "title": "Developer Quickstart",
     "description": "Get started by building a counter dApp in Fuel.",
-    "featured": true,
+    "featured": false,
     "tags": ["Getting Started", "Full Stack"]
   },
   "intro_to_sway": {
@@ -20,7 +20,7 @@
   "intro_to_predicates": {
     "title": "Building stateless DeFI applications using Predicates",
     "description": "Learn about predicates by building a MultiSig",
-    "featured": false,
+    "featured": true,
     "tags": ["Full Stack"]
   },
   "running_a_node": {
@@ -28,6 +28,12 @@
     "description": "Run a local Fuel node.",
     "featured": false,
     "tags": ["fuel-core"]
+  },
+  "fuelnaut": {
+    "title": "The Fuelnaut",
+    "description": "Play The Fuelnaut: a security-focused smart contract game",
+    "featured": true,
+    "tags": []
   },
   "migration_guide": {
     "title": "Migration Guide",
