@@ -47,7 +47,9 @@ export const LEVELS_CONFIG: FuelnautLevelsConfig = {
     key: 'vault',
     title: 'Vault',
     index: 2,
-    contractId: isDev ? contractsIds.vault : '0x...',
+    contractId: isDev
+      ? contractsIds.vault
+      : '0x1d32d3683bedf8d956ec2f52e8baea058292494866a418e991d917fec552126c',
     hasConfigurables: true,
   },
 };
