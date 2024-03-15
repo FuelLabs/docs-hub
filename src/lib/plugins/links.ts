@@ -263,7 +263,8 @@ function replaceInternalLinks(href: string, base: string) {
     href.startsWith('https://fuellabs.github.io') &&
     !href.includes('fuellabs.github.io/block-explorer-v2') &&
     !href.startsWith('https://fuellabs.github.io/sway/master/std/') &&
-    !href.includes('LICENSE')
+    !href.includes('LICENSE') &&
+    !href.includes('/fuelup/')
   ) {
     href = href
       .replace('https://fuellabs.github.io', '')

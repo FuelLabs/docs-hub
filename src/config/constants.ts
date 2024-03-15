@@ -90,10 +90,10 @@ export const NAVIGATION: any[] = [
       {
         name: 'Tooling',
       },
-      {
-        name: 'Fuelup',
-        link: '/docs/fuelup',
-      },
+      // {
+      //   name: 'Fuelup',
+      //   link: '/docs/fuelup',
+      // },
       {
         name: 'Forc',
         link: '/docs/forc',

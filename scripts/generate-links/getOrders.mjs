@@ -17,10 +17,10 @@ const CONFIG = {
     type: 'vp',
     path: './fuels-ts/apps/docs/.vitepress/config.ts',
   },
-  fuelup: {
-    type: 'mdbook',
-    path: './fuelup/docs/src/SUMMARY.md',
-  },
+  // fuelup: {
+  //   type: 'mdbook',
+  //   path: './fuelup/docs/src/SUMMARY.md',
+  // },
   specs: {
     type: 'mdbook',
     path: './fuel-specs/src/SUMMARY.md',

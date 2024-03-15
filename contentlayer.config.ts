@@ -53,7 +53,7 @@ const MdDoc = defineDocumentType(() => ({
 const includeDirs = [
   // DEFAULT DOCS & GUIDES
   'docs/sway/docs/book/src',
-  'docs/fuelup/docs/src',
+  // 'docs/fuelup/docs/src',
   'docs/fuels-rs/docs/src',
   'docs/fuels-ts/apps/docs/src',
   'docs/fuel-specs/src',
@@ -88,7 +88,7 @@ const excludeDirs = [
   'docs/intro/nav.json',
   'docs/contributing/nav.json',
   'docs/sway/docs/book/src/SUMMARY.md',
-  'docs/fuelup/docs/src/SUMMARY.md',
+  // 'docs/fuelup/docs/src/SUMMARY.md',
   'docs/fuels-rs/docs/src/SUMMARY.md',
   'docs/fuel-specs/src/SUMMARY.md',
   // NIGHTLY DOCS
