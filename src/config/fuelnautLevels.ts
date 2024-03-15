@@ -34,7 +34,7 @@ export const LEVELS_CONFIG: FuelnautLevelsConfig = {
       : '0xfb691e6337816eae2262156322771bf432a010d232cdebf5c6383e863769aaff',
     hasConfigurables: false,
   },
-  coinFlip: {
+  ['coin-flip']: {
     key: 'coin-flip',
     title: 'Coin Flip',
     index: 1,
@@ -43,11 +43,11 @@ export const LEVELS_CONFIG: FuelnautLevelsConfig = {
       : '0x9800989ac8a30b168e1a5629ad2b21fedfcfd0424d2031138e7bfcb4e98c0d7a',
     hasConfigurables: false,
   },
-  // vault: {
-  //   key: 'vault',
-  //   title: 'Vault',
-  //   index: 2,
-  //   contractId: isDev ? contractsIds.vault : '0x...',
-  //   hasConfigurables: true,
-  // },
+  vault: {
+    key: 'vault',
+    title: 'Vault',
+    index: 2,
+    contractId: isDev ? contractsIds.vault : '0x...',
+    hasConfigurables: true,
+  },
 };

@@ -17,6 +17,7 @@ import { DocScreen } from '../screens/DocPage';
 import type { DocType, NavOrder, SidebarLinkItem, Versions } from '../types';
 import type { FuelnautLevel } from '../config/fuelnautLevels';
 import { LEVELS_CONFIG } from '../config/fuelnautLevels';
+import type { JsonAbi } from 'fuels';
 
 export type DocPageProps = {
   allNavs: NavOrder[];
@@ -39,7 +40,7 @@ export type DocPageProps = {
 
 interface FuelnautProps {
   level: FuelnautLevel;
-  abiJSON: string;
+  abiJSON: JsonAbi;
   base64Bytecode: string;
 }
 
@@ -92,19 +93,18 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   const fuelnautProps: any = {};
 
   if (slug.includes('guides/fuelnaut/')) {
-    console.log('SLUG:', slugArray[slugArray.length - 1]);
     const levelKey = slugArray[slugArray.length - 1];
     const level = LEVELS_CONFIG[levelKey];
     fuelnautProps.level = level;
     const fuelnautPath = join(DOCS_DIRECTORY, `guides/examples/fuelnaut`);
     const byteCodePath = join(
       fuelnautPath,
-      `${level.key}/out/debug/${level.key}.bin`
+      `${levelKey}/out/debug/${levelKey}.bin`
     );
     const bytecode = readFileSync(byteCodePath);
     const abiJSONPath = join(
       fuelnautPath,
-      `${level.key}/out/debug/${level.key}-abi.json`
+      `${levelKey}/out/debug/${levelKey}-abi.json`
     );
     fuelnautProps.abiJSON = JSON.parse(readFileSync(abiJSONPath, 'utf8'));
 

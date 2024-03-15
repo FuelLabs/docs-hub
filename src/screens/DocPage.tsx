@@ -71,6 +71,17 @@ export function DocScreen(props: DocPageProps) {
                 fuelCoreVersion={props.fuelCoreVersion}
                 nodeVersion={props.nodeVersion}
                 nodeVersionMax={props.nodeVersionMax}
+                level={
+                  props.fuelnautProps ? props.fuelnautProps.level : undefined
+                }
+                bytecode={
+                  props.fuelnautProps
+                    ? props.fuelnautProps.base64Bytecode
+                    : undefined
+                }
+                abiJSON={
+                  props.fuelnautProps ? props.fuelnautProps.abiJSON : undefined
+                }
               />
             </Box>
           )}

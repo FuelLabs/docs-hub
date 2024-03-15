@@ -1,14 +1,15 @@
-import { Box, Button } from '@fuel-ui/react';
+import { Box } from '@fuel-ui/react';
 import { FUELNAUT_CONTRACT_ID } from '~/src/config/fuelnautLevels';
 import { FuelnautAbi__factory } from '~/src/fuelnaut-api';
 import { useMemo } from 'react';
-import { useConnectUI, useIsConnected, useWallet } from '@fuels/react';
+import { useIsConnected, useWallet } from '@fuel-wallet/react';
 import ShowFuelnautLevels from './ShowFuelnautLevels';
+import { ConnectWallet } from '../ConnectWallet';
 // import Setup from './Setup';
 
 export function FuelnautCards() {
   const { isConnected } = useIsConnected();
-  const { connect, isConnecting } = useConnectUI();
+
   const { wallet } = useWallet();
 
   const contract = useMemo(() => {
@@ -22,6 +23,10 @@ export function FuelnautCards() {
     return null;
   }, [wallet, isConnected, FUELNAUT_CONTRACT_ID]);
 
+  console.log('WALLET:', wallet);
+  console.log('ISCONNECTED:', isConnected);
+  console.log('CONTRACT:', contract);
+
   return (
     <Box.Flex>
       {wallet && isConnected && contract ? (
@@ -31,13 +36,7 @@ export function FuelnautCards() {
         </div>
       ) : (
         <div>
-          <Button
-            onClick={() => {
-              connect();
-            }}
-          >
-            {isConnecting ? 'Connecting' : 'Connect Your Wallet'}
-          </Button>
+          <ConnectWallet />
         </div>
       )}
     </Box.Flex>

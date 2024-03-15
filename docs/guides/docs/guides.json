@@ -20,7 +20,7 @@
   "intro_to_predicates": {
     "title": "Building stateless DeFI applications using Predicates",
     "description": "Learn about predicates by building a MultiSig",
-    "featured": true,
+    "featured": false,
     "tags": ["Full Stack"]
   },
   "running_a_node": {
@@ -30,9 +30,9 @@
     "tags": ["fuel-core"]
   },
   "fuelnaut": {
-    "title": "The Fuelnaut",
+    "title": "Fuelnaut",
     "description": "Play The Fuelnaut: a security-focused smart contract game",
-    "featured": true,
+    "featured": false,
     "tags": []
   },
   "migration_guide": {

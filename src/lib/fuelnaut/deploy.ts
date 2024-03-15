@@ -1,16 +1,18 @@
 import { ContractFactory, randomBytes } from 'fuels';
-import type { JsonAbi, BytesLike, WalletLocked } from 'fuels';
+import type { JsonAbi, BytesLike, Account } from 'fuels';
 
 export async function deployNewInstance(
-  wallet: WalletLocked,
+  wallet: Account,
   bytecodeString: string,
   abiJSON: JsonAbi,
-  configurableConstants: undefined | {
-    [name: string]: unknown;
-  },
+  configurableConstants:
+    | undefined
+    | {
+        [name: string]: unknown;
+      }
 ) {
   const bytecode: BytesLike = Uint8Array.from(
-    Buffer.from(bytecodeString, 'base64'),
+    Buffer.from(bytecodeString, 'base64')
   );
   const factory = new ContractFactory(bytecode, abiJSON, wallet);
   const { minGasPrice: gasPrice } = wallet.provider.getGasConfig();

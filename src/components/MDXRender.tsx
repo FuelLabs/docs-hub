@@ -34,6 +34,8 @@ import { QuickstartCallout } from './QuickstartCallout';
 import { Table } from './Table';
 import { FuelnautCards } from './Fuelnaut/FuelnautCards';
 import { FuelnautLevel } from './Fuelnaut/FuelnautLevel';
+import type { FuelnautLevel as FuelnautLevelType } from '../config/fuelnautLevels';
+import type { JsonAbi } from 'fuels';
 
 const Player = dynamic(() => import('./Player'), {
   ssr: false,
@@ -72,6 +74,9 @@ type MDXRenderProps = {
   fuelCoreVersion?: string;
   nodeVersion?: string;
   nodeVersionMax?: string;
+  level?: FuelnautLevelType;
+  bytecode?: string;
+  abiJSON?: JsonAbi;
 };
 
 export function MDXRender({
@@ -81,6 +86,9 @@ export function MDXRender({
   fuelCoreVersion,
   nodeVersion,
   nodeVersionMax,
+  level,
+  bytecode,
+  abiJSON,
 }: MDXRenderProps) {
   const { default: Content } = useMemo(
     () => runSync(code, { ...runtime, ...provider }),
@@ -118,6 +126,9 @@ export function MDXRender({
         fuelCoreVersion={<Code>{fuelCoreVersion}</Code>}
         nodeVersion={<Code>{nodeVersion}</Code>}
         nodeVersionMax={<Code>{nodeVersionMax}</Code>}
+        level={level}
+        bytecode={bytecode}
+        abiJSON={abiJSON}
       />
     </provider.MDXProvider>
   );

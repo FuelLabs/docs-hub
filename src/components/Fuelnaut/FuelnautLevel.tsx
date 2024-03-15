@@ -1,17 +1,34 @@
 import { Box, Button } from '@fuel-ui/react';
-import { useWallet } from '@fuels/react';
 import { BaseAssetId } from 'fuels';
+import type { JsonAbi } from 'fuels';
 import { useEffect, useMemo, useState } from 'react';
 import { FUELNAUT_CONTRACT_ID } from '~/src/config/fuelnautLevels';
 import { FuelnautAbi__factory } from '~/src/fuelnaut-api';
 import type { AddressInput } from '~/src/fuelnaut-api/contracts/FuelnautAbi';
 import { getLevelContractFactory } from '~/src/lib/fuelnaut/factories';
+import type { FuelnautLevel } from '~/src/config/fuelnautLevels';
+import { getNewInstance } from '~/src/lib/fuelnaut/instance';
+import { useWallet, useIsConnected } from '@fuel-wallet/react';
+import { ConnectWallet } from '../ConnectWallet';
 
-export function FuelnautLevel() {
+interface FuelnautLevelProps {
+  level: FuelnautLevel;
+  description: string;
+  bytecode: string;
+  abiJSON: JsonAbi;
+}
+
+export function FuelnautLevel({
+  level,
+  description,
+  bytecode,
+  abiJSON,
+}: FuelnautLevelProps) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [instance, setInstance] = useState<any>(null);
   const [isCompleted, setIsCompleted] = useState(false);
   const { wallet } = useWallet();
+  const { isConnected } = useIsConnected();
 
   const contract = useMemo(() => {
     if (wallet) {
@@ -93,6 +110,7 @@ export function FuelnautLevel() {
 
   return (
     <Box>
+      <p>{description}</p>
       {instance ? (
         <>
           {isCompleted ? (
@@ -107,14 +125,21 @@ export function FuelnautLevel() {
                 Click the button below to check if you successfully completed
                 the challenge.
               </p>
-              <button onClick={handleCheckIfCompleted}>
+              <Button onClick={handleCheckIfCompleted}>
                 Check If Completed
-              </button>
+              </Button>
             </div>
           )}
         </>
       ) : (
-        <Button onClick={handleNewInstance}>Deploy New Instance</Button>
+        <>
+        {wallet && isConnected ? (
+            <Button onClick={handleNewInstance}>Deploy New Instance</Button>
+        ) : (
+            <ConnectWallet />
+        )}
+        </>
+        
       )}
     </Box>
   );
