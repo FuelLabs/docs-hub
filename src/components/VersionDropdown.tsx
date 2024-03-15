@@ -28,7 +28,6 @@ export default function VersionDropdown({
   const isDoc =
     router.asPath.includes('docs') &&
     !router.asPath.includes('/intro/') &&
-    // !router.asPath.includes('docs/fuelup') &&
     !router.asPath.includes('docs/contributing');
   const bookIndex =
     versionSet !== 'default' &&
