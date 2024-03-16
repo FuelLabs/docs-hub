@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "build:ci": "run-s docs:* generate:* patch:wallet build",
+    "build:ci": "run-s docs:clean docs:sync generate:* patch:wallet build",
     "check": "run-s lint prettier:check",
     "check:prod": "run-s lint:prod prettier:check",
     "copy:icons": "cp -r ./node_modules/@fuel-ui/icons/dist/icons/sprite.svg ./public/icons",
