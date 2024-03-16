@@ -75,17 +75,22 @@ impl Fuelnaut for Contract {
         }
     }
 
+    fn test_instance_with_configurables(configurables: Vec<(u64, Vec<u8>)>) {
+        log(42);
+    }
+
      #[storage(read, write)]
     fn create_instance_with_configurables(instance: ContractId, level_id: u64, bytecode_input: Vec<u8>, configurables: Vec<(u64, Vec<u8>)>) {
         let sender = msg_sender().unwrap();
         if let Identity::Address(address) = sender {
-            // verify the contractId of the instance matches the registered level bytecode
             let registered_bytecode_root = storage.registered_levels.get(level_id).unwrap().read();
             let mut bytecode = bytecode_input;
-            // check that the contractId matches the bytecode
-            verify_contract_bytecode(instance, bytecode);
-            // verify the bytecode is correct
-            swap_configurables(bytecode, configurables);
+
+            // VERIFY THE INTANCE CONTRACT ID MATCHES THE BYTECODE & CONFIGURABLES
+            verify_contract_bytecode_with_configurables(instance, bytecode, configurables);
+
+            // VERIFY BYTECODE ROOT MATCHES THE REGISTERED LEVEL
+            bytecode = swap_configurables(bytecode, configurables);
             let computed_root = compute_bytecode_root(bytecode);
             require(registered_bytecode_root == computed_root, Error::InvalidBytecodeRoot);
            

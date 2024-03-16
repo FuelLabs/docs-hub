@@ -4,9 +4,9 @@
 /* eslint-disable */
 
 /*
-  Fuels version: 0.76.0
-  Forc version: 0.51.1
-  Fuel-Core version: 0.22.1
+  Fuels version: 0.73.0
+  Forc version: 0.49.2
+  Fuel-Core version: 0.22.0
 */
 
 import { Interface, Contract, ContractFactory } from "fuels";
@@ -657,6 +657,28 @@ const _abi = {
     {
       "inputs": [
         {
+          "name": "configurables",
+          "type": 18,
+          "typeArguments": [
+            {
+              "name": "",
+              "type": 1,
+              "typeArguments": null
+            }
+          ]
+        }
+      ],
+      "name": "test_instance_with_configurables",
+      "output": {
+        "name": "",
+        "type": 0,
+        "typeArguments": null
+      },
+      "attributes": null
+    },
+    {
+      "inputs": [
+        {
           "name": "new_owner",
           "type": 7,
           "typeArguments": null
@@ -732,12 +754,20 @@ const _abi = {
       "logId": 6,
       "loggedType": {
         "name": "",
+        "type": 19,
+        "typeArguments": null
+      }
+    },
+    {
+      "logId": 7,
+      "loggedType": {
+        "name": "",
         "type": 5,
         "typeArguments": []
       }
     },
     {
-      "logId": 7,
+      "logId": 8,
       "loggedType": {
         "name": "",
         "type": 16,

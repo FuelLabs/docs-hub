@@ -4,9 +4,9 @@
 /* eslint-disable */
 
 /*
-  Fuels version: 0.76.0
-  Forc version: 0.51.1
-  Fuel-Core version: 0.22.1
+  Fuels version: 0.73.0
+  Forc version: 0.49.2
+  Fuel-Core version: 0.22.0
 */
 
 import { Interface, Contract, ContractFactory } from "fuels";
@@ -23,18 +23,12 @@ const _abi = {
     },
     {
       "typeId": 1,
-      "type": "b256",
-      "components": null,
-      "typeParameters": null
-    },
-    {
-      "typeId": 2,
       "type": "bool",
       "components": null,
       "typeParameters": null
     },
     {
-      "typeId": 3,
+      "typeId": 2,
       "type": "enum Error",
       "components": [
         {
@@ -51,7 +45,7 @@ const _abi = {
       "typeParameters": null
     },
     {
-      "typeId": 4,
+      "typeId": 3,
       "type": "u64",
       "components": null,
       "typeParameters": null
@@ -63,7 +57,7 @@ const _abi = {
       "name": "attack_success",
       "output": {
         "name": "",
-        "type": 2,
+        "type": 1,
         "typeArguments": null
       },
       "attributes": [
@@ -79,7 +73,7 @@ const _abi = {
       "inputs": [
         {
           "name": "password",
-          "type": 1,
+          "type": 3,
           "typeArguments": null
         }
       ],
@@ -104,7 +98,7 @@ const _abi = {
       "logId": 0,
       "loggedType": {
         "name": "",
-        "type": 4,
+        "type": 3,
         "typeArguments": null
       }
     },
@@ -112,7 +106,7 @@ const _abi = {
       "logId": 1,
       "loggedType": {
         "name": "",
-        "type": 3,
+        "type": 2,
         "typeArguments": []
       }
     },
@@ -120,7 +114,7 @@ const _abi = {
       "logId": 2,
       "loggedType": {
         "name": "",
-        "type": 3,
+        "type": 2,
         "typeArguments": []
       }
     }
@@ -131,10 +125,10 @@ const _abi = {
       "name": "PASSWORD",
       "configurableType": {
         "name": "",
-        "type": 1,
+        "type": 3,
         "typeArguments": null
       },
-      "offset": 1288
+      "offset": 1220
     }
   ]
 };

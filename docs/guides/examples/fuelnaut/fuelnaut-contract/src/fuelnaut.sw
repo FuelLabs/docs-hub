@@ -5,6 +5,8 @@ use src5::{State};
 abi Fuelnaut {
     fn get_bytecode_root(id: ContractId) -> b256;
 
+   fn test_instance_with_configurables(configurables: Vec<(u64, Vec<u8>)>);
+   
     #[storage(read, write)]
     fn register_level(bytecode_root: b256) -> u64;
 

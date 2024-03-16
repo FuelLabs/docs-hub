@@ -28,20 +28,12 @@ export async function getNewInstance(
   };
   if (level.hasConfigurables && configurableConstants) {
     console.log('HAS CONFIGURABLES');
-    const configurableInputs = buildConfigurables(new BN(1288), new BN(17));
-    // getConfigurableInputs(configurableConstants.PASSWORD);
-    console.log('configurableInputs:', configurableInputs);
+    const configurableInputs = buildConfigurables(new BN(1288), 17);
     const bytecodeBuffer = Buffer.from(bytecode, 'base64');
 
-    // Parse the bytecode and convert to BN instances
-    const bytecodeInput: Vec<BigNumberish> = [];
-    for (let i = 0; i < bytecodeBuffer.length; i += 32) {
-      // Extract a 32-byte segment and convert to a hex string
-      const segment = bytecodeBuffer.subarray(i, i + 32);
-      const number = new BN(segment.toString('hex'), 'hex');
-      // Convert the hex string to a BN and add it to the array
-      bytecodeInput.push(number);
-    }
+    console.log('bytecode', bytecode);
+    console.log('bytecodeBuffer', bytecodeBuffer);
+    const bytecodeInput: Vec<BigNumberish> = [...bytecodeBuffer];
 
     await contract.functions
       .create_instance_with_configurables(
@@ -75,22 +67,13 @@ export async function getNewInstance(
 
 function buildConfigurables(
   offset: BigNumberish,
-  configValue: BigNumberish
+  configValue: number
 ): Vec<[BigNumberish, Vec<BigNumberish>]> {
   const myConfigurables: Vec<[BigNumberish, Vec<BigNumberish>]> = [];
   const data: Vec<BigNumberish> = [];
 
   // Assuming configValue is a single byte and we want to prepend it with seven 0 bytes
-  data.push(
-    new BN(0),
-    new BN(0),
-    new BN(0),
-    new BN(0),
-    new BN(0),
-    new BN(0),
-    new BN(0),
-    configValue
-  );
+  data.push(0, 0, 0, 0, 0, 0, 0, configValue);
   myConfigurables.push([offset, data]);
 
   return myConfigurables;

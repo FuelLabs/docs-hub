@@ -8,18 +8,12 @@
     },
     {
       "typeId": 1,
-      "type": "b256",
-      "components": null,
-      "typeParameters": null
-    },
-    {
-      "typeId": 2,
       "type": "bool",
       "components": null,
       "typeParameters": null
     },
     {
-      "typeId": 3,
+      "typeId": 2,
       "type": "enum Error",
       "components": [
         {
@@ -36,7 +30,7 @@
       "typeParameters": null
     },
     {
-      "typeId": 4,
+      "typeId": 3,
       "type": "u64",
       "components": null,
       "typeParameters": null
@@ -48,7 +42,7 @@
       "name": "attack_success",
       "output": {
         "name": "",
-        "type": 2,
+        "type": 1,
         "typeArguments": null
       },
       "attributes": [
@@ -64,7 +58,7 @@
       "inputs": [
         {
           "name": "password",
-          "type": 1,
+          "type": 3,
           "typeArguments": null
         }
       ],
@@ -89,7 +83,7 @@
       "logId": 0,
       "loggedType": {
         "name": "",
-        "type": 4,
+        "type": 3,
         "typeArguments": null
       }
     },
@@ -97,7 +91,7 @@
       "logId": 1,
       "loggedType": {
         "name": "",
-        "type": 3,
+        "type": 2,
         "typeArguments": []
       }
     },
@@ -105,7 +99,7 @@
       "logId": 2,
       "loggedType": {
         "name": "",
-        "type": 3,
+        "type": 2,
         "typeArguments": []
       }
     }
@@ -116,10 +110,10 @@
       "name": "PASSWORD",
       "configurableType": {
         "name": "",
-        "type": 1,
+        "type": 3,
         "typeArguments": null
       },
-      "offset": 1288
+      "offset": 1220
     }
   ]
 }

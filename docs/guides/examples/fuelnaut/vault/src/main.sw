@@ -2,7 +2,7 @@ contract;
 
 abi MyContract {
     #[storage(write)]
-    fn unlock(password: b256);
+    fn unlock(password: u64);
 
     #[storage(read)]
     fn attack_success() -> bool;
@@ -13,7 +13,7 @@ storage {
 }
 
 configurable {
-    PASSWORD: b256 = 0x0000000000000000000000000000000000000000000000000000000000000000,
+    PASSWORD: u64 = 0,
 }
 
 enum Error {
@@ -23,9 +23,9 @@ enum Error {
 
 impl MyContract for Contract {
     #[storage(write)]
-    fn unlock(password: b256) {
+    fn unlock(password: u64) {
         require(
-            PASSWORD != 0x0000000000000000000000000000000000000000000000000000000000000000,
+            PASSWORD != 0,
             Error::PasswordNotSet,
         );
         require(PASSWORD == password, Error::WrongPassword);

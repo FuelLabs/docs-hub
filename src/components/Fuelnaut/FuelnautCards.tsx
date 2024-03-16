@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 import { useIsConnected, useWallet } from '@fuel-wallet/react';
 import ShowFuelnautLevels from './ShowFuelnautLevels';
 import { ConnectWallet } from '../ConnectWallet';
-// import Setup from './Setup';
+import Setup from './Setup';
 
 export function FuelnautCards() {
   const { isConnected } = useIsConnected();
@@ -23,15 +23,11 @@ export function FuelnautCards() {
     return null;
   }, [wallet, isConnected, FUELNAUT_CONTRACT_ID]);
 
-  console.log('WALLET:', wallet);
-  console.log('ISCONNECTED:', isConnected);
-  console.log('CONTRACT:', contract);
-
   return (
     <Box.Flex>
       {wallet && isConnected && contract ? (
         <div>
-          {/* <Setup contract={contract} wallet={wallet} /> */}
+          <Setup contract={contract} wallet={wallet} />
           <ShowFuelnautLevels contract={contract} />
         </div>
       ) : (

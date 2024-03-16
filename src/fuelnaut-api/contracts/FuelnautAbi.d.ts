@@ -4,9 +4,9 @@
 /* eslint-disable */
 
 /*
-  Fuels version: 0.76.0
-  Forc version: 0.51.1
-  Fuel-Core version: 0.22.1
+  Fuels version: 0.73.0
+  Forc version: 0.49.2
+  Fuel-Core version: 0.22.0
 */
 
 import type {
@@ -55,6 +55,7 @@ interface FuelnautAbiInterface extends Interface {
     my_constructor: FunctionFragment;
     owner: FunctionFragment;
     register_level: FunctionFragment;
+    test_instance_with_configurables: FunctionFragment;
     transfer_contract_ownership: FunctionFragment;
   };
 
@@ -69,6 +70,7 @@ interface FuelnautAbiInterface extends Interface {
   encodeFunctionData(functionFragment: 'my_constructor', values: []): Uint8Array;
   encodeFunctionData(functionFragment: 'owner', values: []): Uint8Array;
   encodeFunctionData(functionFragment: 'register_level', values: [string]): Uint8Array;
+  encodeFunctionData(functionFragment: 'test_instance_with_configurables', values: [Vec<[BigNumberish, Vec<BigNumberish>]>]): Uint8Array;
   encodeFunctionData(functionFragment: 'transfer_contract_ownership', values: [IdentityInput]): Uint8Array;
 
   decodeFunctionData(functionFragment: 'complete_instance', data: BytesLike): DecodedValue;
@@ -82,6 +84,7 @@ interface FuelnautAbiInterface extends Interface {
   decodeFunctionData(functionFragment: 'my_constructor', data: BytesLike): DecodedValue;
   decodeFunctionData(functionFragment: 'owner', data: BytesLike): DecodedValue;
   decodeFunctionData(functionFragment: 'register_level', data: BytesLike): DecodedValue;
+  decodeFunctionData(functionFragment: 'test_instance_with_configurables', data: BytesLike): DecodedValue;
   decodeFunctionData(functionFragment: 'transfer_contract_ownership', data: BytesLike): DecodedValue;
 }
 
@@ -99,6 +102,7 @@ export class FuelnautAbi extends Contract {
     my_constructor: InvokeFunction<[], void>;
     owner: InvokeFunction<[], StateOutput>;
     register_level: InvokeFunction<[bytecode_root: string], BN>;
+    test_instance_with_configurables: InvokeFunction<[configurables: Vec<[BigNumberish, Vec<BigNumberish>]>], void>;
     transfer_contract_ownership: InvokeFunction<[new_owner: IdentityInput], void>;
   };
 }

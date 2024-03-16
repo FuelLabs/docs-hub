@@ -330,6 +330,13 @@
       },
       "attributes": [
         {
+          "name": "storage",
+          "arguments": [
+            "read",
+            "write"
+          ]
+        },
+        {
           "name": "doc-comment",
           "arguments": [
             " this function takes the ContractId of a newly deployed instance"
@@ -357,13 +364,6 @@
           "name": "doc-comment",
           "arguments": [
             " the ContractId of the instance is verified to match the registered level bytecode"
-          ]
-        },
-        {
-          "name": "storage",
-          "arguments": [
-            "read",
-            "write"
           ]
         }
       ]
@@ -447,12 +447,6 @@
       },
       "attributes": [
         {
-          "name": "storage",
-          "arguments": [
-            "read"
-          ]
-        },
-        {
           "name": "doc-comment",
           "arguments": [
             " returns a vector of bool options representing the statuses of each level"
@@ -474,6 +468,12 @@
           "name": "doc-comment",
           "arguments": [
             " if the option is Some(false), the level has been started but not completed"
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read"
           ]
         }
       ]
@@ -642,6 +642,28 @@
     {
       "inputs": [
         {
+          "name": "configurables",
+          "type": 18,
+          "typeArguments": [
+            {
+              "name": "",
+              "type": 1,
+              "typeArguments": null
+            }
+          ]
+        }
+      ],
+      "name": "test_instance_with_configurables",
+      "output": {
+        "name": "",
+        "type": 0,
+        "typeArguments": null
+      },
+      "attributes": null
+    },
+    {
+      "inputs": [
+        {
           "name": "new_owner",
           "type": 7,
           "typeArguments": null
@@ -717,12 +739,20 @@
       "logId": 6,
       "loggedType": {
         "name": "",
+        "type": 19,
+        "typeArguments": null
+      }
+    },
+    {
+      "logId": 7,
+      "loggedType": {
+        "name": "",
         "type": 5,
         "typeArguments": []
       }
     },
     {
-      "logId": 7,
+      "logId": 8,
       "loggedType": {
         "name": "",
         "type": 16,

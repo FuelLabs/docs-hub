@@ -4,9 +4,9 @@
 /* eslint-disable */
 
 /*
-  Fuels version: 0.76.0
-  Forc version: 0.51.1
-  Fuel-Core version: 0.22.1
+  Fuels version: 0.73.0
+  Forc version: 0.49.2
+  Fuel-Core version: 0.22.0
 */
 
 import type {
@@ -26,7 +26,7 @@ export enum ErrorInput { PasswordNotSet = 'PasswordNotSet', WrongPassword = 'Wro
 export enum ErrorOutput { PasswordNotSet = 'PasswordNotSet', WrongPassword = 'WrongPassword' };
 
 export type VaultAbiConfigurables = {
-  PASSWORD: string;
+  PASSWORD: BigNumberish;
 };
 
 interface VaultAbiInterface extends Interface {
@@ -36,7 +36,7 @@ interface VaultAbiInterface extends Interface {
   };
 
   encodeFunctionData(functionFragment: 'attack_success', values: []): Uint8Array;
-  encodeFunctionData(functionFragment: 'unlock', values: [string]): Uint8Array;
+  encodeFunctionData(functionFragment: 'unlock', values: [BigNumberish]): Uint8Array;
 
   decodeFunctionData(functionFragment: 'attack_success', data: BytesLike): DecodedValue;
   decodeFunctionData(functionFragment: 'unlock', data: BytesLike): DecodedValue;
@@ -46,6 +46,6 @@ export class VaultAbi extends Contract {
   interface: VaultAbiInterface;
   functions: {
     attack_success: InvokeFunction<[], boolean>;
-    unlock: InvokeFunction<[password: string], void>;
+    unlock: InvokeFunction<[password: BigNumberish], void>;
   };
 }
