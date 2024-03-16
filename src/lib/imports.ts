@@ -6,7 +6,7 @@ import * as beta4GQLExamples from '~/docs/beta-4/fuel-graphql-docs/examples';
 import * as GQLExamples from '~/docs/fuel-graphql-docs/examples';
 import * as FuelExamples from '~/docs/fuels-wallet/packages/docs/examples';
 import * as nightlyGQLExamples from '~/docs/nightly/fuel-graphql-docs/examples';
-import * as nightlyFuelExamples from '~/docs/nightly/fuels-wallet/packages/docs/examples';
+// import * as nightlyFuelExamples from '~/docs/nightly/fuels-wallet/packages/docs/examples';
 import { TD, TH } from '~/src/components/Table';
 import TestAction from '~/src/components/TestAction';
 import { COMPONENTS as BETA_4_GQL_COMPONENTS } from '~/src/generated/components/beta-4-graphql';
@@ -32,7 +32,7 @@ export interface ComponentsObject {
     | typeof GQLExamples
     | typeof FuelExamples
     | typeof nightlyGQLExamples
-    | typeof nightlyFuelExamples
+    // | typeof nightlyFuelExamples
     | typeof beta4GQLExamples;
 }
 
@@ -60,7 +60,7 @@ export function getComponents(docSlug: string, versionSet: VersionSet) {
     components.th = TH;
 
     if (versionSet === 'nightly') {
-      components.Examples = nightlyFuelExamples;
+      // components.Examples = nightlyFuelExamples;
       addComponents(NIGHTLY_WALLET_COMPONENTS);
     } else if (versionSet === 'beta-4') {
       addComponents(BETA_4_WALLET_COMPONENTS);

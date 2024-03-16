@@ -10,10 +10,14 @@ const propToReplace = 'onPress';
 const replacementProp = 'onClick';
 
 const pattern = new RegExp(`\\b${propToReplace}\\s*=\\s*\\{([^}]+)\\}`, 'g');
+const removeExamplesPattern = /<Examples\.[^\s>]+(\s+[^>]+)?\/>/g;
 
 function replaceInFile(filePath) {
   const content = fs.readFileSync(filePath, 'utf8');
-  const newContent = content.replace(pattern, `${replacementProp}={$1}`);
+  let newContent = content.replace(pattern, `${replacementProp}={$1}`);
+  if (filePath.includes('/nightly/')) {
+    newContent = newContent.replace(removeExamplesPattern, '');
+  }
   fs.writeFileSync(filePath, newContent);
 }
 
