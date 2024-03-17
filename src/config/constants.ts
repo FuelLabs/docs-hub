@@ -80,6 +80,10 @@ export const NAVIGATION: any[] = [
         link: 'https://fuellabs.github.io/sway/master/std/',
       },
       {
+        name: 'Sway Standards (SRC20, Vault, Owner etc.)',
+        link: 'https://github.com/FuelLabs/sway-standards/',
+      },
+      {
         name: 'Sway Playground',
         link: 'https://sway-playground.org',
       },
