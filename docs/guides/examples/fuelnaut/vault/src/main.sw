@@ -24,10 +24,7 @@ enum Error {
 impl MyContract for Contract {
     #[storage(write)]
     fn unlock(password: u64) {
-        require(
-            PASSWORD != 0,
-            Error::PasswordNotSet,
-        );
+        require(PASSWORD != 0, Error::PasswordNotSet);
         require(PASSWORD == password, Error::WrongPassword);
         storage.locked.write(false);
     }

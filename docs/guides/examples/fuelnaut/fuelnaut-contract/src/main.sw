@@ -20,6 +20,7 @@ storage {
     registered_levels: StorageVec<b256> = StorageVec {},
     /// mapping of all of the level instances and if they have been completed (ContractId, bool) to their respective player addresses + the index of the level in registered_levels (Address, u64)
     instances: StorageMap<(Address, u64), (ContractId, bool)> = StorageMap::<(Address, u64), (ContractId, bool)> {},
+    verified_configurable_instances: StorageMap<ContractId, bool> = StorageMap::<ContractId, bool> {},
 }
 
 enum Error {
@@ -75,11 +76,7 @@ impl Fuelnaut for Contract {
         }
     }
 
-    fn test_instance_with_configurables(configurables: Vec<(u64, Vec<u8>)>) {
-        log(42);
-    }
-
-     #[storage(read, write)]
+    #[storage(read, write)]
     fn create_instance_with_configurables(instance: ContractId, level_id: u64, bytecode_input: Vec<u8>, configurables: Vec<(u64, Vec<u8>)>) {
         let sender = msg_sender().unwrap();
         if let Identity::Address(address) = sender {
@@ -89,9 +86,8 @@ impl Fuelnaut for Contract {
             // VERIFY THE INTANCE CONTRACT ID MATCHES THE BYTECODE & CONFIGURABLES
             verify_contract_bytecode_with_configurables(instance, bytecode, configurables);
 
-            // VERIFY BYTECODE ROOT MATCHES THE REGISTERED LEVEL
-            bytecode = swap_configurables(bytecode, configurables);
-            let computed_root = compute_bytecode_root(bytecode);
+            // // VERIFY BYTECODE ROOT MATCHES THE REGISTERED LEVEL
+            let computed_root = compute_bytecode_root(bytecode_input);
             require(registered_bytecode_root == computed_root, Error::InvalidBytecodeRoot);
            
             // store the instance
@@ -99,6 +95,13 @@ impl Fuelnaut for Contract {
         } else {
             revert(0);
         }
+    }
+
+    // #[storage(write)]
+    fn verify_instance_with_configurables(bytecode_input: Vec<u8>, configurables: Vec<(u64, Vec<u8>)>) {
+        let mut bytecode = bytecode_input;
+            // GET BYTECODE ROOT WITH CONFIGURABLES
+            let root = compute_bytecode_root_with_configurables(bytecode, configurables);
     }
 
     #[storage(read, write)]
@@ -162,7 +165,7 @@ impl Fuelnaut for Contract {
     fn my_constructor() {
         let sender = msg_sender().unwrap();
        match sender {
-			Identity::Address(address) => initialize_ownership(sender),
+			Identity::Address => initialize_ownership(sender),
 			_ => revert(222),
 		};
     }

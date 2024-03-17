@@ -1,11 +1,11 @@
-import { BN } from 'fuels';
+import { bn } from 'fuels';
 
 export function getConfigurables(levelKey: string) {
   let configurableConstants = undefined;
   switch (levelKey) {
     case 'vault':
       configurableConstants = {
-        PASSWORD: 17,
+        PASSWORD: bn(17),
       };
       break;
     default:

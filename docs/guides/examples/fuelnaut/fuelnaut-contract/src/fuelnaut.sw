@@ -1,12 +1,10 @@
 library;
 
-use src5::{State};
-
-abi Fuelnaut {
+use src5::State;
+abi Fuelnaut
+ {
     fn get_bytecode_root(id: ContractId) -> b256;
 
-   fn test_instance_with_configurables(configurables: Vec<(u64, Vec<u8>)>);
-   
     #[storage(read, write)]
     fn register_level(bytecode_root: b256) -> u64;
 
@@ -14,7 +12,15 @@ abi Fuelnaut {
     fn create_instance(instance: ContractId, level_id: u64);
 
     #[storage(read, write)]
-    fn create_instance_with_configurables(instance: ContractId, level_id: u64, bytecode_input: Vec<u8>, configurables: Vec<(u64, Vec<u8>)>);
+    fn create_instance_with_configurables(
+        instance: ContractId,
+        level_id: u64,
+        bytecode_input: Vec<u8>,
+        configurables: Vec<(u64, Vec<u8>)>
+    );
+
+    // #[storage(write)]
+    fn verify_instance_with_configurables(bytecode_input: Vec<u8>, configurables: Vec<(u64, Vec<u8>)>);
 
     #[storage(read, write)]
     fn complete_instance(address: Address, level_id: u64);

@@ -29,7 +29,7 @@ storage {
 impl MyContract for Contract {
     #[payable, storage(write)]
     fn send_funds() {
-       let contract_balance = this_balance(BASE_ASSET_ID);
+        let contract_balance = this_balance(BASE_ASSET_ID);
         if contract_balance > 0 {
             storage.has_initial_funds.write(true);
         }
@@ -50,7 +50,7 @@ impl MyContract for Contract {
     }
 
     #[storage(read)]
-    fn attack_success() -> bool{
+    fn attack_success() -> bool {
         let intial_funds = storage.has_initial_funds.try_read().unwrap();
         require(intial_funds == true, 333);
         let contract_balance = this_balance(BASE_ASSET_ID);

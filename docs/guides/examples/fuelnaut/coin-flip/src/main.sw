@@ -1,11 +1,6 @@
 contract;
 
-use std::{
-    block::{
-    height,
-    block_header_hash,
-    },
-};
+use std::{block::{block_header_hash, height,},};
 
 abi MyContract {
     #[storage(read, write)]
@@ -39,9 +34,9 @@ impl MyContract for Contract {
 
         storage.last_height.write(current_height);
         let coin_flip = current_height * FACTOR;
-         log(coin_flip);
+        log(coin_flip);
         let result = coin_flip % 3;
-         log(result);
+        log(result);
         let side = if result == 1 { true } else { false };
 
         if side == guess {
@@ -55,7 +50,7 @@ impl MyContract for Contract {
     }
 
     #[storage(read)]
-    fn attack_success() -> bool{
+    fn attack_success() -> bool {
         let consecutive_wins = storage.consecutive_wins.read();
         require(consecutive_wins > 9, Error::HasNotWon(consecutive_wins));
         true
