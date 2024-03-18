@@ -17,15 +17,15 @@ export async function getNewInstance(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const thisWindow = window as any;
   const configurableConstants = getConfigurables(level.key);
-  // const newInstance = await deployNewInstance(
-  //   wallet,
-  //   bytecode,
-  //   abiJSON,
-  //   configurableConstants
-  // );
-  // const instanceId: ContractIdInput = {
-  //   value: newInstance.id.toB256(),
-  // };
+  const newInstance = await deployNewInstance(
+    wallet,
+    bytecode,
+    abiJSON,
+    configurableConstants
+  );
+  const instanceId: ContractIdInput = {
+    value: newInstance.id.toB256(),
+  };
   if (level.hasConfigurables && configurableConstants) {
     console.log('HAS CONFIGURABLES');
     const configurableInputs = buildConfigurables(
@@ -33,34 +33,26 @@ export async function getNewInstance(
       configurableConstants.PASSWORD
     );
     const bytecodeBuffer = Buffer.from(bytecode, 'base64');
-
     const bytecodeInput: Vec<BigNumberish> = [...bytecodeBuffer];
 
-    console.log('CALLING VERIFY INSTANCE WITH CONFIGURABLES...');
+    console.log('CALLING CREATE INSTANCE WITH CONFIGURABLES...');
 
     await contract.functions
-      .verify_instance_with_configurables(bytecodeInput, configurableInputs)
-      .txParams({ gasPrice: 1, gasLimit: 3_000_000 })
-      .simulate();
-
-    // console.log('CALLING CREATE INSTANCE WITH CONFIGURABLES...');
-
-    // await contract.functions
-    //   .create_instance_with_configurables(
-    //     instanceId,
-    //     level.index,
-    //     bytecodeInput,
-    //     configurableInputs
-    //   )
-    //   .txParams({ gasPrice: 1, gasLimit: 1_000_000 })
-    //   .call();
+      .create_instance_with_configurables(
+        instanceId,
+        level.index,
+        bytecodeInput,
+        configurableInputs
+      )
+      .txParams({ gasPrice: 1, gasLimit: 1_000_000 })
+      .call();
   } else {
-    // await contract.functions
-    //   .create_instance(instanceId, level.index)
-    //   .txParams({ gasPrice: 1, gasLimit: 8_000_000 })
-    //   .call();
+    await contract.functions
+      .create_instance(instanceId, level.index)
+      .txParams({ gasPrice: 1, gasLimit: 1_000_000 })
+      .call();
   }
-  // thisWindow.instance = newInstance;
+  thisWindow.instance = newInstance;
 }
 
 // "configurables": [

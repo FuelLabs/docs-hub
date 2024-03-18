@@ -14,6 +14,8 @@ export function FuelnautCard({ link, title, status }: FuelnautCardProps) {
         <FuelCard.Body>
           <div>{title}</div>
 
+          {status === null && <p>🚫 Not Registered</p>}
+
           {status === undefined && <p>🟠 Not Started</p>}
 
           {status === false && <p>🔵 Started</p>}

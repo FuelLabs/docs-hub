@@ -22,7 +22,7 @@ export const isDev =
 
 export const FUELNAUT_CONTRACT_ID = isDev
   ? contractsIds.fuelnaut
-  : '0x0738d0c30a3473e5a21910b6bcac66cdc9f84c8842c0b7e15ed346b2c32f6bcb';
+  : '0x92c37efb9dac2e28332cbdf59d394bca992e3b6c719c4e346e71368a954149a8';
 
 export const LEVELS_CONFIG: FuelnautLevelsConfig = {
   payback: {

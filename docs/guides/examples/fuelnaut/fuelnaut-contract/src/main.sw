@@ -100,8 +100,9 @@ impl Fuelnaut for Contract {
     // #[storage(write)]
     fn verify_instance_with_configurables(bytecode_input: Vec<u8>, configurables: Vec<(u64, Vec<u8>)>) {
         let mut bytecode = bytecode_input;
-            // GET BYTECODE ROOT WITH CONFIGURABLES
-            let root = compute_bytecode_root_with_configurables(bytecode, configurables);
+        // GET BYTECODE ROOT WITH CONFIGURABLES
+        let root = compute_bytecode_root_with_configurables(bytecode, configurables);
+        log(root);
     }
 
     #[storage(read, write)]
