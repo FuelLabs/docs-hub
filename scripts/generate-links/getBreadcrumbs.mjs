@@ -10,7 +10,7 @@ export function getBreadcrumbs(
   splitSlug,
   shouldBeLowerCase,
   thisCategory,
-  label
+  label,
 ) {
   let breadcrumbs = [
     { label: isGuide ? 'Guides' : 'Docs', link: isGuide ? '/guides' : '/' },
@@ -38,7 +38,7 @@ export function getBreadcrumbs(
         splitSlug,
         shouldBeLowerCase,
         thisCategory,
-        i
+        i,
       );
     } else if (type === 'submenuItem') {
       breadcrumbs = handleSubmenuItemCrumb(
@@ -48,7 +48,7 @@ export function getBreadcrumbs(
         isBeta4,
         splitSlug,
         i,
-        shouldBeLowerCase
+        shouldBeLowerCase,
       );
     } else if (type === 'link') {
       breadcrumbs = handleLinkCrumb(
@@ -56,7 +56,7 @@ export function getBreadcrumbs(
         splitSlug,
         i,
         shouldBeLowerCase,
-        label
+        label,
       );
     }
   }
@@ -77,7 +77,7 @@ function handleSubmenuCrumb(
   splitSlug,
   shouldBeLowerCase,
   thisCategory,
-  i
+  i,
 ) {
   const breadcrumbs = initialBreadcrumbs;
   let l = hasIndex ? 1 : 2;
@@ -85,7 +85,7 @@ function handleSubmenuCrumb(
     l = l - 1;
   }
   if (!isGuide || splitSlug.length > 2) {
-    const link = '/' + splitSlug.slice(0, splitSlug.length - l).join('/');
+    const link = `/${splitSlug.slice(0, splitSlug.length - l).join('/')}`;
     breadcrumbs.push({
       label: editLabel(splitSlug[i], shouldBeLowerCase),
       link,
@@ -94,7 +94,7 @@ function handleSubmenuCrumb(
   if (!isGuide) {
     if (!hasIndex) {
       const i = isNightly || isBeta4 ? 3 : 2;
-      const link = '/' + splitSlug.slice(0, splitSlug.length - 1).join('/');
+      const link = `/${splitSlug.slice(0, splitSlug.length - 1).join('/')}`;
       breadcrumbs.push({
         label: editLabel(splitSlug[i], shouldBeLowerCase),
         link,
@@ -125,20 +125,20 @@ function handleSubmenuItemCrumb(
   isBeta4,
   splitSlug,
   i,
-  shouldBeLowerCase
+  shouldBeLowerCase,
 ) {
   const breadcrumbs = initialBreadcrumbs;
   const l = isGuide ? 2 : isNightly || isBeta4 ? 4 : 3;
   if (splitSlug.length > l) {
     const p = isGuide ? 1 : 2;
-    const link1 = '/' + splitSlug.slice(0, splitSlug.length - p).join('/');
+    const link1 = `/${splitSlug.slice(0, splitSlug.length - p).join('/')}`;
     breadcrumbs.push({
       label: editLabel(splitSlug[i], shouldBeLowerCase),
       link: link1,
     });
   }
   if (!isGuide) {
-    const link2 = '/' + splitSlug.slice(0, splitSlug.length - 1).join('/');
+    const link2 = `/${splitSlug.slice(0, splitSlug.length - 1).join('/')}`;
     let label;
     if (splitSlug.length < l + 1) {
       label = editLabel(splitSlug[i], shouldBeLowerCase);
@@ -157,7 +157,7 @@ function handleSubmenuItemCrumb(
 function handleLinkCrumb(initialBreadcrumbs, splitSlug, i, shouldBeLowerCase) {
   const breadcrumbs = initialBreadcrumbs;
   if (splitSlug.length > i + 1) {
-    const link = '/' + splitSlug.slice(0, splitSlug.length - 1).join('/');
+    const link = `/${splitSlug.slice(0, splitSlug.length - 1).join('/')}`;
     breadcrumbs.push({
       label: editLabel(splitSlug[i], shouldBeLowerCase),
       link,

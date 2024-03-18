@@ -1,5 +1,5 @@
 import { ThemeProvider } from '@fuel-ui/react';
-import { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 type ProviderProps = {
   children: ReactNode;

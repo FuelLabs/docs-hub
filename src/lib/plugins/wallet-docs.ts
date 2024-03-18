@@ -1,7 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { EOL } from 'os';
 
+// biome-ignore lint/suspicious/noExplicitAny:
 export function handleDemoComp(node: any) {
+  // biome-ignore lint/suspicious/noExplicitAny:
   const media = node.attributes.find((i: any) => i.name === 'media')?.value;
   const lines = media.value.split(EOL);
   const oldSrcs: string[] = [];
@@ -34,15 +35,17 @@ export function handleDemoComp(node: any) {
 
   const elements =
     node.attributes[0].value.data.estree.body[0].expression.elements;
+  // biome-ignore lint/suspicious/noExplicitAny:
   elements.forEach((el: any, i: number) => {
     const props = el.properties;
+    // biome-ignore lint/suspicious/noExplicitAny:
     const newProps = props.map((property: any) => {
       if (property.key.name === 'src') {
         if (oldSrcs.length === apiPaths.length) {
           oldSrcs.forEach((src, i) => {
             property.value.value = property.value.value.replace(
               src,
-              apiPaths[i]
+              apiPaths[i],
             );
             property.value.raw = property.value.raw.replace(src, apiPaths[i]);
           });
@@ -57,6 +60,7 @@ export function handleDemoComp(node: any) {
   return [elements, old];
 }
 
+// biome-ignore lint/suspicious/noExplicitAny:
 export function handleWalletImages(node: any) {
   let paths = node.url.split('/');
   paths.shift();
@@ -65,7 +69,9 @@ export function handleWalletImages(node: any) {
   return imagePath;
 }
 
+// biome-ignore lint/suspicious/noExplicitAny:
 export function handlePlayerComp(node: any) {
+  // biome-ignore lint/suspicious/noExplicitAny:
   const src = node.attributes.find((i: any) => i.name === 'src')?.value;
   let paths = src.split('/');
   paths.shift();

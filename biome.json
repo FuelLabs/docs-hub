@@ -1,0 +1,77 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.6.1/schema.json",
+  "organizeImports": {
+    "enabled": true
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 80
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "style": {
+        "noNonNullAssertion": "off",
+        "useNodejsImportProtocol": "off"
+      },
+      "suspicious": {
+        "noExplicitAny": "warn",
+        "noImplicitAnyLet": "warn",
+        "noArrayIndexKey": "off",
+        "noConfusingVoidType": "off",
+        "noSelfCompare": "off"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "off"
+      },
+      "complexity": {
+        "noStaticOnlyClass": "off",
+        "noForEach": "off",
+        "noBannedTypes": "off"
+      },
+      "performance": {
+        "noAccumulatingSpread": "off"
+      },
+      "a11y": {
+        "noSvgWithoutTitle": "off"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single"
+    }
+  },
+  "json": {
+    "parser": {
+      "allowTrailingCommas": true
+    }
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "ignore": [
+      "docs",
+      "public",
+      ".contentlayer",
+      ".github",
+      ".husky",
+      ".next",
+      ".vscode",
+      "src/generated",
+      "*.html",
+      "guide-examples",
+      "dist",
+      "**/node_modules",
+      "pnpm-lock.yaml",
+      "./next.config.js"
+    ]
+  }
+}

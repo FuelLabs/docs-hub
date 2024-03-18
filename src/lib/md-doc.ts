@@ -1,15 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { readFileSync } from 'fs';
+import { join } from 'path';
 import { compile } from '@mdx-js/mdx';
 import { addRawDocumentToVFile } from 'contentlayer/core';
 import type { MdDoc } from 'contentlayer/generated';
-import { readFileSync } from 'fs';
-import { join } from 'path';
+import { codeExamples as beta4CodeExamples } from '~/docs/beta-4/fuel-graphql-docs/src/lib/code-examples';
+import { codeImport as beta4WalletCodeImport } from '~/docs/beta-4/fuels-wallet/packages/docs/src/lib/code-import';
 import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
 import { codeImport as walletCodeImport } from '~/docs/fuels-wallet/packages/docs/src/lib/code-import';
 import { codeExamples as nightlyCodeExamples } from '~/docs/nightly/fuel-graphql-docs/src/lib/code-examples';
-import { codeExamples as beta4CodeExamples } from '~/docs/beta-4/fuel-graphql-docs/src/lib/code-examples';
 import { codeImport as nightlyWalletCodeImport } from '~/docs/nightly/fuels-wallet/packages/docs/src/lib/code-import';
-import { codeImport as beta4WalletCodeImport } from '~/docs/beta-4/fuels-wallet/packages/docs/src/lib/code-import';
 import { codeImport } from '~/src/lib/plugins/code-import';
 import { textImport } from '~/src/lib/plugins/text-import';
 
@@ -61,7 +60,7 @@ export class Doc {
     const splitPath = item._raw.flattenedPath.split('/');
     splitPath.splice(0, 2);
     splitPath.pop();
-    const actualPath = '/tree/master/' + splitPath.join('/');
+    const actualPath = `/tree/master/${splitPath.join('/')}`;
     const pageLink = `${config.repository}${actualPath}`;
 
     this.md = item;
@@ -105,20 +104,20 @@ export class Doc {
   }
 
   #getConfig(slug: string): Config {
-    slug = slug
+    let newSlug = slug
       .replace('docs/nightly/', 'docs/')
       .replace('docs/beta-4/', 'docs/');
     try {
-      if (slug.startsWith('docs/')) {
-        slug = slug.replace('docs/', '');
+      if (newSlug.startsWith('docs/')) {
+        newSlug = newSlug.replace('docs/', '');
       }
-      if (slug.startsWith('.')) {
-        slug = slug.split('/')[1].replace('.md', '');
+      if (newSlug.startsWith('.')) {
+        newSlug = newSlug.split('/')[1].replace('.md', '');
       }
-      if (slug.includes('/')) {
-        slug = slug.split('/')[0];
+      if (newSlug.includes('/')) {
+        newSlug = newSlug.split('/')[0];
       }
-      return configFile[slug];
+      return configFile[newSlug];
     } catch (e) {
       throw new Error(`${slug} docs.json not found`);
     }
@@ -166,7 +165,7 @@ export class Doc {
     let guideName = this.item.slug.split('/')[0];
     const linksPath = join(
       DOCS_DIRECTORY,
-      `../src/generated/sidebar-links/${configSlug}.json`
+      `../src/generated/sidebar-links/${configSlug}.json`,
     );
     const links = JSON.parse(readFileSync(linksPath, 'utf8'));
     if (
@@ -200,11 +199,13 @@ export class Doc {
       if (link.submenu) {
         for (const subItem of link.submenu) {
           const newItem = subItem;
+          // biome-ignore lint/style/noCommaOperator:
           (newItem.slug = this.#parseSlug(subItem.slug) ?? subItem.slug),
             result.push(newItem);
         }
       } else {
         const newItem = link;
+        // biome-ignore lint/style/noCommaOperator:
         (newItem.slug = this.#parseSlug(link.slug) ?? link.slug),
           result.push(newItem);
       }
@@ -226,12 +227,12 @@ export class Doc {
 
   #parseSlug(slug?: string) {
     if (!slug) return null;
-    slug = slug.replace('../', '');
-    slug = slug.startsWith('./') ? slug.slice(2) : slug;
-    if (slug.endsWith('/index')) {
-      slug = slug.replace('/index', '');
+    let newSlug = slug.replace('../', '');
+    newSlug = newSlug.startsWith('./') ? newSlug.slice(2) : newSlug;
+    if (newSlug.endsWith('/index')) {
+      newSlug = newSlug.replace('/index', '');
     }
-    return slug;
+    return newSlug;
   }
 
   #createUrl(slug: string) {
@@ -245,21 +246,29 @@ export class Doc {
     const slug = this.md.slug;
 
     if (slug.startsWith('docs/wallet/')) {
+      // biome-ignore lint/suspicious/noExplicitAny:
       plugins = plugins.concat([[walletCodeImport, { filepath }] as any]);
     } else if (slug.startsWith('docs/nightly/wallet/')) {
       plugins = plugins.concat([
+        // biome-ignore lint/suspicious/noExplicitAny:
         [nightlyWalletCodeImport, { filepath }] as any,
       ]);
     } else if (slug.startsWith('docs/beta-4/wallet/')) {
+      // biome-ignore lint/suspicious/noExplicitAny:
       plugins = plugins.concat([[beta4WalletCodeImport, { filepath }] as any]);
     } else if (slug.startsWith('docs/graphql/')) {
+      // biome-ignore lint/suspicious/noExplicitAny:
       plugins = plugins.concat([[codeExamples, { filepath }] as any]);
     } else if (slug.startsWith('docs/nightly/graphql/')) {
+      // biome-ignore lint/suspicious/noExplicitAny:
       plugins = plugins.concat([[nightlyCodeExamples, { filepath }] as any]);
     } else if (slug.startsWith('docs/beta-4/graphql/')) {
+      // biome-ignore lint/suspicious/noExplicitAny:
       plugins = plugins.concat([[beta4CodeExamples, { filepath }] as any]);
     } else if (slug.includes('guides') || slug.includes('/intro/')) {
+      // biome-ignore lint/suspicious/noExplicitAny:
       plugins = plugins.concat([[codeImport, { filepath }] as any]);
+      // biome-ignore lint/suspicious/noExplicitAny:
       plugins = plugins.concat([[textImport, { filepath }] as any]);
     }
 

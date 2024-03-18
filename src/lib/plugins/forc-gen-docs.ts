@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-import { NodeHtmlMarkdown } from 'node-html-markdown';
 import fs from 'node:fs';
 import { EOL } from 'os';
 import path from 'path';
+import { NodeHtmlMarkdown } from 'node-html-markdown';
 import remarkParse from 'remark-parse';
 import { unified } from 'unified';
 import type { VersionSet } from '~/src/types';
@@ -21,11 +19,13 @@ let thisFilePath = '';
 
 // this only works for the sway generated docs
 export function handleForcGenDocs(
+  // biome-ignore lint/suspicious/noExplicitAny:
   node: any,
   filepath: string,
-  rootDir: string
+  rootDir: string,
 ) {
   thisFilePath = filepath;
+  // biome-ignore lint/suspicious/noImplicitAnyLet:
   let child;
   if (thisFilePath.endsWith('commands/index.md')) {
     child = { value: 'index' };
@@ -33,12 +33,15 @@ export function handleForcGenDocs(
     child = node.children[0].children[0];
   }
 
+  // biome-ignore lint/suspicious/noExplicitAny:
   const newTree = transformContent(child, rootDir) as any;
   if (newTree === null) {
     return null;
   }
   const slug = child.value.replace(' ', '-');
+  // biome-ignore lint/suspicious/noExplicitAny:
   const children = newTree.children as any[];
+  // biome-ignore lint/suspicious/noExplicitAny:
   const newTreeChildren = children.map((n: any) => {
     n.data = { hProperties: { id: slug }, id: slug };
     return n;
@@ -46,6 +49,7 @@ export function handleForcGenDocs(
   return newTreeChildren;
 }
 
+// biome-ignore lint/suspicious/noExplicitAny:
 function transformContent(node: any, rootDir: string) {
   const fileName = node.value;
   const filePathName = fileName.replace(' ', '_').concat('.html');
@@ -74,7 +78,7 @@ function transformContent(node: any, rootDir: string) {
   if (!fs.existsSync(fileAbsPath)) {
     fileAbsPath = path.resolve(
       path.join(rootDir, `${swayBuildFilePath}/plugins/forc_client/`),
-      filePathName
+      filePathName,
     );
   }
   const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
@@ -115,7 +119,7 @@ function getBuildFileAST(content: string) {
     /* html */ newLines.join('\n'),
     /* options (optional) */ {},
     /* customTranslators (optional) */ undefined,
-    /* customCodeBlockTranslators (optional) */ undefined
+    /* customCodeBlockTranslators (optional) */ undefined,
   );
   const processor = unified().use(remarkParse);
 

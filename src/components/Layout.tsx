@@ -2,7 +2,7 @@ import { cssObj } from '@fuel-ui/css';
 import { Box, Grid } from '@fuel-ui/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useRef, type ReactNode, useEffect } from 'react';
+import { type ReactNode, useEffect, useRef } from 'react';
 
 import type { Config, NavOrder, VersionSet, Versions } from '../types';
 
@@ -82,10 +82,7 @@ export function Layout({
               : '/images/Fuel_Network.png'
           }
         />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0"
-        ></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <Box css={styles.root}>
         <Grid data-clean={Boolean(isClean)} css={styles.grid}>

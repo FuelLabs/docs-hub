@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { Root } from 'remark-gfm';
@@ -9,15 +8,17 @@ import { DOCS_DIRECTORY } from '../../config/constants';
 import type { DuplicateAPIItem } from '../ts-api';
 import { getTSAPIDuplicates } from '../ts-api';
 
-const configPath = join(DOCS_DIRECTORY, `../src/config/paths.json`);
+const configPath = join(DOCS_DIRECTORY, '../src/config/paths.json');
 const pathsConfig = JSON.parse(readFileSync(configPath, 'utf8'));
 
 export function handleLinks(
+  // biome-ignore lint/suspicious/noExplicitAny:
   node: any,
   dirname: string,
   idx?: number | null,
+  // biome-ignore lint/suspicious/noExplicitAny:
   parent?: Parent<any, any>,
-  tree?: Root
+  tree?: Root,
 ) {
   let newUrl: string | null = null;
   let base = dirname.split('/').splice(0, 2).join('/');
@@ -70,22 +71,24 @@ function handleTSLinks(url: string | null, versionSet: VersionSet) {
       if (newUrl?.startsWith(item.path.toLowerCase())) {
         newUrl = newUrl.replace(
           item.originalCategory.toLowerCase(),
-          item.newCategory.toLowerCase()
+          item.newCategory.toLowerCase(),
         );
       }
     });
   }
 
-  if (newUrl && newUrl.startsWith('/api/')) {
+  if (newUrl?.startsWith('/api/')) {
     newUrl = newUrl.replace(
       '/api/',
-      `/docs/${versionSet === 'default' ? '' : `/${versionSet}`}/fuels-ts/`
+      `/docs/${versionSet === 'default' ? '' : `/${versionSet}`}/fuels-ts/`,
     );
   }
   return newUrl;
 }
 
+// biome-ignore lint/suspicious/noExplicitAny:
 function getNewUrl(node: any, dirname: string, versionSet: VersionSet) {
+  // biome-ignore lint/suspicious/noImplicitAnyLet:
   let newUrl;
   newUrl = node.url
     .replace('.md', '')
@@ -93,7 +96,7 @@ function getNewUrl(node: any, dirname: string, versionSet: VersionSet) {
     .replace('.html', '')
     .toLowerCase();
 
-  const configPath = join(DOCS_DIRECTORY, `../src/config/paths.json`);
+  const configPath = join(DOCS_DIRECTORY, '../src/config/paths.json');
   const pathsConfig = JSON.parse(readFileSync(configPath, 'utf8'));
 
   let dir = dirname;
@@ -111,7 +114,7 @@ function getNewUrl(node: any, dirname: string, versionSet: VersionSet) {
   if (node.url.startsWith('./') && !node.url.includes('index')) {
     newUrl = `/${dir.endsWith('/') ? dir : `${dir}/`}${newUrl!.replace(
       './',
-      ''
+      '',
     )}`;
   }
   if (/^[a-zA-Z]/.test(node.url)) {
@@ -142,7 +145,7 @@ function getNewUrl(node: any, dirname: string, versionSet: VersionSet) {
       '/docs/dev/getting-started',
       versionSet === 'default'
         ? '/docs/wallet/dev/getting-started'
-        : `/docs/${versionSet}/wallet/dev/getting-started`
+        : `/docs/${versionSet}/wallet/dev/getting-started`,
     )
     .replace('/api/interfaces/index', '/api/interfaces/');
 
@@ -153,7 +156,7 @@ function getNewUrl(node: any, dirname: string, versionSet: VersionSet) {
   if (newUrl.startsWith('@repository')) {
     newUrl = newUrl.replace(
       '@repository',
-      'https://github.com/FuelLabs/fuels-wallet/blob/master'
+      'https://github.com/FuelLabs/fuels-wallet/blob/master',
     );
   }
 
@@ -184,11 +187,13 @@ function getTSUrl(input: string): { [key: string]: string } {
 }
 
 function handleHTMLLink(
+  // biome-ignore lint/suspicious/noExplicitAny:
   node: any,
   base: string,
   idx?: number | null,
+  // biome-ignore lint/suspicious/noExplicitAny:
   parent?: Parent<any, any>,
-  tree?: Root
+  tree?: Root,
 ) {
   let url = getUrl(node.value);
   if (url) {
@@ -211,6 +216,7 @@ function handleHTMLLink(
     idx !== undefined &&
     idx !== null
   ) {
+    // biome-ignore lint/suspicious/noExplicitAny:
     const scriptString = tree?.children[0] as any;
     const newURLs = getTSUrl(scriptString.value);
 
@@ -226,8 +232,9 @@ function handleNewURLs(
   },
   url: string,
   idx: number,
+  // biome-ignore lint/suspicious/noExplicitAny:
   parent: Parent<any, any>,
-  base: string
+  base: string,
 ) {
   let newURL = newURLs[url];
   if (newURL) {
@@ -247,6 +254,7 @@ function handleNewURLs(
         },
       ],
     };
+    // biome-ignore lint/suspicious/noExplicitAny:
     parent.children.forEach((child: any) => {
       if (child.type === 'html' && child.value === '</a>') {
         child.type = 'text';
@@ -259,53 +267,54 @@ function handleNewURLs(
 }
 
 function replaceInternalLinks(href: string, base: string) {
+  let newHref = href;
   if (
-    href.startsWith('https://fuellabs.github.io') &&
-    !href.includes('fuellabs.github.io/block-explorer-v2') &&
-    !href.startsWith('https://fuellabs.github.io/sway/master/std/') &&
-    !href.includes('LICENSE')
+    newHref.startsWith('https://fuellabs.github.io') &&
+    !newHref.includes('fuellabs.github.io/block-explorer-v2') &&
+    !newHref.startsWith('https://fuellabs.github.io/sway/master/std/') &&
+    !newHref.includes('LICENSE')
   ) {
-    href = href
+    newHref = newHref
       .replace('https://fuellabs.github.io', '')
       .replace('/master/', '/')
       .replace('.html', '');
-    href = `/docs${href}`;
+    newHref = `/docs${newHref}`;
 
-    const isSwayVersion = href.match(/sway\/(v.+)\/forc/);
+    const isSwayVersion = newHref.match(/sway\/(v.+)\/forc/);
     if (isSwayVersion) {
       const version = isSwayVersion[1];
-      href = href.replace(`sway/${version}/forc`, 'forc');
+      newHref = newHref.replace(`sway/${version}/forc`, 'forc');
     }
   }
 
-  if (href.startsWith('../')) {
-    href = href.replace('../', `/${base}/`);
-  } else if (href.startsWith('./../')) {
-    href = href.replace('./../', `/${base}/`);
-  } else if (href.startsWith('./')) {
-    href = href.replace('./', `/${base}/`);
+  if (newHref.startsWith('../')) {
+    newHref = newHref.replace('../', `/${base}/`);
+  } else if (newHref.startsWith('./../')) {
+    newHref = newHref.replace('./../', `/${base}/`);
+  } else if (newHref.startsWith('./')) {
+    newHref = newHref.replace('./', `/${base}/`);
   }
 
-  href = href
+  newHref = newHref
     .replace(/\/index$/, '/')
     .replace('sway/book/', 'sway/')
     .replace('sway/forc/', 'forc/')
     .replace(/\/v\d+\.\d+\.\d+\//, '/')
     .replace('specs/vm', 'specs/fuel-vm');
 
-  if (!href.endsWith('/forc/plugins/forc_client/')) {
-    href = href.replace('/forc/plugins/forc_client/', '/forc/plugins/');
+  if (!newHref.endsWith('/forc/plugins/forc_client/')) {
+    newHref = newHref.replace('/forc/plugins/forc_client/', '/forc/plugins/');
   }
 
   // TODO: fix this at source
-  href = href
+  newHref = newHref
     .replace(
       'docs/fuel-docs/quickstart/developer-quickstart',
-      'guides/quickstart/'
+      'guides/quickstart/',
     )
     .replace(
       'https://fuelbook.fuel.network/master/quickstart/developer-quickstart.html',
-      'guides/quickstart/'
+      'guides/quickstart/',
     )
     .replace('specs/fuel-vm/instruction_set', 'specs/fuel-vm/instruction-set')
     .replace('specs/protocol/tx_format', 'specs/tx-format/')
@@ -316,32 +325,38 @@ function replaceInternalLinks(href: string, base: string) {
     .replace('standards/src_5', 'standards/src5-ownership')
     .replace('/index#', '#');
 
-  if (href.startsWith('/docs/')) {
-    href = href.replace('/docs/', 'docs/');
+  if (newHref.startsWith('/docs/')) {
+    newHref = newHref.replace('/docs/', 'docs/');
   }
 
-  if (href.includes('github.com/FuelLabs/fuels-ts')) {
-    href = href.replace('/packages/api/', '/packages/interfaces/');
+  if (newHref.includes('github.com/FuelLabs/fuels-ts')) {
+    newHref = newHref.replace('/packages/api/', '/packages/interfaces/');
   }
 
   if (
-    !href.includes('soliditylang.org/en/latest/') &&
-    !href.includes('soliditylang.org/en/v0')
+    !newHref.includes('soliditylang.org/en/latest/') &&
+    !newHref.includes('soliditylang.org/en/v0')
   ) {
-    href = href.replace('soliditylang.org/en/', 'soliditylang.org/en/latest/');
+    newHref = newHref.replace(
+      'soliditylang.org/en/',
+      'soliditylang.org/en/latest/',
+    );
   }
 
   if (
-    href ===
+    newHref ===
     'https://github.com/FuelLabs/fuels-wallet/blob/master/packages/config/'
   ) {
-    href =
+    newHref =
       'https://github.com/FuelLabs/fuels-wallet/blob/master/packages/sdk/src/config.ts';
   }
 
-  if (!href.includes('github.com/FuelLabs') && !href.includes('docs.rs')) {
-    href = href.replace('/fuel-specs', '/specs');
+  if (
+    !newHref.includes('github.com/FuelLabs') &&
+    !newHref.includes('docs.rs')
+  ) {
+    newHref = newHref.replace('/fuel-specs', '/specs');
   }
 
-  return href;
+  return newHref;
 }

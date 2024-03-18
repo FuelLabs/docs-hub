@@ -3,9 +3,9 @@ import { join } from 'path';
 import toml from 'toml';
 
 import {
+  BETA_4_DOCS_DIRECTORY,
   DOCS_DIRECTORY,
   NIGHTLY_DOCS_DIRECTORY,
-  BETA_4_DOCS_DIRECTORY,
 } from '../config/constants';
 import type { VersionSet } from '../types';
 
@@ -18,11 +18,11 @@ function itemFromPackageJson(docsDir: string, filename: string) {
 function getWalletVersion(docsDir: string) {
   const { homepage } = itemFromPackageJson(
     docsDir,
-    'fuels-wallet/package.json'
+    'fuels-wallet/package.json',
   );
   const json = itemFromPackageJson(
     docsDir,
-    'fuels-wallet/packages/sdk/package.json'
+    'fuels-wallet/packages/sdk/package.json',
   );
   return {
     name: 'fuels-wallet',
@@ -36,7 +36,7 @@ function getTSSDKVersion(docsDir: string) {
   const { homepage } = itemFromPackageJson(docsDir, 'fuels-ts/package.json');
   const json = itemFromPackageJson(
     docsDir,
-    'fuels-ts/packages/fuels/package.json'
+    'fuels-ts/packages/fuels/package.json',
   );
   return {
     name: 'fuels-ts',

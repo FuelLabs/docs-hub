@@ -1,11 +1,11 @@
 import { cssObj } from '@fuel-ui/css';
 import {
-  Text,
   Box,
-  Icon,
-  Link as FuelLink,
   Button,
+  Link as FuelLink,
   Grid,
+  Icon,
+  Text,
 } from '@fuel-ui/react';
 import NextLink from 'next/link';
 import { useDocContext } from '~/src/hooks/useDocContext';

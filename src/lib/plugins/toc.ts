@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { headingRank } from 'hast-util-heading-rank';
-import { toString } from 'hast-util-to-string';
+import { toString as hastToString } from 'hast-util-to-string';
 import { visit } from 'unist-util-visit';
 import type { NodeHeading } from '~/src/types';
 
@@ -11,6 +10,7 @@ export function rehypeExtractHeadings({
   headings: NodeHeading[];
   slug: string;
 }) {
+  // biome-ignore lint/suspicious/noExplicitAny:
   return () => (tree: any) => {
     visit(tree, 'element', (node) => {
       node.properties['data-nightly'] = slug.includes('/nightly');
@@ -26,7 +26,7 @@ export function rehypeExtractHeadings({
       }
       if (rank === 2 && node?.type === 'element') {
         headings.push({
-          title: toString(node),
+          title: hastToString(node),
           id: node.properties.id?.toString(),
         });
       }
@@ -35,7 +35,7 @@ export function rehypeExtractHeadings({
         if (last) {
           last.children = last?.children || [];
           last.children.push({
-            title: toString(node),
+            title: hastToString(node),
             id: node.properties.id.toString(),
           });
         }
