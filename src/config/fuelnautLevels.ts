@@ -43,13 +43,13 @@ export const LEVELS_CONFIG: FuelnautLevelsConfig = {
       : '0x9800989ac8a30b168e1a5629ad2b21fedfcfd0424d2031138e7bfcb4e98c0d7a',
     hasConfigurables: false,
   },
-  vault: {
-    key: 'vault',
-    title: 'Vault',
-    index: 2,
-    contractId: isDev
-      ? contractsIds.vault
-      : '0x1d32d3683bedf8d956ec2f52e8baea058292494866a418e991d917fec552126c',
-    hasConfigurables: true,
-  },
+  // vault: {
+  //   key: 'vault',
+  //   title: 'Vault',
+  //   index: 2,
+  //   contractId: isDev
+  //     ? contractsIds.vault
+  //     : '0x1d32d3683bedf8d956ec2f52e8baea058292494866a418e991d917fec552126c',
+  //   hasConfigurables: true,
+  // },
 };
