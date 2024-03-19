@@ -104,9 +104,6 @@ function getNewUrl(node: any, dirname: string, versionSet: VersionSet) {
     .replace(".html", "")
     .toLowerCase();
 
-  const configPath = join(DOCS_DIRECTORY, "../src/config/paths.json");
-  const pathsConfig = JSON.parse(readFileSync(configPath, "utf8"));
-
   let dir = dirname;
   Object.keys(pathsConfig).forEach((key) => {
     dir = dir.replaceAll(key, pathsConfig[key]);
@@ -251,10 +248,10 @@ function handleNewURLs(
     for (const [key, value] of Object.entries(pathsConfig)) {
       newURL = newURL.replaceAll(key, value as string);
     }
-    if (!newURL.includes("docs.fuel.network")) {
-      newURL = newURL.replace("/docs/", "/");
-    } else {
-      newURL = newURL.replace("fuel.network/sway/", "fuel.network/docs/sway");
+    if (newURL.includes("docs.fuel.network")) {
+      newURL = newURL
+        .replace("fuel.network/forc", "fuel.network/docs/forc")
+        .replace("fuel.network/sway/", "fuel.network/docs/sway");
     }
     const value = parent.children[idx + 1].value;
     parent.children[idx] = {
