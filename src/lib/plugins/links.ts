@@ -7,6 +7,7 @@ import type { VersionSet } from "~/src/types";
 import { DOCS_DIRECTORY } from "../../config/constants";
 import type { DuplicateAPIItem } from "../ts-api";
 import { getTSAPIDuplicates } from "../ts-api";
+import getDocVersion from "../versions";
 
 const configPath = join(DOCS_DIRECTORY, "../src/config/paths.json");
 const pathsConfig = JSON.parse(readFileSync(configPath, "utf8"));
@@ -57,6 +58,21 @@ export function handleLinks(
       (newUrl.startsWith("docs/") || newUrl.startsWith("/docs/"))
     ) {
       newUrl = newUrl.replace("docs/", "docs/beta-4/");
+    }
+
+    if (newUrl.includes("github.com/FuelLabs/")) {
+      // TODO: REMOVE THIS ONCE FIXED IN SOURCE
+      newUrl = newUrl.replace(
+        "fuels-wallet/blob/master/packages/sdk/src/config.ts",
+        "fuels-wallet"
+      );
+
+      const version = getDocVersion(newUrl, versionSet);
+      if (version !== "master") {
+        newUrl = newUrl
+          .replace("/tree/master/", `/tree/${version}/`)
+          .replace("/blob/master/", `/blob/${version}/`);
+      }
     }
 
     return newUrl;
