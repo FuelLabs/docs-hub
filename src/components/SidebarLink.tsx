@@ -25,7 +25,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
     const isSubmenu = props['data-submenu'];
     const activeStyles = {
       color: isSamePage ?? '$semanticLinkPrimaryColor',
-      fontWeight: isActiveMenu && !isSamePage ? '550' : 'normal',
+      fontWeight: isActiveMenu ? '550' : 'normal',
       'html[class="fuel_light-theme"] &': {
         color: isSamePage ? '#009957' : '$intentsBase12',
         borderLeft: isSamePage && '2px solid #009957 !important',

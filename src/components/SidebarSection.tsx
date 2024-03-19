@@ -41,7 +41,7 @@ export function SidebarSection({
   if (!version && book !== 'Intro') {
     switch (book) {
       case 'GraphQL':
-        githubLink = 'https://github.com/FuelLabs/fuel-core';
+        githubLink = 'https://github.com/FuelLabs/fuel-core/tree/v0.22.1';
         break;
       case 'Specs':
         githubLink = 'https://github.com/FuelLabs/fuel-specs';
@@ -137,15 +137,27 @@ const styles = {
     fontSize: '$sm',
     pl: '$4',
     mb: '$8',
-    color: '$textColor',
     'html[class="fuel_light-theme"] &': {
       color: '$intentsBase12 !important',
     },
-    '.fuel_Icon': {
-      color: '$textColor',
+    '[aria-label*="Icon Link"]':{
+      display: 'none'
+    },
+    '&:hover': {
       'html[class="fuel_light-theme"] &': {
-        color: '$intentsBase12 !important',
+        color: '#009957 !important',
+        '.fuel_Icon': {
+          color: '#009957 !important',
+        }
       },
+      'html[class="fuel_dark-theme"] &': {
+        color: '$semanticLinkPrimaryColor !important',
+        '.fuel_Icon': {
+          color: '$semanticLinkPrimaryColor !important',
+        }
+      },
+
+      textDecoration: 'none !important',
     },
   }),
   listItem: cssObj({
@@ -170,6 +182,9 @@ const styles = {
       bg: '$gray2 !important',
       border: 'none !important',
       fontWeight: '550',
+    },
+    '&:active': {
+      transform: 'scale(1) !important',
     },
   }),
 };

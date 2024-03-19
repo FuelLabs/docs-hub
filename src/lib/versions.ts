@@ -16,10 +16,6 @@ function itemFromPackageJson(docsDir: string, filename: string) {
 }
 
 function getWalletVersion(docsDir: string) {
-  const { homepage } = itemFromPackageJson(
-    docsDir,
-    'fuels-wallet/package.json'
-  );
   const json = itemFromPackageJson(
     docsDir,
     'fuels-wallet/packages/sdk/package.json'
@@ -28,12 +24,11 @@ function getWalletVersion(docsDir: string) {
     name: 'fuels-wallet',
     version: json.version,
     category: 'Wallet',
-    url: homepage,
+    url: `https://github.com/FuelLabs/fuels-wallet/tree/v${json.version}`,
   };
 }
 
 function getTSSDKVersion(docsDir: string) {
-  const { homepage } = itemFromPackageJson(docsDir, 'fuels-ts/package.json');
   const json = itemFromPackageJson(
     docsDir,
     'fuels-ts/packages/fuels/package.json'
@@ -42,7 +37,7 @@ function getTSSDKVersion(docsDir: string) {
     name: 'fuels-ts',
     version: json.version,
     category: 'TypeScript SDK',
-    url: homepage,
+    url: `https://github.com/FuelLabs/fuels-ts/tree/v${json.version}`,
   };
 }
 
@@ -54,7 +49,7 @@ export function getRustSDKVersion(docsDir: string) {
     name: 'fuels-rs',
     category: 'Rust SDK',
     version: tomfile.workspace.package.version,
-    url: tomfile.workspace.package.repository,
+    url: `https://github.com/FuelLabs/fuels-rs/tree/v${tomfile.workspace.package.version}`,
   };
 }
 
@@ -70,7 +65,7 @@ function getForcVersion(docsDir: string) {
     name: 'forc',
     category: 'Forc',
     version,
-    url: swaitomfile.workspace.package.repository,
+    url: `https://github.com/FuelLabs/sway/tree/v${version}`,
   };
 }
 

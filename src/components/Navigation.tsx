@@ -14,7 +14,8 @@ export function Navigation({ versionSet }: { versionSet: VersionSet }) {
         href={'https://forum.fuel.network/'}
         intent="base"
         css={styles.navItem}
-        isExternal={true}
+        leftIcon={'HelpCircle'}
+        isExternal
       >
         Forum
       </ButtonLink>
@@ -30,18 +31,24 @@ const styles = {
     '@sm': {
       display: 'flex',
     },
+    '[aria-label*="Icon Link"]':{
+      display: 'none'
+    },
     '&:hover': {
       'html[class="fuel_light-theme"] &': {
         color: '#009957 !important',
+        '.fuel_Icon': {
+          color: '#009957 !important',
+        }
       },
       'html[class="fuel_dark-theme"] &': {
         color: '$semanticLinkPrimaryColor !important',
+        '.fuel_Icon': {
+          color: '$semanticLinkPrimaryColor !important',
+        }
       },
 
       textDecoration: 'none !important',
-      '.fuel_Icon': {
-        color: '$semanticLinkPrimaryColor !important',
-      },
     },
   }),
 };

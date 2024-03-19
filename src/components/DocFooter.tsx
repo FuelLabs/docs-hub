@@ -145,7 +145,7 @@ const styles = {
     },
   }),
   feedbackContainer: cssObj({
-    mt: '$8',
+    mt: '$1',
     py: '$4',
     gap: '$4',
     flexDirection: 'column',
