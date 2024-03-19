@@ -82,13 +82,12 @@ function handleTSLinks(url: string | null, versionSet: VersionSet) {
         `/docs/${versionSet === "default" ? "" : `/${versionSet}`}/fuels-ts/`
       );
     }
-    if (!newUrl.endsWith("/api/")) {
+    if (newUrl.includes("/api/") && !newUrl.endsWith("/api/")) {
       newUrl = newUrl
-        .replace("/api/providers", "/api-providers")
+        .replace("docs/fuels-ts/../api/", "docs/fuels-ts/")
         .replace("fuels-ts/docs/api/", "fuels-ts/")
-        .replace("/providers/provider", "/api-providers")
-        .replace("/predicate/predicate", "/predicate")
-        .replace("/wallet/wallet", "/wallet");
+        .replace("/api/", "/")
+        .replace("/providers", "/api-providers");
     }
   }
   return newUrl;
@@ -251,7 +250,7 @@ function handleNewURLs(
     if (newURL.includes("docs.fuel.network")) {
       newURL = newURL
         .replace("fuel.network/forc", "fuel.network/docs/forc")
-        .replace("fuel.network/sway/", "fuel.network/docs/sway");
+        .replace("fuel.network/sway", "fuel.network/docs/sway");
     }
     const value = parent.children[idx + 1].value;
     parent.children[idx] = {
