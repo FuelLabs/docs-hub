@@ -76,6 +76,26 @@ export function getFuelCoreVersion() {
   return tomfile.workspace.package.version;
 }
 
+export function getFullFuelCoreVersion(versionSet: VersionSet) {
+  if(versionSet === 'beta-4') {
+    return {
+      name: 'fuel-graphql-docs',
+      category: 'GraphQL API',
+      version: '0.20.5',
+      url: 'https://github.com/FuelLabs/fuel-core/tree/v0.20.5',
+    };
+  }
+  const filedir = join(DOCS_DIRECTORY, 'fuel-core/Cargo.toml');
+  const file = fs.readFileSync(filedir, 'utf-8');
+  const tomfile = toml.parse(file);
+  return {
+    name: 'fuel-graphql-docs',
+    category: 'GraphQL API',
+    version: tomfile.workspace.package.version,
+    url: `https://github.com/FuelLabs/fuel-core/tree/v${tomfile.workspace.package.version}`,
+  };
+}
+
 // returns the version of the node required by fuels-ts
 export function getNodeVersion() {
   const filedir = join(DOCS_DIRECTORY, 'fuels-ts/packages/fuels/package.json');
@@ -95,6 +115,7 @@ export function getVersions(versionSet: VersionSet) {
   const tsSDK = getTSSDKVersion(docsDir);
   const rust = getRustSDKVersion(docsDir);
   const forc = getForcVersion(docsDir);
+  const fuelCore = getFullFuelCoreVersion(versionSet);
 
   return {
     Forc: forc,
@@ -102,6 +123,7 @@ export function getVersions(versionSet: VersionSet) {
     'Fuel Rust SDK': rust,
     'Fuel TS SDK': tsSDK,
     'Fuel Wallet': wallet,
+    'GraphQL API': fuelCore
   };
 }
 
