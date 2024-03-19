@@ -133,7 +133,7 @@ export default function getDocVersion(link: string, versionSet: VersionSet) {
   }
 
   if (link.includes("/fuels-rs/")) {
-    return `v${versions["Fuel RS SDK"].version}`;
+    return `v${versions["Fuel Rust SDK"].version}`;
   }
 
   if (link.includes("/sway/")) {

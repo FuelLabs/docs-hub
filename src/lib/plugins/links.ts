@@ -67,11 +67,13 @@ export function handleLinks(
         "fuels-wallet"
       );
 
-      const version = getDocVersion(newUrl, versionSet);
-      if (version !== "master") {
-        newUrl = newUrl
-          .replace("/tree/master/", `/tree/${version}/`)
-          .replace("/blob/master/", `/blob/${version}/`);
+      if (newUrl.includes("/master/")) {
+        const version = getDocVersion(newUrl, versionSet);
+        if (version !== "master") {
+          newUrl = newUrl
+            .replace("/tree/master/", `/tree/${version}/`)
+            .replace("/blob/master/", `/blob/${version}/`);
+        }
       }
     }
 
