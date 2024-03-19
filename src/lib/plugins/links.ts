@@ -77,6 +77,10 @@ export function handleLinks(
       }
     }
 
+    if (newUrl.includes("docs.rs/fuel-types/{{versions.fuel-types}}")) {
+      newUrl = newUrl.replace("{{versions.fuel-types}}", "latest");
+    }
+
     return newUrl;
   }
 }
