@@ -87,7 +87,6 @@ export class Doc {
         .replace('docs/fuels-ts/', '')
         .replace('docs/fuels-rs/', '')
         .replace('docs/fuels-wallet/', '')
-        // .replace('docs/fuelup/', '')
         .replace('docs/fuel-graphql-docs/', '')
         .replace('docs/sway/', '')
         .replace('docs/fuel-specs/', '');

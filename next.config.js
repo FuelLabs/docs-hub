@@ -120,7 +120,7 @@ const nextConfig = {
       },
       {
         source: '/docs/fuelup/:slug*',
-        destination: 'https://install.fuel.network/master/:slug*',
+        destination: 'https://install.fuel.network/latest/',
         permanent: true,
       },
     ];
