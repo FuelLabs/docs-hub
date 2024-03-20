@@ -1,5 +1,5 @@
 import { cssObj } from '@fuel-ui/css';
-import { Tabs, Box, Heading } from '@fuel-ui/react';
+import { Box, Heading, Tabs } from '@fuel-ui/react';
 
 export type CodeExamplesProps = {
   file: string;
@@ -16,7 +16,7 @@ export type CodeExamplesProps = {
   __apollo_content: string;
   __urql_content: string;
   __ts_language: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny:
   children: any;
   // __filepath: string;
   // __filename: string;

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ButtonLinkProps, ButtonSizes } from '@fuel-ui/react';
 import { ButtonLink } from '@fuel-ui/react';
 import NextLink from 'next/link';
@@ -44,6 +43,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
         <ButtonLink
           {...props}
           size={size}
+          // biome-ignore lint/suspicious/noExplicitAny:
           ref={ref as any}
           data-active={Boolean(isSamePage)}
           {...(onClick && { onClick })}
@@ -55,7 +55,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
         </ButtonLink>
       </NextLink>
     );
-  }
+  },
 );
 
 export const buttonStyles = {

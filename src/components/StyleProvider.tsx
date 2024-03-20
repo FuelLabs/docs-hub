@@ -6,6 +6,7 @@ import { useServerInsertedHTML } from 'next/navigation';
 export function StyleProvider() {
   useServerInsertedHTML(() => (
     <>
+      {/* biome-ignore lint/security/noDangerouslySetInnerHtml: */}
       <style id="stitches" dangerouslySetInnerHTML={{ __html: getCssText() }} />
     </>
   ));

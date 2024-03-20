@@ -5,7 +5,7 @@ import { DOCS_DIRECTORY } from '../config/constants';
 
 import { getTSAPIDuplicates } from './ts-api';
 
-const configPath = join(DOCS_DIRECTORY, `../src/config/paths.json`);
+const configPath = join(DOCS_DIRECTORY, '../src/config/paths.json');
 const pathsConfig = JSON.parse(readFileSync(configPath, 'utf8'));
 
 export class DocParser {
@@ -18,7 +18,7 @@ export class DocParser {
           if (path.includes(apiPath)) {
             slug = path.replace(cat, category);
           }
-        }
+        },
       );
     }
 

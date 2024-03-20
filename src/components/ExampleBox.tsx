@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { cssObj } from '@fuel-ui/css';
 import { Box, Text } from '@fuel-ui/react';
 import type { ReactNode } from 'react';
@@ -10,6 +9,7 @@ export function ExampleBox({
   error,
 }: {
   children: ReactNode;
+  // biome-ignore lint/suspicious/noExplicitAny:
   error?: any;
 }) {
   return (

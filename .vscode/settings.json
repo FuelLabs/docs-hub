@@ -1,9 +1,9 @@
 {
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "biomejs.biome",
   "prettier.prettierPath": "./node_modules/prettier",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.organizeImports.biome": "explicit"
   },
   "typescript.tsdk": "./node_modules/.pnpm/typescript@4.9.3/node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
@@ -15,6 +15,7 @@
     "**/fuel-graphql-docs": true,
     "**/fuel-indexer": true,
     "**/fuel-specs": true,
+    "**/fuel-core": true,
     "**/fuels-rs": true,
     "**/fuels-ts": true,
     "**/fuels-wallet": true,

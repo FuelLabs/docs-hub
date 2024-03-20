@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import dynamic from 'next/dynamic';
 import type { ComponentType } from 'react';
 import * as beta4GQLExamples from '~/docs/beta-4/fuel-graphql-docs/examples';
@@ -18,12 +16,15 @@ import { COMPONENTS as WALLET_COMPONENTS } from '~/src/generated/components/wall
 
 import type { ComponentsList, VersionSet } from '../types';
 
+// biome-ignore lint/suspicious/noExplicitAny:
 function loadComponent(imp: any, name?: string): ComponentType<object> {
+  // biome-ignore lint/suspicious/noExplicitAny:
   return dynamic(() => imp.then((mod: any) => (name ? mod[name] : mod)), {
     ssr: false,
   });
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 type Component = React.ComponentType<any>;
 
 export interface ComponentsObject {
@@ -42,6 +43,7 @@ export function getComponents(docSlug: string, versionSet: VersionSet) {
   function addComponents(list: ComponentsList) {
     Object.keys(list).forEach((page) => {
       if (docSlug.includes(page)) {
+        // biome-ignore lint/suspicious/noExplicitAny:
         list[page].forEach((comp: any) => {
           if (comp.import) {
             components[comp.name] = comp.import;
@@ -81,7 +83,7 @@ export function getComponents(docSlug: string, versionSet: VersionSet) {
     }
     components.CodeExamples = loadComponent(
       import('~/src/components/GraphqlCodeExample'),
-      'GraphQLCodeExample'
+      'GraphQLCodeExample',
     );
   }
 

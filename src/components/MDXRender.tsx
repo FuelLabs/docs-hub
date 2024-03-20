@@ -1,20 +1,19 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import 'plyr-react/plyr.css';
 import { Box } from '@fuel-ui/react';
 import { runSync } from '@mdx-js/mdx';
 import * as provider from '@mdx-js/react';
 import dynamic from 'next/dynamic';
+import 'plyr-react/plyr.css';
 import { useMemo } from 'react';
 
 import {
+  BETA_4_EXPLORER_LINK,
+  BETA_4_FAUCET_LINK,
+  BETA_4_PLAYGROUND_LINK,
   BRIDGE_LINK,
   EXPLORER_LINK,
-  BETA_4_EXPLORER_LINK,
   FAUCET_LINK,
-  BETA_4_FAUCET_LINK,
   FUEL_TESTNET,
   PLAYGROUND_LINK,
-  BETA_4_PLAYGROUND_LINK,
 } from '../config/constants';
 import { runtime } from '../lib/runtime';
 import type { VersionSet } from '../types';
@@ -27,7 +26,7 @@ import { ConditionalContent } from './ConditionalContent';
 import { Divider } from './Divider';
 import { Heading } from './Heading';
 import { Link } from './Link';
-import { UL, OL } from './List';
+import { OL, UL } from './List';
 import { Paragraph } from './Paragraph';
 import { Pre } from './Pre';
 import { QuickstartCallout } from './QuickstartCallout';
@@ -59,10 +58,12 @@ export const mdxComponents = {
   QuickstartCallout,
   CodeTabs,
   ConditionalContent,
+  // biome-ignore lint/suspicious/noExplicitAny:
 } as any;
 
 type MDXRenderProps = {
   code: string;
+  // biome-ignore lint/suspicious/noExplicitAny:
   components: Record<any, any>;
   versionSet: VersionSet;
   fuelCoreVersion?: string;
@@ -80,7 +81,7 @@ export function MDXRender({
 }: MDXRenderProps) {
   const { default: Content } = useMemo(
     () => runSync(code, { ...runtime, ...provider }),
-    [code]
+    [code],
   );
 
   return (

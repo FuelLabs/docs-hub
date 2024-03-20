@@ -1,12 +1,12 @@
 import {
+  BETA_4_DOCS_DIRECTORY,
   DOCS_DIRECTORY,
   NIGHTLY_DOCS_DIRECTORY,
-  BETA_4_DOCS_DIRECTORY,
 } from '~/src/config/constants';
 
 import { getRustSDKVersion } from '../versions';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny:
 export function handleRustVersion(node: any, dirname: string) {
   let versionSet = 'default';
   if (dirname.includes('/nightly/')) {

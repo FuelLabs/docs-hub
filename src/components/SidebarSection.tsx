@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { cssObj } from '@fuel-ui/css';
 import { Box, Button, Icon } from '@fuel-ui/react';
 import type { ButtonLinkProps } from '@fuel-ui/react';
@@ -9,6 +8,7 @@ import { SidebarLink } from './SidebarLink';
 import { SidebarSubmenu } from './SidebarSubmenu';
 
 type SectionProps = {
+  // biome-ignore lint/suspicious/noExplicitAny:
   links: any;
   onClick?: ButtonLinkProps['onClick'];
   book: string;
@@ -28,7 +28,7 @@ export function SidebarSection({
   const [isOpened, setIsOpened] = useState<boolean | undefined>(
     book === 'guides' ||
       docSlug?.includes(book.toLowerCase()) ||
-      (book === 'Intro' && docSlug?.includes('guides/quickstart/'))
+      (book === 'Intro' && docSlug?.includes('guides/quickstart/')),
   );
   const isGuide = book === 'guides';
   const bookHasIndex =
@@ -61,6 +61,7 @@ export function SidebarSection({
         <Box css={styles.listContainer}>
           <Box css={styles.line} />
           <Box.VStack gap="0" css={styles.sectionContainer}>
+            {/* biome-ignore lint/suspicious/noExplicitAny: */}
             {links.map((link: any, index: number) => {
               if (link.slug) {
                 return (
@@ -71,7 +72,8 @@ export function SidebarSection({
                     isIndex={index === 0 && bookHasIndex}
                   />
                 );
-              } else if (link.submenu) {
+              }
+              if (link.submenu) {
                 return (
                   <SidebarSubmenu
                     key={link.submenu[0].slug}

@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "build:ci": "run-s docs:* generate:* patch:wallet build",
-    "check": "run-s lint prettier:check",
-    "check:prod": "run-s lint:prod prettier:check",
+    "build:ci": "run-s docs:clean docs:sync generate:* patch:wallet build",
+    "check": "run-s lint",
+    "check:prod": "run-s lint:prod",
     "copy:icons": "cp -r ./node_modules/@fuel-ui/icons/dist/icons/sprite.svg ./public/icons",
     "deps:update": "updates -gu",
     "dev": "./scripts/dev.sh",
@@ -17,12 +17,10 @@
     "export": "DOCS_DIST=${DOCS_DIST:=dist} next export -o $DOCS_DIST",
     "generate:links": "node scripts/generate-links/index.mjs",
     "generate:components": "node scripts/components.mjs",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
-    "lint:fix": "pnpm lint --fix",
-    "lint:prod": "eslint . --ext .ts,.tsx,.js,.jsx -c .eslintrc.prod",
+    "lint": "biome check --apply-unsafe .",
+    "lint:fix": "biome format --write .",
+    "lint:prod": "biome lint --max-diagnostics=1000 --diagnostic-level=error .",
     "prepare": "husky install && pnpm copy:icons",
-    "prettier:check": "prettier --check .",
-    "prettier:format": "prettier --write .",
     "start": "next start",
     "patch:wallet": "node scripts/wallet-patch-fixes/index.mjs",
     "test:guides": "npx playwright test tests/test.spec.ts",
@@ -30,7 +28,7 @@
     "ts:check": "tsc --noEmit",
     "lint:guides:check": "markdownlint --config .markdownlint.yaml --ignore-path .markdownlintignore '**/*.mdx'",
     "lint:guides:fix": "markdownlint --config .markdownlint.yaml --ignore-path .markdownlintignore '**/*.mdx' --fix",
-    "lint:fix:all": "run-s lint:fix lint:guides:fix prettier:format"
+    "lint:fix:all": "run-s lint:fix lint:guides:fix"
   },
   "dependencies": {
     "@actions/exec": "^1.1.1",
@@ -43,8 +41,6 @@
     "@fuel-wallet/playwright-utils": "^0.13.10",
     "@fuel-wallet/react": "0.15.2",
     "@fuel-wallet/sdk": "0.15.2",
-    "@fuels/eslint-plugin": "^0.15.1",
-    "@fuels/prettier-config": "^0.0.8",
     "@fuels/react": "^0.16.0",
     "@fuels/ts-config": "^0.15.1",
     "@mdx-js/mdx": "^2.3.0",
@@ -96,7 +92,7 @@
     "vfile": "^6.0.1"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^13.4.19",
+    "@biomejs/biome": "1.6.1",
     "@playwright/test": "^1.38.1",
     "@types/chrome": "^0.0.245",
     "@types/cookie": "^0.5.2",
@@ -104,7 +100,6 @@
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "@types/react-syntax-highlighter": "^15.5.7",
-    "eslint": "^8.48.0",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
     "npm-run-all": "^4.1.5",
