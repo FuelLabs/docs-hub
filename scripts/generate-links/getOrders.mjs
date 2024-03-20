@@ -53,10 +53,8 @@ function handleOrder(orderType, filepath, orderName) {
   let beta4Orders;
   const isJSON = orderType === 'json';
   const orderFile = getFile(filepath, 'default', isJSON);
-  let nightlyOrderFile;
-  let beta4OrderFile;
-  nightlyOrderFile = getFile(filepath, 'nightly', isJSON);
-  beta4OrderFile = getFile(filepath, 'beta-4', isJSON);
+  const nightlyOrderFile = getFile(filepath, 'nightly', isJSON);
+  const beta4OrderFile = getFile(filepath, 'beta-4', isJSON);
 
   if (isJSON) {
     betaOrders = { order: orderFile };

@@ -46,7 +46,7 @@ export function Pre({
 
   return (
     <Box css={{ ...styles.root, ...css }}>
-      {title && <Text as="h6">{title}</Text>}
+      {title && <Text as='h6'>{title}</Text>}
       <Box
         css={styles.wrapper}
         data-expanded={expanded}
@@ -67,17 +67,17 @@ export function Pre({
       </Box>
       <Box css={styles.actions} data-expanded={expanded}>
         {needExpand && (
-          <Button variant="outlined" size="xs" onClick={toggleExpand}>
+          <Button variant='outlined' size='xs' onClick={toggleExpand}>
             {expanded ? 'Collapse' : 'Expand'}
           </Button>
         )}
         <IconButton
-          size="xs"
+          size='xs'
           css={styles.copyIcon}
           icon={<Icon icon={Icon.is('ClipboardText')} size={12} stroke={1} />}
-          variant="ghost"
-          intent="base"
-          aria-label="Copy to Clipboard"
+          variant='ghost'
+          intent='base'
+          aria-label='Copy to Clipboard'
           onClick={handleCopy}
         />
       </Box>

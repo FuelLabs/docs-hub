@@ -17,8 +17,8 @@ export function PrevAndNextLinks() {
             <Button
               css={styles.linkButton}
               leftIcon={'ArrowLeft'}
-              variant="outlined"
-              intent="base"
+              variant='outlined'
+              intent='base'
               iconSize={ICON_SIZE}
             >
               <Box.VStack css={{ ...styles.links, ...styles.alignRight }}>
@@ -35,8 +35,8 @@ export function PrevAndNextLinks() {
             <Button
               css={styles.linkButton}
               rightIcon={'ArrowRight'}
-              variant="outlined"
-              intent="base"
+              variant='outlined'
+              intent='base'
               iconSize={ICON_SIZE}
             >
               <Box.VStack css={{ ...styles.links, ...styles.alignLeft }}>
@@ -55,7 +55,7 @@ export function DocFooter() {
   const { doc } = useDocContext();
 
   return (
-    <Box css={styles.root} as="footer">
+    <Box css={styles.root} as='footer'>
       <PrevAndNextLinks />
 
       {!doc.pageLink.includes('docs/beta-4') && (

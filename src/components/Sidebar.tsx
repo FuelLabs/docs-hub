@@ -6,9 +6,9 @@ import { EXTERNAL_NAVIGATION_LINKS } from '../config/constants';
 import { useDocContext } from '../hooks/useDocContext';
 import type { NavOrder, SidebarLinkItem, VersionSet, Versions } from '../types';
 
+import { FeedbackForm } from './FeedbackForm';
 import { SidebarLink, buttonStyles } from './SidebarLink';
 import { SidebarSection } from './SidebarSection';
-import { FeedbackForm } from './FeedbackForm';
 
 type SidebarProps = {
   allNavs?: NavOrder[];
@@ -32,7 +32,7 @@ export function Sidebar({
   const { links, doc } = ctx;
 
   return (
-    <Box.Stack as="nav" css={styles.root} className="Sidebar">
+    <Box.Stack as='nav' css={styles.root} className='Sidebar'>
       {!allNavs && doc && (
         <>
           {doc.parent && (
@@ -47,8 +47,8 @@ export function Sidebar({
             </ButtonLink>
           )}
           <SidebarSection
-            book="guides"
-            bookName="guides"
+            book='guides'
+            bookName='guides'
             links={links}
             onClick={onClick}
             docSlug={doc?.slug}

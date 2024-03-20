@@ -46,7 +46,7 @@ export function SidebarSubmenu({
   return (
     <Box.Flex css={styles.root}>
       <SidebarLink
-        intent="base"
+        intent='base'
         onClick={onClick}
         item={thisItem}
         isActiveMenu={isOpened}

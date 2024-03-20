@@ -67,7 +67,7 @@ export default function Guides({
 
   return (
     <Layout
-      title="Fuel Guides"
+      title='Fuel Guides'
       versionSet={versionSet}
       allNavs={navs}
       versions={activeVersions}
@@ -79,7 +79,7 @@ export default function Guides({
 
 // biome-ignore lint/suspicious/noExplicitAny:
 export const getStaticProps: GetStaticProps<any> = async () => {
-  const guidesPath = join(DOCS_DIRECTORY, `./guides/docs/guides.json`);
+  const guidesPath = join(DOCS_DIRECTORY, './guides/docs/guides.json');
 
   const { allNavs, allNightlyNavs, allBeta4Navs } = getNavs();
   const { versions, nightlyVersions, beta4Versions } = getAllVersions();

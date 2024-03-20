@@ -7,10 +7,10 @@ import { Breadcrumb } from '../components/Breadcrumb';
 import { DocFooter } from '../components/DocFooter';
 import { MDXRender } from '../components/MDXRender';
 import { useVersion } from '../hooks/useVersion';
+import { getActiveNav } from '../lib/getActiveNav';
 import { getComponents } from '../lib/imports';
 import type { DocPageProps } from '../pages/[...slug]';
 import type { VersionSet } from '../types';
-import { getActiveNav } from '../lib/getActiveNav';
 
 export function DocScreen(props: DocPageProps) {
   const { doc, allNavs, allNightlyNavs, allBeta4Navs } = props;
@@ -33,7 +33,7 @@ export function DocScreen(props: DocPageProps) {
     allNavs,
     allNightlyNavs,
     allBeta4Navs,
-    doc
+    doc,
   );
 
   let versions = props.versions;
@@ -55,7 +55,7 @@ export function DocScreen(props: DocPageProps) {
         versions={versions}
         allNavs={navs}
       >
-        <Box.Flex as="section" className="Layout--section">
+        <Box.Flex as='section' className='Layout--section'>
           {doc && (
             <Box>
               <Breadcrumb />

@@ -10,7 +10,7 @@ type LabelProps = {
 };
 
 function Label({ label }: LabelProps) {
-  return <Text as="span">{capitalize(label.replaceAll(/[_-]/g, ' '))}</Text>;
+  return <Text as='span'>{capitalize(label.replaceAll(/[_-]/g, ' '))}</Text>;
 }
 
 export function Breadcrumb() {

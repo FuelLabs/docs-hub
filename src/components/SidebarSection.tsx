@@ -62,7 +62,7 @@ export function SidebarSection({
           <Button
             variant={'ghost'}
             href={links[0].slug}
-            intent="base"
+            intent='base'
             onClick={toggle}
             css={styles.menuButton}
             rightIcon={isOpened ? Icon.is('ChevronUp') : Icon.is('ChevronDown')}
@@ -76,7 +76,7 @@ export function SidebarSection({
       {(isGuide || isOpened) && (
         <Box css={styles.listContainer}>
           <Box css={styles.line} />
-          <Box.VStack gap="0" css={styles.sectionContainer}>
+          <Box.VStack gap='0' css={styles.sectionContainer}>
             {/* biome-ignore lint/suspicious/noExplicitAny: */}
             {links.map((link: any, index: number) => {
               if (link.slug) {
@@ -142,21 +142,21 @@ const styles = {
     'html[class="fuel_light-theme"] &': {
       color: '$intentsBase12 !important',
     },
-    '[aria-label*="Icon Link"]':{
-      display: 'none'
+    '[aria-label*="Icon Link"]': {
+      display: 'none',
     },
     '&:hover': {
       'html[class="fuel_light-theme"] &': {
         color: '#009957 !important',
         '.fuel_Icon': {
           color: '#009957 !important',
-        }
+        },
       },
       'html[class="fuel_dark-theme"] &': {
         color: '$semanticLinkPrimaryColor !important',
         '.fuel_Icon': {
           color: '$semanticLinkPrimaryColor !important',
-        }
+        },
       },
 
       textDecoration: 'none !important',

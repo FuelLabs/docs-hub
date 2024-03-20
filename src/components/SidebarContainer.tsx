@@ -18,7 +18,7 @@ export function SidebarContainer({
   return (
     <Box css={styles.sidebar}>
       <Box css={styles.logo}>
-        <Link href="/" className="logo">
+        <Link href='/' className='logo'>
           <FuelLogo size={30} />
         </Link>
       </Box>

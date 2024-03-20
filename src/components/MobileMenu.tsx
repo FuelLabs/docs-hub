@@ -3,9 +3,9 @@ import { Box, Drawer, FuelLogo, Icon, IconButton, Link } from '@fuel-ui/react';
 import { useState } from 'react';
 import type { NavOrder, VersionSet, Versions } from '~/src/types';
 
+import { Navigation } from './Navigation';
 import Search from './Search';
 import { Sidebar } from './Sidebar';
-import { Navigation } from './Navigation';
 
 interface MobileMenuProps {
   active: string;
@@ -30,12 +30,12 @@ export function MobileMenu({
 
   const drawerButton = (
     <IconButton
-      className="mobile-button"
-      variant="link"
-      intent="base"
+      className='mobile-button'
+      variant='link'
+      intent='base'
       icon={open ? Icon.is('X') : Icon.is('List')}
       iconSize={30}
-      aria-label="Menu"
+      aria-label='Menu'
       onClick={toggle}
     />
   );
@@ -44,12 +44,12 @@ export function MobileMenu({
     <Box.Flex css={styles.root}>
       <Search title={title} versionSet={versionSet} />
 
-      <Box.Stack direction="row" gap="$3" css={styles.box}>
+      <Box.Stack direction='row' gap='$3' css={styles.box}>
         <Navigation versionSet={versionSet} />
         <Drawer
           isDismissable
           isOpen={open}
-          side="right"
+          side='right'
           onClose={() => setOpen(false)}
         >
           <Drawer.Trigger>{drawerButton}</Drawer.Trigger>
@@ -57,10 +57,10 @@ export function MobileMenu({
           <Drawer.Content css={styles.drawer}>
             <Drawer.Body>
               <Box.Flex css={styles.topContainer} justify={'space-between'}>
-                <Link href="/">
+                <Link href='/'>
                   <FuelLogo size={30} />
                 </Link>
-                <Box.Flex gap="$4" align="center" css={styles.iconContainer}>
+                <Box.Flex gap='$4' align='center' css={styles.iconContainer}>
                   {drawerButton}
                 </Box.Flex>
               </Box.Flex>

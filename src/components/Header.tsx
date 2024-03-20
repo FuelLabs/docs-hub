@@ -24,12 +24,12 @@ export function Header({
   versions,
 }: HeaderProps) {
   return (
-    <Box as="header" css={styles.root}>
+    <Box as='header' css={styles.root}>
       <Box.Flex css={styles.header}>
         <Box css={{ ...styles.desktop, ...styles.searchContainer }}>
           {/* THIS GETS USED BY THE SEARCH INDEXER */}
           <span
-            id="lvl0"
+            id='lvl0'
             style={{ visibility: 'hidden', width: '0', height: '0' }}
           >
             {title}
@@ -48,7 +48,7 @@ export function Header({
         />
       </Box.Flex>
       {versionSet === 'nightly' && (
-        <Alert css={styles.alert} direction="row" status="warning">
+        <Alert css={styles.alert} direction='row' status='warning'>
           <Alert.Description>
             Nightly versions may be unstable or not compatible across tooling.
           </Alert.Description>

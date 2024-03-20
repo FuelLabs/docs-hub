@@ -60,13 +60,13 @@ setFuelThemes({
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang="en">
+      <Html lang='en'>
         <Head>
-          <Script id="theme" strategy="beforeInteractive">
+          <Script id='theme' strategy='beforeInteractive'>
             {getThemeScript}
           </Script>
           <style
-            id="stitches"
+            id='stitches'
             // biome-ignore lint/security/noDangerouslySetInnerHtml:
             dangerouslySetInnerHTML={{ __html: getCssText() }}
           />

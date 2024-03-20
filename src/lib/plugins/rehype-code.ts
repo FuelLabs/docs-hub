@@ -422,7 +422,7 @@ function addNumberOfLines() {
 }
 
 const getRehypeCodeOptions = (
-  theme: 'light' | 'dark'
+  theme: 'light' | 'dark',
 ): Partial<RehypeCodeOptions> => {
   const themeFileName: string = theme === 'light' ? 'github-light' : 'dracula';
   return {
