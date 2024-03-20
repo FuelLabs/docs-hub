@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
-import type { GetStaticProps } from 'next';
 import { join } from 'path';
+import type { GetStaticProps } from 'next';
 
 import type { MdDoc } from '../../.contentlayer/generated';
 import { allMdDocs } from '../../.contentlayer/generated';
@@ -10,8 +10,8 @@ import { Doc } from '../lib/md-doc';
 import { Docs } from '../lib/md-docs';
 import {
   getFuelCoreVersion,
-  getVersions,
   getNodeVersion,
+  getVersions,
 } from '../lib/versions';
 import { DocScreen } from '../screens/DocPage';
 import type { DocType, NavOrder, SidebarLinkItem, Versions } from '../types';
@@ -44,7 +44,7 @@ export function getStaticPaths() {
   return { paths, fallback: false };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny:
 export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   const slugArray = params?.slug as string[];
   const doc = new Doc(slugArray, allMdDocs);
@@ -52,15 +52,15 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   const code = await doc.getCode();
   const allNavsPath = join(
     DOCS_DIRECTORY,
-    `../src/generated/sidebar-links/all-orders.json`
+    '../src/generated/sidebar-links/all-orders.json',
   );
   const allnightlyNavsPath = join(
     DOCS_DIRECTORY,
-    `../src/generated/sidebar-links/all-nightly-orders.json`
+    '../src/generated/sidebar-links/all-nightly-orders.json',
   );
   const allBeta4NavsPath = join(
     DOCS_DIRECTORY,
-    `../src/generated/sidebar-links/all-beta-4-orders.json`
+    '../src/generated/sidebar-links/all-beta-4-orders.json',
   );
   const allNavs = JSON.parse(readFileSync(allNavsPath, 'utf8'));
   const allnightlyNavs = JSON.parse(readFileSync(allnightlyNavsPath, 'utf8'));
@@ -75,7 +75,7 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   if (slug.includes('guides/') || slug.includes('/intro/quickstart')) {
     fuelCoreVersion = getFuelCoreVersion();
     nodeVersion = getNodeVersion().substring(1);
-    const majorVersionMax = parseInt(nodeVersion.substring(0, 2)) + 1;
+    const majorVersionMax = Number.parseInt(nodeVersion.substring(0, 2)) + 1;
     nodeVersionMax = `${majorVersionMax}.0.0`;
   }
 

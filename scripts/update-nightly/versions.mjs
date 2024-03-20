@@ -45,19 +45,19 @@ function getFuelupVersion() {
 
 function getTSSDKVersion(isNightly) {
   return getVersionFromJSONFile(
-    `docs${isNightly ? '/nightly' : ''}/fuels-ts/packages/fuels/package.json`
+    `docs${isNightly ? '/nightly' : ''}/fuels-ts/packages/fuels/package.json`,
   );
 }
 
 function getRustSDKVersion(isNightly) {
   return getVersionFromTOMLFile(
-    `docs${isNightly ? '/nightly' : ''}/fuels-rs/Cargo.toml`
+    `docs${isNightly ? '/nightly' : ''}/fuels-rs/Cargo.toml`,
   );
 }
 
 function getWalletVersion(isNightly) {
   return getVersionFromJSONFile(
-    `docs${isNightly ? '/nightly' : ''}/fuels-wallet/packages/sdk/package.json`
+    `docs${isNightly ? '/nightly' : ''}/fuels-wallet/packages/sdk/package.json`,
   );
 }
 

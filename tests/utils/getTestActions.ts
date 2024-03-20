@@ -9,6 +9,7 @@ export async function getTestActions(page: Page) {
       for (const attr of el.attributes) {
         dataAttributes[attr.name] = attr.value;
       }
+      // biome-ignore lint/complexity/useLiteralKeys: <explanation>
       dataAttributes['id'] = el.id;
       return dataAttributes;
     });

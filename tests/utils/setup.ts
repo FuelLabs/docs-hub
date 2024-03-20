@@ -1,6 +1,6 @@
-import type { Page } from '@playwright/test';
 import { execSync } from 'child_process';
 import fs from 'fs';
+import type { Page } from '@playwright/test';
 
 const START_SERVER_COMMAND = "pnpm pm2 start npm --name 'docs-hub' -- run dev";
 const STOP_SERVERS = 'pnpm pm2 delete all';

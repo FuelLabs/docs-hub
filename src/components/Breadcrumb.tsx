@@ -20,26 +20,24 @@ export function Breadcrumb() {
 
   return (
     <Box.Flex wrap={'wrap'} css={styles.root}>
-      {breadcrumbs &&
-        breadcrumbs.map((breadcrumb, index) => {
-          if (breadcrumb.link) {
-            return (
-              <Box css={styles.label} key={`${breadcrumb.label}`}>
-                <NextLink href={breadcrumb.link}>
-                  <Label label={breadcrumb.label} />
-                </NextLink>
-                {index < breadcrumbs.length - 1 && ' / '}
-              </Box>
-            );
-          } else {
-            return (
-              <Box key={`${index}-${breadcrumb.label}`}>
+      {breadcrumbs?.map((breadcrumb, index) => {
+        if (breadcrumb.link) {
+          return (
+            <Box css={styles.label} key={`${breadcrumb.label}`}>
+              <NextLink href={breadcrumb.link}>
                 <Label label={breadcrumb.label} />
-                {index < breadcrumbs.length - 1 && ' / '}
-              </Box>
-            );
-          }
-        })}
+              </NextLink>
+              {index < breadcrumbs.length - 1 && ' / '}
+            </Box>
+          );
+        }
+        return (
+          <Box key={`${index}-${breadcrumb.label}`}>
+            <Label label={breadcrumb.label} />
+            {index < breadcrumbs.length - 1 && ' / '}
+          </Box>
+        );
+      })}
     </Box.Flex>
   );
 }

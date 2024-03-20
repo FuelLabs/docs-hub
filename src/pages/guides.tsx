@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
-import type { GetStaticProps } from 'next';
 import { join } from 'path';
-import { useState, useEffect } from 'react';
+import type { GetStaticProps } from 'next';
+import { useEffect, useState } from 'react';
 
 import { Layout } from '../components/Layout';
 import { DOCS_DIRECTORY, FUEL_TESTNET_UPPER_CASE } from '../config/constants';
@@ -44,16 +44,16 @@ export default function Guides({ guides }: GuidesProps) {
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny:
 export const getStaticProps: GetStaticProps<any> = async () => {
-  const guidesPath = join(DOCS_DIRECTORY, `./guides/docs/guides.json`);
+  const guidesPath = join(DOCS_DIRECTORY, './guides/docs/guides.json');
   const allNavsPath = join(
     DOCS_DIRECTORY,
-    `../src/generated/sidebar-links/all-orders.json`
+    '../src/generated/sidebar-links/all-orders.json',
   );
   const allnightlyNavsPath = join(
     DOCS_DIRECTORY,
-    `../src/generated/sidebar-links/all-nightly-orders.json`
+    '../src/generated/sidebar-links/all-nightly-orders.json',
   );
   const guides = JSON.parse(readFileSync(guidesPath, 'utf8'));
   const allNavs = JSON.parse(readFileSync(allNavsPath, 'utf8'));

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { EOL } from 'os';
 import type { Root } from 'remark-gfm';
 
@@ -8,12 +7,16 @@ export function handleScriptLink(
     FORC: string;
     FUELS: string;
     FUEL_CORE: string;
-  }
+  },
 ) {
   let url = '';
+  // biome-ignore lint/suspicious/noImplicitAnyLet:
   let paragraphIndex;
+  // biome-ignore lint/suspicious/noImplicitAnyLet:
   let linkStartIndex;
+  // biome-ignore lint/suspicious/noExplicitAny:
   const newTree = tree as any;
+  // biome-ignore lint/suspicious/noExplicitAny:
   const firstNode = tree.children[0] as any;
   const lines = firstNode.value.split(EOL);
   for (let i = 0; i < lines.length; i++) {
@@ -24,6 +27,7 @@ export function handleScriptLink(
   }
   if (url !== '') {
     for (let i = 1; i < tree.children.length; i++) {
+      // biome-ignore lint/suspicious/noExplicitAny:
       const node = tree.children[i] as any;
       if (node.type === 'paragraph' && node.children) {
         paragraphIndex = i;
@@ -48,7 +52,7 @@ export function handleScriptLink(
         newTree.children[paragraphIndex].children[linkStartIndex] = linkNode;
         newTree.children[paragraphIndex].children.splice(
           linkStartIndex + 1,
-          linkStartIndex + 2
+          linkStartIndex + 2,
         );
       }
     }

@@ -32,18 +32,19 @@ export function capitalize(val) {
   }
   const words = val.split(' ');
   const capitalizedWords = words.map((word, idx) => {
+    let newWord = word;
     const isFirstWord = idx === 0;
-    const isPrep = PREPOSITIONS.includes(word.toLowerCase());
-    const isLowerCase = word === word.toLowerCase();
+    const isPrep = PREPOSITIONS.includes(newWord.toLowerCase());
+    const isLowerCase = newWord === newWord.toLowerCase();
     if (isFirstWord || !isPrep || !isLowerCase) {
       specialCapsWords.forEach((item) => {
-        if (word === item.word) {
-          word = item.newWord;
+        if (newWord === item.word) {
+          newWord = item.newWord;
         }
       });
-      return word.charAt(0).toUpperCase() + word.slice(1);
+      return newWord.charAt(0).toUpperCase() + newWord.slice(1);
     }
-    return word;
+    return newWord;
   });
   return capitalizedWords.join(' ');
 }

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import fs from 'node:fs';
 import { EOL } from 'os';
 import path from 'path';
@@ -68,10 +66,12 @@ function getFilesOnCache(filepath: string) {
 }
 
 export function handleExampleImports(
+  // biome-ignore lint/suspicious/noExplicitAny:
   node: any,
   dirname: string,
   rootDir: string,
-  parent: Parent<any, any>
+  // biome-ignore lint/suspicious/noExplicitAny:
+  parent: Parent<any, any>,
 ) {
   let content = '';
   let filePath = node.value.replace(/(\.\.\/)+/g, '');
@@ -117,7 +117,7 @@ export function handleExampleImports(
   const docsPath = versionSet === 'default' ? 'docs/' : `docs/${versionSet}/`;
   let fileAbsPath = path.resolve(
     path.join(rootDir, `${docsPath}${bookPath}/`),
-    filePath
+    filePath,
   );
 
   if (node.type === 'text') {
@@ -133,7 +133,7 @@ export function handleExampleImports(
     if (fileAbsPath.includes('/fuels-ts/demo-typegen/')) {
       fileAbsPath = fileAbsPath.replace(
         'fuels-ts/demo-typegen',
-        'fuels-ts/apps/demo-typegen'
+        'fuels-ts/apps/demo-typegen',
       );
     }
     const fileContent = fs.readFileSync(fileAbsPath, 'utf8');

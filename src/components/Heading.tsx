@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { cssObj } from '@fuel-ui/css';
 import { Heading as FuelHeading, Icon } from '@fuel-ui/react';
 
+// biome-ignore lint/suspicious/noExplicitAny:
 export function Heading({ children, ...props }: any) {
   const isNightly = props['data-nightly'];
   const paddingStyles = cssObj({

@@ -2,7 +2,7 @@ import type { Page } from '@playwright/test';
 
 import { expect } from './fixtures';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny:
 let saved: any[] = [];
 
 export function checkIfIsIncremented(initialIndex: number, finalIndex: number) {
@@ -10,8 +10,8 @@ export function checkIfIsIncremented(initialIndex: number, finalIndex: number) {
   console.log('FINAL Index:', finalIndex);
   const savedInitial = saved[initialIndex];
   const savedFinal = saved[finalIndex];
-  const initial: number = parseInt(savedInitial);
-  const final: number = parseInt(savedFinal);
+  const initial: number = Number.parseInt(savedInitial);
+  const final: number = Number.parseInt(savedFinal);
   console.log('INITIAL:', initial);
   console.log('FINAL:', final);
   const isIncremented = final === initial + 1;
@@ -30,7 +30,7 @@ export function checkValue(index: number, value: string) {
 export async function getByLocator(
   page: Page,
   locator: string,
-  removeFromValue: string | null | undefined
+  removeFromValue: string | null | undefined,
 ) {
   const locatorVals = await page.locator(locator).allInnerTexts();
   let locatorVal = locatorVals[0];
