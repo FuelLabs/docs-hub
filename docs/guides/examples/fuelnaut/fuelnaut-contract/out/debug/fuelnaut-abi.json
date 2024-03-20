@@ -447,12 +447,6 @@
       },
       "attributes": [
         {
-          "name": "storage",
-          "arguments": [
-            "read"
-          ]
-        },
-        {
           "name": "doc-comment",
           "arguments": [
             " returns a vector of bool options representing the statuses of each level"
@@ -474,6 +468,12 @@
           "name": "doc-comment",
           "arguments": [
             " if the option is Some(false), the level has been started but not completed"
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read"
           ]
         }
       ]

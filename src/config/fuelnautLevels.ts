@@ -21,9 +21,9 @@ const VERCEL_ENV =
   process.env.VERCEL_ENV || process.env.NEXT_PUBLIC_VERCEL_ENV || 'development';
 
 export const FUELNAUT_CONTRACT_ID =
-  VERCEL_ENV === 'development'
-    ? contractsIds.fuelnaut
-    : '0x92c37efb9dac2e28332cbdf59d394bca992e3b6c719c4e346e71368a954149a8';
+  (VERCEL_ENV === 'production' || VERCEL_ENV === 'preview')
+  ? '0x92c37efb9dac2e28332cbdf59d394bca992e3b6c719c4e346e71368a954149a8'
+  : contractsIds.fuelnaut;
 
 export const LEVELS_CONFIG: FuelnautLevelsConfig = {
   payback: {
@@ -46,13 +46,13 @@ export const LEVELS_CONFIG: FuelnautLevelsConfig = {
         : '0x9800989ac8a30b168e1a5629ad2b21fedfcfd0424d2031138e7bfcb4e98c0d7a',
     hasConfigurables: false,
   },
-  // vault: {
-  //   key: 'vault',
-  //   title: 'Vault',
-  //   index: 2,
-  //   contractId: VERCEL_ENV === 'development'
-  //     ? contractsIds.vault
-  //     : '0x1d32d3683bedf8d956ec2f52e8baea058292494866a418e991d917fec552126c',
-  //   hasConfigurables: true,
-  // },
+  vault: {
+    key: 'vault',
+    title: 'Vault',
+    index: 2,
+    contractId: VERCEL_ENV === 'development'
+      ? contractsIds.vault
+      : '0x1d32d3683bedf8d956ec2f52e8baea058292494866a418e991d917fec552126c',
+    hasConfigurables: true,
+  },
 };
