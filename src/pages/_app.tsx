@@ -1,10 +1,10 @@
-import '../styles/index.css';
-import '../styles/docsearch.css';
 import { FuelProvider } from '@fuel-wallet/react';
 import { FuelProvider as NewFuelProvider } from '@fuels/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Analytics } from '@vercel/analytics/react';
 import type { AppProps } from 'next/app';
+import '../styles/docsearch.css';
+import '../styles/index.css';
 
 import { Provider } from '../components/Provider';
 import { VersionProvider } from '../hooks/useVersion';

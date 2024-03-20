@@ -1,16 +1,16 @@
 import { readFileSync } from 'fs';
-import type { GetStaticProps } from 'next';
 import { join } from 'path';
-import { useState, useEffect } from 'react';
+import type { GetStaticProps } from 'next';
+import { useEffect, useState } from 'react';
 
 import { Layout } from '../components/Layout';
 import { DOCS_DIRECTORY, FUEL_TESTNET_UPPER_CASE } from '../config/constants';
 import { useVersion } from '../hooks/useVersion';
+import { getActiveNav } from '../lib/getActiveNav';
+import { getNavs } from '../lib/getNavs';
+import { getAllVersions } from '../lib/versions';
 import { GuidesPage } from '../screens/GuidesPage';
 import type { NavOrder, VersionSet, Versions } from '../types';
-import { getNavs } from '../lib/getNavs';
-import { getActiveNav } from '../lib/getActiveNav';
-import { getAllVersions } from '../lib/versions';
 
 export interface GuideInfo {
   title: string;
@@ -77,7 +77,7 @@ export default function Guides({
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny:
 export const getStaticProps: GetStaticProps<any> = async () => {
   const guidesPath = join(DOCS_DIRECTORY, `./guides/docs/guides.json`);
 

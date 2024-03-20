@@ -4,7 +4,7 @@ import { Box, ButtonLink } from '@fuel-ui/react';
 
 import { EXTERNAL_NAVIGATION_LINKS } from '../config/constants';
 import { useDocContext } from '../hooks/useDocContext';
-import type { SidebarLinkItem, NavOrder, Versions, VersionSet } from '../types';
+import type { NavOrder, SidebarLinkItem, VersionSet, Versions } from '../types';
 
 import { SidebarLink, buttonStyles } from './SidebarLink';
 import { SidebarSection } from './SidebarSection';
@@ -51,7 +51,7 @@ export function Sidebar({
             bookName="guides"
             links={links}
             onClick={onClick}
-            docSlug={doc && doc.slug}
+            docSlug={doc?.slug}
           />
         </>
       )}
@@ -73,7 +73,7 @@ export function Sidebar({
                   bookName={navOrder.sidebarName}
                   links={navOrder.links}
                   onClick={onClick}
-                  docSlug={doc && doc.slug}
+                  docSlug={doc?.slug}
                   version={
                     versions &&
                     Object.values(versions).find((v) => v.name.includes(key))

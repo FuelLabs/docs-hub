@@ -8,7 +8,7 @@ export default function processSummary(lines, docsName) {
       docsName,
       currentCategory,
       order,
-      forcLines
+      forcLines,
     );
     order = currentOrder;
     forcLines = currentForcLines;
@@ -19,7 +19,7 @@ export default function processSummary(lines, docsName) {
 
 function handleLine(line, docsName, currentCategory, order, forcLines) {
   let currentOrder = order;
-  let currentForcLines = forcLines;
+  const currentForcLines = forcLines;
   let currentCat = currentCategory;
   const paths = line.split('/');
   const newPaths = paths[0].split('(');
@@ -33,7 +33,7 @@ function handleLine(line, docsName, currentCategory, order, forcLines) {
         currentCat,
         docsName,
         newPaths,
-        currentOrder
+        currentOrder,
       );
       currentOrder = handled.order;
       currentCat = handled.currentCategory;

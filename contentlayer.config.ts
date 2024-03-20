@@ -44,7 +44,7 @@ const MdDoc = defineDocumentType(() => ({
   computedFields: {
     slug: {
       type: 'string',
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       resolve: (doc: any) => DocParser.createSlug(doc._raw.flattenedPath),
     },
   },

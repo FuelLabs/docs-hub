@@ -1,7 +1,7 @@
 import type { ThemeUtilsCSS } from '@fuel-ui/css';
 import { cssObj } from '@fuel-ui/css';
 import { Box, Button, Icon, IconButton, Text, toast } from '@fuel-ui/react';
-import { useState, type ReactNode, Children } from 'react';
+import { Children, type ReactNode, useState } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import theme from 'react-syntax-highlighter/dist/cjs/styles/prism/night-owl';
 
@@ -24,7 +24,7 @@ export function Pre({
 }: PreProps) {
   const [expanded, setExpanded] = useState(false);
   const needExpand = lines >= 32;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny:
   const codeEl: any = Children.toArray(children)[0];
   const codeStr = codeEl?.props?.children || '';
   const gqlCode =

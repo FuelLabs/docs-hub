@@ -10,7 +10,7 @@ export async function waitForExtensions(
       version: string;
     }
   >,
-  attempts: number = 0
+  attempts = 0,
 ) {
   console.log('Checking extensions...');
   const pages = context.pages();

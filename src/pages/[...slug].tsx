@@ -1,18 +1,20 @@
+import { join } from 'path';
 import type { GetStaticProps } from 'next';
 
 import type { MdDoc } from '../../.contentlayer/generated';
 import { allMdDocs } from '../../.contentlayer/generated';
 import useTheme from '../hooks/useTheme';
+import { getNavs } from '../lib/getNavs';
 import { Doc } from '../lib/md-doc';
 import { Docs } from '../lib/md-docs';
 import {
+  getAllVersions,
   getFuelCoreVersion,
   getNodeVersion,
-  getAllVersions,
+  getVersions,
 } from '../lib/versions';
 import { DocScreen } from '../screens/DocPage';
 import type { DocType, NavOrder, SidebarLinkItem, Versions } from '../types';
-import { getNavs } from '../lib/getNavs';
 
 export type DocPageProps = {
   allNavs: NavOrder[];
@@ -43,7 +45,7 @@ export function getStaticPaths() {
   return { paths, fallback: false };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny:
 export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   const slugArray = params?.slug as string[];
   const doc = new Doc(slugArray, allMdDocs);
@@ -58,7 +60,7 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   if (slug.includes('guides/') || slug.includes('/intro/quickstart')) {
     fuelCoreVersion = getFuelCoreVersion();
     nodeVersion = getNodeVersion().substring(1);
-    const majorVersionMax = parseInt(nodeVersion.substring(0, 2)) + 1;
+    const majorVersionMax = Number.parseInt(nodeVersion.substring(0, 2)) + 1;
     nodeVersionMax = `${majorVersionMax}.0.0`;
   }
 

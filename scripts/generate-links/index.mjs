@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import { getDocs, getDocBySlug } from './getDocs.mjs';
+import { getDocBySlug, getDocs } from './getDocs.mjs';
 import { getOrders } from './getOrders.mjs';
 import getSortedLinks from './getSortedLinks.mjs';
 import { capitalize } from './str.mjs';
@@ -78,7 +78,7 @@ async function main() {
           });
         }
       }
-    })
+    }),
   );
 
   handleAllOrders(allOrders, folderPath, 'all-orders');

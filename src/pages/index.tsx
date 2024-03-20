@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
-import type { GetStaticProps } from 'next';
 import { join } from 'path';
+import type { GetStaticProps } from 'next';
 
 import { allMdDocs } from '../../.contentlayer/generated';
 import { DOCS_DIRECTORY } from '../config/constants';
@@ -14,7 +14,7 @@ export default function HomePage(props: DocPageProps) {
   return <DocPage {...props} />;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny:
 export const getStaticProps: GetStaticProps<any> = async () => {
   const slugArray = ['docs', 'intro', 'what-is-fuel'];
   const doc = new Doc(slugArray, allMdDocs);
@@ -22,15 +22,15 @@ export const getStaticProps: GetStaticProps<any> = async () => {
   const { light, dark } = await doc.getCode();
   const allNavsPath = join(
     DOCS_DIRECTORY,
-    `../src/generated/sidebar-links/all-orders.json`
+    '../src/generated/sidebar-links/all-orders.json',
   );
   const allnightlyNavsPath = join(
     DOCS_DIRECTORY,
-    `../src/generated/sidebar-links/all-nightly-orders.json`
+    '../src/generated/sidebar-links/all-nightly-orders.json',
   );
   const allBeta4NavsPath = join(
     DOCS_DIRECTORY,
-    `../src/generated/sidebar-links/all-beta-4-orders.json`
+    '../src/generated/sidebar-links/all-beta-4-orders.json',
   );
   const allNavs = JSON.parse(readFileSync(allNavsPath, 'utf8'));
   const allNightlyNavs = JSON.parse(readFileSync(allnightlyNavsPath, 'utf8'));

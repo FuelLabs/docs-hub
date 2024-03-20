@@ -1,5 +1,5 @@
 import { cssObj } from '@fuel-ui/css';
-import { Text, Box, Button, Grid, ButtonLink } from '@fuel-ui/react';
+import { Box, Button, ButtonLink, Grid, Text } from '@fuel-ui/react';
 import NextLink from 'next/link';
 import { useDocContext } from '~/src/hooks/useDocContext';
 

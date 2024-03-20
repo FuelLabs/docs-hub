@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import fs from 'node:fs';
 import { EOL } from 'os';
 import path from 'path';
@@ -12,6 +10,7 @@ import { FUEL_TESTNET } from '~/src/config/constants';
 export type CommentTypes = '<!--' | '{/*' | '//' | '/*';
 
 export function getEndCommentType(commentType: string) {
+  // biome-ignore lint/suspicious/noImplicitAnyLet:
   let commentEnd;
   switch (commentType) {
     case '/*':
@@ -34,7 +33,7 @@ export function getEndCommentType(commentType: string) {
 function extractCommentBlock(
   content: string,
   comment: string,
-  commentType: CommentTypes
+  commentType: CommentTypes,
 ) {
   const lines = content.split(EOL);
   const commentEnd = getEndCommentType(commentType);
@@ -78,10 +77,13 @@ export function textImport(options: Options = { filepath: '' }) {
   const dirname = path.relative(rootDir, path.dirname(filepath));
 
   return function transformer(tree: Root) {
+    // biome-ignore lint/suspicious/noExplicitAny:
     const nodes: [any, number | null, Parent<any, any>][] = [];
 
+    // biome-ignore lint/suspicious/noExplicitAny:
     visit(tree, 'mdxJsxFlowElement', (node: any, idx, parent) => {
       if (node.name === 'TextImport') {
+        // biome-ignore lint/suspicious/noExplicitAny:
         nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
       }
     });
@@ -94,12 +96,16 @@ export function textImport(options: Options = { filepath: '' }) {
         throw new Error('TextImport needs to have properties defined');
       }
 
+      // biome-ignore lint/suspicious/noExplicitAny:
       const file = attr.find((i: any) => i.name === 'file')?.value;
+      // biome-ignore lint/suspicious/noExplicitAny:
       const comment = attr.find((i: any) => i.name === 'comment')?.value;
       const commentType = attr.find(
-        (i: any) => i.name === 'commentType'
+        // biome-ignore lint/suspicious/noExplicitAny:
+        (i: any) => i.name === 'commentType',
       )?.value;
       let linesIncluded =
+        // biome-ignore lint/suspicious/noExplicitAny:
         attr.find((i: any) => i.name === 'linesIncluded')?.value || [];
       const fileAbsPath = path.resolve(path.join(rootDir, dirname), file);
       const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
@@ -110,12 +116,12 @@ export function textImport(options: Options = { filepath: '' }) {
       const commentResult = extractCommentBlock(
         fileContent,
         comment,
-        commentType
+        commentType,
       );
       content = commentResult;
       content = content
         .replaceAll('{props.fuelTestnet}', FUEL_TESTNET)
-        .replaceAll('{props.fuelTestnetInlineCode}', '`' + FUEL_TESTNET + '`');
+        .replaceAll('{props.fuelTestnetInlineCode}', `\`${FUEL_TESTNET}\``);
 
       const processor = remark();
       const ast = processor.parse(content);
