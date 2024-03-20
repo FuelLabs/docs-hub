@@ -13,11 +13,12 @@ import { codeImport } from '~/src/lib/plugins/code-import';
 import { textImport } from '~/src/lib/plugins/text-import';
 
 import { DOCS_DIRECTORY } from '../config/constants';
-import type { Config, DocType, SidebarLinkItem } from '../types';
+import type { Config, DocType, SidebarLinkItem, VersionSet } from '../types';
 
 import { Docs } from './md-docs';
 import { rehypePlugins, remarkPlugins } from './md-plugins';
 import { rehypeExtractHeadings } from './plugins/toc';
+import getDocVersion from './versions';
 
 const isPreview = process.env.VERCEL_ENV === 'preview';
 const branchUrl = `https://${process.env.VERCEL_BRANCH_URL}/`;
@@ -93,6 +94,19 @@ export class Doc {
     if (pageLink.includes('breaking-change-log/breaking-changes-log')) {
       pageLink =
         'https://github.com/FuelLabs/breaking-change-log/blob/master/breaking-changes-log.md';
+    }
+
+    if (pageLink.includes('/master/')) {
+      let versionSet: VersionSet = 'default';
+      if(item.slug.includes('/nightly/')) {
+        versionSet = 'nightly'
+      }
+      const version = getDocVersion(pageLink, versionSet);
+      if (version !== 'master') {
+        pageLink = pageLink
+          .replace('/tree/master/', `/tree/${version}/`)
+          .replace('/blob/master/', `/blob/${version}/`);
+      }
     }
 
     this.md = item;
