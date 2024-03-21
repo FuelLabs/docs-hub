@@ -5,7 +5,7 @@ import { Box } from '@fuel-ui/react';
 export function Table(props: any) {
   return (
     <Box css={styles.root}>
-      <Box as="table" {...props} css={styles.table} />
+      <Box as='table' {...props} css={styles.table} />
     </Box>
   );
 }
@@ -13,8 +13,8 @@ export function Table(props: any) {
 // biome-ignore lint/suspicious/noExplicitAny:
 export function TD(props: any) {
   return (
-    <Box as="td" {...props} css={styles.td}>
-      <Box as="div" css={styles.tdContainer}>
+    <Box as='td' {...props} css={styles.td}>
+      <Box as='div' css={styles.tdContainer}>
         {props.children}
       </Box>
     </Box>
@@ -24,8 +24,8 @@ export function TD(props: any) {
 // biome-ignore lint/suspicious/noExplicitAny:
 export function TH(props: any) {
   return (
-    <Box as="th" {...props} css={styles.td}>
-      <Box as="div" css={styles.thContainer}>
+    <Box as='th' {...props} css={styles.td}>
+      <Box as='div' css={styles.thContainer}>
         {props.children}
       </Box>
     </Box>

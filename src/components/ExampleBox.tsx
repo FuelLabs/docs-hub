@@ -13,10 +13,10 @@ export function ExampleBox({
   error?: any;
 }) {
   return (
-    <Box.Stack gap="$2" css={styles.root}>
-      <Heading as="h6">Check it working </Heading>
+    <Box.Stack gap='$2' css={styles.root}>
+      <Heading as='h6'>Check it working </Heading>
       <Box css={styles.content}>
-        {error && <Text color="intentsError10">{error.message}</Text>}
+        {error && <Text color='intentsError10'>{error.message}</Text>}
         {children}
       </Box>
     </Box.Stack>

@@ -6,17 +6,17 @@ import {
   Dialog,
   Form,
   Icon,
-  IconButton,
   Input,
   Link,
   Spinner,
   Text,
-  toast,
+  toast
 } from '@fuel-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import { buttonStyles } from './SidebarLink';
 
 type FormData = {
   helpful: 'true' | 'false' | null;
@@ -31,7 +31,7 @@ export function FeedbackForm() {
     handleSubmit,
     watch,
     reset,
-    setValue,
+    // setValue,
     formState: { errors },
   } = useForm<FormData>();
   const isHelpful = watch('helpful');
@@ -70,16 +70,16 @@ export function FeedbackForm() {
       <Form.Control css={styles.formControl} isRequired>
         <Box.Flex gap={'8px'}>
           <Box
-            as="input"
-            type="radio"
-            id="trueButton"
-            value="true"
+            as='input'
+            type='radio'
+            id='trueButton'
+            value='true'
             checked={isHelpful === 'true'}
             {...register('helpful', { required: true })}
             css={styles.radioButton}
           />
           <Box
-            as="label"
+            as='label'
             css={
               isHelpful === 'true'
                 ? {
@@ -88,24 +88,24 @@ export function FeedbackForm() {
                   }
                 : styles.buttonLabel
             }
-            htmlFor="trueButton"
+            htmlFor='trueButton'
           >
             <Icon
               css={isHelpful === 'true' ? styles.selectedThumbIcon : {}}
-              icon="ThumbUp"
+              icon='ThumbUp'
             />
           </Box>
           <Box
-            as="input"
-            type="radio"
-            id="falseButton"
-            value="false"
+            as='input'
+            type='radio'
+            id='falseButton'
+            value='false'
             checked={isHelpful === 'false'}
             {...register('helpful', { required: true })}
             css={styles.radioButton}
           />
           <Box
-            as="label"
+            as='label'
             css={
               isHelpful === 'false'
                 ? {
@@ -114,16 +114,16 @@ export function FeedbackForm() {
                   }
                 : styles.buttonLabel
             }
-            htmlFor="falseButton"
+            htmlFor='falseButton'
           >
             <Icon
               css={isHelpful === 'false' ? styles.selectedThumbIcon : {}}
-              icon="ThumbDown"
+              icon='ThumbDown'
             />
           </Box>
         </Box.Flex>
         {errors.helpful && (
-          <Alert css={styles.alert} direction="row" status="error">
+          <Alert css={styles.alert} direction='row' status='error'>
             <Alert.Description>A rating is required.</Alert.Description>
           </Alert>
         )}
@@ -139,7 +139,7 @@ export function FeedbackForm() {
           justify={'space-between'}
           align={'flex-end'}
         >
-          <Form.Label css={styles.text} htmlFor="feedback">
+          <Form.Label css={styles.text} htmlFor='feedback'>
             Let us know what we{' '}
             {isHelpful === 'true' ? 'did well' : 'can do better'}
           </Form.Label>
@@ -147,10 +147,10 @@ export function FeedbackForm() {
         </Box.Flex>
         <Box css={styles.textareaContainer}>
           <Box
-            as="textarea"
+            as='textarea'
             css={styles.textarea}
-            className="form-textarea"
-            id="message"
+            className='form-textarea'
+            id='message'
             rows={4}
             cols={50}
             {...register('feedback')}
@@ -168,18 +168,18 @@ export function FeedbackForm() {
           justify={'space-between'}
           align={'flex-end'}
         >
-          <Form.Label css={styles.text} htmlFor="email">
+          <Form.Label css={styles.text} htmlFor='email'>
             If we can contact you with questions, please enter your email
           </Form.Label>
           <Text css={styles.text}>Optional</Text>
         </Box.Flex>
         <Input isFullWidth>
-          <Input.ElementLeft element={<Icon icon="Mail" />} />
+          <Input.ElementLeft element={<Icon icon='Mail' />} />
           <Input.Field
-            type="email"
-            id="email"
+            type='email'
+            id='email'
             {...register('email')}
-            placeholder="email@example.com"
+            placeholder='email@example.com'
           />
         </Input>
       </Form.Control>
@@ -190,10 +190,10 @@ export function FeedbackForm() {
     return (
       <Box.Flex justify={'flex-end'} gap={'10px'}>
         <Button
-          variant="outlined"
-          intent="base"
-          size="sm"
-          type="button"
+          variant='outlined'
+          intent='base'
+          size='sm'
+          type='button'
           onClick={() => closeForm()}
           css={styles.text}
         >
@@ -201,14 +201,14 @@ export function FeedbackForm() {
         </Button>
         <Button
           css={{ ...styles.text, ...styles.submit }}
-          variant="outlined"
-          intent="base"
-          size="sm"
-          type="submit"
+          variant='outlined'
+          intent='base'
+          size='sm'
+          type='submit'
           onClick={handleSubmit(onSubmit)}
         >
           {mutation.isLoading ? (
-            <Spinner color="semanticSolidInfoBg" />
+            <Spinner color='semanticSolidInfoBg' />
           ) : (
             'Send'
           )}
@@ -220,32 +220,17 @@ export function FeedbackForm() {
   return (
     <Box>
       <Dialog isOpen={dialogIsOpen} onOpenChange={setDialogIsOpen}>
-        <Box.Flex align="center" gap={'6px'} css={styles.container}>
-          <IconButton
-            aria-label="Thumbs Up"
-            icon="ThumbUp"
-            size="sm"
-            intent="base"
-            variant="ghost"
-            css={styles.ratingButton}
+        <Box.Flex align='center' gap={'6px'} css={styles.container}>
+          <Button
+            intent={'primary'}
+            variant={'link'}
+            css={{ ...buttonStyles, ...styles.feedback }}
             onClick={() => {
               setDialogIsOpen(true);
-              setValue('helpful', 'true');
             }}
-          />
-          <IconButton
-            aria-label="Thumbs Down"
-            icon="ThumbDown"
-            size="sm"
-            intent="base"
-            variant="ghost"
-            css={styles.ratingButton}
-            onClick={() => {
-              setDialogIsOpen(true);
-              setValue('helpful', 'false');
-            }}
-          />
-          <Text css={styles.text}>Was this page helpful?</Text>
+          >
+            Feedback
+          </Button>
         </Box.Flex>
         <Dialog.Content>
           <Dialog.Close onClick={closeForm} />
@@ -258,7 +243,7 @@ export function FeedbackForm() {
                 <Link
                   css={styles.forumLink}
                   isExternal
-                  href="https://forum.fuel.network/"
+                  href='https://forum.fuel.network/'
                 >
                   Forum
                 </Link>
@@ -277,6 +262,13 @@ export function FeedbackForm() {
 
 const styles = {
   text: cssObj({
+    'html[class="fuel_light-theme"] &': {
+      color: '$intentsBase12',
+    },
+  }),
+  feedback: cssObj({
+    color: '$semanticLinkBaseColor',
+    ml: '$3',
     'html[class="fuel_light-theme"] &': {
       color: '$intentsBase12',
     },
@@ -346,9 +338,6 @@ const styles = {
     fontFamily: 'var(--fonts-display)',
   }),
   container: cssObj({
-    justifyContent: 'center',
-    '@sm': {
-      justifyContent: 'flex-start',
-    },
+    justifyContent: 'flex-start',
   }),
 };

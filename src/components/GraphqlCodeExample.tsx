@@ -44,24 +44,24 @@ export function GraphQLCodeExample(props: CodeExamplesProps) {
 
   return (
     <Box.Stack css={styles.root}>
-      <Tabs defaultValue="ts" css={styles.tabs}>
-        <Tabs.List css={styles.tabsList} aria-label="Using the query in an app">
-          <Heading as="h4" leftIcon="Code">
+      <Tabs defaultValue='ts' css={styles.tabs}>
+        <Tabs.List css={styles.tabsList} aria-label='Using the query in an app'>
+          <Heading as='h4' leftIcon='Code'>
             Code Example:
           </Heading>
-          <Tabs.Trigger css={styles.tabsTrigger} value="ts">
+          <Tabs.Trigger css={styles.tabsTrigger} value='ts'>
             TypeScript
           </Tabs.Trigger>
-          <Tabs.Trigger css={styles.tabsTrigger} value="apollo">
+          <Tabs.Trigger css={styles.tabsTrigger} value='apollo'>
             Apollo Client
           </Tabs.Trigger>
-          <Tabs.Trigger css={styles.tabsTrigger} value="urql">
+          <Tabs.Trigger css={styles.tabsTrigger} value='urql'>
             urql
           </Tabs.Trigger>
         </Tabs.List>
-        <TabContent value="ts" content={props.children[0]} />
-        <TabContent value="apollo" content={props.children[1]} />
-        <TabContent value="urql" content={props.children[2]} />
+        <TabContent value='ts' content={props.children[0]} />
+        <TabContent value='apollo' content={props.children[1]} />
+        <TabContent value='urql' content={props.children[2]} />
       </Tabs>
     </Box.Stack>
   );

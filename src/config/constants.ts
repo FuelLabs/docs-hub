@@ -91,17 +91,9 @@ export const NAVIGATION: any[] = [
         name: 'Tooling',
       },
       {
-        name: 'Fuelup',
-        link: '/docs/fuelup',
-      },
-      {
         name: 'Forc',
         link: '/docs/forc',
       },
-      // {
-      //   name: 'Fuel Nix',
-      //   link: '/docs/nix/',
-      // },
     ],
   },
   {
@@ -133,7 +125,7 @@ export const NAVIGATION: any[] = [
         link: '/docs/graphql/overview/',
       },
       {
-        name: 'Specs',
+        name: 'Specifications',
         link: '/docs/specs',
       },
       {

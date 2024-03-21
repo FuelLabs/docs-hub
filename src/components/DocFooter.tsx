@@ -1,16 +1,7 @@
 import { cssObj } from '@fuel-ui/css';
-import {
-  Box,
-  Button,
-  Link as FuelLink,
-  Grid,
-  Icon,
-  Text,
-} from '@fuel-ui/react';
+import { Box, Button, ButtonLink, Grid, Text } from '@fuel-ui/react';
 import NextLink from 'next/link';
 import { useDocContext } from '~/src/hooks/useDocContext';
-
-import { FeedbackForm } from './FeedbackForm';
 
 export function PrevAndNextLinks() {
   const { docLink } = useDocContext();
@@ -26,8 +17,8 @@ export function PrevAndNextLinks() {
             <Button
               css={styles.linkButton}
               leftIcon={'ArrowLeft'}
-              variant="outlined"
-              intent="base"
+              variant='outlined'
+              intent='base'
               iconSize={ICON_SIZE}
             >
               <Box.VStack css={{ ...styles.links, ...styles.alignRight }}>
@@ -44,8 +35,8 @@ export function PrevAndNextLinks() {
             <Button
               css={styles.linkButton}
               rightIcon={'ArrowRight'}
-              variant="outlined"
-              intent="base"
+              variant='outlined'
+              intent='base'
               iconSize={ICON_SIZE}
             >
               <Box.VStack css={{ ...styles.links, ...styles.alignLeft }}>
@@ -61,22 +52,27 @@ export function PrevAndNextLinks() {
 }
 
 export function DocFooter() {
+  const { doc } = useDocContext();
+
+  const hideGithubLink = (doc.pageLink.includes('github.com/FuelLabs/fuels-ts') && doc.pageLink.includes('/api/')) || doc.pageLink.includes('docs/beta-4');
+
   return (
-    <Box css={styles.root} as="footer">
-      <Box.Flex css={styles.feedbackContainer}>
-        <FeedbackForm />
-        <Box.Flex gap={'6px'} css={styles.forum}>
-          <Icon icon={'HelpCircle'} stroke={1} color="intentsBase12" />
-          <FuelLink
-            css={styles.forumLink}
-            href="https://forum.fuel.network/"
+    <Box css={styles.root} as='footer'>
+      <PrevAndNextLinks />
+
+      {!hideGithubLink  && (
+        <Box.Flex justify={'flex-end'} css={styles.feedbackContainer}>
+          <ButtonLink
+            leftIcon={'BrandGithubFilled'}
+            size={'sm'}
+            css={styles.githubLink}
+            href={doc.pageLink}
             isExternal
           >
-            Ask a question in the forum.
-          </FuelLink>
+            Edit this page
+          </ButtonLink>
         </Box.Flex>
-      </Box.Flex>
-      <PrevAndNextLinks />
+      )}
     </Box>
   );
 }
@@ -125,28 +121,38 @@ const styles = {
   label: cssObj({
     color: '$textInverse',
   }),
+  githubLink: cssObj({
+    border: '1px solid $border',
+    px: '$2',
+    color: '$textColor',
+    '&:hover': {
+      textDecoration: 'none',
+      bg: '$border !important',
+      color: '$textColor !important',
+      '.fuel_Icon': {
+        color: '$textColor !important',
+      },
+    },
+    'html[class="fuel_light-theme"] &': {
+      color: 'black',
+      '&:hover': {
+        color: 'black !important',
+        '.fuel_Icon': {
+          color: 'black',
+        },
+      },
+    },
+    '.fuel_Icon': {
+      color: '$textColor',
+    },
+  }),
   feedbackContainer: cssObj({
-    my: '$4',
+    mt: '$1',
     py: '$4',
     gap: '$4',
-    borderTop: '1px solid $border',
-    borderBottom: '1px solid $border',
     flexDirection: 'column',
     '@sm': {
       flexDirection: 'row',
-      justifyContent: 'space-between',
-    },
-  }),
-  forumLink: cssObj({
-    color: '$intentsBase11 !important',
-    'html[class="fuel_light-theme"] &': {
-      color: '$intentsBase12 !important',
-    },
-  }),
-  forum: cssObj({
-    justifyContent: 'center',
-    '@sm': {
-      justifyContent: 'flex-start',
     },
   }),
 };
