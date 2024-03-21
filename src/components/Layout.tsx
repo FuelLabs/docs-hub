@@ -57,17 +57,17 @@ export function Layout({
       <Head>
         <title>{titleText}</title>
         <meta
-          name="description"
+          name='description'
           content={
             config && config?.ogTags?.description !== ''
               ? config?.ogTags?.description
               : 'Fuel Network Docs'
           }
-          key="desc"
+          key='desc'
         />
-        <meta property="og:title" content={titleText} />
+        <meta property='og:title' content={titleText} />
         <meta
-          property="og:description"
+          property='og:description'
           content={
             config && config?.ogTags?.description !== ''
               ? config?.ogTags?.description
@@ -75,14 +75,14 @@ export function Layout({
           }
         />
         <meta
-          property="og:image"
+          property='og:image'
           content={
             config && config?.ogTags?.image !== ''
               ? config?.ogTags?.image
               : '/images/Fuel_Network.png'
           }
         />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name='viewport' content='width=device-width, initial-scale=1.0' />
       </Head>
       <Box css={styles.root}>
         <Grid data-clean={Boolean(isClean)} css={styles.grid}>

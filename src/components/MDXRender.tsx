@@ -3,7 +3,7 @@ import { runSync } from '@mdx-js/mdx';
 import * as provider from '@mdx-js/react';
 import dynamic from 'next/dynamic';
 import 'plyr-react/plyr.css';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import {
   BETA_4_EXPLORER_LINK,
@@ -18,6 +18,7 @@ import {
 import { runtime } from '../lib/runtime';
 import type { VersionSet } from '../types';
 
+import useTheme from '../hooks/useTheme';
 import { Blockquote } from './Blockquote';
 import { CardSection } from './CardSection';
 import { Code } from './Code';
@@ -62,7 +63,8 @@ export const mdxComponents = {
 } as any;
 
 type MDXRenderProps = {
-  code: string;
+  codeLight: string;
+  codeDark: string;
   // biome-ignore lint/suspicious/noExplicitAny:
   components: Record<any, any>;
   versionSet: VersionSet;
@@ -72,17 +74,29 @@ type MDXRenderProps = {
 };
 
 export function MDXRender({
-  code,
+  codeLight,
+  codeDark,
   components,
   versionSet,
   fuelCoreVersion,
   nodeVersion,
   nodeVersionMax,
 }: MDXRenderProps) {
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+  const { theme } = useTheme();
+
   const { default: Content } = useMemo(
-    () => runSync(code, { ...runtime, ...provider }),
-    [code],
+    () =>
+      runSync(isMounted && theme === 'light' ? codeLight : codeDark, {
+        ...runtime,
+        ...provider,
+      }),
+    [codeDark, codeLight, theme, isMounted],
   );
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <provider.MDXProvider components={{ ...components, ...mdxComponents }}>

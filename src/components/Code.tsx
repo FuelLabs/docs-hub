@@ -3,7 +3,7 @@ import { Box } from '@fuel-ui/react';
 
 // biome-ignore lint/suspicious/noExplicitAny:
 export function Code(props: any) {
-  return <Box as="code" css={styles.root} {...props} />;
+  return <Box as='code' css={styles.root} {...props} />;
 }
 
 const styles = {

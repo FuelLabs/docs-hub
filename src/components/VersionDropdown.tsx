@@ -28,7 +28,6 @@ export default function VersionDropdown({
   const isDoc =
     router.asPath.includes('docs') &&
     !router.asPath.includes('/intro/') &&
-    !router.asPath.includes('docs/fuelup') &&
     !router.asPath.includes('docs/contributing');
   const bookIndex =
     versionSet !== 'default' &&
@@ -49,8 +48,8 @@ export default function VersionDropdown({
   return (
     <Dropdown isOpen={opened} onOpenChange={setOpened}>
       <Dropdown.Trigger
-        intent="base"
-        variant="outlined"
+        intent='base'
+        variant='outlined'
         css={
           opened ? { ...styles.trigger, ...styles.triggerOpen } : styles.trigger
         }
@@ -91,25 +90,25 @@ export default function VersionDropdown({
           aria-label={FUEL_TESTNET}
         >
           <Text>{FUEL_TESTNET_UPPER_CASE}</Text>
-          {versionSet === 'default' && <Icon icon="Check" color="accent11" />}
+          {versionSet === 'default' && <Icon icon='Check' color='accent11' />}
         </Dropdown.MenuItem>
 
         <Dropdown.MenuItem
           css={styles.menuItem}
-          key="beta-4"
-          aria-label="beta-4"
+          key='beta-4'
+          aria-label='beta-4'
         >
           <Text>Beta-4</Text>
-          {versionSet === 'beta-4' && <Icon icon="Check" color="accent11" />}
+          {versionSet === 'beta-4' && <Icon icon='Check' color='accent11' />}
         </Dropdown.MenuItem>
 
         <Dropdown.MenuItem
           css={styles.menuItem}
-          key="nightly"
-          aria-label="nightly"
+          key='nightly'
+          aria-label='nightly'
         >
           <Text>Nightly</Text>
-          {versionSet === 'nightly' && <Icon icon="Check" color="accent11" />}
+          {versionSet === 'nightly' && <Icon icon='Check' color='accent11' />}
         </Dropdown.MenuItem>
       </Dropdown.Menu>
     </Dropdown>

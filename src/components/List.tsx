@@ -4,7 +4,7 @@ import { List } from '@fuel-ui/react';
 // biome-ignore lint/suspicious/noExplicitAny:
 export function UL({ children, ...props }: any) {
   return (
-    <List {...props} type="unordered" css={styles.root}>
+    <List {...props} type='unordered' css={styles.root}>
       {children
         // biome-ignore lint/suspicious/noExplicitAny:
         .map((child: any, idx: number) => {
@@ -19,7 +19,7 @@ export function UL({ children, ...props }: any) {
 // biome-ignore lint/suspicious/noExplicitAny:
 export function OL({ children, ...props }: any) {
   return (
-    <List {...props} type="ordered" css={styles.root}>
+    <List {...props} type='ordered' css={styles.root}>
       {children
         // biome-ignore lint/suspicious/noExplicitAny:
         .map((child: any, idx: number) => {

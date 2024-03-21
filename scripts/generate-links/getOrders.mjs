@@ -17,10 +17,6 @@ const CONFIG = {
     type: 'vp',
     path: './fuels-ts/apps/docs/.vitepress/config.ts',
   },
-  fuelup: {
-    type: 'mdbook',
-    path: './fuelup/docs/src/SUMMARY.md',
-  },
   specs: {
     type: 'mdbook',
     path: './fuel-specs/src/SUMMARY.md',
@@ -57,12 +53,8 @@ function handleOrder(orderType, filepath, orderName) {
   let beta4Orders;
   const isJSON = orderType === 'json';
   const orderFile = getFile(filepath, 'default', isJSON);
-  let nightlyOrderFile;
-  let beta4OrderFile;
-  if (orderName !== 'fuelup') {
-    nightlyOrderFile = getFile(filepath, 'nightly', isJSON);
-    beta4OrderFile = getFile(filepath, 'beta-4', isJSON);
-  }
+  const nightlyOrderFile = getFile(filepath, 'nightly', isJSON);
+  const beta4OrderFile = getFile(filepath, 'beta-4', isJSON);
 
   if (isJSON) {
     betaOrders = { order: orderFile };
@@ -79,10 +71,8 @@ function handleOrder(orderType, filepath, orderName) {
       beta4Orders = processSummary(newBeta4ForcLines, 'forc');
     } else {
       betaOrders = processSummary(orderFile.split(EOL), orderName);
-      if (orderName !== 'fuelup') {
-        nightlyOrders = processSummary(nightlyOrderFile.split(EOL), orderName);
-        beta4Orders = processSummary(beta4OrderFile.split(EOL), orderName);
-      }
+      nightlyOrders = processSummary(nightlyOrderFile.split(EOL), orderName);
+      beta4Orders = processSummary(beta4OrderFile.split(EOL), orderName);
     }
   } else if (orderType === 'vp') {
     betaOrders = processVPConfig(orderFile.split(EOL), false, false);
@@ -101,10 +91,8 @@ export async function getOrders() {
     if (!['guides', 'intro', 'contributing'].includes(key)) {
       const bookOrder = handleOrder(book.type, book.path, key);
       orders[key] = bookOrder.betaOrders.order;
-      if (key !== 'fuelup') {
-        orders[`nightly-${key}`] = bookOrder.nightlyOrders.order;
-        orders[`beta-4-${key}`] = bookOrder.beta4Orders.order;
-      }
+      orders[`nightly-${key}`] = bookOrder.nightlyOrders.order;
+      orders[`beta-4-${key}`] = bookOrder.beta4Orders.order;
 
       if (key === 'sway') {
         forcLines.push(...bookOrder.betaOrders.forcLines);

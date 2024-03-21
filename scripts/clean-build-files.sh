@@ -7,7 +7,6 @@ TARGET_DIRS=(
 "./docs/builds/sway" 
 "./docs/nightly/builds/sway" 
 "./docs/fuelup"
-"./docs/nightly/fuelup"
 "./docs/fuels-rs"
 "./docs/nightly/fuels-rs"
 "./docs/fuels-ts"
@@ -20,7 +19,6 @@ TARGET_DIRS=(
 EXCLUSIONS_sway=("Cargo.toml" "forc-pkg" "sway-lib-std" "docs" "examples" "master")
 EXCLUSIONS_fuels_rs=("Cargo.toml" "docs" "examples" "packages")
 EXCLUSIONS_fuels_ts=("apps" "packages" "package.json")
-EXCLUSIONS_fuelup=("Cargo.toml" "docs")
 EXCLUSIONS_fuels_wallet=("package.json" "packages")
 
 for TARGET_DIR in "${TARGET_DIRS[@]}"; do

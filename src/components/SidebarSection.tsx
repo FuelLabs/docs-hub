@@ -1,5 +1,5 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box, Button, Icon } from '@fuel-ui/react';
+import { Box, Button, ButtonLink, Icon } from '@fuel-ui/react';
 import type { ButtonLinkProps } from '@fuel-ui/react';
 import { useState } from 'react';
 import type { VersionItem } from '~/src/types';
@@ -28,12 +28,28 @@ export function SidebarSection({
   const [isOpened, setIsOpened] = useState<boolean | undefined>(
     book === 'guides' ||
       docSlug?.includes(book.toLowerCase()) ||
-      (book === 'Intro' && docSlug?.includes('guides/quickstart/')),
+      (book === 'Intro' &&
+        (docSlug?.includes('guides/quickstart/') || !docSlug)),
   );
+
   const isGuide = book === 'guides';
   const bookHasIndex =
     book?.toLowerCase().replaceAll(/[_-]/g, ' ') ===
     links[0].label.toLowerCase().replaceAll(/[_-]/g, ' ');
+
+  let githubLink = '';
+  if (!version && book !== 'Intro') {
+    switch (book) {
+      case 'GraphQL':
+        githubLink = 'https://github.com/FuelLabs/fuel-core/tree/v0.22.1';
+        break;
+      case 'Specs':
+        githubLink = 'https://github.com/FuelLabs/fuel-specs';
+        break;
+      default:
+        break;
+    }
+  }
 
   function toggle() {
     setIsOpened((s) => !s);
@@ -46,7 +62,7 @@ export function SidebarSection({
           <Button
             variant={'ghost'}
             href={links[0].slug}
-            intent="base"
+            intent='base'
             onClick={toggle}
             css={styles.menuButton}
             rightIcon={isOpened ? Icon.is('ChevronUp') : Icon.is('ChevronDown')}
@@ -60,7 +76,7 @@ export function SidebarSection({
       {(isGuide || isOpened) && (
         <Box css={styles.listContainer}>
           <Box css={styles.line} />
-          <Box.VStack gap="0" css={styles.sectionContainer}>
+          <Box.VStack gap='0' css={styles.sectionContainer}>
             {/* biome-ignore lint/suspicious/noExplicitAny: */}
             {links.map((link: any, index: number) => {
               if (link.slug) {
@@ -86,8 +102,16 @@ export function SidebarSection({
           </Box.VStack>
         </Box>
       )}
-      {isOpened && version && (
-        <Box css={styles.version}>Version: {version.version}</Box>
+      {isOpened && book !== 'Intro' && book !== 'guides' && (
+        <ButtonLink
+          href={version ? version.url : githubLink}
+          leftIcon={'BrandGithubFilled'}
+          size={'sm'}
+          css={styles.version}
+          isExternal
+        >
+          {version && <>Version: {version.version}</>}
+        </ButtonLink>
       )}
     </>
   );
@@ -102,12 +126,40 @@ const styles = {
     mt: '$2',
     mb: '$6',
   }),
+  icon: cssObj({
+    color: '$intentsBase10',
+    'html[class="fuel_light-theme"] &': {
+      color: '$gray11',
+    },
+    '&:hover': {
+      color: '$accent8',
+    },
+  }),
   version: cssObj({
     fontSize: '$sm',
     pl: '$4',
     mb: '$8',
     'html[class="fuel_light-theme"] &': {
       color: '$intentsBase12 !important',
+    },
+    '[aria-label*="Icon Link"]': {
+      display: 'none',
+    },
+    '&:hover': {
+      'html[class="fuel_light-theme"] &': {
+        color: '#009957 !important',
+        '.fuel_Icon': {
+          color: '#009957 !important',
+        },
+      },
+      'html[class="fuel_dark-theme"] &': {
+        color: '$semanticLinkPrimaryColor !important',
+        '.fuel_Icon': {
+          color: '$semanticLinkPrimaryColor !important',
+        },
+      },
+
+      textDecoration: 'none !important',
     },
   }),
   listItem: cssObj({
@@ -132,6 +184,9 @@ const styles = {
       bg: '$gray2 !important',
       border: 'none !important',
       fontWeight: '550',
+    },
+    '&:active': {
+      transform: 'scale(1) !important',
     },
   }),
 };

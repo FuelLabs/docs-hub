@@ -118,6 +118,11 @@ const nextConfig = {
         destination: '/guides/running-a-node/running-a-testnet-node/',
         permanent: true,
       },
+      {
+        source: '/docs/fuelup/:slug*',
+        destination: 'https://install.fuel.network/latest/',
+        permanent: true,
+      },
     ];
   },
   typescript: {
