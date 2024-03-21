@@ -25,8 +25,8 @@ export default function ThemeToggler() {
 
   return (
     <Box ref={ref} data-theme={theme} css={styles.root} onClick={handleChange}>
-      <Icon icon="SunFilled" css={styles.icon} stroke={1.2} />
-      <Icon icon="MoonStars" css={styles.icon} stroke={1.2} />
+      <Icon icon='SunFilled' css={styles.icon} stroke={1.2} />
+      <Icon icon='MoonStars' css={styles.icon} stroke={1.2} />
     </Box>
   );
 }

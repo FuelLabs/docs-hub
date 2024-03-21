@@ -87,7 +87,6 @@ export type VersionItem = {
 export type Versions = {
   Forc: VersionItem;
   Sway: VersionItem;
-  Fuelup: VersionItem;
   'Fuel Rust SDK': VersionItem;
   'Fuel TS SDK': VersionItem;
   'Fuel Wallet': VersionItem;

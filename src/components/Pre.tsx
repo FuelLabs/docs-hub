@@ -46,7 +46,7 @@ export function Pre({
 
   return (
     <Box css={{ ...styles.root, ...css }}>
-      {title && <Text as="h6">{title}</Text>}
+      {title && <Text as='h6'>{title}</Text>}
       <Box
         css={styles.wrapper}
         data-expanded={expanded}
@@ -67,17 +67,17 @@ export function Pre({
       </Box>
       <Box css={styles.actions} data-expanded={expanded}>
         {needExpand && (
-          <Button variant="outlined" size="xs" onClick={toggleExpand}>
+          <Button variant='outlined' size='xs' onClick={toggleExpand}>
             {expanded ? 'Collapse' : 'Expand'}
           </Button>
         )}
         <IconButton
-          size="xs"
+          size='xs'
           css={styles.copyIcon}
           icon={<Icon icon={Icon.is('ClipboardText')} size={12} stroke={1} />}
-          variant="ghost"
-          intent="base"
-          aria-label="Copy to Clipboard"
+          variant='ghost'
+          intent='base'
+          aria-label='Copy to Clipboard'
           onClick={handleCopy}
         />
       </Box>
@@ -95,7 +95,7 @@ const styles = {
       my: '$0 !important',
       padding: '$3 $5 $3',
       tabSize: '4',
-      fontSize: '16px !important',
+      fontSize: '14px !important',
       bg: 'transparent !important',
       borderRadius: '$default',
     },
@@ -144,6 +144,9 @@ const styles = {
   wrapper: cssObj({
     borderRadius: '$default',
     background: 'var(--colors-preBg)',
+    'html[class="fuel_light-theme"] &': {
+      background: '#f6f7f6',
+    },
 
     '&[data-need-expand=false]': {
       overflowY: 'auto',
@@ -173,6 +176,11 @@ const styles = {
         borderBottomRightRadius: '$default',
         background:
           'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%)',
+
+        'html[class="fuel_light-theme"] &': {
+          background:
+            'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%)',
+        },
       },
       '&[data-expanded=false]': {
         maxHeight: '300px',
@@ -192,19 +200,38 @@ const styles = {
       fontSize: '$xs',
       border: '1px solid $whiteA6',
 
-      '&, &:hover': {
-        color: '$whiteA10 !important',
-        bg: '$preBg !important',
+      'html[class="fuel_light-theme"] &': {
+        color: 'black',
+        borderColor: '$border',
+        bg: '$border',
+        '&, &:hover': {
+          color: 'black',
+          bg: '$border',
+        },
+        '&:hover': {
+          borderColor: 'white',
+        },
       },
-      '&:hover': {
-        borderColor: '$whiteA9 !important',
+
+      'html[class="fuel_dark-theme"] &': {
+        '&, &:hover': {
+          color: '$whiteA10 !important',
+          bg: '$preBg !important',
+        },
+        '&:hover': {
+          borderColor: '$whiteA9 !important',
+        },
       },
     },
   }),
   copyIcon: cssObj({
+    'html[class="fuel_light-theme"] &': {
+      background: '$gray6 !important',
+      border: '1px solid $gray8',
+    },
     '.fuel_Icon': {
       'html[class="fuel_light-theme"] &': {
-        color: '$gray6 !important',
+        color: 'black !important',
       },
     },
   }),

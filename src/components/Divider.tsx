@@ -3,7 +3,7 @@ import type { HTMLProps } from '@fuel-ui/react';
 import { Box } from '@fuel-ui/react';
 
 export function Divider(props: HTMLProps['hr']) {
-  return <Box as="hr" css={styles.root} {...props} />;
+  return <Box as='hr' css={styles.root} {...props} />;
 }
 
 const styles = {

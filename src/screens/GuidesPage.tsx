@@ -18,7 +18,7 @@ export function GuidesPage({ guides, versionSet }: GuidesPageProps) {
 
   return (
     <Box.Stack css={styles.root}>
-      <Heading as="h1" data-rank="h1" id="fuel-guides">
+      <Heading as='h1' data-rank='h1' id='fuel-guides'>
         Guides
       </Heading>
       <Box.Flex gap={'$3'} wrap={'wrap'} css={styles.categoryContainer}>
@@ -49,7 +49,7 @@ export function GuidesPage({ guides, versionSet }: GuidesPageProps) {
           </Button>
         ))}
       </Box.Flex>
-      <Box.Stack gap="$8">
+      <Box.Stack gap='$8'>
         {Object.keys(guides).map((guideName) => {
           const guideInfo = guides[guideName];
           if (active === 'all' || guideInfo.tags.includes(active)) {

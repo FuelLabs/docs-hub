@@ -7,4 +7,4 @@ import { getMdxCode } from './plugins/rehype-code';
 
 export const remarkPlugins = [remarkSlug, remarkGfm, handlePlugins, fixIndent];
 
-export const rehypePlugins = getMdxCode();
+export const rehypePlugins = (theme: 'light' | 'dark') => getMdxCode(theme);

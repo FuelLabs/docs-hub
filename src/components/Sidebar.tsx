@@ -6,6 +6,7 @@ import { EXTERNAL_NAVIGATION_LINKS } from '../config/constants';
 import { useDocContext } from '../hooks/useDocContext';
 import type { NavOrder, SidebarLinkItem, VersionSet, Versions } from '../types';
 
+import { FeedbackForm } from './FeedbackForm';
 import { SidebarLink, buttonStyles } from './SidebarLink';
 import { SidebarSection } from './SidebarSection';
 
@@ -31,7 +32,7 @@ export function Sidebar({
   const { links, doc } = ctx;
 
   return (
-    <Box.Stack as="nav" css={styles.root} className="Sidebar">
+    <Box.Stack as='nav' css={styles.root} className='Sidebar'>
       {!allNavs && doc && (
         <>
           {doc.parent && (
@@ -46,8 +47,8 @@ export function Sidebar({
             </ButtonLink>
           )}
           <SidebarSection
-            book="guides"
-            bookName="guides"
+            book='guides'
+            bookName='guides'
             links={links}
             onClick={onClick}
             docSlug={doc?.slug}
@@ -60,11 +61,7 @@ export function Sidebar({
           {/* DOCS */}
 
           {allNavs.map((navOrder) => {
-            const catIndex =
-              versionSet === 'default' ||
-              navOrder.links[0].slug.includes('docs/fuelup')
-                ? 1
-                : 2;
+            const catIndex = versionSet === 'default' ? 1 : 2;
             let key = navOrder.links[0].slug.split('/')[catIndex];
             if (key === 'sway') {
               key = 'forc';
@@ -100,6 +97,7 @@ export function Sidebar({
               />
             </Box>
           ))}
+          <FeedbackForm />
         </>
       )}
     </Box.Stack>

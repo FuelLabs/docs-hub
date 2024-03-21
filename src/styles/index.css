@@ -65,7 +65,8 @@ tr > td {
 
 pre span,
 code {
-  font-family: var(--fonts-mono) !important;
+  font-family: 'Source Code Pro', Consolas, 'Ubuntu Mono', Menlo,
+    'DejaVu Sans Mono', monospace, monospace;
   font-size: 1em;
   letter-spacing: -0.01em;
 }
