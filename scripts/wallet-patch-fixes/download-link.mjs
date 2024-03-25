@@ -4,7 +4,7 @@ import { join } from 'path';
 
 const constantsPath = join(
   process.cwd(),
-  'docs/fuels-wallet/packages/docs/src/constants.ts',
+  'docs/fuels-wallet/packages/docs/src/constants.ts'
 );
 const nightlyConstantsPath =
   'docs/nightly/fuels-wallet/packages/docs/src/constants.ts';
@@ -19,9 +19,9 @@ function getWalletVersion(version) {
       process.cwd(),
       `docs/${
         version === 'default' ? '' : `${version}/`
-      }fuels-wallet/packages/app/package.json`,
+      }fuels-wallet/packages/app/package.json`
     ),
-    'utf-8',
+    'utf-8'
   );
   const json = JSON.parse(file);
   return json.version;

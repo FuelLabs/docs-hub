@@ -71,7 +71,7 @@ export function handleExampleImports(
   dirname: string,
   rootDir: string,
   // biome-ignore lint/suspicious/noExplicitAny:
-  parent: Parent<any, any>,
+  parent: Parent<any, any>
 ) {
   let content = '';
   let filePath = node.value.replace(/(\.\.\/)+/g, '');
@@ -117,7 +117,7 @@ export function handleExampleImports(
   const docsPath = versionSet === 'default' ? 'docs/' : `docs/${versionSet}/`;
   let fileAbsPath = path.resolve(
     path.join(rootDir, `${docsPath}${bookPath}/`),
-    filePath,
+    filePath
   );
 
   if (node.type === 'text') {
@@ -133,7 +133,7 @@ export function handleExampleImports(
     if (fileAbsPath.includes('/fuels-ts/demo-typegen/')) {
       fileAbsPath = fileAbsPath.replace(
         'fuels-ts/demo-typegen',
-        'fuels-ts/apps/demo-typegen',
+        'fuels-ts/apps/demo-typegen'
       );
     }
     const fileContent = fs.readFileSync(fileAbsPath, 'utf8');

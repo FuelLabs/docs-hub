@@ -9,7 +9,7 @@ export async function runCommand(
   page: Page,
   buttonName: string,
   goToFolder?: string | null,
-  preCommand?: string,
+  preCommand?: string
 ) {
   const copied = await clickCopyButton(page, buttonName);
   console.log('COPIED', copied.text);

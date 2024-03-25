@@ -273,7 +273,7 @@ function removeDocsPath(path, duplicateAPICategories) {
 
 export function getDocBySlug(slug, slugs) {
   let slugPath = slugs.find(
-    ({ slug: pathSlug }) => pathSlug === `./${slug}.md`,
+    ({ slug: pathSlug }) => pathSlug === `./${slug}.md`
   );
   if (!slugPath) {
     slugPath = slugs.find(({ slug: pathSlug }) => pathSlug.includes(slug));

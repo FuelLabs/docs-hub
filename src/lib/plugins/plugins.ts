@@ -179,7 +179,7 @@ function handleSwayDocs(
   tree: Root,
   filepath: string,
   rootDir: string,
-  dirname: string,
+  dirname: string
 ) {
   const nodes: NodeArray = [];
   // biome-ignore lint/suspicious/noExplicitAny:
@@ -224,7 +224,7 @@ function handleTSDocs(
   tree: Root,
   rootDir: string,
   dirname: string,
-  versions: TSVersions,
+  versions: TSVersions
 ) {
   const nodes: NodeArray = [];
   let newTree = tree;
@@ -296,7 +296,7 @@ function handleRustBooks(tree: Root, rootDir: string, dirname: string) {
       if (node.url.includes('faucet-beta-3.fuel.network')) {
         node.url = node.url.replace(
           'faucet-beta-3.fuel.network',
-          'faucet-beta-5.fuel.network',
+          'faucet-beta-5.fuel.network'
         );
         if (
           node.children &&

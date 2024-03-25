@@ -45,7 +45,8 @@
     "formatter": {
       "quoteStyle": "single",
       "jsxQuoteStyle": "single",
-      "quoteProperties": "asNeeded"
+      "quoteProperties": "asNeeded",
+      "trailingComma": "es5"
     }
   },
   "json": {

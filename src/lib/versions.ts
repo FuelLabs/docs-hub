@@ -18,7 +18,7 @@ function itemFromPackageJson(docsDir: string, filename: string) {
 function getWalletVersion(docsDir: string) {
   const json = itemFromPackageJson(
     docsDir,
-    'fuels-wallet/packages/sdk/package.json',
+    'fuels-wallet/packages/sdk/package.json'
   );
   return {
     name: 'fuels-wallet',
@@ -31,7 +31,7 @@ function getWalletVersion(docsDir: string) {
 function getTSSDKVersion(docsDir: string) {
   const json = itemFromPackageJson(
     docsDir,
-    'fuels-ts/packages/fuels/package.json',
+    'fuels-ts/packages/fuels/package.json'
   );
   return {
     name: 'fuels-ts',

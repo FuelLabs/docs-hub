@@ -44,6 +44,11 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/',
+        destination: '/docs/intro/what-is-fuel/',
+        permanent: true,
+      },
+      {
         source: '/docs/',
         destination: '/',
         permanent: true,

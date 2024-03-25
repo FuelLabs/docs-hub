@@ -19,7 +19,7 @@ export function handleLinks(
   idx?: number | null,
   // biome-ignore lint/suspicious/noExplicitAny:
   parent?: Parent<any, any>,
-  tree?: Root,
+  tree?: Root
 ) {
   let newUrl: string | null = null;
   let base = dirname.split('/').splice(0, 2).join('/');
@@ -64,7 +64,7 @@ export function handleLinks(
       // TODO: REMOVE THIS ONCE FIXED IN SOURCE
       newUrl = newUrl.replace(
         'fuels-wallet/blob/master/packages/sdk/src/config.ts',
-        'fuels-wallet',
+        'fuels-wallet'
       );
 
       if (newUrl.includes('/master/')) {
@@ -93,7 +93,7 @@ function handleTSLinks(url: string | null, versionSet: VersionSet) {
       if (newUrl?.startsWith(item.path.toLowerCase())) {
         newUrl = newUrl.replace(
           item.originalCategory.toLowerCase(),
-          item.newCategory.toLowerCase(),
+          item.newCategory.toLowerCase()
         );
       }
     });
@@ -101,7 +101,7 @@ function handleTSLinks(url: string | null, versionSet: VersionSet) {
     if (newUrl.startsWith('/api/')) {
       newUrl = newUrl.replace(
         '/api/',
-        `/docs/${versionSet === 'default' ? '' : `/${versionSet}`}/fuels-ts/`,
+        `/docs/${versionSet === 'default' ? '' : `/${versionSet}`}/fuels-ts/`
       );
     }
     if (newUrl.includes('/api/') && !newUrl.endsWith('/api/')) {
@@ -140,7 +140,7 @@ function getNewUrl(node: any, dirname: string, versionSet: VersionSet) {
   if (node.url.startsWith('./') && !node.url.includes('index')) {
     newUrl = `/${dir.endsWith('/') ? dir : `${dir}/`}${newUrl!.replace(
       './',
-      '',
+      ''
     )}`;
   }
   if (/^[a-zA-Z]/.test(node.url)) {
@@ -171,7 +171,7 @@ function getNewUrl(node: any, dirname: string, versionSet: VersionSet) {
       '/docs/dev/getting-started',
       versionSet === 'default'
         ? '/docs/wallet/dev/getting-started'
-        : `/docs/${versionSet}/wallet/dev/getting-started`,
+        : `/docs/${versionSet}/wallet/dev/getting-started`
     )
     .replace('/api/interfaces/index', '/api/interfaces/');
 
@@ -182,7 +182,7 @@ function getNewUrl(node: any, dirname: string, versionSet: VersionSet) {
   if (newUrl.startsWith('@repository')) {
     newUrl = newUrl.replace(
       '@repository',
-      'https://github.com/FuelLabs/fuels-wallet/blob/master',
+      'https://github.com/FuelLabs/fuels-wallet/blob/master'
     );
   }
 
@@ -219,7 +219,7 @@ function handleHTMLLink(
   idx?: number | null,
   // biome-ignore lint/suspicious/noExplicitAny:
   parent?: Parent<any, any>,
-  tree?: Root,
+  tree?: Root
 ) {
   let url = getUrl(node.value);
   if (url) {
@@ -260,7 +260,7 @@ function handleNewURLs(
   idx: number,
   // biome-ignore lint/suspicious/noExplicitAny:
   parent: Parent<any, any>,
-  base: string,
+  base: string
 ) {
   let newURL = newURLs[url];
   if (newURL) {
@@ -342,11 +342,11 @@ function replaceInternalLinks(href: string, base: string) {
   newHref = newHref
     .replace(
       'docs/fuel-docs/quickstart/developer-quickstart',
-      'guides/quickstart/',
+      'guides/quickstart/'
     )
     .replace(
       'https://fuelbook.fuel.network/master/quickstart/developer-quickstart.html',
-      'guides/quickstart/',
+      'guides/quickstart/'
     )
     .replace('specs/fuel-vm/instruction_set', 'specs/fuel-vm/instruction-set')
     .replace('specs/protocol/tx_format', 'specs/tx-format/')
@@ -371,7 +371,7 @@ function replaceInternalLinks(href: string, base: string) {
   ) {
     newHref = newHref.replace(
       'soliditylang.org/en/',
-      'soliditylang.org/en/latest/',
+      'soliditylang.org/en/latest/'
     );
   }
 

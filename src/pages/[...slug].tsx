@@ -1,8 +1,10 @@
 import { join } from 'path';
 import type { GetStaticProps } from 'next';
 
+import { readFileSync } from 'fs';
 import type { MdDoc } from '../../.contentlayer/generated';
 import { allMdDocs } from '../../.contentlayer/generated';
+import { DOCS_DIRECTORY } from '../config/constants';
 import useTheme from '../hooks/useTheme';
 import { getNavs } from '../lib/getNavs';
 import { Doc } from '../lib/md-doc';
@@ -20,10 +22,10 @@ export type DocPageProps = {
   allNavs: NavOrder[];
   allNightlyNavs: NavOrder[];
   allBeta4Navs: NavOrder[];
-  codeLight: string;
-  codeDark: string;
-  md: MdDoc;
-  doc: DocType;
+  codeLight?: string;
+  codeDark?: string;
+  md?: MdDoc;
+  doc?: DocType;
   links: SidebarLinkItem[];
   docLink?: SidebarLinkItem;
   theme: string;
@@ -33,7 +35,16 @@ export type DocPageProps = {
   fuelCoreVersion?: string;
   nodeVersion?: string;
   nodeVersionMax?: string;
+  isGuide: boolean;
+  guides?: { [key: string]: GuideInfo };
 };
+
+export interface GuideInfo {
+  title: string;
+  description: string;
+  featured: boolean;
+  tags: string[];
+}
 
 export default function DocPage(props: DocPageProps) {
   const { theme } = useTheme();
@@ -42,22 +53,41 @@ export default function DocPage(props: DocPageProps) {
 
 export function getStaticPaths() {
   const paths = Docs.getAllPaths(allMdDocs);
+  paths.push({ params: { slug: ['guides'], path: '/guides' } });
   return { paths, fallback: false };
 }
 
 // biome-ignore lint/suspicious/noExplicitAny:
 export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   const slugArray = params?.slug as string[];
-  const doc = new Doc(slugArray, allMdDocs);
   const slug = slugArray.join('/');
-  const { light, dark } = await doc.getCode();
   const { allNavs, allNightlyNavs, allBeta4Navs } = getNavs();
   const { versions, nightlyVersions, beta4Versions } = getAllVersions();
+
+  if (slug === 'guides') {
+    const guidesPath = join(DOCS_DIRECTORY, './guides/docs/guides.json');
+    const guides = JSON.parse(readFileSync(guidesPath, 'utf8'));
+    return {
+      props: {
+        guides,
+        allNavs,
+        allNightlyNavs,
+        allBeta4Navs,
+        versions,
+        nightlyVersions,
+        beta4Versions,
+      },
+    };
+  }
+  const doc = new Doc(slugArray, allMdDocs);
+  const { light, dark } = await doc.getCode();
+
   let fuelCoreVersion = null;
   let nodeVersion = null;
   let nodeVersionMax = null;
 
-  if (slug.includes('guides/') || slug.includes('/intro/quickstart')) {
+  const isGuide = slug.startsWith('guides/');
+  if (isGuide || slug.includes('/intro/quickstart')) {
     fuelCoreVersion = getFuelCoreVersion();
     nodeVersion = getNodeVersion().substring(1);
     const majorVersionMax = Number.parseInt(nodeVersion.substring(0, 2)) + 1;
@@ -81,6 +111,7 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
       fuelCoreVersion,
       nodeVersion,
       nodeVersionMax,
+      isGuide,
     },
   };
 };
