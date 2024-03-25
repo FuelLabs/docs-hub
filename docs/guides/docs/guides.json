@@ -1,27 +1,27 @@
 {
-  "installation": {
-    "title": "Toolchain Installation",
-    "description": "Install the Fuel toolchain and binaries.",
+  "intro_to_predicates": {
+    "title": "Predicates 101: Building Stateless DeFi Applications",
+    "description": "Learn about predicates by building a MultiSig",
     "featured": true,
-    "tags": ["Getting Started"]
-  },
-  "quickstart": {
-    "title": "Developer Quickstart",
-    "description": "Get started by building a counter dApp in Fuel.",
-    "featured": true,
-    "tags": ["Getting Started", "Full Stack"]
+    "tags": ["Full Stack"]
   },
   "intro_to_sway": {
     "title": "Introduction to Sway for JavaScript developers",
     "description": "Learn Sway fundamentals by building a marketplace dApp.",
-    "featured": false,
+    "featured": true,
     "tags": ["Full Stack"]
   },
-  "intro_to_predicates": {
-    "title": "Predicates 101: Building Stateless DeFi Applications",
-    "description": "Learn about predicates by building a MultiSig",
+  "quickstart": {
+    "title": "Developer Quickstart",
+    "description": "Get started by building a counter dApp in Fuel.",
     "featured": false,
-    "tags": ["Full Stack"]
+    "tags": ["Getting Started", "Full Stack"]
+  },
+  "installation": {
+    "title": "Toolchain Installation",
+    "description": "Install the Fuel toolchain and binaries.",
+    "featured": false,
+    "tags": ["Getting Started"]
   },
   "running_a_node": {
     "title": "Running a Node",
