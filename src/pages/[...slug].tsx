@@ -1,7 +1,7 @@
 import { join } from 'path';
 import type { GetStaticProps } from 'next';
 
-import { readFileSync } from 'fs';
+import { existsSync, readFileSync, writeFileSync } from 'fs';
 import type { MdDoc } from '../../.contentlayer/generated';
 import { allMdDocs } from '../../.contentlayer/generated';
 import { DOCS_DIRECTORY } from '../config/constants';
@@ -17,6 +17,7 @@ import {
 } from '../lib/versions';
 import { DocScreen } from '../screens/DocPage';
 import type { DocType, NavOrder, SidebarLinkItem, Versions } from '../types';
+import { generateSiteMap } from './sitemap.xml';
 
 export type DocPageProps = {
   allNavs: NavOrder[];
@@ -54,6 +55,15 @@ export default function DocPage(props: DocPageProps) {
 export function getStaticPaths() {
   const paths = Docs.getAllPaths(allMdDocs);
   paths.push({ params: { slug: ['guides'], path: '/guides' } });
+
+  // generate a sitemap file
+  const sitemapPath = join(DOCS_DIRECTORY, '../src/generated/sitemap.xml');
+  if (!existsSync(sitemapPath)) {
+    console.log("SITEMAP FILE DOESN'T EXIST. GENERATING...");
+    const sitemap = generateSiteMap();
+    writeFileSync(sitemapPath, sitemap, 'utf8');
+  }
+
   return { paths, fallback: false };
 }
 
