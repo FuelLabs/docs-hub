@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "build:ci": "run-s docs:clean docs:sync generate:* patch:wallet build",
+    "build:ci": "run-s docs:clean docs:sync generate:* patch:wallet build sitemap",
     "check": "run-s lint",
     "check:prod": "run-s lint:prod",
     "copy:icons": "cp -r ./node_modules/@fuel-ui/icons/dist/icons/sprite.svg ./public/icons",
@@ -17,7 +17,7 @@
     "export": "DOCS_DIST=${DOCS_DIST:=dist} next export -o $DOCS_DIST",
     "generate:links": "node scripts/generate-links/index.mjs",
     "generate:components": "node scripts/components.mjs",
-    "generate:sitemap": "node scripts/generate-sitemap/index.mjs",
+    "sitemap": "node scripts/generate-sitemap/index.mjs",
     "lint": "biome check --apply-unsafe .",
     "lint:fix": "biome format --write .",
     "lint:prod": "biome lint --max-diagnostics=1000 --diagnostic-level=error .",

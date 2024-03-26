@@ -11,5 +11,5 @@ export LINK_DEPS="$deps"
 
 # Run the dev env requested
 if [ -z "$1" ]; then
-	pnpm generate:links && pnpm generate:components && pnpm generate:sitemap && next dev
+	pnpm generate:links && pnpm generate:components && next dev
 fi
