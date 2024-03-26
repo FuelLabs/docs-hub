@@ -15,7 +15,6 @@ const depsLinkOpts = {
   webpack: (config, options) => {
     if (options.isServer) {
       config.externals = ['react', ...config.externals];
-      execSync('ts-node --transpile-only scripts/generate-sitemap/index.ts');
     }
     config.resolve.alias['react'] = path.resolve(
       __dirname,
