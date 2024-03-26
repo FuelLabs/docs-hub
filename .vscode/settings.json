@@ -1,7 +1,5 @@
 {
   "editor.defaultFormatter": "biomejs.biome",
-  "prettier.prettierPath": "./node_modules/prettier",
-  "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.organizeImports.biome": "explicit"
   },

@@ -1,8 +1,13 @@
 import { join } from 'path';
 import type { GetStaticProps } from 'next';
 
+import { readFileSync } from 'fs';
+import type { JsonAbi } from 'fuels';
 import type { MdDoc } from '../../.contentlayer/generated';
 import { allMdDocs } from '../../.contentlayer/generated';
+import { DOCS_DIRECTORY } from '../config/constants';
+import type { FuelnautLevel } from '../config/fuelnautLevels';
+import { LEVELS_CONFIG } from '../config/fuelnautLevels';
 import useTheme from '../hooks/useTheme';
 import { getNavs } from '../lib/getNavs';
 import { Doc } from '../lib/md-doc';
@@ -11,13 +16,9 @@ import {
   getAllVersions,
   getFuelCoreVersion,
   getNodeVersion,
-  getVersions,
 } from '../lib/versions';
 import { DocScreen } from '../screens/DocPage';
 import type { DocType, NavOrder, SidebarLinkItem, Versions } from '../types';
-import type { FuelnautLevel } from '../config/fuelnautLevels';
-import { LEVELS_CONFIG } from '../config/fuelnautLevels';
-import type { JsonAbi } from 'fuels';
 
 export type DocPageProps = {
   allNavs: NavOrder[];
@@ -74,14 +75,14 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
     nodeVersionMax = `${majorVersionMax}.0.0`;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny:
   const fuelnautProps: any = {};
 
   if (slug.includes('guides/fuelnaut/')) {
     const levelKey = slugArray[slugArray.length - 1];
     const level = LEVELS_CONFIG[levelKey];
     fuelnautProps.level = level;
-    const fuelnautPath = join(DOCS_DIRECTORY, `guides/examples/fuelnaut`);
+    const fuelnautPath = join(DOCS_DIRECTORY, 'guides/examples/fuelnaut');
     const byteCodePath = join(
       fuelnautPath,
       `${levelKey}/out/debug/${levelKey}.bin`
