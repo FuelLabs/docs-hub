@@ -4,9 +4,9 @@
 /* eslint-disable */
 
 /*
-  Fuels version: 0.76.0
-  Forc version: 0.51.1
-  Fuel-Core version: 0.22.1
+  Fuels version: 0.73.0
+  Forc version: 0.49.2
+  Fuel-Core version: 0.22.0
 */
 
 import { Interface, Contract, ContractFactory } from "fuels";
@@ -345,13 +345,6 @@ const _abi = {
       },
       "attributes": [
         {
-          "name": "storage",
-          "arguments": [
-            "read",
-            "write"
-          ]
-        },
-        {
           "name": "doc-comment",
           "arguments": [
             " this function takes the ContractId of a newly deployed instance"
@@ -379,6 +372,13 @@ const _abi = {
           "name": "doc-comment",
           "arguments": [
             " the ContractId of the instance is verified to match the registered level bytecode"
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read",
+            "write"
           ]
         }
       ]
@@ -462,6 +462,12 @@ const _abi = {
       },
       "attributes": [
         {
+          "name": "storage",
+          "arguments": [
+            "read"
+          ]
+        },
+        {
           "name": "doc-comment",
           "arguments": [
             " returns a vector of bool options representing the statuses of each level"
@@ -483,12 +489,6 @@ const _abi = {
           "name": "doc-comment",
           "arguments": [
             " if the option is Some(false), the level has been started but not completed"
-          ]
-        },
-        {
-          "name": "storage",
-          "arguments": [
-            "read"
           ]
         }
       ]
