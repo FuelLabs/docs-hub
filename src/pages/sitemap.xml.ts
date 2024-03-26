@@ -1,6 +1,9 @@
 import type { GetServerSideProps } from 'next';
 
+import { existsSync, readFileSync } from 'fs';
+import { join } from 'path';
 import { allMdDocs } from '../../.contentlayer/generated';
+import { DOCS_DIRECTORY } from '../config/constants';
 import { Doc } from '../lib/md-doc';
 import { Docs } from '../lib/md-docs';
 
@@ -25,8 +28,14 @@ export default function SiteMap() {
 // biome-ignore lint/suspicious/noExplicitAny:
 export const getServerSideProps: GetServerSideProps<any> = async ({ res }) => {
   res.setHeader('Content-Type', 'text/xml');
-  // send the XML
-  res.write(generateSiteMap());
+  const sitemapPath = join(DOCS_DIRECTORY, '../src/generated/sitemap.xml');
+  if (!existsSync(sitemapPath)) {
+    // send the XML
+    res.write(generateSiteMap());
+  } else {
+    const sitemap = readFileSync(sitemapPath, 'utf8');
+    res.write(sitemap);
+  }
   res.end();
 
   return {
