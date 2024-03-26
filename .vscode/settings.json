@@ -20,5 +20,8 @@
     "**/fuelup": true,
     "**/guides/examples": true
   },
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  }
 }
