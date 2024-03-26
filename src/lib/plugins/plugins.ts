@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { join } from 'path';
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
@@ -25,9 +23,11 @@ type TSVersions = {
   FUELS: string;
 };
 
+// biome-ignore lint/suspicious/noExplicitAny:
 type NodeArray = [any, number | null, Parent<any, any>][];
 
 const conditions = {
+  // biome-ignore lint/suspicious/noExplicitAny:
   forcGen: (tree: any, node: any, filepath: string) => {
     return (
       filepath.includes('sway/docs/book/src/forc') &&
@@ -35,21 +35,25 @@ const conditions = {
       node.type === 'root'
     );
   },
+  // biome-ignore lint/suspicious/noExplicitAny:
   exampleImport: (node: any) => {
     return (
       (node.type === 'code' && node.value.startsWith('{{#include')) ||
       (node.type === 'text' && node.value.startsWith('<<< @'))
     );
   },
+  // biome-ignore lint/suspicious/noExplicitAny:
   walletImages: (node: any, filepath: string) => {
     return node.type === 'image' && filepath.includes('/fuels-wallet/');
   },
+  // biome-ignore lint/suspicious/noExplicitAny:
   walletComponents: (node: any, filepath: string) => {
     return (
       node.name === 'Demo' ||
       (node.name === 'Player' && filepath.includes('/fuels-wallet/'))
     );
   },
+  // biome-ignore lint/suspicious/noExplicitAny:
   links: (node: any) => {
     return (
       ((node.type === 'link' || node.type === 'definition') &&
@@ -57,6 +61,7 @@ const conditions = {
       (node.type === 'html' && node.value.includes('<a '))
     );
   },
+  // biome-ignore lint/suspicious/noExplicitAny:
   tsBookVersions: (node: any) => {
     return (
       typeof node.value === 'string' &&
@@ -65,15 +70,18 @@ const conditions = {
         node.value === 'v{{forc}}')
     );
   },
+  // biome-ignore lint/suspicious/noExplicitAny:
   hasScriptLink: (node: any) => {
     return node.type === 'html' && node.value.includes('const url =');
   },
+  // biome-ignore lint/suspicious/noExplicitAny:
   rustBookVersion: (node: any) => {
-    return node.value && node.value.includes('{{versions.fuels}}');
+    return node.value?.includes('{{versions.fuels}}');
   },
 };
 
 export function handlePlugins() {
+  // biome-ignore lint/suspicious/noExplicitAny:
   return function transformer(tree: Root, file: any) {
     const rootDir = process.cwd();
     const filepath = join(rootDir, file.data.rawDocumentData?.sourceFilePath);
@@ -95,10 +103,7 @@ export function handlePlugins() {
       handleTSDocs(tree, rootDir, dirname, versions);
     } else if (filepath.includes('/fuels-rs/')) {
       handleRustBooks(tree, rootDir, dirname);
-    } else if (
-      filepath.includes('/fuelup/') ||
-      filepath.includes('/fuel-specs/')
-    ) {
+    } else if (filepath.includes('/fuel-specs/')) {
       handleMDBooks(tree, rootDir, dirname);
     }
   };
@@ -106,6 +111,7 @@ export function handlePlugins() {
 
 function handleGraphQLDocs(tree: Root, filepath: string, dirname: string) {
   const nodes: NodeArray = [];
+  // biome-ignore lint/suspicious/noExplicitAny:
   visit(tree, '', (node: any, idx, parent) => {
     if (
       (node.name === 'a' &&
@@ -113,6 +119,7 @@ function handleGraphQLDocs(tree: Root, filepath: string, dirname: string) {
         node.attributes[0].value.includes('/docs/')) ||
       conditions.links(node)
     ) {
+      // biome-ignore lint/suspicious/noExplicitAny:
       nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
     }
   });
@@ -134,6 +141,7 @@ function handleGraphQLDocs(tree: Root, filepath: string, dirname: string) {
 
 function handleWalletDocs(tree: Root, filepath: string, dirname: string) {
   const nodes: NodeArray = [];
+  // biome-ignore lint/suspicious/noExplicitAny:
   visit(tree, '', (node: any, idx, parent) => {
     if (
       // update the image & video paths in the wallet docs
@@ -141,6 +149,7 @@ function handleWalletDocs(tree: Root, filepath: string, dirname: string) {
       conditions.walletComponents(node, filepath) ||
       conditions.links(node)
     ) {
+      // biome-ignore lint/suspicious/noExplicitAny:
       nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
     }
   });
@@ -170,14 +179,16 @@ function handleSwayDocs(
   tree: Root,
   filepath: string,
   rootDir: string,
-  dirname: string
+  dirname: string,
 ) {
   const nodes: NodeArray = [];
+  // biome-ignore lint/suspicious/noExplicitAny:
   visit(tree, '', (node: any, idx, parent) => {
     if (
       // get the generated docs for forc
       conditions.forcGen(tree, node, filepath)
     ) {
+      // biome-ignore lint/suspicious/noExplicitAny:
       nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
     }
   });
@@ -185,6 +196,7 @@ function handleSwayDocs(
     const newTreeChildren = handleForcGenDocs(node, filepath, rootDir);
     if (newTreeChildren) node.children = newTreeChildren;
   });
+  // biome-ignore lint/suspicious/noExplicitAny:
   visit(tree, '', (node: any, idx, parent) => {
     if (
       // handle example code imports in mdbook repos and the TS SDK docs
@@ -192,6 +204,7 @@ function handleSwayDocs(
       // remove .md from mdBook links
       conditions.links(node)
     ) {
+      // biome-ignore lint/suspicious/noExplicitAny:
       nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
     }
   });
@@ -211,14 +224,16 @@ function handleTSDocs(
   tree: Root,
   rootDir: string,
   dirname: string,
-  versions: TSVersions
+  versions: TSVersions,
 ) {
   const nodes: NodeArray = [];
+  let newTree = tree;
   // handle injected link urls
-  if (conditions.hasScriptLink(tree.children[0])) {
-    tree = handleScriptLink(tree, versions);
+  if (conditions.hasScriptLink(newTree.children[0])) {
+    newTree = handleScriptLink(newTree, versions);
   }
-  visit(tree, '', (node: any, idx, parent) => {
+  // biome-ignore lint/suspicious/noExplicitAny:
+  visit(newTree, '', (node: any, idx, parent) => {
     if (
       // handle example code imports in mdbook repos and the TS SDK docs
       conditions.exampleImport(node) ||
@@ -228,6 +243,7 @@ function handleTSDocs(
       conditions.tsBookVersions(node) ||
       (node.type === 'code' && node.lang === 'ts:line-numbers')
     ) {
+      // biome-ignore lint/suspicious/noExplicitAny:
       nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
     }
   });
@@ -236,7 +252,7 @@ function handleTSDocs(
       const content = handleExampleImports(node, dirname, rootDir, parent);
       node.value = content;
     } else if (conditions.links(node)) {
-      const newUrl = handleLinks(node, dirname, idx, parent, tree);
+      const newUrl = handleLinks(node, dirname, idx, parent, newTree);
       if (newUrl) node.url = newUrl;
     } else if (conditions.tsBookVersions(node)) {
       if (node.value === 'v{{forc}}') {
@@ -254,6 +270,7 @@ function handleTSDocs(
 
 function handleRustBooks(tree: Root, rootDir: string, dirname: string) {
   const nodes: NodeArray = [];
+  // biome-ignore lint/suspicious/noExplicitAny:
   visit(tree, '', (node: any, idx, parent) => {
     if (
       // handle example code imports in mdbook repos and the TS SDK docs
@@ -263,6 +280,7 @@ function handleRustBooks(tree: Root, rootDir: string, dirname: string) {
       // replace {{versions}}
       conditions.rustBookVersion(node)
     ) {
+      // biome-ignore lint/suspicious/noExplicitAny:
       nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
     }
   });
@@ -278,7 +296,7 @@ function handleRustBooks(tree: Root, rootDir: string, dirname: string) {
       if (node.url.includes('faucet-beta-3.fuel.network')) {
         node.url = node.url.replace(
           'faucet-beta-3.fuel.network',
-          'faucet-beta-5.fuel.network'
+          'faucet-beta-5.fuel.network',
         );
         if (
           node.children &&
@@ -296,6 +314,7 @@ function handleRustBooks(tree: Root, rootDir: string, dirname: string) {
 
 function handleMDBooks(tree: Root, rootDir: string, dirname: string) {
   const nodes: NodeArray = [];
+  // biome-ignore lint/suspicious/noExplicitAny:
   visit(tree, '', (node: any, idx, parent) => {
     if (
       // handle example code imports in mdbook repos and the TS SDK docs
@@ -303,6 +322,7 @@ function handleMDBooks(tree: Root, rootDir: string, dirname: string) {
       // remove .md from mdBook links
       conditions.links(node)
     ) {
+      // biome-ignore lint/suspicious/noExplicitAny:
       nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
     }
   });

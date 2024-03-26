@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import { getDocs, getDocBySlug } from './getDocs.mjs';
+import { getDocBySlug, getDocs } from './getDocs.mjs';
 import { getOrders } from './getOrders.mjs';
 import getSortedLinks from './getSortedLinks.mjs';
 import { capitalize } from './str.mjs';
@@ -20,6 +20,14 @@ async function main() {
       const slugs = await getDocs(key, orders[key]);
       const final = slugs.map(({ slug }) => getDocBySlug(slug, slugs));
       let sortedLinks = getSortedLinks(orders[key], final);
+
+      if (key === 'intro') {
+        sortedLinks.push({
+          slug: '/guides',
+          label: 'Guides',
+          isExternal: false,
+        });
+      }
       if (key.includes('guides')) {
         const newLinks = {};
         sortedLinks.forEach((link) => {
@@ -45,7 +53,7 @@ async function main() {
       if (!key.includes('guides') && key !== 'contributing') {
         if (
           key.includes('nightly') ||
-          ['intro', 'contributing', 'fuelup'].includes(key)
+          ['intro', 'contributing'].includes(key)
         ) {
           const cleanKey = key.replace('nightly-', '');
           allNightlyOrders.push({
@@ -54,7 +62,7 @@ async function main() {
             links: sortedLinks,
           });
         }
-        if (key.includes('beta-4') || key === 'intro' || key === 'fuelup') {
+        if (key.includes('beta-4') || key === 'intro') {
           const cleanKey = key.replace('beta-4-', '');
           allBeta4Orders.push({
             key: capitalize(cleanKey),
@@ -70,7 +78,7 @@ async function main() {
           });
         }
       }
-    })
+    }),
   );
 
   handleAllOrders(allOrders, folderPath, 'all-orders');
@@ -93,6 +101,9 @@ function getSidebarName(key) {
     case 'graphql':
       newKey = 'GraphQL API';
       break;
+    case 'specs':
+      newKey = 'Specifications';
+      break;
     default:
   }
 
@@ -107,7 +118,6 @@ function handleAllOrders(allOrders, folderPath, filename) {
     'fuels-rs',
     'wallet',
     'graphql',
-    'fuelup',
     'forc',
     'specs',
   ];

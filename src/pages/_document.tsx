@@ -1,9 +1,9 @@
 import { getCssText } from '@fuel-ui/css';
 import {
-  loadIcons,
-  setFuelThemes,
   darkTheme,
   lightTheme,
+  loadIcons,
+  setFuelThemes,
 } from '@fuel-ui/react';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import Script from 'next/script';
@@ -37,7 +37,7 @@ function getInitialColorMode() {
 })()
 `;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny:
 function editTheme(ogTheme: any) {
   const thisTheme = ogTheme;
   if (!thisTheme.components) thisTheme.components = {};
@@ -60,13 +60,14 @@ setFuelThemes({
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang="en">
+      <Html lang='en'>
         <Head>
-          <Script id="theme" strategy="beforeInteractive">
+          <Script id='theme' strategy='beforeInteractive'>
             {getThemeScript}
           </Script>
           <style
-            id="stitches"
+            id='stitches'
+            // biome-ignore lint/security/noDangerouslySetInnerHtml:
             dangerouslySetInnerHTML={{ __html: getCssText() }}
           />
         </Head>

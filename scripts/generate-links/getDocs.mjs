@@ -1,7 +1,7 @@
 import fs from 'fs';
+import { join } from 'path';
 import { globby } from 'globby';
 import matter from 'gray-matter';
-import { join } from 'path';
 
 const DOCS_DIRECTORY = join(process.cwd(), './docs');
 
@@ -155,15 +155,6 @@ export async function getDocs(key, order) {
         './beta-4/fuel-graphql-docs/docs/**/*.mdx',
       ];
       break;
-    case 'fuelup':
-      paths = [
-        // FUELUP DOCS
-        './fuelup/docs/src/*.md',
-        './fuelup/docs/src/**/*.md',
-        // IGNORE ALL SUMMARY PAGES
-        '!**/SUMMARY.md',
-      ];
-      break;
     case 'specs':
       paths = [
         // SPECS DOCS
@@ -245,7 +236,7 @@ export async function getDocs(key, order) {
 
 function removeDocsPath(path, duplicateAPICategories) {
   // clean up the url paths
-  const configPath = join(DOCS_DIRECTORY, `../src/config/paths.json`);
+  const configPath = join(DOCS_DIRECTORY, '../src/config/paths.json');
   const pathsConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
   let newPath = path;
   duplicateAPICategories.forEach((category) => {
@@ -265,7 +256,6 @@ function removeDocsPath(path, duplicateAPICategories) {
     newPath.includes('/sway/') ||
     newPath.includes('/fuels-rs/') ||
     newPath.includes('/forc/') ||
-    newPath.includes('/fuelup/') ||
     newPath.includes('/specs/')
   ) {
     const paths = newPath.split('/');
@@ -283,7 +273,7 @@ function removeDocsPath(path, duplicateAPICategories) {
 
 export function getDocBySlug(slug, slugs) {
   let slugPath = slugs.find(
-    ({ slug: pathSlug }) => pathSlug === `./${slug}.md`
+    ({ slug: pathSlug }) => pathSlug === `./${slug}.md`,
   );
   if (!slugPath) {
     slugPath = slugs.find(({ slug: pathSlug }) => pathSlug.includes(slug));

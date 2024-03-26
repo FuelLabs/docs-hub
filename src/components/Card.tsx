@@ -1,11 +1,11 @@
 import { cssObj } from '@fuel-ui/css';
 import {
-  Link as FuelLink,
-  Box,
   Badge,
-  Text,
-  Heading,
+  Box,
   Card as FuelCard,
+  Link as FuelLink,
+  Heading,
+  Text,
 } from '@fuel-ui/react';
 
 import type { GuideInfo } from '../pages/guides';
@@ -52,7 +52,7 @@ export function Card({ guideInfo, cardInfo, cardName, versionSet }: CardProps) {
           <Heading
             iconSize={24}
             leftIcon={cardInfo?.headingIcon ?? null}
-            as="h4"
+            as='h4'
           >
             {cardInfo ? cardInfo.heading : guideInfo?.title}
           </Heading>
@@ -60,7 +60,7 @@ export function Card({ guideInfo, cardInfo, cardName, versionSet }: CardProps) {
           {guideInfo && (
             <Box.Flex gap={'$2'} css={styles.badgeContainer}>
               {guideInfo.tags.map((tag) => (
-                <Badge key={tag} variant="ghost" css={styles.badge}>
+                <Badge key={tag} variant='ghost' css={styles.badge}>
                   {tag}
                 </Badge>
               ))}

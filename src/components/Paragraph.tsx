@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { cssObj } from '@fuel-ui/css';
 import { Text } from '@fuel-ui/react';
 
+// biome-ignore lint/suspicious/noExplicitAny:
 export function Paragraph(props: any) {
-  return <Text as="p" {...props} css={styles.root} />;
+  return <Text as='p' {...props} css={styles.root} />;
 }
 
 const styles = {

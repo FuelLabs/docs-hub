@@ -7,12 +7,13 @@ import { Breadcrumb } from '../components/Breadcrumb';
 import { DocFooter } from '../components/DocFooter';
 import { MDXRender } from '../components/MDXRender';
 import { useVersion } from '../hooks/useVersion';
+import { getActiveNav } from '../lib/getActiveNav';
 import { getComponents } from '../lib/imports';
 import type { DocPageProps } from '../pages/[...slug]';
 import type { VersionSet } from '../types';
 
 export function DocScreen(props: DocPageProps) {
-  const { doc, allNavs, allnightlyNavs, allBeta4Navs } = props;
+  const { doc, allNavs, allNightlyNavs, allBeta4Navs } = props;
   const [versionSet, setVersionSet] = useState<VersionSet>('default');
   const version = useVersion();
 
@@ -27,19 +28,13 @@ export function DocScreen(props: DocPageProps) {
   }, [version, doc]);
 
   const components = getComponents(doc.slug, doc.versionSet);
-  let navs = undefined;
-  if (
-    !doc.originalSlug.includes('guides') &&
-    !doc.originalSlug.includes('docs/contributing')
-  ) {
-    if (versionSet === 'nightly') {
-      navs = allnightlyNavs;
-    } else if (versionSet === 'beta-4') {
-      navs = allBeta4Navs;
-    } else {
-      navs = allNavs;
-    }
-  }
+  const navs = getActiveNav(
+    versionSet,
+    allNavs,
+    allNightlyNavs,
+    allBeta4Navs,
+    doc,
+  );
 
   let versions = props.versions;
   if (versionSet !== 'default') {
@@ -60,12 +55,13 @@ export function DocScreen(props: DocPageProps) {
         versions={versions}
         allNavs={navs}
       >
-        <Box.Flex as="section" className="Layout--section">
+        <Box.Flex as='section' className='Layout--section'>
           {doc && (
             <Box>
               <Breadcrumb />
               <MDXRender
-                code={props.code}
+                codeLight={props.codeLight}
+                codeDark={props.codeDark}
                 components={components}
                 versionSet={versionSet}
                 fuelCoreVersion={props.fuelCoreVersion}

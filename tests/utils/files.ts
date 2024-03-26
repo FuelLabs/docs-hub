@@ -1,5 +1,5 @@
-import type { Page } from '@playwright/test';
 import fs from 'fs';
+import type { Page } from '@playwright/test';
 
 import { clickCopyButton } from './button';
 import { compareOutputs } from './runCommand';
@@ -7,10 +7,10 @@ import { compareOutputs } from './runCommand';
 export async function writeToFile(
   page: Page,
   buttonName: string,
-  filePath: string
+  filePath: string,
 ) {
   const content = await clickCopyButton(page, buttonName);
-  fs.writeFileSync(filePath, content.text + '\n\n');
+  fs.writeFileSync(filePath, `${content.text}\n\n`);
 }
 
 export async function modifyFile(
@@ -21,7 +21,7 @@ export async function modifyFile(
   addSpacesAfter?: number,
   atLine?: number,
   removeLines?: string,
-  useSetData?: string
+  useSetData?: string,
 ) {
   let contentText = useSetData;
   if (!contentText) {
@@ -32,13 +32,13 @@ export async function modifyFile(
   const spacesAfter = '\n'.repeat(addSpacesAfter ?? 0);
   if (!atLine && !removeLines) {
     const finalContent = spacesBefore + contentText + spacesAfter;
-    fs.appendFileSync(filePath, finalContent + '\n\n');
+    fs.appendFileSync(filePath, `${finalContent}\n\n`);
   } else {
     const lines = fs.readFileSync(filePath, 'utf8').split('\n');
     if (removeLines) {
       const removeLinesArray = JSON.parse(removeLines);
       removeLinesArray.forEach((lineNumber) => {
-        lines[parseInt(lineNumber) - 1] = '~~~REMOVE~~~';
+        lines[Number.parseInt(lineNumber) - 1] = '~~~REMOVE~~~';
       });
     }
     if (atLine) {
@@ -55,7 +55,7 @@ export async function modifyFile(
 export async function compareToFile(
   page: Page,
   buttonName: string,
-  pathName: string
+  pathName: string,
 ) {
   const expected = await clickCopyButton(page, buttonName);
   const actual = fs.readFileSync(pathName, { encoding: 'utf8' });

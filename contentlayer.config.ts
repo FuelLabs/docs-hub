@@ -44,7 +44,7 @@ const MdDoc = defineDocumentType(() => ({
   computedFields: {
     slug: {
       type: 'string',
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       resolve: (doc: any) => DocParser.createSlug(doc._raw.flattenedPath),
     },
   },
@@ -53,7 +53,6 @@ const MdDoc = defineDocumentType(() => ({
 const includeDirs = [
   // DEFAULT DOCS & GUIDES
   'docs/sway/docs/book/src',
-  'docs/fuelup/docs/src',
   'docs/fuels-rs/docs/src',
   'docs/fuels-ts/apps/docs/src',
   'docs/fuel-specs/src',
@@ -88,7 +87,6 @@ const excludeDirs = [
   'docs/intro/nav.json',
   'docs/contributing/nav.json',
   'docs/sway/docs/book/src/SUMMARY.md',
-  'docs/fuelup/docs/src/SUMMARY.md',
   'docs/fuels-rs/docs/src/SUMMARY.md',
   'docs/fuel-specs/src/SUMMARY.md',
   // NIGHTLY DOCS

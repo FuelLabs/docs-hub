@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { RawDocumentData } from 'contentlayer/core';
 import type { ComponentType } from 'react';
 
@@ -56,11 +55,13 @@ export type NodeHeading = {
 };
 
 export interface ComponentObject {
+  // biome-ignore lint/suspicious/noExplicitAny:
   [key: string]: ComponentType<any> | ComponentObject;
 }
 
 export interface Component {
   name: string;
+  // biome-ignore lint/suspicious/noExplicitAny:
   import?: ComponentType<any>;
   imports?: ComponentObject;
 }
@@ -72,6 +73,7 @@ export interface ComponentsList {
 export interface NavOrder {
   key: string;
   sidebarName: string;
+  // biome-ignore lint/suspicious/noExplicitAny:
   links: any[];
 }
 
@@ -85,7 +87,6 @@ export type VersionItem = {
 export type Versions = {
   Forc: VersionItem;
   Sway: VersionItem;
-  Fuelup: VersionItem;
   'Fuel Rust SDK': VersionItem;
   'Fuel TS SDK': VersionItem;
   'Fuel Wallet': VersionItem;

@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { readFileSync } from 'fs';
+import { join as pathJoin } from 'path';
 import * as fs from 'fs/promises';
 import { toText } from 'hast-util-to-text';
 import { h } from 'hastscript';
-import { join as pathJoin } from 'path';
 import prettier from 'prettier';
 import type { Options as RehypeCodeOptions } from 'rehype-pretty-code';
 import rehypeCode from 'rehype-pretty-code';
@@ -42,6 +41,7 @@ const getHighlighter: RehypeCodeOptions['getHighlighter'] = async (options) => {
     // This is technically not compatible with shiki's interface but
     // necessary for rehype-pretty-code to work
     // - https://rehype-pretty-code.netlify.app/ (see Custom Highlighter)
+    // biome-ignore lint/suspicious/noExplicitAny:
     ...(options as any),
     langs: [
       {
@@ -107,9 +107,11 @@ const getHighlighter: RehypeCodeOptions['getHighlighter'] = async (options) => {
   return highlighter;
 };
 
+// biome-ignore lint/suspicious/noExplicitAny:
 function isElement(value: any): value is Element {
   return value ? value.type === 'element' : false;
 }
+// biome-ignore lint/suspicious/noExplicitAny:
 function isCodeEl(node: any, parent: any) {
   return (
     (node.tagName === 'code' &&
@@ -122,38 +124,47 @@ function isCodeEl(node: any, parent: any) {
 /**
  * This plugin is used to group code blocks of fuels-ts together.
  */
+// biome-ignore lint/suspicious/noExplicitAny:
 function processCodeGroup(nodes: any[]): any[] {
-  return nodes
-    .filter((n: any) => n.tagName === 'pre')
-    .map((pre: any) => {
-      const language =
-        pre.children?.[0]?.properties?.className?.[0].replace(
-          'language-',
-          ''
-        ) ?? '';
-      const code = pre.children?.[0]?.children
-        ?.map((child: any) => child.value)
-        .join('');
+  return (
+    nodes
+      // biome-ignore lint/suspicious/noExplicitAny:
+      .filter((n: any) => n.tagName === 'pre')
+      // biome-ignore lint/suspicious/noExplicitAny:
+      .map((pre: any) => {
+        const language =
+          pre.children?.[0]?.properties?.className?.[0].replace(
+            'language-',
+            '',
+          ) ?? '';
+        const code = pre.children?.[0]?.children
+          // biome-ignore lint/suspicious/noExplicitAny:
+          ?.map((child: any) => child.value)
+          .join('');
 
-      const child = h('code', { class: language }, code);
+        const child = h('code', { class: language }, code);
 
-      return {
-        type: 'element',
-        tagName: 'pre',
-        properties: {
-          language: language,
-          code: code,
-        },
-        children: [child],
-      };
-    });
+        return {
+          type: 'element',
+          tagName: 'pre',
+          properties: {
+            language: language,
+            code: code,
+          },
+          children: [child],
+        };
+      })
+  );
 }
 
 function codeGroup2() {
+  // biome-ignore lint/suspicious/noExplicitAny:
   return function transformer(tree: any) {
+    // biome-ignore lint/suspicious/noExplicitAny:
     const nodes: any[] = [];
     let start: number | null = null;
     let end: number | null = null;
+    // biome-ignore lint/suspicious/noExplicitAny:
     tree.children.forEach((node: any, index: number) => {
       if (
         node.children &&
@@ -166,6 +177,7 @@ function codeGroup2() {
         } else if (start !== null) {
           end = index;
           const children = processCodeGroup(nodes);
+          // biome-ignore lint/suspicious/noExplicitAny:
           const codeTabsElement: any = {
             type: 'mdxJsxFlowElement',
             name: 'CodeTabs',
@@ -181,6 +193,7 @@ function codeGroup2() {
 }
 
 function codeGroup() {
+  // biome-ignore lint/suspicious/noExplicitAny:
   return function transformer(tree: any) {
     let i = 0;
     while (i < tree.children.length) {
@@ -199,6 +212,7 @@ function codeGroup() {
         const end = i + 1;
         const codeGroupNodes = tree.children.slice(start, end);
         const children = processCodeGroup(codeGroupNodes);
+        // biome-ignore lint/suspicious/noExplicitAny:
         const codeTabsElement: any = {
           type: 'mdxJsxFlowElement',
           name: 'CodeTabs',
@@ -212,6 +226,7 @@ function codeGroup() {
   };
 }
 
+// biome-ignore lint/suspicious/noExplicitAny:
 function hasCodeGroup(node: any): boolean {
   return (
     node.children &&
@@ -220,6 +235,7 @@ function hasCodeGroup(node: any): boolean {
   );
 }
 
+// biome-ignore lint/suspicious/noExplicitAny:
 function hasEndOfCodeGroup(node: any): boolean {
   return (
     node.children &&
@@ -233,6 +249,7 @@ function hasEndOfCodeGroup(node: any): boolean {
  */
 function codeLanguage() {
   return function transformer(tree: Root) {
+    // biome-ignore lint/suspicious/noExplicitAny:
     visit(tree, '', (node: any, _idx: any, parent: any) => {
       if (!isCodeEl(node, parent)) return;
       if (!node.properties) node.properties = {};
@@ -260,13 +277,16 @@ function codeLanguage() {
   };
 }
 
+// biome-ignore lint/suspicious/noExplicitAny:
 function isGraphQLCodeSamples(node: any) {
   return (
     node.name === 'CodeExamples' &&
+    // biome-ignore lint/suspicious/noExplicitAny:
     node.attributes?.find((a: any) => a.name === '__ts_content')
   );
 }
 
+// biome-ignore lint/suspicious/noExplicitAny:
 function getGraphQLCodeTabs(node: any) {
   const codeProps = {
     className: ['language-typescript'],
@@ -279,6 +299,7 @@ function getGraphQLCodeTabs(node: any) {
     singleQuote: true,
   };
 
+  // biome-ignore lint/suspicious/noExplicitAny:
   const findProp = (name: string) => (a: any) => a.name === name;
   const tsContent = node.attributes?.find(findProp('__ts_content'));
   const apolloContent = node.attributes?.find(findProp('__apollo_content'));
@@ -315,8 +336,10 @@ function getGraphQLCodeTabs(node: any) {
 
 function codeImport() {
   return function transformer(tree: Root) {
+    // biome-ignore lint/suspicious/noExplicitAny:
     visit(tree, 'mdxJsxFlowElement', (node: any) => {
       if (node.name !== 'CodeImport' && node.name !== 'CodeExamples') return;
+      // biome-ignore lint/suspicious/noExplicitAny:
       const content = node.attributes?.find((a: any) => a.name === '__content');
 
       if (isGraphQLCodeSamples(node)) {
@@ -339,11 +362,12 @@ function codeImport() {
 
       node.type = 'element';
       node.tagName = 'pre';
+      // biome-ignore lint/suspicious/noExplicitAny:
       const lang = node.attributes?.find((a: any) => a.name === '__language');
       const code = h(
         'code',
         { class: lang?.value },
-        content?.value.replace(/\r/g, '')
+        content?.value.replace(/\r/g, ''),
       );
       node.children = [code];
     });
@@ -355,9 +379,11 @@ function codeImport() {
  */
 function addLines() {
   return function transformer(tree: Root) {
+    // biome-ignore lint/suspicious/noExplicitAny:
     visit(tree, '', (node: any, _idx: any, parent: any) => {
       if (!isCodeEl(node, parent)) return;
       let counter = 1;
+      // biome-ignore lint/suspicious/noExplicitAny:
       node.children = node.children.reduce((acc: any, node: any) => {
         if (node.properties?.['data-line'] === '') {
           node.properties['data-line'] = counter;
@@ -371,41 +397,48 @@ function addLines() {
 
 function addRawCode() {
   return function transformer(tree: Root) {
+    // biome-ignore lint/suspicious/noExplicitAny:
     visit(tree, '', (node: any) => {
       if (node.tagName !== 'pre') return;
       const text = toText(node);
       if (!node.properties) node.properties = {};
-      node.properties['__code'] = text;
+      node.properties.__code = text;
     });
   };
 }
 
 function addNumberOfLines() {
   return function transformer(tree: Root) {
+    // biome-ignore lint/suspicious/noExplicitAny:
     visit(tree, '', (node: any, _idx: any, parent: any) => {
       if (!node.properties) node.properties = {};
       if (!isCodeEl(node, parent)) {
         const text = toText(node);
         const lines = text.split('\n').length;
-        node.properties['__lines'] = lines;
+        node.properties.__lines = lines;
       }
     });
   };
 }
 
-const getRehypeCodeOptions = (): Partial<RehypeCodeOptions> => ({
-  theme: JSON.parse(
-    readFileSync(`${getShikiPath()}/themes/dracula.json`, 'utf-8')
-  ),
-  getHighlighter,
-});
+const getRehypeCodeOptions = (
+  theme: 'light' | 'dark',
+): Partial<RehypeCodeOptions> => {
+  const themeFileName: string = theme === 'light' ? 'github-light' : 'dracula';
+  return {
+    theme: JSON.parse(
+      readFileSync(`${getShikiPath()}/themes/${themeFileName}.json`, 'utf-8'),
+    ),
+    getHighlighter,
+  };
+};
 
-export const getMdxCode = (): PluggableList => [
+export const getMdxCode = (theme: 'light' | 'dark'): PluggableList => [
   codeImport,
   codeGroup,
   codeGroup2,
   codeLanguage,
-  [rehypeCode, getRehypeCodeOptions()],
+  [rehypeCode, getRehypeCodeOptions(theme)],
   addLines,
   addRawCode,
   addNumberOfLines,

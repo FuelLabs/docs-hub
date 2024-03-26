@@ -1,6 +1,6 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box, FuelLogo, Link } from '@fuel-ui/react';
-import type { NavOrder, Versions, VersionSet } from '~/src/types';
+import type { NavOrder, VersionSet, Versions } from '~/src/types';
 
 import { Sidebar } from './Sidebar';
 
@@ -18,7 +18,7 @@ export function SidebarContainer({
   return (
     <Box css={styles.sidebar}>
       <Box css={styles.logo}>
-        <Link href="/" className="logo">
+        <Link href='/' className='logo'>
           <FuelLogo size={30} />
         </Link>
       </Box>

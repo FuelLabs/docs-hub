@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ButtonLinkProps, ButtonSizes } from '@fuel-ui/react';
 import { ButtonLink } from '@fuel-ui/react';
 import NextLink from 'next/link';
@@ -21,11 +20,11 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
     const isSamePage =
       cleanRoute === '/'
         ? item.slug === 'docs/intro/what-is-fuel'
-        : router.asPath.split('#')[0] === `/${item.slug}/`;
+        : cleanRoute === `/${item.slug}/` || cleanRoute === `${item.slug}/`;
     const isSubmenu = props['data-submenu'];
     const activeStyles = {
       color: isSamePage ?? '$semanticLinkPrimaryColor',
-      fontWeight: isActiveMenu && !isSamePage ? '550' : 'normal',
+      fontWeight: isActiveMenu ? '550' : 'normal',
       'html[class="fuel_light-theme"] &': {
         color: isSamePage ? '#009957' : '$intentsBase12',
         borderLeft: isSamePage && '2px solid #009957 !important',
@@ -44,6 +43,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
         <ButtonLink
           {...props}
           size={size}
+          // biome-ignore lint/suspicious/noExplicitAny:
           ref={ref as any}
           data-active={Boolean(isSamePage)}
           {...(onClick && { onClick })}
@@ -55,7 +55,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
         </ButtonLink>
       </NextLink>
     );
-  }
+  },
 );
 
 export const buttonStyles = {

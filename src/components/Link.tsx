@@ -7,7 +7,11 @@ export function Link(props: LinkProps) {
   return props.href?.startsWith('http') ? (
     <FuelLink {...props} isExternal css={styles.link} />
   ) : (
-    <NextLink href={props.href ?? ''} passHref legacyBehavior>
+    <NextLink
+      href={props.href?.replace('//', '/') ?? ''}
+      passHref
+      legacyBehavior
+    >
       <FuelLink {...props} css={styles.link} />
     </NextLink>
   );

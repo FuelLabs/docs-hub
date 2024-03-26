@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { cssObj } from '@fuel-ui/css';
 import { Box, Icon } from '@fuel-ui/react';
 
+// biome-ignore lint/suspicious/noExplicitAny:
 export function Blockquote(props: any) {
   return (
-    <Box.Flex as="blockquote" css={styles.root} gap={'$2'}>
+    <Box.Flex as='blockquote' css={styles.root} gap={'$2'}>
       <Icon icon={'InfoCircle'} size={30} color={'intentsWarning8'} />
       {props.children}
     </Box.Flex>

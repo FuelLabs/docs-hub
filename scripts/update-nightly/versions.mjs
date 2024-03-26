@@ -14,7 +14,6 @@ export function getExistingVersions() {
     rust: getRustSDKVersion(true),
     ts: getTSSDKVersion(true),
     wallet: getWalletVersion(true),
-    fuelup: getFuelupVersion(),
   };
 
   return versions;
@@ -26,7 +25,6 @@ export async function getNightlyVersions() {
   versions.rust = await getNightlyRelease('fuels-rs');
   versions.ts = await getNightlyRelease('fuels-ts');
   versions.wallet = await getNightlyRelease('fuels-wallet');
-  versions.fuelup = await getNightlyRelease('fuelup');
   return versions;
 }
 
@@ -39,25 +37,21 @@ function getForcVersion(isNightly) {
   return version;
 }
 
-function getFuelupVersion() {
-  return getVersionFromTOMLFile('docs/fuelup/Cargo.toml');
-}
-
 function getTSSDKVersion(isNightly) {
   return getVersionFromJSONFile(
-    `docs${isNightly ? '/nightly' : ''}/fuels-ts/packages/fuels/package.json`
+    `docs${isNightly ? '/nightly' : ''}/fuels-ts/packages/fuels/package.json`,
   );
 }
 
 function getRustSDKVersion(isNightly) {
   return getVersionFromTOMLFile(
-    `docs${isNightly ? '/nightly' : ''}/fuels-rs/Cargo.toml`
+    `docs${isNightly ? '/nightly' : ''}/fuels-rs/Cargo.toml`,
   );
 }
 
 function getWalletVersion(isNightly) {
   return getVersionFromJSONFile(
-    `docs${isNightly ? '/nightly' : ''}/fuels-wallet/packages/sdk/package.json`
+    `docs${isNightly ? '/nightly' : ''}/fuels-wallet/packages/sdk/package.json`,
   );
 }
 

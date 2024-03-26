@@ -1,13 +1,11 @@
 import { cssObj } from '@fuel-ui/css';
-import { Box, Drawer, IconButton, FuelLogo, Link, Icon } from '@fuel-ui/react';
+import { Box, Drawer, FuelLogo, Icon, IconButton, Link } from '@fuel-ui/react';
 import { useState } from 'react';
-import type { NavOrder, Versions, VersionSet } from '~/src/types';
+import type { NavOrder, VersionSet, Versions } from '~/src/types';
 
 import { Navigation } from './Navigation';
 import Search from './Search';
 import { Sidebar } from './Sidebar';
-import ThemeToggler from './ThemeToggler';
-import VersionDropdown from './VersionDropdown';
 
 interface MobileMenuProps {
   active: string;
@@ -32,12 +30,12 @@ export function MobileMenu({
 
   const drawerButton = (
     <IconButton
-      className="mobile-button"
-      variant="link"
-      intent="base"
+      className='mobile-button'
+      variant='link'
+      intent='base'
       icon={open ? Icon.is('X') : Icon.is('List')}
       iconSize={30}
-      aria-label="Menu"
+      aria-label='Menu'
       onClick={toggle}
     />
   );
@@ -46,13 +44,12 @@ export function MobileMenu({
     <Box.Flex css={styles.root}>
       <Search title={title} versionSet={versionSet} />
 
-      <Box.Stack direction="row" gap="$3">
-        <VersionDropdown versionSet={versionSet} />
-        <ThemeToggler />
+      <Box.Stack direction='row' gap='$3' css={styles.box}>
+        <Navigation versionSet={versionSet} />
         <Drawer
           isDismissable
           isOpen={open}
-          side="right"
+          side='right'
           onClose={() => setOpen(false)}
         >
           <Drawer.Trigger>{drawerButton}</Drawer.Trigger>
@@ -60,19 +57,18 @@ export function MobileMenu({
           <Drawer.Content css={styles.drawer}>
             <Drawer.Body>
               <Box.Flex css={styles.topContainer} justify={'space-between'}>
-                <Link href="/">
+                <Link href='/'>
                   <FuelLogo size={30} />
                 </Link>
-                <Box.Flex gap="$4" align="center" css={styles.iconContainer}>
+                <Box.Flex gap='$4' align='center' css={styles.iconContainer}>
                   {drawerButton}
                 </Box.Flex>
               </Box.Flex>
-              <Navigation active={active} />
 
               <Box css={styles.navContainer}>
                 <Sidebar
                   versions={versions}
-                  allNavs={active.includes('guides') ? undefined : allNavs}
+                  allNavs={active.includes('guides/') ? undefined : allNavs}
                   onClick={() => setOpen(false)}
                   versionSet={versionSet}
                 />
@@ -128,5 +124,8 @@ const styles = {
     '.fuel_Box-flex': {
       height: '36px',
     },
+  }),
+  box: cssObj({
+    pl: '$1',
   }),
 };

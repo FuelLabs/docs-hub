@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-import * as acorn from 'acorn';
-import * as walk from 'acorn-walk';
 import fs from 'node:fs';
 import { EOL } from 'os';
 import path from 'path';
+import * as acorn from 'acorn';
+import * as walk from 'acorn-walk';
 import * as prettier from 'prettier';
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
@@ -30,10 +28,11 @@ function extractLines(
   content: string,
   fromLine: number | undefined,
   toLine: number | undefined,
-  linesIncluded: number[]
+  linesIncluded: number[],
 ) {
   const lines = content.split(EOL);
   const start = fromLine || 1;
+  // biome-ignore lint/suspicious/noImplicitAnyLet:
   let end;
   if (toLine) {
     end = toLine;
@@ -48,9 +47,8 @@ function extractLines(
       .slice(start - 1, end)
       .filter((_line, index) => newLines.includes(index))
       .join('\n');
-  } else {
-    return lines.slice(start - 1, end).join('\n');
   }
+  return lines.slice(start - 1, end).join('\n');
 }
 
 function escapeRegExp(string: string): string {
@@ -61,7 +59,7 @@ function extractCommentBlock(
   content: string,
   comment: string,
   commentType: CommentTypes,
-  trim: string
+  trim: string,
 ): Block {
   const lines = content.split(EOL);
   let lineStart = -1;
@@ -72,13 +70,13 @@ function extractCommentBlock(
 
   const startAnchorRegex = new RegExp(
     `${escapeRegExp(commentType)}\\s*ANCHOR\\s*:\\s*${escapeRegExp(
-      comment
-    )}\\s*${escapeRegExp(endCommentType)}`
+      comment,
+    )}\\s*${escapeRegExp(endCommentType)}`,
   );
   const endAnchorRegex = new RegExp(
     `${escapeRegExp(commentType)}\\s*ANCHOR_END\\s*:\\s*${escapeRegExp(
-      comment
-    )}\\s*${escapeRegExp(endCommentType)}`
+      comment,
+    )}\\s*${escapeRegExp(endCommentType)}`,
   );
 
   for (let i = 0; i < lines.length; i++) {
@@ -109,10 +107,10 @@ function extractCommentBlock(
     // and the code block markers (```), if present.
     lineStart =
       lines.findIndex(
-        (line, index) => index > lineStart && line.includes('```')
+        (line, index) => index > lineStart && line.includes('```'),
       ) + 1;
     lineEnd = lines.findIndex(
-      (line, index) => index > lineStart && line.includes('```')
+      (line, index) => index > lineStart && line.includes('```'),
     );
     lineEnd = lineEnd === -1 ? lines.length : lineEnd;
   }
@@ -142,7 +140,7 @@ function minWhitespace(lines: string[]): number {
       const matchResult = line.match(/^(\s*)/);
       return matchResult ? matchResult[0].length : 0;
     })
-    .reduce((min, curr) => Math.min(min, curr), Infinity);
+    .reduce((min, curr) => Math.min(min, curr), Number.POSITIVE_INFINITY);
 }
 
 function dedent(lines: string[], amount: number): string[] {
@@ -167,8 +165,10 @@ function extractTestCase(source: string, testCase: string) {
   const chars = source.split('');
   const linesOffset = getLineOffsets(source);
 
+  // biome-ignore lint/suspicious/noExplicitAny:
   walk.fullAncestor(ast, (node: any, _state, ancestors) => {
     if (node.name === 'test') {
+      // biome-ignore lint/suspicious/noExplicitAny:
       const parent = ancestors.reverse()[1] as any;
       const args = parent.arguments || [];
       const val = args[0]?.value;
@@ -194,14 +194,18 @@ function extractTestCase(source: string, testCase: string) {
 }
 
 export function codeImport() {
+  // biome-ignore lint/suspicious/noExplicitAny:
   return function transformer(tree: Root, file: any) {
     const rootDir = process.cwd();
     const dirname = file.data.rawDocumentData?.sourceFileDir;
+    // biome-ignore lint/suspicious/noExplicitAny:
     const nodes: [any, number | undefined, any][] = [];
     if (dirname.startsWith('docs/fuels-wallet')) return;
 
+    // biome-ignore lint/suspicious/noExplicitAny:
     visit(tree, 'mdxJsxFlowElement', (node: any, idx, parent) => {
       if (node.name === 'CodeImport') {
+        // biome-ignore lint/suspicious/noExplicitAny:
         nodes.push([node as any, idx, parent]);
       }
     });
@@ -214,19 +218,28 @@ export function codeImport() {
         throw new Error('CodeImport needs to have properties defined');
       }
 
+      // biome-ignore lint/suspicious/noExplicitAny:
       const file = attr.find((i: any) => i.name === 'file')?.value;
+      // biome-ignore lint/suspicious/noExplicitAny:
       let lineStart = attr.find((i: any) => i.name === 'lineStart')?.value;
+      // biome-ignore lint/suspicious/noExplicitAny:
       let lineEnd = attr.find((i: any) => i.name === 'lineEnd')?.value;
+      // biome-ignore lint/suspicious/noExplicitAny:
       const comment = attr.find((i: any) => i.name === 'comment')?.value;
       const commentType = attr.find(
-        (i: any) => i.name === 'commentType'
+        // biome-ignore lint/suspicious/noExplicitAny:
+        (i: any) => i.name === 'commentType',
       )?.value;
+      // biome-ignore lint/suspicious/noExplicitAny:
       const trim = attr.find((i: any) => i.name === 'trim')?.value;
       let linesIncluded =
+        // biome-ignore lint/suspicious/noExplicitAny:
         attr.find((i: any) => i.name === 'linesIncluded')?.value || [];
+      // biome-ignore lint/suspicious/noExplicitAny:
       const testCase = attr.find((i: any) => i.name === 'testCase')?.value;
       const fileAbsPath = path.resolve(path.join(rootDir, dirname), file);
       const lang =
+        // biome-ignore lint/suspicious/noExplicitAny:
         attr.find((i: any) => i.name === 'lang')?.value ||
         path.extname(fileAbsPath).replace('.', '');
       const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
@@ -245,7 +258,7 @@ export function codeImport() {
           fileContent,
           comment,
           commentType,
-          trim
+          trim,
         );
         lineStart = commentResult.lineStart;
         lineEnd = commentResult.lineEnd;

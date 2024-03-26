@@ -1,8 +1,8 @@
 import type { BrowserContext, Page } from '@playwright/test';
 
-import { clickByLocator, clickByLabel } from './button';
+import { clickByLabel, clickByLocator } from './button';
 import { checkIfIsIncremented, checkValue, getByLocator } from './checks';
-import { compareFiles, compareToFile, writeToFile, modifyFile } from './files';
+import { compareFiles, compareToFile, modifyFile, writeToFile } from './files';
 import { getTestActions } from './getTestActions';
 import { runCommand } from './runCommand';
 import { reload, visit } from './visit';
@@ -11,11 +11,11 @@ import { walletApprove, walletConnect } from './wallet';
 export async function runTest(
   page: Page,
   context: BrowserContext,
-  url: string
+  url: string,
 ) {
   await visit(page, url);
   console.log('GETTING TEST ACTIONS');
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny:
   const steps: any[] = await getTestActions(page);
 
   console.log('STARTING TEST');
@@ -29,7 +29,7 @@ export async function runTest(
             page,
             step.id,
             step['data-command-folder'],
-            step['data-pre-command']
+            step['data-pre-command'],
           );
         } else if (step['data-command-folder']) {
           await runCommand(page, step.id, step['data-command-folder']);
@@ -38,7 +38,7 @@ export async function runTest(
         }
         break;
       case 'wait':
-        await page.waitForTimeout(parseInt(step['data-timeout']));
+        await page.waitForTimeout(Number.parseInt(step['data-timeout']));
         break;
       case 'reload':
         await reload(page);
@@ -49,7 +49,7 @@ export async function runTest(
       case 'compareFiles':
         await compareFiles(
           step['data-test-path-name'],
-          step['data-ref-path-name']
+          step['data-ref-path-name'],
         );
         break;
       case 'compareToFile':
@@ -63,18 +63,18 @@ export async function runTest(
           page,
           step.id,
           step['data-filepath'],
-          parseInt(step['data-add-spaces-before']),
+          Number.parseInt(step['data-add-spaces-before']),
           step['data-add-spaces-after'],
-          parseInt(step['data-at-line']),
+          Number.parseInt(step['data-at-line']),
           step['data-remove-lines'],
-          step['data-use-set-data']
+          step['data-use-set-data'],
         );
         break;
       case 'getByLocator-save':
         await getByLocator(
           page,
           step['data-locator'],
-          step['data-remove-from-value']
+          step['data-remove-from-value'],
         );
         break;
       case 'clickByRole':
@@ -102,12 +102,15 @@ export async function runTest(
         break;
       case 'checkIfIsIncremented':
         checkIfIsIncremented(
-          parseInt(step['data-initial-index']),
-          parseInt(step['data-final-index'])
+          Number.parseInt(step['data-initial-index']),
+          Number.parseInt(step['data-final-index']),
         );
         break;
       case 'checkValue':
-        checkValue(parseInt(step['data-index']), step['data-check-value']);
+        checkValue(
+          Number.parseInt(step['data-index']),
+          step['data-check-value'],
+        );
         break;
       default:
         console.log('STEP NOT FOUND:', step);

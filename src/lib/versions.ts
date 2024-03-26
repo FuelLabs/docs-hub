@@ -3,9 +3,9 @@ import { join } from 'path';
 import toml from 'toml';
 
 import {
+  BETA_4_DOCS_DIRECTORY,
   DOCS_DIRECTORY,
   NIGHTLY_DOCS_DIRECTORY,
-  BETA_4_DOCS_DIRECTORY,
 } from '../config/constants';
 import type { VersionSet } from '../types';
 
@@ -16,33 +16,28 @@ function itemFromPackageJson(docsDir: string, filename: string) {
 }
 
 function getWalletVersion(docsDir: string) {
-  const { homepage } = itemFromPackageJson(
-    docsDir,
-    'fuels-wallet/package.json'
-  );
   const json = itemFromPackageJson(
     docsDir,
-    'fuels-wallet/packages/sdk/package.json'
+    'fuels-wallet/packages/sdk/package.json',
   );
   return {
     name: 'fuels-wallet',
     version: json.version,
     category: 'Wallet',
-    url: homepage,
+    url: `https://github.com/FuelLabs/fuels-wallet/tree/v${json.version}`,
   };
 }
 
 function getTSSDKVersion(docsDir: string) {
-  const { homepage } = itemFromPackageJson(docsDir, 'fuels-ts/package.json');
   const json = itemFromPackageJson(
     docsDir,
-    'fuels-ts/packages/fuels/package.json'
+    'fuels-ts/packages/fuels/package.json',
   );
   return {
     name: 'fuels-ts',
     version: json.version,
     category: 'TypeScript SDK',
-    url: homepage,
+    url: `https://github.com/FuelLabs/fuels-ts/tree/v${json.version}`,
   };
 }
 
@@ -54,20 +49,7 @@ export function getRustSDKVersion(docsDir: string) {
     name: 'fuels-rs',
     category: 'Rust SDK',
     version: tomfile.workspace.package.version,
-    url: tomfile.workspace.package.repository,
-  };
-}
-
-function getFuelupVersion() {
-  const filedir = join(DOCS_DIRECTORY, 'fuelup/Cargo.toml');
-  const file = fs.readFileSync(filedir, 'utf-8');
-  const tomfile = toml.parse(file);
-
-  return {
-    name: 'fuelup',
-    category: 'Fuelup',
-    version: tomfile.package.version,
-    url: tomfile.package.repository,
+    url: `https://github.com/FuelLabs/fuels-rs/tree/v${tomfile.workspace.package.version}`,
   };
 }
 
@@ -83,7 +65,7 @@ function getForcVersion(docsDir: string) {
     name: 'forc',
     category: 'Forc',
     version,
-    url: swaitomfile.workspace.package.repository,
+    url: `https://github.com/FuelLabs/sway/tree/v${version}`,
   };
 }
 
@@ -92,6 +74,26 @@ export function getFuelCoreVersion() {
   const file = fs.readFileSync(filedir, 'utf-8');
   const tomfile = toml.parse(file);
   return tomfile.workspace.package.version;
+}
+
+export function getFullFuelCoreVersion(versionSet: VersionSet) {
+  if (versionSet === 'beta-4') {
+    return {
+      name: 'fuel-graphql-docs',
+      category: 'GraphQL API',
+      version: '0.20.5',
+      url: 'https://github.com/FuelLabs/fuel-core/tree/v0.20.5',
+    };
+  }
+  const filedir = join(DOCS_DIRECTORY, 'fuel-core/Cargo.toml');
+  const file = fs.readFileSync(filedir, 'utf-8');
+  const tomfile = toml.parse(file);
+  return {
+    name: 'fuel-graphql-docs',
+    category: 'GraphQL API',
+    version: tomfile.workspace.package.version,
+    url: `https://github.com/FuelLabs/fuel-core/tree/v${tomfile.workspace.package.version}`,
+  };
 }
 
 // returns the version of the node required by fuels-ts
@@ -112,15 +114,48 @@ export function getVersions(versionSet: VersionSet) {
   const wallet = getWalletVersion(docsDir);
   const tsSDK = getTSSDKVersion(docsDir);
   const rust = getRustSDKVersion(docsDir);
-  const fuelup = getFuelupVersion();
   const forc = getForcVersion(docsDir);
+  const fuelCore = getFullFuelCoreVersion(versionSet);
 
   return {
     Forc: forc,
     Sway: forc,
-    Fuelup: fuelup,
     'Fuel Rust SDK': rust,
     'Fuel TS SDK': tsSDK,
     'Fuel Wallet': wallet,
+    'GraphQL API': fuelCore,
   };
+}
+
+export function getAllVersions() {
+  const versions = getVersions('default');
+  const nightlyVersions = getVersions('nightly');
+  const beta4Versions = getVersions('beta-4');
+
+  return { versions, nightlyVersions, beta4Versions };
+}
+
+// gets the correct url tag for github links
+export default function getDocVersion(link: string, versionSet: VersionSet) {
+  const versions = getVersions(versionSet);
+  if (link.includes('/fuels-ts/')) {
+    return `v${versions['Fuel TS SDK'].version}`;
+  }
+
+  if (link.includes('/fuels-rs/')) {
+    return `v${versions['Fuel Rust SDK'].version}`;
+  }
+
+  if (link.includes('/sway/')) {
+    return `v${versions.Sway.version}`;
+  }
+
+  if (link.includes('/fuelup/')) {
+    return `v${versions.Fuelup.version}`;
+  }
+
+  if (link.includes('/fuels-wallet/')) {
+    return `v${versions['Fuel Wallet'].version}`;
+  }
+  return 'master';
 }

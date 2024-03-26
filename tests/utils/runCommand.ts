@@ -1,6 +1,6 @@
-import type { Page } from '@playwright/test';
 import { execSync } from 'child_process';
 import { EOL } from 'os';
+import type { Page } from '@playwright/test';
 
 import { clickCopyButton } from './button';
 import { expect } from './fixtures';
@@ -9,7 +9,7 @@ export async function runCommand(
   page: Page,
   buttonName: string,
   goToFolder?: string | null,
-  preCommand?: string
+  preCommand?: string,
 ) {
   const copied = await clickCopyButton(page, buttonName);
   console.log('COPIED', copied.text);
@@ -22,7 +22,7 @@ export async function runCommand(
     }
   }
   if (goToFolder) {
-    command = `cd ${goToFolder} && ` + command;
+    command = `cd ${goToFolder} && ${command}`;
   }
   console.log('COMMAND', command);
   const commandOutput = execSync(command, {

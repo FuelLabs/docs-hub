@@ -15,13 +15,13 @@ export function CodeTabs(props: CodeTabsProps) {
       order = [props.children[1], props.children[0]];
     }
     return (
-      <Tabs css={styles.root} defaultValue="pnpm">
-        <Tabs.List css={styles.tabStyles} aria-label="Choose npm or pnpm.">
-          <Tabs.Trigger value="pnpm">pnpm</Tabs.Trigger>
-          <Tabs.Trigger value="npm">npm</Tabs.Trigger>
+      <Tabs css={styles.root} defaultValue='pnpm'>
+        <Tabs.List css={styles.tabStyles} aria-label='Choose npm or pnpm.'>
+          <Tabs.Trigger value='pnpm'>pnpm</Tabs.Trigger>
+          <Tabs.Trigger value='npm'>npm</Tabs.Trigger>
         </Tabs.List>
-        <Tabs.Content value="pnpm">{order[0]}</Tabs.Content>
-        <Tabs.Content value="npm">{order[1]}</Tabs.Content>
+        <Tabs.Content value='pnpm'>{order[0]}</Tabs.Content>
+        <Tabs.Content value='npm'>{order[1]}</Tabs.Content>
       </Tabs>
     );
   }

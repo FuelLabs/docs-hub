@@ -1,30 +1,31 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
 
+// biome-ignore lint/suspicious/noExplicitAny:
 export function Table(props: any) {
   return (
     <Box css={styles.root}>
-      <Box as="table" {...props} css={styles.table} />
+      <Box as='table' {...props} css={styles.table} />
     </Box>
   );
 }
 
+// biome-ignore lint/suspicious/noExplicitAny:
 export function TD(props: any) {
   return (
-    <Box as="td" {...props} css={styles.td}>
-      <Box as="div" css={styles.tdContainer}>
+    <Box as='td' {...props} css={styles.td}>
+      <Box as='div' css={styles.tdContainer}>
         {props.children}
       </Box>
     </Box>
   );
 }
 
+// biome-ignore lint/suspicious/noExplicitAny:
 export function TH(props: any) {
   return (
-    <Box as="th" {...props} css={styles.td}>
-      <Box as="div" css={styles.thContainer}>
+    <Box as='th' {...props} css={styles.td}>
+      <Box as='div' css={styles.thContainer}>
         {props.children}
       </Box>
     </Box>

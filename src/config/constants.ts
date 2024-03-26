@@ -8,9 +8,9 @@ export const FIELDS = ['title', 'slug', 'content', 'category'];
 export const FUEL_TESTNET = 'beta-5';
 export const FUEL_TESTNET_UPPER_CASE = 'Beta-5';
 export const FAUCET_LINK = `https://faucet-${FUEL_TESTNET}.fuel.network/`;
-export const BETA_4_FAUCET_LINK = `https://faucet-beta-4.fuel.network/`;
+export const BETA_4_FAUCET_LINK = 'https://faucet-beta-4.fuel.network/';
 export const PLAYGROUND_LINK = `https://${FUEL_TESTNET}.fuel.network/playground/`;
-export const BETA_4_PLAYGROUND_LINK = `https://beta-4.fuel.network/playground/`;
+export const BETA_4_PLAYGROUND_LINK = 'https://beta-4.fuel.network/playground/';
 export const EXPLORER_LINK = 'https://next-app.fuel.network/';
 export const BETA_4_EXPLORER_LINK =
   'https://fuellabs.github.io/block-explorer-v2/beta-4/';
@@ -51,7 +51,7 @@ export const EXTERNAL_NAVIGATION_LINKS: LinkObject[] = [
 
 // TODO: replace this
 // this is only used the search component
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny:
 export const NAVIGATION: any[] = [
   {
     name: 'Guides',
@@ -91,17 +91,9 @@ export const NAVIGATION: any[] = [
         name: 'Tooling',
       },
       {
-        name: 'Fuelup',
-        link: '/docs/fuelup',
-      },
-      {
         name: 'Forc',
         link: '/docs/forc',
       },
-      // {
-      //   name: 'Fuel Nix',
-      //   link: '/docs/nix/',
-      // },
     ],
   },
   {
@@ -133,7 +125,7 @@ export const NAVIGATION: any[] = [
         link: '/docs/graphql/overview/',
       },
       {
-        name: 'Specs',
+        name: 'Specifications',
         link: '/docs/specs',
       },
       {

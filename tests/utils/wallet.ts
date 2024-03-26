@@ -10,7 +10,7 @@ export const FUEL_WALLET_PASSWORD = '$123Ran123Dom123!';
 export async function walletSetup(
   context: BrowserContext,
   fuelExtensionId: string,
-  page: Page
+  page: Page,
 ) {
   await page.goto(`chrome-extension://${fuelExtensionId}/popup.html`);
 
@@ -30,7 +30,7 @@ export async function walletSetup(
   // Copy and paste seed phrase
   /** Copy words to clipboard area */
   await signupPage.evaluate(
-    `navigator.clipboard.writeText('${FUEL_MNEMONIC}')`
+    `navigator.clipboard.writeText('${FUEL_MNEMONIC}')`,
   );
   const pasteButton = signupPage.locator('button').getByText('Paste');
   await pasteButton.click();
@@ -59,7 +59,7 @@ export async function walletSetup(
 export async function useFuelWallet(
   context: BrowserContext,
   extensionId: string,
-  page: Page
+  page: Page,
 ) {
   await walletSetup(context, extensionId, page);
 }

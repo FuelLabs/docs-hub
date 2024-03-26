@@ -1,14 +1,14 @@
 import {
-  updateSubmodule,
-  checkout,
   checkDiff,
+  checkout,
   commitAll,
-  push,
   createPR,
-  fetchTag,
   fetchBranch,
+  fetchTag,
   getCommitFromTitle,
   getVersionCommit,
+  push,
+  updateSubmodule,
 } from './gitUtils.mjs';
 
 export async function handleNewPR(branchName, isNightly) {
@@ -39,7 +39,7 @@ export async function updateSubmodules(newDefaultVersions, newNightlyVersions) {
     updateRegardless.map(async (sub) => {
       console.log('UPDATING SUB:', sub);
       await updateSubmodule(sub);
-    })
+    }),
   );
 
   if (newNightlyVersions) {
@@ -65,7 +65,7 @@ async function updateDocs(versions, isNightly) {
           await update(
             version,
             `docs${isNightly ? '/nightly' : ''}/builds/sway`,
-            'gh-pages'
+            'gh-pages',
           );
           break;
         case 'rust':
@@ -78,13 +78,10 @@ async function updateDocs(versions, isNightly) {
         case 'wallet':
           submoduleName = `docs${isNightly ? '/nightly' : ''}/fuels-wallet`;
           break;
-        case 'fuelup':
-          submoduleName = 'docs/fuelup';
-          break;
         default:
       }
       await update(version, submoduleName, branch);
-    })
+    }),
   );
 }
 

@@ -1,8 +1,8 @@
-import { checkIfNightlyIsNew } from './checkNightly.mjs';
-import { setupUser, createNewBranch } from './gitUtils.mjs';
-import { getExistingVersions } from './versions.mjs';
 import { checkDefault } from './checkDefault.mjs';
-import { updateSubmodules, handleNewPR } from './updateSubmodules.mjs';
+import { checkIfNightlyIsNew } from './checkNightly.mjs';
+import { createNewBranch, setupUser } from './gitUtils.mjs';
+import { handleNewPR, updateSubmodules } from './updateSubmodules.mjs';
+import { getExistingVersions } from './versions.mjs';
 
 main();
 
@@ -25,7 +25,7 @@ async function main() {
   }
 
   const newNightlyVersions = await checkIfNightlyIsNew(
-    existingVersions.nightly
+    existingVersions.nightly,
   );
 
   if (isWorkflow) {

@@ -1,7 +1,7 @@
 import { cssObj } from '@fuel-ui/css';
-import { Dropdown, Text, Icon } from '@fuel-ui/react';
+import { Dropdown, Icon, Text } from '@fuel-ui/react';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { FUEL_TESTNET, FUEL_TESTNET_UPPER_CASE } from '../config/constants';
 import { useSetVersion } from '../hooks/useVersion';
@@ -19,8 +19,8 @@ export default function VersionDropdown({
     versionSet === 'default'
       ? FUEL_TESTNET_UPPER_CASE
       : versionSet === 'nightly'
-      ? 'Nightly'
-      : 'Beta-4'
+        ? 'Nightly'
+        : 'Beta-4',
   );
   const router = useRouter();
   const setVersion = useSetVersion();
@@ -28,7 +28,6 @@ export default function VersionDropdown({
   const isDoc =
     router.asPath.includes('docs') &&
     !router.asPath.includes('/intro/') &&
-    !router.asPath.includes('docs/fuelup') &&
     !router.asPath.includes('docs/contributing');
   const bookIndex =
     versionSet !== 'default' &&
@@ -41,16 +40,16 @@ export default function VersionDropdown({
       versionSet === 'default'
         ? FUEL_TESTNET_UPPER_CASE
         : versionSet === 'nightly'
-        ? 'Nightly'
-        : 'Beta-4';
+          ? 'Nightly'
+          : 'Beta-4';
     setActiveVersion(newActiveVersion);
   }, [versionSet]);
 
   return (
     <Dropdown isOpen={opened} onOpenChange={setOpened}>
       <Dropdown.Trigger
-        intent="base"
-        variant="outlined"
+        intent='base'
+        variant='outlined'
         css={
           opened ? { ...styles.trigger, ...styles.triggerOpen } : styles.trigger
         }
@@ -60,7 +59,7 @@ export default function VersionDropdown({
       <Dropdown.Menu
         disabledKeys={versionSet === 'default' ? [FUEL_TESTNET] : [versionSet]}
         css={styles.dropdownMenu}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny:
         onAction={(action: any) => {
           if (setVersion) {
             if (action === FUEL_TESTNET) {
@@ -91,25 +90,25 @@ export default function VersionDropdown({
           aria-label={FUEL_TESTNET}
         >
           <Text>{FUEL_TESTNET_UPPER_CASE}</Text>
-          {versionSet === 'default' && <Icon icon="Check" color="accent11" />}
+          {versionSet === 'default' && <Icon icon='Check' color='accent11' />}
         </Dropdown.MenuItem>
 
         <Dropdown.MenuItem
           css={styles.menuItem}
-          key="beta-4"
-          aria-label="beta-4"
+          key='beta-4'
+          aria-label='beta-4'
         >
           <Text>Beta-4</Text>
-          {versionSet === 'beta-4' && <Icon icon="Check" color="accent11" />}
+          {versionSet === 'beta-4' && <Icon icon='Check' color='accent11' />}
         </Dropdown.MenuItem>
 
         <Dropdown.MenuItem
           css={styles.menuItem}
-          key="nightly"
-          aria-label="nightly"
+          key='nightly'
+          aria-label='nightly'
         >
           <Text>Nightly</Text>
-          {versionSet === 'nightly' && <Icon icon="Check" color="accent11" />}
+          {versionSet === 'nightly' && <Icon icon='Check' color='accent11' />}
         </Dropdown.MenuItem>
       </Dropdown.Menu>
     </Dropdown>
