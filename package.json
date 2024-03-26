@@ -17,6 +17,7 @@
     "export": "DOCS_DIST=${DOCS_DIST:=dist} next export -o $DOCS_DIST",
     "generate:links": "node scripts/generate-links/index.mjs",
     "generate:components": "node scripts/components.mjs",
+    "generate:sitemap": "node scripts/generate-sitemap/index.mjs",
     "lint": "biome check --apply-unsafe .",
     "lint:fix": "biome format --write .",
     "lint:prod": "biome lint --max-diagnostics=1000 --diagnostic-level=error .",
