@@ -55,15 +55,6 @@ export default function DocPage(props: DocPageProps) {
 export function getStaticPaths() {
   const paths = Docs.getAllPaths(allMdDocs);
   paths.push({ params: { slug: ['guides'], path: '/guides' } });
-
-  // generate a sitemap file
-  const sitemapPath = join(DOCS_DIRECTORY, '../src/generated/sitemap.xml');
-  if (!existsSync(sitemapPath)) {
-    console.log("SITEMAP FILE DOESN'T EXIST. GENERATING...");
-    const sitemap = generateSiteMap();
-    writeFileSync(sitemapPath, sitemap, 'utf8');
-  }
-
   return { paths, fallback: false };
 }
 
