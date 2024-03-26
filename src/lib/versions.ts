@@ -150,10 +150,6 @@ export default function getDocVersion(link: string, versionSet: VersionSet) {
     return `v${versions.Sway.version}`;
   }
 
-  if (link.includes('/fuelup/')) {
-    return `v${versions.Fuelup.version}`;
-  }
-
   if (link.includes('/fuels-wallet/')) {
     return `v${versions['Fuel Wallet'].version}`;
   }
