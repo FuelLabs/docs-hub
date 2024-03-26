@@ -1,4 +1,4 @@
-import { Link as FuelLink, Card as FuelCard } from '@fuel-ui/react';
+import { Card as FuelCard, Link as FuelLink } from '@fuel-ui/react';
 import { styles } from '../Card';
 
 interface FuelnautCardProps {

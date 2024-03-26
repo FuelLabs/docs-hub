@@ -1,6 +1,6 @@
 import {
-  PaybackAbi__factory,
   CoinFlipAbi__factory,
+  PaybackAbi__factory,
   VaultAbi__factory,
 } from '../../fuelnaut-api';
 

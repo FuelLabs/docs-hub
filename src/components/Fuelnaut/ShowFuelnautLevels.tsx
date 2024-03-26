@@ -1,11 +1,11 @@
+import { Box } from '@fuel-ui/react';
 import { useAccount } from '@fuel-wallet/react';
 import { useEffect, useState } from 'react';
-import type { FuelnautAbi } from '~/src/fuelnaut-api';
-import type { Vec, Option } from '~/src/fuelnaut-api/contracts/common';
-import { getLevelStatuses } from '~/src/lib/fuelnaut/fuelnaut-utils';
 import { LEVELS_CONFIG } from '~/src/config/fuelnautLevels';
+import type { FuelnautAbi } from '~/src/fuelnaut-api';
+import type { Option, Vec } from '~/src/fuelnaut-api/contracts/common';
+import { getLevelStatuses } from '~/src/lib/fuelnaut/fuelnaut-utils';
 import { FuelnautCard } from './FuelnautCard';
-import { Box } from '@fuel-ui/react';
 
 interface ShowLevelsProps {
   contract: FuelnautAbi | null;
@@ -20,14 +20,13 @@ export default function ShowLevels({ contract }: ShowLevelsProps) {
       if (!contract || !account) {
         console.log('Not connected to wallet');
         return 'error';
-      } else {
-        const statusesResponse = await getLevelStatuses(
-          contract,
-          account as `fuel${string}`
-        );
-        if (statusesResponse !== null) {
-          setStatuses(statusesResponse);
-        }
+      }
+      const statusesResponse = await getLevelStatuses(
+        contract,
+        account as `fuel${string}`,
+      );
+      if (statusesResponse !== null) {
+        setStatuses(statusesResponse);
       }
     }
     getStatuses();
@@ -40,7 +39,7 @@ export default function ShowLevels({ contract }: ShowLevelsProps) {
           title={LEVELS_CONFIG[key].title}
           status={statuses && statuses.length > index ? statuses[index] : null}
           key={key + index}
-          link={'/guides/fuelnaut/' + LEVELS_CONFIG[key].key}
+          link={`/guides/fuelnaut/${LEVELS_CONFIG[key].key}`}
         />
       ))}
     </Box.Flex>

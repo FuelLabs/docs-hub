@@ -85,12 +85,12 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
     const fuelnautPath = join(DOCS_DIRECTORY, 'guides/examples/fuelnaut');
     const byteCodePath = join(
       fuelnautPath,
-      `${levelKey}/out/debug/${levelKey}.bin`
+      `${levelKey}/out/debug/${levelKey}.bin`,
     );
     const bytecode = readFileSync(byteCodePath);
     const abiJSONPath = join(
       fuelnautPath,
-      `${levelKey}/out/debug/${levelKey}-abi.json`
+      `${levelKey}/out/debug/${levelKey}-abi.json`,
     );
     fuelnautProps.abiJSON = JSON.parse(readFileSync(abiJSONPath, 'utf8'));
 

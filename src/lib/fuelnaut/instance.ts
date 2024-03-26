@@ -1,27 +1,27 @@
+import { type Account, type BigNumberish, type JsonAbi, bn } from 'fuels';
 import type { FuelnautLevel } from '~/src/config/fuelnautLevels';
 import type { FuelnautAbi } from '~/src/fuelnaut-api';
 import type { ContractIdInput } from '~/src/fuelnaut-api/contracts/FuelnautAbi';
-import { type JsonAbi, type Account, type BigNumberish, bn } from 'fuels';
 
+import type { Vec } from '~/src/fuelnaut-api/contracts/common';
 import { getConfigurables } from './configurables';
 import { deployNewInstance } from './deploy';
-import type { Vec } from '~/src/fuelnaut-api/contracts/common';
 
 export async function getNewInstance(
   level: FuelnautLevel,
   contract: FuelnautAbi,
   wallet: Account,
   bytecode: string,
-  abiJSON: JsonAbi
+  abiJSON: JsonAbi,
 ) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const thisWindow = window as any;
   const configurableConstants = getConfigurables(level.key);
   const newInstance = await deployNewInstance(
     wallet,
     bytecode,
     abiJSON,
-    configurableConstants
+    configurableConstants,
   );
   const instanceId: ContractIdInput = {
     value: newInstance.id.toB256(),
@@ -30,7 +30,7 @@ export async function getNewInstance(
     console.log('HAS CONFIGURABLES');
     const configurableInputs = buildConfigurables(
       bn(1288),
-      configurableConstants.PASSWORD
+      configurableConstants.PASSWORD,
     );
     const bytecodeBuffer = Buffer.from(bytecode, 'base64');
     const bytecodeInput: Vec<BigNumberish> = [...bytecodeBuffer];
@@ -42,7 +42,7 @@ export async function getNewInstance(
         instanceId,
         level.index,
         bytecodeInput,
-        configurableInputs
+        configurableInputs,
       )
       .txParams({ gasPrice: 1, gasLimit: 1_000_000 })
       .call();
@@ -69,7 +69,7 @@ export async function getNewInstance(
 
 function buildConfigurables(
   offset: BigNumberish,
-  configValue: BigNumberish
+  configValue: BigNumberish,
 ): Vec<[BigNumberish, Vec<BigNumberish>]> {
   const myConfigurables: Vec<[BigNumberish, Vec<BigNumberish>]> = [];
   const data: Vec<BigNumberish> = [];

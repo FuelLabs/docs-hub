@@ -1,9 +1,9 @@
-import type { FuelnautAbi } from '../../fuelnaut-api';
 import { Address } from 'fuels';
+import type { FuelnautAbi } from '../../fuelnaut-api';
 
 export const getLevelStatuses = async (
   contract: FuelnautAbi,
-  account: `fuel${string}`
+  account: `fuel${string}`,
 ) => {
   try {
     const address = new Address(account);

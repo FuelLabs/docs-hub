@@ -1,18 +1,18 @@
 import { Box, Button } from '@fuel-ui/react';
+import { useIsConnected, useWallet } from '@fuel-wallet/react';
 import { BaseAssetId } from 'fuels';
 import type { JsonAbi } from 'fuels';
 import { useEffect, useMemo, useState } from 'react';
 import { FUELNAUT_CONTRACT_ID } from '~/src/config/fuelnautLevels';
+import type { IFuelnautLevel } from '~/src/config/fuelnautLevels';
 import { FuelnautAbi__factory } from '~/src/fuelnaut-api';
 import type { AddressInput } from '~/src/fuelnaut-api/contracts/FuelnautAbi';
 import { getLevelContractFactory } from '~/src/lib/fuelnaut/factories';
-import type { FuelnautLevel } from '~/src/config/fuelnautLevels';
 import { getNewInstance } from '~/src/lib/fuelnaut/instance';
-import { useWallet, useIsConnected } from '@fuel-wallet/react';
 import { ConnectWallet } from '../ConnectWallet';
 
 interface FuelnautLevelProps {
-  level: FuelnautLevel;
+  level: IFuelnautLevel;
   description: string;
   bytecode: string;
   abiJSON: JsonAbi;
@@ -24,7 +24,7 @@ export function FuelnautLevel({
   bytecode,
   abiJSON,
 }: FuelnautLevelProps) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny:
   const [instance, setInstance] = useState<any>(null);
   const [isCompleted, setIsCompleted] = useState(false);
   const { wallet } = useWallet();
@@ -34,7 +34,7 @@ export function FuelnautLevel({
     if (wallet) {
       const contract = FuelnautAbi__factory.connect(
         FUELNAUT_CONTRACT_ID,
-        wallet
+        wallet,
       );
       return contract;
     }
@@ -42,7 +42,7 @@ export function FuelnautLevel({
   }, [wallet]);
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny:
     const thisWindow = window as any;
     thisWindow.baseAssetId = BaseAssetId;
     thisWindow.player = wallet;
@@ -78,7 +78,7 @@ export function FuelnautLevel({
           contract,
           wallet,
           bytecode,
-          abiJSON
+          abiJSON,
         );
 
         setInstance(newInstance);
@@ -133,13 +133,12 @@ export function FuelnautLevel({
         </>
       ) : (
         <>
-        {wallet && isConnected ? (
+          {wallet && isConnected ? (
             <Button onClick={handleNewInstance}>Deploy New Instance</Button>
-        ) : (
+          ) : (
             <ConnectWallet />
-        )}
+          )}
         </>
-        
       )}
     </Box>
   );

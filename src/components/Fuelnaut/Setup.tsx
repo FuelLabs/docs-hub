@@ -1,11 +1,11 @@
 import { Button } from '@fuel-ui/react';
+import type { FuelWalletLocked } from '@fuel-wallet/sdk';
 import type { FuelnautAbi } from '~/src/fuelnaut-api';
 import { setup } from '~/src/lib/fuelnaut/setup';
 
 export interface SetupProps {
   contract: FuelnautAbi | null;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  wallet?: any;
+  wallet?: FuelWalletLocked;
 }
 
 export default function Setup({ contract, wallet }: SetupProps) {
