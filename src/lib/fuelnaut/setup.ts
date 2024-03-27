@@ -8,10 +8,10 @@ import { getLevelContractFactory } from './factories';
 
 export async function setup(contract: FuelnautAbi, wallet: WalletLocked) {
   try {
-    // await contract.functions
-    //   .my_constructor()
-    //   .txParams({ gasPrice: 1, gasLimit: 800_000 })
-    //   .call();
+    await contract.functions
+      .my_constructor()
+      .txParams({ gasPrice: 1, gasLimit: 800_000 })
+      .call();
 
     for (const key of Object.keys(LEVELS_CONFIG)) {
       const level = LEVELS_CONFIG[key];

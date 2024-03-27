@@ -34,7 +34,7 @@ export const LEVELS_CONFIG: FuelnautLevelsConfig = {
     contractId:
       VERCEL_ENV === 'development'
         ? contractsIds.helloWorld
-        : '',
+        : '0xb3b99987a8d22824c27438dcf4d0f72328a0bda273c05d03ca6f889e47155a0c',
     hasConfigurables: false,
   },
   payback: {
