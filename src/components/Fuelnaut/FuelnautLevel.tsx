@@ -1,8 +1,9 @@
-import { Box, Button } from '@fuel-ui/react';
+import { Box, Button, Spinner, toast } from '@fuel-ui/react';
 import { useIsConnected, useWallet } from '@fuel-wallet/react';
 import { BaseAssetId } from 'fuels';
 import type { JsonAbi } from 'fuels';
 import { useEffect, useMemo, useState } from 'react';
+import { set } from 'react-hook-form';
 import { FUELNAUT_CONTRACT_ID } from '~/src/config/fuelnautLevels';
 import type { IFuelnautLevel } from '~/src/config/fuelnautLevels';
 import { FuelnautAbi__factory } from '~/src/fuelnaut-api';
@@ -27,6 +28,7 @@ export function FuelnautLevel({
   // biome-ignore lint/suspicious/noExplicitAny:
   const [instance, setInstance] = useState<any>(null);
   const [isCompleted, setIsCompleted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { wallet } = useWallet();
   const { isConnected } = useIsConnected();
 
@@ -71,6 +73,7 @@ export function FuelnautLevel({
   }, [wallet, contract]);
 
   const handleNewInstance = async () => {
+    setIsLoading(true);
     try {
       if (wallet && contract) {
         const newInstance = await getNewInstance(
@@ -82,17 +85,22 @@ export function FuelnautLevel({
         );
 
         setInstance(newInstance);
+        toast.success('New instance created.');
       } else {
-        alert('Wallet not connected or contract not found.');
+        toast.error('Wallet or contract not found.');
       }
     } catch (error) {
+      toast.error('Oops! Something went wrong.');
       console.error('Error deploying new instance:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleCheckIfCompleted = async () => {
+    setIsLoading(true);
+    try {
     if (contract && wallet) {
-      try {
         const address = wallet?.address.toB256();
         const addressInput: AddressInput = { value: address! };
         await contract.functions
@@ -100,12 +108,15 @@ export function FuelnautLevel({
           .txParams({ gasPrice: 1, gasLimit: 800_000 })
           .call();
         setIsCompleted(true);
-      } catch (error) {
-        alert('You have not yet completed this challenge.');
+        toast.success("Challenge completed!")
+      } else {
+        toast.error('You are not connected');
       }
-    } else {
-      alert('You are not connected');
-    }
+    } catch (error) {
+      toast.error('You have not yet completed this challenge.');
+      } finally {
+        setIsLoading(false);
+      }
   };
 
   return (
@@ -125,16 +136,21 @@ export function FuelnautLevel({
                 Click the button below to check if you successfully completed
                 the challenge.
               </p>
-              <Button onClick={handleCheckIfCompleted}>
+              {isLoading ? <Spinner /> : <Button onClick={handleCheckIfCompleted}>
                 Check If Completed
               </Button>
+              }
             </div>
           )}
         </>
       ) : (
         <>
           {wallet && isConnected ? (
+            <>
+            {isLoading ? <Spinner /> : 
             <Button onClick={handleNewInstance}>Deploy New Instance</Button>
+            }
+            </>
           ) : (
             <ConnectWallet />
           )}

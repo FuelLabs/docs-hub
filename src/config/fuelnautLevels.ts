@@ -17,12 +17,13 @@ export interface FuelnautLevelsConfig {
   [key: string]: IFuelnautLevel;
 }
 
-const VERCEL_ENV =
+export const VERCEL_ENV = 
   process.env.VERCEL_ENV || process.env.NEXT_PUBLIC_VERCEL_ENV || 'development';
 
 export const FUELNAUT_CONTRACT_ID =
   VERCEL_ENV === 'production' || VERCEL_ENV === 'preview'
-    ? '0x92c37efb9dac2e28332cbdf59d394bca992e3b6c719c4e346e71368a954149a8'
+    ? 
+    '0xebf3dd62ae107f7fbe69d42e38d4d338e84d7da25465ee6c4408c456c4ad228c'
     : contractsIds.fuelnaut;
 
 export const LEVELS_CONFIG: FuelnautLevelsConfig = {
@@ -33,7 +34,7 @@ export const LEVELS_CONFIG: FuelnautLevelsConfig = {
     contractId:
       VERCEL_ENV === 'development'
         ? contractsIds.payback
-        : '0xfb691e6337816eae2262156322771bf432a010d232cdebf5c6383e863769aaff',
+        : '0x46d81687ec5db87c50cb0e49cb6c68c02da7dabc0b87f6fa62ad56dcc720f81b',
     hasConfigurables: false,
   },
   'coin-flip': {
@@ -43,7 +44,7 @@ export const LEVELS_CONFIG: FuelnautLevelsConfig = {
     contractId:
       VERCEL_ENV === 'development'
         ? contractsIds.coinFlip
-        : '0x9800989ac8a30b168e1a5629ad2b21fedfcfd0424d2031138e7bfcb4e98c0d7a',
+        : '0x02fd424a8732e43c34f87cd4d231a761cfc8941775ba8bd752f478e46efe027a',
     hasConfigurables: false,
   },
   vault: {

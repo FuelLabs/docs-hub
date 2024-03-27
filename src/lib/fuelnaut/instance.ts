@@ -1,14 +1,15 @@
 import { type Account, type BigNumberish, type JsonAbi, bn } from 'fuels';
-import type { FuelnautLevel } from '~/src/config/fuelnautLevels';
+import type { IFuelnautLevel } from '~/src/config/fuelnautLevels';
 import type { FuelnautAbi } from '~/src/fuelnaut-api';
 import type { ContractIdInput } from '~/src/fuelnaut-api/contracts/FuelnautAbi';
 
 import type { Vec } from '~/src/fuelnaut-api/contracts/common';
 import { getConfigurables } from './configurables';
 import { deployNewInstance } from './deploy';
+import { getLevelContractFactory } from './factories';
 
 export async function getNewInstance(
-  level: FuelnautLevel,
+  level: IFuelnautLevel,
   contract: FuelnautAbi,
   wallet: Account,
   bytecode: string,
@@ -26,11 +27,18 @@ export async function getNewInstance(
   const instanceId: ContractIdInput = {
     value: newInstance.id.toB256(),
   };
+  const factory = getLevelContractFactory(level.key);
+  const levelContract = factory.connect(instanceId.value, wallet);
+
+  // without this, the newly deployed contract instance may not be found
+  await timeout(2000);
+
   if (level.hasConfigurables && configurableConstants) {
     console.log('HAS CONFIGURABLES');
+    // hardcoded for testing
     const configurableInputs = buildConfigurables(
-      bn(1288),
-      configurableConstants.PASSWORD,
+      1288,
+      1,
     );
     const bytecodeBuffer = Buffer.from(bytecode, 'base64');
     const bytecodeInput: Vec<BigNumberish> = [...bytecodeBuffer];
@@ -44,15 +52,18 @@ export async function getNewInstance(
         bytecodeInput,
         configurableInputs,
       )
+      .addContracts([levelContract])
       .txParams({ gasPrice: 1, gasLimit: 1_000_000 })
-      .call();
+      .simulate();
   } else {
-    await contract.functions
+  await contract.functions
       .create_instance(instanceId, level.index)
+      .addContracts([levelContract])
       .txParams({ gasPrice: 1, gasLimit: 1_000_000 })
       .call();
   }
   thisWindow.instance = newInstance;
+  return newInstance;
 }
 
 // "configurables": [
@@ -73,10 +84,13 @@ function buildConfigurables(
 ): Vec<[BigNumberish, Vec<BigNumberish>]> {
   const myConfigurables: Vec<[BigNumberish, Vec<BigNumberish>]> = [];
   const data: Vec<BigNumberish> = [];
-
-  // Assuming configValue is a single byte and we want to prepend it with seven 0 bytes
   data.push(0, 0, 0, 0, 0, 0, 0, configValue);
   myConfigurables.push([offset, data]);
 
   return myConfigurables;
+}
+
+
+function timeout(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }

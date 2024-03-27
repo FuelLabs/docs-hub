@@ -345,6 +345,13 @@ const _abi = {
       },
       "attributes": [
         {
+          "name": "storage",
+          "arguments": [
+            "read",
+            "write"
+          ]
+        },
+        {
           "name": "doc-comment",
           "arguments": [
             " this function takes the ContractId of a newly deployed instance"
@@ -372,13 +379,6 @@ const _abi = {
           "name": "doc-comment",
           "arguments": [
             " the ContractId of the instance is verified to match the registered level bytecode"
-          ]
-        },
-        {
-          "name": "storage",
-          "arguments": [
-            "read",
-            "write"
           ]
         }
       ]
@@ -628,6 +628,13 @@ const _abi = {
       },
       "attributes": [
         {
+          "name": "storage",
+          "arguments": [
+            "read",
+            "write"
+          ]
+        },
+        {
           "name": "doc-comment",
           "arguments": [
             " this function registers a challenge level of the fuelnaut game"
@@ -643,13 +650,6 @@ const _abi = {
           "name": "doc-comment",
           "arguments": [
             " and returns the index where the level is stored in the registered_levels vector"
-          ]
-        },
-        {
-          "name": "storage",
-          "arguments": [
-            "read",
-            "write"
           ]
         }
       ]

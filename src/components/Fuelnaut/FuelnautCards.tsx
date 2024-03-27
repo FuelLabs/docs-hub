@@ -1,7 +1,7 @@
-import { Box, Spinner } from '@fuel-ui/react';
+import { Alert, Box, Spinner } from '@fuel-ui/react';
 import { useIsConnected, useNetwork, useWallet } from '@fuel-wallet/react';
 import { useMemo } from 'react';
-import { FUELNAUT_CONTRACT_ID } from '~/src/config/fuelnautLevels';
+import { FUELNAUT_CONTRACT_ID, VERCEL_ENV } from '~/src/config/fuelnautLevels';
 import { FuelnautAbi__factory } from '~/src/fuelnaut-api';
 import { ConnectWallet } from '../ConnectWallet';
 // import Setup from './Setup';
@@ -25,8 +25,7 @@ export function FuelnautCards() {
   }, [wallet, isConnected, FUELNAUT_CONTRACT_ID]);
 
   const isProdOrPreview =
-    process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ||
-    process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview';
+    VERCEL_ENV === 'production' || VERCEL_ENV === 'preview';
 
   const testnetNetwork = 'https://beta-5.fuel.network/graphql';
 
@@ -41,15 +40,20 @@ export function FuelnautCards() {
             </>
           ) : (
             <>
-              {isProdOrPreview && network!.url === testnetNetwork ? (
+              {isProdOrPreview && network?.url !== testnetNetwork ? (
                 <>
-                  Loading contract...
-                  <Spinner />
+                  <Alert direction='row' status='error'>
+                    <Alert.Description>
+                      Wrong network. Change to the testnet network in your
+                      wallet.
+                    </Alert.Description>
+                  </Alert>
                 </>
               ) : (
                 <>
-                  Change to the testnet network in your wallet to interact with
-                  the Fuelnaut contract.
+                  Loading contract...
+                  <Spinner />
+                  {wallet?.address}
                 </>
               )}
             </>

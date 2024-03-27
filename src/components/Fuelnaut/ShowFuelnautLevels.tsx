@@ -13,6 +13,7 @@ interface ShowLevelsProps {
 
 export default function ShowLevels({ contract }: ShowLevelsProps) {
   const [statuses, setStatuses] = useState<Vec<Option<boolean>>>();
+  const [ mounted, setMounted ] = useState(false);
   const { account } = useAccount();
 
   useEffect(() => {
@@ -27,6 +28,7 @@ export default function ShowLevels({ contract }: ShowLevelsProps) {
       );
       if (statusesResponse !== null) {
         setStatuses(statusesResponse);
+        setMounted(true);
       }
     }
     getStatuses();
@@ -40,6 +42,7 @@ export default function ShowLevels({ contract }: ShowLevelsProps) {
           status={statuses && statuses.length > index ? statuses[index] : null}
           key={key + index}
           link={`/guides/fuelnaut/${LEVELS_CONFIG[key].key}`}
+          mounted={mounted}
         />
       ))}
     </Box.Flex>

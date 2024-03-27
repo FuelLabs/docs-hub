@@ -47,14 +47,14 @@
       },
       "attributes": [
         {
-          "name": "payable",
-          "arguments": []
-        },
-        {
           "name": "storage",
           "arguments": [
             "read"
           ]
+        },
+        {
+          "name": "payable",
+          "arguments": []
         }
       ]
     },

@@ -5,7 +5,7 @@ export function getConfigurables(levelKey: string) {
   switch (levelKey) {
     case 'vault':
       configurableConstants = {
-        PASSWORD: bn(17),
+        PASSWORD: bn(1),
       };
       break;
     default:
