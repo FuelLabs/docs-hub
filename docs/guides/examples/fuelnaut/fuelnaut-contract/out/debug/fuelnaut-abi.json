@@ -330,6 +330,13 @@
       },
       "attributes": [
         {
+          "name": "storage",
+          "arguments": [
+            "read",
+            "write"
+          ]
+        },
+        {
           "name": "doc-comment",
           "arguments": [
             " this function takes the ContractId of a newly deployed instance"
@@ -357,13 +364,6 @@
           "name": "doc-comment",
           "arguments": [
             " the ContractId of the instance is verified to match the registered level bytecode"
-          ]
-        },
-        {
-          "name": "storage",
-          "arguments": [
-            "read",
-            "write"
           ]
         }
       ]

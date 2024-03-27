@@ -6,7 +6,7 @@ import type { JsonAbi } from 'fuels';
 import type { MdDoc } from '../../.contentlayer/generated';
 import { allMdDocs } from '../../.contentlayer/generated';
 import { DOCS_DIRECTORY } from '../config/constants';
-import type { FuelnautLevel } from '../config/fuelnautLevels';
+import type { IFuelnautLevel } from '../config/fuelnautLevels';
 import { LEVELS_CONFIG } from '../config/fuelnautLevels';
 import useTheme from '../hooks/useTheme';
 import { getNavs } from '../lib/getNavs';
@@ -41,7 +41,7 @@ export type DocPageProps = {
 };
 
 interface FuelnautProps {
-  level: FuelnautLevel;
+  level: IFuelnautLevel;
   abiJSON: JsonAbi;
   base64Bytecode: string;
 }

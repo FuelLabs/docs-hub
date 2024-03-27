@@ -23,14 +23,24 @@ export const VERCEL_ENV =
 export const FUELNAUT_CONTRACT_ID =
   VERCEL_ENV === 'production' || VERCEL_ENV === 'preview'
     ? 
-    '0xebf3dd62ae107f7fbe69d42e38d4d338e84d7da25465ee6c4408c456c4ad228c'
+    '0x13c8eafb002820d38c6b30d838a993e4bd81a585382f68a2cd44015181db17da'
     : contractsIds.fuelnaut;
 
 export const LEVELS_CONFIG: FuelnautLevelsConfig = {
+  'hello-world': {
+    key: 'hello-world',
+    title: 'Hello World',
+    index: 0,
+    contractId:
+      VERCEL_ENV === 'development'
+        ? contractsIds.helloWorld
+        : '',
+    hasConfigurables: false,
+  },
   payback: {
     key: 'payback',
     title: 'Payback',
-    index: 0,
+    index: 1,
     contractId:
       VERCEL_ENV === 'development'
         ? contractsIds.payback
@@ -40,7 +50,7 @@ export const LEVELS_CONFIG: FuelnautLevelsConfig = {
   'coin-flip': {
     key: 'coin-flip',
     title: 'Coin Flip',
-    index: 1,
+    index: 2,
     contractId:
       VERCEL_ENV === 'development'
         ? contractsIds.coinFlip
@@ -50,7 +60,7 @@ export const LEVELS_CONFIG: FuelnautLevelsConfig = {
   vault: {
     key: 'vault',
     title: 'Vault',
-    index: 2,
+    index: 3,
     contractId:
       VERCEL_ENV === 'development'
         ? contractsIds.vault

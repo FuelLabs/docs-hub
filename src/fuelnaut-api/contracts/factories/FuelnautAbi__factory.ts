@@ -462,12 +462,6 @@ const _abi = {
       },
       "attributes": [
         {
-          "name": "storage",
-          "arguments": [
-            "read"
-          ]
-        },
-        {
           "name": "doc-comment",
           "arguments": [
             " returns a vector of bool options representing the statuses of each level"
@@ -489,6 +483,12 @@ const _abi = {
           "name": "doc-comment",
           "arguments": [
             " if the option is Some(false), the level has been started but not completed"
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read"
           ]
         }
       ]
@@ -628,13 +628,6 @@ const _abi = {
       },
       "attributes": [
         {
-          "name": "storage",
-          "arguments": [
-            "read",
-            "write"
-          ]
-        },
-        {
           "name": "doc-comment",
           "arguments": [
             " this function registers a challenge level of the fuelnaut game"
@@ -650,6 +643,13 @@ const _abi = {
           "name": "doc-comment",
           "arguments": [
             " and returns the index where the level is stored in the registered_levels vector"
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read",
+            "write"
           ]
         }
       ]

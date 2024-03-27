@@ -11,7 +11,7 @@
 
 import { Interface, Contract, ContractFactory } from "fuels";
 import type { Provider, Account, AbstractAddress, BytesLike, DeployContractOptions, StorageSlot } from "fuels";
-import type { PaybackAbi, PaybackAbiInterface } from "../PaybackAbi";
+import type { HelloWorldAbi, HelloWorldAbiInterface } from "../HelloWorldAbi";
 
 const _abi = {
   "types": [
@@ -24,12 +24,6 @@ const _abi = {
     {
       "typeId": 1,
       "type": "bool",
-      "components": null,
-      "typeParameters": null
-    },
-    {
-      "typeId": 2,
-      "type": "u64",
       "components": null,
       "typeParameters": null
     }
@@ -54,38 +48,13 @@ const _abi = {
     },
     {
       "inputs": [],
-      "name": "pay_back",
+      "name": "hello_world",
       "output": {
         "name": "",
         "type": 0,
         "typeArguments": null
       },
       "attributes": [
-        {
-          "name": "payable",
-          "arguments": []
-        },
-        {
-          "name": "storage",
-          "arguments": [
-            "read"
-          ]
-        }
-      ]
-    },
-    {
-      "inputs": [],
-      "name": "send_funds",
-      "output": {
-        "name": "",
-        "type": 0,
-        "typeArguments": null
-      },
-      "attributes": [
-        {
-          "name": "payable",
-          "arguments": []
-        },
         {
           "name": "storage",
           "arguments": [
@@ -95,24 +64,7 @@ const _abi = {
       ]
     }
   ],
-  "loggedTypes": [
-    {
-      "logId": 0,
-      "loggedType": {
-        "name": "",
-        "type": 2,
-        "typeArguments": null
-      }
-    },
-    {
-      "logId": 1,
-      "loggedType": {
-        "name": "",
-        "type": 2,
-        "typeArguments": null
-      }
-    }
-  ],
+  "loggedTypes": [],
   "messagesTypes": [],
   "configurables": []
 };
@@ -124,36 +76,36 @@ const _storageSlots: StorageSlot[] = [
   }
 ];
 
-export class PaybackAbi__factory {
+export class HelloWorldAbi__factory {
   static readonly abi = _abi;
 
   static readonly storageSlots = _storageSlots;
 
-  static createInterface(): PaybackAbiInterface {
-    return new Interface(_abi) as unknown as PaybackAbiInterface
+  static createInterface(): HelloWorldAbiInterface {
+    return new Interface(_abi) as unknown as HelloWorldAbiInterface
   }
 
   static connect(
     id: string | AbstractAddress,
     accountOrProvider: Account | Provider
-  ): PaybackAbi {
-    return new Contract(id, _abi, accountOrProvider) as unknown as PaybackAbi
+  ): HelloWorldAbi {
+    return new Contract(id, _abi, accountOrProvider) as unknown as HelloWorldAbi
   }
 
   static async deployContract(
     bytecode: BytesLike,
     wallet: Account,
     options: DeployContractOptions = {}
-  ): Promise<PaybackAbi> {
+  ): Promise<HelloWorldAbi> {
     const factory = new ContractFactory(bytecode, _abi, wallet);
 
-    const { storageSlots } = PaybackAbi__factory;
+    const { storageSlots } = HelloWorldAbi__factory;
 
     const contract = await factory.deployContract({
       storageSlots,
       ...options,
     });
 
-    return contract as unknown as PaybackAbi;
+    return contract as unknown as HelloWorldAbi;
   }
 }

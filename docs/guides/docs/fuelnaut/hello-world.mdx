@@ -1,0 +1,31 @@
+---
+title: Hello World
+category: Fuelnaut
+parent:
+  label: All Guides
+  link: /guides
+---
+
+# Hello World
+
+<FuelnautLevel
+description="This level will guide you through how to play the Fuelnaut game."
+level={props.level}
+bytecode={props.bytecode}
+abiJSON={props.abiJSON}
+>
+<List type="ordered" css={{mb: '$4'}}>
+    <List.Item>Download the [Fuel Wallet](https://chromewebstore.google.com/detail/fuel-wallet/dldjpboieedgcmpkchcjcbijingjcgok) extension, setup an account, and use the "Faucet" button to get some testnet funds.</List.Item>
+    <List.Item>Press the "Connect Your Wallet" button below to connect your wallet.</List.Item>
+    <List.Item>Open up the developer console in your browser window. You can play the game from here! Try typing in `help()` in the console to see a full list of helper variables and functions.</List.Item>
+    <List.Item>Click the "Deploy New Instance" button to deploy a new instance of the level contract. Note: you will have to approve 2 transactions for this to work!</List.Item>
+    <List.Item>Take a look at the level contract. To beat a level in the game, you'll need to make sure the `attack_success` function returns `true`. For this level, you'll have to call the `hello_world` function to set the `value` variable in the storage block to `true`.</List.Item>
+    <List.Item>In the developer console, use the `instance` variable to call the `hello_world` function. (Hint: take a look at the `fuels` TypeScript [docs](/docs/fuels-ts/contracts/)). </List.Item>
+    <List.Item>Once you think you've beat the level, click the "Check If Completed" button to confirm.</List.Item>
+</List>
+</FuelnautLevel>
+
+<CodeImport
+  file="../../examples/fuelnaut/hello-world/src/main.sw"
+  lang="sway"
+/>

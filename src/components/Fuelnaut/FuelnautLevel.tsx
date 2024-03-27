@@ -1,9 +1,8 @@
 import { Box, Button, Spinner, toast } from '@fuel-ui/react';
 import { useIsConnected, useWallet } from '@fuel-wallet/react';
-import { BaseAssetId } from 'fuels';
-import type { JsonAbi } from 'fuels';
+import { BaseAssetId, Wallet } from 'fuels';
+import type { BytesLike, JsonAbi } from 'fuels';
 import { useEffect, useMemo, useState } from 'react';
-import { set } from 'react-hook-form';
 import { FUELNAUT_CONTRACT_ID } from '~/src/config/fuelnautLevels';
 import type { IFuelnautLevel } from '~/src/config/fuelnautLevels';
 import { FuelnautAbi__factory } from '~/src/fuelnaut-api';
@@ -13,6 +12,7 @@ import { getNewInstance } from '~/src/lib/fuelnaut/instance';
 import { ConnectWallet } from '../ConnectWallet';
 
 interface FuelnautLevelProps {
+  children: React.ReactNode;
   level: IFuelnautLevel;
   description: string;
   bytecode: string;
@@ -20,6 +20,7 @@ interface FuelnautLevelProps {
 }
 
 export function FuelnautLevel({
+  children,
   level,
   description,
   bytecode,
@@ -46,8 +47,49 @@ export function FuelnautLevel({
   useEffect(() => {
     // biome-ignore lint/suspicious/noExplicitAny:
     const thisWindow = window as any;
-    thisWindow.baseAssetId = BaseAssetId;
-    thisWindow.player = wallet;
+    if (wallet) {
+      thisWindow.player = wallet;
+      thisWindow.baseAssetId = BaseAssetId;
+      thisWindow.getBalance = (address: string, assetId: string) => {
+        const thisWallet = Wallet.fromAddress(address, wallet?.provider);
+        return thisWallet.getBalance(assetId);
+      };
+      thisWindow.getBalances = (address: string) => {
+        const thisWallet = Wallet.fromAddress(address, wallet?.provider);
+        return thisWallet.getBalances();
+      };
+      thisWindow.getContractBalance = (
+        contractId: string,
+        assetId: BytesLike,
+      ) => {
+        return wallet?.provider.getContractBalance(contractId, assetId);
+      };
+      thisWindow.getBlockNumber = () => {
+        return wallet?.provider.getBlockNumber();
+      };
+      thisWindow.getNetwork = () => {
+        return wallet?.provider.getNetwork();
+      };
+      thisWindow.help = () => {
+        console.table({
+          player: "the current player's wallet",
+          instance: "the current level's contract instance, if deployed",
+          baseAssetId: 'the base asset id (ETH)',
+          'getBalance(address, assetId)':
+            'gets the balance of a given assetId for an address',
+          'getBalances(address)':
+            'gets the balances of all assets for a given address',
+          'getContractBalance(contractId, assetId)':
+            'gets the balance of a given assetId for a contract',
+          'getBlockNumber()': 'gets the current block number',
+          'getNetwork()':
+            'gets the current network provider for the connected wallet',
+        });
+      };
+    } else {
+      thisWindow.help = () =>
+        console.log('Connect your wallet to see the full list of options.');
+    }
     const fetchInstance = async () => {
       if (contract && wallet) {
         try {
@@ -100,7 +142,7 @@ export function FuelnautLevel({
   const handleCheckIfCompleted = async () => {
     setIsLoading(true);
     try {
-    if (contract && wallet) {
+      if (contract && wallet) {
         const address = wallet?.address.toB256();
         const addressInput: AddressInput = { value: address! };
         await contract.functions
@@ -108,20 +150,21 @@ export function FuelnautLevel({
           .txParams({ gasPrice: 1, gasLimit: 800_000 })
           .call();
         setIsCompleted(true);
-        toast.success("Challenge completed!")
+        toast.success('Challenge completed!');
       } else {
         toast.error('You are not connected');
       }
     } catch (error) {
       toast.error('You have not yet completed this challenge.');
-      } finally {
-        setIsLoading(false);
-      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <Box>
       <p>{description}</p>
+      {children && children}
       {instance ? (
         <>
           {isCompleted ? (
@@ -136,10 +179,13 @@ export function FuelnautLevel({
                 Click the button below to check if you successfully completed
                 the challenge.
               </p>
-              {isLoading ? <Spinner /> : <Button onClick={handleCheckIfCompleted}>
-                Check If Completed
-              </Button>
-              }
+              {isLoading ? (
+                <Spinner />
+              ) : (
+                <Button onClick={handleCheckIfCompleted}>
+                  Check If Completed
+                </Button>
+              )}
             </div>
           )}
         </>
@@ -147,9 +193,11 @@ export function FuelnautLevel({
         <>
           {wallet && isConnected ? (
             <>
-            {isLoading ? <Spinner /> : 
-            <Button onClick={handleNewInstance}>Deploy New Instance</Button>
-            }
+              {isLoading ? (
+                <Spinner />
+              ) : (
+                <Button onClick={handleNewInstance}>Deploy New Instance</Button>
+              )}
             </>
           ) : (
             <ConnectWallet />

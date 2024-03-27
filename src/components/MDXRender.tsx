@@ -18,6 +18,7 @@ import {
 import { runtime } from '../lib/runtime';
 import type { VersionSet } from '../types';
 
+import { List } from '@fuel-ui/react';
 import type { JsonAbi } from 'fuels';
 import type { FuelnautLevel as FuelnautLevelType } from '../config/fuelnautLevels';
 import useTheme from '../hooks/useTheme';
@@ -36,7 +37,6 @@ import { Paragraph } from './Paragraph';
 import { Pre } from './Pre';
 import { QuickstartCallout } from './QuickstartCallout';
 import { Table } from './Table';
-
 const Player = dynamic(() => import('./Player'), {
   ssr: false,
 });
@@ -65,6 +65,7 @@ export const mdxComponents = {
   ConditionalContent,
   FuelnautCards,
   FuelnautLevel,
+  List,
   // biome-ignore lint/suspicious/noExplicitAny:
 } as any;
 
