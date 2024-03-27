@@ -109,3 +109,5 @@ DeFi
 onboarding
 Fuelnaut
 Ethernaut
+FuelnautLevel
+abiJSON
