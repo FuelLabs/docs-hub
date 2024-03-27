@@ -54,13 +54,16 @@ export function PrevAndNextLinks() {
 export function DocFooter() {
   const { doc } = useDocContext();
 
-  const hideGithubLink = (doc.pageLink.includes('github.com/FuelLabs/fuels-ts') && doc.pageLink.includes('/api/')) || doc.pageLink.includes('docs/beta-4');
+  const hideGithubLink =
+    (doc.pageLink.includes('github.com/FuelLabs/fuels-ts') &&
+      doc.pageLink.includes('/api/')) ||
+    doc.pageLink.includes('docs/beta-4');
 
   return (
     <Box css={styles.root} as='footer'>
       <PrevAndNextLinks />
 
-      {!hideGithubLink  && (
+      {!hideGithubLink && (
         <Box.Flex justify={'flex-end'} css={styles.feedbackContainer}>
           <ButtonLink
             leftIcon={'BrandGithubFilled'}

@@ -1,8 +1,13 @@
 import { join } from 'path';
 import type { GetStaticProps } from 'next';
 
+import { readFileSync } from 'fs';
+import type { JsonAbi } from 'fuels';
 import type { MdDoc } from '../../.contentlayer/generated';
 import { allMdDocs } from '../../.contentlayer/generated';
+import { DOCS_DIRECTORY } from '../config/constants';
+import type { IFuelnautLevel } from '../config/fuelnautLevels';
+import { LEVELS_CONFIG } from '../config/fuelnautLevels';
 import useTheme from '../hooks/useTheme';
 import { getNavs } from '../lib/getNavs';
 import { Doc } from '../lib/md-doc';
@@ -11,7 +16,6 @@ import {
   getAllVersions,
   getFuelCoreVersion,
   getNodeVersion,
-  getVersions,
 } from '../lib/versions';
 import { DocScreen } from '../screens/DocPage';
 import type { DocType, NavOrder, SidebarLinkItem, Versions } from '../types';
@@ -33,7 +37,14 @@ export type DocPageProps = {
   fuelCoreVersion?: string;
   nodeVersion?: string;
   nodeVersionMax?: string;
+  fuelnautProps: FuelnautProps;
 };
+
+interface FuelnautProps {
+  level: IFuelnautLevel;
+  abiJSON: JsonAbi;
+  base64Bytecode: string;
+}
 
 export default function DocPage(props: DocPageProps) {
   const { theme } = useTheme();
@@ -64,6 +75,28 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
     nodeVersionMax = `${majorVersionMax}.0.0`;
   }
 
+  // biome-ignore lint/suspicious/noExplicitAny:
+  const fuelnautProps: any = {};
+
+  if (slug.includes('guides/fuelnaut/')) {
+    const levelKey = slugArray[slugArray.length - 1];
+    const level = LEVELS_CONFIG[levelKey];
+    fuelnautProps.level = level;
+    const fuelnautPath = join(DOCS_DIRECTORY, 'guides/examples/fuelnaut');
+    const byteCodePath = join(
+      fuelnautPath,
+      `${levelKey}/out/debug/${levelKey}.bin`,
+    );
+    const bytecode = readFileSync(byteCodePath);
+    const abiJSONPath = join(
+      fuelnautPath,
+      `${levelKey}/out/debug/${levelKey}-abi.json`,
+    );
+    fuelnautProps.abiJSON = JSON.parse(readFileSync(abiJSONPath, 'utf8'));
+
+    fuelnautProps.base64Bytecode = bytecode.toString('base64');
+  }
+
   return {
     props: {
       allNavs,
@@ -81,6 +114,7 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
       fuelCoreVersion,
       nodeVersion,
       nodeVersionMax,
+      fuelnautProps: fuelnautProps as FuelnautProps,
     },
   };
 };

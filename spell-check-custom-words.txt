@@ -107,3 +107,7 @@ broadcasted
 configurables
 DeFi
 onboarding
+Fuelnaut
+Ethernaut
+FuelnautLevel
+abiJSON

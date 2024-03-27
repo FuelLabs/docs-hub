@@ -72,7 +72,7 @@ export function Card({ guideInfo, cardInfo, cardName, versionSet }: CardProps) {
   );
 }
 
-const styles = {
+export const styles = {
   root: cssObj({
     padding: '$3 $2',
     margin: 0,

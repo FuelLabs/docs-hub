@@ -18,6 +18,9 @@ import {
 import { runtime } from '../lib/runtime';
 import type { VersionSet } from '../types';
 
+import { List } from '@fuel-ui/react';
+import type { JsonAbi } from 'fuels';
+import type { FuelnautLevel as FuelnautLevelType } from '../config/fuelnautLevels';
 import useTheme from '../hooks/useTheme';
 import { Blockquote } from './Blockquote';
 import { CardSection } from './CardSection';
@@ -25,6 +28,8 @@ import { Code } from './Code';
 import { CodeTabs } from './CodeTabs';
 import { ConditionalContent } from './ConditionalContent';
 import { Divider } from './Divider';
+import { FuelnautCards } from './Fuelnaut/FuelnautCards';
+import { FuelnautLevel } from './Fuelnaut/FuelnautLevel';
 import { Heading } from './Heading';
 import { Link } from './Link';
 import { OL, UL } from './List';
@@ -32,7 +37,6 @@ import { Paragraph } from './Paragraph';
 import { Pre } from './Pre';
 import { QuickstartCallout } from './QuickstartCallout';
 import { Table } from './Table';
-
 const Player = dynamic(() => import('./Player'), {
   ssr: false,
 });
@@ -59,6 +63,9 @@ export const mdxComponents = {
   QuickstartCallout,
   CodeTabs,
   ConditionalContent,
+  FuelnautCards,
+  FuelnautLevel,
+  List,
   // biome-ignore lint/suspicious/noExplicitAny:
 } as any;
 
@@ -71,6 +78,9 @@ type MDXRenderProps = {
   fuelCoreVersion?: string;
   nodeVersion?: string;
   nodeVersionMax?: string;
+  level?: FuelnautLevelType;
+  bytecode?: string;
+  abiJSON?: JsonAbi;
 };
 
 export function MDXRender({
@@ -81,6 +91,9 @@ export function MDXRender({
   fuelCoreVersion,
   nodeVersion,
   nodeVersionMax,
+  level,
+  bytecode,
+  abiJSON,
 }: MDXRenderProps) {
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const { theme } = useTheme();
@@ -129,6 +142,9 @@ export function MDXRender({
         fuelCoreVersion={<Code>{fuelCoreVersion}</Code>}
         nodeVersion={<Code>{nodeVersion}</Code>}
         nodeVersionMax={<Code>{nodeVersionMax}</Code>}
+        level={level}
+        bytecode={bytecode}
+        abiJSON={abiJSON}
       />
     </provider.MDXProvider>
   );

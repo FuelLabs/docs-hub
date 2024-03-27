@@ -2,13 +2,13 @@
   "installation": {
     "title": "Toolchain Installation",
     "description": "Install the Fuel toolchain and binaries.",
-    "featured": true,
+    "featured": false,
     "tags": ["Getting Started"]
   },
   "quickstart": {
     "title": "Developer Quickstart",
     "description": "Get started by building a counter dApp in Fuel.",
-    "featured": true,
+    "featured": false,
     "tags": ["Getting Started", "Full Stack"]
   },
   "intro_to_sway": {
@@ -28,6 +28,12 @@
     "description": "Run a local Fuel node.",
     "featured": false,
     "tags": ["fuel-core"]
+  },
+  "fuelnaut": {
+    "title": "Fuelnaut",
+    "description": "Play The Fuelnaut: a security-focused smart contract game",
+    "featured": false,
+    "tags": []
   },
   "migration_guide": {
     "title": "Migration Guide",

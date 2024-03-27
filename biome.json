@@ -73,7 +73,8 @@
       "dist",
       "**/node_modules",
       "pnpm-lock.yaml",
-      "./next.config.js"
+      "./next.config.js",
+      "src/fuelnaut-api"
     ]
   }
 }
