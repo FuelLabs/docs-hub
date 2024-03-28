@@ -33,7 +33,7 @@ export function getEndCommentType(commentType: string) {
 function extractCommentBlock(
   content: string,
   comment: string,
-  commentType: CommentTypes,
+  commentType: CommentTypes
 ) {
   const lines = content.split(EOL);
   const commentEnd = getEndCommentType(commentType);
@@ -102,7 +102,7 @@ export function textImport(options: Options = { filepath: '' }) {
       const comment = attr.find((i: any) => i.name === 'comment')?.value;
       const commentType = attr.find(
         // biome-ignore lint/suspicious/noExplicitAny:
-        (i: any) => i.name === 'commentType',
+        (i: any) => i.name === 'commentType'
       )?.value;
       let linesIncluded =
         // biome-ignore lint/suspicious/noExplicitAny:
@@ -116,7 +116,7 @@ export function textImport(options: Options = { filepath: '' }) {
       const commentResult = extractCommentBlock(
         fileContent,
         comment,
-        commentType,
+        commentType
       );
       content = commentResult;
       content = content

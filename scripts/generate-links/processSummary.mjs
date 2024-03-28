@@ -8,7 +8,7 @@ export default function processSummary(lines, docsName) {
       docsName,
       currentCategory,
       order,
-      forcLines,
+      forcLines
     );
     order = currentOrder;
     forcLines = currentForcLines;
@@ -33,7 +33,7 @@ function handleLine(line, docsName, currentCategory, order, forcLines) {
         currentCat,
         docsName,
         newPaths,
-        currentOrder,
+        currentOrder
       );
       currentOrder = handled.order;
       currentCat = handled.currentCategory;

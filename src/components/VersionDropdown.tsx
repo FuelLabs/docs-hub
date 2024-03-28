@@ -20,7 +20,7 @@ export default function VersionDropdown({
       ? FUEL_TESTNET_UPPER_CASE
       : versionSet === 'nightly'
         ? 'Nightly'
-        : 'Beta-4',
+        : 'Beta-4'
   );
   const router = useRouter();
   const setVersion = useSetVersion();

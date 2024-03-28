@@ -5,17 +5,17 @@ import { getFile } from './getFile.mjs';
 const tsAPIOrderFile = getFile(
   './fuels-ts/apps/docs/.typedoc/api-links.json',
   'default',
-  true,
+  true
 );
 const nightlyTsAPIOrderFile = getFile(
   './fuels-ts/apps/docs/.typedoc/api-links.json',
   'nightly',
-  true,
+  true
 );
 const beta4TsAPIOrderFile = getFile(
   './fuels-ts/apps/docs/.typedoc/api-links.json',
   'beta-4',
-  true,
+  true
 );
 
 function extractData(inputString) {
@@ -35,7 +35,7 @@ function handleVPLine(
   thisOrder,
   thisCat,
   isNightly,
-  isBeta4,
+  isBeta4
 ) {
   const regex = /'([^']+)'/;
   // Create a shallow copy
@@ -106,7 +106,7 @@ function handleVPLine(
         newVPOrder,
         category,
         isNightly,
-        isBeta4,
+        isBeta4
       );
       category = results.category;
       newVPOrder = results.newVPOrder;
@@ -130,7 +130,7 @@ export function processVPConfig(lines, isNightly, isBeta4) {
         tsOrder,
         currentCategory,
         isNightly,
-        isBeta4,
+        isBeta4
       );
       tsOrder = newVPOrder;
       currentCategory = category;

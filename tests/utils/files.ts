@@ -7,7 +7,7 @@ import { compareOutputs } from './runCommand';
 export async function writeToFile(
   page: Page,
   buttonName: string,
-  filePath: string,
+  filePath: string
 ) {
   const content = await clickCopyButton(page, buttonName);
   fs.writeFileSync(filePath, `${content.text}\n\n`);
@@ -21,7 +21,7 @@ export async function modifyFile(
   addSpacesAfter?: number,
   atLine?: number,
   removeLines?: string,
-  useSetData?: string,
+  useSetData?: string
 ) {
   let contentText = useSetData;
   if (!contentText) {
@@ -55,7 +55,7 @@ export async function modifyFile(
 export async function compareToFile(
   page: Page,
   buttonName: string,
-  pathName: string,
+  pathName: string
 ) {
   const expected = await clickCopyButton(page, buttonName);
   const actual = fs.readFileSync(pathName, { encoding: 'utf8' });

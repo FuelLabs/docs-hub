@@ -6,7 +6,7 @@ export async function checkDefault(existingVersions) {
   let newDefaultVersions = null;
   const versionConfigFile = readFileSync(
     join(process.cwd(), 'src/config/versions.json'),
-    'utf-8',
+    'utf-8'
   );
   const versionConfig = JSON.parse(versionConfigFile);
   Object.keys(existingVersions).forEach((key) => {

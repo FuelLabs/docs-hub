@@ -28,7 +28,7 @@ function setValueOnNode(node: any, cb: (value: string) => string) {
   if (node.type === 'mdxJsxFlowElement') {
     const idx = node.attributes.findIndex(
       // biome-ignore lint/suspicious/noExplicitAny:
-      (attr: any) => attr.name === '__content',
+      (attr: any) => attr.name === '__content'
     );
     if (idx !== -1) {
       const value = node.attributes[idx].value;

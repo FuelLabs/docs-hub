@@ -30,7 +30,7 @@ export function checkValue(index: number, value: string) {
 export async function getByLocator(
   page: Page,
   locator: string,
-  removeFromValue: string | null | undefined,
+  removeFromValue: string | null | undefined
 ) {
   const locatorVals = await page.locator(locator).allInnerTexts();
   let locatorVal = locatorVals[0];

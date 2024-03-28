@@ -25,7 +25,7 @@ async function main() {
   }
 
   const newNightlyVersions = await checkIfNightlyIsNew(
-    existingVersions.nightly,
+    existingVersions.nightly
   );
 
   if (isWorkflow) {

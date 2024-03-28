@@ -22,7 +22,7 @@ export function handleForcGenDocs(
   // biome-ignore lint/suspicious/noExplicitAny:
   node: any,
   filepath: string,
-  rootDir: string,
+  rootDir: string
 ) {
   thisFilePath = filepath;
   // biome-ignore lint/suspicious/noImplicitAnyLet:
@@ -78,7 +78,7 @@ function transformContent(node: any, rootDir: string) {
   if (!fs.existsSync(fileAbsPath)) {
     fileAbsPath = path.resolve(
       path.join(rootDir, `${swayBuildFilePath}/plugins/forc_client/`),
-      filePathName,
+      filePathName
     );
   }
   const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
@@ -119,7 +119,7 @@ function getBuildFileAST(content: string) {
     /* html */ newLines.join('\n'),
     /* options (optional) */ {},
     /* customTranslators (optional) */ undefined,
-    /* customCodeBlockTranslators (optional) */ undefined,
+    /* customCodeBlockTranslators (optional) */ undefined
   );
   const processor = unified().use(remarkParse);
 
