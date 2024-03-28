@@ -140,8 +140,14 @@ const styles = {
     pl: '$4',
     mb: '$8',
     color: '$semanticLinkBaseColor !important',
+    '.fuel_Icon': {
+      color: '$semanticLinkBaseColor !important',
+    },
     'html[class="fuel_light-theme"] &': {
       color: '$intentsBase12 !important',
+      '.fuel_Icon': {
+        color: '$intentsBase12 !important',
+      },
     },
     '[aria-label*="Icon Link"]': {
       display: 'none',

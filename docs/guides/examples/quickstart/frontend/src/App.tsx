@@ -2,25 +2,22 @@ import { useEffect, useState } from "react";
 import {
   useConnectUI,
   useIsConnected,
-  useWallet,
-} from '@fuel-wallet/react';
+  useWallet
+} from '@fuels/react';
 // Import the contract factory -- you can find the name in src/contracts/contracts/index.ts.
 // You can also do command + space and the compiler will suggest the correct name.
 import { CounterContractAbi__factory  } from "./sway-api"
 import type { CounterContractAbi } from "./sway-api";
 
 const CONTRACT_ID = 
-  "0x...";
+  "0xf2402a4c375550abc8c781bb59761135f88799dcfa81862f8233dfe234894dfe";
 
 export default function Home() {
   const [contract, setContract] = useState<CounterContractAbi>();
   const [counter, setCounter] = useState<number>();
-  const { connect, setTheme, isConnecting } =
-    useConnectUI();
+  const { connect, isConnecting } = useConnectUI();
   const { isConnected } = useIsConnected();
   const { wallet } = useWallet();
-
-  setTheme("dark");
 
   useEffect(() => {
     async function getInitialCount(){
@@ -42,7 +39,7 @@ export default function Home() {
         gasPrice: 1,
         gasLimit: 100_000,
       })
-      .simulate();
+      .get();
       setCounter(value.toNumber());
     } catch(error) {
       console.error(error);
