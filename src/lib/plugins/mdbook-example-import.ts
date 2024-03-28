@@ -148,7 +148,11 @@ export function handleExampleImports(
 
     content = extractCommentBlock(fileContent, exampleName);
   } catch (err) {
-    // console.error('ERROR:', err);
+    console.error('ERROR GETTING EXAMPLE CODE:', err);
+  }
+
+  if (!content) {
+    throw new Error(`${fileAbsPath} not found`);
   }
 
   return content;

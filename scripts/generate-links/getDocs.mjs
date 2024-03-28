@@ -328,6 +328,10 @@ export function getDocBySlug(slug, slugs) {
     doc.category = `API-${doc.category}`;
   }
 
+  if (slugPath.slug.includes('beta-4/fuels-ts/cli/built-in-binaries.md')) {
+    doc.category = 'cli';
+  }
+
   return {
     ...doc,
   };
