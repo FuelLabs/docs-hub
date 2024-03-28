@@ -29,7 +29,7 @@ export function SidebarSection({
     book === 'guides' ||
       docSlug?.includes(book.toLowerCase()) ||
       (book === 'Intro' &&
-        (docSlug?.includes('guides/quickstart/') || !docSlug)),
+        (docSlug?.includes('guides/quickstart/') || !docSlug))
   );
 
   const isGuide = book === 'guides';

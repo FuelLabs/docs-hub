@@ -18,7 +18,7 @@ export class DocParser {
           if (path.includes(apiPath)) {
             slug = path.replace(cat, category);
           }
-        },
+        }
       );
     }
 

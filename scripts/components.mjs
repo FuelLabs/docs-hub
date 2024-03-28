@@ -17,35 +17,35 @@ const GRAPHQL_DIRECTORY = path.join(DOCS_DIRECTORY, `./${GRAPHQL_BOOK_NAME}`);
 const GRAPHQL_DOCS_DIRECTORY = path.join(GRAPHQL_DIRECTORY, './docs');
 const GRAPHQL_COMPONENTS_CONFIG_PATH = path.join(
   GRAPHQL_DIRECTORY,
-  './src/components.json',
+  './src/components.json'
 );
 
 // NIGHTLY GRAPHQL DOCS COMPONENTS
 const NIGHTLY_GRAPHQL_DIRECTORY = path.join(
   DOCS_DIRECTORY,
-  `./nightly/${GRAPHQL_BOOK_NAME}`,
+  `./nightly/${GRAPHQL_BOOK_NAME}`
 );
 const NIGHTLY_GRAPHQL_DOCS_DIRECTORY = path.join(
   NIGHTLY_GRAPHQL_DIRECTORY,
-  './docs',
+  './docs'
 );
 const NIGHTLY_GRAPHQL_COMPONENTS_CONFIG_PATH = path.join(
   NIGHTLY_GRAPHQL_DIRECTORY,
-  './src/components.json',
+  './src/components.json'
 );
 
 // BETA-4 GRAPHQL DOCS COMPONENTS
 const BETA_4_GRAPHQL_DIRECTORY = path.join(
   DOCS_DIRECTORY,
-  `./beta-4/${GRAPHQL_BOOK_NAME}`,
+  `./beta-4/${GRAPHQL_BOOK_NAME}`
 );
 const BETA_4_GRAPHQL_DOCS_DIRECTORY = path.join(
   BETA_4_GRAPHQL_DIRECTORY,
-  './docs',
+  './docs'
 );
 const BETA_4_GRAPHQL_COMPONENTS_CONFIG_PATH = path.join(
   BETA_4_GRAPHQL_DIRECTORY,
-  './src/components.json',
+  './src/components.json'
 );
 
 // WALLET COMPONENTS
@@ -53,48 +53,48 @@ const WALLET_BOOK_NAME = 'fuels-wallet';
 const WALLET_PATH = path.join(DOCS_DIRECTORY, WALLET_BOOK_NAME);
 const WALLET_DIRECTORY = path.join(
   DOCS_DIRECTORY,
-  `./${WALLET_BOOK_NAME}/packages/docs`,
+  `./${WALLET_BOOK_NAME}/packages/docs`
 );
 const WALLET_DOCS_DIRECTORY = path.join(WALLET_DIRECTORY, './docs');
 const WALLET_COMPONENTS_CONFIG_PATH = path.join(
   WALLET_DIRECTORY,
-  './src/components.json',
+  './src/components.json'
 );
 
 // NIGHTLY WALLET COMPONENTS
 const NIGHTLY_WALLET_PATH = path.join(
   DOCS_DIRECTORY,
-  `nightly/${WALLET_BOOK_NAME}`,
+  `nightly/${WALLET_BOOK_NAME}`
 );
 const NIGHTLY_WALLET_DIRECTORY = path.join(
   DOCS_DIRECTORY,
-  `./nightly/${WALLET_BOOK_NAME}/packages/docs`,
+  `./nightly/${WALLET_BOOK_NAME}/packages/docs`
 );
 const NIGHTLY_WALLET_DOCS_DIRECTORY = path.join(
   NIGHTLY_WALLET_DIRECTORY,
-  './docs',
+  './docs'
 );
 const NIGHTLY_WALLET_COMPONENTS_CONFIG_PATH = path.join(
   NIGHTLY_WALLET_DIRECTORY,
-  './src/components.json',
+  './src/components.json'
 );
 
 // BETA-4 WALLET COMPONENTS
 const BETA_4_WALLET_PATH = path.join(
   DOCS_DIRECTORY,
-  `beta-4/${WALLET_BOOK_NAME}`,
+  `beta-4/${WALLET_BOOK_NAME}`
 );
 const BETA_4_WALLET_DIRECTORY = path.join(
   DOCS_DIRECTORY,
-  `./beta-4/${WALLET_BOOK_NAME}/packages/docs`,
+  `./beta-4/${WALLET_BOOK_NAME}/packages/docs`
 );
 const BETA_4_WALLET_DOCS_DIRECTORY = path.join(
   BETA_4_WALLET_DIRECTORY,
-  './docs',
+  './docs'
 );
 const BETA_4_WALLET_COMPONENTS_CONFIG_PATH = path.join(
   BETA_4_WALLET_DIRECTORY,
-  './src/components.json',
+  './src/components.json'
 );
 
 const completedExports = [];
@@ -110,7 +110,7 @@ async function main() {
     GRAPHQL_DOCS_DIRECTORY,
     GRAPHQL_BOOK_NAME,
     GRAPHQL_COMPONENTS_CONFIG_PATH,
-    'graphql.ts',
+    'graphql.ts'
   );
   // NIGHTLY GRAPHQL DOCS COMPONENTS
   await exportComponents(
@@ -118,7 +118,7 @@ async function main() {
     NIGHTLY_GRAPHQL_DOCS_DIRECTORY,
     `nightly/${GRAPHQL_BOOK_NAME}`,
     NIGHTLY_GRAPHQL_COMPONENTS_CONFIG_PATH,
-    'nightly-graphql.ts',
+    'nightly-graphql.ts'
   );
   // BETA-4 GRAPHQL DOCS COMPONENTS
   await exportComponents(
@@ -126,7 +126,7 @@ async function main() {
     BETA_4_GRAPHQL_DOCS_DIRECTORY,
     `beta-4/${GRAPHQL_BOOK_NAME}`,
     BETA_4_GRAPHQL_COMPONENTS_CONFIG_PATH,
-    'beta-4-graphql.ts',
+    'beta-4-graphql.ts'
   );
   // WALLET COMPONENTS
   await exportComponents(
@@ -134,7 +134,7 @@ async function main() {
     WALLET_DOCS_DIRECTORY,
     WALLET_BOOK_NAME,
     WALLET_COMPONENTS_CONFIG_PATH,
-    'wallet.ts',
+    'wallet.ts'
   );
   // NIGHTLY WALLET COMPONENTS
   await exportComponents(
@@ -142,7 +142,7 @@ async function main() {
     NIGHTLY_WALLET_DOCS_DIRECTORY,
     `nightly/${WALLET_BOOK_NAME}`,
     NIGHTLY_WALLET_COMPONENTS_CONFIG_PATH,
-    'nightly-wallet.ts',
+    'nightly-wallet.ts'
   );
   // BETA-4 WALLET COMPONENTS
   await exportComponents(
@@ -150,7 +150,7 @@ async function main() {
     BETA_4_WALLET_DOCS_DIRECTORY,
     `beta-4/${WALLET_BOOK_NAME}`,
     BETA_4_WALLET_COMPONENTS_CONFIG_PATH,
-    'beta-4-wallet.ts',
+    'beta-4-wallet.ts'
   );
 }
 
@@ -288,7 +288,7 @@ function handleSubCategory(
   componentsConfig,
   directory,
   dirPath,
-  subCategories,
+  subCategories
 ) {
   const importName = `${comp.name}.${key}`;
   let categories = subCategories;
@@ -306,7 +306,7 @@ function handleSubCategory(
           subCatComp,
           componentsConfig,
           directory,
-          dirPath,
+          dirPath
         );
 
         const id = `${comp.name}.${key}.${subCatComp}`;
@@ -331,7 +331,7 @@ function handleSubComponents(comp, componentsConfig, directory, dirPath) {
         subComp,
         componentsConfig,
         directory,
-        dirPath,
+        dirPath
       );
 
       if (!completedExports.includes(`${comp.name}.${subComp}`)) {
@@ -355,7 +355,7 @@ function handleSubComponents(comp, componentsConfig, directory, dirPath) {
           componentsConfig,
           directory,
           dirPath,
-          subCategories,
+          subCategories
         );
     });
   }
@@ -373,7 +373,7 @@ function handleComponent(comp, componentsConfig, directory, dirPath) {
     comp.name,
     componentsConfig,
     directory,
-    dirPath,
+    dirPath
   );
 
   if (!completedExports.includes(comp.name)) {
@@ -401,7 +401,7 @@ function getImports(components) {
         hasObject = pageArray.some(
           (comp) =>
             (comp.subComponents && comp.subComponents.length > 0) ||
-            comp.subCategories,
+            comp.subCategories
         );
       }
     });
@@ -422,7 +422,7 @@ async function exportComponents(
   docsDirectory,
   dirPath,
   configPath,
-  fileName,
+  fileName
 ) {
   const componentsConfigFile = fs.readFileSync(configPath, 'utf8');
   const componentsConfig = JSON.parse(componentsConfigFile);
@@ -446,7 +446,7 @@ async function exportComponents(
               comp,
               componentsConfig,
               directory,
-              dirPath,
+              dirPath
             );
           }
           return handleComponent(comp, componentsConfig, directory, dirPath);

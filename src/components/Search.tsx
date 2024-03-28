@@ -42,7 +42,7 @@ function getItemData(item: DocSearchHit): string[] {
       for (const subObj of obj.menu) {
         if (
           item.hierarchy.lvl0.includes(
-            subObj.name.replace('TypeScript', 'TS').replace('API', ''),
+            subObj.name.replace('TypeScript', 'TS').replace('API', '')
           ) &&
           subObj.link
         ) {

@@ -5,7 +5,7 @@ import { DOCS_DIRECTORY } from '../config/constants';
 
 const linksPath = join(
   DOCS_DIRECTORY,
-  '../src/generated/sidebar-links/fuels-ts.json',
+  '../src/generated/sidebar-links/fuels-ts.json'
 );
 
 const links = JSON.parse(readFileSync(linksPath, 'utf8'));
