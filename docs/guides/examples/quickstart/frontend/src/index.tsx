@@ -28,7 +28,7 @@ root.render(
           ],
         }}
       >
-      <App />
+        <App />
       </FuelProvider>
     </QueryClientProvider>
   </React.StrictMode>
