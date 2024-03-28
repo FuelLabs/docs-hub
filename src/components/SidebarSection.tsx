@@ -139,6 +139,7 @@ const styles = {
     fontSize: '$sm',
     pl: '$4',
     mb: '$8',
+    color: '$semanticLinkBaseColor !important',
     'html[class="fuel_light-theme"] &': {
       color: '$intentsBase12 !important',
     },
