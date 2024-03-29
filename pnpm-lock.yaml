@@ -43,6 +43,9 @@ dependencies:
   '@fuel-wallet/playwright-utils':
     specifier: ^0.13.10
     version: 0.13.10(@playwright/test@1.42.1)
+  '@fuel-wallet/sdk':
+    specifier: ^0.16.1
+    version: 0.16.1(dexie@3.2.4)(fuels@0.79.0)
   '@fuels/connectors':
     specifier: 0.1.1
     version: 0.1.1(fuels@0.79.0)
@@ -1828,6 +1831,32 @@ packages:
       - encoding
       - supports-color
       - utf-8-validate
+    dev: false
+
+  /@fuel-wallet/sdk@0.16.1(dexie@3.2.4)(fuels@0.79.0):
+    resolution: {integrity: sha512-LqGdOh0gUPMp0XtWtiDjtPbeTucTOPGG+4qbx5gLSeaLoi8QiTw9MQ1wU0VNAIht1tAgF7vwmwYgi0HVDjfsOQ==}
+    peerDependencies:
+      fuels: '>=0.73.0'
+    dependencies:
+      '@fuel-wallet/types': 0.16.1(dexie@3.2.4)(fuels@0.79.0)
+      events: 3.3.0
+      fuels: 0.79.0(dexie@3.2.4)
+      json-rpc-2.0: 1.7.0
+    transitivePeerDependencies:
+      - dexie
+    dev: false
+
+  /@fuel-wallet/types@0.16.1(dexie@3.2.4)(fuels@0.79.0):
+    resolution: {integrity: sha512-x90HaNvjbyBfFF/ZWeoeVdfiJj3wdFkk4IaneQBAB5tVAoF0QzXStWJHSbGnsPm38xzlme+Oo0k+y11OnU3MUw==}
+    peerDependencies:
+      fuels: '>=0.73.0'
+    dependencies:
+      '@fuels/assets': 0.1.5
+      dexie-observable: 4.0.1-beta.13(dexie@3.2.4)
+      fuels: 0.79.0(dexie@3.2.4)
+      json-rpc-2.0: 1.7.0
+    transitivePeerDependencies:
+      - dexie
     dev: false
 
   /@fuels/assets@0.1.5:
