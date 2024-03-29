@@ -75,6 +75,13 @@ export async function walletConnect(context: BrowserContext) {
 export async function walletApprove(context: BrowserContext) {
   const walletPage = await getWalletPage(context);
   if (walletPage) console.log('FOUND WALLET PAGE');
+  await walletPage.waitForTimeout(8000);
+  console.log('WAITED 8 SECONDS');
+  const buttonElements = await walletPage.$$('button');
+  for (const element of buttonElements) {
+    const textContent = await element.innerText();
+    console.log("BUTTON TEXT:", textContent);
+  }
   await walletPage.getByRole('button', { name: 'Approve' }).click();
   console.log('CLICKED APPROVE BUTTON');
 }
