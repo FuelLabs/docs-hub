@@ -244,7 +244,8 @@ function handleHTMLLink(
   ) {
     // biome-ignore lint/suspicious/noExplicitAny:
     const scriptString = tree?.children[0] as any;
-    const newURLs = getTSUrl(scriptString.value);
+    const value = scriptString.value ?? scriptString.children[0].value;
+    const newURLs = getTSUrl(value);
 
     if (newURLs) {
       handleNewURLs(newURLs, url, idx, parent, base);
