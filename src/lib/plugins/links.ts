@@ -75,6 +75,17 @@ export function handleLinks(
             .replace('/blob/master/', `/blob/${version}/`);
         }
       }
+
+      if(newUrl.includes('/sway-libs')){
+        newUrl = newUrl.replace(/\/libs\/([^\/]+)/g, (match, p1) => {
+          if (p1 === 'merkle_proof') {
+            return '/libs/src/merkle';
+          }
+          return `/libs/src/${p1}`;
+        });
+      } else if (newUrl.includes('/sway-standards/')){
+        newUrl = newUrl.replace('/standards/src5-ownership', '/standards/src/src5.sw');
+      }
     }
 
     if (newUrl.includes('docs.rs/fuel-types/{{versions.fuel-types}}')) {
@@ -131,10 +142,12 @@ function getNewUrl(node: any, dirname: string, versionSet: VersionSet) {
   });
 
   if (node.url.startsWith('../')) {
-    // TODO: remove this once wallet is updated past 13.0
     if (!dirname.includes('fuels-wallet') && !node.url.startsWith('../dev')) {
+      const thisDir = dir.endsWith('/') ? dir : `${dir}/`;
       const folder = dirname.split('/').pop();
-      newUrl = `/${dir.replace(folder!, '')}${newUrl!.replace('../', '')}`;
+      const first = thisDir.replace(`/${folder}/`!, '/');
+      const second = newUrl!.replace('../', '');
+      newUrl = `/${first}${second}`;
     }
   }
   if (node.url.startsWith('./') && !node.url.includes('index')) {
