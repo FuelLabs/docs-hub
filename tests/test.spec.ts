@@ -22,7 +22,7 @@ test.describe('Guides', () => {
 
     // SHUT DOWN
     stopServers();
-    context.close();
+    // context.close();
   });
 
   test('intro to sway', async ({ context, extensionId, page }) => {
