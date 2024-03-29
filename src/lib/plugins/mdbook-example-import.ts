@@ -130,10 +130,10 @@ export function handleExampleImports(
   }
 
   try {
-    if (fileAbsPath.includes('/fuels-ts/demo-typegen/')) {
+    if (fileAbsPath.includes('/fuels-ts/demo')) {
       fileAbsPath = fileAbsPath.replace(
-        'fuels-ts/demo-typegen',
-        'fuels-ts/apps/demo-typegen'
+        'fuels-ts/demo',
+        'fuels-ts/apps/demo'
       );
     }
     const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
