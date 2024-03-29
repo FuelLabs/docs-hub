@@ -43,12 +43,9 @@ dependencies:
   '@fuel-wallet/playwright-utils':
     specifier: ^0.13.10
     version: 0.13.10(@playwright/test@1.42.1)
-  '@fuel-wallet/react':
-    specifier: 0.16.1
-    version: 0.16.1(@types/react-dom@18.2.7)(@types/react@18.2.21)(fuels@0.79.0)(react-dom@18.2.0)(react@18.2.0)
-  '@fuel-wallet/sdk':
-    specifier: 0.16.1
-    version: 0.16.1(dexie@3.2.4)(fuels@0.79.0)
+  '@fuels/connectors':
+    specifier: 0.1.1
+    version: 0.1.1(fuels@0.79.0)
   '@fuels/react':
     specifier: ^0.16.0
     version: 0.16.0(@types/react-dom@18.2.7)(@types/react@18.2.21)(fuels@0.79.0)(react-dom@18.2.0)(react@18.2.0)
@@ -1833,52 +1830,17 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@fuel-wallet/react@0.16.1(@types/react-dom@18.2.7)(@types/react@18.2.21)(fuels@0.79.0)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-0VJ5JDulIG5OF/bBdPgXuakIbiJ86cbryDkMjbAPRjsSgW/3J+j9KDzn0WevZxmOG7b/msvf60OHq9Q3tIrnOA==}
-    peerDependencies:
-      fuels: '>=0.73.0'
-      react: ^18.2.0
-    dependencies:
-      '@radix-ui/react-dialog': 1.0.5(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
-      '@tanstack/react-query': 4.36.1(react-dom@18.2.0)(react@18.2.0)
-      events: 3.3.0
-      fuels: 0.79.0(dexie@3.2.4)
-      react: 18.2.0
-    transitivePeerDependencies:
-      - '@types/react'
-      - '@types/react-dom'
-      - react-dom
-      - react-native
-    dev: false
-
-  /@fuel-wallet/sdk@0.16.1(dexie@3.2.4)(fuels@0.79.0):
-    resolution: {integrity: sha512-LqGdOh0gUPMp0XtWtiDjtPbeTucTOPGG+4qbx5gLSeaLoi8QiTw9MQ1wU0VNAIht1tAgF7vwmwYgi0HVDjfsOQ==}
-    peerDependencies:
-      fuels: '>=0.73.0'
-    dependencies:
-      '@fuel-wallet/types': 0.16.1(dexie@3.2.4)(fuels@0.79.0)
-      events: 3.3.0
-      fuels: 0.79.0(dexie@3.2.4)
-      json-rpc-2.0: 1.7.0
-    transitivePeerDependencies:
-      - dexie
-    dev: false
-
-  /@fuel-wallet/types@0.16.1(dexie@3.2.4)(fuels@0.79.0):
-    resolution: {integrity: sha512-x90HaNvjbyBfFF/ZWeoeVdfiJj3wdFkk4IaneQBAB5tVAoF0QzXStWJHSbGnsPm38xzlme+Oo0k+y11OnU3MUw==}
-    peerDependencies:
-      fuels: '>=0.73.0'
-    dependencies:
-      '@fuels/assets': 0.1.5
-      dexie-observable: 4.0.1-beta.13(dexie@3.2.4)
-      fuels: 0.79.0(dexie@3.2.4)
-      json-rpc-2.0: 1.7.0
-    transitivePeerDependencies:
-      - dexie
-    dev: false
-
   /@fuels/assets@0.1.5:
     resolution: {integrity: sha512-3rFZdY2f5/h7e2Rlhv/+WKz1CVsTnydKoxLdVjQfUaNsj7zbMLSfT37bsBSB42AnXKOlPs/vyMbS77LxhN8a2A==}
+    dev: false
+
+  /@fuels/connectors@0.1.1(fuels@0.79.0):
+    resolution: {integrity: sha512-h0ErY8J8y58QaOyjVtcXICY/GjmSZMD/nLnrAMyrBpsrAUChLV6lYdwZ1MxVhHJFpbtaCG0IrclHxwJvQCFE5Q==}
+    peerDependencies:
+      fuels: '>=0.77.0'
+    dependencies:
+      fuels: 0.79.0(dexie@3.2.4)
+      json-rpc-2.0: 1.7.0
     dev: false
 
   /@fuels/react@0.16.0(@types/react-dom@18.2.7)(@types/react@18.2.21)(fuels@0.79.0)(react-dom@18.2.0)(react@18.2.0):

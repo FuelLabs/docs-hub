@@ -149,10 +149,9 @@ action={{
 
 ### Connecting to the contract
 
-Wrap your components with `FuelProvider` from `@fuel-wallet/react` to enable Fuel's custom React hooks for wallet functionalities in `index.tsx`.
+Wrap your components with the `FuelProvider` and `QueryClientProvider` components to enable Fuel's custom React hooks for wallet functionalities in `index.tsx`.
 
-For development purposes `devMode` is also enabled here.
-This allows users to connect with the Fuel Development Wallet as well.
+This is where you can pass in custom wallet connectors to customize which wallets your users can use to connect to your app.
 
 <TestAction
 id="fe-index-all"
