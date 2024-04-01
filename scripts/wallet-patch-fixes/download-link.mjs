@@ -49,8 +49,8 @@ function handleConstantsFile(filePath, version) {
   const walletVersion = getWalletVersion(version);
 
   if (start !== undefined && end !== undefined && walletVersion) {
-    const downloadLink = walletVersion.includes('15.2')
-      ? 'https://wallet.fuel.network/app/fuel-wallet-0.15.2.zip'
+    const downloadLink = walletVersion.includes('16.1')
+      ? 'https://wallet.fuel.network/app/fuel-wallet-0.16.1.zip'
       : `https://next-wallet.fuel.network/app/fuel-wallet-${walletVersion}.zip`;
     const modifiedContent = `export const DOWNLOAD_LINK = '${downloadLink}';`;
     lines.splice(start, end - start + 1, modifiedContent);

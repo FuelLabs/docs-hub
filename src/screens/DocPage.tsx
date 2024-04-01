@@ -22,18 +22,15 @@ export function DocScreen(props: DocPageProps) {
   useEffect(() => {
     if (version === 'Nightly' || doc?.versionSet === 'nightly') {
       setVersionSet('nightly');
+      setIsAlertVisible(true);
     } else if (version === 'Beta-4' || doc?.versionSet === 'beta-4') {
       setVersionSet('beta-4');
+      setIsAlertVisible(false);
     } else {
       setVersionSet('default');
+      setIsAlertVisible(false);
     }
   }, [version, doc]);
-
-  useEffect(() => {
-    if (versionSet === 'nightly') {
-      setIsAlertVisible(true);
-    }
-  }, [versionSet]);
 
   const navs = getActiveNav(
     versionSet,
