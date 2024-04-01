@@ -13,7 +13,7 @@ export const test = base.extend<{
   // biome-ignore lint/correctness/noEmptyPattern:
   context: async ({}, use) => {
     // download fuel wallet
-    const fuelPathExtension = await downloadFuel('0.15.2');
+    const fuelPathExtension = await downloadFuel('0.16.1');
     // prepare browser args
     const browserArgs = [
       `--disable-extensions-except=${fuelPathExtension}`,

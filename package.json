@@ -42,8 +42,8 @@
     "@fuel-ui/icons": "0.21.0-pr-305-04b8434",
     "@fuel-ui/react": "0.21.0-pr-305-04b8434",
     "@fuel-wallet/playwright-utils": "^0.13.10",
-    "@fuel-wallet/react": "0.15.2",
-    "@fuel-wallet/sdk": "0.15.2",
+    "@fuel-wallet/sdk": "^0.16.1",
+    "@fuels/connectors": "0.1.1",
     "@fuels/react": "^0.16.0",
     "@fuels/ts-config": "^0.15.1",
     "@mdx-js/mdx": "^2.3.0",
@@ -59,7 +59,7 @@
     "cookie": "^0.5.0",
     "dotenv": "^16.3.1",
     "framer-motion": "^10.16.4",
-    "fuels": "^0.76.0",
+    "fuels": "^0.79.0",
     "globby": "^13.2.2",
     "gray-matter": "^4.0.3",
     "hast-util-from-text": "^2.0.1",
@@ -96,7 +96,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.6.1",
-    "@playwright/test": "^1.38.1",
+    "@playwright/test": "^1.39.1",
     "@types/chrome": "^0.0.245",
     "@types/cookie": "^0.5.2",
     "@types/node": "^20.5.9",
@@ -106,7 +106,7 @@
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
     "npm-run-all": "^4.1.5",
-    "pm2": "5.3.0",
+    "pm2": "^5.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sharp": "^0.32.6",
@@ -122,7 +122,10 @@
       "zod@<=3.22.2": ">=3.22.3",
       "next@<13.4.20-canary.13": ">=13.4.20-canary.13",
       "axios@>=0.8.1 <1.6.0": ">=1.6.0",
-      "sharp@<0.32.6": ">=0.32.6"
+      "sharp@<0.32.6": ">=0.32.6",
+      "ip@<1.1.9": ">=1.1.9",
+      "ip@=2.0.0": ">=2.0.1",
+      "follow-redirects@<=1.15.5": ">=1.15.6"
     }
   }
 }
