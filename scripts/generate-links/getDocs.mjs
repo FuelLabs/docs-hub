@@ -195,6 +195,12 @@ export async function getDocs(key, order) {
         './intro/*.mdx',
       ];
       break;
+    case 'fuel-101':
+      paths = [
+        // FUEL 101
+        './fuel-101/*.mdx',
+      ];
+      break;
     case 'contributing':
       paths = [
         // CONTRIBUTING

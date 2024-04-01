@@ -66,6 +66,7 @@ function createLinks(docs, isNightly, isBeta4) {
       thisCategory === 'forc' ||
       (thisCategory === 'guide' && doc.title === 'guide') ||
       thisCategory === 'intro' ||
+      thisCategory === 'Fuel 101' ||
       (thisCategory === 'api' && doc.title === 'api')
     ) {
       const newLink = handleLink(
