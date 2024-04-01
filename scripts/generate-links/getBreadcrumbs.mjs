@@ -24,6 +24,8 @@ export function getBreadcrumbs(
 
   if (slug.includes('docs/intro/')) {
     breadcrumbs.push({ label: 'Intro' });
+  } else if (slug.includes('docs/fuel-101/')) {
+    breadcrumbs.push({ label: 'Fuel 101', link: '/docs/fuel-101' });
   } else if (slug.includes('docs/contributing/')) {
     breadcrumbs.push({ label: 'Contributing', link: '/docs/contributing/' });
   } else {

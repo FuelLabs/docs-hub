@@ -19,7 +19,22 @@ export default function getSortedLinks(config, docs) {
   const isNightly = docs[0].slug.includes('/nightly/');
   const isBeta4 = docs[0].slug.includes('/beta-4/');
   const links = createLinks(docs, isNightly, isBeta4);
-  const sortedLinks = sortLinks(lcOrder, links, config, isNightly, isBeta4);
+  let sortedLinks = sortLinks(lcOrder, links, config, isNightly, isBeta4);
+
+  // TODO: FIX FUELS-TS NAV AT SOURCE
+  if (config.menu[0] === 'fuels-ts' && !isBeta4) {
+    sortedLinks = sortedLinks.filter((link) => {
+      const remove =
+        link.label !== 'Guide' &&
+        link.label !== 'basics' &&
+        link.label !== 'essentials' &&
+        link.label !== 'extras' &&
+        link.label !== 'tooling' &&
+        link.label !== 'cli' &&
+        link.label !== 'API';
+      return remove;
+    });
+  }
   return sortedLinks;
 }
 
@@ -51,6 +66,7 @@ function createLinks(docs, isNightly, isBeta4) {
       thisCategory === 'forc' ||
       (thisCategory === 'guide' && doc.title === 'guide') ||
       thisCategory === 'intro' ||
+      thisCategory === 'Fuel 101' ||
       (thisCategory === 'api' && doc.title === 'api')
     ) {
       const newLink = handleLink(

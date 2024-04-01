@@ -38,7 +38,7 @@ export function SidebarSection({
     links[0].label.toLowerCase().replaceAll(/[_-]/g, ' ');
 
   let githubLink = '';
-  if (!version && book !== 'Intro') {
+  if (!version && book !== 'Intro' && book !== 'Fuel-101') {
     switch (book) {
       case 'GraphQL':
         githubLink = 'https://github.com/FuelLabs/fuel-core/tree/v0.22.1';
@@ -102,17 +102,20 @@ export function SidebarSection({
           </Box.VStack>
         </Box>
       )}
-      {isOpened && book !== 'Intro' && book !== 'guides' && (
-        <ButtonLink
-          href={version ? version.url : githubLink}
-          leftIcon={'BrandGithubFilled'}
-          size={'sm'}
-          css={styles.version}
-          isExternal
-        >
-          {version && <>Version: {version.version}</>}
-        </ButtonLink>
-      )}
+      {isOpened &&
+        book !== 'Intro' &&
+        book !== 'Fuel-101' &&
+        book !== 'guides' && (
+          <ButtonLink
+            href={version ? version.url : githubLink}
+            leftIcon={'BrandGithubFilled'}
+            size={'sm'}
+            css={styles.version}
+            isExternal
+          >
+            {version && <>Version: {version.version}</>}
+          </ButtonLink>
+        )}
     </>
   );
 }
@@ -139,8 +142,15 @@ const styles = {
     fontSize: '$sm',
     pl: '$4',
     mb: '$8',
+    color: '$semanticLinkBaseColor !important',
+    '.fuel_Icon': {
+      color: '$semanticLinkBaseColor !important',
+    },
     'html[class="fuel_light-theme"] &': {
       color: '$intentsBase12 !important',
+      '.fuel_Icon': {
+        color: '$intentsBase12 !important',
+      },
     },
     '[aria-label*="Icon Link"]': {
       display: 'none',

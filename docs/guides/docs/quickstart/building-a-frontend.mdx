@@ -96,13 +96,7 @@ cd frontend
 
 > `fuels` requires Node version {props.nodeVersion}.
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
-Install `fuels`, `@fuel-wallet/sdk`, and `@fuel-wallet/react`.
-</ConditionalContent>
-
-<ConditionalContent versionSet={props.versionSet} showForVersions={['beta-4']}>
-Install `fuels` and `@fuel-wallet/sdk`.
-</ConditionalContent>
+Install the following packages in your `frontend` folder:
 
 <TestAction
 id="install-deps"
@@ -115,7 +109,7 @@ action={{
 <ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
 
 ```sh
-npm install fuels@0.73.0 @fuel-wallet/sdk@0.15.2 @fuel-wallet/react@0.15.2
+npm install fuels@0.79.0 @fuels/react@0.18.0 @fuels/connectors@0.1.1 @tanstack/react-query@5.28.9
 ```
 
 </ConditionalContent>
@@ -239,11 +233,9 @@ Now you should be able to find a new folder `fuel-project/frontend/src/contracts
 Inside the `frontend/src` folder let's add code that interacts with our contract.
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
-Because we'll be using `@fuel-wallet/react`, first we need to wrap our app with the `FuelProvider` component.
-Modify the file `fuel-project/frontend/src/index.tsx` so that the `App` component is wrapped with the `FuelProvider` component.
+Because we'll be using `@fuels/react`, first we need to wrap our app with the `FuelProvider` component.
 
-For development purposes `devMode` is also enabled here.
-This allows users to connect with the Fuel Development Wallet as well.
+Add the imports below to the top of your `frontend/src/index.tsx` file and setup a query client:
 
 <TestAction
 id="provider-import"
@@ -258,24 +250,26 @@ action={{
   file="../../examples/quickstart/frontend/src/index.tsx"
   lang="tsx"
   lineStart="6"
-  lineEnd="6"
+  lineEnd="14"
 />
+
+Next, modify your `frontend/src/index.tsx` file to wrap the `App` component with the `FuelProvider` and `QueryClientProvider` components.
 
 <TestAction
 id="fuel-wallet-provider"
 action={{
   name: 'modifyFile',
   filepath: 'guides-testing/fuel-project/frontend/src/index.tsx',
-  atLine: 13,
-  removeLines: [13],
+  atLine: 21,
+  removeLines: [21],
 }}
 />
 
 <CodeImport
   file="../../examples/quickstart/frontend/src/index.tsx"
   lang="tsx"
-  lineStart="13"
-  lineEnd="19"
+  lineStart="21"
+  lineEnd="33"
 />
 </ConditionalContent>
 
@@ -312,7 +306,7 @@ action={{
   filepath: 'guides-testing/fuel-project/frontend/src/App.tsx',
   atLine: 13,
   removeLines: [13],
-  useSetData: '  "0x78218d62429082ccf3f6a8a36155aaf771508c632c0855f8fe2d51d6f7baec73";'
+  useSetData: '  "0xf2402a4c375550abc8c781bb59761135f88799dcfa81862f8233dfe234894dfe";'
 }}
 />
 
@@ -370,7 +364,7 @@ Tweet us [@fuel_network](https://twitter.com/fuel_network) letting us know you j
 ### Updating The Contract
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
-To develop and test faster, we recommend using the [`fuels dev` command](/docs/fuels-ts/cli/commands/#fuels-dev) to start a local node and automatically redeploy and generate types for your contract on each change.
+To develop and test faster, we recommend using the [`fuels dev` command](/docs/fuels-ts/fuels/commands/) to start a local node and automatically redeploy and generate types for your contract on each change.
 </ConditionalContent>
 
 Once you're ready to redeploy your contract to the testnet, here are the steps you should take to get your frontend and contract back in sync:
@@ -450,6 +444,7 @@ action={{
 }}
 />
 
+{/*
 <TestAction
 id="click-increment-button"
 action={{
@@ -458,7 +453,6 @@ action={{
   elementName: "Increment"
 }}
 />
-
 <TestAction
 id="approve-txn"
 action={{
@@ -504,4 +498,4 @@ action={{
   initialIndex: 0,
   finalIndex: 1
 }}
-/>
+/> */}

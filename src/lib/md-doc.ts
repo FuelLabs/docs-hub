@@ -319,7 +319,7 @@ export class Doc {
     } else if (slug.startsWith('docs/beta-4/graphql/')) {
       // biome-ignore lint/suspicious/noExplicitAny:
       plugins = plugins.concat([[beta4CodeExamples, { filepath }] as any]);
-    } else if (slug.includes('guides') || slug.includes('/intro/')) {
+    } else if (slug.includes('guides') || slug.includes('/intro/') || slug.includes('/fuel-101/')) {
       // biome-ignore lint/suspicious/noExplicitAny:
       plugins = plugins.concat([[codeImport, { filepath }] as any]);
       // biome-ignore lint/suspicious/noExplicitAny:

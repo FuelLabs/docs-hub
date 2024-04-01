@@ -195,6 +195,12 @@ export async function getDocs(key, order) {
         './intro/*.mdx',
       ];
       break;
+    case 'fuel-101':
+      paths = [
+        // FUEL 101
+        './fuel-101/*.mdx',
+      ];
+      break;
     case 'contributing':
       paths = [
         // CONTRIBUTING
@@ -326,6 +332,10 @@ export function getDocBySlug(slug, slugs) {
 
   if (doc.slug.includes('fuels-ts/API-')) {
     doc.category = `API-${doc.category}`;
+  }
+
+  if (slugPath.slug.includes('beta-4/fuels-ts/cli/built-in-binaries.md')) {
+    doc.category = 'cli';
   }
 
   return {
