@@ -57,7 +57,7 @@ test.describe('Guides', () => {
 
     // SHUT DOWN
     stopServers();
-    context.close();
+    // context.close();
   });
 
   test('intro to predicates', async ({ context, extensionId, page }) => {
@@ -97,6 +97,6 @@ test.describe('Guides', () => {
 
     // SHUT DOWN
     stopServers();
-    context.close();
+    // context.close();
   });
 });
