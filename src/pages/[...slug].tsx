@@ -17,7 +17,6 @@ import {
 } from '../lib/versions';
 import { DocScreen } from '../screens/DocPage';
 import type { DocType, NavOrder, SidebarLinkItem, Versions } from '../types';
-import { generateSiteMap } from './sitemap.xml';
 
 export type DocPageProps = {
   allNavs: NavOrder[];

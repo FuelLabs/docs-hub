@@ -130,11 +130,8 @@ export function handleExampleImports(
   }
 
   try {
-    if (fileAbsPath.includes('/fuels-ts/demo-typegen/')) {
-      fileAbsPath = fileAbsPath.replace(
-        'fuels-ts/demo-typegen',
-        'fuels-ts/apps/demo-typegen'
-      );
+    if (fileAbsPath.includes('/fuels-ts/demo')) {
+      fileAbsPath = fileAbsPath.replace('fuels-ts/demo', 'fuels-ts/apps/demo');
     }
     const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
     const cachedFile = getFilesOnCache(fileAbsPath);
@@ -148,7 +145,11 @@ export function handleExampleImports(
 
     content = extractCommentBlock(fileContent, exampleName);
   } catch (err) {
-    // console.error('ERROR:', err);
+    console.error('ERROR GETTING EXAMPLE CODE:', err);
+  }
+
+  if (!content) {
+    throw new Error(`${fileAbsPath} not found`);
   }
 
   return content;
