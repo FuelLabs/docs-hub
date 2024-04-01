@@ -1,0 +1,40 @@
+---
+title: Relationship between Ethereum and Fuel
+category: Fuel 101
+parent:
+  label: Fuel 101
+  link: /fuel-101
+---
+
+# The Relationship between Ethereum and Fuel
+
+Fuel is an operating system purpose built for Ethereum Rollups. It allows for rollups to solve for parallelization, state minimized execution and interoperability in Ethereum. Here is how Fuel fits into the Ethereum ecosystem and improves the scalability of the network:
+
+- **Fuel brings long needed improvements to the Ethereum ecosystem.** Due to constraints with backward compatability, the Ethereum virtual machine (EVM) has been limited in its ability to scale. The Fuel virtual machine (FuelVM) brings those improvements to Ethereum.
+- **Fuel reduces Ethereum state bloat.** Fuel utilizes the UTXO model for strict state access lists, which allows for a more efficient usage of state storage on chain.
+- **Interoperability with Ethereum built in.** Compatibility with Ethereum is essential to Fuel, and being able to build code, send transactions and interoperate across the networks is incorporated into every aspect of Fuel's design._createMdxContent
+
+Let's look at each of these areas in detail._createMdxContent
+
+## The FuelVM and Improving Ethereum Scalability
+
+The introduction of the Fuel Virtual Machine (FuelVM) into the Ethereum ecosystem represents a significant step forward in addressing the scalability challenges that have historically constrained Ethereum's growth and performance. 
+The FuelVM introduces several key innovations designed to improve transaction throughput, reduce latency, and optimize resource utilization on the Ethereum network
+
+### Parallel Transaction Execution
+
+One of the most significant features of the FuelVM is its ability to execute transactions in parallel. This is achieved through the use of strict state access lists, which enable the FuelVM to identify dependencies between transactions ahead of their execution. By mapping out these dependencies, the FuelVM can efficiently allocate transactions to multiple threads or cores of a CPU, drastically increasing the number of transactions processed within a given time frame. This approach contrasts with the Ethereum Virtual Machine (EVM), which primarily processes transactions sequentially, leading to potential bottlenecks and increased latency during periods of high network demand.
+
+### Enhanced Throughput
+
+The parallel processing capability of the FuelVM directly translates into enhanced transaction throughput. By leveraging the computational resources available more effectively, the FuelVM can handle a significantly higher volume of transactions compared to other Ethereum-aligned architectures. This increase in throughput is crucial for supporting the growing number of dApps, app chains and L3s on Ethereum, many of which require high transaction capacities to function effectively​. 
+
+### Optimized CPU Utilization
+
+The FuelVM introduces a paradigm shift in the utilization of computational resources within blockchain networks, particularly addressing the inefficiencies prevalent in other systems. By implementing strategies that allow for more extensive use of a CPU's threads and cores, the FuelVM enhances the Ethereum network's performance and scalability.
+
+At the core of FuelVM's approach to optimized CPU utilization is its use of the Unspent Transaction Output (UTXO) model, complemented by strict state access lists. This allows the FuelVM to precisely determine which parts of the state will be read or written by each transaction before its execution. This topic will be covered in more detail in the next section on solving for state bloat in Ethereum.
+
+## Solving for Ethereum State Bloat
+
+## Interoperability with Ethereum
