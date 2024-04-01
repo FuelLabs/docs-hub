@@ -37,4 +37,30 @@ At the core of FuelVM's approach to optimized CPU utilization is its use of the 
 
 ## Solving for Ethereum State Bloat
 
+Fuel's architectural design introduces a new approach to managing and mitigating the challenges associated with Ethereum's state bloat, a constant issue that has implications for the network's scalability, efficiency, and overall performance. At the root of Fuel's strategy is a transaction model and state management system designed to optimize resource usage while maintaining the network's integrity and security.
+
+### Localized State Trees
+
+Fuel's use of the UTXO (Unspent Transaction Output) model changes how state is managed and stored on chain. Unlike the global state tree utilized by Ethereum, which requires updating the entire tree for each transaction, Fuel adopts localized state trees. This means that each smart contract has its own state tree, significantly reducing the overhead associated with state updates. 
+
+Fuel's approach to asset management, in which all asset transfers affect only a single state element, streamlines transactions. Native assets are managed more efficiently, without the need for complex state changes.
+
+### Eliminating Approval State
+
+One of the innovative aspects of Fuel's state approach is the elimination of the approval state. In traditional Ethereum transactions, the `approve` and `transferFrom` functions involve multiple state changes that contribute to state bloat and increased transaction costs. Fuel's model does away with this by simplifying the asset transfer process, thereby enhancing transaction efficiency and reducing unnecessary state modifications.
+
+### State Minimized Techniques
+
+Fuel introduces several state-minimized techniques that leverage bandwidth and execution over state storage, presenting developers with new ways for building other than just smart contract storage:
+
+* Scripts: Ephemeral logic is included in transactions, not stored in state. Unlike EVM transactions which can call a contract directly (but can only call a single contract), Fuel transactions execute a script, which may call zero or more contracts.
+
+* Predicates: Lightweight, stateless contracts. A predicate is a new, pure mechanism for authorizing transactions. A predicate can only access the data in a transaction, it cannot view the current chain state. Predicates can be used, among other things, to enable native (stateless) account abstraction.
+
+### A New State-Minimized Transaction Model
+
+By combining these state-minimized techniques with the UTXO model, Fuel offers a flexible transaction model that supports complex, multi-party transactions without the need for traditional smart contracts to access state. This approach also enhances light client verifiability, ensuring the security and integrity of transactions with minimal state footprint.
+
+For a deeper analysis of how Fuel solves for Ethereum state bloat, read [Mastering the Final Boss in Blockchain Scalability: State Growth](https://fuel.mirror.xyz/OrgKx3EOE07YfPydGbQh1_R01lUqH0U0-uyrrEjpgrw) in the Fuel blog.
+
 ## Interoperability with Ethereum
