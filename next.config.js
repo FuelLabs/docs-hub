@@ -46,7 +46,7 @@ const nextConfig = {
       {
         source: '/',
         destination: '/docs/intro/what-is-fuel/',
-        permanent: true,
+        permanent: false,
       },
       {
         source: '/docs/',
