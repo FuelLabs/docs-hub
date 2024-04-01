@@ -131,10 +131,7 @@ export function handleExampleImports(
 
   try {
     if (fileAbsPath.includes('/fuels-ts/demo')) {
-      fileAbsPath = fileAbsPath.replace(
-        'fuels-ts/demo',
-        'fuels-ts/apps/demo'
-      );
+      fileAbsPath = fileAbsPath.replace('fuels-ts/demo', 'fuels-ts/apps/demo');
     }
     const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
     const cachedFile = getFilesOnCache(fileAbsPath);

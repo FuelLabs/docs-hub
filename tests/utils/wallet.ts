@@ -80,7 +80,7 @@ export async function walletApprove(context: BrowserContext) {
   const buttonElements = await walletPage.$$('button');
   for (const element of buttonElements) {
     const textContent = await element.innerText();
-    console.log("BUTTON TEXT:", textContent);
+    console.log('BUTTON TEXT:', textContent);
   }
   await walletPage.getByRole('button', { name: 'Approve' }).click();
   console.log('CLICKED APPROVE BUTTON');
