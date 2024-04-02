@@ -41,7 +41,7 @@ Fuel's architectural design introduces a new approach to managing and mitigating
 
 ### Localized State Trees
 
-Fuel's use of the UTXO (Unspent Transaction Output) model changes how state is managed and stored on chain. Unlike the global state tree utilized by Ethereum, which requires updating the entire tree for each transaction, Fuel adopts localized state trees. This means that each smart contract has its own state tree, significantly reducing the overhead associated with state updates.
+Fuel's use of the UTXO model changes how state is managed and stored on chain. Unlike the global state tree utilized by Ethereum, which requires updating the entire tree for each transaction, Fuel adopts localized state trees. This means that each smart contract has its own state tree, significantly reducing the overhead associated with state updates.
 
 Fuel's approach to asset management, in which all asset transfers affect only a single state element, streamlines transactions. Native assets are managed more efficiently, without the need for complex state changes.
 
@@ -55,7 +55,7 @@ Fuel introduces several state-minimized techniques that leverage bandwidth and e
 
 - Scripts: Ephemeral logic is included in transactions, not stored in state. Unlike EVM transactions which can call a contract directly (but can only call a single contract), Fuel transactions execute a script, which may call zero or more contracts.
 
-- Predicates: Lightweight, stateless contracts. A predicate is a new, pure mechanism for authorizing transactions. A predicate can only access the data in a transaction, it cannot view the current chain state. Predicates can be used, among other things, to enable native (stateless) account abstraction.
+- Predicates: Lightweight, stateless programs. A predicate is a new, pure mechanism for authorizing transactions. A predicate can only access the data in a transaction, it cannot view the current chain state. Predicates can be used, among other things, to enable native (stateless) account abstraction.
 
 ### A New State-Minimized Transaction Model
 
