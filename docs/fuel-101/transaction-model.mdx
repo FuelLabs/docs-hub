@@ -3,6 +3,71 @@ title: Transaction Model
 category: Fuel 101
 ---
 
-# Transaction Model
+# Transaction & Block Models
 
-Fuel's transaction model explained.
+Fuel's transaction and block models explained.
+
+## Transaction Types
+
+<CodeImport
+  file="../fuel-specs/src/tx-format/transaction.md"
+  lang="rust"
+  lineStart="4"
+  lineEnd="8"
+/>
+
+There are three types of transactions:
+
+1. Script transactions
+2. Create transactions
+3. Mint transactions
+
+### Transaction Validation
+
+All transactions are validated by the FuelVM. Some validation checks only apply to certain types of transactions, while other validation rules are universal.
+
+#### Universal Validation Rules
+
+All transactions must conform to the following rules:
+
+- The transaction type must match one of the supported [transaction types](/docs/fuel-101/transaction-model#transaction-types). 
+- All transaction parameters are within the network's [consensus parameters](/docs/specs/tx-format/consensus_parameters).
+- There are no invalid inputs or outputs. For example, a  `ChangeOutput` cannot exist for a transaction that does not have an `InputCoin` for the same asset.
+- There are no duplicate or competing transaction inputs or outputs. For example, a transaction cannot have two `InputCoin` inputs for the same coin.
+- The transction must be able to be serialized and deserialized. 
+
+### Script Transactions
+
+Script transactions are any transaction that 
+
+#### Script Transaction Validation
+
+- The script cannot have an output type of `ContractCreated`.
+- The script data cannot be empty.
+- The transaction cannot be missing any required policy types.
+- The transacation cannot contain any unsupported policy types.
+
+### Create Transactions
+
+`Create` transactions create new contracts on the Fuel network. This is the type of transaction that occurs when you run `forc deploy`.
+
+#### Create Transaction Validation
+
+
+### Mint Transactions
+
+The `Mint` transaction type is used when new coins are minted.
+`Mint` transactions are created by the block producer and are not signed.
+
+#### Mint Transaction Validation
+
+- The `txPointer` must match the block. The value cannot be zero.
+- The `inputIndex` of the `outputContract` is not zero.
+
+## Transaction Inputs
+
+## Transaction Outputs
+
+### Receipts
+
+## Blocks

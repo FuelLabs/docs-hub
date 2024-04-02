@@ -6,3 +6,35 @@ category: Fuel 101
 # Transaction Lifecycle
 
 Fuel's transaction lifecycle explained.
+
+## Summary
+
+1. **Transaction Creation**: Someone sends a transaction to a node.
+2. **Transaction Added to TxPool**: The transaction gets placed in the transaction pool.
+3. **Transaction Validation**: The transaction is validated by the FuelVM.
+4. **Parallelization**: The transaction is validated by the FuelVM.
+5. **Execution**: The transaction is executed in the node.
+6. **Broadcasting/Gossiping**: The transaction gets broadcast to the network, and the nodes gossip. They repeat the validation, parallelization, and execution steps.
+7. **Block Formation**: The transaction is included in a block.
+8. **Block Propagation**: The block is broadcast to the network and validated by the nodes.
+9. **Sequencer**: 
+**Finality**: The block is finalized on Ethereum.
+
+## Transaction Creation
+
+The transaction is created by someone. 
+
+One way a transaction can be created is by interacting with an application that uses the `fuels` SDK. In this case, the SDK will do some validation to make sure that the transaction appears valid before sending it to the node. If the SDK detects that the transaction is not valid, the transaction will not move on to the next step.
+
+## TxPool
+
+The transaction pool sorts pending transactions by their gas price. Note that a transaction's gas represents the total amount of work that the VM did to execute the transaction, while the gas price represents the amount that the transaction is going to pay for each unit of gas (or `GasSpend`). 
+
+## Transaction Validation
+
+Transactions are [validated](/docs/fuel-101/transaction-model#transaction-validation) by the FuelVM.
+
+## Parallelization
+
+## Execution
+
