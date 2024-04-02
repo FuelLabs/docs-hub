@@ -18,7 +18,7 @@ Let's look at each of these areas in detail._createMdxContent
 
 ## The FuelVM and Improving Ethereum Scalability
 
-The introduction of the Fuel Virtual Machine (FuelVM) into the Ethereum ecosystem represents a significant step forward in addressing the scalability challenges that have historically constrained Ethereum's growth and performance. 
+The introduction of the Fuel Virtual Machine (FuelVM) into the Ethereum ecosystem represents a significant step forward in addressing the scalability challenges that have historically constrained Ethereum's growth and performance.
 The FuelVM introduces several key innovations designed to improve transaction throughput, reduce latency, and optimize resource utilization on the Ethereum network
 
 ### Parallel Transaction Execution
@@ -27,7 +27,7 @@ One of the most significant features of the FuelVM is its ability to execute tra
 
 ### Enhanced Throughput
 
-The parallel processing capability of the FuelVM directly translates into enhanced transaction throughput. By leveraging the computational resources available more effectively, the FuelVM can handle a significantly higher volume of transactions compared to other Ethereum-aligned architectures. This increase in throughput is crucial for supporting the growing number of dApps, app chains and L3s on Ethereum, many of which require high transaction capacities to function effectively​. 
+The parallel processing capability of the FuelVM directly translates into enhanced transaction throughput. By leveraging the computational resources available more effectively, the FuelVM can handle a significantly higher volume of transactions compared to other Ethereum-aligned architectures. This increase in throughput is crucial for supporting the growing number of dApps, app chains and L3s on Ethereum, many of which require high transaction capacities to function effectively​.
 
 ### Optimized CPU Utilization
 
@@ -41,7 +41,7 @@ Fuel's architectural design introduces a new approach to managing and mitigating
 
 ### Localized State Trees
 
-Fuel's use of the UTXO (Unspent Transaction Output) model changes how state is managed and stored on chain. Unlike the global state tree utilized by Ethereum, which requires updating the entire tree for each transaction, Fuel adopts localized state trees. This means that each smart contract has its own state tree, significantly reducing the overhead associated with state updates. 
+Fuel's use of the UTXO (Unspent Transaction Output) model changes how state is managed and stored on chain. Unlike the global state tree utilized by Ethereum, which requires updating the entire tree for each transaction, Fuel adopts localized state trees. This means that each smart contract has its own state tree, significantly reducing the overhead associated with state updates.
 
 Fuel's approach to asset management, in which all asset transfers affect only a single state element, streamlines transactions. Native assets are managed more efficiently, without the need for complex state changes.
 
@@ -53,9 +53,9 @@ One of the innovative aspects of Fuel's state approach is the elimination of the
 
 Fuel introduces several state-minimized techniques that leverage bandwidth and execution over state storage, presenting developers with new ways for building other than just smart contract storage:
 
-* Scripts: Ephemeral logic is included in transactions, not stored in state. Unlike EVM transactions which can call a contract directly (but can only call a single contract), Fuel transactions execute a script, which may call zero or more contracts.
+- Scripts: Ephemeral logic is included in transactions, not stored in state. Unlike EVM transactions which can call a contract directly (but can only call a single contract), Fuel transactions execute a script, which may call zero or more contracts.
 
-* Predicates: Lightweight, stateless contracts. A predicate is a new, pure mechanism for authorizing transactions. A predicate can only access the data in a transaction, it cannot view the current chain state. Predicates can be used, among other things, to enable native (stateless) account abstraction.
+- Predicates: Lightweight, stateless contracts. A predicate is a new, pure mechanism for authorizing transactions. A predicate can only access the data in a transaction, it cannot view the current chain state. Predicates can be used, among other things, to enable native (stateless) account abstraction.
 
 ### A New State-Minimized Transaction Model
 
@@ -73,4 +73,4 @@ Fuel is designed with modularity at its core, allowing for easy interaction with
 
 ### Trust-Minimized Bridge
 
-The [Fuel native bridge](https://app.fuel.network/bridge) moves assets currently between Ethereum's Sepolia network and Fuel. It allows for seamless interoperability between Ethereum and Fuel. This bridging capability is essential for maintaining liquidity across the two ecosystems and ensures that users and developers can move assets freely. 
+The [Fuel native bridge](https://app.fuel.network/bridge) moves assets currently between Ethereum's Sepolia network and Fuel. It allows for seamless interoperability between Ethereum and Fuel. This bridging capability is essential for maintaining liquidity across the two ecosystems and ensures that users and developers can move assets freely.
