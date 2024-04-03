@@ -38,7 +38,7 @@ All transactions must conform to the following rules:
 
 ### Script Transactions
 
-Script transactions are any transaction that 
+Script transactions include all other types of transactions that are not `Create` or `Mint` transactions.
 
 #### Script Transaction Validation
 
@@ -46,6 +46,7 @@ Script transactions are any transaction that
 - The script data cannot be empty.
 - The transaction cannot be missing any required policy types.
 - The transacation cannot contain any unsupported policy types.
+
 
 ### Create Transactions
 
@@ -56,7 +57,7 @@ Script transactions are any transaction that
 
 ### Mint Transactions
 
-The `Mint` transaction type is used when new coins are minted.
+The `Mint` transaction type is used when new coins are minted as part of a coinbase transaction.
 `Mint` transactions are created by the block producer and are not signed.
 
 #### Mint Transaction Validation
@@ -64,10 +65,10 @@ The `Mint` transaction type is used when new coins are minted.
 - The `txPointer` must match the block. The value cannot be zero.
 - The `inputIndex` of the `outputContract` is not zero.
 
-## Transaction Inputs
-
-## Transaction Outputs
-
 ### Receipts
 
-## Blocks
+The receipts contain all output information for a transaction. For example, if a contract logs a value, the logs will be contained in the receipt.
+
+## Block Model
+
+Block objects are wrapped in a Conensus object that is specific to a network. The Block header itself is network agnostic.
