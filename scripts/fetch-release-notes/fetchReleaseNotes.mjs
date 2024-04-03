@@ -2,7 +2,7 @@ import fs from "fs";
 import dotenv from "dotenv";
 dotenv.config();
 
-const REPOS = ["sway"]
+const REPOS = ["sway", "fuel-core", "fuels-rs", "fuels-ts", "fuels-wallet", "block-explorer-v2"]
 
 export async function fetchReleaseNotes() {
     let releaseNoteContent = "";
@@ -22,10 +22,7 @@ export async function fetchReleaseNotes() {
         const releaseName = responseJson.name;
         releaseNoteContent += `## ${repo}
         ## ${releaseName}
-        ${releaseNotes}`;
-        //releaseNoteInfo.push({ name: releaseName, notes: releaseNotes, repo });
-        //const parsedReleaseNotes = releaseNotes.split("*");
-        //console.log(releaseNotes.split("*"));
+        ${releaseNotes}]\n`;
     }
     let content = `---
 title: Release Notes and Changelogs
