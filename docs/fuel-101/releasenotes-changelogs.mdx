@@ -5,9 +5,9 @@ category: Understanding Fuel
     
 # Release Notes and Changelogs
 
-## sway
-        ## v0.52.1
-        ## What's Changed
+## Sway
+        ### v0.52.1
+        ### What's Changed
 * Some cleanups and refactors to module-related code by @tritao in https://github.com/FuelLabs/sway/pull/5793
 * Fix dead links by @bitzoic in https://github.com/FuelLabs/sway/pull/5807
 * Fixes compiler asking for unnecessary disambiguation for trait methods. by @esdrubal in https://github.com/FuelLabs/sway/pull/5801
@@ -20,15 +20,15 @@ category: Understanding Fuel
 * From\<u8, u16\> for u32 by @SwayStar123 in https://github.com/FuelLabs/sway/pull/5816
 * chore: bump to v0.52.1 by @kayagokalp in https://github.com/FuelLabs/sway/pull/5822
 
-## New Contributors
+### New Contributors
 * @hummusonrails made their first contribution in https://github.com/FuelLabs/sway/pull/5794
 
 **Full Changelog**: https://github.com/FuelLabs/sway/compare/v0.52.0...v0.52.1]
-## fuel-core
-        ## v0.24.1
-        ## Version v0.24.1
+## Fuel Core
+        ### v0.24.1
+        ### Version v0.24.1
 
-### Added
+#### Added
 
 - [#1786](https://github.com/FuelLabs/fuel-core/pull/1786): Regenesis now includes off-chain tables.
 - [#1716](https://github.com/FuelLabs/fuel-core/pull/1716): Added support of WASM state transition along with upgradable execution that works with native(std) and WASM(non-std) executors. The `fuel-core` now requires a `wasm32-unknown-unknown` target to build.
@@ -41,9 +41,9 @@ category: Understanding Fuel
 - [#1737](https://github.com/FuelLabs/fuel-core/pull/1737): Remove temporary tables for calculating roots during genesis.
 - [#1731](https://github.com/FuelLabs/fuel-core/pull/1731): Expose `schema.sdl` from `fuel-core-client`.
 
-### Changed
+#### Changed
 
-#### Breaking
+##### Breaking
 
 - [#1771](https://github.com/FuelLabs/fuel-core/pull/1771): Contract 'states' and 'balances' brought back into `ContractConfig`. Parquet now writes a file per table.
 - [1779](https://github.com/FuelLabs/fuel-core/pull/1779): Modify Relayer service to order Events from L1 by block index
@@ -67,7 +67,7 @@ category: Understanding Fuel
 
 - [#1694](https://github.com/FuelLabs/fuel-core/pull/1694): The change moves the database transaction logic from the `fuel-core` to the `fuel-core-storage` level. The corresponding [issue](https://github.com/FuelLabs/fuel-core/issues/1589) described the reason behind it.
 
-    ## Technical details of implementation
+    ### Technical details of implementation
 
     - The change splits the `KeyValueStore` into `KeyValueInspect` and `KeyValueMutate`, as well the `Blueprint` into `BlueprintInspect` and `BlueprintMutate`. It allows requiring less restricted constraints for any read-related operations.
 
@@ -92,13 +92,13 @@ category: Understanding Fuel
 
 - [#1693](https://github.com/FuelLabs/fuel-core/pull/1693): The change separates the initial chain state from the chain config and stores them in separate files when generating a snapshot. The state snapshot can be generated in a new format where parquet is used for compression and indexing while postcard is used for encoding. This enables importing in a stream like fashion which reduces memory requirements. Json encoding is still supported to enable easy manual setup. However, parquet is prefered for large state files.
 
-  ### Snapshot command
+  #### Snapshot command
 
   The CLI was expanded to allow customizing the used encoding. Snapshots are now generated along with a metadata file describing the encoding used. The metadata file contains encoding details as well as the location of additional files inside the snapshot directory containing the actual data. The chain config is always generated in the JSON format.
 
   The snapshot command now has the '--output-directory' for specifying where to save the snapshot.
 
-  ### Run command
+  #### Run command
 
   The run command now includes the 'db_prune' flag which when provided will prune the existing db and start genesis from the provided snapshot metadata file or the local testnet configuration.
 
@@ -108,16 +108,16 @@ category: Understanding Fuel
 
   A database transaction is committed every time an item group is succesfully loaded. Resumability is achieved by recording the last loaded group index within the same db tx. If loading is aborted, the remaining workers are shutdown. Upon restart, workers resume from the last processed group.
 
-  ### Contract States and Balances
+  #### Contract States and Balances
 
   Using uniform-sized batches may result in batches containing items from multiple contracts. Optimal performance can presumably be achieved by selecting a batch size that typically encompasses an entire contract's state or balance, allowing for immediate initialization of relevant Merkle trees.
 
-### Removed
+#### Removed
 
 - [#1757](https://github.com/FuelLabs/fuel-core/pull/1757): Removed `protobuf` from everywhere since `libp2p` uses `quick-protobuf`.
 
 
-## What's Changed
+### What's Changed
 * Expose `schema.sdl` add some helper types and traits by @Dentosal in https://github.com/FuelLabs/fuel-core/pull/1731
 * Regenesis support by @MujkicA in https://github.com/FuelLabs/fuel-core/pull/1693
 * Remove genesis temp tables by @MujkicA in https://github.com/FuelLabs/fuel-core/pull/1737
@@ -147,9 +147,9 @@ category: Understanding Fuel
 
 
 **Full Changelog**: https://github.com/FuelLabs/fuel-core/compare/v0.23.0...v0.24.1]
-## fuels-rs
-        ## v0.56.0
-        ## What's Changed
+## Rust SDK
+        ### v0.56.0
+        ### What's Changed
 * feat!: add support for experimental encoding in logs by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1259
 * chore!: remove unused `response` method by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1263
 * chore: bump `forc` to `0.49.2` by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1268
@@ -170,19 +170,19 @@ category: Understanding Fuel
 
 **Full Changelog**: https://github.com/FuelLabs/fuels-rs/compare/v0.55.0...v0.56.0
 
-### Removed unused response method
+#### Removed unused response method
 
 We've removed response method from `ScriptCallHandler`, `ContractCallHandler` and `MultiContractCallHandler`.
 
 
-### Fix encoding capacity overflow bug
+#### Fix encoding capacity overflow bug
 
 - `Configurables` structs must be instantiated through a `::new(encoder_config)` or `::default()` method.
 - `Configurables::with_some_string_config(some_string)` methods now return a `Result\<Configurables\>` instead of `Configurables`.
 - `Predicates::encode_data` now returns a `Result\<UnresolvedBytes\>` instead of `UnresolvedBytes`.
 - `PredicateEncoder` structs must be instantiated through a `::new(encoder_config)` or `::default()`  method.
 
-### New `decode_as_debug_str` for the `ABIDecoder
+#### New `decode_as_debug_str` for the `ABIDecoder
 
 You can now decode straight into a debug string:
 
@@ -194,18 +194,18 @@ This was done so users could use `ParamTypes` at runtime to debug logs or return
 
 BREAKING CHANGE: `EnumVariants` are now imported through `param_types::EnumVariants`
 
-### Support for `fuel-core` `0.23.0`
+#### Support for `fuel-core` `0.23.0`
 
 - `TxPolicies` `gas_price` is replaced with `tip`.
 - `dry_run` now returns `TxStatus`. The receipts can be taken with `tx_status.take_receipts()`.
 - `checked_dry_run` is deleted.
 - `TransactionResponse`'s `block_id` is replaced with `block_height`.
 - `estimate_transaction_cost` has a new argument `block_horizon` used to estimate the gas price.]
-## fuels-ts
-        ## v0.79.0
-        # RELEASE - v0.79.0
+## TS SDK
+        ### v0.79.0
+        ## RELEASE - v0.79.0
 
-# Breaking
+## Breaking
 
 - Chores
     - [#1936](https://github.com/FuelLabs/fuels-ts/pull/1936), Remove `externalLoggedTypes` from `Interface` class, by [@Torres-ssf](https://github.com/Torres-ssf)
@@ -213,49 +213,49 @@ BREAKING CHANGE: `EnumVariants` are now imported through `param_types::EnumVaria
 
 ---
 
-# Features
+## Features
 - [#1840](https://github.com/FuelLabs/fuels-ts/pull/1840), Log out custom require messages for error enums when tx reverts, by [@theausicist](https://github.com/theausicist)
 - [#1873](https://github.com/FuelLabs/fuels-ts/pull/1873), Add browser wallet support to the create-fuels template app, by [@Dhaiwat10](https://github.com/Dhaiwat10)
 - [#1940](https://github.com/FuelLabs/fuels-ts/pull/1940), Decode logs from TXs submitted outside `BaseInvocationScope`, by [@Torres-ssf](https://github.com/Torres-ssf)
 ]
-## fuels-wallet
-        ## v0.16.1
-        ## @fuel-wallet/connections@0.16.1
+## Fuel Wallet
+        ### v0.16.1
+        ### @fuel-wallet/connections@0.16.1
 
-### Patch Changes
+#### Patch Changes
 
 -   Updated dependencies \[]:
     -   @fuel-wallet/sdk@0.16.1
     -   @fuel-wallet/types@0.16.1
 
 
-## @fuel-wallet/react@0.16.1
+### @fuel-wallet/react@0.16.1
 
 
 
 
-## @fuel-wallet/sdk@0.16.1
+### @fuel-wallet/sdk@0.16.1
 
-### Patch Changes
+#### Patch Changes
 
 -   Updated dependencies \[]:
     -   @fuel-wallet/types@0.16.1
 
 
-## @fuel-wallet/playwright-utils@0.16.1
+### @fuel-wallet/playwright-utils@0.16.1
 
 
 
 
-## @fuel-wallet/types@0.16.1
+### @fuel-wallet/types@0.16.1
 
 
 ]
-## block-explorer-v2
-        ## 0.2.2
-        # beta-3 support
+## Fuel Explorer
+        ### 0.2.2
+        ## beta-3 support
 
-## What's Changed
+### What's Changed
 * feat: change storage key by @luizstacio in https://github.com/FuelLabs/block-explorer-v2/pull/127
 * feat: update block-explorer to beta-3 by @luizstacio in https://github.com/FuelLabs/block-explorer-v2/pull/124
 * feat: finish upgrade + add producer + add age of transactions by @LuizAsFight in https://github.com/FuelLabs/block-explorer-v2/pull/125
