@@ -5,9 +5,20 @@ category: Fuel 101
 
 # Transaction & Block Models
 
-Fuel's transaction and block models explained.
+Transactions and blocks on the Fuel network have a unique structure that is optimized for speed and scalability. Below you can find an outline of the structure of transactions and blocks on the Fuel network.
+
+- [Transaction Types](#transaction-types)
+- [Transaction Data](#transaction-data)
+- [Transaction Validation](#transaction-validation)
+- [Block Model](#block-model)
 
 ## Transaction Types
+
+There are three types of transactions:
+
+1. Script transactions
+2. Create transactions
+3. Mint transactions
 
 <CodeImport
   file="../fuel-specs/src/tx-format/transaction.md"
@@ -16,17 +27,70 @@ Fuel's transaction and block models explained.
   lineEnd="8"
 />
 
-There are three types of transactions:
+### Script Transactions
 
-1. Script transactions
-2. Create transactions
-3. Mint transactions
+Script transactions include all other types of transactions that are not `Create` or `Mint` transactions.
 
-### Transaction Validation
+### Create Transactions
+
+`Create` transactions create new contracts on the Fuel network. This is the type of transaction that occurs when you run `forc deploy`.
+
+### Mint Transactions
+
+The `Mint` transaction type is used when new coins are minted as part of a coinbase transaction.
+`Mint` transactions are created by the block producer and are not signed.
+
+## Transaction Data
+
+### Transaction Inputs
+
+There are three types of transaction inputs:
+
+1. **Coin** inputs represent funds are are being spent.
+2. **Contract** inputs are used when a contract is being called.
+3. **Message** inputs are used for messages.
+
+<CodeImport
+  file="../fuel-specs/src/tx-format/input.md"
+  lang="rust"
+  lineStart="4"
+  lineEnd="8"
+/>
+
+### Transaction Outputs
+
+There are five types of transaction outputs:
+
+1. **Coin** outputs represent ..
+2. **Contract** outputs are created when a transaction changes the state of a contract.
+3. **Change** outputs are ..
+4. **Variable** outputs are used ..
+5. **Contract Created** outputs are used when a contract is created.
+
+<CodeImport
+  file="../fuel-specs/src/tx-format/output.md"
+  lang="rust"
+  lineStart="4"
+  lineEnd="10"
+/>
+
+### Transaction Receipts
+
+The receipts contain all output information for a transaction. For example, if a contract logs a value, the logs will be contained in the receipt.
+
+### Transaction Policies
+
+A transaction must set certain policies in order to be valid. The policies include the gas price, witness limit, maturity, and the maximum fee the sender would allow.
+
+### Transaction Witnesses
+
+A transction must contain the signatures of all parties involved in the transaction. The signatures are stored as witness data in the transaction.
+
+## Transaction Validation
 
 All transactions are validated by the FuelVM. Some validation checks only apply to certain types of transactions, while other validation rules are universal.
 
-#### Universal Validation Rules
+### Universal Validation Rules
 
 All transactions must conform to the following rules:
 
@@ -36,38 +100,19 @@ All transactions must conform to the following rules:
 - There are no duplicate or competing transaction inputs or outputs. For example, a transaction cannot have two `InputCoin` inputs for the same coin.
 - The transction must be able to be serialized and deserialized. 
 
-### Script Transactions
-
-Script transactions include all other types of transactions that are not `Create` or `Mint` transactions.
-
-#### Script Transaction Validation
+### Script Transaction Validation
 
 - The script cannot have an output type of `ContractCreated`.
 - The script data cannot be empty.
 - The transaction cannot be missing any required policy types.
 - The transacation cannot contain any unsupported policy types.
 
+### Create Transaction Validation
 
-### Create Transactions
-
-`Create` transactions create new contracts on the Fuel network. This is the type of transaction that occurs when you run `forc deploy`.
-
-#### Create Transaction Validation
-
-
-### Mint Transactions
-
-The `Mint` transaction type is used when new coins are minted as part of a coinbase transaction.
-`Mint` transactions are created by the block producer and are not signed.
-
-#### Mint Transaction Validation
+### Mint Transaction Validation
 
 - The `txPointer` must match the block. The value cannot be zero.
 - The `inputIndex` of the `outputContract` is not zero.
-
-### Receipts
-
-The receipts contain all output information for a transaction. For example, if a contract logs a value, the logs will be contained in the receipt.
 
 ## Block Model
 
