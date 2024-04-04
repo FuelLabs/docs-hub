@@ -15,11 +15,11 @@ A transaction on the Fuel network goes through a complex serious of steps before
 6. **Broadcasting/Gossiping**: The transaction gets broadcast to the network, and the nodes gossip. They repeat the validation, parallelization, and execution steps.
 7. **Block Formation**: The transaction is included in a block.
 8. **Block Propagation**: The block is broadcast to the network.
-8. **Sequencer**: 
+9. **Sequencer**:
 
 ## Transaction Creation
 
-The transaction is created by someone. 
+The transaction is created by someone.
 
 One way a transaction can be created is by interacting with an application that uses the `fuels` SDK. In this case, the SDK will do some validation to make sure that the transaction appears valid before sending it to the node. If the SDK detects that the transaction is not valid, the transaction will not move on to the next step.
 
@@ -29,7 +29,7 @@ Before a transaction makes it to the mempool, it goes through a series of pre-ch
 
 ## TxPool
 
-The transaction pool sorts pending transactions by their gas price. Note that a transaction's gas represents the total amount of work that the VM did to execute the transaction, while the gas price represents the amount that the transaction is going to pay for each unit of gas (or `GasSpend`). 
+The transaction pool sorts pending transactions by their gas price. Note that a transaction's gas represents the total amount of work that the VM did to execute the transaction, while the gas price represents the amount that the transaction is going to pay for each unit of gas (or `GasSpend`).
 
 ## Parallelization
 
@@ -51,4 +51,3 @@ The transaction execution is completed by removing the spent UTXOs and adding an
 ## Block Propagation
 
 ## Sequencer
-
