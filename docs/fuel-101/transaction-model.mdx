@@ -16,10 +16,6 @@ Transactions and blocks on the Fuel network have a unique structure that is opti
 
 There are three types of transactions:
 
-1. Script transactions
-2. Create transactions
-3. Mint transactions
-
 <CodeImport
   file="../fuel-specs/src/tx-format/transaction.md"
   lang="rust"
@@ -27,28 +23,31 @@ There are three types of transactions:
   lineEnd="8"
 />
 
-### Script Transactions
-
-Script transactions include all other types of transactions that are not `Create` or `Mint` transactions.
-
-### Create Transactions
-
-`Create` transactions create new contracts on the Fuel network. This is the type of transaction that occurs when you run `forc deploy`.
-
-### Mint Transactions
-
-The `Mint` transaction type is used when new coins are minted as part of a coinbase transaction.
-`Mint` transactions are created by the block producer and are not signed.
+1. **Script Transactions** include all other types of transactions that are not `Create` or `Mint` transactions.
+2. **Create Transactions** create new contracts on the Fuel network. This is the type of transaction that occurs when you run `forc deploy`.
+3. **Mint Transactions** are used when new coins are minted as part of a coinbase transaction. `Mint` transactions are created by the block producer and are not signed.
 
 ## Transaction Data
+
+There are several types of data contained in a transaction on the Fuel network:
+
+- [Transaction Policies](#transaction-policies)
+- [Transaction Witnesses](#transaction-witnesses)
+- [Transaction Inputs](#transaction-inputs)
+- [Transaction Outputs](#transaction-outputs)
+- [Transaction Receipts](#transaction-receipts)
+
+### Transaction Policies
+
+A transaction must set certain policies in order to be valid. The policies include the gas price, witness limit, maturity, and the maximum fee allowed.
+
+### Transaction Witnesses
+
+A transction must contain the signatures of all parties involved in the transaction, A.K.A. the transaction "witnesses". The signatures are stored as witness data.
 
 ### Transaction Inputs
 
 There are three types of transaction inputs:
-
-1. **Coin** inputs represent funds are are being spent.
-2. **Contract** inputs are used when a contract is being called.
-3. **Message** inputs are used for messages.
 
 <CodeImport
   file="../fuel-specs/src/tx-format/input.md"
@@ -57,15 +56,13 @@ There are three types of transaction inputs:
   lineEnd="8"
 />
 
+1. **Coin** inputs represent funds are are being spent.
+2. **Contract** inputs are used when a contract is being called.
+3. **Message** inputs are used for messages.
+
 ### Transaction Outputs
 
 There are five types of transaction outputs:
-
-1. **Coin** outputs represent ..
-2. **Contract** outputs are created when a transaction changes the state of a contract.
-3. **Change** outputs are ..
-4. **Variable** outputs are used ..
-5. **Contract Created** outputs are used when a contract is created.
 
 <CodeImport
   file="../fuel-specs/src/tx-format/output.md"
@@ -74,17 +71,19 @@ There are five types of transaction outputs:
   lineEnd="10"
 />
 
+1. **Coin** outputs represent a transfer of an asset. This type of output is only used when a transaction does not have any malleable fields. This means that the recipient, asset, and amount is known before the transaction is fully executed.
+2. **Contract** outputs are created when a transaction changes the state of a contract.
+3. **Change** outputs are similar to coin outputs, but are used when the amount is not known.
+4. **Variable** outputs are similar to coin outputs, but the recipient, asset, and amount are not known before the transaction is fully executed.
+5. **Contract Created** outputs are used when a contract is created.
+
 ### Transaction Receipts
 
-The receipts contain all output information for a transaction. For example, if a contract logs a value, the logs will be contained in the receipt.
+After a transaction is executed, a list of receipts that contain all of the output information is generated. For example, if a contract logs a value, or panics during execution, this information will be contained in the receipts list.
 
-### Transaction Policies
+### Transaction Pointer
 
-A transaction must set certain policies in order to be valid. The policies include the gas price, witness limit, maturity, and the maximum fee the sender would allow.
-
-### Transaction Witnesses
-
-A transction must contain the signatures of all parties involved in the transaction. The signatures are stored as witness data in the transaction.
+Once a transaction is included in a block, it is assigned a transaction pointer. The transaction pointer is a unique identifier that is used to reference the location of the transaction in the block.
 
 ## Transaction Validation
 
@@ -100,16 +99,28 @@ All transactions must conform to the following rules:
 - There are no duplicate or competing transaction inputs or outputs. For example, a transaction cannot have two `InputCoin` inputs for the same coin.
 - The transction must be able to be serialized and deserialized. 
 
-### Script Transaction Validation
+### Transaction-Specific Validation
+
+In addition to the universal validation rules above, each transaction type has its own set of validation rules.
+
+#### Script Transaction Validation
 
 - The script cannot have an output type of `ContractCreated`.
 - The script data cannot be empty.
 - The transaction cannot be missing any required policy types.
 - The transacation cannot contain any unsupported policy types.
 
-### Create Transaction Validation
+#### Create Transaction Validation
 
-### Mint Transaction Validation
+- The transaction cannot perform any other operations besides creating a contract. This includes sending a message, interacting with another contract, sending any assets, etc.
+- The transaction must have exactly one `ContractCreated` output.
+- The keys of storageSlots must be in ascending lexicographic order.
+- The contract ID must not already be in use.
+- The Sparse Merkle tree root of the `storageSlots` is not equal to the `stateRoot` of a deployed contract.
+- The transaction cannot be missing any required policy types.
+- The transacation cannot contain any unsupported policy types.
+
+#### Mint Transaction Validation
 
 - The `txPointer` must match the block. The value cannot be zero.
 - The `inputIndex` of the `outputContract` is not zero.
