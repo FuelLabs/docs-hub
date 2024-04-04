@@ -33,7 +33,7 @@ The parallel processing capability of the FuelVM directly translates into enhanc
 
 The FuelVM introduces a paradigm shift in the utilization of computational resources within blockchain networks, particularly addressing the inefficiencies prevalent in other systems. By implementing strategies that allow for more extensive use of a CPU's threads and cores, the FuelVM enhances the Ethereum network's performance and scalability.
 
-At the core of FuelVM's approach to optimized CPU utilization is its use of the Unspent Transaction Output (UTXO) model, complemented by strict state access lists. This allows the FuelVM to precisely determine which parts of the state will be read or written by each transaction before its execution. This topic will be covered in more detail in the next section on solving for state bloat in Ethereum.
+At the core of FuelVM's approach to optimized CPU utilization is its use of the Unspent Transaction Output (UTXO) model, complemented by [strict state access lists](https://github.com/ethereum/EIPs/issues/648). This allows the FuelVM to precisely determine which parts of the state will be read or written by each transaction before its execution. This topic will be covered in more detail in the next section on solving for state bloat in Ethereum.
 
 ## Solving for Ethereum State Bloat
 
