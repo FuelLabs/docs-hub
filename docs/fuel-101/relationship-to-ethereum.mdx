@@ -47,7 +47,7 @@ Fuel's approach to asset management, in which all asset transfers affect only a 
 
 ### Eliminating Approval State
 
-One of the innovative aspects of Fuel's state approach is the elimination of the approval state. In traditional Ethereum transactions, the `approve` and `transferFrom` functions involve multiple state changes that contribute to state bloat and increased transaction costs. Fuel's model does away with this by simplifying the asset transfer process, thereby enhancing transaction efficiency and reducing unnecessary state modifications.
+One of the innovative aspects of Fuel's state approach is the elimination of the approval state. In traditional Ethereum transactions, the `approve` and `transferFrom` functions involve multiple state changes that contribute to state bloat and increased transaction costs. Fuel's model streamlines the process by treating all assets natively. This means that although you still require a smart contract for minting and burning fungible assets, the sending and receiving of these assets can be conducted independently of the asset contract. By treating all assets as first-class citizens, it significantly enhances transaction efficiency and reduces unnecessary state modifications.
 
 ### State Minimized Techniques
 
