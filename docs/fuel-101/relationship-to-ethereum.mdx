@@ -55,7 +55,7 @@ Fuel introduces several state-minimized techniques that leverage bandwidth and e
 
 - Scripts: Ephemeral logic is included in transactions, not stored in state. Unlike EVM transactions which can call a contract directly (but can only call a single contract), Fuel transactions execute a script, which may call zero or more contracts.
 
-- Predicates: Lightweight, stateless programs. A predicate is a new, pure mechanism for authorizing transactions. A predicate can only access the data in a transaction, it cannot view the current chain state. Predicates can be used, among other things, to enable native (stateless) account abstraction.
+- [Predicates](https://docs.fuel.network/guides/intro-to-predicates/): Lightweight, stateless programs. A predicate is a new, pure mechanism for authorizing transactions. A predicate can only access the data in a transaction, it cannot view the current chain state. Predicates can be used, among other things, to enable native (stateless) account abstraction.
 
 ### A New State-Minimized Transaction Model
 
