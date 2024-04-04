@@ -23,7 +23,7 @@ The FuelVM introduces several key innovations designed to improve transaction th
 
 ### Parallel Transaction Execution
 
-One of the most significant features of the FuelVM is its ability to execute transactions in parallel. This is achieved through the use of strict state access lists, which enable the FuelVM to identify dependencies between transactions ahead of their execution. By mapping out these dependencies, the FuelVM can efficiently allocate transactions to multiple threads or cores of a CPU, drastically increasing the number of transactions processed within a given time frame. This approach contrasts with the Ethereum Virtual Machine (EVM), which primarily processes transactions sequentially, leading to potential bottlenecks and increased latency during periods of high network demand.
+One of the most significant features of the FuelVM is its ability to execute transactions in parallel. This is achieved through the use of [strict state access lists](https://github.com/ethereum/EIPs/issues/648), which enable the FuelVM to identify dependencies between transactions ahead of their execution. By mapping out these dependencies, the FuelVM can efficiently allocate transactions to multiple threads or cores of a CPU, drastically increasing the number of transactions processed within a given time frame. This approach contrasts with the Ethereum Virtual Machine (EVM), which primarily processes transactions sequentially, leading to potential bottlenecks and increased latency during periods of high network demand.
 
 ### Enhanced Throughput
 
