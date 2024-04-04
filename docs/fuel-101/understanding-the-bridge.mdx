@@ -7,8 +7,58 @@ category: Fuel 101
 
 ## What is a bridge?
 
+In the blockchain world, a bridge is a mechanism that allows two different blockchains to communicate with each other. Becuase different protocols and rules, and they can't communicate with each other directly without a special mechanism to work together. Fuel uses a bridge to connect the Ethereum blockchain with the Fuel blockchain. 
+
 ## Why do we need a bridge?
+
+Bridges allow users to move assets between different blockchains. For example, if you own ETH on the Ethereum blockchain, you can use a bridge to move it to the Fuel blockchain. 
+
+This allows you to take advantage of faster execution and cheaper transaction on the Fuel network using the same assets you already own on Ethereum.
 
 ## How does the bridge work?
 
+The Fuel bridge utilizes smart contracts on both the Ethereum and Fuel blockchains to facilitate the bridge.
+
+Once a bridge is available between two blockchains, the assets are not automatically bridged. Users must initiate the bridging process either depositing funds from Ethereum or withdrawing funds from Fuel. 
+
+## How are messages passed between networks?
+
+Fuel's sequencer (link to sequnencing page) is responsible for picking up any message on Ethereum that represent a deposit to Fuel. The sequencer will send the a corresponding message on the Fuel network so that it can be processed.
+
+## How does a deposit work?
+
+1. A user deposits ETH on the bridge contract on Ethereum.
+2. The transction is confirmed and gets included in a block on Ethereum.
+3. An event is emitted in the transaction that contains informatin about the deposit.
+4. The Fuel sequencer picks up the event and sends a corresponding message on the Fuel network as a a part of a UTXO that can be spent by any entity but that must be delivered to the bridge contract on Fuel.
+5. The message is confirmed and included in a block on Fuel.
+6. The message is processed, and delivered to the bridge contract (by a node?).
+7. The bridge contract on Fuel processes the message and mints the equivalent amount of ETH to the destination wallet.
+8. Once the transaction is confirmed and included in a block on Fuel, the assets will be available in destination wallet.
+
+You can follow the actual implementation of the message processing flow via:
+
+- the `deposit` function in the [`FuelERC20Gateway`](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/solidity-contracts/contracts/messaging/gateway/FuelERC20Gateway.sol) Solidity contract
+- the `sendMessage` function in the [`FuelMessagePortal`](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/solidity-contracts/contracts/fuelchain/FuelMessagePortal.sol) Solidity contract
+- the `process_message` function in the [Bridge Fundible Token](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/fungible-token/bridge-fungible-token/src/main.sw) Sway contract
+
+## How does a withdrawl work?
+
+1. A user withdraws ETH from the Fuel bridge contract on Fuel.
+2. The transction is confirmed and gets included in a block on Fuel.
+3. A message is sent on the Ethereum network containing the information about the deposit.
+4. The message is confirmed and included in a block on Ethereum.
+5. The message is processed, and the equivalent amount of ETH gets minted to the destination wallet on Ethereum.
+
+## What types of assets can be bridged?
+
+
+
 ## How can I use the bridge?
+
+To bridge assets from Ethereum to the Fuel network, you'll need an Ethereum wallet with some ETH in it and a Fuel Wallet. (can they also use metamask to receive it??)
+
+Connect your Ethereum wallet to the [Fuel Bridge](https://next-app.fuel.network/bridge) and select the amount of ETH you want to bridge.
+Next, connect the Fuel Wallet that you want to receive the funds, and click the "Bridge" button.
+
+The bridging process can take several minutes to complete. You can close the page at any time and check the status of your transaction in the "History" tab of the bridge page. Once the transaction is complete, you will see the assets in your Fuel Wallet.
