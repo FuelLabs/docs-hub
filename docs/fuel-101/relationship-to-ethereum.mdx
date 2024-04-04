@@ -53,7 +53,7 @@ One of the innovative aspects of Fuel's state approach is the elimination of the
 
 Fuel introduces several state-minimized techniques that leverage bandwidth and execution over state storage, presenting developers with new ways for building other than just smart contract storage:
 
-- Scripts: Ephemeral logic is included in transactions, not stored in state. Unlike EVM transactions which can call a contract directly (but can only call a single contract), Fuel transactions execute a script, which may call zero or more contracts.
+- [Scripts](https://docs.fuel.network/docs/sway/sway-program-types/scripts/): Ephemeral logic is included in transactions, not stored in state. Unlike EVM transactions which can call a contract directly (but can only call a single contract), Fuel transactions execute a script, which may call zero or more contracts.
 
 - [Predicates](https://docs.fuel.network/guides/intro-to-predicates/): Lightweight, stateless programs. A predicate is a new, pure mechanism for authorizing transactions. A predicate can only access the data in a transaction, it cannot view the current chain state. Predicates can be used, among other things, to enable native (stateless) account abstraction.
 
