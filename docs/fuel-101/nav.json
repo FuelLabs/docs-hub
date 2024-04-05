@@ -1,3 +1,4 @@
 {
-  "menu": ["Transaction Model", "Transaction Lifecycle", "Sequencer"]
-}
+    "menu": ["Transaction Model", "Transaction Lifecycle"]
+  }
+  
