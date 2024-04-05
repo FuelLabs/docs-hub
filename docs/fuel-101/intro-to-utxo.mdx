@@ -1,0 +1,34 @@
+---
+title: Intro to UTXO
+category: Fuel 101
+---
+
+# Understanding UTXO
+
+The Unspent Transaction Output (UTXO) model is a fundamental concept in Fuel's underlying blockchain architecture, representing the amount of digital state available for a user to spend. Unlike the account-based model, which operates similarly to traditional bank accounts by tracking debits and credits, the UTXO model works by tracking state through transaction outputs.
+
+> For example, if Bob wishes to send Alice three coins, his wallet utilizes a 10-coin UTXO, sends three coins to Alice, and returns seven coins as a new UTXO to Bob. This process ensures that the sum of inputs equals or exceeds the total outputs, a principle validators enforce to maintain integrity.
+
+## Why Choose UTXO Over Account-Based Models?
+
+The UTXO model, as exemplified by Bitcoin, offers a distinct approach to tracking ownership and transactions. It provides a clear, transaction-by-transaction ledger of coin movement and state transitions, enhancing privacy and improving scalability through parallel processing. This contrasts with the account-based model's running balance approach which is state intensive.
+
+## Stateful UTXOs
+
+Fuel has the capability to embed data and logic within UTXOs, enabling smart contracts and decentralized applications (DApps) on UTXO-based blockchains. This allows UTXOs to carry not just value but also state information and conditions for spending, akin to smart contracts in account-based models.
+
+### Statefulness
+
+These UTXOs can encapsulate not only cryptocurrency but also data and conditions, enabling complex applications and contracts.
+
+### Smart Contract Functionality
+
+Embedded logic within UTXOs allows for actions and state changes, facilitating DApps in a scalable and private manner.
+
+### Transitioning State
+
+Spending an UTXO can update its state or affect others, similar to executing smart contract functions, with new UTXOs representing the updated contract state.
+
+### Enhanced Privacy and Scalability
+
+The encapsulation of state and logic within UTXOs offers privacy benefits and more efficient parallel transaction processing.

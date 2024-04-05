@@ -1,4 +1,8 @@
 {
-    "menu": ["Transaction Model", "Transaction Lifecycle"]
-  }
-  
+  "menu": [
+    "Transaction Model",
+    "Transaction Lifecycle",
+    "Intro to UTXO",
+    "Fuel Virtual Machine"
+  ]
+}
