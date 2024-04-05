@@ -74,3 +74,13 @@ Fuel is designed with modularity at its core, allowing for easy interaction with
 ### Trust-Minimized Bridge
 
 The [Fuel native bridge](https://app.fuel.network/bridge) moves assets currently between Ethereum's Sepolia network and Fuel. It allows for seamless interoperability between Ethereum and Fuel. This bridging capability is essential for maintaining liquidity across the two ecosystems and ensures that users and developers can move assets freely.
+
+### Application Cohesion
+
+One of the key aspects of Fuel's interoperability with Ethereum is its focus on usability and application cohesion. This is demonstrated through Fuel's capability to accept various cryptographic signatures, which makes it easier for users to bring their own wallets to Fuel and for developers to build dApps on Fuel that can use most wallets.
+
+#### EVM Wallet Connector
+
+Fuel's support for diverse signature standards ensures accessibility and placing user experience as a top priority. The [Fuel Wallet Connectors specifications](https://github.com/FuelLabs/fuels-wallet/wiki/Fuel-Wallet-Connectors) defines the flow and provides a system overview of how this is achieved, along with concise definitions of the methods in the [Fuel TypeScript SDK](https://docs.fuel.network/docs/fuels-ts/) and how to utilize them in the codebase of a dApp to enable generic EVM-compatiable wallet usage.
+
+The Fuel Metamask Demo, both the [sample code](https://github.com/FuelLabs/EVM-Wallet-Connector) and the [live demo](https://fuel-evm-wallet.vercel.app/) showcase how easily Ethereum users can connect and interact with Fuel using any EVM wallet. 
