@@ -7,58 +7,75 @@ category: Fuel 101
 
 ## What is a bridge?
 
-In the blockchain world, a bridge is a mechanism that allows two different blockchains to communicate with each other. Becuase different protocols and rules, and they can't communicate with each other directly without a special mechanism to work together. Fuel uses a bridge to connect the Ethereum blockchain with the Fuel blockchain. 
+Different blockchain protocols cannot communicate with each other directly without a special mechanism to work together. A bridge is a mechanism that allows just that: bridges allow different blockchains to communicate with each other. 
 
-## Why do we need a bridge?
+Fuel uses a bridge to connect the Ethereum blockchain with the Fuel blockchain. In the future, Fuel could be connected to a number of different blockchains using bridges.
+
+## Why would someone need a bridge?
 
 Bridges allow users to move assets between different blockchains. For example, if you own ETH on the Ethereum blockchain, you can use a bridge to move it to the Fuel blockchain. 
 
-This allows you to take advantage of faster execution and cheaper transaction on the Fuel network using the same assets you already own on Ethereum.
+This allows users to take advantage of faster execution and cheaper transaction on the Fuel network using the same assets they already own on another network. It also allows developers to build cross-chain applications, that work with assets on multiple blockchains.
 
-## How does the bridge work?
+## How does the Fuel bridge work?
 
-The Fuel bridge utilizes smart contracts on both the Ethereum and Fuel blockchains to facilitate the bridge.
+The Fuel bridge utilizes smart contracts on both the Ethereum and Fuel networks.
 
-Once a bridge is available between two blockchains, the assets are not automatically bridged. Users must initiate the bridging process either depositing funds from Ethereum or withdrawing funds from Fuel. 
+Once a bridge is available between two blockchains, assets and data from one network are not automatically available on the other. Users must initiate the bridging process. Fuel provides a convenient [UI](https://next-app.fuel.network/bridge) to make this process easy for users, but it is possible to use the bridge without a UI as well.
 
-## How are messages passed between networks?
+## What types of things can be bridged?
 
-Fuel's sequencer (link to sequnencing page) is responsible for picking up any message on Ethereum that represent a deposit to Fuel. The sequencer will send the a corresponding message on the Fuel network so that it can be processed.
+You can bridge anything! The UI currently only supports bridging ETH & ERC-20 tokens, but the underlying bridge architecture can support the bridging of any type of asset or data.
 
 ## How does a deposit work?
 
-1. A user deposits ETH on the bridge contract on Ethereum.
-2. The transction is confirmed and gets included in a block on Ethereum.
-3. An event is emitted in the transaction that contains informatin about the deposit.
-4. The Fuel sequencer picks up the event and sends a corresponding message on the Fuel network as a a part of a UTXO that can be spent by any entity but that must be delivered to the bridge contract on Fuel.
-5. The message is confirmed and included in a block on Fuel.
-6. The message is processed, and delivered to the bridge contract (by a node?).
-7. The bridge contract on Fuel processes the message and mints the equivalent amount of ETH to the destination wallet.
-8. Once the transaction is confirmed and included in a block on Fuel, the assets will be available in destination wallet.
+The process for depositing, or bridging something from Ethereum to Fuel, is slightly different depending on whether or not you are bridging ETH.
 
-You can follow the actual implementation of the message processing flow via:
+For any deposit:
+
+1. A user initiates the deposit on the bridge contract on Ethereum.
+2. An event is emitted in the transaction that contains information about the deposit.
+3. The transction is confirmed and gets included in a block on Ethereum.
+4. A Fuel node (`fuel-core`) picks up the event from the Fuel message portal. 
+
+If the user is depositing ETH, the node will mint the ETH to the destination wallet on Fuel and the process is complete. 
+
+If the user is depositing anything besides ETH:
+
+5. The Fuel node will generate a message UTXO and sends it to the user's address on Fuel.
+6. At this point another transaction is required by the user. The user must spend the message UTXO to call the `process_message` function from the bridge contract on Fuel.
+7. The transaction is confirmed and included in a block on Fuel.
+
+You can follow the actual implementation via:
 
 - the `deposit` function in the [`FuelERC20Gateway`](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/solidity-contracts/contracts/messaging/gateway/FuelERC20Gateway.sol) Solidity contract
 - the `sendMessage` function in the [`FuelMessagePortal`](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/solidity-contracts/contracts/fuelchain/FuelMessagePortal.sol) Solidity contract
+(if not just ETH:)
 - the `process_message` function in the [Bridge Fundible Token](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/fungible-token/bridge-fungible-token/src/main.sw) Sway contract
 
 ## How does a withdrawl work?
 
-1. A user withdraws ETH from the Fuel bridge contract on Fuel.
-2. The transction is confirmed and gets included in a block on Fuel.
-3. A message is sent on the Ethereum network containing the information about the deposit.
-4. The message is confirmed and included in a block on Ethereum.
-5. The message is processed, and the equivalent amount of ETH gets minted to the destination wallet on Ethereum.
+To withdraw, or bridge something from Fuel to Ethereum:
 
-## What types of assets can be bridged?
+1. A user initiates a withdrawl of anything on the bridge contract on Fuel.
+2. In the transaction, the asset/data on the Fuel network is burned, and a message with the withdrawl information is included in the receipts.
+3. The transaction is confirmed and included in a block on Fuel.
+4. The block is included in an epoch on the Fuel network. An epoch a group of Fuel blocks, packed together and identified by the last block of the epoch.
+5. Once the epoch is reached, the last block hash in the epoch is committed to the L1 blockchain in the [Chain State contract](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/solidity-contracts/contracts/fuelchain/FuelChainState.sol). This allows anyone to prove the inclusion of all the blocks in the epoch with the Merkle root of the Fuel `rootBlock` (the last block of a Fuel epoch).
+5. The transaction is confirmed and included in a block on Ethereum.
+6. A grace period must pass before this data is considered finalized and usable to prove the withdrawl was initiated.
+7. The user must finalize the withdrawl on the bridge contract on Ethereum by calling the `relayMessage` function with the commmited block and merkle proof data.
+This function will then trigger `finalizeWithdrawal` function in the `FuelERC20Gateway` contract on Ethereum with the withdrawl information.
+8. Once this final transaction confirmed and included in a block on Ethereum, the assets will be available in the destination wallet.
 
+You can follow the actual implementation via:
 
+- the `withdraw` function in the [Bridge Fundible Token](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/fungible-token/bridge-fungible-token/src/main.sw) Sway contract
+- the `commit` and `finalized` functions in the [`FuelChainState`](../packages/solidity-contracts/contracts/fuelchain/FuelChainState.sol) Solidity contract
+- the `relayMessage` function in the [`FuelMessagePortal`](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/solidity-contracts/contracts/fuelchain/FuelMessagePortal.sol) Solidity contract
+- the `finalizeWithdrawal` function in the [`FuelERC20Gateway`](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/solidity-contracts/contracts/messaging/gateway/FuelERC20Gateway.sol) Solidity contract
 
 ## How can I use the bridge?
 
-To bridge assets from Ethereum to the Fuel network, you'll need an Ethereum wallet with some ETH in it and a Fuel Wallet. (can they also use metamask to receive it??)
-
-Connect your Ethereum wallet to the [Fuel Bridge](https://next-app.fuel.network/bridge) and select the amount of ETH you want to bridge.
-Next, connect the Fuel Wallet that you want to receive the funds, and click the "Bridge" button.
-
-The bridging process can take several minutes to complete. You can close the page at any time and check the status of your transaction in the "History" tab of the bridge page. Once the transaction is complete, you will see the assets in your Fuel Wallet.
+You can try out the Fuel bridge by going to the [bridge UI](https://next-app.fuel.network/bridge), connecting your wallet, and following the instructions on the page.
+You can close the page at any time and check the status of your transaction in the "History" tab of the bridge page.
