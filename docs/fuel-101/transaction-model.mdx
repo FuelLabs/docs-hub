@@ -14,7 +14,7 @@ Transactions and blocks on the Fuel network have a unique structure that is opti
 
 ## Transaction Types
 
-There are three types of transactions:
+There are currently three types of transactions:
 
 <CodeImport
   file="../fuel-specs/src/tx-format/transaction.md"
@@ -29,7 +29,8 @@ There are three types of transactions:
 
 ## Transaction Data
 
-There are several types of data contained in a transaction on the Fuel network:
+Transactions on the Fuel network utilize a [UTXO model](#) (add link here).
+There are several types of data contained in a transaction:
 
 - [Transaction Policies](#transaction-policies)
 - [Transaction Witnesses](#transaction-witnesses)
@@ -43,11 +44,11 @@ A transaction must set certain policies in order to be valid. The policies inclu
 
 ### Transaction Witnesses
 
-A transction must contain the signatures of all parties involved in the transaction, A.K.A. the transaction "witnesses". The signatures are stored as witness data.
+A transction must contain the signatures of all parties involved in the transaction. Signatures are a type of witness data. Witness data is malleable, which means that it is not included in the transaction hash calculation.
 
 ### Transaction Inputs
 
-There are three types of transaction inputs:
+There are three parent types of transaction inputs:
 
 <CodeImport
   file="../fuel-specs/src/tx-format/input.md"
@@ -75,7 +76,7 @@ There are five types of transaction outputs:
 2. **Contract** outputs are created when a transaction changes the state of a contract.
 3. **Change** outputs are similar to coin outputs, but are used when the amount is not known.
 4. **Variable** outputs are similar to coin outputs, but the recipient, asset, and amount are not known before the transaction is fully executed.
-5. **Contract Created** outputs are used when a contract is created.
+5. **Contract Created** outputs are used when a contract is deployed.
 
 ### Transaction Receipts
 
@@ -83,7 +84,7 @@ After a transaction is executed, a list of receipts that contain all of the outp
 
 ### Transaction Pointer
 
-Once a transaction is included in a block, it is assigned a transaction pointer. The transaction pointer is a unique identifier that is used to reference the location of the transaction in the block.
+The transaction pointer is a unique identifier that is used to reference the location of itself within a block.
 
 ## Transaction Validation
 
@@ -93,11 +94,10 @@ All transactions are validated by the FuelVM. Some validation checks only apply 
 
 All transactions must conform to the following rules:
 
-- The transaction type must match one of the supported [transaction types](/docs/fuel-101/transaction-model#transaction-types).
+- The transaction type must match one of the supported [transaction types](#transaction-types).
 - All transaction parameters are within the network's [consensus parameters](/docs/specs/tx-format/consensus_parameters).
-- There are no invalid inputs or outputs. For example, a  `ChangeOutput` cannot exist for a transaction that does not have an `InputCoin` for the same asset.
+- There are no invalid inputs or outputs. For example, a `ChangeOutput` cannot exist for a transaction that does not have an `InputCoin` for the same asset.
 - There are no duplicate or competing transaction inputs or outputs. For example, a transaction cannot have two `InputCoin` inputs for the same coin.
-- The transction must be able to be serialized and deserialized.
 
 ### Transaction-Specific Validation
 
@@ -114,9 +114,8 @@ In addition to the universal validation rules above, each transaction type has i
 
 - The transaction cannot perform any other operations besides creating a contract. This includes sending a message, interacting with another contract, sending any assets, etc.
 - The transaction must have exactly one `ContractCreated` output.
-- The keys of storageSlots must be in ascending lexicographic order.
-- The contract ID must not already be in use.
-- The Sparse Merkle tree root of the `storageSlots` is not equal to the `stateRoot` of a deployed contract.
+- The keys of `storageSlots` must be in ascending lexicographic order. (who does this ordering?)
+- The contract ID must not already be in use. The Sparse Merkle tree root of the `storageSlots` is not equal to the `stateRoot` of a deployed contract.
 - The transaction cannot be missing any required policy types.
 - The transacation cannot contain any unsupported policy types.
 
@@ -127,4 +126,9 @@ In addition to the universal validation rules above, each transaction type has i
 
 ## Block Model
 
-Block objects are wrapped in a Conensus object that is specific to a network. The Block header itself is network agnostic.
+Blocks contains 4 main components:
+
+1. [**Block ID**](/docs/graphql/reference/scalars/#blockid) - A unique identifier for the block.
+2. [**Header**](/docs/graphql/reference/objects/#header) - Contains metadata about the block, such as the block height, the time the block was created, and the previous block's root.
+3. [**Consensus**](/docs/graphql/reference/unions/#consensus) - Contains network-specific consensus data.
+4. [**Transactions**](/docs/graphql/reference/objects/#transaction) - A list of transactions that are included in the block.
