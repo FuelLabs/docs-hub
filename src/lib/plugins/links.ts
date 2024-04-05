@@ -95,7 +95,7 @@ export function handleLinks(
       newUrl = newUrl.replace('{{versions.fuel-types}}', 'latest');
     }
 
-    newUrl = newUrl.replace('fuels-ts/abi-typegen/', 'fuels-ts/typegen/');
+    newUrl = newUrl.replace("fuels-ts/abi-typegen/", "fuels-ts/typegen/");
 
     return newUrl;
   }
