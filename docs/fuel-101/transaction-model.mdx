@@ -7,12 +7,12 @@ category: Fuel 101
 
 Transactions and blocks on the Fuel network have a unique structure that is optimized for speed and scalability. Below you can find an outline of the structure of transactions and blocks on the Fuel network.
 
-- [Transaction Types](#transaction-types)
-- [Transaction Data](#transaction-data)
-- [Transaction Validation](#transaction-validation)
-- [Block Model](#block-model)
+- [Transaction Types](#what-are-the-different-types-of-transactions)
+- [Transaction Data](#what-data-is-included-in-a-transaction)
+- [Transaction Validation](#how-are-transactions-validated)
+- [Block Model](#what-does-the-fuel-block-model-look-like)
 
-## Transaction Types
+## What are the different types of transactions?
 
 There are currently three types of transactions:
 
@@ -27,7 +27,7 @@ There are currently three types of transactions:
 2. **Create Transactions** create new contracts on the Fuel network. This is the type of transaction that occurs when you run `forc deploy`.
 3. **Mint Transactions** are used when new coins are minted as part of a coinbase transaction. `Mint` transactions are created by the block producer and are not signed.
 
-## Transaction Data
+## What data is included in a transaction?
 
 Transactions on the Fuel network utilize a UTXO model (add link to UTXO page).
 There are several types of data contained in a transaction:
@@ -86,7 +86,7 @@ After a transaction is executed, a list of receipts that contain all of the outp
 
 The transaction pointer is a unique identifier that is used to reference the location of itself within a block.
 
-## Transaction Validation
+## How are transactions validated?
 
 All transactions are validated by the FuelVM. Some validation checks only apply to certain types of transactions, while other validation rules are universal.
 
@@ -94,7 +94,7 @@ All transactions are validated by the FuelVM. Some validation checks only apply 
 
 All transactions must conform to the following rules:
 
-- The transaction type must match one of the supported [transaction types](#transaction-types).
+- The transaction type must match one of the supported [transaction types](#what-are-the-different-types-of-transactions).
 - All transaction parameters are within the network's [consensus parameters](/docs/specs/tx-format/consensus_parameters).
 - There are no invalid inputs or outputs. For example, a `ChangeOutput` cannot exist for a transaction that does not have an `InputCoin` for the same asset.
 - There are no duplicate or competing transaction inputs or outputs. For example, a transaction cannot have two `InputCoin` inputs for the same coin.
@@ -124,9 +124,9 @@ In addition to the universal validation rules above, each transaction type has i
 - The `txPointer` must match the block. The value cannot be zero.
 - The `inputIndex` of the `outputContract` is not zero.
 
-## Block Model
+## What does the Fuel block model look like?
 
-Blocks contains 4 main components:
+Blocks on Fuel contain 4 main components:
 
 1. [**Block ID**](/docs/graphql/reference/scalars/#blockid) - A unique identifier for the block.
 2. [**Header**](/docs/graphql/reference/objects/#header) - Contains metadata about the block, such as the block height, the time the block was created, and the previous block's root.
