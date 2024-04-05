@@ -11,7 +11,7 @@ parent:
 Fuel is an operating system purpose built for Ethereum Rollups. It allows for rollups to solve for parallelization, state minimized execution and interoperability in Ethereum. Here is how Fuel fits into the Ethereum ecosystem and improves the scalability of the network:
 
 - **Fuel brings long needed improvements to the Ethereum ecosystem.** Due to constraints with backward compatability, the Ethereum virtual machine (EVM) has been limited in its ability to scale. The Fuel virtual machine (FuelVM) brings those improvements to Ethereum.
-- **Fuel reduces Ethereum state bloat.** Fuel utilizes the UTXO model for strict state access lists, which allows for a more efficient usage of state storage on chain.
+- **Fuel reduces Ethereum state bloat.** Fuel utilizes the UTXO model for [strict state access lists](https://github.com/ethereum/EIPs/issues/648), which allows for a more efficient usage of state storage on chain.
 - **Interoperability with Ethereum built in.** Compatibility with Ethereum is essential to Fuel, and being able to build code, send transactions and interoperate across the networks is incorporated into every aspect of Fuel's design.
 
 Let's look at each of these areas in detail.
@@ -23,7 +23,7 @@ The FuelVM introduces several key innovations designed to improve transaction th
 
 ### Parallel Transaction Execution
 
-One of the most significant features of the FuelVM is its ability to execute transactions in parallel. This is achieved through the use of strict state access lists, which enable the FuelVM to identify dependencies between transactions ahead of their execution. By mapping out these dependencies, the FuelVM can efficiently allocate transactions to multiple threads or cores of a CPU, drastically increasing the number of transactions processed within a given time frame. This approach contrasts with the Ethereum Virtual Machine (EVM), which primarily processes transactions sequentially, leading to potential bottlenecks and increased latency during periods of high network demand.
+One of the most significant features of the FuelVM is its ability to execute transactions in parallel. This is achieved through the use of [strict state access lists](https://github.com/ethereum/EIPs/issues/648), which enable the FuelVM to identify dependencies between transactions ahead of their execution. By mapping out these dependencies, the FuelVM can efficiently allocate transactions to multiple threads or cores of a CPU, drastically increasing the number of transactions processed within a given time frame. This approach contrasts with the Ethereum Virtual Machine (EVM), which primarily processes transactions sequentially, leading to potential bottlenecks and increased latency during periods of high network demand.
 
 ### Enhanced Throughput
 
@@ -33,7 +33,7 @@ The parallel processing capability of the FuelVM directly translates into enhanc
 
 The FuelVM introduces a paradigm shift in the utilization of computational resources within blockchain networks, particularly addressing the inefficiencies prevalent in other systems. By implementing strategies that allow for more extensive use of a CPU's threads and cores, the FuelVM enhances the Ethereum network's performance and scalability.
 
-At the core of FuelVM's approach to optimized CPU utilization is its use of the Unspent Transaction Output (UTXO) model, complemented by strict state access lists. This allows the FuelVM to precisely determine which parts of the state will be read or written by each transaction before its execution. This topic will be covered in more detail in the next section on solving for state bloat in Ethereum.
+At the core of FuelVM's approach to optimized CPU utilization is its use of the Unspent Transaction Output (UTXO) model, complemented by [strict state access lists](https://github.com/ethereum/EIPs/issues/648). This allows the FuelVM to precisely determine which parts of the state will be read or written by each transaction before its execution. This topic will be covered in more detail in the next section on solving for state bloat in Ethereum.
 
 ## Solving for Ethereum State Bloat
 
@@ -47,15 +47,15 @@ Fuel's approach to asset management, in which all asset transfers affect only a 
 
 ### Eliminating Approval State
 
-One of the innovative aspects of Fuel's state approach is the elimination of the approval state. In traditional Ethereum transactions, the `approve` and `transferFrom` functions involve multiple state changes that contribute to state bloat and increased transaction costs. Fuel's model does away with this by simplifying the asset transfer process, thereby enhancing transaction efficiency and reducing unnecessary state modifications.
+One of the innovative aspects of Fuel's state approach is the elimination of the approval state. In traditional Ethereum transactions, the `approve` and `transferFrom` functions involve multiple state changes that contribute to state bloat and increased transaction costs. Fuel's model streamlines the process by treating all assets natively. This means that although you still require a smart contract for minting and burning fungible assets, the sending and receiving of these assets can be conducted independently of the asset contract. By treating all assets as first-class citizens, it significantly enhances transaction efficiency and reduces unnecessary state modifications.
 
 ### State Minimized Techniques
 
 Fuel introduces several state-minimized techniques that leverage bandwidth and execution over state storage, presenting developers with new ways for building other than just smart contract storage:
 
-- Scripts: Ephemeral logic is included in transactions, not stored in state. Unlike EVM transactions which can call a contract directly (but can only call a single contract), Fuel transactions execute a script, which may call zero or more contracts.
+- [Scripts](https://docs.fuel.network/docs/sway/sway-program-types/scripts/): Ephemeral logic is included in transactions, not stored in state. Unlike EVM transactions which can call a contract directly (but can only call a single contract), Fuel transactions execute a script, which may call zero or more contracts.
 
-- Predicates: Lightweight, stateless programs. A predicate is a new, pure mechanism for authorizing transactions. A predicate can only access the data in a transaction, it cannot view the current chain state. Predicates can be used, among other things, to enable native (stateless) account abstraction.
+- [Predicates](https://docs.fuel.network/guides/intro-to-predicates/): Lightweight, stateless programs. A predicate is a new, pure mechanism for authorizing transactions. A predicate can only access the data in a transaction, it cannot view the current chain state. Predicates can be used, among other things, to enable native (stateless) account abstraction.
 
 ### A New State-Minimized Transaction Model
 
@@ -65,21 +65,21 @@ For a deeper analysis of how Fuel solves for Ethereum state bloat, read [Masteri
 
 ## Interoperability with Ethereum
 
-Fuel's commitment to interoperability with Ethereum is a cornerstone of its design, facilitating seamless integration between Fuel and the broader Ethereum ecosystem. This interoperability is not just a feature but a fundamental part of Fuel's architecture, enabling it to serve in a way that complements Ethereum's existing infrastructure.
+Fuel's commitment to interoperability with Ethereum is a cornerstone of its design, facilitating seamless integration between Fuel and the broader Ethereum ecosystem.
 
 ### Modular Architecture
 
-Fuel is designed with modularity at its core, allowing for easy interaction with various data availability and settlement layers. This flexibility ensures that Fuel can adapt to a range of scenarios, from operating alongside Ethereum as a Layer 2 solution to functioning independently or in conjunction with other systems. The modular nature of Fuel's architecture affirms its ability to provide high-performance execution without sacrificing the security and decentralized principles of the Ethereum network.
+Fuel is designed with modularity at its core, allowing for easy interaction with various data availability and settlement layers. This flexibility ensures that Fuel can adapt to a range of scenarios, from operating alongside Ethereum as a Layer 2 solution to functioning independently or remain agnostic to serve other blockchain architectures as the prime execution layer of choice. The modular nature of Fuel's architecture affirms its ability to provide high-performance execution without sacrificing the security and decentralized principles of the Ethereum network.
 
 ### Trust-Minimized Bridge
 
-The [Fuel native bridge](https://app.fuel.network/bridge) moves assets currently between Ethereum's Sepolia network and Fuel. It allows for seamless interoperability between Ethereum and Fuel. This bridging capability is essential for maintaining liquidity across the two ecosystems and ensures that users and developers can move assets freely.
+The [Fuel native bridge](https://app.fuel.network/bridge) moves assets currently between Ethereum and Fuel. This bridging capability is essential for maintaining liquidity across the two ecosystems and ensures that users and developers can move assets freely.
 
 ### Application Cohesion
 
 One of the key aspects of Fuel's interoperability with Ethereum is its focus on usability and application cohesion. This is demonstrated through Fuel's capability to accept various cryptographic signatures, which makes it easier for users to bring their own wallets to Fuel and for developers to build dApps on Fuel that can use most wallets.
 
-#### EVM Wallet Connector
+#### EVM Wallet Connectors
 
 Fuel's support for diverse signature standards ensures accessibility and placing user experience as a top priority. The [Fuel Wallet Connectors specifications](https://github.com/FuelLabs/fuels-wallet/wiki/Fuel-Wallet-Connectors) defines the flow and provides a system overview of how this is achieved, along with concise definitions of the methods in the [Fuel TypeScript SDK](https://docs.fuel.network/docs/fuels-ts/) and how to utilize them in the codebase of a dApp to enable generic EVM-compatiable wallet usage.
 
