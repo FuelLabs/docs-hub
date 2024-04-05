@@ -7,13 +7,13 @@ category: Fuel 101
 
 ## What is a bridge?
 
-Different blockchain protocols cannot communicate with each other directly without a special mechanism to work together. A bridge is a mechanism that allows just that: bridges allow different blockchains to communicate with each other. 
+Different blockchain protocols cannot communicate with each other directly without a special mechanism to work together. A bridge is a mechanism that allows just that: bridges allow different blockchains to communicate with each other.
 
 Fuel uses a bridge to connect the Ethereum blockchain with the Fuel blockchain. In the future, Fuel could be connected to a number of different blockchains using bridges.
 
 ## Why would someone need a bridge?
 
-Bridges allow users to move assets between different blockchains. For example, if you own ETH on the Ethereum blockchain, you can use a bridge to move it to the Fuel blockchain. 
+Bridges allow users to move assets between different blockchains. For example, if you own ETH on the Ethereum blockchain, you can use a bridge to move it to the Fuel blockchain.
 
 This allows users to take advantage of faster execution and cheaper transaction on the Fuel network using the same assets they already own on another network. It also allows developers to build cross-chain applications, that work with assets on multiple blockchains.
 
@@ -36,12 +36,7 @@ For any deposit:
 1. A user initiates the deposit on the bridge contract on Ethereum.
 2. An event is emitted in the transaction that contains information about the deposit.
 3. The transction is confirmed and gets included in a block on Ethereum.
-4. A Fuel node (`fuel-core`) picks up the event from the Fuel message portal. 
-
-If the user is depositing ETH, the node will mint the ETH to the destination wallet on Fuel and the process is complete. 
-
-If the user is depositing anything besides ETH:
-
+4. A Fuel node (`fuel-core`) picks up the event from the Fuel message portal. If the user is depositing ETH, the node will mint the ETH to the destination wallet on Fuel and the process is complete. If the user is depositing anything besides ETH:
 5. The Fuel node will generate a message UTXO and sends it to the user's address on Fuel.
 6. At this point another transaction is required by the user. The user must spend the message UTXO to call the `process_message` function from the bridge contract on Fuel.
 7. The transaction is confirmed and included in a block on Fuel.
@@ -62,11 +57,11 @@ To withdraw, or bridge something from Fuel to Ethereum:
 3. The transaction is confirmed and included in a block on Fuel.
 4. The block is included in an epoch on the Fuel network. An epoch a group of Fuel blocks, packed together and identified by the last block of the epoch.
 5. Once the epoch is reached, the last block hash in the epoch is committed to the L1 blockchain in the [Chain State contract](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/solidity-contracts/contracts/fuelchain/FuelChainState.sol). This allows anyone to prove the inclusion of all the blocks in the epoch with the Merkle root of the Fuel `rootBlock` (the last block of a Fuel epoch).
-5. The transaction is confirmed and included in a block on Ethereum.
-6. A grace period must pass before this data is considered finalized and usable to prove the withdrawl was initiated.
-7. The user must finalize the withdrawl on the bridge contract on Ethereum by calling the `relayMessage` function with the commmited block and merkle proof data.
+6. The transaction is confirmed and included in a block on Ethereum.
+7. A grace period must pass before this data is considered finalized and usable to prove the withdrawl was initiated.
+8. The user must finalize the withdrawl on the bridge contract on Ethereum by calling the `relayMessage` function with the commmited block and merkle proof data.
 This function will then trigger `finalizeWithdrawal` function in the `FuelERC20Gateway` contract on Ethereum with the withdrawl information.
-8. Once this final transaction confirmed and included in a block on Ethereum, the assets will be available in the destination wallet.
+9. Once this final transaction confirmed and included in a block on Ethereum, the assets will be available in the destination wallet.
 
 You can follow the actual implementation via:
 
