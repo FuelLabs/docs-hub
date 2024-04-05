@@ -5,17 +5,15 @@ category: Fuel 101
 
 # Transaction Lifecycle
 
-A transaction on the Fuel network goes through a complex serious of steps before it is considered final:
+A transaction on the Fuel network goes through a complex series of steps before it is considered final:
 
 1. **Transaction Creation**: Someone sends a transaction to a node.
-2. **Pre-Validation**: The transaction goes through a series of pre-checks.
-3. **Added to Transaction Pool**: The transaction gets placed in the transaction pool.
-4. **Parallelization**: The transaction is validated by the FuelVM.
-5. **Validation & Execution**: The transaction is validated by the FuelVM.
-6. **Broadcasting/Gossiping**: The transaction gets broadcast to the network, and the nodes gossip. They repeat the validation, parallelization, and execution steps.
-7. **Block Formation**: The transaction is included in a block.
-8. **Block Propagation**: The block is broadcast to the network.
-9. **Sequencer**:
+2. **Pre-Validation**: The transaction goes through an extensive series of pre-checks, including UTXO validation.
+3. **Transaction Pool**: The transaction gets placed in the transaction pool.
+3. **Selection**: Transactions are selected from the pool.
+5. **Execution & Validation**: The transaction is validated by the FuelVM.
+7. **Block Production**: The transaction is included in a block.
+6. **Gossiping & Validation**: The transaction gets broadcast to the network, and the nodes gossip. They repeat the validation, parallelization, and execution steps.
 
 ## Transaction Creation
 
@@ -25,29 +23,32 @@ One way a transaction can be created is by interacting with an application that 
 
 ## Pre-Validation
 
-Before a transaction makes it to the mempool, it goes through a series of pre-checks. These checks are done to ensure that the transaction appears valid before it is added to the transaction pool.
+All transactions are fully [validated](/docs/fuel-101/transaction-model#transaction-validation) by the Fuel VM.
 
-## TxPool
+Before a transaction makes it to the transaction pool, it goes through a extensive pre-checks. These checks are done to ensure that the transaction appears valid before attempting to execute it.
+
+## Transaction Pool
 
 The transaction pool sorts pending transactions by their gas price. Note that a transaction's gas represents the total amount of work that the VM did to execute the transaction, while the gas price represents the amount that the transaction is going to pay for each unit of gas (or `GasSpend`).
 
-## Parallelization
+## Selection
 
-The VM inspects the transaction inputs and outputs and assigns the transaction an access list, which is a list of all of the state that is accessed during the transaction. This allows the VM to determine which transactions can be executed in parallel.
+Transactions are selected from the pool to be included in the block. They are selected in a way that maximizes the block producer's reward.
 
-## Validation & Execution
+## Execution & Validation
 
-All transactions are fully [validated](/docs/fuel-101/transaction-model#transaction-validation) by the Fuel VM.
 If a transaction contains a script, the script will be executed.
-
 The transaction execution is completed by removing the spent UTXOs and adding any new UTXOs that were created.
 
-(is the transaction returned to the SDK at this point?)
+## Block Production
 
-## Broadcasting/Gossiping
+The block producer creates a new block that includes the transaction.
 
-## Block Formation
+## Gossiping & Validation
 
-## Block Propagation
+The block is broadcast to the network, and the nodes gossip with each other.
+Validators connected to the block producer will receive the block, repeat the validation and execution steps, and continue to broadcast the block.
 
-## Sequencer
+## Finality on Ethereum
+
+(is this happening now?)
