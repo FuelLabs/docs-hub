@@ -3,21 +3,21 @@ title: Fuel Virtual Machine
 category: Fuel 101
 ---
 
-# Understanding the Fuel Virtual Machine (FVM) and Its Comparison to EVM
-
-In this guide, we will explain how the Fuel Virtual Machine (FVM) differs from the Ethereum Virtual Machine (EVM) used by Ethereum. Additionally, we will cover the basic architecture of the FVM design and compare its performance against other optimistic rollups.
-
-At its core, the Fuel Virtual Machine is an execution environment designed for smart contracts, scripts, and predicates. Given that Fuel's primary function is to maximize throughput, we will delve into the intricacies of why developing a new VM is crucial for the evolution of scalable blockchains. Fuel operates as an optimistic rollup targeting Ethereum, aiming to enhance throughput through parallelized execution and state minimization.
+# Fuel Virtual Machine (FVM)
 
 > The Fuel Virtual Machine is an operating system designed for unparalleled speed in generalized computation on the execution layer.
 
+The Fuel Virtual Machine fundamentally serves as an execution environment tailored for smart contracts, scripts, and predicates. With Fuel's main objective being to maximize throughput, the development of a new VM is essential for advancing scalable blockchain technology.
+
 ## Why the FVM?
 
-Building on the premise that Fuel's sole purpose is to facilitate the fastest and most cost-effective transaction execution, it addresses a key limitation of the Ethereum Virtual Machine (EVM). The EVM's requirement for backward compatibility means that Layer 2 solutions (L2s) relying on it are constrained to single-threaded computation. The surging demand for block space, driven by the booming activity in the DeFi sector, underscores the need for superior solutions. By adopting the UTXO model, Fuel leverages the full potential of modern computer cores, significantly enhancing transaction throughput by several orders of magnitude, all while maintaining the foundational security of Ethereum.
+Building on the premise that Fuel's sole purpose is to facilitate the fastest and most cost-effective transaction execution, it addresses a key limitation of the Ethereum Virtual Machine (EVM). The EVM's requirement for backward compatibility means that Layer 2 solutions (L2s) relying on familiar yet legacy software are constrained to single-threaded computation. 
+
+The surging demand for block space, driven by the booming activity in the DeFi, necessitates the need for better solutions. By adopting the UTXO model, Fuel leverages the full potential of modern computer cores, significantly enhancing transaction throughput by several orders of magnitude, all while maintaining the foundational security of Ethereum.
 
 ## Key Features and Innovations of FVM
 
-- **Shared Memory Architecture:** FVM departs from EVM's linear memory model by introducing a globally shared memory space. This architecture enables more efficient inter-contract communication and data handling, eliminating the need for data serialization and duplication.
+- **Shared Memory Architecture:** FVM differs from EVM's linear memory model by introducing a globally shared memory space. This architecture enables more efficient inter-contract communication and data handling, eliminating the need for data serialization and duplication.
 
 - **Support for Multiple Native Assets:** Unlike Ethereum, which primarily revolves around Ether, FVM facilitates the creation and seamless management of various UTXO-based native assets. This capability enriches the ecosystem with diverse transactional and operational possibilities.
 
@@ -26,11 +26,3 @@ Building on the premise that Fuel's sole purpose is to facilitate the fastest an
 - **Register-based Virtual Machine:** Opting for a register-based architecture, FVM achieves a reduction in the number of required instructions for executing operations. This optimization translates into lower gas costs and enhanced performance compared to stack-based virtual machines like EVM.
 
 - **Advanced Smart Contract Capabilities:** FVM introduces scripts and predicates that simplify executing complex transactions and smart contract logic. This approach enhances user experience and operational efficiency within the blockchain ecosystem.
-
-## Looking ahead
-
-Although Fuel currently operates as an optimistic rollup, ongoing discussions weigh the merits of zk (zero-knowledge) proofs against the optimistic approach. The current state of zk proving, while secure, remains prohibitively expensive and computationally intensive, making it less suitable for Fuel's goal of efficiency. Zk rollups consolidate transactions into a single batch and generate a cryptographic proof that all transactions are valid, but this process is slower and more costly than its optimistic counterpart. As the technology evolves, Fuel has announced plans for an agnostic hybrid approach, allowing for a seamless transition to zk-based proving systems as they become more viable, without sacrificing efficiency.
-
-Another issue is the slow finality window of 7 days associated with optimistic rollups, which rely on a fraud-proof window during which validators can submit evidence of fraudulent transactions. This acts as a security measure, allowing for the dispute of transactions under the assumption that all transactions are valid until proven otherwise. Fuel proposes a dynamic challenge window that adjusts based on validator activity, ensuring they are neither censored nor inactive. With regular validator check-ins as a testament to the chain's integrity, the rollup could operate with a significantly shorter finality window, potentially just a few blocks.
-
-These research directions highlight Fuel's commitment to adopting the latest architectures to uphold its promise of delivering the fastest, most cost-effective transactions.
