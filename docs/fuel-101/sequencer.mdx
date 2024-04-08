@@ -10,50 +10,35 @@ By efficiently ordering transactions, sequencers allow Layer 2 solutions to sign
     ![Fuel's Single Sequencer](/images/sequencer.png)
     </Box.Centered>
 
-## Transaction Batching
-
-Fuel's single sequencers collect a large number of transactions over a certain period. Instead of each transaction being submitted individually to the base chain, the sequencer batches these transactions into a single package. This approach significantly reduces the number of transactions that the base chain has to process, as a single batched transaction on the base chain can represent hundreds or thousands of individual transactions.
-
-## Off-Chain Computation
-
-Fuel's single sequencers perform much of the computational work off-chain. This includes executing the transactions in the batch, computing the new state, and only then submitting the relevant data to the base chain. Since the computational work is done off-chain, the base chain does not need to expend resources on executing these transactions, which reduces its workload and the amount of data it needs to process and store.
-
-## Data Compression
-
-Before submitting transactions to the base chain, sequencers employs various data compression techniques to reduce the size of the transaction data. This involves encoding the data in a more efficient format and uses cryptographic techniques to represent the data more compactly.
-
-## Fraud Proofs
-
-Fuel is an optimistic rollup, so it's single sequencer will submit a summary of the transactions along with a commitment to the new state. Transactions are assumed to be valid by default but allow a [dynamic challenge period](https://forum.fuel.network/t/why-wait-a-week-fast-finality-optimistic-rollups/4471) during which fraudulent transactions can be disputed. Fuel reduces the finality of transactions from 7 days to just several blocks!
-
-## Single Sequencer
-
-> A single sequencer model relies on one entity or node to order transactions and submit them to the main chain. This model is often used for its simplicity and efficiency in processing transactions.
-
-### Single Sequencing Pros
-
-**Efficiency**: A single sequencer can process and order transactions quickly without the need for consensus among multiple parties, leading to faster throughput.
-
-**Simplicity**: The architecture and operation logic are simpler, making it easier to implement and maintain.
-
-### Single Sequencing Cons
-
-**Centralization Risk**: Reliance on a single sequencer introduces a point of centralization, potentially undermining the decentralized nature of blockchain. This can lead to censorship concerns, where the sequencer might prioritize or exclude transactions based on its criteria.
-
-**Security Vulnerabilities**: If the sequencer is compromised, it could manipulate the order of transactions or introduce fraudulent ones, affecting the integrity of the Layer 2 solution.
-
 ## Shared Sequencer
 
 > A shared sequencer model involves multiple entities or nodes taking turns or sharing the responsibility of sequencing transactions.
 
-### Shared Sequencing Pros
+Fuel leverages a shared sequencer an Application Blockchain Interface (ABCI), integrated with the Cosmos network. Validators participating in this shared sequencer network stake Fuel tokens on the Ethereum blockchain. They are responsible for 
 
-**Reduced Centralization**: By distributing the sequencing role among multiple parties, the system reduces the risk of centralization and censorship.
+1. Establishing the order of Fuel's blocks
+2. Verifying these optimistically ordered blocks through fraud proofing
 
-**Increased Security**: The shared responsibility makes it harder for a single entity to compromise the sequencing process, enhancing the system's overall security.
+Any misbehaving actors producing bad blocks within the system are penalized (slashed) on Ethereum. The sequencer network uses the `secp256k1` cryptographic algorithm, which is compatible with Ethereum's infrastructure.
 
-### Shared Sequencing Cons
+### 1. Transaction Batching
 
-**Complexity**: Coordinating among multiple sequencers can introduce complexity in terms of system design and consensus mechanisms needed to agree on transaction order.
+The shared sequencer network to collect a large number of transactions over a certain period. Instead of each transaction being submitted individually to the base chain, the sequencer batches these transactions into a single package. This approach significantly reduces the number of transactions that the base chain has to process, as a single batched transaction on the base chain can represent hundreds or thousands of individual transactions.
 
-**Potential Latency**: The need for coordination and consensus among sequencers might result in higher latency compared to a single sequencer system.
+### 2. Off-Chain Computation
+
+Shared sequencers perform much of the computational work off-chain. This includes executing the transactions in the batch, computing the new state, and only then submitting the relevant data to the base chain. Since the computational work is done off-chain, the base chain does not need to expend resources on executing these transactions, which reduces its workload and the amount of data it needs to process and store.
+
+### 3. Data Compression
+
+Before submitting transactions to the base chain, sequencers employs various data compression techniques to reduce the size of the transaction data. This involves encoding the data in a more efficient format and uses cryptographic techniques to represent the data more compactly.
+
+### 4. Fraud Proofs
+
+Fuel is an optimistic rollup, meaning its shared sequencer network submits a summary of transactions along with a commitment to the new state. Transactions are presumed valid by default, but there is a [dynamic challenge period](https://forum.fuel.network/t/why-wait-a-week-fast-finality-optimistic-rollups/4471) during which fraudulent transactions can be disputed. This significantly reduces the finality time of transactions from 7 days to just a few blocks. The Merkle root generated can serve as evidence of transaction order for a fraud-proof system. All sequencer network block headers are posted back to Ethereum for transparency and security.
+
+## Why Shared Sequencer?
+
+**Reduced Centralization**: Distributing the sequencing responsibilities across multiple participants diminishes the risk of centralization and censorship, fostering a more decentralized network.
+
+**Increased Security**: By sharing the sequencing duties, it becomes more challenging for any single party to manipulate the sequencing process. This collective approach significantly bolsters the network's security.
