@@ -44,10 +44,18 @@ function setValueOnNode(node: any, cb: (value: string) => string) {
 export function fixIndent() {
   // biome-ignore lint/suspicious/noExplicitAny:
   return function transformer(tree: Root, file: any) {
-    const rootDir = process.cwd();
-    const fullpath = join(rootDir, file.data.rawDocumentData?.sourceFilePath);
-    const isSway = fullpath.includes('sway');
-    const isFuelsTs = fullpath.includes('fuels-ts');
+
+    function normalizeIndentation(lines: string[]) {
+      const minLeadingIndentations = lines.reduce((min, line) => {
+        const match = line.match(/^[\s\t]*/);
+        if(/^\s*$/.test(line)){
+          return min;
+        }
+        const leadingIndentations = match ? match[0].length : 0;
+        return Math.min(min, leadingIndentations);
+      }, Number.POSITIVE_INFINITY);
+      return lines.map(line => line.substring(minLeadingIndentations));
+    }
 
     // biome-ignore lint/suspicious/noExplicitAny:
     visit(tree, '', (node: any) => {
@@ -65,37 +73,7 @@ export function fixIndent() {
             ['rust', 'rust,ignore', 'ts', 'typescript'].includes(lang)
           ) {
             const lines = newValue.split('\n');
-            const newLines = lines
-              // parsing code tabs/spaces in Fuels-TS code blocks
-              .map((line: string) => {
-                if (isSway) {
-                  return line.replace(/\s{4}/g, '\t');
-                }
-                return line;
-              })
-              .map((line: string) => {
-                if (!isFuelsTs) return line;
-                return line.replace(/\s{4}/g, '\t').replace(/^\t/g, '');
-              })
-              // parsing code blocks with 8 spaces indentation
-              .map((line: string) => {
-                if (isSway) return line;
-                if (line.match(/^\s{8}/)) {
-                  return line.replace(/^\s{8}/, '');
-                }
-                return line;
-              })
-              // parsing code blocks with 2 spaces indentation
-              .map((line: string) => {
-                if (isSway) return line;
-                if (line.match(/^\s{2}([^\s].*)/)) {
-                  return line.replace(/^\s{2}/, '\t');
-                }
-                return line;
-              })
-              .join('\n');
-
-            newValue = newLines;
+            newValue = normalizeIndentation(lines).join('\n');
           }
 
           return newValue;
