@@ -19,11 +19,11 @@ The UTXO model has often been misunderstood, especially in terms of its ability 
 
 ### Contract Creation
 
-Contract UTXOs can be generated through an opcode that deterministically assigns a cryptographically unique contract ID, similar to Ethereum's CREATE2 opcode. 
+Contract UTXOs can be generated through an opcode that deterministically assigns a cryptographically unique contract ID, similar to Ethereum's CREATE2 opcode.
 
 ### Conditional Spending
 
-When a contract UTXO is used in a transaction, it must generate precisely one new UTXO. This new UTXO inherits specific spending conditions, maintaining the original contract's code while updating its state root. 
+When a contract UTXO is used in a transaction, it must generate precisely one new UTXO. This new UTXO inherits specific spending conditions, maintaining the original contract's code while updating its state root.
 
 ### Cross Contract Calls
 
@@ -31,11 +31,12 @@ By using strict access lists, transactions explicitly list the contracts they in
 
 ## Why Choose UTXO Over Account-Based Models?
 
-The UTXO (Unspent Transaction Output) model offers significant advantages over Ethereum's account-based framework. Fuel's architecture is inherently designed for high scalability, enabling the parallel processing of transactions. 
+The UTXO (Unspent Transaction Output) model offers significant advantages over Ethereum's account-based framework. Fuel's architecture is inherently designed for high scalability, enabling the parallel processing of transactions.
 
 ### Parallelization
 
-By specifying which contracts are involved in a transaction, it allows transactions that interact with disjoint sets of contracts to be executed concurrently, a feature streamlined through the use of strict access lists. It also enhances transaction validation efficiency by explicitly defining state transitions, permitting parallel validation by non-block-producing nodes, even for transactions that engage the same contracts. 
+By specifying which contracts are involved in a transaction, it allows transactions that interact with disjoint sets of contracts to be executed concurrently, a feature streamlined through the use of strict access lists. It also enhances transaction validation efficiency by explicitly defining state transitions, permitting parallel validation by non-block-producing nodes, even for transactions that engage the same contracts.
 
 ### Nonce Management
-The UTXO model also simplifies nonce management by using implicit nonces derived from outpoints, thereby eliminating the need to track nonces for addresses with zero balances, an essential aspect of the account-based model. 
+
+The UTXO model also simplifies nonce management by using implicit nonces derived from outpoints, thereby eliminating the need to track nonces for addresses with zero balances, an essential aspect of the account-based model.
