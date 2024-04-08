@@ -15,13 +15,13 @@ Fuel uses a bridge to connect the Ethereum blockchain with the Fuel blockchain. 
 
 Bridges allow users to move assets between different blockchains. For example, if you own ETH on the Ethereum blockchain, you can use a bridge to move it to the Fuel blockchain.
 
-This allows users to take advantage of faster execution and cheaper transaction on the Fuel network using the same assets they already own on another network. It also allows developers to build cross-chain applications, that work with assets on multiple blockchains.
+This allows users to take advantage of faster execution and cheaper transactions on the Fuel network using the same assets they already own on another network. It also allows developers to build cross-chain applications that work with assets on multiple blockchains.
 
 ## How does the Fuel bridge work?
 
 The Fuel bridge utilizes smart contracts on both the Ethereum and Fuel networks.
 
-Once a bridge is available between two blockchains, assets and data from one network are not automatically available on the other. Users must initiate the bridging process. Fuel provides a convenient [UI](https://next-app.fuel.network/bridge) to make this process easy for users, but it is possible to use the bridge without a UI as well.
+Once a bridge is available between two blockchains, assets and data from one network are not automatically available on the other. Users must initiate the bridging process. Fuel provides a convenient [UI](https://app.fuel.network/bridge) to make this process easy for users, but it is possible to use the bridge without a UI as well.
 
 ## What types of things can be bridged?
 
@@ -37,15 +37,16 @@ For any deposit:
 2. An event is emitted in the transaction that contains information about the deposit.
 3. The transction is confirmed and gets included in a block on Ethereum.
 4. A Fuel node (`fuel-core`) picks up the event from the Fuel message portal. If the user is depositing ETH, the node will mint the ETH to the destination wallet on Fuel and the process is complete. If the user is depositing anything besides ETH:
-5. The Fuel node will generate a message UTXO and sends it to the user's address on Fuel.
-6. At this point another transaction is required by the user. The user must spend the message UTXO to call the `process_message` function from the bridge contract on Fuel.
+5. The Fuel node will generate a message UTXO and send it to a [predicate](/docs/sway/sway-program-types/predicates/) that validates the correctness of the bridging operation.
+6. At this point another transaction is required. Someone must unlock the predicate so that the message UTXO gets sent to `process_message` function. This function mints the final UTXO containing a "mirror" of the asset from Ethereum.
 7. The transaction is confirmed and included in a block on Fuel.
 
 You can follow the actual implementation via:
 
 - the `deposit` function in the [`FuelERC20Gateway`](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/solidity-contracts/contracts/messaging/gateway/FuelERC20Gateway.sol) Solidity contract
 - the `sendMessage` function in the [`FuelMessagePortal`](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/solidity-contracts/contracts/fuelchain/FuelMessagePortal.sol) Solidity contract
-(if not just ETH:)
+(and if the deposit is not ETH:)
+- the [Message Predicate](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/message-predicates)
 - the `process_message` function in the [Bridge Fundible Token](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/fungible-token/bridge-fungible-token/src/main.sw) Sway contract
 
 ## How does a withdrawl work?
@@ -72,5 +73,5 @@ You can follow the actual implementation via:
 
 ## How can I use the bridge?
 
-You can try out the Fuel bridge by going to the [bridge UI](https://next-app.fuel.network/bridge), connecting your wallet, and following the instructions on the page.
+You can try out the Fuel bridge by going to the [bridge UI](https://app.fuel.network/bridge), connecting your wallet, and following the instructions on the page.
 You can close the page at any time and check the status of your transaction in the "History" tab of the bridge page.

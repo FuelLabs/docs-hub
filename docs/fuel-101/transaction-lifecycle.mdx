@@ -11,45 +11,45 @@ A transaction on the Fuel network goes through a complex series of steps before 
 2. **Pre-Validation**: The transaction goes through an extensive series of pre-checks, including UTXO validation.
 3. **Transaction Pool**: The transaction gets placed in the transaction pool.
 4. **Selection**: Transactions are selected from the pool.
-5. **Execution & Validation**: The transaction is validated by the FuelVM.
+5. **Execution & Validation**: The transaction is executed in the FuelVM.
 6. **Block Production**: The transaction is included in a block.
 7. **Gossiping & Validation**: The block is broadcast to the network and the validatation process is repeated.
 8. **Finality on Ethereum**: The transaction is considered final.
 
-## Transaction Creation
+## 1. Transaction Creation
 
 The transaction is created by someone.
 
 One way a transaction can be created is by interacting with an application that uses the `fuels` SDK. In this case, the SDK will do some validation to make sure that the transaction appears valid before sending it to the node. If the SDK detects that the transaction is not valid, the transaction will not move on to the next step.
 
-## Pre-Validation
+## 2. Pre-Validation
 
 All transactions are fully [validated](/docs/fuel-101/transaction-model#transaction-validation) by the Fuel VM.
 
 Before a transaction makes it to the transaction pool, it goes through a extensive pre-checks. These checks are done to ensure that the transaction appears valid before attempting to execute it.
 
-## Transaction Pool
+## 3. Transaction Pool
 
 The transaction pool sorts pending transactions by their gas price. Note that a transaction's gas represents the total amount of work that the VM did to execute the transaction, while the gas price represents the amount that the transaction is going to pay for each unit of gas (or `GasSpend`).
 
-## Selection
+## 4. Selection
 
 Transactions are selected from the pool to be included in the block. They are selected in a way that maximizes the block producer's reward.
 
-## Execution & Validation
+## 5. Execution & Validation
 
 If a transaction contains a script, the script will be executed.
 The transaction execution is completed by removing the spent UTXOs and adding any new UTXOs that were created.
 
-## Block Production
+## 6. Block Production
 
 The block producer creates a new block that includes the transaction.
 
-## Gossiping & Validation
+## 7. Gossiping & Validation
 
 The block is broadcast to the network, and the nodes gossip with each other.
 Validators connected to the block producer will receive the block, repeat the validation and execution steps, and continue to broadcast the block.
 
-## Finality on Ethereum
+## 8. Finality on Ethereum
 
 (is this happening now?)
