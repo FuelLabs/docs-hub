@@ -3,7 +3,9 @@ import { cssObj } from '@fuel-ui/css';
 import { Box, Button, Icon, IconButton, Text, toast } from '@fuel-ui/react';
 import { Children, type ReactNode, useState } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import theme from 'react-syntax-highlighter/dist/cjs/styles/prism/night-owl';
+import darkTheme from 'react-syntax-highlighter/dist/cjs/styles/prism/night-owl';
+import lightTheme from 'react-syntax-highlighter/dist/cjs/styles/prism/one-light';
+import useTheme from '~/src/hooks/useTheme';
 
 type PreProps = {
   children: ReactNode;
@@ -23,6 +25,7 @@ export function Pre({
   ...props
 }: PreProps) {
   const [expanded, setExpanded] = useState(false);
+  const { theme } = useTheme();
   const needExpand = lines >= 32;
   // biome-ignore lint/suspicious/noExplicitAny:
   const codeEl: any = Children.toArray(children)[0];
@@ -55,7 +58,7 @@ export function Pre({
         {!props['data-language'] ? (
           <SyntaxHighlighter
             language={'graphql'}
-            style={theme}
+            style={theme === 'dark' ? darkTheme : lightTheme}
             data-title={Boolean(title)}
             {...props}
           >
