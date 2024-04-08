@@ -1,6 +1,6 @@
 # What is a Sequencer?
 
-> A sequencer is a component utilized in Layer 2 scaling solutions, such as Optimistic Rollups and certain types of Zero-Knowledge Rollups to order transactions. 
+> A sequencer is a component utilized in Layer 2 scaling solutions, such as Optimistic Rollups and certain types of Zero-Knowledge Rollups to order transactions.
 
 Since rollups strategically leverage the consensus and data availability of another layer 1 chain, they depend on a sequencer for transaction ordering.
 
@@ -30,29 +30,37 @@ Fuel is an optimistic rollup, so it's single sequencer will submit a summary of 
 
 > A single sequencer model relies on one entity or node to order transactions and submit them to the main chain. This model is often used for its simplicity and efficiency in processing transactions.
 
+{/*markdownlint-disable*/}
 ### Pros
+{/*markdownlint-disable*/}
 
 **Efficiency**: A single sequencer can process and order transactions quickly without the need for consensus among multiple parties, leading to faster throughput.
 
 **Simplicity**: The architecture and operation logic are simpler, making it easier to implement and maintain.
 
+{/*markdownlint-disable*/}
 ### Cons
+{/*markdownlint-disable*/}
 
 **Centralization Risk**: Reliance on a single sequencer introduces a point of centralization, potentially undermining the decentralized nature of blockchain. This can lead to censorship concerns, where the sequencer might prioritize or exclude transactions based on its criteria.
 
 **Security Vulnerabilities**: If the sequencer is compromised, it could manipulate the order of transactions or introduce fraudulent ones, affecting the integrity of the Layer 2 solution.
 
-## Shared Sequencer 
+## Shared Sequencer
 
 > A shared sequencer model involves multiple entities or nodes taking turns or sharing the responsibility of sequencing transactions.
 
+{/*markdownlint-disable*/}
 ### Pros
+{/*markdownlint-disable*/}
 
 **Reduced Centralization**: By distributing the sequencing role among multiple parties, the system reduces the risk of centralization and censorship.
 
 **Increased Security**: The shared responsibility makes it harder for a single entity to compromise the sequencing process, enhancing the system's overall security.
 
+{/*markdownlint-disable*/}
 ### Cons
+{/*markdownlint-disable*/}
 
 **Complexity**: Coordinating among multiple sequencers can introduce complexity in terms of system design and consensus mechanisms needed to agree on transaction order.
 
