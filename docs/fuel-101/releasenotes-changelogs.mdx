@@ -3,8 +3,14 @@ title: Release Notes and Changelogs
 category: Understanding Fuel
 ---
     
-# Release Notes and Changelogs
+# Nightly Release Notes and Changelogs
 
+<div style={{ fontSize: "20px" }}>1. [Sway](#sway)</div>
+<div style={{ fontSize: "20px" }}>2. [Fuel Core](#fuel-core)</div>
+<div style={{ fontSize: "20px" }}>3. [Rust SDK](#rust-sdk)</div>
+<div style={{ fontSize: "20px" }}>4. [TS SDK](#ts-sdk)</div>
+<div style={{ fontSize: "20px" }}>5. [Fuel Wallet](#fuel-wallet)</div>
+<div style={{ fontSize: "20px" }}>6. [Fuel Explorer](#fuel-explorer)</div>
 ## Sway
         ### v0.52.1
         ### What's Changed
@@ -25,128 +31,31 @@ category: Understanding Fuel
 
 **Full Changelog**: https://github.com/FuelLabs/sway/compare/v0.52.0...v0.52.1]
 ## Fuel Core
-        ### v0.24.1
-        ### Version v0.24.1
-
-#### Added
-
-- [#1786](https://github.com/FuelLabs/fuel-core/pull/1786): Regenesis now includes off-chain tables.
-- [#1716](https://github.com/FuelLabs/fuel-core/pull/1716): Added support of WASM state transition along with upgradable execution that works with native(std) and WASM(non-std) executors. The `fuel-core` now requires a `wasm32-unknown-unknown` target to build.
-- [#1770](https://github.com/FuelLabs/fuel-core/pull/1770): Add the new L1 event type for forced transactions.
-- [#1767](https://github.com/FuelLabs/fuel-core/pull/1767): Added consensus parameters version and state transition version to the `ApplicationHeader` to describe what was used to produce this block.
-- [#1760](https://github.com/FuelLabs/fuel-core/pull/1760): Added tests to verify that the network operates with a custom chain id and base asset id.
-- [#1752](https://github.com/FuelLabs/fuel-core/pull/1752): Add `ProducerGasPrice` trait that the `Producer` depends on to get the gas price for the block.
-- [#1747](https://github.com/FuelLabs/fuel-core/pull/1747): The DA block height is now included in the genesis state.
-- [#1740](https://github.com/FuelLabs/fuel-core/pull/1740): Remove optional fields from genesis configs
-- [#1737](https://github.com/FuelLabs/fuel-core/pull/1737): Remove temporary tables for calculating roots during genesis.
-- [#1731](https://github.com/FuelLabs/fuel-core/pull/1731): Expose `schema.sdl` from `fuel-core-client`.
+        ### v0.24.2
+        ### Version v0.24.2
 
 #### Changed
 
 ##### Breaking
+- [#1798](https://github.com/FuelLabs/fuel-core/pull/1798): add nonce to relayed transactions and also hash full messages in the inbox root.
 
-- [#1771](https://github.com/FuelLabs/fuel-core/pull/1771): Contract 'states' and 'balances' brought back into `ContractConfig`. Parquet now writes a file per table.
-- [1779](https://github.com/FuelLabs/fuel-core/pull/1779): Modify Relayer service to order Events from L1 by block index
-- [#1783](https://github.com/FuelLabs/fuel-core/pull/1783): The PR upgrade `fuel-vm` to `0.48.0` release. Because of some breaking changes, we also adapted our codebase to follow them: 
-  - Implementation of `Default` for configs was moved under the `test-helpers` feature. The `fuel-core` binary uses testnet configuration instead of `Default::default`(for cases when `ChainConfig` was not provided by the user).
-  - All parameter types are enums now and require corresponding modifications across the codebase(we need to use getters and setters). The GraphQL API remains the same for simplicity, but each parameter now has one more field - `version`, that can be used to decide how to deserialize. 
-  - The `UtxoId` type now is 34 bytes instead of 33. It affects hex representation and requires adding `00`.
-  - The `block_gas_limit` was moved to `ConsensusParameters` from `ChainConfig`. It means the block producer doesn't specify the block gas limit anymore, and we don't need to propagate this information.
-  - The `bytecodeLength` field is removed from the `Create` transaction.
-  - Removed `ConsensusParameters` from executor config because `ConsensusParameters::default` is not available anymore. Instead, executors fetch `ConsensusParameters` from the database.
+#### Fixed
 
-- [#1769](https://github.com/FuelLabs/fuel-core/pull/1769): Include new field on header for the merkle root of imported events. Rename other message root field.
-- [#1768](https://github.com/FuelLabs/fuel-core/pull/1768): Moved `ContractsInfo` table to the off-chain database. Removed `salt` field from the `ContractConfig`.
-- [#1761](https://github.com/FuelLabs/fuel-core/pull/1761): Adjustments to the upcoming testnet configs:
-  - Decreased the max size of the contract/predicate/script to be 100KB.
-  - Decreased the max size of the transaction to be 110KB.
-  - Decreased the max number of storage slots to be 1760(110KB / 64).
-  - Removed fake coins from the genesis state.
-  - Renamed folders to be "testnet" and "dev-testnet".
-  - The name of the networks are "Upgradable Testnet" and "Upgradable Dev Testnet".
-
-- [#1694](https://github.com/FuelLabs/fuel-core/pull/1694): The change moves the database transaction logic from the `fuel-core` to the `fuel-core-storage` level. The corresponding [issue](https://github.com/FuelLabs/fuel-core/issues/1589) described the reason behind it.
-
-    ### Technical details of implementation
-
-    - The change splits the `KeyValueStore` into `KeyValueInspect` and `KeyValueMutate`, as well the `Blueprint` into `BlueprintInspect` and `BlueprintMutate`. It allows requiring less restricted constraints for any read-related operations.
-
-    - One of the main ideas of the change is to allow for the actual storage only to implement `KeyValueInspect` and `Modifiable` without the `KeyValueMutate`. It simplifies work with the databases and provides a safe way of interacting with them (Modification into the database can only go through the `Modifiable::commit_changes`). This feature is used to [track the height](https://github.com/FuelLabs/fuel-core/pull/1694/files#diff-c95a3d57a39feac7c8c2f3b193a24eec39e794413adc741df36450f9a4539898) of each database during commits and even limit how commits are done, providing additional safety. This part of the change was done as a [separate commit](https://github.com/FuelLabs/fuel-core/pull/1694/commits/7b1141ac838568e3590f09dd420cb24a6946bd32).
-    
-    - The `StorageTransaction` is a `StructuredStorage` that uses `InMemoryTransaction` inside to accumulate modifications. Only `InMemoryTransaction` has a real implementation of the `KeyValueMutate`(Other types only implement it in tests).
-    
-    - The implementation of the `Modifiable` for the `Database` contains a business logic that provides additional safety but limits the usage of the database. The `Database` now tracks its height and is responsible for its updates. In the `commit_changes` function, it analyzes the changes that were done and tries to find a new height(For example, in the case of the `OnChain` database, we are looking for a new `Block` in the `FuelBlocks` table).
-    
-    - As was planned in the issue, now the executor has full control over how commits to the storage are done.
-    
-    - All mutation methods now require `&mut self` - exclusive ownership over the object to be able to write into it. It almost negates the chance of concurrent modification of the storage, but it is still possible since the `Database` implements the `Clone` trait. To be sure that we don't corrupt the state of the database, the `commit_changes` function implements additional safety checks to be sure that we commit updates per each height only once time.
-
-    - Side changes:
-      - The `drop` function was moved from `Database` to `RocksDB` as a preparation for the state rewind since the read view should also keep the drop function until it is destroyed.
-      - The `StatisticTable` table lives in the off-chain worker.
-      - Removed duplication of the `Database` from the `dap::ConcreteStorage` since it is already available from the VM.
-      - The executor return only produced `Changes` instead of the storage transaction, which simplifies the interaction between modules and port definition.
-      - The logic related to the iteration over the storage is moved to the `fuel-core-storage` crate and is now reusable. It provides an `interator` method that duplicates the logic from `MemoryStore` on iterating over the `BTreeMap` and methods like `iter_all`, `iter_all_by_prefix`, etc. It was done in a separate revivable [commit](https://github.com/FuelLabs/fuel-core/pull/1694/commits/5b9bd78320e6f36d0650ec05698f12f7d1b3c7c9).
-      - The `MemoryTransactionView` is fully replaced by the `StorageTransactionInner`.
-      - Removed `flush` method from the `Database` since it is not needed after https://github.com/FuelLabs/fuel-core/pull/1664.
-
-- [#1693](https://github.com/FuelLabs/fuel-core/pull/1693): The change separates the initial chain state from the chain config and stores them in separate files when generating a snapshot. The state snapshot can be generated in a new format where parquet is used for compression and indexing while postcard is used for encoding. This enables importing in a stream like fashion which reduces memory requirements. Json encoding is still supported to enable easy manual setup. However, parquet is prefered for large state files.
-
-  #### Snapshot command
-
-  The CLI was expanded to allow customizing the used encoding. Snapshots are now generated along with a metadata file describing the encoding used. The metadata file contains encoding details as well as the location of additional files inside the snapshot directory containing the actual data. The chain config is always generated in the JSON format.
-
-  The snapshot command now has the '--output-directory' for specifying where to save the snapshot.
-
-  #### Run command
-
-  The run command now includes the 'db_prune' flag which when provided will prune the existing db and start genesis from the provided snapshot metadata file or the local testnet configuration.
-
-  The snapshot metadata file contains paths to the chain config file and files containing chain state items (coins, messages, contracts, contract states, and balances), which are loaded via streaming.
-
-  Each item group in the genesis process is handled by a separate worker, allowing for parallel loading. Workers stream file contents in batches.
-
-  A database transaction is committed every time an item group is succesfully loaded. Resumability is achieved by recording the last loaded group index within the same db tx. If loading is aborted, the remaining workers are shutdown. Upon restart, workers resume from the last processed group.
-
-  #### Contract States and Balances
-
-  Using uniform-sized batches may result in batches containing items from multiple contracts. Optimal performance can presumably be achieved by selecting a batch size that typically encompasses an entire contract's state or balance, allowing for immediate initialization of relevant Merkle trees.
-
-#### Removed
-
-- [#1757](https://github.com/FuelLabs/fuel-core/pull/1757): Removed `protobuf` from everywhere since `libp2p` uses `quick-protobuf`.
-
+- [#1802](https://github.com/FuelLabs/fuel-core/pull/1802): Fixed a runtime panic that occurred when restarting a node. The panic was caused by an invalid database commit while loading an existing off-chain database. The invalid commit is removed in this PR.
+- [#1803](https://github.com/FuelLabs/fuel-core/pull/1803): Produce block when da height haven't changed.
+- [#1795](https://github.com/FuelLabs/fuel-core/pull/1795): Fixed the building of the `fuel-core-wasm-executor` to work outside of the `fuel-core` context. The change uses the path to the manifest file of the `fuel-core-upgradable-executor` to build the `fuel-core-wasm-executor` instead of relying on the workspace.
 
 ### What's Changed
-* Expose `schema.sdl` add some helper types and traits by @Dentosal in https://github.com/FuelLabs/fuel-core/pull/1731
-* Regenesis support by @MujkicA in https://github.com/FuelLabs/fuel-core/pull/1693
-* Remove genesis temp tables by @MujkicA in https://github.com/FuelLabs/fuel-core/pull/1737
-* Remove optional fields from configs by @MujkicA in https://github.com/FuelLabs/fuel-core/pull/1740
-* Weekly `cargo update` by @github-actions in https://github.com/FuelLabs/fuel-core/pull/1745
-* Regenesis should also store da block height by @xgreenx in https://github.com/FuelLabs/fuel-core/pull/1747
-* Duplicating blacklisting feature for TxPool from `0.22.4` by @xgreenx in https://github.com/FuelLabs/fuel-core/pull/1748
-* Moved `StorageTransaction` to the `fuel-core-storage` crate by @xgreenx in https://github.com/FuelLabs/fuel-core/pull/1694
-* Prepare the codebase to use base gas price during block production #1642  by @MitchTurner in https://github.com/FuelLabs/fuel-core/pull/1752
-* Removed `protobuf` from everywhere since `libp2p` uses `quick-protobuf` by @xgreenx in https://github.com/FuelLabs/fuel-core/pull/1757
-* Weekly `cargo update` by @github-actions in https://github.com/FuelLabs/fuel-core/pull/1758
-* Added tests to verify that the network operates with a custom chain id and base asset id by @xgreenx in https://github.com/FuelLabs/fuel-core/pull/1760
-* Adjustments to the upcoming testnet configs by @xgreenx in https://github.com/FuelLabs/fuel-core/pull/1761
-* Added consensus parameters version and state transition version to the `ApplicationHeader` by @xgreenx in https://github.com/FuelLabs/fuel-core/pull/1767
-* Moved `ContractsInfo` table to the off-chain database by @xgreenx in https://github.com/FuelLabs/fuel-core/pull/1768
-* Keep record of events from L1 in Block Header by @MitchTurner in https://github.com/FuelLabs/fuel-core/pull/1769
-* Feature/new fti event by @Voxelot in https://github.com/FuelLabs/fuel-core/pull/1770
-* Forkless state transition with upgradable WASM executor by @xgreenx in https://github.com/FuelLabs/fuel-core/pull/1716
-* Removed the usage of the `lazy_static` from teh codebase by @xgreenx in https://github.com/FuelLabs/fuel-core/pull/1781
-* Patch to use `fuel-vm 0.48.0` by @xgreenx in https://github.com/FuelLabs/fuel-core/pull/1783
-* Modify Relayer service to order Events from L1 by block index by @MitchTurner in https://github.com/FuelLabs/fuel-core/pull/1779
-* refactor: Prepare (re)genesis for off chain tables by @segfault-magnet in https://github.com/FuelLabs/fuel-core/pull/1771
-* feat: Add some off chain tables to regenesis by @segfault-magnet in https://github.com/FuelLabs/fuel-core/pull/1786
-* Release v0.24.0 by @xgreenx in https://github.com/FuelLabs/fuel-core/pull/1791
-* Moved chain specification into `fuel-core-bin` crate by @xgreenx in https://github.com/FuelLabs/fuel-core/pull/1792
-* Release v0.24.1 by @xgreenx in https://github.com/FuelLabs/fuel-core/pull/1793
+* Weekly `cargo update` by @github-actions in https://github.com/FuelLabs/fuel-core/pull/1794
+* Improvements for the `fuel-core-upgradable-executor` build script by @xgreenx in https://github.com/FuelLabs/fuel-core/pull/1795
+* Use full hash for messages in inbox_root and add nonce to relayed transactions by @Voxelot in https://github.com/FuelLabs/fuel-core/pull/1798
+* Modify block producer to take into account the total gas used by the L1 transactions by @MitchTurner in https://github.com/FuelLabs/fuel-core/pull/1785
+* Fix: Produce block when da height haven't changed by @xgreenx in https://github.com/FuelLabs/fuel-core/pull/1803
+* fix: Fix commit error on GraphQL service startup  by @bvrooman in https://github.com/FuelLabs/fuel-core/pull/1802
+* Release v0.24.2 by @xgreenx in https://github.com/FuelLabs/fuel-core/pull/1805
 
 
-**Full Changelog**: https://github.com/FuelLabs/fuel-core/compare/v0.23.0...v0.24.1]
+**Full Changelog**: https://github.com/FuelLabs/fuel-core/compare/v0.24.1...v0.24.2]
 ## Rust SDK
         ### v0.56.0
         ### What's Changed

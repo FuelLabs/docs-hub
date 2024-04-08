@@ -15,7 +15,9 @@ const re = new RegExp("#+ ", "g");
 
 export async function fetchReleaseNotes() {
   let releaseNoteContent = "";
-  for (const repo of REPOS) {
+  let toc = "";
+  for (const [index, repo] of REPOS.entries()) {
+    toc += `<div style={{ fontSize: "20px" }}>${index + 1}. [${repo.docName}](#${repo.docName.toLowerCase().replaceAll(" ", "-")})</div>\n`
     const url = `https://api.github.com/repos/FuelLabs/${repo.repoName}/releases/latest`;
     const response = await fetch(url, {
       credentials: "include",
@@ -27,6 +29,7 @@ export async function fetchReleaseNotes() {
       redirect: "follow",
     });
     const responseJson = await response.json();
+    // Escape angled brackets for mdx
     const releaseNotes = responseJson.body
       .replaceAll("<", "\\<")
       .replaceAll(">", "\\>")
@@ -43,9 +46,11 @@ title: Release Notes and Changelogs
 category: Understanding Fuel
 ---
     
-# Release Notes and Changelogs
+# Nightly Release Notes and Changelogs
 
 `;
+
+  content += toc;
   content += releaseNoteContent;
   console.log(content);
 
