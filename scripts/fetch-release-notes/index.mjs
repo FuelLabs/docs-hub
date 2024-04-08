@@ -1,7 +1,7 @@
-import { fetchReleaseNotes } from "./fetchReleaseNotes.mjs";
+import { writeReleaseNotes } from "./fetchReleaseNotes.mjs";
 
 await main();
 
 async function main() {
-    await fetchReleaseNotes();
+  await writeReleaseNotes();
 }

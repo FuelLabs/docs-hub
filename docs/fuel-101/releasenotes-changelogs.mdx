@@ -11,6 +11,11 @@ category: Understanding Fuel
 <div style={{ fontSize: "20px" }}>4. [TS SDK](#ts-sdk)</div>
 <div style={{ fontSize: "20px" }}>5. [Fuel Wallet](#fuel-wallet)</div>
 <div style={{ fontSize: "20px" }}>6. [Fuel Explorer](#fuel-explorer)</div>
+<ConditionalContent versionSet={props.versionSet} showForVersions={['default']}>
+        {props.versions}
+        {props.nightlyVersions}
+</ConditionalContent>
+
 ## Sway
         ### v0.52.1
         ### What's Changed
