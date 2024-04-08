@@ -15,24 +15,27 @@ The Unspent Transaction Output (UTXO) model, is a fundamental concept in Fuel's 
 
 ## Stateful UTXOs
 
-Fuel has the capability to embed data and logic within UTXOs, enabling smart contracts and decentralized applications (DApps) on UTXO-based blockchains. This allows UTXOs to carry not just value but also state information and conditions for spending, akin to smart contracts in account-based models.
+The UTXO model has often been misunderstood, especially in terms of its ability to support complex functionalities similar to those found in Ethereum style smart contracts. However, Fuel uses an execution model that capitalizes on the strengths of UTXOs while maintaining smart contract capabilities. To enable smart contracts a blockchain need these essential elements.
 
-### Statefulness
+### Contract Creation
 
-These UTXOs can encapsulate not only cryptocurrency but also data and conditions, enabling complex applications and contracts.
+Contract UTXOs can be generated through an opcode that deterministically assigns a cryptographically unique contract ID, similar to Ethereum's CREATE2 opcode. 
 
-### Smart Contract Functionality
+### Conditional Spending
 
-Embedded logic within UTXOs allows for actions and state changes, facilitating DApps in a scalable and private manner.
+When a contract UTXO is used in a transaction, it must generate precisely one new UTXO. This new UTXO inherits specific spending conditions, maintaining the original contract's code while updating its state root. 
 
-### Transitioning State
+### Cross Contract Calls
 
-Spending an UTXO can update its state or affect others, similar to executing smart contract functions, with new UTXOs representing the updated contract state.
-
-### Enhanced Privacy and Scalability
-
-The encapsulation of state and logic within UTXOs offers privacy benefits and more efficient parallel transaction processing.
+By using strict access lists, transactions explicitly list the contracts they intend to interact with, allowing for the seamless interaction among contracts by utilizing their UTXOs in a unified transaction.
 
 ## Why Choose UTXO Over Account-Based Models?
 
-Ethereum's account-based model functions similarly to traditional bank accounts, tracking the state of each account by adjusting balances through debits and credits. While Ethereum's model simplifies state management and enables powerful smart contract capabilities, the stateful UTXO model is less state intensive and offers out of the box scalability through the parallelization of transactions. Additionally, UTXO allows for more granular control over transaction outputs and the conditions under which they can be spent.
+The UTXO (Unspent Transaction Output) model offers significant advantages over Ethereum's account-based framework. Fuel's architecture is inherently designed for high scalability, enabling the parallel processing of transactions. 
+
+### Parallelization
+
+By specifying which contracts are involved in a transaction, it allows transactions that interact with disjoint sets of contracts to be executed concurrently, a feature streamlined through the use of strict access lists. It also enhances transaction validation efficiency by explicitly defining state transitions, permitting parallel validation by non-block-producing nodes, even for transactions that engage the same contracts. 
+
+### Nonce Management
+The UTXO model also simplifies nonce management by using implicit nonces derived from outpoints, thereby eliminating the need to track nonces for addresses with zero balances, an essential aspect of the account-based model. 
