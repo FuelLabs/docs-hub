@@ -43,7 +43,7 @@ function setValueOnNode(node: any, cb: (value: string) => string) {
 
 export function fixIndent() {
   // biome-ignore lint/suspicious/noExplicitAny:
-  return function transformer(tree: Root, file: any) {
+  return function transformer(tree: Root, _file: any) {
 
     function normalizeIndentation(lines: string[]) {
       const minLeadingIndentations = lines.reduce((min, line) => {
