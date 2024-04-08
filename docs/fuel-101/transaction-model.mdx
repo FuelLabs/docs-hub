@@ -23,7 +23,7 @@ There are currently three types of transactions:
   lineEnd="8"
 />
 
-1. **Script Transactions** include all other types of transactions that are not `Create` or `Mint` transactions.
+1. **Script Transactions** are transactions that require some type of execution and don't hold internal state.
 2. **Create Transactions** create new contracts on the Fuel network. This is the type of transaction that occurs when you run `forc deploy`.
 3. **Mint Transactions** are used when new coins are minted as part of a coinbase transaction. `Mint` transactions are created by the block producer and are not signed.
 
@@ -84,7 +84,7 @@ After a transaction is executed, a list of receipts that contain all of the outp
 
 ### Transaction Pointer
 
-The transaction pointer is a unique identifier that is used to reference the location of itself within a block.
+The transaction pointer is a unique identifier that is used to reference the location of a transaction within a block.
 
 ## How are transactions validated?
 
