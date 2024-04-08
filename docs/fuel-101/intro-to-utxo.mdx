@@ -5,13 +5,13 @@ category: Fuel 101
 
 # Understanding UTXO
 
-The Unspent Transaction Output (UTXO) model is a fundamental concept in Fuel's underlying blockchain architecture, representing the amount of digital state available for a user to spend. Unlike the account-based model, which operates similarly to traditional bank accounts by tracking debits and credits, the UTXO model works by tracking state through transaction outputs.
+The Unspent Transaction Output (UTXO) model, is a fundamental concept in Fuel's underlying blockchain architecture. Fuel tracks digital currency through transaction outputs, each representing a discrete piece of state that can be spent. This model is extended by stateful UTXOs to include additional data or conditions, enabling complex transactions and smart contract functionalities within a UTXO framework. 
 
-> For example, if Bob wishes to send Alice three coins, his wallet utilizes a 10-coin UTXO, sends three coins to Alice, and returns seven coins as a new UTXO to Bob. This process ensures that the sum of inputs equals or exceeds the total outputs, a principle validators enforce to maintain integrity.
+> For example, if Bob wants to send Alice three coins, his wallet utilizes a 10-coin UTXO, sends three coins to Alice, and issues seven coins back to Bob as a new UTXO. This process guarantees that the sum of the inputs equals or exceeds the total outputs, a principle that validators can enforce easily. These newly created output UTXOs can then serve as input UTXOs in subsequent transactions.
 
-## Why Choose UTXO Over Account-Based Models?
-
-The UTXO model, as exemplified by Bitcoin, offers a distinct approach to tracking ownership and transactions. It provides a clear, transaction-by-transaction ledger of coin movement and state transitions, enhancing privacy and improving scalability through parallel processing. This contrasts with the account-based model's running balance approach which is state intensive.
+    <Box.Centered>
+    ![UTXO example](/images/utxo.png)
+    </Box.Centered>
 
 ## Stateful UTXOs
 
@@ -32,3 +32,7 @@ Spending an UTXO can update its state or affect others, similar to executing sma
 ### Enhanced Privacy and Scalability
 
 The encapsulation of state and logic within UTXOs offers privacy benefits and more efficient parallel transaction processing.
+
+## Why Choose UTXO Over Account-Based Models?
+
+Ethereum's account-based model functions similarly to traditional bank accounts, tracking the state of each account by adjusting balances through debits and credits. While Ethereum's model simplifies state management and enables powerful smart contract capabilities, the stateful UTXO model is less state intensive and offers out of the box scalability through the parallelization of transactions. Additionally, UTXO allows for more granular control over transaction outputs and the conditions under which they can be spent.
