@@ -9,18 +9,24 @@ const REPOS = [
   {
     repoName: "sway",
     docName: "Sway",
+    defaultVersionDocLink: `https://fuellabs.github.io/sway/v${versions.versions.Sway.version}/book/`,
+    nightlyVersionDocLink: `https://fuellabs.github.io/sway/v${versions.nightlyVersions.Sway.version}/book/`,
     defaultVersion: versions.versions.Sway,
     nightlyVersion: versions.nightlyVersions.Sway,
   },
   {
     repoName: "fuel-core",
     docName: "Fuel Core",
+    defaultVersionDocLink: `https://docs.rs/fuel-core/${versions.versions["GraphQL API"].version}/fuel_core/`,
+    nightlyVersionDocLink: `https://docs.rs/fuel-core/${versions.nightlyVersions["GraphQL API"].version}/fuel_core/`,
     defaultVersion: versions.versions["GraphQL API"],
     nightlyVersion: versions.nightlyVersions["GraphQL API"],
   },
   {
     repoName: "fuels-rs",
     docName: "Rust SDK",
+    defaultVersionDocLink: `https://rust.fuel.network/v${versions.versions["Fuel Rust SDK"].version}`,
+    nightlyVersionDocLink: `https://rust.fuel.network/v${versions.nightlyVersions["Fuel Rust SDK"].version}`,
     defaultVersion: versions.versions["Fuel Rust SDK"],
     nightlyVersion: versions.nightlyVersions["Fuel Rust SDK"],
   },
@@ -33,12 +39,16 @@ const REPOS = [
   {
     repoName: "fuels-wallet",
     docName: "Fuel Wallet",
+    defaultVersionDocLink: "https://docs.fuel.network/docs/fuels-ts/",
+    nightlyVersionDocLink: "https://docs.fuel.network/docs/fuels-ts/",
     defaultVersion: versions.versions["Fuel Wallet"],
     nightlyVersion: versions.nightlyVersions["Fuel Wallet"],
   },
   {
-    repoName: "block-explorer-v2",
+    repoName: "fuel-explorer",
     docName: "Fuel Explorer",
+    defaultVersionDocLink: "https://app.fuel.network/",
+    nightlyVersionDocLink: "https://app.fuel.network/",
     defaultVersion: "latest", // TODO: do we need a default version?
     nightlyVersion: "latest",
   },
@@ -47,7 +57,9 @@ const REPOS = [
 const re = new RegExp("#+ ", "g");
 
 async function fetchReleaseNotes(repoName, repoVersion) {
-  const url = `https://api.github.com/repos/FuelLabs/${repoName}/releases/${repoVersion}`;
+  const url = `https://api.github.com/repos/FuelLabs/${repoName}/releases/${
+    repoVersion === "latest" ? repoVersion : `tags/v${repoVersion}`
+  }`;
   const response = await fetch(url, {
     credentials: "include",
     headers: {
@@ -60,7 +72,7 @@ async function fetchReleaseNotes(repoName, repoVersion) {
   return await response.json();
 }
 
-function constructReleaseNotes(reponseJson) {
+function constructReleaseNotes(responseJson, docName, docLink) {
   // Escape angled brackets for mdx
   const releaseNotes = responseJson.body
     .replaceAll("<", "\\<")
@@ -69,7 +81,7 @@ function constructReleaseNotes(reponseJson) {
       return `#${match}`;
     });
   const releaseName = responseJson.name;
-  const releaseNoteContent = `## ${repo.docName}
+  const releaseNoteContent = `## <a href={"${docLink}"} target="_blank">${docName}</a>
   ### ${releaseName}
   ${releaseNotes}]\n`;
   return releaseNoteContent;
@@ -77,29 +89,57 @@ function constructReleaseNotes(reponseJson) {
 
 export async function writeReleaseNotes() {
   let defaultVersionContent = "";
+  let nightlyVersionContent = "";
   let toc = "";
   for (const [index, repo] of REPOS.entries()) {
     toc += `<div style={{ fontSize: "20px" }}>${index + 1}. [${
       repo.docName
     }](#${repo.docName.toLowerCase().replaceAll(" ", "-")})</div>\n`;
+
     const defaultVersionResponse = await fetchReleaseNotes(
       repo.repoName,
-      repo.defaultVersion
+      repo.defaultVersion === "latest"
+        ? repo.defaultVersion
+        : repo.defaultVersion.version
     );
-    defaultVersionContent += constructReleaseNotes(defaultVersionResponse);
+    defaultVersionContent += constructReleaseNotes(
+      defaultVersionResponse,
+      repo.docName,
+      repo.defaultVersionDocLink
+    );
+
+    const nightlyVersionResponse = await fetchReleaseNotes(
+      repo.repoName,
+      repo.nightlyVersion === "latest"
+        ? repo.nightlyVersion
+        : repo.nightlyVersion.version
+    );
+    nightlyVersionContent += constructReleaseNotes(
+      nightlyVersionResponse,
+      repo.docName,
+      repo.nightlyVersionDocLink
+    );
   }
   let content = `---
 title: Release Notes and Changelogs
 category: Understanding Fuel
 ---
     
-# Nightly Release Notes and Changelogs
+<ConditionalContent versionSet={props.versionSet} showForVersions={["default"]}>
+  # Beta-5 Release Notes and Changelogs
 
 `;
 
   content += toc;
   content += defaultVersionContent;
-  console.log(content);
+  content += `</ConditionalContent>
+<ConditionalContent versionSet={props.versionSet} showForVersions={["nightly"]}>
+  # Nightly Release Notes and Changelogs
+  
+  `;
+  content += toc;
+  content += nightlyVersionContent;
+  content += "</ConditionalContent>";
 
   fs.writeFileSync("./docs/fuel-101/releasenotes-changelogs.mdx", content);
 }
