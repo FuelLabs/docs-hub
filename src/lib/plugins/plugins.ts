@@ -65,9 +65,9 @@ const conditions = {
   tsBookVersions: (node: any) => {
     return (
       typeof node.value === 'string' &&
-      (node.value === 'v{{fuels}}' ||
-        node.value === 'v{{fuelCore}}' ||
-        node.value === 'v{{forc}}')
+      (node.value.includes('{{fuels}}') ||
+        node.value.includes('{{fuelCore}}') ||
+        node.value.includes('{{forc}}'))
     );
   },
   // biome-ignore lint/suspicious/noExplicitAny:
@@ -256,14 +256,13 @@ function handleTSDocs(
       const newUrl = handleLinks(node, dirname, idx, parent, newTree);
       if (newUrl) node.url = newUrl;
     } else if (conditions.tsBookVersions(node)) {
-      if (node.value === 'v{{forc}}') {
-        node.value = versions.FORC;
-      } else if (node.value === 'v{{fuels}}') {
-        node.value = versions.FUELS;
-      } else {
-        node.value = versions.FUEL_CORE;
+      if (typeof node.value === 'string') {
+        node.value = node.value
+          .replaceAll('{{fuels}}', versions.FUELS)
+          .replaceAll('{{fuelCore}}', versions.FUEL_CORE)
+          .replaceAll('{{forc}}', versions.FORC);
       }
-    } else if (node.type === 'code' && node.lang === 'ts:line-numbers'){
+    } else if (node.type === 'code' && node.lang === 'ts:line-numbers') {
       node.lang = 'ts';
     } else {
       node.lang = 'sh';
