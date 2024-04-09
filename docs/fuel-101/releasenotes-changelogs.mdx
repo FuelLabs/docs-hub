@@ -4,7 +4,8 @@ category: Understanding Fuel
 ---
     
 <ConditionalContent versionSet={props.versionSet} showForVersions={["default"]}>
-  # Beta-5 Release Notes and Changelogs
+
+# Beta-5 Release Notes and Changelogs
 
 <div style={{ fontSize: "20px" }}>1. [Sway](#sway)</div>
 <div style={{ fontSize: "20px" }}>2. [Fuel Core](#fuel-core)</div>
@@ -12,47 +13,56 @@ category: Understanding Fuel
 <div style={{ fontSize: "20px" }}>4. [TS SDK](#ts-sdk)</div>
 <div style={{ fontSize: "20px" }}>5. [Fuel Wallet](#fuel-wallet)</div>
 <div style={{ fontSize: "20px" }}>6. [Fuel Explorer](#fuel-explorer)</div>
+
 ## <a href={"https://fuellabs.github.io/sway/v0.49.3/book/"} target="_blank">Sway</a>
+
   ### v0.49.3
+
   ### What's Changed
+
 * Enable LSP Garbage Collection test for CI by @JoshuaBatty  in https://github.com/FuelLabs/sway/pull/5704
 
-
 **Full Changelog**: https://github.com/FuelLabs/sway/compare/v0.49.2...v0.49.3]
+
 ## <a href={"https://docs.rs/fuel-core/0.22.1/fuel_core/"} target="_blank">Fuel Core</a>
-  ### v0.22.1
-  ### Version v0.22.1
+
+### v0.22.1
+
+### Version v0.22.1
 
 #### Fixed
+
 - [#1664](https://github.com/FuelLabs/fuel-core/pull/1664): Fixed long database initialization after restart of the node by setting limit to the WAL file.
 
 ### What's Changed
-* Fix for the long database initialization after restart by @xgreenx in https://github.com/FuelLabs/fuel-core/pull/1664
-
+- Fix for the long database initialization after restart by @xgreenx in https://github.com/FuelLabs/fuel-core/pull/1664
 
 **Full Changelog**: https://github.com/FuelLabs/fuel-core/compare/v0.22.0...v0.22.1]
+
 ## <a href={"https://rust.fuel.network/v0.55.0"} target="_blank">Rust SDK</a>
-  ### v0.55.0
-  ### What's Changed
-* refactor!: remove `NetworkInfo` by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1231
-* chore: add test for compute_calls_instructions_len by @Br1ght0ne in https://github.com/FuelLabs/fuels-rs/pull/1183
-* fix: use only base asset amount when calculating fee by @mpoplavkov in https://github.com/FuelLabs/fuels-rs/pull/1240
-* refactor!: use `submit_and_await_commit` API by @iqdecay in https://github.com/FuelLabs/fuels-rs/pull/1187
-* chore!: remove duplicate function by @iqdecay in https://github.com/FuelLabs/fuels-rs/pull/1243
-* fix: prevent overflow while decoding param types by @iqdecay in https://github.com/FuelLabs/fuels-rs/pull/1227
-* refactor!: signing and the `Signer` trait by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1241
-* chore: fixing broken links by @Frierened in https://github.com/FuelLabs/fuels-rs/pull/1248
-* chore: bump `forc` to `0.49.1` by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1251
-* fix: remove redundant contract tests by @iqdecay in https://github.com/FuelLabs/fuels-rs/pull/1254
-* chore: remove hybrid trigger by @MujkicA in https://github.com/FuelLabs/fuels-rs/pull/1250
-* feat: add conversion from `Address`/`ContractId` types to `Identity` by @dmihal in https://github.com/FuelLabs/fuels-rs/pull/1252
-* Bump versions to 0.55.0 by @digorithm in https://github.com/FuelLabs/fuels-rs/pull/1262
-* Change publish action by @digorithm in https://github.com/FuelLabs/fuels-rs/pull/1264
+
+### v0.55.0
+
+### What's Changed
+- refactor!: remove `NetworkInfo` by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1231
+- chore: add test for compute_calls_instructions_len by @Br1ght0ne in https://github.com/FuelLabs/fuels-rs/pull/1183
+- fix: use only base asset amount when calculating fee by @mpoplavkov in https://github.com/FuelLabs/fuels-rs/pull/1240
+- refactor!: use `submit_and_await_commit` API by @iqdecay in https://github.com/FuelLabs/fuels-rs/pull/1187
+- chore!: remove duplicate function by @iqdecay in https://github.com/FuelLabs/fuels-rs/pull/1243
+- fix: prevent overflow while decoding param types by @iqdecay in https://github.com/FuelLabs/fuels-rs/pull/1227
+- refactor!: signing and the `Signer` trait by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1241
+- chore: fixing broken links by @Frierened in https://github.com/FuelLabs/fuels-rs/pull/1248
+- chore: bump `forc` to `0.49.1` by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1251
+- fix: remove redundant contract tests by @iqdecay in https://github.com/FuelLabs/fuels-rs/pull/1254
+- chore: remove hybrid trigger by @MujkicA in https://github.com/FuelLabs/fuels-rs/pull/1250
+- feat: add conversion from `Address`/`ContractId` types to `Identity` by @dmihal in https://github.com/FuelLabs/fuels-rs/pull/1252
+- Bump versions to 0.55.0 by @digorithm in https://github.com/FuelLabs/fuels-rs/pull/1262
+- Change publish action by @digorithm in https://github.com/FuelLabs/fuels-rs/pull/1264
 
 ### New Contributors
-* @mpoplavkov made their first contribution in https://github.com/FuelLabs/fuels-rs/pull/1240
-* @Frierened made their first contribution in https://github.com/FuelLabs/fuels-rs/pull/1248
-* @dmihal made their first contribution in https://github.com/FuelLabs/fuels-rs/pull/1252
+- @mpoplavkov made their first contribution in https://github.com/FuelLabs/fuels-rs/pull/1240
+- @Frierened made their first contribution in https://github.com/FuelLabs/fuels-rs/pull/1248
+- @dmihal made their first contribution in https://github.com/FuelLabs/fuels-rs/pull/1252
 
 **Full Changelog**: https://github.com/FuelLabs/fuels-rs/compare/v0.54.0...v0.55.0
 
@@ -82,94 +92,100 @@ category: Understanding Fuel
 #### Conversion from `Address`/`ContractId` types to `Identity`
 
 It's not a breaking change, just a new cool UX feature. Convert from `Address`/`Bech32Address`/`ContractId`/`Bech32ContractId` to `Identity` easily.]
+
 ## <a href={"undefined"} target="_blank">TS SDK</a>
-  ### v0.79.0
-  ## RELEASE - v0.79.0
+
+### v0.79.0
+
+## RELEASE - v0.79.0
 
 ## Breaking
 
 - Chores
-    - [#1936](https://github.com/FuelLabs/fuels-ts/pull/1936), Remove `externalLoggedTypes` from `Interface` class, by [@Torres-ssf](https://github.com/Torres-ssf)
-    - [#1963](https://github.com/FuelLabs/fuels-ts/pull/1963), Reset base `forc` version to `0.49.3` except for experimental builds, by [@nedsalk](https://github.com/nedsalk)
+  - [#1936](https://github.com/FuelLabs/fuels-ts/pull/1936), Remove `externalLoggedTypes` from `Interface` class, by [@Torres-ssf](https://github.com/Torres-ssf)
+  - [#1963](https://github.com/FuelLabs/fuels-ts/pull/1963), Reset base `forc` version to `0.49.3` except for experimental builds, by [@nedsalk](https://github.com/nedsalk)
 
 ---
 
 ## Features
+
 - [#1840](https://github.com/FuelLabs/fuels-ts/pull/1840), Log out custom require messages for error enums when tx reverts, by [@theausicist](https://github.com/theausicist)
 - [#1873](https://github.com/FuelLabs/fuels-ts/pull/1873), Add browser wallet support to the create-fuels template app, by [@Dhaiwat10](https://github.com/Dhaiwat10)
 - [#1940](https://github.com/FuelLabs/fuels-ts/pull/1940), Decode logs from TXs submitted outside `BaseInvocationScope`, by [@Torres-ssf](https://github.com/Torres-ssf)
 ]
+
 ## <a href={"https://docs.fuel.network/docs/fuels-ts/"} target="_blank">Fuel Wallet</a>
-  ### v0.16.1
-  ### @fuel-wallet/connections@0.16.1
+
+### v0.16.1
+
+### @fuel-wallet/connections@0.16.1
 
 #### Patch Changes
 
--   Updated dependencies \[]:
-    -   @fuel-wallet/sdk@0.16.1
-    -   @fuel-wallet/types@0.16.1
-
+- Updated dependencies \[]:
+  - @fuel-wallet/sdk@0.16.1
+  - @fuel-wallet/types@0.16.1
 
 ### @fuel-wallet/react@0.16.1
-
-
-
 
 ### @fuel-wallet/sdk@0.16.1
 
 #### Patch Changes
 
--   Updated dependencies \[]:
-    -   @fuel-wallet/types@0.16.1
-
+- Updated dependencies \[]:
+  - @fuel-wallet/types@0.16.1
 
 ### @fuel-wallet/playwright-utils@0.16.1
 
-
-
-
 ### @fuel-wallet/types@0.16.1
 
-
 ]
+
 ## <a href={"https://app.fuel.network/"} target="_blank">Fuel Explorer</a>
-  ### v0.2.0
-  ### What's Changed
-* feat(Portal): purge @fuel-ui dependency, replacing to @fuels/ui by @LuizAsFight in https://github.com/FuelLabs/fuel-explorer/pull/158
-* fix: nextjs error logs by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/202
-* refactor: sync env vars by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/209
-* fix: bridge polishing by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/214
-* feat(Portal): purge @fuel-ui dependency, replacing to @fuels/ui by @LuizAsFight in https://github.com/FuelLabs/fuel-explorer/pull/158
-* fix: nextjs error logs by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/202
-* refactor: sync env vars by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/209
-* fix: bridge polishing by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/214
-* fix: react hooks observers by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/223
-* fix: spawn tx machines only when fetching next pages by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/218
-* feat: upgrade fuel packages by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/233
-* fix: Resolve issue with incorrect hyperlink on Ecosystem page by @zm-moon in https://github.com/FuelLabs/fuel-explorer/pull/216
-* docs: updated project list and status by @Rubyt0x in https://github.com/FuelLabs/fuel-explorer/pull/237
-* fix: high amounts transaction card by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/231
-* fix: adjust transaction id by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/234
-* fix: portal title by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/235
+
+### v0.2.0
+
+### What's Changed
+- feat(Portal): purge @fuel-ui dependency, replacing to @fuels/ui by @LuizAsFight in https://github.com/FuelLabs/fuel-explorer/pull/158
+- fix: nextjs error logs by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/202
+- refactor: sync env vars by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/209
+- fix: bridge polishing by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/214
+- feat(Portal): purge @fuel-ui dependency, replacing to @fuels/ui by @LuizAsFight in https://github.com/FuelLabs/fuel-explorer/pull/158
+- fix: nextjs error logs by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/202
+- refactor: sync env vars by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/209
+- fix: bridge polishing by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/214
+- fix: react hooks observers by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/223
+- fix: spawn tx machines only when fetching next pages by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/218
+- feat: upgrade fuel packages by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/233
+- fix: Resolve issue with incorrect hyperlink on Ecosystem page by @zm-moon in https://github.com/FuelLabs/fuel-explorer/pull/216
+- docs: updated project list and status by @Rubyt0x in https://github.com/FuelLabs/fuel-explorer/pull/237
+- fix: high amounts transaction card by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/231
+- fix: adjust transaction id by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/234
+- fix: portal title by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/235
 
 ### New Contributors
-* @zm-moon made their first contribution in https://github.com/FuelLabs/fuel-explorer/pull/216
-* @Rubyt0x made their first contribution in https://github.com/FuelLabs/fuel-explorer/pull/237
+- @zm-moon made their first contribution in https://github.com/FuelLabs/fuel-explorer/pull/216
+- @Rubyt0x made their first contribution in https://github.com/FuelLabs/fuel-explorer/pull/237
 
 **Full Changelog**: https://github.com/FuelLabs/fuel-explorer/compare/v0.1.0...v0.2.0]
 </ConditionalContent>
 <ConditionalContent versionSet={props.versionSet} showForVersions={["nightly"]}>
-  # Nightly Release Notes and Changelogs
+
+# Nightly Release Notes and Changelogs
   
-  <div style={{ fontSize: "20px" }}>1. [Sway](#sway)</div>
-<div style={{ fontSize: "20px" }}>2. [Fuel Core](#fuel-core)</div>
-<div style={{ fontSize: "20px" }}>3. [Rust SDK](#rust-sdk)</div>
-<div style={{ fontSize: "20px" }}>4. [TS SDK](#ts-sdk)</div>
-<div style={{ fontSize: "20px" }}>5. [Fuel Wallet](#fuel-wallet)</div>
-<div style={{ fontSize: "20px" }}>6. [Fuel Explorer](#fuel-explorer)</div>
+  <div style={{ fontSize: "20px" }}>1. [Sway](#sway-1)</div>
+<div style={{ fontSize: "20px" }}>2. [Fuel Core](#fuel-core-1)</div>
+<div style={{ fontSize: "20px" }}>3. [Rust SDK](#rust-sdk-1)</div>
+<div style={{ fontSize: "20px" }}>4. [TS SDK](#ts-sdk-1)</div>
+<div style={{ fontSize: "20px" }}>5. [Fuel Wallet](#fuel-wallet-1)</div>
+<div style={{ fontSize: "20px" }}>6. [Fuel Explorer](#fuel-explorer-1)</div>
+
 ## <a href={"https://fuellabs.github.io/sway/v0.52.0/book/"} target="_blank">Sway</a>
+
   ### v0.52.0
+
   ### What's Changed
+
 * Refactor scoped namespace accesses and clones in type check context by @tritao in https://github.com/FuelLabs/sway/pull/5642
 * Fix type check and inference issues in references, structs, and enums by @ironcev in https://github.com/FuelLabs/sway/pull/5643
 * Provide `__jmpb_ssp` intrinsic by @vaivaswatha in https://github.com/FuelLabs/sway/pull/5576
@@ -230,50 +246,54 @@ It's not a breaking change, just a new cool UX feature. Convert from `Address`/`
 * Bump to v0.52.0 by @IGI-111 in https://github.com/FuelLabs/sway/pull/5791
 
 ### New Contributors
-* @tudorpintea999 made their first contribution in https://github.com/FuelLabs/sway/pull/5362
-* @thirdkeyword made their first contribution in https://github.com/FuelLabs/sway/pull/5699
-* @great9 made their first contribution in https://github.com/FuelLabs/sway/pull/5731
+- @tudorpintea999 made their first contribution in https://github.com/FuelLabs/sway/pull/5362
+- @thirdkeyword made their first contribution in https://github.com/FuelLabs/sway/pull/5699
+- @great9 made their first contribution in https://github.com/FuelLabs/sway/pull/5731
 
 **Full Changelog**: https://github.com/FuelLabs/sway/compare/v0.51.1...v0.52.0]
+
 ## <a href={"https://docs.rs/fuel-core/0.22.1/fuel_core/"} target="_blank">Fuel Core</a>
-  ### v0.22.1
-  ### Version v0.22.1
+
+### v0.22.1
+
+### Version v0.22.1
 
 #### Fixed
+
 - [#1664](https://github.com/FuelLabs/fuel-core/pull/1664): Fixed long database initialization after restart of the node by setting limit to the WAL file.
 
 ### What's Changed
-* Fix for the long database initialization after restart by @xgreenx in https://github.com/FuelLabs/fuel-core/pull/1664
-
+- Fix for the long database initialization after restart by @xgreenx in https://github.com/FuelLabs/fuel-core/pull/1664
 
 **Full Changelog**: https://github.com/FuelLabs/fuel-core/compare/v0.22.0...v0.22.1]
-## <a href={"https://rust.fuel.network/v0.56.0"} target="_blank">Rust SDK</a>
-  ### v0.56.0
-  ### What's Changed
-* feat!: add support for experimental encoding in logs by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1259
-* chore!: remove unused `response` method by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1263
-* chore: bump `forc` to `0.49.2` by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1268
-* chore: refactor `fuel_types` imports by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1273
-* chore: bump `forc` to `0.50.0` by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1272
-* fix!: encoding capacity overflow by @iqdecay in https://github.com/FuelLabs/fuels-rs/pull/1249
-* chore: seal traits by @MujkicA in https://github.com/FuelLabs/fuels-rs/pull/1276
-* chore: bump `fuel-core` to `0.22.1` by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1280
-* refactor: `Error` type by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1270
-* chore: bump `forc` to `0.51.1` by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1284
-* chore: update deprecated functions by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1293
-* feat!: add `decode_as_debug_str` to `ABIDecoder` by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1291
-* docs: expand converting types page by @sarahschwartz in https://github.com/FuelLabs/fuels-rs/pull/1295
-* fix: configurables encoding to have top level u8 and bool single-byte optimizations by @segfault-magnet in https://github.com/FuelLabs/fuels-rs/pull/1294
-* feat!: update `fuel-core` to `0.23.0` by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1292
-* Bump versions to 0.56.0 by @digorithm in https://github.com/FuelLabs/fuels-rs/pull/1298
 
+## <a href={"https://rust.fuel.network/v0.56.0"} target="_blank">Rust SDK</a>
+
+### v0.56.0
+
+### What's Changed
+- feat!: add support for experimental encoding in logs by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1259
+- chore!: remove unused `response` method by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1263
+- chore: bump `forc` to `0.49.2` by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1268
+- chore: refactor `fuel_types` imports by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1273
+- chore: bump `forc` to `0.50.0` by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1272
+- fix!: encoding capacity overflow by @iqdecay in https://github.com/FuelLabs/fuels-rs/pull/1249
+- chore: seal traits by @MujkicA in https://github.com/FuelLabs/fuels-rs/pull/1276
+- chore: bump `fuel-core` to `0.22.1` by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1280
+- refactor: `Error` type by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1270
+- chore: bump `forc` to `0.51.1` by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1284
+- chore: update deprecated functions by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1293
+- feat!: add `decode_as_debug_str` to `ABIDecoder` by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1291
+- docs: expand converting types page by @sarahschwartz in https://github.com/FuelLabs/fuels-rs/pull/1295
+- fix: configurables encoding to have top level u8 and bool single-byte optimizations by @segfault-magnet in https://github.com/FuelLabs/fuels-rs/pull/1294
+- feat!: update `fuel-core` to `0.23.0` by @hal3e in https://github.com/FuelLabs/fuels-rs/pull/1292
+- Bump versions to 0.56.0 by @digorithm in https://github.com/FuelLabs/fuels-rs/pull/1298
 
 **Full Changelog**: https://github.com/FuelLabs/fuels-rs/compare/v0.55.0...v0.56.0
 
 #### Removed unused response method
 
 We've removed response method from `ScriptCallHandler`, `ContractCallHandler` and `MultiContractCallHandler`.
-
 
 #### Fix encoding capacity overflow bug
 
@@ -301,79 +321,80 @@ BREAKING CHANGE: `EnumVariants` are now imported through `param_types::EnumVaria
 - `checked_dry_run` is deleted.
 - `TransactionResponse`'s `block_id` is replaced with `block_height`.
 - `estimate_transaction_cost` has a new argument `block_horizon` used to estimate the gas price.]
+
 ## <a href={"undefined"} target="_blank">TS SDK</a>
-  ### v0.79.0
-  ## RELEASE - v0.79.0
+
+### v0.79.0
+
+## RELEASE - v0.79.0
 
 ## Breaking
 
 - Chores
-    - [#1936](https://github.com/FuelLabs/fuels-ts/pull/1936), Remove `externalLoggedTypes` from `Interface` class, by [@Torres-ssf](https://github.com/Torres-ssf)
-    - [#1963](https://github.com/FuelLabs/fuels-ts/pull/1963), Reset base `forc` version to `0.49.3` except for experimental builds, by [@nedsalk](https://github.com/nedsalk)
+  - [#1936](https://github.com/FuelLabs/fuels-ts/pull/1936), Remove `externalLoggedTypes` from `Interface` class, by [@Torres-ssf](https://github.com/Torres-ssf)
+  - [#1963](https://github.com/FuelLabs/fuels-ts/pull/1963), Reset base `forc` version to `0.49.3` except for experimental builds, by [@nedsalk](https://github.com/nedsalk)
 
 ---
 
 ## Features
+
 - [#1840](https://github.com/FuelLabs/fuels-ts/pull/1840), Log out custom require messages for error enums when tx reverts, by [@theausicist](https://github.com/theausicist)
 - [#1873](https://github.com/FuelLabs/fuels-ts/pull/1873), Add browser wallet support to the create-fuels template app, by [@Dhaiwat10](https://github.com/Dhaiwat10)
 - [#1940](https://github.com/FuelLabs/fuels-ts/pull/1940), Decode logs from TXs submitted outside `BaseInvocationScope`, by [@Torres-ssf](https://github.com/Torres-ssf)
 ]
+
 ## <a href={"https://docs.fuel.network/docs/fuels-ts/"} target="_blank">Fuel Wallet</a>
-  ### v0.16.1
-  ### @fuel-wallet/connections@0.16.1
+
+### v0.16.1
+
+### @fuel-wallet/connections@0.16.1
 
 #### Patch Changes
 
--   Updated dependencies \[]:
-    -   @fuel-wallet/sdk@0.16.1
-    -   @fuel-wallet/types@0.16.1
-
+- Updated dependencies \[]:
+  - @fuel-wallet/sdk@0.16.1
+  - @fuel-wallet/types@0.16.1
 
 ### @fuel-wallet/react@0.16.1
-
-
-
 
 ### @fuel-wallet/sdk@0.16.1
 
 #### Patch Changes
 
--   Updated dependencies \[]:
-    -   @fuel-wallet/types@0.16.1
-
+- Updated dependencies \[]:
+  - @fuel-wallet/types@0.16.1
 
 ### @fuel-wallet/playwright-utils@0.16.1
 
-
-
-
 ### @fuel-wallet/types@0.16.1
 
-
 ]
+
 ## <a href={"https://app.fuel.network/"} target="_blank">Fuel Explorer</a>
-  ### v0.2.0
-  ### What's Changed
-* feat(Portal): purge @fuel-ui dependency, replacing to @fuels/ui by @LuizAsFight in https://github.com/FuelLabs/fuel-explorer/pull/158
-* fix: nextjs error logs by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/202
-* refactor: sync env vars by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/209
-* fix: bridge polishing by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/214
-* feat(Portal): purge @fuel-ui dependency, replacing to @fuels/ui by @LuizAsFight in https://github.com/FuelLabs/fuel-explorer/pull/158
-* fix: nextjs error logs by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/202
-* refactor: sync env vars by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/209
-* fix: bridge polishing by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/214
-* fix: react hooks observers by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/223
-* fix: spawn tx machines only when fetching next pages by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/218
-* feat: upgrade fuel packages by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/233
-* fix: Resolve issue with incorrect hyperlink on Ecosystem page by @zm-moon in https://github.com/FuelLabs/fuel-explorer/pull/216
-* docs: updated project list and status by @Rubyt0x in https://github.com/FuelLabs/fuel-explorer/pull/237
-* fix: high amounts transaction card by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/231
-* fix: adjust transaction id by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/234
-* fix: portal title by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/235
+
+### v0.2.0
+
+### What's Changed
+- feat(Portal): purge @fuel-ui dependency, replacing to @fuels/ui by @LuizAsFight in https://github.com/FuelLabs/fuel-explorer/pull/158
+- fix: nextjs error logs by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/202
+- refactor: sync env vars by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/209
+- fix: bridge polishing by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/214
+- feat(Portal): purge @fuel-ui dependency, replacing to @fuels/ui by @LuizAsFight in https://github.com/FuelLabs/fuel-explorer/pull/158
+- fix: nextjs error logs by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/202
+- refactor: sync env vars by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/209
+- fix: bridge polishing by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/214
+- fix: react hooks observers by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/223
+- fix: spawn tx machines only when fetching next pages by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/218
+- feat: upgrade fuel packages by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/233
+- fix: Resolve issue with incorrect hyperlink on Ecosystem page by @zm-moon in https://github.com/FuelLabs/fuel-explorer/pull/216
+- docs: updated project list and status by @Rubyt0x in https://github.com/FuelLabs/fuel-explorer/pull/237
+- fix: high amounts transaction card by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/231
+- fix: adjust transaction id by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/234
+- fix: portal title by @helciofranco in https://github.com/FuelLabs/fuel-explorer/pull/235
 
 ### New Contributors
-* @zm-moon made their first contribution in https://github.com/FuelLabs/fuel-explorer/pull/216
-* @Rubyt0x made their first contribution in https://github.com/FuelLabs/fuel-explorer/pull/237
+- @zm-moon made their first contribution in https://github.com/FuelLabs/fuel-explorer/pull/216
+- @Rubyt0x made their first contribution in https://github.com/FuelLabs/fuel-explorer/pull/237
 
 **Full Changelog**: https://github.com/FuelLabs/fuel-explorer/compare/v0.1.0...v0.2.0]
 </ConditionalContent>

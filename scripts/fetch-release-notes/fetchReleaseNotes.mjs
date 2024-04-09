@@ -1,5 +1,6 @@
-import { getAllVersions } from '../../src/lib/versions.js';
+import { getAllVersions } from '../../dist/lib/versions.js';
 import fs from 'fs';
+import exec from "@actions/exec";
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -90,11 +91,15 @@ function constructReleaseNotes(responseJson, docName, docLink) {
 export async function writeReleaseNotes() {
   let defaultVersionContent = '';
   let nightlyVersionContent = '';
-  let toc = '';
+  let defaultVersionTOC = '';
+  let nightlyVersionTOC = '';
   for (const [index, repo] of REPOS.entries()) {
-    toc += `<div style={{ fontSize: "20px" }}>${index + 1}. [${
+    defaultVersionTOC += `<div style={{ fontSize: "20px" }}>${index + 1}. [${
       repo.docName
     }](#${repo.docName.toLowerCase().replaceAll(' ', '-')})</div>\n`;
+    nightlyVersionTOC += `<div style={{ fontSize: "20px" }}>${index + 1}. [${
+      repo.docName
+    }](#${repo.docName.toLowerCase().replaceAll(' ', '-')}-1)</div>\n`;
 
     const defaultVersionResponse = await fetchReleaseNotes(
       repo.repoName,
@@ -130,16 +135,19 @@ category: Understanding Fuel
 
 `;
 
-  content += toc;
+  content += defaultVersionTOC;
   content += defaultVersionContent;
   content += `</ConditionalContent>
 <ConditionalContent versionSet={props.versionSet} showForVersions={["nightly"]}>
   # Nightly Release Notes and Changelogs
   
   `;
-  content += toc;
+  content += nightlyVersionTOC;
   content += nightlyVersionContent;
   content += '</ConditionalContent>';
 
   fs.writeFileSync('./docs/fuel-101/releasenotes-changelogs.mdx', content);
+  try {
+    await exec.exec("pnpm lint:guides:fix");
+  } catch (_) {}
 }
