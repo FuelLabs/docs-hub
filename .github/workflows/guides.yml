@@ -31,7 +31,7 @@ jobs:
         run: npm install -g markdownlint-cli@0.32.1
       # RUN LINT CHECK
       - name: Lint Check
-        run: markdownlint --config .markdownlint.yaml --ignore-path .markdownlintignore '**/*.mdx'
+        run: pnpm lint:guides:check
 
   ## QUICKSTART E2E TESTS
   quickstart-e2e-tests:
