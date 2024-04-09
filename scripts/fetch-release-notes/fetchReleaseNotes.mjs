@@ -55,7 +55,7 @@ const REPOS = [
   },
 ];
 
-const re = new RegExp('#+ ', 'g');
+const re = /#+/g;
 
 async function fetchReleaseNotes(repoName, repoVersion) {
   const url = `https://api.github.com/repos/FuelLabs/${repoName}/releases/${
