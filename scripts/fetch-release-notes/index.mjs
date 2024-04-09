@@ -1,4 +1,4 @@
-import { writeReleaseNotes } from "./fetchReleaseNotes.mjs";
+import { writeReleaseNotes } from './fetchReleaseNotes.mjs';
 
 await main();
 
