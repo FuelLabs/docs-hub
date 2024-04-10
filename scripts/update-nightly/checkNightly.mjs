@@ -6,7 +6,7 @@ export async function checkIfNightlyIsNew(existingVersions) {
   const nightlyVersions = await getNightlyVersions();
   updatedVersions = checkIfVersionsAreDifferent(
     existingVersions,
-    nightlyVersions,
+    nightlyVersions
   );
   return updatedVersions;
 }
@@ -21,7 +21,7 @@ function checkIfVersionsAreDifferent(existingVersions, nightlyVersions) {
         key,
         existingVersions[key],
         '-->',
-        nightlyVersions[key],
+        nightlyVersions[key]
       );
       if (!newVersions) {
         newVersions = {};

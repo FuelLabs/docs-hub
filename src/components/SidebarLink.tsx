@@ -55,7 +55,7 @@ export const SidebarLink = forwardRef<unknown, SidebarLinkProps>(
         </ButtonLink>
       </NextLink>
     );
-  },
+  }
 );
 
 export const buttonStyles = {

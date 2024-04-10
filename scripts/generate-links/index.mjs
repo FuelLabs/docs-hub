@@ -78,7 +78,7 @@ async function main() {
           });
         }
       }
-    }),
+    })
   );
 
   handleAllOrders(allOrders, folderPath, 'all-orders');

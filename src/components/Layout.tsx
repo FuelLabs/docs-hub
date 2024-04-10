@@ -17,6 +17,8 @@ type LayoutProps = {
   versionSet: VersionSet;
   versions?: Versions;
   allNavs?: NavOrder[];
+  setIsAlertVisible: (arg0: boolean) => void;
+  isAlertVisible: boolean;
 };
 
 export function Layout({
@@ -27,6 +29,8 @@ export function Layout({
   versionSet,
   versions,
   allNavs,
+  setIsAlertVisible,
+  isAlertVisible,
 }: LayoutProps) {
   const router = useRouter();
   const scrollContainer = useRef<HTMLDivElement>(null);
@@ -102,6 +106,8 @@ export function Layout({
               versionSet={versionSet}
               versions={versions}
               allNavs={allNavs}
+              setIsAlertVisible={setIsAlertVisible}
+              isAlertVisible={isAlertVisible}
             />
             {children}
           </Grid.Item>

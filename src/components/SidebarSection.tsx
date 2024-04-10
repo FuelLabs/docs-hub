@@ -29,7 +29,7 @@ export function SidebarSection({
     book === 'guides' ||
       docSlug?.includes(book.toLowerCase()) ||
       (book === 'Intro' &&
-        (docSlug?.includes('guides/quickstart/') || !docSlug)),
+        (docSlug?.includes('guides/quickstart/') || !docSlug))
   );
 
   const isGuide = book === 'guides';
@@ -139,8 +139,15 @@ const styles = {
     fontSize: '$sm',
     pl: '$4',
     mb: '$8',
+    color: '$semanticLinkBaseColor !important',
+    '.fuel_Icon': {
+      color: '$semanticLinkBaseColor !important',
+    },
     'html[class="fuel_light-theme"] &': {
       color: '$intentsBase12 !important',
+      '.fuel_Icon': {
+        color: '$intentsBase12 !important',
+      },
     },
     '[aria-label*="Icon Link"]': {
       display: 'none',

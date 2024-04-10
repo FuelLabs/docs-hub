@@ -14,12 +14,27 @@ const LOWER_CASE_NAV_PATHS = [
 
 export default function getSortedLinks(config, docs) {
   const lcOrder = config.menu.map((o) =>
-    o.toLowerCase().replaceAll('-', '_').replaceAll(' ', '_'),
+    o.toLowerCase().replaceAll('-', '_').replaceAll(' ', '_')
   );
   const isNightly = docs[0].slug.includes('/nightly/');
   const isBeta4 = docs[0].slug.includes('/beta-4/');
   const links = createLinks(docs, isNightly, isBeta4);
-  const sortedLinks = sortLinks(lcOrder, links, config, isNightly, isBeta4);
+  let sortedLinks = sortLinks(lcOrder, links, config, isNightly, isBeta4);
+
+  // TODO: FIX FUELS-TS NAV AT SOURCE
+  if (config.menu[0] === 'fuels-ts' && !isBeta4) {
+    sortedLinks = sortedLinks.filter((link) => {
+      const remove =
+        link.label !== 'Guide' &&
+        link.label !== 'basics' &&
+        link.label !== 'essentials' &&
+        link.label !== 'extras' &&
+        link.label !== 'tooling' &&
+        link.label !== 'cli' &&
+        link.label !== 'API';
+      return remove;
+    });
+  }
   return sortedLinks;
 }
 
@@ -61,7 +76,7 @@ function createLinks(docs, isNightly, isBeta4) {
         isNightly,
         isExternal,
         isGuide,
-        isBeta4,
+        isBeta4
       );
       links.push(newLink);
       continue;
@@ -82,7 +97,7 @@ function createLinks(docs, isNightly, isBeta4) {
         splitSlug,
         isExternal,
         isGuide,
-        isBeta4,
+        isBeta4
       );
       continue;
     }
@@ -97,7 +112,7 @@ function createLinks(docs, isNightly, isBeta4) {
       isExternal,
       isNightly,
       isGuide,
-      isBeta4,
+      isBeta4
     );
     links.push(newSubMenu);
   }
@@ -155,7 +170,7 @@ function sortLinks(lcOrder, links, config, isNightly, isBeta4) {
             catOrder = newConfig[key];
           }
           catOrder = catOrder?.map((title) =>
-            title.toLowerCase().replaceAll('-', '_').replaceAll(' ', '_'),
+            title.toLowerCase().replaceAll('-', '_').replaceAll(' ', '_')
           );
 
           const submenu = link.submenu.sort((a, b) => {
@@ -234,7 +249,7 @@ function handleLink(
   isNightly,
   isExternal,
   isGuide,
-  isBeta4,
+  isBeta4
 ) {
   let newLabel = title.replace('nightly/', '').replace('beta-4/', '');
   if (newLabel === 'index' || newLabel === 'README') {
@@ -252,7 +267,7 @@ function handleLink(
     splitSlug,
     shouldBeLowerCase,
     null,
-    label,
+    label
   );
 
   return {
@@ -274,7 +289,7 @@ function handleSubmenuItem(
   splitSlug,
   isExternal,
   isGuide,
-  isBeta4,
+  isBeta4
 ) {
   const submenu = links[categoryIdx].submenu || [];
   let newLabel = title;
@@ -304,7 +319,7 @@ function handleSubmenuItem(
     splitSlug,
     shouldBeLowerCase,
     thisCategory,
-    label,
+    label
   );
 
   submenu.push({
@@ -327,7 +342,7 @@ function handleSubmenu(
   isExternal,
   isNightly,
   isGuide,
-  isBeta4,
+  isBeta4
 ) {
   const hasIndex = thisCategory === title;
   const subpath = getSubmenuSubpath(splitSlug);
@@ -341,7 +356,7 @@ function handleSubmenu(
     splitSlug,
     shouldBeLowerCase,
     thisCategory,
-    null,
+    null
   );
 
   const submenu = [

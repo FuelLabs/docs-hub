@@ -1,22 +1,8 @@
 import type { GetServerSideProps } from 'next';
 
-import { allMdDocs } from '../../.contentlayer/generated';
-import { Doc } from '../lib/md-doc';
-import { Docs } from '../lib/md-docs';
-
-function generateSiteMap() {
-  const paths = Docs.getAllPaths(allMdDocs).map((p) => {
-    const doc = new Doc(p?.params.slug as string[], allMdDocs);
-    return doc.slugForSitemap();
-  });
-
-  const uniquePaths = [...new Set(paths)];
-  return `<?xml version="1.0" encoding="UTF-8"?>
-    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-      ${uniquePaths.map((p) => `<url><loc>${p}</loc></url>`).join('')}
-    </urlset>
-  `;
-}
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import { DOCS_DIRECTORY } from '../config/constants';
 
 export default function SiteMap() {
   // see getServerSideProps
@@ -25,8 +11,9 @@ export default function SiteMap() {
 // biome-ignore lint/suspicious/noExplicitAny:
 export const getServerSideProps: GetServerSideProps<any> = async ({ res }) => {
   res.setHeader('Content-Type', 'text/xml');
-  // send the XML
-  res.write(generateSiteMap());
+  const sitemapPath = join(DOCS_DIRECTORY, '../src/generated/sitemap.xml');
+  const sitemap = readFileSync(sitemapPath, 'utf8');
+  res.write(sitemap);
   res.end();
 
   return {

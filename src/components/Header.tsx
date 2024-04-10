@@ -1,8 +1,10 @@
 import { cssObj } from '@fuel-ui/css';
-import { Alert, Box, darkTheme, lightTheme } from '@fuel-ui/react';
+import { Alert, Box, Icon, darkTheme, lightTheme } from '@fuel-ui/react';
 import dynamic from 'next/dynamic';
 import type { NavOrder, VersionSet, Versions } from '~/src/types';
 
+import { use, useEffect, useState } from 'react';
+import { useSetShowWarning } from '../hooks/useShowWarning';
 import { MobileMenu } from './MobileMenu';
 import { Navigation } from './Navigation';
 
@@ -14,6 +16,8 @@ interface HeaderProps {
   allNavs?: NavOrder[];
   versionSet: VersionSet;
   versions?: Versions;
+  setIsAlertVisible: (arg0: boolean) => void;
+  isAlertVisible: boolean;
 }
 
 export function Header({
@@ -22,7 +26,11 @@ export function Header({
   allNavs,
   versionSet,
   versions,
+  setIsAlertVisible,
+  isAlertVisible,
 }: HeaderProps) {
+  const setShowWarning = useSetShowWarning();
+
   return (
     <Box as='header' css={styles.root}>
       <Box.Flex css={styles.header}>
@@ -47,11 +55,22 @@ export function Header({
           versions={versions}
         />
       </Box.Flex>
-      {versionSet === 'nightly' && (
+      {isAlertVisible && (
         <Alert css={styles.alert} direction='row' status='warning'>
           <Alert.Description>
             Nightly versions may be unstable or not compatible across tooling.
           </Alert.Description>
+          <Alert.Actions>
+            <Alert.Button
+              onClick={() => {
+                setIsAlertVisible(false);
+                setShowWarning('false');
+              }}
+              title='Dismiss'
+            >
+              <Icon icon={'X'} css={styles.closeButton} />
+            </Alert.Button>
+          </Alert.Actions>
         </Alert>
       )}
     </Box>
@@ -114,6 +133,13 @@ const styles = {
   searchContainer: cssObj({
     '.fuel_Box-flex': {
       height: '36px',
+    },
+  }),
+  closeButton: cssObj({
+    svg: {
+      [`.${darkTheme.theme} &`]: {
+        color: '$semanticGhostWarningColor !important',
+      },
     },
   }),
 };

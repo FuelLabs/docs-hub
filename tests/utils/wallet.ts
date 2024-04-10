@@ -10,7 +10,7 @@ export const FUEL_WALLET_PASSWORD = '$123Ran123Dom123!';
 export async function walletSetup(
   context: BrowserContext,
   fuelExtensionId: string,
-  page: Page,
+  page: Page
 ) {
   await page.goto(`chrome-extension://${fuelExtensionId}/popup.html`);
 
@@ -30,7 +30,7 @@ export async function walletSetup(
   // Copy and paste seed phrase
   /** Copy words to clipboard area */
   await signupPage.evaluate(
-    `navigator.clipboard.writeText('${FUEL_MNEMONIC}')`,
+    `navigator.clipboard.writeText('${FUEL_MNEMONIC}')`
   );
   const pasteButton = signupPage.locator('button').getByText('Paste');
   await pasteButton.click();
@@ -59,7 +59,7 @@ export async function walletSetup(
 export async function useFuelWallet(
   context: BrowserContext,
   extensionId: string,
-  page: Page,
+  page: Page
 ) {
   await walletSetup(context, extensionId, page);
 }
@@ -75,6 +75,13 @@ export async function walletConnect(context: BrowserContext) {
 export async function walletApprove(context: BrowserContext) {
   const walletPage = await getWalletPage(context);
   if (walletPage) console.log('FOUND WALLET PAGE');
+  await walletPage.waitForTimeout(8000);
+  console.log('WAITED 8 SECONDS');
+  const buttonElements = await walletPage.$$('button');
+  for (const element of buttonElements) {
+    const textContent = await element.innerText();
+    console.log('BUTTON TEXT:', textContent);
+  }
   await walletPage.getByRole('button', { name: 'Approve' }).click();
   console.log('CLICKED APPROVE BUTTON');
 }

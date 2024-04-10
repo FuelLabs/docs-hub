@@ -18,7 +18,7 @@ function itemFromPackageJson(docsDir: string, filename: string) {
 function getWalletVersion(docsDir: string) {
   const json = itemFromPackageJson(
     docsDir,
-    'fuels-wallet/packages/sdk/package.json',
+    'fuels-wallet/packages/sdk/package.json'
   );
   return {
     name: 'fuels-wallet',
@@ -31,7 +31,7 @@ function getWalletVersion(docsDir: string) {
 function getTSSDKVersion(docsDir: string) {
   const json = itemFromPackageJson(
     docsDir,
-    'fuels-ts/packages/fuels/package.json',
+    'fuels-ts/packages/fuels/package.json'
   );
   return {
     name: 'fuels-ts',
@@ -148,10 +148,6 @@ export default function getDocVersion(link: string, versionSet: VersionSet) {
 
   if (link.includes('/sway/')) {
     return `v${versions.Sway.version}`;
-  }
-
-  if (link.includes('/fuelup/')) {
-    return `v${versions.Fuelup.version}`;
   }
 
   if (link.includes('/fuels-wallet/')) {

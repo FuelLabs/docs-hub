@@ -10,7 +10,7 @@ export function getBreadcrumbs(
   splitSlug,
   shouldBeLowerCase,
   thisCategory,
-  label,
+  label
 ) {
   let breadcrumbs = [
     { label: isGuide ? 'Guides' : 'Docs', link: isGuide ? '/guides' : '/' },
@@ -38,7 +38,7 @@ export function getBreadcrumbs(
         splitSlug,
         shouldBeLowerCase,
         thisCategory,
-        i,
+        i
       );
     } else if (type === 'submenuItem') {
       breadcrumbs = handleSubmenuItemCrumb(
@@ -48,7 +48,7 @@ export function getBreadcrumbs(
         isBeta4,
         splitSlug,
         i,
-        shouldBeLowerCase,
+        shouldBeLowerCase
       );
     } else if (type === 'link') {
       breadcrumbs = handleLinkCrumb(
@@ -56,7 +56,7 @@ export function getBreadcrumbs(
         splitSlug,
         i,
         shouldBeLowerCase,
-        label,
+        label
       );
     }
   }
@@ -77,7 +77,7 @@ function handleSubmenuCrumb(
   splitSlug,
   shouldBeLowerCase,
   thisCategory,
-  i,
+  i
 ) {
   const breadcrumbs = initialBreadcrumbs;
   let l = hasIndex ? 1 : 2;
@@ -125,7 +125,7 @@ function handleSubmenuItemCrumb(
   isBeta4,
   splitSlug,
   i,
-  shouldBeLowerCase,
+  shouldBeLowerCase
 ) {
   const breadcrumbs = initialBreadcrumbs;
   const l = isGuide ? 2 : isNightly || isBeta4 ? 4 : 3;

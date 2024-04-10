@@ -5,7 +5,7 @@ export function getActiveNav(
   allNavs: NavOrder[],
   allNightlyNavs: NavOrder[],
   allBeta4Navs: NavOrder[],
-  doc?: DocType,
+  doc?: DocType
 ) {
   let navs = undefined;
   if (

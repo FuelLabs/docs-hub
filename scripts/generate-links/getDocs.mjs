@@ -273,7 +273,7 @@ function removeDocsPath(path, duplicateAPICategories) {
 
 export function getDocBySlug(slug, slugs) {
   let slugPath = slugs.find(
-    ({ slug: pathSlug }) => pathSlug === `./${slug}.md`,
+    ({ slug: pathSlug }) => pathSlug === `./${slug}.md`
   );
   if (!slugPath) {
     slugPath = slugs.find(({ slug: pathSlug }) => pathSlug.includes(slug));
@@ -326,6 +326,10 @@ export function getDocBySlug(slug, slugs) {
 
   if (doc.slug.includes('fuels-ts/API-')) {
     doc.category = `API-${doc.category}`;
+  }
+
+  if (slugPath.slug.includes('beta-4/fuels-ts/cli/built-in-binaries.md')) {
+    doc.category = 'cli';
   }
 
   return {

@@ -83,7 +83,7 @@ export function getComponents(docSlug: string, versionSet: VersionSet) {
     }
     components.CodeExamples = loadComponent(
       import('~/src/components/GraphqlCodeExample'),
-      'GraphQLCodeExample',
+      'GraphQLCodeExample'
     );
   }
 

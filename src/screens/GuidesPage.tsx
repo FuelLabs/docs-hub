@@ -5,7 +5,7 @@ import { TAG_CATEGORIES } from '~/docs/guides/docs/categories';
 
 import { Card } from '../components/Card';
 import { Heading } from '../components/Heading';
-import type { GuideInfo } from '../pages/guides';
+import type { GuideInfo } from '../pages/[...slug]';
 import type { VersionSet } from '../types';
 
 interface GuidesPageProps {

@@ -101,6 +101,12 @@ const getHighlighter: RehypeCodeOptions['getHighlighter'] = async (options) => {
         scopeName: 'source.sway',
         path: `${pathFolder}/sway.tmLanguage.json`,
       },
+      {
+        id: 'html',
+        name: "html",
+        scopeName: "text.html.basic",
+        path: `${pathFolder}/html.tmLanguage.json`,
+      },
     ],
   });
 
@@ -135,7 +141,7 @@ function processCodeGroup(nodes: any[]): any[] {
         const language =
           pre.children?.[0]?.properties?.className?.[0].replace(
             'language-',
-            '',
+            ''
           ) ?? '';
         const code = pre.children?.[0]?.children
           // biome-ignore lint/suspicious/noExplicitAny:
@@ -367,7 +373,7 @@ function codeImport() {
       const code = h(
         'code',
         { class: lang?.value },
-        content?.value.replace(/\r/g, ''),
+        content?.value.replace(/\r/g, '')
       );
       node.children = [code];
     });
@@ -422,12 +428,12 @@ function addNumberOfLines() {
 }
 
 const getRehypeCodeOptions = (
-  theme: 'light' | 'dark',
+  theme: 'light' | 'dark'
 ): Partial<RehypeCodeOptions> => {
   const themeFileName: string = theme === 'light' ? 'github-light' : 'dracula';
   return {
     theme: JSON.parse(
-      readFileSync(`${getShikiPath()}/themes/${themeFileName}.json`, 'utf-8'),
+      readFileSync(`${getShikiPath()}/themes/${themeFileName}.json`, 'utf-8')
     ),
     getHighlighter,
   };

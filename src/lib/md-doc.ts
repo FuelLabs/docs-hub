@@ -219,7 +219,7 @@ export class Doc {
     let guideName = this.item.slug.split('/')[0];
     const linksPath = join(
       DOCS_DIRECTORY,
-      `../src/generated/sidebar-links/${configSlug}.json`,
+      `../src/generated/sidebar-links/${configSlug}.json`
     );
     const links = JSON.parse(readFileSync(linksPath, 'utf8'));
     if (

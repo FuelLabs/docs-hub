@@ -65,9 +65,9 @@ const conditions = {
   tsBookVersions: (node: any) => {
     return (
       typeof node.value === 'string' &&
-      (node.value === 'v{{fuels}}' ||
-        node.value === 'v{{fuelCore}}' ||
-        node.value === 'v{{forc}}')
+      (node.value.includes('{{fuels}}') ||
+        node.value.includes('{{fuelCore}}') ||
+        node.value.includes('{{forc}}'))
     );
   },
   // biome-ignore lint/suspicious/noExplicitAny:
@@ -179,7 +179,7 @@ function handleSwayDocs(
   tree: Root,
   filepath: string,
   rootDir: string,
-  dirname: string,
+  dirname: string
 ) {
   const nodes: NodeArray = [];
   // biome-ignore lint/suspicious/noExplicitAny:
@@ -224,7 +224,7 @@ function handleTSDocs(
   tree: Root,
   rootDir: string,
   dirname: string,
-  versions: TSVersions,
+  versions: TSVersions
 ) {
   const nodes: NodeArray = [];
   let newTree = tree;
@@ -241,7 +241,8 @@ function handleTSDocs(
       conditions.links(node) ||
       // handle TS book versions
       conditions.tsBookVersions(node) ||
-      (node.type === 'code' && node.lang === 'ts:line-numbers')
+      (node.type === 'code' && node.lang === 'ts:line-numbers') ||
+      (node.type === 'code' && !node.lang)
     ) {
       // biome-ignore lint/suspicious/noExplicitAny:
       nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
@@ -255,15 +256,16 @@ function handleTSDocs(
       const newUrl = handleLinks(node, dirname, idx, parent, newTree);
       if (newUrl) node.url = newUrl;
     } else if (conditions.tsBookVersions(node)) {
-      if (node.value === 'v{{forc}}') {
-        node.value = versions.FORC;
-      } else if (node.value === 'v{{fuels}}') {
-        node.value = versions.FUELS;
-      } else {
-        node.value = versions.FUEL_CORE;
+      if (typeof node.value === 'string') {
+        node.value = node.value
+          .replaceAll('{{fuels}}', versions.FUELS)
+          .replaceAll('{{fuelCore}}', versions.FUEL_CORE)
+          .replaceAll('{{forc}}', versions.FORC);
       }
-    } else {
+    } else if (node.type === 'code' && node.lang === 'ts:line-numbers') {
       node.lang = 'ts';
+    } else {
+      node.lang = 'sh';
     }
   });
 }
@@ -296,7 +298,7 @@ function handleRustBooks(tree: Root, rootDir: string, dirname: string) {
       if (node.url.includes('faucet-beta-3.fuel.network')) {
         node.url = node.url.replace(
           'faucet-beta-3.fuel.network',
-          'faucet-beta-5.fuel.network',
+          'faucet-beta-5.fuel.network'
         );
         if (
           node.children &&

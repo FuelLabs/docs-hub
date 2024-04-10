@@ -71,7 +71,7 @@ export function handleExampleImports(
   dirname: string,
   rootDir: string,
   // biome-ignore lint/suspicious/noExplicitAny:
-  parent: Parent<any, any>,
+  parent: Parent<any, any>
 ) {
   let content = '';
   let filePath = node.value.replace(/(\.\.\/)+/g, '');
@@ -117,7 +117,7 @@ export function handleExampleImports(
   const docsPath = versionSet === 'default' ? 'docs/' : `docs/${versionSet}/`;
   let fileAbsPath = path.resolve(
     path.join(rootDir, `${docsPath}${bookPath}/`),
-    filePath,
+    filePath
   );
 
   if (node.type === 'text') {
@@ -130,11 +130,8 @@ export function handleExampleImports(
   }
 
   try {
-    if (fileAbsPath.includes('/fuels-ts/demo-typegen/')) {
-      fileAbsPath = fileAbsPath.replace(
-        'fuels-ts/demo-typegen',
-        'fuels-ts/apps/demo-typegen',
-      );
+    if (fileAbsPath.includes('/fuels-ts/demo')) {
+      fileAbsPath = fileAbsPath.replace('fuels-ts/demo', 'fuels-ts/apps/demo');
     }
     const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
     const cachedFile = getFilesOnCache(fileAbsPath);
@@ -148,7 +145,11 @@ export function handleExampleImports(
 
     content = extractCommentBlock(fileContent, exampleName);
   } catch (err) {
-    // console.error('ERROR:', err);
+    console.error('ERROR GETTING EXAMPLE CODE:', err);
+  }
+
+  if (!content) {
+    throw new Error(`${fileAbsPath} not found`);
   }
 
   return content;

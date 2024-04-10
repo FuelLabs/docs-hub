@@ -13,7 +13,7 @@ export const setupUser = async () => {
 export const push = async (branch, { force } = {}) => {
   await exec(
     'git',
-    ['push', 'origin', `HEAD:${branch}`, force && '--force'].filter(Boolean),
+    ['push', 'origin', `HEAD:${branch}`, force && '--force'].filter(Boolean)
   );
 };
 

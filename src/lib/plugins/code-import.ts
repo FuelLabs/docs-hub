@@ -28,7 +28,7 @@ function extractLines(
   content: string,
   fromLine: number | undefined,
   toLine: number | undefined,
-  linesIncluded: number[],
+  linesIncluded: number[]
 ) {
   const lines = content.split(EOL);
   const start = fromLine || 1;
@@ -59,7 +59,7 @@ function extractCommentBlock(
   content: string,
   comment: string,
   commentType: CommentTypes,
-  trim: string,
+  trim: string
 ): Block {
   const lines = content.split(EOL);
   let lineStart = -1;
@@ -70,13 +70,13 @@ function extractCommentBlock(
 
   const startAnchorRegex = new RegExp(
     `${escapeRegExp(commentType)}\\s*ANCHOR\\s*:\\s*${escapeRegExp(
-      comment,
-    )}\\s*${escapeRegExp(endCommentType)}`,
+      comment
+    )}\\s*${escapeRegExp(endCommentType)}`
   );
   const endAnchorRegex = new RegExp(
     `${escapeRegExp(commentType)}\\s*ANCHOR_END\\s*:\\s*${escapeRegExp(
-      comment,
-    )}\\s*${escapeRegExp(endCommentType)}`,
+      comment
+    )}\\s*${escapeRegExp(endCommentType)}`
   );
 
   for (let i = 0; i < lines.length; i++) {
@@ -107,10 +107,10 @@ function extractCommentBlock(
     // and the code block markers (```), if present.
     lineStart =
       lines.findIndex(
-        (line, index) => index > lineStart && line.includes('```'),
+        (line, index) => index > lineStart && line.includes('```')
       ) + 1;
     lineEnd = lines.findIndex(
-      (line, index) => index > lineStart && line.includes('```'),
+      (line, index) => index > lineStart && line.includes('```')
     );
     lineEnd = lineEnd === -1 ? lines.length : lineEnd;
   }
@@ -228,7 +228,7 @@ export function codeImport() {
       const comment = attr.find((i: any) => i.name === 'comment')?.value;
       const commentType = attr.find(
         // biome-ignore lint/suspicious/noExplicitAny:
-        (i: any) => i.name === 'commentType',
+        (i: any) => i.name === 'commentType'
       )?.value;
       // biome-ignore lint/suspicious/noExplicitAny:
       const trim = attr.find((i: any) => i.name === 'trim')?.value;
@@ -258,7 +258,7 @@ export function codeImport() {
           fileContent,
           comment,
           commentType,
-          trim,
+          trim
         );
         lineStart = commentResult.lineStart;
         lineEnd = commentResult.lineEnd;

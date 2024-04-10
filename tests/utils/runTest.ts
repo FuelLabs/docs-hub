@@ -11,7 +11,7 @@ import { walletApprove, walletConnect } from './wallet';
 export async function runTest(
   page: Page,
   context: BrowserContext,
-  url: string,
+  url: string
 ) {
   await visit(page, url);
   console.log('GETTING TEST ACTIONS');
@@ -29,7 +29,7 @@ export async function runTest(
             page,
             step.id,
             step['data-command-folder'],
-            step['data-pre-command'],
+            step['data-pre-command']
           );
         } else if (step['data-command-folder']) {
           await runCommand(page, step.id, step['data-command-folder']);
@@ -49,7 +49,7 @@ export async function runTest(
       case 'compareFiles':
         await compareFiles(
           step['data-test-path-name'],
-          step['data-ref-path-name'],
+          step['data-ref-path-name']
         );
         break;
       case 'compareToFile':
@@ -67,14 +67,14 @@ export async function runTest(
           step['data-add-spaces-after'],
           Number.parseInt(step['data-at-line']),
           step['data-remove-lines'],
-          step['data-use-set-data'],
+          step['data-use-set-data']
         );
         break;
       case 'getByLocator-save':
         await getByLocator(
           page,
           step['data-locator'],
-          step['data-remove-from-value'],
+          step['data-remove-from-value']
         );
         break;
       case 'clickByRole':
@@ -103,13 +103,13 @@ export async function runTest(
       case 'checkIfIsIncremented':
         checkIfIsIncremented(
           Number.parseInt(step['data-initial-index']),
-          Number.parseInt(step['data-final-index']),
+          Number.parseInt(step['data-final-index'])
         );
         break;
       case 'checkValue':
         checkValue(
           Number.parseInt(step['data-index']),
-          step['data-check-value'],
+          step['data-check-value']
         );
         break;
       default:
