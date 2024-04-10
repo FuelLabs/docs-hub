@@ -13,7 +13,7 @@ export const getLevelStatuses = async (
         gasPrice: 1,
         gasLimit: 100_000,
       })
-      .simulate();
+      .get();
     return value;
   } catch (error) {
     console.log('ERROR:', error);

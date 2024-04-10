@@ -8,7 +8,7 @@ import {
   Text,
 } from '@fuel-ui/react';
 
-import type { GuideInfo } from '../pages/guides';
+import type { GuideInfo } from '../pages/[...slug]';
 import type { VersionSet } from '../types';
 
 export type CardInfo = {

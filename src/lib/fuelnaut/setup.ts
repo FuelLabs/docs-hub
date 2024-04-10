@@ -1,4 +1,4 @@
-import type { WalletLocked } from 'fuels';
+import type { Account, WalletLocked } from 'fuels';
 import { BN } from 'fuels';
 
 import type { IFuelnautLevel } from '~/src/config/fuelnautLevels';
@@ -6,7 +6,7 @@ import { LEVELS_CONFIG } from '~/src/config/fuelnautLevels';
 import type { FuelnautAbi } from '~/src/fuelnaut-api';
 import { getLevelContractFactory } from './factories';
 
-export async function setup(contract: FuelnautAbi, wallet: WalletLocked) {
+export async function setup(contract: FuelnautAbi, wallet: Account) {
   try {
     await contract.functions
       .my_constructor()
@@ -26,7 +26,7 @@ export async function setup(contract: FuelnautAbi, wallet: WalletLocked) {
 
 async function setupLevel(
   contract: FuelnautAbi,
-  wallet: WalletLocked,
+  wallet: Account,
   level: IFuelnautLevel,
 ) {
   const factory = getLevelContractFactory(level.key);
@@ -39,7 +39,7 @@ async function setupLevel(
       gasPrice: 1,
       gasLimit: 800_000,
     })
-    .simulate();
+    .get();
 
   const contractRoot = response.value;
   console.log('CONTRACT ROOT:', contractRoot);

@@ -1,5 +1,5 @@
 import { Box } from '@fuel-ui/react';
-import { useAccount } from '@fuel-wallet/react';
+import { useAccount } from '@fuels/react';
 import { useEffect, useState } from 'react';
 import { LEVELS_CONFIG } from '~/src/config/fuelnautLevels';
 import type { FuelnautAbi } from '~/src/fuelnaut-api';

@@ -54,7 +54,7 @@ export async function getNewInstance(
       )
       .addContracts([levelContract])
       .txParams({ gasPrice: 1, gasLimit: 1_000_000 })
-      .simulate();
+      .call();
   } else {
   await contract.functions
       .create_instance(instanceId, level.index)

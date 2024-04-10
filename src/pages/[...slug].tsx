@@ -1,10 +1,10 @@
 import { join } from 'path';
 import type { GetStaticProps } from 'next';
 
-import { existsSync, readFileSync, writeFileSync } from 'fs';
+import { readFileSync } from 'fs';
 import type { JsonAbi } from 'fuels';
-import type { MdDoc } from '../../.contentlayer/generated';
-import { allMdDocs } from '../../.contentlayer/generated';
+import { allMdDocs } from '~/.contentlayer/generated/index';
+import type { MdDoc } from '~/.contentlayer/generated/types';
 import { DOCS_DIRECTORY } from '../config/constants';
 import type { IFuelnautLevel } from '../config/fuelnautLevels';
 import { LEVELS_CONFIG } from '../config/fuelnautLevels';

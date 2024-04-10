@@ -1,5 +1,5 @@
 import { Box, Button, Spinner, toast } from '@fuel-ui/react';
-import { useIsConnected, useWallet } from '@fuel-wallet/react';
+import { useIsConnected, useWallet } from '@fuels/react';
 import { BaseAssetId, Wallet } from 'fuels';
 import type { BytesLike, JsonAbi } from 'fuels';
 import { useEffect, useMemo, useState } from 'react';
@@ -97,7 +97,7 @@ export function FuelnautLevel({
           const response = await contract.functions
             .get_instance_contract(address, level.index)
             .txParams({ gasPrice: 1, gasLimit: 800_000 })
-            .simulate();
+            .get();
           if (response.value) {
             const thisInstanceId = response.value[0].value;
             const thisFactory = getLevelContractFactory(level.key);
