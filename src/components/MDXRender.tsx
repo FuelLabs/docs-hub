@@ -20,7 +20,7 @@ import type { VersionSet } from '../types';
 
 import { List } from '@fuel-ui/react';
 import type { JsonAbi } from 'fuels';
-import type { FuelnautLevel as FuelnautLevelType } from '../config/fuelnautLevels';
+import type { IFuelnautLevel as FuelnautLevelType } from '../config/fuelnautLevels';
 import useTheme from '../hooks/useTheme';
 import { Blockquote } from './Blockquote';
 import { CardSection } from './CardSection';

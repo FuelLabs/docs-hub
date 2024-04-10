@@ -105,6 +105,13 @@ impl Fuelnaut for Contract {
         log(root);
     }
 
+    fn verify_bytecode_test(bytecode_input: Vec<u8>) {
+        let mut bytecode = bytecode_input;
+        // GET BYTECODE ROOT
+        let root = compute_bytecode_root(bytecode);
+        log(root);
+    }
+
     #[storage(read, write)]
     fn complete_instance(address: Address, level_id: u64){
         let (instance, _completed) = storage.instances.get((address, level_id)).try_read().unwrap();

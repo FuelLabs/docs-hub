@@ -56,6 +56,7 @@ interface FuelnautAbiInterface extends Interface {
     owner: FunctionFragment;
     register_level: FunctionFragment;
     transfer_contract_ownership: FunctionFragment;
+    verify_bytecode_test: FunctionFragment;
     verify_instance_with_configurables: FunctionFragment;
   };
 
@@ -71,6 +72,7 @@ interface FuelnautAbiInterface extends Interface {
   encodeFunctionData(functionFragment: 'owner', values: []): Uint8Array;
   encodeFunctionData(functionFragment: 'register_level', values: [string]): Uint8Array;
   encodeFunctionData(functionFragment: 'transfer_contract_ownership', values: [IdentityInput]): Uint8Array;
+  encodeFunctionData(functionFragment: 'verify_bytecode_test', values: [Vec<BigNumberish>]): Uint8Array;
   encodeFunctionData(functionFragment: 'verify_instance_with_configurables', values: [Vec<BigNumberish>, Vec<[BigNumberish, Vec<BigNumberish>]>]): Uint8Array;
 
   decodeFunctionData(functionFragment: 'complete_instance', data: BytesLike): DecodedValue;
@@ -85,6 +87,7 @@ interface FuelnautAbiInterface extends Interface {
   decodeFunctionData(functionFragment: 'owner', data: BytesLike): DecodedValue;
   decodeFunctionData(functionFragment: 'register_level', data: BytesLike): DecodedValue;
   decodeFunctionData(functionFragment: 'transfer_contract_ownership', data: BytesLike): DecodedValue;
+  decodeFunctionData(functionFragment: 'verify_bytecode_test', data: BytesLike): DecodedValue;
   decodeFunctionData(functionFragment: 'verify_instance_with_configurables', data: BytesLike): DecodedValue;
 }
 
@@ -103,6 +106,7 @@ export class FuelnautAbi extends Contract {
     owner: InvokeFunction<[], StateOutput>;
     register_level: InvokeFunction<[bytecode_root: string], BN>;
     transfer_contract_ownership: InvokeFunction<[new_owner: IdentityInput], void>;
+    verify_bytecode_test: InvokeFunction<[bytecode_input: Vec<BigNumberish>], void>;
     verify_instance_with_configurables: InvokeFunction<[bytecode_input: Vec<BigNumberish>, configurables: Vec<[BigNumberish, Vec<BigNumberish>]>], void>;
   };
 }

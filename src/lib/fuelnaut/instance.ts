@@ -1,9 +1,8 @@
-import { type Account, type BigNumberish, type JsonAbi, bn } from 'fuels';
+import { type Account, type BigNumberish, type JsonAbi, arrayify, bn } from 'fuels';
 import type { IFuelnautLevel } from '~/src/config/fuelnautLevels';
 import type { FuelnautAbi } from '~/src/fuelnaut-api';
 import type { ContractIdInput } from '~/src/fuelnaut-api/contracts/FuelnautAbi';
 
-import type { Vec } from '~/src/fuelnaut-api/contracts/common';
 import { getConfigurables } from './configurables';
 import { deployNewInstance } from './deploy';
 import { getLevelContractFactory } from './factories';
@@ -15,7 +14,7 @@ export async function getNewInstance(
   bytecode: string,
   abiJSON: JsonAbi,
 ) {
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny:
   const thisWindow = window as any;
   const configurableConstants = getConfigurables(level.key);
   const newInstance = await deployNewInstance(
@@ -33,28 +32,39 @@ export async function getNewInstance(
   // without this, the newly deployed contract instance may not be found
   await timeout(2000);
 
-  if (level.hasConfigurables && configurableConstants) {
+  if (level.hasConfigurables) {
     console.log('HAS CONFIGURABLES');
-    // hardcoded for testing
+    // // hardcoded for testing
     const configurableInputs = buildConfigurables(
-      1288,
+      1220,
       1,
     );
     const bytecodeBuffer = Buffer.from(bytecode, 'base64');
-    const bytecodeInput: Vec<BigNumberish> = [...bytecodeBuffer];
+    const bytecodeInput = arrayify(bytecodeBuffer) as unknown as number[];
 
-    console.log('CALLING CREATE INSTANCE WITH CONFIGURABLES...');
+    // console.log('CALLING VERIFY INSTANCE WITH CONFIGURABLES...');
 
-    await contract.functions
-      .create_instance_with_configurables(
-        instanceId,
-        level.index,
-        bytecodeInput,
-        configurableInputs,
-      )
-      .addContracts([levelContract])
-      .txParams({ gasPrice: 1, gasLimit: 1_000_000 })
-      .call();
+    // // await contract.functions
+    // //   .create_instance_with_configurables(
+    // //     instanceId,
+    // //     level.index,
+    // //     bytecodeInput,
+    // //     configurableInputs,
+    // //   )
+    // //   .addContracts([levelContract])
+    // //   .call();
+
+    console.log("BYTECODE INPUT:", bytecodeInput)
+    console.log("configurableInputs:", configurableInputs)
+
+  //   const { logs } = await contract.functions
+  // .verify_bytecode_test(bytecodeInput)
+  // .call();
+    const { logs } = await contract.functions
+  .verify_instance_with_configurables(bytecodeInput, configurableInputs)
+  .call();
+
+  console.log("LOGS:", logs)
   } else {
   await contract.functions
       .create_instance(instanceId, level.index)
@@ -71,22 +81,18 @@ export async function getNewInstance(
 //     "name": "PASSWORD",
 //     "configurableType": {
 //       "name": "",
-//       "type": 1,
+//       "type": 3,
 //       "typeArguments": null
 //     },
-//     "offset": 1288
+//     "offset": 1220
 //   }
 // ]
 
-function buildConfigurables(
-  offset: BigNumberish,
-  configValue: BigNumberish,
-): Vec<[BigNumberish, Vec<BigNumberish>]> {
-  const myConfigurables: Vec<[BigNumberish, Vec<BigNumberish>]> = [];
-  const data: Vec<BigNumberish> = [];
+function buildConfigurables(offset: number, configValue: number): [number, number[]][] {
+  const myConfigurables: [number, number[]][] = [];
+  const data: number[] = [];
   data.push(0, 0, 0, 0, 0, 0, 0, configValue);
   myConfigurables.push([offset, data]);
-
   return myConfigurables;
 }
 

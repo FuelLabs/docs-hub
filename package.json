@@ -59,7 +59,7 @@
     "cookie": "^0.5.0",
     "dotenv": "^16.3.1",
     "framer-motion": "^10.16.4",
-    "fuels": "^0.79.0",
+    "fuels": "0.0.0-pr-2018-20240410113607",
     "globby": "^13.2.2",
     "gray-matter": "^4.0.3",
     "hast-util-from-text": "^2.0.1",

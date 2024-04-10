@@ -45,4 +45,6 @@ abi Fuelnaut
 
     #[storage(read, write)]
     fn transfer_contract_ownership(new_owner: Identity);
+
+    fn verify_bytecode_test(bytecode_input: Vec<u8>);
 }

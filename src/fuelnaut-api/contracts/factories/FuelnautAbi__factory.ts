@@ -462,6 +462,12 @@ const _abi = {
       },
       "attributes": [
         {
+          "name": "storage",
+          "arguments": [
+            "read"
+          ]
+        },
+        {
           "name": "doc-comment",
           "arguments": [
             " returns a vector of bool options representing the statuses of each level"
@@ -483,12 +489,6 @@ const _abi = {
           "name": "doc-comment",
           "arguments": [
             " if the option is Some(false), the level has been started but not completed"
-          ]
-        },
-        {
-          "name": "storage",
-          "arguments": [
-            "read"
           ]
         }
       ]
@@ -628,13 +628,6 @@ const _abi = {
       },
       "attributes": [
         {
-          "name": "storage",
-          "arguments": [
-            "read",
-            "write"
-          ]
-        },
-        {
           "name": "doc-comment",
           "arguments": [
             " this function registers a challenge level of the fuelnaut game"
@@ -650,6 +643,13 @@ const _abi = {
           "name": "doc-comment",
           "arguments": [
             " and returns the index where the level is stored in the registered_levels vector"
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read",
+            "write"
           ]
         }
       ]
@@ -677,6 +677,28 @@ const _abi = {
           ]
         }
       ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "bytecode_input",
+          "type": 18,
+          "typeArguments": [
+            {
+              "name": "",
+              "type": 20,
+              "typeArguments": null
+            }
+          ]
+        }
+      ],
+      "name": "verify_bytecode_test",
+      "output": {
+        "name": "",
+        "type": 0,
+        "typeArguments": null
+      },
+      "attributes": null
     },
     {
       "inputs": [
@@ -779,6 +801,14 @@ const _abi = {
     },
     {
       "logId": 8,
+      "loggedType": {
+        "name": "",
+        "type": 3,
+        "typeArguments": null
+      }
+    },
+    {
+      "logId": 9,
       "loggedType": {
         "name": "",
         "type": 3,
