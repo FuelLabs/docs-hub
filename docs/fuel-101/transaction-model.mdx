@@ -98,6 +98,7 @@ All transactions must conform to the following rules:
 - All transaction parameters are within the network's [consensus parameters](/docs/specs/tx-format/consensus_parameters).
 - There are no invalid inputs or outputs. For example, a `ChangeOutput` cannot exist for a transaction that does not have an `InputCoin` for the same asset.
 - There are no duplicate or competing transaction inputs or outputs. For example, a transaction cannot have two `InputCoin` inputs for the same coin.
+- The transaction must have enough gas to cover the execution cost.
 
 ### Transaction-Specific Validation
 
@@ -109,6 +110,7 @@ In addition to the universal validation rules above, each transaction type has i
 - The script data cannot be empty.
 - The transaction cannot be missing any required policy types.
 - The transacation cannot contain any unsupported policy types.
+- Predicates must pass [predicate verification](/docs/specs/fuel-vm#predicate-verification).
 
 #### Create Transaction Validation
 

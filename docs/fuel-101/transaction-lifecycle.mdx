@@ -41,6 +41,9 @@ Transactions are selected from the pool to be included in the block. They are se
 If a transaction contains a script, the script will be executed.
 The transaction execution is completed by removing the spent UTXOs and adding any new UTXOs that were created.
 
+The transaction undergoes further validation at this step.
+If the transaction contains a predicate, the predicate is executed and validated.
+
 ## 6. Block Production
 
 The block producer creates a new block that includes the transaction.
