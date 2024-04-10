@@ -6,6 +6,7 @@ import { DocProvider } from '~/src/hooks/useDocContext';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { DocFooter } from '../components/DocFooter';
 import { MDXRender } from '../components/MDXRender';
+import { useShowWarning } from '../hooks/useShowWarning';
 import { useVersion } from '../hooks/useVersion';
 import { getActiveNav } from '../lib/getActiveNav';
 import { getComponents } from '../lib/imports';
@@ -18,11 +19,16 @@ export function DocScreen(props: DocPageProps) {
   const { doc, allNavs, allNightlyNavs, allBeta4Navs } = props;
   const [versionSet, setVersionSet] = useState<VersionSet>('default');
   const version = useVersion();
+  const showWarning = useShowWarning();
 
   useEffect(() => {
     if (version === 'Nightly' || doc?.versionSet === 'nightly') {
       setVersionSet('nightly');
-      setIsAlertVisible(true);
+      if (showWarning === 'true') {
+        setIsAlertVisible(true);
+      } else {
+        setIsAlertVisible(false);
+      }
     } else if (version === 'Beta-4' || doc?.versionSet === 'beta-4') {
       setVersionSet('beta-4');
       setIsAlertVisible(false);

@@ -241,7 +241,8 @@ function handleTSDocs(
       conditions.links(node) ||
       // handle TS book versions
       conditions.tsBookVersions(node) ||
-      (node.type === 'code' && node.lang === 'ts:line-numbers')
+      (node.type === 'code' && node.lang === 'ts:line-numbers') ||
+      (node.type === 'code' && !node.lang)
     ) {
       // biome-ignore lint/suspicious/noExplicitAny:
       nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
@@ -262,8 +263,10 @@ function handleTSDocs(
       } else {
         node.value = versions.FUEL_CORE;
       }
-    } else {
+    } else if (node.type === 'code' && node.lang === 'ts:line-numbers'){
       node.lang = 'ts';
+    } else {
+      node.lang = 'sh';
     }
   });
 }
