@@ -5,7 +5,7 @@ category: Fuel 101
 
 # Understanding UTXO
 
-The Unspent Transaction Output (UTXO) model, is a fundamental concept in Fuel's underlying blockchain architecture. Fuel tracks digital currency through transaction outputs, each representing a discrete piece of state that can be spent. This model is extended by stateful UTXOs to include additional data or conditions, enabling complex transactions and smart contract functionalities within a UTXO framework.
+The Unspent Transaction Output (UTXO) model is a fundamental concept in Fuel's underlying blockchain architecture. Fuel tracks digital currency through transaction outputs, each representing a discrete piece of state that can be spent. This model is extended by stateful UTXOs to include additional data or conditions, enabling complex transactions and smart contract functionalities within a UTXO framework.
 
 > For example, if Bob wants to send Alice three coins, his wallet utilizes a 10-coin UTXO, sends three coins to Alice, and issues seven coins back to Bob as a new UTXO. This process guarantees that the sum of the inputs equals or exceeds the total outputs, a principle that validators can enforce easily. These newly created output UTXOs can then serve as input UTXOs in subsequent transactions.
 
