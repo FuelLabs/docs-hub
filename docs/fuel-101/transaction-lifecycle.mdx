@@ -37,7 +37,7 @@ Transactions are selected from the pool to be included in the block. They are se
 
 ## 5. Execution & Validation
 
-First, if the transaction contains a predicate, the predicate is executed and validated. If the predicate fails, the transaction is prevented from being included in the block entirely. 
+First, if the transaction contains a predicate, the predicate is executed and validated. If the predicate fails, the transaction is prevented from being included in the block entirely.
 
 Next, if a transaction contains a script, the script will be executed.
 The transaction execution is completed by removing the spent UTXOs and adding any new UTXOs that were created.
