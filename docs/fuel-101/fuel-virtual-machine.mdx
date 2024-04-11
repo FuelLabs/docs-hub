@@ -1,0 +1,28 @@
+---
+title: Fuel Virtual Machine
+category: Fuel 101
+---
+
+# Fuel Virtual Machine (FVM)
+
+> The Fuel Virtual Machine is an operating system designed for unparalleled speed in generalized computation on the execution layer.
+
+The Fuel Virtual Machine fundamentally serves as an execution environment tailored for smart contracts, scripts, and predicates. With Fuel's main objective being to maximize throughput, the development of a new VM is essential for advancing scalable blockchain technology.
+
+## Why the FVM?
+
+Building on the premise that Fuel's sole purpose is to facilitate the fastest and most cost-effective transaction execution layer, it addresses a key limitation of the Ethereum Virtual Machine (EVM). The EVM's requirement for backward compatibility means that Layer 2 solutions (L2s) relying on familiar yet legacy software are constrained to single-threaded computation.
+
+The surging demand for block space, driven by the booming activity in the DeFi, necessitates the need for better solutions. By adopting the UTXO model, Fuel leverages the full potential of modern computer cores, significantly enhancing transaction throughput by several orders of magnitude, all while maintaining the foundational security of Ethereum.
+
+## Key Features and Innovations of FVM
+
+- **Shared Memory Architecture:** The Fuel VM differs from the EVM's linear memory model by introducing a globally shared memory space. This architecture enables more efficient inter-contract communication and data handling, eliminating the need for data serialization and duplication.
+
+- **Support for Multiple Native Assets:** Unlike Ethereum, which primarily revolves around Ether, FVM facilitates the creation and seamless management of various UTXO-based native assets. This capability enriches the ecosystem with diverse transactional and operational possibilities.
+
+- **64-bit Computing Compatibility:** FVM is built to harness the efficiency of 64-bit computing, aligning with the capabilities of modern processors. This contrasts with EVM's reliance on 256-bit computing, which is not natively supported by current hardware, leading to inefficiencies.
+
+- **Register-based Virtual Machine:** Opting for a register-based architecture, FVM achieves a reduction in the number of required instructions for executing operations. This optimization translates into lower gas costs and enhanced performance compared to stack-based virtual machines like EVM.
+
+- **Advanced Smart Contract Capabilities:** FVM introduces scripts and predicates that simplify executing complex transactions and smart contract logic. This approach enhances user experience and operational efficiency within the blockchain ecosystem.
