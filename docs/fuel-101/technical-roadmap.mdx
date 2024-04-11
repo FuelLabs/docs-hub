@@ -1,0 +1,39 @@
+---
+title: Technical Roadmap
+category: Fuel 101
+---
+
+# Technical Roadmap
+
+## Testnet Roadmap
+
+#### New abi encoding scheme
+
+The new abi encoding scheme will enable support for nested heap types.
+This enables developers to return arbitrarily nested heap types from contracts and scripts, and log any arbitrary data type.
+A data type allocated on the heap can grow or shrink in size.
+Compared to the built-in array and tuple types which are allocated on the stack and cannot grow in serialize.
+
+#### Forkless upgrades in Fuel Core
+
+Supporting forkless upgrades to the fuel core will allow changing logic on the fly for all nodes in the network.
+This minimizes the impact to the network when upgrades take place.
+
+#### SRC-20 standardization for bridged assets
+
+#### Fuel wallet connectors
+
+Fuel wallet connectors enable users to sign transactions on the Fuel network using wallets such as Metamask or Phantom.
+These wallets are able to be used on Fuel through the use of predicates.
+
+#### The Graph integration
+
+Integrating Fuel with The Graph allows developers to easily index and query blockchain data for their Dapps.
+This integration will allow developers and users to easily aggregate, search, and filter the state of Dapps and the Fuel network.
+
+## Post-Testnet Roadmap
+
+#### Forced transaction inclusion
+
+Forced transaction inclusion allows users to include transactions on Fuel even in the event of a sequencer failure.
+This is achieved by sending the transactions to the L1 which includes the transaction in Fuel's block history.
