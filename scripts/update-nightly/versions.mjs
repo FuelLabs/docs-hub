@@ -51,7 +51,7 @@ function getRustSDKVersion(isNightly) {
 
 function getWalletVersion(isNightly) {
   return getVersionFromJSONFile(
-    `docs${isNightly ? '/nightly' : ''}/fuels-wallet/packages/sdk/package.json`
+    `docs${isNightly ? '/nightly' : ''}/fuels-wallet/packages/app/package.json`
   );
 }
 
