@@ -14,7 +14,6 @@ A transaction on the Fuel network goes through a complex series of steps before 
 5. **Execution & Validation**: The transaction is executed in the Fuel Virtual Machine (Fuel VM).
 6. **Block Production**: The transaction is included in a block.
 7. **Gossiping & Validation**: The block is broadcast to the network and the validatation process is repeated.
-8. **Finality on Ethereum**: The transaction is considered final.
 
 ## 1. Transaction Creation
 
@@ -34,15 +33,16 @@ The transaction pool sorts pending transactions by their gas price. Note that a 
 
 ## 4. Selection
 
-Transactions are selected from the pool to be included in the block. They are selected in a way that maximizes the block producer's reward.
+Transactions are selected from the pool to be included in the block. They are selected in a way that maximizes the block producer's reward and overall throughput of the network.
 
 ## 5. Execution & Validation
 
-If a transaction contains a script, the script will be executed.
+First, if the transaction contains a predicate, the predicate is executed and validated. If the predicate fails, the transaction is prevented from being included in the block entirely. 
+
+Next, if a transaction contains a script, the script will be executed.
 The transaction execution is completed by removing the spent UTXOs and adding any new UTXOs that were created.
 
 The transaction undergoes further validation at this step.
-If the transaction contains a predicate, the predicate is executed and validated.
 
 ## 6. Block Production
 
@@ -53,6 +53,4 @@ The block producer creates a new block that includes the transaction.
 The block is broadcast to the network, and the nodes gossip with each other.
 Validators connected to the block producer will receive the block, repeat the validation and execution steps, and continue to broadcast the block.
 
-## 8. Finality on Ethereum
-
-(is this happening now?)
+If a validating fullnode attempts to synchronize with a block that contains any faulty predicates, the entire block is rejected.
