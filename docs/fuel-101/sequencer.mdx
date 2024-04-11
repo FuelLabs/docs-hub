@@ -9,13 +9,13 @@ category: Fuel 101
 
 Since rollups strategically leverage the consensus and data availability of another Layer 1 chain, they depend on a sequencer for transaction ordering.
 
-By efficiently ordering transactions, sequencers allow Layer 2 solutions to significantly reduce transaction processing times and costs. This efficiency gain is essential for scaling blockchain networks and improving their usability for a wider range of applications, making the trade-off an integral part of optimizing blockchain performance.
+By efficiently ordering transactions, sequencers allow Layer 2 solutions to significantly reduce transaction processing times and costs. This efficiency gain is essential for scaling blockchain networks and improving their usability for a wider range of applications.
 
 ## Shared Sequencer
 
 > A shared sequencer model involves multiple entities or nodes taking turns or sharing the responsibility of sequencing transactions.
 
-Fuel leverages a shared sequencer an Application Blockchain Interface (ABCI), integrated with the Cosmos network. Validators are responsible for
+Fuel leverages a shared sequencer on the Cosmos network. Validators on this network are responsible for:
 
 1. Establishing the order of Fuel's blocks
 2. Verifying these optimistically ordered blocks through fraud proofing
