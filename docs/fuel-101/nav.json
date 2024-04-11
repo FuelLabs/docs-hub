@@ -2,7 +2,7 @@
   "menu": [
     "Transaction Model",
     "Transaction Lifecycle",
-    "Intro to UTXO",
+    "Intro to the UTXO model",
     "Fuel Virtual Machine"
   ]
 }
