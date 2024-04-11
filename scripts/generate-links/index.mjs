@@ -104,6 +104,9 @@ function getSidebarName(key) {
     case 'specs':
       newKey = 'Specifications';
       break;
+    case 'fuel-101':
+      newKey = 'Fuel 101';
+      break;
     default:
   }
 
