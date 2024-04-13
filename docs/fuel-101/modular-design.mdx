@@ -11,11 +11,63 @@ __Modular Design__ in _Blockchains_ and _Distributed Ledgers_ aims to solve scal
 
 ## Monolithic blockchains and the trilemma
 
+Monolithic Blockchain referes to a type of Blockchain architechture where all tasks as performed by a single system. In this approach, the Blockchain Nodes are responsible for handling multiple tasks such as Execution, Consensus, Settlement and Data availability. This monolithic approach have proven to be unefficient when it comes to handle with large volumes of user interactions, leading to a poor UX with high and volatile fees, dropped and rejected transactions and constrained throughput.
+
+In this context, comes to spotilight the "Blockchain Trilemma" that describe how Decentralization, Security and Scalability are coupled togheter in a situation where enhancing one of those aspects results en diminishing the remaing others. In scenario, is up to the developers to prioritize on of these aspectes resulting in a unsecure, or centralized or constrained system.
+
+In order to overcome this challenge, the layered approach was proposed, where different functionalities are split into subsystems connected togheter in order to separate concercens while keeping consistency and security. The layer approach ultimately allows blockchains to be be built in modules, this is, sections tailored design to serve specific responsabilities optimizing resource utilization.
+
 ## The four foundamental components of a modular blockchains
+
+The modular design in blockchains relies on four main components:
+
+### Consensus
+
+Coordinating the nodes to validate and order transactions resulting in a concurrent global state.
+
+### Execution
+
+Processing user interactions to propose state changes by applying the computation rules defined in the virtual machine.
+
+### Data Availability
+
+Archiving and publishing the information required for light nodes to verify the blockchain state integrity and consistency.
+
+### Settlement
+
+Verifying and solving disputes related to the transaction exectuion in rollup-centric blockchain designs. This component is often consider as optional.
 
 ## Rollups, Validiums and Sovereign Rollups
 
-## Optimistic and ZK proving
+Rollups are a scalability solution where computation and storage are compressed by hasing batches of transactions. These batches are executed and arranged outside of the Consensus Layer and integrated into the global state by publishing `state-roots` which integrity is verified by the Settlement Layer.
+
+This design decreases the data load over the Consensus Layer by keeping Security resulting in the increase of the network bandwidth. Currently, is common to describe the modular blockchain landscape as "rollup centric", meaning that this scallability solution is the main component of the modular blockchain implementations.
+
+In the rollup-centric ecosystems, the following implementation methods are consider the most important
+
+### Rollups
+
+The core idea behind the standard rollup design is to increase the throughput of monolithic blockchain by offloading exectuion. This solution prioritizes decentralization and security in the Layer 1 or _Parent Chain_ while allowing Layer 2 to specialize in execution by performing this task in other networks while syncronizing the data with the use of fraud or validity proofs.
+
+### Validiums
+
+This is a special type of rollup that docuples Data Availability from the Layer 1 or _Parent Network_ by including validity proofs that represent the execution verification by a "Data Availability Layer". These validity proofs and the rolloup transaction batch are sent togheter to a decentralization specialized Layer 1, offloading of the transaction execution an verification to rollups.
+
+### Sovereign Rollups
+
+Sovereignty in rollups means that rollups node are responsible of performing settlement actions by themselves, resulting in unsyncronized rollup instances that can only comunicate with each other by posting their raw transactions into the _parent chain_ who fully manages the consensus between rollups. 
+
+## Optimistic and ZK Proving
+
+This differentiation refeers to the proving system that rollups incorporate. These approaches come with tradeoffs regarding perfomance and security at the settlement step.
+
+### Optimistic Proving
+
+In this case, fraud proofs are the settlement strategy used to verify that the state transitions within the rollup are coherent with the _parent chain_ state. In Optimisc Rollups, the Layer 1 interacts with the rollups trough a Smart Contract that keeps track of the Rollup state root and the published transaction batches. Each time a transaction batch is published, a period of dispute allows third party actors to ensure that the published batch correspond to the new proposed rollup state. In case of fiding an inconsistency, this third party can publish a proof of incorrect computing that reverts the incoming batch of transaction, invalidating the proposed rollup satate change and generating a economic reward to the fraud proof submitter. This approach asuumes that the incoming batch of transactions was computated correctly, thus the name Optimistic.
+
+### ZK Proving
+
+Zero Knowledge (often mentioned as ZK) describe the settlement strategy that uses validity proofs which consist on cryptographic proofs embeded with the published batch of trasactions. In this scenario, the Layer 1 uses a second Smart Contract to verify the integrity of the validity proof resulting in the incorporation or rejection of the new proposed rollup state root. The ZK approach eliminates the dispute time resulting in a instant finality of the rollup transactions thanks to the Zero Knowledge Protocol that allows information to be verified without being exposed. In practical terms, this means that the _parent chain_ or Layer 1 can get detect incorrect computing without executing the whole batch of transactions. 
 
 ## The roll up os
 
