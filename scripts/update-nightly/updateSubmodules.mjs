@@ -4,6 +4,7 @@ import {
   commitAll,
   createPR,
   fetchBranch,
+  fetchGitRef,
   fetchTag,
   getCommitFromTitle,
   getVersionCommit,

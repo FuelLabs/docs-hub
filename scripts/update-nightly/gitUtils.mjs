@@ -36,7 +36,7 @@ export const fetchGitRef = async (version, dir) => {
       'fetch',
       '--depth=1',
       'origin',
-      `+refs/tags/v${version}:refs/tags/v${version}`,
+      `+refs/tags/${version}:refs/tags/${version}`,
     ],
     {
       cwd: dir,
