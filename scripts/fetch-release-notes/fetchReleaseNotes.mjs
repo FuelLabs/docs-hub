@@ -1,6 +1,6 @@
 import { getAllVersions } from '../../dist/lib/versions.js';
 import fs from 'fs';
-import exec from "@actions/exec";
+import exec from '@actions/exec';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -127,7 +127,6 @@ export async function writeReleaseNotes() {
   }
   let content = `---
 title: Release Notes and Changelogs
-category: Understanding Fuel
 ---
     
 <ConditionalContent versionSet={props.versionSet} showForVersions={["default"]}>
@@ -148,6 +147,6 @@ category: Understanding Fuel
 
   fs.writeFileSync('./docs/fuel-101/releasenotes-changelogs.mdx', content);
   try {
-    await exec.exec("pnpm lint:guides:fix");
+    await exec.exec('pnpm lint:guides:fix');
   } catch (_) {}
 }

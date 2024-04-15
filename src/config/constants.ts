@@ -58,6 +58,10 @@ export const NAVIGATION: any[] = [
     link: '/guides',
   },
   {
+    name: 'Notices',
+    link: '/docs/notices',
+  },
+  {
     name: 'Intro',
     link: '/docs/intro',
   },

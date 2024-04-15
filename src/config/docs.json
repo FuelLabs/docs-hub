@@ -1,4 +1,13 @@
 {
+  "notices": {
+    "title": "Notices",
+    "slug": "notices",
+    "repository": "https://github.com/FuelLabs/docs-hub",
+    "ogTags": {
+      "description": "Updates about Fuel software",
+      "image": ""
+    }
+  },
   "intro": {
     "title": "Intro",
     "slug": "intro",
