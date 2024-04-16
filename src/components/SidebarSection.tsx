@@ -38,7 +38,7 @@ export function SidebarSection({
     links[0].label.toLowerCase().replaceAll(/[_-]/g, ' ');
 
   let githubLink = '';
-  if (!version && book !== 'Intro' && book !== 'Fuel-101' && book !== 'Notices') {
+  if (!version && book !== 'Intro' && book !== 'Fuel-101') {
     switch (book) {
       case 'GraphQL':
         githubLink = 'https://github.com/FuelLabs/fuel-core/tree/v0.22.1';
@@ -105,7 +105,6 @@ export function SidebarSection({
       {isOpened &&
         book !== 'Intro' &&
         book !== 'Fuel-101' &&
-        book !== "Notices" &&
         book !== 'guides' && (
           <ButtonLink
             href={version ? version.url : githubLink}

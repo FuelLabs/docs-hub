@@ -50,10 +50,10 @@ async function main() {
         fs.mkdirSync(folderPath, { recursive: true });
       }
       fs.writeFileSync(`${folderPath}/${key}.json`, json, 'utf-8');
-      if (!key.includes('guides') && key !== 'contributing') {
+      if (!key.includes('guides') && key !== 'contributing' && key !== 'notices') {
         if (
           key.includes('nightly') ||
-          ['intro', 'fuel-101', 'contributing', 'notices'].includes(key)
+          ['intro', 'fuel-101', 'contributing' ,'notices'].includes(key)
         ) {
           const cleanKey = key.replace('nightly-', '');
           allNightlyOrders.push({
@@ -62,7 +62,7 @@ async function main() {
             links: sortedLinks,
           });
         }
-        if (key.includes('beta-4') || key === 'intro' || key === 'fuel-101' || key === "notices") {
+        if (key.includes('beta-4') || key === 'intro' || key === 'fuel-101') {
           const cleanKey = key.replace('beta-4-', '');
           allBeta4Orders.push({
             key: capitalize(cleanKey),
@@ -121,7 +121,6 @@ function handleAllOrders(allOrders, folderPath, filename) {
     'graphql',
     'forc',
     'specs',
-    'notices',
   ];
 
   const finalAllOrders = allOrders.sort((a, b) => {
