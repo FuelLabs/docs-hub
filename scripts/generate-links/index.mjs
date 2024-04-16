@@ -53,7 +53,7 @@ async function main() {
       if (!key.includes('guides') && key !== 'contributing') {
         if (
           key.includes('nightly') ||
-          ['intro', 'fuel-101', 'contributing'].includes(key)
+          ['intro', 'fuel-101', 'contributing', 'notices'].includes(key)
         ) {
           const cleanKey = key.replace('nightly-', '');
           allNightlyOrders.push({
@@ -62,7 +62,7 @@ async function main() {
             links: sortedLinks,
           });
         }
-        if (key.includes('beta-4') || key === 'intro' || key === 'fuel-101') {
+        if (key.includes('beta-4') || key === 'intro' || key === 'fuel-101' || key === "notices") {
           const cleanKey = key.replace('beta-4-', '');
           allBeta4Orders.push({
             key: capitalize(cleanKey),
@@ -121,6 +121,7 @@ function handleAllOrders(allOrders, folderPath, filename) {
     'graphql',
     'forc',
     'specs',
+    'notices',
   ];
 
   const finalAllOrders = allOrders.sort((a, b) => {

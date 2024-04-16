@@ -28,6 +28,8 @@ export function getBreadcrumbs(
     breadcrumbs.push({ label: 'Fuel 101', link: '/docs/fuel-101' });
   } else if (slug.includes('docs/contributing/')) {
     breadcrumbs.push({ label: 'Contributing', link: '/docs/contributing/' });
+  } else if (slug.includes("docs/notices")) {
+    breadcrumbs.push({ label: "Notices", link: '/docs/notices' })
   } else {
     const i = isNightly || isBeta4 ? 2 : 1;
     if (type === 'submenu') {

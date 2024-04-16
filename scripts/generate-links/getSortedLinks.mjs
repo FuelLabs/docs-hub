@@ -60,6 +60,8 @@ function createLinks(docs, isNightly, isBeta4) {
 
     const splitSlug = finalSlug.split('/');
 
+    console.log("doc", doc);
+
     if (
       !thisCategory ||
       thisCategory === 'src' ||
@@ -67,6 +69,7 @@ function createLinks(docs, isNightly, isBeta4) {
       (thisCategory === 'guide' && doc.title === 'guide') ||
       thisCategory === 'intro' ||
       thisCategory === 'Fuel 101' ||
+      thisCategory === "Notices" ||
       (thisCategory === 'api' && doc.title === 'api')
     ) {
       const newLink = handleLink(

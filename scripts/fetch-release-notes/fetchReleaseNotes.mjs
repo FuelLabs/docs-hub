@@ -55,7 +55,7 @@ const REPOS = [
   },
 ];
 
-const re = /#+/g;
+const re = /^#+\s$/g;
 
 async function fetchReleaseNotes(repoName, repoVersion) {
   const url = `https://api.github.com/repos/FuelLabs/${repoName}/releases/${
@@ -83,8 +83,8 @@ function constructReleaseNotes(responseJson, docName, docLink) {
     });
   const releaseName = responseJson.name;
   const releaseNoteContent = `## <a href={"${docLink}"} target="_blank">${docName}</a>
-  ### ${releaseName}
-  ${releaseNotes}]\n`;
+### ${releaseName}
+${releaseNotes}\n`;
   return releaseNoteContent;
 }
 
@@ -127,10 +127,11 @@ export async function writeReleaseNotes() {
   }
   let content = `---
 title: Release Notes and Changelogs
+category: Notices
 ---
     
 <ConditionalContent versionSet={props.versionSet} showForVersions={["default"]}>
-  # Beta-5 Release Notes and Changelogs
+# Beta-5 Release Notes and Changelogs
 
 `;
 
@@ -145,7 +146,7 @@ title: Release Notes and Changelogs
   content += nightlyVersionContent;
   content += '</ConditionalContent>';
 
-  fs.writeFileSync('./docs/fuel-101/releasenotes-changelogs.mdx', content);
+  fs.writeFileSync('./docs/notices/releasenotes-changelogs.mdx', content);
   try {
     await exec.exec('pnpm lint:guides:fix');
   } catch (_) {}
