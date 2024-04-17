@@ -31,7 +31,7 @@ export function getBreadcrumbs(
   } else if (slug.includes('docs/notices/')) {
     breadcrumbs.push({
       label: 'Notices',
-      link: '/docs/notices/releasenotes-changelogs',
+      link: '/docs/notices/releasenotes-changelogs/',
     });
   } else {
     const i = isNightly || isBeta4 ? 2 : 1;
