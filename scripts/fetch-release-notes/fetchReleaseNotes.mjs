@@ -34,6 +34,8 @@ const REPOS = [
   {
     repoName: 'fuels-ts',
     docName: 'TS SDK',
+    defaultVersionDocLink: `https://fuellabs.github.io/fuels-ts/`,
+    nightlyVersionDocLink: `https://fuellabs.github.io/fuels-ts/`,
     defaultVersion: versions.versions['Fuel TS SDK'],
     nightlyVersion: versions.nightlyVersions['Fuel TS SDK'],
   },
@@ -139,9 +141,9 @@ category: Notices
   content += defaultVersionContent;
   content += `</ConditionalContent>
 <ConditionalContent versionSet={props.versionSet} showForVersions={["nightly"]}>
-  # Nightly Release Notes and Changelogs
-  
-  `;
+# Nightly Release Notes and Changelogs
+
+`;
   content += nightlyVersionTOC;
   content += nightlyVersionContent;
   content += '</ConditionalContent>';
