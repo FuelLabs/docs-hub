@@ -40,21 +40,21 @@ export function QuickstartCards() {
       <Grid css={styles.grid}>
         <Card
           heading={'Smart Contract Developer'}
-          description={'Get started your first smart contract in Sway.'}
+          description={'Generate and deploy a smart contract in Sway.'}
           href={'/guides/contract-quickstart'}
           icon={'Script'}
         />
 
         <Card
           heading={'Frontend / Fullstack Developer'}
-          description={'Generate a full-stack counter contract dapp on Fuel'}
+          description={'Generate a full-stack counter contract dapp on Fuel.'}
           href={'/guides/frontend-quickstart'}
           icon={'BoxPadding'}
         />
 
         <Card
           heading={'Node Operator'}
-          description={'Get started running a node on Fuel'}
+          description={'Get started running a node on Fuel.'}
           href={'/guides/running-a-node'}
           icon={'Broadcast'}
         />
