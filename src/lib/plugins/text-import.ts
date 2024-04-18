@@ -63,9 +63,9 @@ function extractCommentBlock(
   }
 
   const linesContent = lines
-  .slice(lineStart, lineEnd)
-  .join('\n')
-  .replace(/<TestAction[^<]*?\/>/gs, '');
+    .slice(lineStart, lineEnd)
+    .join('\n')
+    .replace(/<TestAction[^<]*?\/>/gs, '');
 
   return linesContent;
 }
