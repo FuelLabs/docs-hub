@@ -8,7 +8,7 @@ import {
   Text,
 } from '@fuel-ui/react';
 
-import type { GuideInfo } from '../pages/guides';
+import type { GuideInfo } from '../pages/[...slug]';
 import type { VersionSet } from '../types';
 
 export type CardInfo = {
@@ -72,7 +72,7 @@ export function Card({ guideInfo, cardInfo, cardName, versionSet }: CardProps) {
   );
 }
 
-const styles = {
+export const styles = {
   root: cssObj({
     padding: '$3 $2',
     margin: 0,

@@ -55,17 +55,7 @@ function createUrl(slug) {
 }
 
 function getDocSlug(slug, mdDocs) {
-  const isIntroQuickstartContract =
-    slug[slug.length - 1] === 'quickstart-contract';
-  const isIntroQuickstartFrontend =
-    slug[slug.length - 1] === 'quickstart-frontend';
-
-  let actualSlug = slug;
-  if (isIntroQuickstartContract) {
-    actualSlug = ['guides', 'quickstart', 'building-a-smart-contract'];
-  } else if (isIntroQuickstartFrontend) {
-    actualSlug = ['guides', 'quickstart', 'building-a-frontend'];
-  }
+  const actualSlug = slug;
 
   const item = findDoc(actualSlug, mdDocs);
   if (!item) {

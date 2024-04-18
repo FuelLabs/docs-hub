@@ -361,11 +361,11 @@ function replaceInternalLinks(href: string, base: string) {
   newHref = newHref
     .replace(
       'docs/fuel-docs/quickstart/developer-quickstart',
-      'guides/quickstart/'
+      'intro/quickstart/'
     )
     .replace(
       'https://fuelbook.fuel.network/master/quickstart/developer-quickstart.html',
-      'guides/quickstart/'
+      'intro/quickstart/'
     )
     .replace('specs/fuel-vm/instruction_set', 'specs/fuel-vm/instruction-set')
     .replace('specs/protocol/tx_format', 'specs/tx-format/')

@@ -34,27 +34,10 @@ export class Doc {
   config: Config;
 
   constructor(slug: string[], mdDocs: MdDoc[]) {
-    const isIntroQuickstartContract =
-      slug[slug.length - 1] === 'quickstart-contract';
-    const isIntroQuickstartFrontend =
-      slug[slug.length - 1] === 'quickstart-frontend';
-
-    let actualSlug = slug;
-    if (isIntroQuickstartContract) {
-      actualSlug = ['guides', 'quickstart', 'building-a-smart-contract'];
-    } else if (isIntroQuickstartFrontend) {
-      actualSlug = ['guides', 'quickstart', 'building-a-frontend'];
-    }
-
+    const actualSlug = slug;
     const item = Docs.findDoc(actualSlug, mdDocs);
     if (!item) {
       throw new Error(`${slug} not found`);
-    }
-
-    if (isIntroQuickstartContract) {
-      item.title = 'Quickstart Contract';
-    } else if (isIntroQuickstartFrontend) {
-      item.title = 'Quickstart Frontend';
     }
 
     const config = this.#getConfig(slug.join('/'));

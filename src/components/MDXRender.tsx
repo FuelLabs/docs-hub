@@ -31,6 +31,7 @@ import { OL, UL } from './List';
 import { Paragraph } from './Paragraph';
 import { Pre } from './Pre';
 import { QuickstartCallout } from './QuickstartCallout';
+import { QuickstartCards } from './QuickstartCards';
 import { Table } from './Table';
 
 const Player = dynamic(() => import('./Player'), {
@@ -59,6 +60,7 @@ export const mdxComponents = {
   QuickstartCallout,
   CodeTabs,
   ConditionalContent,
+  QuickstartCards,
   // biome-ignore lint/suspicious/noExplicitAny:
 } as any;
 
