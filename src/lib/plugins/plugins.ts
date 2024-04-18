@@ -268,8 +268,11 @@ function handleTSDocs(
     } else if (node.type === 'code' && !node.lang) {
       node.lang = 'sh';
     } else if (node.type === 'image') {
-      if (node.url.startsWith('../../public/')) {
-        const path = node.url.replace('../../public/', '').replace('.png', '');
+      if (node.url.includes('/public/')) {
+        const path = node.url
+        .replace('../../public/', '')
+        .replace('./public/', '')
+        .replace('.png', '');
         node.url = `/api/image/${path}`;
       }
     }
