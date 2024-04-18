@@ -8,13 +8,82 @@ parent:
 
 # Smart Contract Quickstart
 
+Getting started with Fuel as a smart contract developer is as simple as:
+
+1. [Installing](#installation) `fuelup`
+2. [Generating a counter contract](#generating-a-counter-dapp)
+3. [Building and deploying the contract](#running-the-project-locally)
+
+## Installation
+
+<TextImport
+  file="../installation/index.mdx"
+  comment="install_fuelup"
+  commentType="{/*"
+/>
+
+<CodeImport
+  file="../installation/index.mdx"
+  comment="install_fuelup_command"
+  commentType="{/*"
+  lang="sh"
+  trim="true"
+/>
+
+{/*install_help:example:start*/}
+> Having problems? Visit the [installation guide](/guides/installation) or post your question in our [forum](https://forum.fuel.network/).
+{/*install_help:example:end*/}
+
+<TextImport
+  file="../installation/index.mdx"
+  comment="install_VSCode_extensions"
+  commentType="{/*"
+/>
+
+
+## Generating a counter contract
+
+Run the command below to generate a counter contract in Sway:
+
 ```sh
 forc template --template-name counter my_counter_project
 ```
 
+The contract will be in the `src/main.sw` file.
+
+<TextImport
+  file="../counter-dapp/building-a-smart-contract.mdx"
+  comment="forc_new"
+  commentType="{/*"
+/>
+
+## Building and deploying the contract
+
+To build a contract, you can use:
+
+```sh
+forc build
+```
+
+To deploy the contract to the testnet, you can run:
+
+```sh
+forc deploy --testnet
+```
+
+> Note that without the `--testnet` flag, `forc` will attempt to deploy to a local node running at `http://127.0.0.1:4000/graphql`.
+
+<TextImport
+  file="../counter-dapp/building-a-smart-contract.mdx"
+  comment="forc_wallet"
+  commentType="{/*"
+/>
+
 ## Next Steps
 
-Counter contract full guide
-Intro to Sway guide
-Predicate guide
-Read the Sway docs
+Want to learn more? Check out the following resources:
+
+- Learn the step-by-step instructions for how to build a full-stack [counter contract dapp](/guides/counter-dapp)
+- Build a full-stack marketplace dapp with the [Intro to Sway](/guides/intro-to-sway) guide
+- Try building with [Predicates](/guides/intro-to-predicates)
+- Read the [Sway docs](/docs/sway)

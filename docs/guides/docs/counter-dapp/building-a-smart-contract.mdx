@@ -488,6 +488,7 @@ forc deploy --testnet
 
 </ConditionalContent>
 
+{/*forc_wallet:example:start*/}
 The terminal will ask for the password of the wallet:
 
 `Please provide the password of your encrypted wallet vault at "~/.fuel/wallets/.wallet":`
@@ -507,6 +508,8 @@ Just below the list, you'll see this prompt:
 Then you'll enter the number of the account of preference and press `Y` when prompted to accept the transaction.
 
 Finally, you will get back the network endpoint where the contract was deployed, a `Contract ID` and the block where the transaction was signed.
+{/*forc_wallet:example:end*/}
+
 Save the `Contract ID`, as you'll need this later to connect the frontend.
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['beta-4']}>
