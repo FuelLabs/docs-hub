@@ -1,6 +1,14 @@
 import type { ThemeUtilsCSS } from '@fuel-ui/css';
 import { cssObj } from '@fuel-ui/css';
-import { Box, Button, Icon, IconButton, Text, toast } from '@fuel-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  IconButton,
+  Text,
+  toast,
+} from '@fuel-ui/react';
 import { Children, type ReactNode, useState } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import darkTheme from 'react-syntax-highlighter/dist/cjs/styles/prism/night-owl';
@@ -14,12 +22,14 @@ type PreProps = {
   __lines?: number;
   __code?: string;
   className?: string;
+  showOpenPlayground?: boolean;
 };
 
 export function Pre({
   css,
   children,
   title,
+  showOpenPlayground,
   __code: code,
   __lines: lines = 0,
   ...props
@@ -43,48 +53,66 @@ export function Pre({
     toast.success('Copied to clipboard');
   }
 
+  async function openSwayPlayground() {
+    const playgroundCode = code ?? '';
+    // TODO: this will break if sway playground changes urls
+    window.open('https://www.sway-playground.org/', '_blank');
+    // TODO: this will break if the storage key in sway playground is changed
+    // or the playground changes how it stores the abi
+    localStorage.setItem('playground_abi', playgroundCode);
+  }
+
   function toggleExpand() {
     setExpanded(!expanded);
   }
 
   return (
-    <Box css={{ ...styles.root, ...css }}>
-      {title && <Text as='h6'>{title}</Text>}
-      <Box
-        css={styles.wrapper}
-        data-expanded={expanded}
-        data-need-expand={needExpand}
-      >
-        {!props['data-language'] ? (
-          <SyntaxHighlighter
-            language={'graphql'}
-            style={theme === 'dark' ? darkTheme : lightTheme}
-            data-title={Boolean(title)}
-            {...props}
-          >
-            {gqlCode}
-          </SyntaxHighlighter>
-        ) : (
-          <pre {...props}>{children}</pre>
-        )}
+    <>
+      <Box css={{ ...styles.root, ...css }}>
+        {title && <Text as='h6'>{title}</Text>}
+        <Box
+          css={styles.wrapper}
+          data-expanded={expanded}
+          data-need-expand={needExpand}
+        >
+          {!props['data-language'] ? (
+            <SyntaxHighlighter
+              language={'graphql'}
+              style={theme === 'dark' ? darkTheme : lightTheme}
+              data-title={Boolean(title)}
+              {...props}
+            >
+              {gqlCode}
+            </SyntaxHighlighter>
+          ) : (
+            <pre {...props}>{children}</pre>
+          )}
+        </Box>
+        <Box css={styles.actions} data-expanded={expanded}>
+          {needExpand && (
+            <Button variant='outlined' size='xs' onClick={toggleExpand}>
+              {expanded ? 'Collapse' : 'Expand'}
+            </Button>
+          )}
+          <IconButton
+            size='xs'
+            css={styles.copyIcon}
+            icon={<Icon icon={Icon.is('ClipboardText')} size={12} stroke={1} />}
+            variant='ghost'
+            intent='base'
+            aria-label='Copy to Clipboard'
+            onClick={handleCopy}
+          />
+        </Box>
       </Box>
-      <Box css={styles.actions} data-expanded={expanded}>
-        {needExpand && (
-          <Button variant='outlined' size='xs' onClick={toggleExpand}>
-            {expanded ? 'Collapse' : 'Expand'}
+      {showOpenPlayground && (
+        <Flex justify='right'>
+          <Button variant='ghost' onClick={openSwayPlayground}>
+            Open Example in Sway Playground
           </Button>
-        )}
-        <IconButton
-          size='xs'
-          css={styles.copyIcon}
-          icon={<Icon icon={Icon.is('ClipboardText')} size={12} stroke={1} />}
-          variant='ghost'
-          intent='base'
-          aria-label='Copy to Clipboard'
-          onClick={handleCopy}
-        />
-      </Box>
-    </Box>
+        </Flex>
+      )}
+    </>
   );
 }
 
