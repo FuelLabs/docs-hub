@@ -20,9 +20,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       } else if (req.headers.referer?.includes('/beta-4/')) {
         versionSet = 'beta-4';
       }
+      const walletPath = 'fuels-wallet/packages/docs';
+      const tsPath = 'fuels-ts/apps/docs/src';
       const imagePath = `${rootDir}/docs/${
         versionSet === 'default' ? '' : versionSet
-      }fuels-wallet/packages/docs/public/${realName}.png`;
+      }/${req.headers.referer?.includes('/fuels-ts/') ? tsPath : walletPath}/public/${realName}.png`;
 
       if (fs.existsSync(imagePath)) {
         res.setHeader('Content-Type', 'image/png');
