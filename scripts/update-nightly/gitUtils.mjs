@@ -29,6 +29,21 @@ export const fetchBranch = async (branch, dir) => {
   });
 };
 
+export const fetchGitRef = async (version, dir) => {
+  await exec(
+    'git',
+    [
+      'fetch',
+      '--depth=1',
+      'origin',
+      `+refs/tags/${version}:refs/tags/${version}`,
+    ],
+    {
+      cwd: dir,
+    }
+  );
+};
+
 export const switchToExistingBranch = async (branch, dir) => {
   await exec('git', ['switch', branch], {
     cwd: dir,

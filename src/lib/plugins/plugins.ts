@@ -242,7 +242,8 @@ function handleTSDocs(
       // handle TS book versions
       conditions.tsBookVersions(node) ||
       (node.type === 'code' && node.lang === 'ts:line-numbers') ||
-      (node.type === 'code' && !node.lang)
+      (node.type === 'code' && !node.lang) ||
+      node.type === 'image'
     ) {
       // biome-ignore lint/suspicious/noExplicitAny:
       nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
@@ -264,8 +265,16 @@ function handleTSDocs(
       }
     } else if (node.type === 'code' && node.lang === 'ts:line-numbers') {
       node.lang = 'ts';
-    } else {
+    } else if (node.type === 'code' && !node.lang) {
       node.lang = 'sh';
+    } else if (node.type === 'image') {
+      if (node.url.includes('/public/')) {
+        const path = node.url
+        .replace('../../public/', '')
+        .replace('./public/', '')
+        .replace('.png', '');
+        node.url = `/api/image/${path}`;
+      }
     }
   });
 }

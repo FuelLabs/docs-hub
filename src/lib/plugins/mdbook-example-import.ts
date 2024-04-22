@@ -130,8 +130,10 @@ export function handleExampleImports(
   }
 
   try {
-    if (fileAbsPath.includes('/fuels-ts/demo')) {
-      fileAbsPath = fileAbsPath.replace('fuels-ts/demo', 'fuels-ts/apps/demo');
+    if (fileAbsPath.includes('/fuels-ts/')) {
+      fileAbsPath = fileAbsPath
+      .replace('fuels-ts/demo', 'fuels-ts/apps/demo')
+      .replace('fuels-ts/create-fuels-counter-guide', 'fuels-ts/apps/create-fuels-counter-guide');
     }
     const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
     const cachedFile = getFilesOnCache(fileAbsPath);
