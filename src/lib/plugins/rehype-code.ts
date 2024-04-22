@@ -1,16 +1,16 @@
-import { readFileSync } from "fs";
-import { join as pathJoin } from "path";
-import * as fs from "fs/promises";
-import { toText } from "hast-util-to-text";
-import { h } from "hastscript";
-import prettier from "prettier";
-import type { Options as RehypeCodeOptions } from "rehype-pretty-code";
-import rehypeCode from "rehype-pretty-code";
-import type { Root } from "remark-gfm";
-import { getHighlighter as shikiGetHighlighter } from "shiki";
-import type { PluggableList } from "unified";
-import { visit } from "unist-util-visit";
-import { FUEL_TESTNET } from "~/src/config/constants";
+import { readFileSync } from 'fs';
+import { join as pathJoin } from 'path';
+import * as fs from 'fs/promises';
+import { toText } from 'hast-util-to-text';
+import { h } from 'hastscript';
+import prettier from 'prettier';
+import type { Options as RehypeCodeOptions } from 'rehype-pretty-code';
+import rehypeCode from 'rehype-pretty-code';
+import type { Root } from 'remark-gfm';
+import { getHighlighter as shikiGetHighlighter } from 'shiki';
+import type { PluggableList } from 'unified';
+import { visit } from 'unist-util-visit';
+import { FUEL_TESTNET } from '~/src/config/constants';
 
 // Shiki loads languages and themes using "fs" instead of "import", so Next.js
 // doesn't bundle them into production build. To work around, we manually copy
@@ -19,7 +19,7 @@ import { FUEL_TESTNET } from "~/src/config/constants";
 // Note that they are only referenced on server side
 // See: https://github.com/shikijs/shiki/issues/138
 const getShikiPath = (): string => {
-  return pathJoin(process.cwd(), "public/shiki");
+  return pathJoin(process.cwd(), 'public/shiki');
 };
 
 const touched = { current: false };
@@ -33,7 +33,7 @@ const touchShikiPath = (): void => {
   touched.current = true;
 };
 
-const getHighlighter: RehypeCodeOptions["getHighlighter"] = async (options) => {
+const getHighlighter: RehypeCodeOptions['getHighlighter'] = async (options) => {
   touchShikiPath();
   const pathFolder = `${getShikiPath()}/languages`;
 
@@ -45,66 +45,66 @@ const getHighlighter: RehypeCodeOptions["getHighlighter"] = async (options) => {
     ...(options as any),
     langs: [
       {
-        id: "rust",
-        scopeName: "source.rust",
+        id: 'rust',
+        scopeName: 'source.rust',
         path: `${pathFolder}/rust.tmLanguage.json`,
-        displayName: "Rust",
-        aliases: ["rs"],
+        displayName: 'Rust',
+        aliases: ['rs'],
       },
       {
-        id: "javascript",
-        scopeName: "source.js",
+        id: 'javascript',
+        scopeName: 'source.js',
         path: `${pathFolder}/javascript.tmLanguage.json`,
-        displayName: "JavaScript",
-        aliases: ["js"],
+        displayName: 'JavaScript',
+        aliases: ['js'],
       },
       {
-        id: "typescript",
-        scopeName: "source.ts",
+        id: 'typescript',
+        scopeName: 'source.ts',
         path: `${pathFolder}/typescript.tmLanguage.json`,
-        displayName: "TypeScript",
-        aliases: ["ts"],
+        displayName: 'TypeScript',
+        aliases: ['ts'],
       },
       {
-        id: "tsx",
-        scopeName: "source.tsx",
+        id: 'tsx',
+        scopeName: 'source.tsx',
         path: `${pathFolder}/tsx.tmLanguage.json`,
-        displayName: "TSX",
+        displayName: 'TSX',
       },
       {
-        id: "jsx",
-        scopeName: "source.js.jsx",
+        id: 'jsx',
+        scopeName: 'source.js.jsx',
         path: `${pathFolder}/jsx.tmLanguage.json`,
-        displayName: "JSX",
+        displayName: 'JSX',
       },
       {
-        id: "json",
-        scopeName: "source.json",
+        id: 'json',
+        scopeName: 'source.json',
         path: `${pathFolder}/json.tmLanguage.json`,
-        displayName: "JSON",
+        displayName: 'JSON',
       },
       {
-        id: "toml",
-        scopeName: "source.toml",
+        id: 'toml',
+        scopeName: 'source.toml',
         path: `${pathFolder}/toml.tmLanguage.json`,
-        displayName: "TOML",
+        displayName: 'TOML',
       },
       {
-        id: "graphql",
-        scopeName: "source.graphql",
+        id: 'graphql',
+        scopeName: 'source.graphql',
         path: `${pathFolder}/graphql.tmLanguage.json`,
-        displayName: "GraphQL",
-        embeddedLangs: ["javascript", "typescript", "jsx", "tsx"],
+        displayName: 'GraphQL',
+        embeddedLangs: ['javascript', 'typescript', 'jsx', 'tsx'],
       },
       {
-        id: "sway",
-        scopeName: "source.sway",
+        id: 'sway',
+        scopeName: 'source.sway',
         path: `${pathFolder}/sway.tmLanguage.json`,
       },
       {
-        id: "html",
-        name: "html",
-        scopeName: "text.html.basic",
+        id: 'html',
+        name: 'html',
+        scopeName: 'text.html.basic',
         path: `${pathFolder}/html.tmLanguage.json`,
       },
     ],
@@ -115,15 +115,15 @@ const getHighlighter: RehypeCodeOptions["getHighlighter"] = async (options) => {
 
 // biome-ignore lint/suspicious/noExplicitAny:
 function isElement(value: any): value is Element {
-  return value ? value.type === "element" : false;
+  return value ? value.type === 'element' : false;
 }
 // biome-ignore lint/suspicious/noExplicitAny:
 function isCodeEl(node: any, parent: any) {
   return (
-    (node.tagName === "code" &&
+    (node.tagName === 'code' &&
       isElement(parent) &&
-      parent.tagName === "pre") ||
-    node.tagName === "inlineCode"
+      parent.tagName === 'pre') ||
+    node.tagName === 'inlineCode'
   );
 }
 
@@ -135,24 +135,24 @@ function processCodeGroup(nodes: any[]): any[] {
   return (
     nodes
       // biome-ignore lint/suspicious/noExplicitAny:
-      .filter((n: any) => n.tagName === "pre")
+      .filter((n: any) => n.tagName === 'pre')
       // biome-ignore lint/suspicious/noExplicitAny:
       .map((pre: any) => {
         const language =
           pre.children?.[0]?.properties?.className?.[0].replace(
-            "language-",
-            ""
-          ) ?? "";
+            'language-',
+            ''
+          ) ?? '';
         const code = pre.children?.[0]?.children
           // biome-ignore lint/suspicious/noExplicitAny:
           ?.map((child: any) => child.value)
-          .join("");
+          .join('');
 
-        const child = h("code", { class: language }, code);
+        const child = h('code', { class: language }, code);
 
         return {
-          type: "element",
-          tagName: "pre",
+          type: 'element',
+          tagName: 'pre',
           properties: {
             language: language,
             code: code,
@@ -174,10 +174,10 @@ function codeGroup2() {
     tree.children.forEach((node: any, index: number) => {
       if (
         node.children &&
-        node.children[0]?.type === "text" &&
-        node.children[0]?.value.trim().startsWith(":::")
+        node.children[0]?.type === 'text' &&
+        node.children[0]?.value.trim().startsWith(':::')
       ) {
-        if (node.children[0]?.value.trim() === "::: code-group") {
+        if (node.children[0]?.value.trim() === '::: code-group') {
           end = null;
           start = index;
         } else if (start !== null) {
@@ -185,8 +185,8 @@ function codeGroup2() {
           const children = processCodeGroup(nodes);
           // biome-ignore lint/suspicious/noExplicitAny:
           const codeTabsElement: any = {
-            type: "mdxJsxFlowElement",
-            name: "CodeTabs",
+            type: 'mdxJsxFlowElement',
+            name: 'CodeTabs',
             children: children,
           };
           tree.children.splice(start, end - start + 1, codeTabsElement);
@@ -220,8 +220,8 @@ function codeGroup() {
         const children = processCodeGroup(codeGroupNodes);
         // biome-ignore lint/suspicious/noExplicitAny:
         const codeTabsElement: any = {
-          type: "mdxJsxFlowElement",
-          name: "CodeTabs",
+          type: 'mdxJsxFlowElement',
+          name: 'CodeTabs',
           children: children,
         };
         tree.children.splice(start, end - start, codeTabsElement);
@@ -236,8 +236,8 @@ function codeGroup() {
 function hasCodeGroup(node: any): boolean {
   return (
     node.children &&
-    node.children[0]?.type === "text" &&
-    node.children[0]?.value.trim() === "::: code-group"
+    node.children[0]?.type === 'text' &&
+    node.children[0]?.value.trim() === '::: code-group'
   );
 }
 
@@ -245,8 +245,8 @@ function hasCodeGroup(node: any): boolean {
 function hasEndOfCodeGroup(node: any): boolean {
   return (
     node.children &&
-    node.children[0].type === "text" &&
-    node.children[0].value.trim() === ":::"
+    node.children[0].type === 'text' &&
+    node.children[0].value.trim() === ':::'
   );
 }
 
@@ -256,28 +256,28 @@ function hasEndOfCodeGroup(node: any): boolean {
 function codeLanguage() {
   return function transformer(tree: Root) {
     // biome-ignore lint/suspicious/noExplicitAny:
-    visit(tree, "", (node: any, _idx: any, parent: any) => {
+    visit(tree, '', (node: any, _idx: any, parent: any) => {
       if (!isCodeEl(node, parent)) return;
       if (!node.properties) node.properties = {};
       const lang = node.properties?.className?.[0];
 
-      if (lang?.includes("rust")) {
-        node.properties.className[0] = "language-rust";
+      if (lang?.includes('rust')) {
+        node.properties.className[0] = 'language-rust';
       }
-      if (lang?.includes("sway")) {
-        node.properties.className[0] = "language-sway";
+      if (lang?.includes('sway')) {
+        node.properties.className[0] = 'language-sway';
       }
-      if (lang?.includes("ts")) {
-        node.properties.className[0] = "language-typescript";
+      if (lang?.includes('ts')) {
+        node.properties.className[0] = 'language-typescript';
       }
-      if (lang?.includes("tsx")) {
-        node.properties.className[0] = "language-typescript";
+      if (lang?.includes('tsx')) {
+        node.properties.className[0] = 'language-typescript';
       }
-      if (lang?.includes("sh")) {
-        node.properties.className[0] = "language-sh";
+      if (lang?.includes('sh')) {
+        node.properties.className[0] = 'language-sh';
       }
-      if (lang?.includes("json")) {
-        node.properties.className[0] = "language-json";
+      if (lang?.includes('json')) {
+        node.properties.className[0] = 'language-json';
       }
     });
   };
@@ -286,37 +286,37 @@ function codeLanguage() {
 // biome-ignore lint/suspicious/noExplicitAny:
 function isGraphQLCodeSamples(node: any) {
   return (
-    node.name === "CodeExamples" &&
+    node.name === 'CodeExamples' &&
     // biome-ignore lint/suspicious/noExplicitAny:
-    node.attributes?.find((a: any) => a.name === "__ts_content")
+    node.attributes?.find((a: any) => a.name === '__ts_content')
   );
 }
 
 // biome-ignore lint/suspicious/noExplicitAny:
 function getGraphQLCodeTabs(node: any) {
   const codeProps = {
-    className: ["language-typescript"],
-    "data-language": "typescript",
+    className: ['language-typescript'],
+    'data-language': 'typescript',
   };
 
   const prettierProps = {
-    parser: "typescript",
+    parser: 'typescript',
     semi: true,
     singleQuote: true,
   };
 
   // biome-ignore lint/suspicious/noExplicitAny:
   const findProp = (name: string) => (a: any) => a.name === name;
-  const tsContent = node.attributes?.find(findProp("__ts_content"));
-  const apolloContent = node.attributes?.find(findProp("__apollo_content"));
-  const urqlContent = node.attributes?.find(findProp("__urql_content"));
-  const filepath = node.attributes?.find(findProp("__filepath"));
+  const tsContent = node.attributes?.find(findProp('__ts_content'));
+  const apolloContent = node.attributes?.find(findProp('__apollo_content'));
+  const urqlContent = node.attributes?.find(findProp('__urql_content'));
+  const filepath = node.attributes?.find(findProp('__filepath'));
 
-  const tsCodeContent = tsContent?.value ?? "";
+  const tsCodeContent = tsContent?.value ?? '';
   const tsCodeRaw = prettier.format(tsCodeContent, prettierProps);
-  const tsCode = h("code", codeProps, tsCodeRaw);
+  const tsCode = h('code', codeProps, tsCodeRaw);
 
-  const testnet = filepath.value.includes("/beta-4/") ? "beta-4" : FUEL_TESTNET;
+  const testnet = filepath.value.includes('/beta-4/') ? 'beta-4' : FUEL_TESTNET;
 
   const apolloImport = `import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 
@@ -324,9 +324,9 @@ function getGraphQLCodeTabs(node: any) {
   uri: 'https://${testnet}.fuel.network/graphql',
   cache: new InMemoryCache(),
   });\n\n`;
-  const apolloContentValue = apolloImport + apolloContent?.value ?? "";
+  const apolloContentValue = apolloImport + apolloContent?.value ?? '';
   const apolloRaw = prettier.format(apolloContentValue, prettierProps);
-  const apolloCode = h("code", codeProps, apolloRaw);
+  const apolloCode = h('code', codeProps, apolloRaw);
 
   const urlqImport = `import { Client, cacheExchange, fetchExchange } from 'urql';
   
@@ -334,46 +334,46 @@ function getGraphQLCodeTabs(node: any) {
     url: 'https:/${testnet}.fuel.network/graphql',
     exchanges: [cacheExchange, fetchExchange],
   });\n\n`;
-  const urlQContentValue = urlqImport + urqlContent?.value ?? "";
+  const urlQContentValue = urlqImport + urqlContent?.value ?? '';
   const urlQRaw = prettier.format(urlQContentValue, prettierProps);
-  const urqlCode = h("code", codeProps, urlQRaw);
+  const urqlCode = h('code', codeProps, urlQRaw);
   return { tsCode, apolloCode, urqlCode };
 }
 
 function codeImport() {
   return function transformer(tree: Root) {
     // biome-ignore lint/suspicious/noExplicitAny:
-    visit(tree, "mdxJsxFlowElement", (node: any) => {
-      if (node.name !== "CodeImport" && node.name !== "CodeExamples") return;
+    visit(tree, 'mdxJsxFlowElement', (node: any) => {
+      if (node.name !== 'CodeImport' && node.name !== 'CodeExamples') return;
       // biome-ignore lint/suspicious/noExplicitAny:
-      const content = node.attributes?.find((a: any) => a.name === "__content");
+      const content = node.attributes?.find((a: any) => a.name === '__content');
 
       if (isGraphQLCodeSamples(node)) {
         const { tsCode, apolloCode, urqlCode } = getGraphQLCodeTabs(node);
-        const tsPre = h("element");
-        tsPre.tagName = "pre";
+        const tsPre = h('element');
+        tsPre.tagName = 'pre';
         tsPre.children = [tsCode];
 
-        const apolloPre = h("element");
-        apolloPre.tagName = "pre";
+        const apolloPre = h('element');
+        apolloPre.tagName = 'pre';
         apolloPre.children = [apolloCode];
 
-        const urlqPre = h("element");
-        urlqPre.tagName = "pre";
+        const urlqPre = h('element');
+        urlqPre.tagName = 'pre';
         urlqPre.children = [urqlCode];
 
         node.children = [tsPre, apolloPre, urlqPre];
         return;
       }
 
-      node.type = "element";
-      node.tagName = "pre";
+      node.type = 'element';
+      node.tagName = 'pre';
       // biome-ignore lint/suspicious/noExplicitAny:
-      const lang = node.attributes?.find((a: any) => a.name === "__language");
+      const lang = node.attributes?.find((a: any) => a.name === '__language');
       const code = h(
-        "code",
+        'code',
         { class: lang?.value },
-        content?.value.replace(/\r/g, "")
+        content?.value.replace(/\r/g, '')
       );
       node.children = [code];
     });
@@ -386,13 +386,13 @@ function codeImport() {
 function addLines() {
   return function transformer(tree: Root) {
     // biome-ignore lint/suspicious/noExplicitAny:
-    visit(tree, "", (node: any, _idx: any, parent: any) => {
+    visit(tree, '', (node: any, _idx: any, parent: any) => {
       if (!isCodeEl(node, parent)) return;
       let counter = 1;
       // biome-ignore lint/suspicious/noExplicitAny:
       node.children = node.children.reduce((acc: any, node: any) => {
-        if (node.properties?.["data-line"] === "") {
-          node.properties["data-line"] = counter;
+        if (node.properties?.['data-line'] === '') {
+          node.properties['data-line'] = counter;
           counter = counter + 1;
         }
         return acc.concat(node);
@@ -404,14 +404,14 @@ function addLines() {
 function addShowPlayground() {
   return function transformer(tree: Root) {
     // biome-ignore lint/suspicious/noExplicitAny:
-    visit(tree, "", (node: any, _, parent: any) => {
+    visit(tree, '', (node: any, _, parent: any) => {
       // WARNING this could break if rehype-pretty-code changes its implementation
       // or we stop using rehype-pretty-code
       // rehype-pretty-code wraps our pre elements in a div which is why this is needed
-      if (node.tagName !== "pre" && parent?.tagName !== "div") return;
+      if (node.tagName !== 'pre' && parent?.tagName !== 'div') return;
       if (!node.properties) node.properties = {};
       node.properties.showOpenPlayground = parent.attributes?.find(
-        (i: any) => i.name === "showOpenPlayground"
+        (i: any) => i.name === 'showOpenPlayground'
       )?.value.value;
     });
   };
@@ -420,8 +420,8 @@ function addShowPlayground() {
 function addRawCode() {
   return function transformer(tree: Root) {
     // biome-ignore lint/suspicious/noExplicitAny:
-    visit(tree, "", (node: any) => {
-      if (node.tagName !== "pre") return;
+    visit(tree, '', (node: any) => {
+      if (node.tagName !== 'pre') return;
       const text = toText(node);
       if (!node.properties) node.properties = {};
       node.properties.__code = text;
@@ -432,11 +432,11 @@ function addRawCode() {
 function addNumberOfLines() {
   return function transformer(tree: Root) {
     // biome-ignore lint/suspicious/noExplicitAny:
-    visit(tree, "", (node: any, _idx: any, parent: any) => {
+    visit(tree, '', (node: any, _idx: any, parent: any) => {
       if (!node.properties) node.properties = {};
       if (!isCodeEl(node, parent)) {
         const text = toText(node);
-        const lines = text.split("\n").length;
+        const lines = text.split('\n').length;
         node.properties.__lines = lines;
       }
     });
@@ -444,18 +444,18 @@ function addNumberOfLines() {
 }
 
 const getRehypeCodeOptions = (
-  theme: "light" | "dark"
+  theme: 'light' | 'dark'
 ): Partial<RehypeCodeOptions> => {
-  const themeFileName: string = theme === "light" ? "github-light" : "dracula";
+  const themeFileName: string = theme === 'light' ? 'github-light' : 'dracula';
   return {
     theme: JSON.parse(
-      readFileSync(`${getShikiPath()}/themes/${themeFileName}.json`, "utf-8")
+      readFileSync(`${getShikiPath()}/themes/${themeFileName}.json`, 'utf-8')
     ),
     getHighlighter,
   };
 };
 
-export const getMdxCode = (theme: "light" | "dark"): PluggableList => [
+export const getMdxCode = (theme: 'light' | 'dark'): PluggableList => [
   codeImport,
   codeGroup,
   codeGroup2,
