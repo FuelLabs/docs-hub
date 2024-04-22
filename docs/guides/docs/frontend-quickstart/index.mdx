@@ -30,9 +30,11 @@ Getting started with Fuel as a frontend or fullstack developer is as simple as:
   trim="true"
 />
 
-{/*install_help:example:start*/}
-> Having problems? Visit the [installation guide](/guides/installation) or post your question in our [forum](https://forum.fuel.network/).
-{/*install_help:example:end*/}
+<TextImport
+  file="../counter-dapp/building-a-smart-contract.mdx"
+  comment="install_help"
+  commentType="{/*"
+/>
 
 <TextImport
   file="../installation/index.mdx"
@@ -72,6 +74,8 @@ npm run fuels:dev
 
 </CodeTabs>
 
+The local endpoint for node will be `http://localhost:4000/graphql`.
+
 Next, open a new terminal in the project directory, and run the following command to start the frontend:
 
 <CodeTabs>
@@ -90,7 +94,7 @@ The frontend will be running at [`http://localhost:3000`](http://localhost:3000)
 
 While the local node is running, any changes you make to the Sway contract  inside the `sway-contract` folder will automatically trigger several updates:
 
-1. The contract gets rebuilt using `forc build`
+1. The contract gets rebuilt using `forc build`.
 2. The contract will be redeployed to the local node using `forc deploy`.
 3. New TypeScript types for the contract and a file called `contract-ids.json` with the new contract ID will be generated in the `src/sway-api` folder.
 
