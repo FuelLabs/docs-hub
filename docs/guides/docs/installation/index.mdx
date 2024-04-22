@@ -12,28 +12,10 @@ This guide will help you to install the Fuel toolchain binaries and prerequisite
 
 This guide covers the following topics:
 
-1. [Installing Rust](#installing-rust)
-2. [Installing the Fuel toolchain using `fuelup`](#installing-the-fuel-toolchain-using-fuelup)
-3. [Changing your default toolchain](#changing-your-default-toolchain)
-4. [Setting up a local wallet](#setting-up-a-local-wallet)
-
-## Installing Rust
-
-{/*install_rust:example:start*/}
-The Fuel toolchain is built on top of the Rust programming language. To install Rust, you can use the `rustup` tool.
-{/*install_rust:example:end*/}
-
-Run the following command in your shell; this downloads and runs `rustup-init.sh`, which in turn downloads and runs the correct version of the `rustup-init` executable for your platform.
-
-{/*ANCHOR: install_rust_command*/}
-
-```sh
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-```
-
-{/*ANCHOR: install_rust_command*/}
-
-Check the official Rust documentation to get more information on [installing the Rust toolchain](https://www.rust-lang.org/tools/install).
+1. [Installing the Fuel toolchain using `fuelup`](#installing-the-fuel-toolchain-using-fuelup)
+2. [Changing your default toolchain](#changing-your-default-toolchain)
+3. [Setting up a local wallet](#setting-up-a-local-wallet)
+4. [Installing Rust](#installing-rust)
 
 ## Installing the Fuel toolchain using fuelup
 
@@ -264,6 +246,26 @@ If you need to list your accounts, you can run the command below:
 ```console
 forc wallet accounts
 ```
+
+## Installing Rust
+
+{/*install_rust:example:start*/}
+If you want to develop with the `fuels` Rust SDK, you will need to install Rust on your machine. To install Rust, you can use the `rustup` tool.
+{/*install_rust:example:end*/}
+
+> You don't need to install Rust if you don't plan on using the Rust SDK.
+
+Run the following command in your shell; this downloads and runs `rustup-init.sh`, which in turn downloads and runs the correct version of the `rustup-init` executable for your platform.
+
+{/*ANCHOR: install_rust_command*/}
+
+```sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+{/*ANCHOR: install_rust_command*/}
+
+Check the official Rust documentation to get more information on [installing the Rust toolchain](https://www.rust-lang.org/tools/install).
 
 ## What's next?
 
