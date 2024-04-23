@@ -33,9 +33,17 @@ const touchShikiPath = (): void => {
   touched.current = true;
 };
 
+const SHIKI_LANGUAGES_PATH = `${getShikiPath()}/languages`;
+
+const getLanguageGrammer = (grammerFile: string) => {
+  const languageGrammer = JSON.parse(
+    readFileSync(`${SHIKI_LANGUAGES_PATH}/${grammerFile}`, "utf-8")
+  );
+  return languageGrammer;
+};
+
 const getHighlighter: RehypeCodeOptions["getHighlighter"] = async (options) => {
   touchShikiPath();
-  const pathFolder = `${getShikiPath()}/languages`;
 
   const highlighter = await shikiGetHighlighter({
     // This is technically not compatible with shiki's interface but
@@ -47,65 +55,65 @@ const getHighlighter: RehypeCodeOptions["getHighlighter"] = async (options) => {
       {
         name: "rust",
         scopeName: "source.rust",
-        path: `${pathFolder}/rust.tmLanguage.json`,
         displayName: "Rust",
         aliases: ["rs"],
+        ...getLanguageGrammer("rust.tmLanguage.json"),
       },
       {
         name: "javascript",
         scopeName: "source.js",
-        path: `${pathFolder}/javascript.tmLanguage.json`,
         displayName: "JavaScript",
         aliases: ["js"],
+        ...getLanguageGrammer("javascript.tmLanguage.json"),
       },
       {
         name: "typescript",
         scopeName: "source.ts",
-        path: `${pathFolder}/typescript.tmLanguage.json`,
         displayName: "TypeScript",
         aliases: ["ts"],
+        ...getLanguageGrammer("typescript.tmLanguage.json"),
       },
       {
         name: "tsx",
         scopeName: "source.tsx",
-        path: `${pathFolder}/tsx.tmLanguage.json`,
         displayName: "TSX",
+        ...getLanguageGrammer("tsx.tmLanguage.json"),
       },
       {
         name: "jsx",
         scopeName: "source.js.jsx",
-        path: `${pathFolder}/jsx.tmLanguage.json`,
         displayName: "JSX",
+        ...getLanguageGrammer("jsx.tmLanguage.json"),
       },
       {
         name: "json",
         scopeName: "source.json",
-        path: `${pathFolder}/json.tmLanguage.json`,
         displayName: "JSON",
+        ...getLanguageGrammer("json.tmLanguage.json"),
       },
       {
         name: "toml",
         scopeName: "source.toml",
-        path: `${pathFolder}/toml.tmLanguage.json`,
         displayName: "TOML",
+        ...getLanguageGrammer("toml.tmLanguage.json"),
       },
       {
         name: "graphql",
         scopeName: "source.graphql",
-        path: `${pathFolder}/graphql.tmLanguage.json`,
         displayName: "GraphQL",
         embeddedLangs: ["javascript", "typescript", "jsx", "tsx"],
+        ...getLanguageGrammer("graphql.tmLanguage.json"),
       },
       {
         name: "sway",
         scopeName: "source.sway",
-        path: `${pathFolder}/sway.tmLanguage.json`,
+        ...getLanguageGrammer("sway.tmLanguage.json"),
       },
       {
         id: "html",
         name: "html",
         scopeName: "text.html.basic",
-        path: `${pathFolder}/html.tmLanguage.json`,
+        ...getLanguageGrammer("html.tmLanguage.json"),
       },
     ],
   });
