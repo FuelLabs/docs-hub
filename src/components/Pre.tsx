@@ -45,6 +45,9 @@ export function Pre({
       ? codeStr.slice(0, -1)
       : codeStr;
 
+  console.log(`showOpenPlayground`, showOpenPlayground);
+  console.log(`className`, props.className);
+
   function handleCopy() {
     const copiedCode = code ?? gqlCode;
     typeof window !== 'undefined' &&

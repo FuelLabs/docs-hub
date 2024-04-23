@@ -1,8 +1,8 @@
-import fs from 'node:fs';
-import { EOL } from 'os';
-import path from 'path';
-import type { Parent } from 'unist-util-visit/lib';
-import type { VersionSet } from '~/src/types';
+import fs from "node:fs";
+import { EOL } from "os";
+import path from "path";
+import type { Parent } from "unist-util-visit/lib";
+import type { VersionSet } from "~/src/types";
 
 function extractCommentBlock(content: string, comment: string | null) {
   const lines = content.split(EOL);
@@ -15,7 +15,7 @@ function extractCommentBlock(content: string, comment: string | null) {
   let foundStart = false;
 
   for (let i = 0; i < lines.length; i++) {
-    const trimmed = lines[i].replace(/\s/g, '');
+    const trimmed = lines[i].replace(/\s/g, "");
 
     const start =
       trimmed === `//ANCHOR:${comment}` ||
@@ -41,18 +41,18 @@ function extractCommentBlock(content: string, comment: string | null) {
   let trimmedLines = newLines.filter((line) => {
     const thisLine = line.trimStart();
     return (
-      thisLine.startsWith('// ANCHOR') === false &&
-      thisLine.startsWith('// #region') === false &&
-      thisLine.startsWith('// #endregion') === false
+      thisLine.startsWith("// ANCHOR") === false &&
+      thisLine.startsWith("// #region") === false &&
+      thisLine.startsWith("// #endregion") === false
     );
   });
   trimmedLines = trimmedLines.map((line) => {
-    if (line.trimStart().startsWith('// #context')) {
-      return line.replace('// #context ', '');
+    if (line.trimStart().startsWith("// #context")) {
+      return line.replace("// #context ", "");
     }
     return line;
   });
-  const linesContent = trimmedLines.join('\n');
+  const linesContent = trimmedLines.join("\n");
   return linesContent;
 }
 
@@ -73,38 +73,42 @@ export function handleExampleImports(
   // biome-ignore lint/suspicious/noExplicitAny:
   parent: Parent<any, any>
 ) {
-  let content = '';
-  let filePath = node.value.replace(/(\.\.\/)+/g, '');
+  // add showOpenPlayground property if the node is a full example
+  if (node.value.includes("examples") && node.value.slice(-5, -2) === ".sw") {
+    node.showOpenPlayground = true;
+  }
+  let content = "";
+  let filePath = node.value.replace(/(\.\.\/)+/g, "");
 
   let exampleName = null;
   let paths = [];
-  let versionSet: VersionSet = 'default';
-  if (dirname.includes('docs/nightly/')) {
-    versionSet = 'nightly';
-  } else if (dirname.includes('docs/beta-4/')) {
-    versionSet = 'beta-4';
+  let versionSet: VersionSet = "default";
+  if (dirname.includes("docs/nightly/")) {
+    versionSet = "nightly";
+  } else if (dirname.includes("docs/beta-4/")) {
+    versionSet = "beta-4";
   }
 
-  if (node.type === 'code') {
+  if (node.type === "code") {
     // handle mdbook docs example format
-    filePath = filePath.replace('{{#include ', '').replace('}}', '');
-    paths = filePath.split(':');
-    if (paths.length > 1) exampleName = filePath.split(':').pop();
-  } else if (node.type === 'text') {
+    filePath = filePath.replace("{{#include ", "").replace("}}", "");
+    paths = filePath.split(":");
+    if (paths.length > 1) exampleName = filePath.split(":").pop();
+  } else if (node.type === "text") {
     // handle ts-sdk docs example format
-    filePath = filePath.replace('<<< @/', '').replace('<<< @', '');
+    filePath = filePath.replace("<<< @/", "").replace("<<< @", "");
 
     if (
-      filePath.startsWith('docs-snippets') ||
-      filePath.startsWith('demo-fuels')
+      filePath.startsWith("docs-snippets") ||
+      filePath.startsWith("demo-fuels")
     ) {
       filePath = `apps/${filePath}`;
     }
-    const pathData = filePath.split('{');
+    const pathData = filePath.split("{");
     filePath = pathData[0];
 
-    paths = filePath.split('#');
-    if (paths.length > 1) exampleName = filePath.split('#').pop();
+    paths = filePath.split("#");
+    if (paths.length > 1) exampleName = filePath.split("#").pop();
   }
 
   // if there is an example at the end of the url, remove it from the filepath
@@ -112,30 +116,33 @@ export function handleExampleImports(
     filePath = paths[0];
   }
 
-  const bookPathIndex = versionSet === 'default' ? 1 : 2;
-  const bookPath = dirname.split('/')[bookPathIndex];
-  const docsPath = versionSet === 'default' ? 'docs/' : `docs/${versionSet}/`;
+  const bookPathIndex = versionSet === "default" ? 1 : 2;
+  const bookPath = dirname.split("/")[bookPathIndex];
+  const docsPath = versionSet === "default" ? "docs/" : `docs/${versionSet}/`;
   let fileAbsPath = path.resolve(
     path.join(rootDir, `${docsPath}${bookPath}/`),
     filePath
   );
 
-  if (node.type === 'text') {
-    node.type = 'code';
-    const paths = filePath.split('.');
+  if (node.type === "text") {
+    node.type = "code";
+    const paths = filePath.split(".");
     let fileType = paths[paths.length - 1];
-    if (fileType === 'sw') fileType = 'rust';
+    if (fileType === "sw") fileType = "rust";
     node.lang = fileType;
-    parent.type = 'root';
+    parent.type = "root";
   }
 
   try {
-    if (fileAbsPath.includes('/fuels-ts/')) {
+    if (fileAbsPath.includes("/fuels-ts/")) {
       fileAbsPath = fileAbsPath
-      .replace('fuels-ts/demo', 'fuels-ts/apps/demo')
-      .replace('fuels-ts/create-fuels-counter-guide', 'fuels-ts/apps/create-fuels-counter-guide');
+        .replace("fuels-ts/demo", "fuels-ts/apps/demo")
+        .replace(
+          "fuels-ts/create-fuels-counter-guide",
+          "fuels-ts/apps/create-fuels-counter-guide"
+        );
     }
-    const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
+    const fileContent = fs.readFileSync(fileAbsPath, "utf8");
     const cachedFile = getFilesOnCache(fileAbsPath);
 
     const oldContent = oldContentMap.get(node.value);
@@ -147,7 +154,7 @@ export function handleExampleImports(
 
     content = extractCommentBlock(fileContent, exampleName);
   } catch (err) {
-    console.error('ERROR GETTING EXAMPLE CODE:', err);
+    console.error("ERROR GETTING EXAMPLE CODE:", err);
   }
 
   if (!content) {
