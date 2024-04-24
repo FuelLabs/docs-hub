@@ -1,0 +1,85 @@
+---
+title: Querying From A Dapp
+---
+
+# Querying From A Dapp
+
+There are several ways to interact with the Fuel GraphQL API from a frontend application.
+This section covers just a few options available to get you started.
+
+## JavaScript
+
+```javascript
+export async function getHealth() {
+  let response = await fetch('https://beta-5.fuel.network/graphql', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify({ query: '{ health }' }),
+  });
+  let data = await response.json();
+  console.log('DATA:', data);
+}
+```
+
+## Apollo Client
+
+Read the official Apollo Client docs [here](https://www.apollographql.com/apollo-client/).
+
+```bash
+npm install @apollo/client graphql
+```
+
+```javascript
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+
+const apolloClient = new ApolloClient({
+  uri: 'https://beta-5.fuel.network/graphql',
+  cache: new InMemoryCache(),
+});
+
+const HEALTH_QUERY = `
+  query {
+    health
+  }
+`;
+
+export const checkHealth = async () => {
+  const response = await apolloClient.query({
+    query: gql(HEALTH_QUERY),
+  });
+  console.log('RESPONSE:', response);
+};
+```
+
+## urql
+
+Read the official urql docs [here](https://formidable.com/open-source/urql/).
+
+```bash
+npm install urql graphql
+```
+
+```javascript
+import { Client, cacheExchange, fetchExchange } from 'urql';
+
+const urqlClient = new Client({
+  url: 'https://beta-5.fuel.network/graphql',
+  exchanges: [cacheExchange, fetchExchange],
+});
+
+const HEALTH_QUERY = `
+  query {
+    health
+  }
+`;
+
+export const checkHealth = async () => {
+  const response = await urqlClient.query(HEALTH_QUERY).toPromise();
+  console.log('RESPONSE:', response);
+};
+```
+
+You can see more examples in the next section.

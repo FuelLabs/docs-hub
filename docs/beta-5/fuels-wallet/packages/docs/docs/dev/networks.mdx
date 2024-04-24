@@ -1,0 +1,48 @@
+---
+title: Networks
+category: For Developers
+---
+
+# Networks
+
+## Add custom networks
+
+You can add new networks to the user's wallet by calling the `addNetwork()` method.
+
+<CodeImport
+  file="../../examples/networks/AddNetwork.tsx"
+  commentBlock="addNetwork"
+/>
+<Examples.AddNetwork />
+
+## Get current network
+
+To retrieve the current network of the user, you can use the `currentNetwork()` method.
+
+<CodeImport
+  file="../../examples/networks/CurrentNetwork.tsx"
+  commentBlock="currentNetwork"
+/>
+<Examples.CurrentNetwork />
+
+## With React
+
+### Add custom networks
+
+You can add new networks to the user's wallet by calling the `addNetwork()` method.
+
+<CodeImport
+  file="../../examples/networks/hooks/AddNetworkHook.tsx"
+  commentBlock="useAddNetwork"
+/>
+<Examples.AddNetworkHook />
+
+### Current network
+
+You can track the current network of the user by using the `currentNetwork()` method.
+
+<CodeImport
+  file="../../examples/networks/hooks/CurrentNetworkHook.tsx"
+  commentBlock="useNetwork"
+/>
+<Examples.CurrentNetworkHook />

@@ -1,0 +1,27 @@
+{
+  "menu": [
+    "Install",
+    "Browser Support",
+    "How To Use",
+    "For Developers",
+    "Contributing"
+  ],
+  "dev": [
+    "Getting Started",
+    "Connecting",
+    "Accounts",
+    "Assets",
+    "Signing a Message",
+    "Networks",
+    "ABIs",
+    "Wallet Connectors",
+    "API Reference",
+    "Hooks Reference",
+    "Playwright Utils"
+  ],
+  "contributing": [
+    "Running locally",
+    "Contributing Guide",
+    "Linking local dependencies"
+  ]
+}

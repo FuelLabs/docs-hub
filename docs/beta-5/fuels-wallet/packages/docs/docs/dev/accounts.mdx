@@ -1,0 +1,70 @@
+---
+title: Accounts
+category: For Developers
+---
+
+# Accounts
+
+## List user accounts
+
+Once the connection is authorized, you can list all the user accounts using `accounts()`.
+
+<CodeImport
+  file="../../examples/accounts/Accounts.tsx"
+  commentBlock="accounts"
+/>
+
+<Examples.ListAccounts />
+
+### Watch Account Changes
+
+To watch account events, you can use the `accounts` event.
+
+<CodeImport
+  file="../../examples/accounts/Accounts.tsx"
+  commentBlock="watchAccounts"
+/>
+<Examples.AccountsHook />
+
+## Get Current Account
+
+You can also get the current account being used in the wallet using `currentAccount()`.
+If the return is `null` this means that the current account selected by the user is not connected.
+
+<CodeImport
+  file="../../examples/accounts/CurrentAccount.tsx"
+  commentBlock="currentAccount"
+/>
+
+<Examples.CurrentAccount />
+
+### Watch Current Account Changes
+
+To monitor events related to the current account, utilize the `currentAccount` event. Receiving a `null` value from this event indicates that the user's currently selected account is not connected.
+If the event receive a `null` value this means that the current account selected by the user is not connected.
+
+<CodeImport
+  file="../../examples/accounts/CurrentAccount.tsx"
+  commentBlock="watchCurrentAccount"
+/>
+<Examples.CurrentAccountHook />
+
+## With React
+
+You can keep track of the current account when using React using the `useAccount` hook as shown below:
+
+### All Connected Accounts
+
+<CodeImport
+  file="../../examples/accounts/hooks/AccountsHook.tsx"
+  commentBlock="useAccounts"
+/>
+<Examples.AccountsHook />
+
+### Current Account
+
+<CodeImport
+  file="../../examples/accounts/hooks/CurrentAccountHook.tsx"
+  commentBlock="useAccount"
+/>
+<Examples.CurrentAccountHook />

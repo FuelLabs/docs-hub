@@ -1,0 +1,148 @@
+---
+title: Mutations
+category: Reference
+---
+
+# Mutations
+
+## `startSession`
+
+Initialize a new debugger session, returning its `ID`.
+A new VM instance is spawned for each session.
+The session is run in a separate database transaction,
+on top of the most recent node state.
+
+## `endSession`
+
+End a debugger session.
+Returns a `Boolean!` indicating whether the session was successfully ended.
+
+**args:**
+
+`id`: `ID!`
+
+The session ID.
+
+## `reset`
+
+Reset the VM instance to the initial state.
+Returns a `Boolean!` indicating whether the VM instance was successfully reset.
+
+**args:**
+
+`id`: `ID!`
+
+The session ID.
+
+## `execute`
+
+Execute a single `fuel-asm` instruction.
+Returns a `Boolean!` indicating whether the instruction was successfully executed.
+
+**args:**
+
+`id`: `ID!`
+
+The session ID.
+
+`op`: `String!`
+
+The `fuel-asm` instruction to execute.
+
+## `setSingleStepping`
+
+Set single-stepping mode for the VM instance.
+Returns a `Boolean!` indicating whether the mutation successfully executed.
+
+**args:**
+
+`id`: `ID!`
+
+The session ID.
+
+`enable`: `boolean`
+
+Whether to enable single-stepping mode.
+
+## `setBreakpoint`
+
+Set a breakpoint for a VM instance.
+Returns a `Boolean!` indicating whether the breakpoint was successfully set.
+
+**args:**
+
+`id`: `ID!`
+
+The session ID.
+
+`breakpoint`: [`Breakpoint!`](/docs/reference/objects/#breakpoint)
+
+The breakpoint to set.
+
+## `startTx`
+
+Run a single transaction in given session until it hits a breakpoint or completes.
+Returns a `RunResult!`.
+
+**args:**
+
+`id`: `ID!`
+
+The session ID.
+
+`txJson`: `String!`
+
+The transaction JSON string.
+
+## `continueTx`
+
+Resume execution of the VM instance after a breakpoint.
+Runs until the next breakpoint or until the transaction completes.
+Returns a `RunResult!`.
+
+**args:**
+
+`id`: `ID!`
+
+The session ID.
+
+## `dryRun`
+
+Spin up a new temporary node from the current state and emulate a given transaction.
+Returns a [`[Receipt!]!`](/docs/reference/objects/#receipt) for the emulated transaction.
+You can optionally use UTXO validation.
+
+**args:**
+
+`tx`: [`HexString!`](/docs/reference/scalars/#hexstring)
+
+The transaction hex string.
+
+`utxoValidation`: `Boolean`
+Whether or not to use UTXO validation.
+
+## `produceBlocks`
+
+Produce blocks that can be used for testing that requires block advancement.
+Returns a [`U32!`](/docs/reference/scalars/#u32).
+
+**args:**
+
+`startTimestamp`: [`Tai64Timestamp!`](/docs/reference/scalars/#tai64timestamp)
+
+The start time of the produced block.
+
+`blocksToProduce`: [`U64!`](/docs/reference/scalars/#u64)
+
+The number of blocks to produce.
+
+## `submit`
+
+Submit a transaction to the transaction pool.
+Returns a [`Transaction!`](/docs/reference/objects/#transaction).
+
+**args:**
+
+`tx`: [`HexString!`](/docs/reference/scalars/#hexstring)
+
+The transaction hex string.

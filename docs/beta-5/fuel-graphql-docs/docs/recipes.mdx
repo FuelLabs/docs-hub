@@ -1,0 +1,150 @@
+---
+title: Recipes
+---
+
+# Recipes
+
+You can see and test the example queries and mutations below.
+Click the "Run" button to run the query above it and see the response.
+Click the "TypeScript", "Apollo Client", or "urql" buttons to see code examples.
+
+- [Get an asset balance of an address](#get-an-asset-balance-of-an-address)
+- [List all asset balances of an address](#list-all-asset-balances-of-an-address)
+- [List all transactions from an address](#list-all-transactions-from-an-address)
+- [List the latest transactions](#list-the-latest-transactions)
+- [Get an asset balance of a contract](#get-an-asset-balance-of-a-contract)
+- [List all asset balances of a contract](#list-all-asset-balances-of-a-contract)
+- [List the latest blocks](#list-the-latest-blocks)
+- [Get block information by height](#get-block-information-by-height)
+- [List all messages owned by address](#list-all-messages-owned-by-address)
+- [Dry run a transaction](#dry-run-a-transaction)
+- [Submit a transaction](#submit-a-transaction)
+- [More Examples](#more-examples)
+
+## Get an asset balance of an address
+
+<GQLExamples.Balance />
+
+<CodeExamples
+  file="../examples/tests/balance.test.ts"
+  ts_testCase="get balance with ts"
+  apollo_testCase="get balance with apollo"
+  urql_testCase="get balance with urql"
+/>
+
+## List all asset balances of an address
+
+<GQLExamples.Balances />
+
+<CodeExamples
+  file="../examples/tests/balances.test.ts"
+  ts_testCase="get balances with ts"
+  apollo_testCase="get balances with apollo"
+  urql_testCase="get balances with urql"
+/>
+
+## List all transactions from an address
+
+<GQLExamples.Transactions />
+
+<CodeExamples
+  file="../examples/tests/transactions-by-owner.test.ts"
+  ts_testCase="get transactions with ts"
+  apollo_testCase="get transactions with apollo"
+  urql_testCase="get transactions with urql"
+/>
+
+## List the latest transactions
+
+<GQLExamples.LatestTransactions />
+
+<CodeExamples
+  file="../examples/tests/latest-transactions.test.ts"
+  ts_testCase="get latest transactions with ts"
+  apollo_testCase="get latest transactions with apollo"
+  urql_testCase="get latest transactions with urql"
+/>
+
+## Get an asset balance of a contract
+
+<GQLExamples.ContractBalance />
+
+<CodeExamples
+  file="../examples/tests/contract-balance.test.ts"
+  ts_testCase="get contract balance with ts"
+  apollo_testCase="get contract balance with apollo"
+  urql_testCase="get contract balance with urql"
+/>
+
+## List all asset balances of a contract
+
+<GQLExamples.ContractBalances />
+
+<CodeExamples
+  file="../examples/tests/contract-balances.test.ts"
+  ts_testCase="get contract balances with ts"
+  apollo_testCase="get contract balances with apollo"
+  urql_testCase="get contract balances with urql"
+/>
+
+## List the latest blocks
+
+<GQLExamples.LatestBlocks />
+
+<CodeExamples
+  file="../examples/tests/latest-blocks.test.ts"
+  ts_testCase="get latest blocks with ts"
+  apollo_testCase="get latest blocks with apollo"
+  urql_testCase="get latest blocks with urql"
+/>
+
+## Get block information by height
+
+<GQLExamples.BlockByHeight />
+
+<CodeExamples
+  file="../examples/tests/block.test.ts"
+  ts_testCase="get block info with ts"
+  apollo_testCase="get block info with apollo"
+  urql_testCase="get block info with urql"
+/>
+
+## List all messages owned by address
+
+<GQLExamples.MessageInfo />
+
+<CodeExamples
+  file="../examples/tests/messages.test.ts"
+  ts_testCase="get messages with ts"
+  apollo_testCase="get messages with apollo"
+  urql_testCase="get messages with urql"
+/>
+
+## Dry run a transaction
+
+```graphql
+mutation DryRun($encodedTransaction: HexString!, $utxoValidation: Boolean) {
+  dryRun(tx: $encodedTransaction, utxoValidation: $utxoValidation) {
+    receiptType
+    data
+  }
+}
+```
+
+## Submit a transaction
+
+```graphql
+mutation submit($encodedTransaction: HexString!) {
+  submit(tx: $encodedTransaction) {
+    id
+  }
+}
+```
+
+## More Examples
+
+You can find more examples of how we use this API in our GitHub:
+
+[Fuels Typescript SDK](https://github.com/FuelLabs/fuels-ts/)
+
+[Fuels Rust SDK](https://github.com/FuelLabs/fuels-rs/)
