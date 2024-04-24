@@ -316,7 +316,7 @@ function getGraphQLCodeTabs(node: any) {
   const tsCodeRaw = prettier.format(tsCodeContent, prettierProps);
   const tsCode = h('code', codeProps, tsCodeRaw);
 
-  const testnet = filepath.value.includes('/beta-4/') ? 'beta-4' : FUEL_TESTNET;
+  const testnet = filepath.value.includes('/beta-5/') ? 'beta-5' : FUEL_TESTNET;
 
   const apolloImport = `import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 

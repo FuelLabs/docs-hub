@@ -6,9 +6,9 @@ import 'plyr-react/plyr.css';
 import { useEffect, useMemo, useState } from 'react';
 
 import {
-  BETA_4_EXPLORER_LINK,
-  BETA_4_FAUCET_LINK,
-  BETA_4_PLAYGROUND_LINK,
+  BETA_5_EXPLORER_LINK,
+  BETA_5_FAUCET_LINK,
+  BETA_5_PLAYGROUND_LINK,
   BRIDGE_LINK,
   EXPLORER_LINK,
   FAUCET_LINK,
@@ -104,25 +104,25 @@ export function MDXRender({
     <provider.MDXProvider components={{ ...components, ...mdxComponents }}>
       <Content
         versionSet={versionSet}
-        fuelTestnet={versionSet === 'beta-4' ? 'beta-4' : FUEL_TESTNET}
+        fuelTestnet={versionSet === 'beta-5' ? 'beta-5' : FUEL_TESTNET}
         fuelTestnetInlineCode={<Code>{FUEL_TESTNET}</Code>}
         faucetLink={
           <Link
-            href={versionSet === 'beta-4' ? BETA_4_FAUCET_LINK : FAUCET_LINK}
+            href={versionSet === 'beta-5' ? BETA_5_FAUCET_LINK : FAUCET_LINK}
           >
-            <Code>{versionSet === 'beta-4' ? 'beta-4' : FUEL_TESTNET}</Code>{' '}
+            <Code>{versionSet === 'beta-5' ? 'beta-5' : FUEL_TESTNET}</Code>{' '}
             faucet
           </Link>
         }
-        faucetUrl={versionSet === 'beta-4' ? BETA_4_FAUCET_LINK : FAUCET_LINK}
+        faucetUrl={versionSet === 'beta-5' ? BETA_5_FAUCET_LINK : FAUCET_LINK}
         explorerUrl={
-          versionSet === 'beta-4' ? BETA_4_EXPLORER_LINK : EXPLORER_LINK
+          versionSet === 'beta-5' ? BETA_5_EXPLORER_LINK : EXPLORER_LINK
         }
         bridgeUrl={BRIDGE_LINK}
         GQLPlaygroundLink={
           <Link
             href={
-              versionSet === 'beta-4' ? BETA_4_PLAYGROUND_LINK : PLAYGROUND_LINK
+              versionSet === 'beta-5' ? BETA_5_PLAYGROUND_LINK : PLAYGROUND_LINK
             }
           >
             <Code>{FUEL_TESTNET}</Code> graphQL playground

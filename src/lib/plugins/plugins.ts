@@ -2,7 +2,7 @@ import { join } from 'path';
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
 import type { Parent } from 'unist-util-visit/lib';
-import { versions as beta4Versions } from '~/docs/beta-4/fuels-ts/packages/versions/src';
+import { versions as beta5Versions } from '~/docs/beta-5/fuels-ts/packages/versions/src';
 import { versions as defaultVersions } from '~/docs/fuels-ts/packages/versions/src';
 import { versions as nightlyVersions } from '~/docs/nightly/fuels-ts/packages/versions/src';
 
@@ -89,8 +89,8 @@ export function handlePlugins() {
     let versions = defaultVersions;
     if (filepath.includes('/nightly/')) {
       versions = nightlyVersions;
-    } else if (filepath.includes('/beta-4/')) {
-      versions = beta4Versions;
+    } else if (filepath.includes('/beta-5/')) {
+      versions = beta5Versions;
     }
 
     if (filepath.includes('/fuel-graphql-docs/')) {

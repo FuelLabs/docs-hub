@@ -3,8 +3,8 @@ import { join } from 'path';
 import { compile } from '@mdx-js/mdx';
 import { addRawDocumentToVFile } from 'contentlayer/core';
 import type { MdDoc } from 'contentlayer/generated';
-import { codeExamples as beta4CodeExamples } from '~/docs/beta-4/fuel-graphql-docs/src/lib/code-examples';
-import { codeImport as beta4WalletCodeImport } from '~/docs/beta-4/fuels-wallet/packages/docs/src/lib/code-import';
+import { codeExamples as beta5CodeExamples } from '~/docs/beta-5/fuel-graphql-docs/src/lib/code-examples';
+import { codeImport as beta5WalletCodeImport } from '~/docs/beta-5/fuels-wallet/packages/docs/src/lib/code-import';
 import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
 import { codeImport as walletCodeImport } from '~/docs/fuels-wallet/packages/docs/src/lib/code-import';
 import { codeExamples as nightlyCodeExamples } from '~/docs/nightly/fuel-graphql-docs/src/lib/code-examples';
@@ -99,7 +99,7 @@ export class Doc {
     let category = item.category;
     if (!category && item.slug.includes('docs/')) {
       const isNotDefault =
-        item.slug.includes('/nightly/') || item.slug.includes('/beta-4/');
+        item.slug.includes('/nightly/') || item.slug.includes('/beta-5/');
       const index = isNotDefault ? 3 : 2;
       const isIndex = split.length === index;
       category = split[isIndex ? index - 1 : index].replaceAll('-', ' ');
@@ -108,8 +108,8 @@ export class Doc {
     let versionSet = 'default';
     if (item.slug.includes('/nightly/')) {
       versionSet = 'nightly';
-    } else if (item.slug.includes('/beta-4/')) {
-      versionSet = 'beta-4';
+    } else if (item.slug.includes('/beta-5/')) {
+      versionSet = 'beta-5';
     }
 
     const doc = {
@@ -135,7 +135,7 @@ export class Doc {
   #getConfig(slug: string): Config {
     let newSlug = slug
       .replace('docs/nightly/', 'docs/')
-      .replace('docs/beta-4/', 'docs/');
+      .replace('docs/beta-5/', 'docs/');
     try {
       if (newSlug.startsWith('docs/')) {
         newSlug = newSlug.replace('docs/', '');
@@ -196,8 +196,8 @@ export class Doc {
     let configSlug = this.config.slug;
     if (slug.includes('/nightly/')) {
       configSlug = `nightly-${this.config.slug}`;
-    } else if (slug.includes('/beta-4/')) {
-      configSlug = `beta-4-${this.config.slug}`;
+    } else if (slug.includes('/beta-5/')) {
+      configSlug = `beta-5-${this.config.slug}`;
     }
     let guideName = this.item.slug.split('/')[0];
     const linksPath = join(
@@ -208,13 +208,13 @@ export class Doc {
     if (
       (configSlug === 'guides' ||
         configSlug === 'nightly-guides' ||
-        configSlug === 'beta-4-guides') &&
+        configSlug === 'beta-5-guides') &&
       guideName
     ) {
       if (configSlug === 'nightly-guides') {
         guideName = `${guideName}/nightly`;
-      } else if (configSlug === 'beta-4-guides') {
-        guideName = `${guideName}/beta-4`;
+      } else if (configSlug === 'beta-5-guides') {
+        guideName = `${guideName}/beta-5`;
       }
       const slug = this.item.slug
         .replace(`${guideName}/`, '')
@@ -290,18 +290,18 @@ export class Doc {
         // biome-ignore lint/suspicious/noExplicitAny:
         [nightlyWalletCodeImport, { filepath }] as any,
       ]);
-    } else if (slug.startsWith('docs/beta-4/wallet/')) {
+    } else if (slug.startsWith('docs/beta-5/wallet/')) {
       // biome-ignore lint/suspicious/noExplicitAny:
-      plugins = plugins.concat([[beta4WalletCodeImport, { filepath }] as any]);
+      plugins = plugins.concat([[beta5WalletCodeImport, { filepath }] as any]);
     } else if (slug.startsWith('docs/graphql/')) {
       // biome-ignore lint/suspicious/noExplicitAny:
       plugins = plugins.concat([[codeExamples, { filepath }] as any]);
     } else if (slug.startsWith('docs/nightly/graphql/')) {
       // biome-ignore lint/suspicious/noExplicitAny:
       plugins = plugins.concat([[nightlyCodeExamples, { filepath }] as any]);
-    } else if (slug.startsWith('docs/beta-4/graphql/')) {
+    } else if (slug.startsWith('docs/beta-5/graphql/')) {
       // biome-ignore lint/suspicious/noExplicitAny:
-      plugins = plugins.concat([[beta4CodeExamples, { filepath }] as any]);
+      plugins = plugins.concat([[beta5CodeExamples, { filepath }] as any]);
     } else if (slug.includes('guides') || slug.includes('/intro/')) {
       // biome-ignore lint/suspicious/noExplicitAny:
       plugins = plugins.concat([[codeImport, { filepath }] as any]);

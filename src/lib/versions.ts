@@ -3,7 +3,7 @@ import { join } from 'path';
 import toml from 'toml';
 
 import {
-  BETA_4_DOCS_DIRECTORY,
+  BETA_5_DOCS_DIRECTORY,
   DOCS_DIRECTORY,
   NIGHTLY_DOCS_DIRECTORY,
 } from '../config/constants';
@@ -77,7 +77,7 @@ export function getFuelCoreVersion() {
 }
 
 export function getFullFuelCoreVersion(versionSet: VersionSet) {
-  if (versionSet === 'beta-4') {
+  if (versionSet === 'beta-5') {
     return {
       name: 'fuel-graphql-docs',
       category: 'GraphQL API',
@@ -108,8 +108,8 @@ export function getVersions(versionSet: VersionSet) {
   let docsDir = DOCS_DIRECTORY;
   if (versionSet === 'nightly') {
     docsDir = NIGHTLY_DOCS_DIRECTORY;
-  } else if (versionSet === 'beta-4') {
-    docsDir = BETA_4_DOCS_DIRECTORY;
+  } else if (versionSet === 'beta-5') {
+    docsDir = BETA_5_DOCS_DIRECTORY;
   }
   const wallet = getWalletVersion(docsDir);
   const tsSDK = getTSSDKVersion(docsDir);
@@ -130,9 +130,9 @@ export function getVersions(versionSet: VersionSet) {
 export function getAllVersions() {
   const versions = getVersions('default');
   const nightlyVersions = getVersions('nightly');
-  const beta4Versions = getVersions('beta-4');
+  const beta5Versions = getVersions('beta-5');
 
-  return { versions, nightlyVersions, beta4Versions };
+  return { versions, nightlyVersions, beta5Versions };
 }
 
 // gets the correct url tag for github links

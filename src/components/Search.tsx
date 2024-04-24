@@ -13,9 +13,9 @@ function filter(items: DocSearchHit[], versionSet: VersionSet) {
   const filtered = items.filter((item) => {
     if (
       (versionSet === 'default' &&
-        (item.url.includes('/nightly/') || item.url.includes('/beta-4/'))) ||
+        (item.url.includes('/nightly/') || item.url.includes('/beta-5/'))) ||
       (versionSet === 'nightly' && !item.url.includes('/nightly/')) ||
-      (versionSet === 'beta-4' && !item.url.includes('/beta-4/'))
+      (versionSet === 'beta-5' && !item.url.includes('/beta-5/'))
     ) {
       return false;
     }

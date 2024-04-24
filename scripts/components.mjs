@@ -34,17 +34,17 @@ const NIGHTLY_GRAPHQL_COMPONENTS_CONFIG_PATH = path.join(
   './src/components.json'
 );
 
-// BETA-4 GRAPHQL DOCS COMPONENTS
-const BETA_4_GRAPHQL_DIRECTORY = path.join(
+// BETA-5 GRAPHQL DOCS COMPONENTS
+const BETA_5_GRAPHQL_DIRECTORY = path.join(
   DOCS_DIRECTORY,
-  `./beta-4/${GRAPHQL_BOOK_NAME}`
+  `./beta-5/${GRAPHQL_BOOK_NAME}`
 );
-const BETA_4_GRAPHQL_DOCS_DIRECTORY = path.join(
-  BETA_4_GRAPHQL_DIRECTORY,
+const BETA_5_GRAPHQL_DOCS_DIRECTORY = path.join(
+  BETA_5_GRAPHQL_DIRECTORY,
   './docs'
 );
-const BETA_4_GRAPHQL_COMPONENTS_CONFIG_PATH = path.join(
-  BETA_4_GRAPHQL_DIRECTORY,
+const BETA_5_GRAPHQL_COMPONENTS_CONFIG_PATH = path.join(
+  BETA_5_GRAPHQL_DIRECTORY,
   './src/components.json'
 );
 
@@ -79,21 +79,21 @@ const NIGHTLY_WALLET_COMPONENTS_CONFIG_PATH = path.join(
   './src/components.json'
 );
 
-// BETA-4 WALLET COMPONENTS
-const BETA_4_WALLET_PATH = path.join(
+// BETA-5 WALLET COMPONENTS
+const BETA_5_WALLET_PATH = path.join(
   DOCS_DIRECTORY,
-  `beta-4/${WALLET_BOOK_NAME}`
+  `beta-5/${WALLET_BOOK_NAME}`
 );
-const BETA_4_WALLET_DIRECTORY = path.join(
+const BETA_5_WALLET_DIRECTORY = path.join(
   DOCS_DIRECTORY,
-  `./beta-4/${WALLET_BOOK_NAME}/packages/docs`
+  `./beta-5/${WALLET_BOOK_NAME}/packages/docs`
 );
-const BETA_4_WALLET_DOCS_DIRECTORY = path.join(
-  BETA_4_WALLET_DIRECTORY,
+const BETA_5_WALLET_DOCS_DIRECTORY = path.join(
+  BETA_5_WALLET_DIRECTORY,
   './docs'
 );
-const BETA_4_WALLET_COMPONENTS_CONFIG_PATH = path.join(
-  BETA_4_WALLET_DIRECTORY,
+const BETA_5_WALLET_COMPONENTS_CONFIG_PATH = path.join(
+  BETA_5_WALLET_DIRECTORY,
   './src/components.json'
 );
 
@@ -120,13 +120,13 @@ async function main() {
     NIGHTLY_GRAPHQL_COMPONENTS_CONFIG_PATH,
     'nightly-graphql.ts'
   );
-  // BETA-4 GRAPHQL DOCS COMPONENTS
+  // BETA-5 GRAPHQL DOCS COMPONENTS
   await exportComponents(
-    BETA_4_GRAPHQL_DIRECTORY,
-    BETA_4_GRAPHQL_DOCS_DIRECTORY,
-    `beta-4/${GRAPHQL_BOOK_NAME}`,
-    BETA_4_GRAPHQL_COMPONENTS_CONFIG_PATH,
-    'beta-4-graphql.ts'
+    BETA_5_GRAPHQL_DIRECTORY,
+    BETA_5_GRAPHQL_DOCS_DIRECTORY,
+    `beta-5/${GRAPHQL_BOOK_NAME}`,
+    BETA_5_GRAPHQL_COMPONENTS_CONFIG_PATH,
+    'beta-5-graphql.ts'
   );
   // WALLET COMPONENTS
   await exportComponents(
@@ -144,13 +144,13 @@ async function main() {
     NIGHTLY_WALLET_COMPONENTS_CONFIG_PATH,
     'nightly-wallet.ts'
   );
-  // BETA-4 WALLET COMPONENTS
+  // BETA-5 WALLET COMPONENTS
   await exportComponents(
-    BETA_4_WALLET_PATH,
-    BETA_4_WALLET_DOCS_DIRECTORY,
-    `beta-4/${WALLET_BOOK_NAME}`,
-    BETA_4_WALLET_COMPONENTS_CONFIG_PATH,
-    'beta-4-wallet.ts'
+    BETA_5_WALLET_PATH,
+    BETA_5_WALLET_DOCS_DIRECTORY,
+    `beta-5/${WALLET_BOOK_NAME}`,
+    BETA_5_WALLET_COMPONENTS_CONFIG_PATH,
+    'beta-5-wallet.ts'
   );
 }
 

@@ -81,8 +81,8 @@ export function handleExampleImports(
   let versionSet: VersionSet = 'default';
   if (dirname.includes('docs/nightly/')) {
     versionSet = 'nightly';
-  } else if (dirname.includes('docs/beta-4/')) {
-    versionSet = 'beta-4';
+  } else if (dirname.includes('docs/beta-5/')) {
+    versionSet = 'beta-5';
   }
 
   if (node.type === 'code') {

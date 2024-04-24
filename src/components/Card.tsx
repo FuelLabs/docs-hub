@@ -14,7 +14,7 @@ import type { VersionSet } from '../types';
 export type CardInfo = {
   link: string;
   nightlyLink?: string;
-  beta4Link?: string;
+  beta5Link?: string;
   isExternal: boolean;
   heading: string;
   headingIcon?: string;
@@ -34,8 +34,8 @@ export function Card({ guideInfo, cardInfo, cardName, versionSet }: CardProps) {
     href = `/guides/${cardName.replaceAll('_', '-')}`;
   } else if (versionSet === 'nightly' && cardInfo?.nightlyLink) {
     href = cardInfo?.nightlyLink;
-  } else if (versionSet === 'beta-4' && cardInfo?.beta4Link) {
-    href = cardInfo?.beta4Link;
+  } else if (versionSet === 'beta-5' && cardInfo?.beta5Link) {
+    href = cardInfo?.beta5Link;
   } else {
     href = cardInfo?.link ?? '';
   }

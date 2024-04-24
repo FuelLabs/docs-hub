@@ -64,8 +64,8 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/docs/beta-4/wallet/',
-        destination: '/docs/beta-4/wallet/install/',
+        source: '/docs/beta-5/wallet/',
+        destination: '/docs/beta-5/wallet/install/',
         permanent: true,
       },
       {
@@ -79,8 +79,8 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/docs/beta-4/graphql/',
-        destination: '/docs/beta-4/graphql/overview/',
+        source: '/docs/beta-5/graphql/',
+        destination: '/docs/beta-5/graphql/overview/',
         permanent: true,
       },
       {

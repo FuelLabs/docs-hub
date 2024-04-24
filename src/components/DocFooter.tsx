@@ -57,7 +57,7 @@ export function DocFooter() {
   const hideGithubLink =
     (doc.pageLink.includes('github.com/FuelLabs/fuels-ts') &&
       doc.pageLink.includes('/api/')) ||
-    doc.pageLink.includes('docs/beta-4');
+    doc.pageLink.includes('docs/beta-5');
 
   return (
     <Box css={styles.root} as='footer'>

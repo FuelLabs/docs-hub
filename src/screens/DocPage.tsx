@@ -16,7 +16,7 @@ import { GuidesPage } from './GuidesPage';
 
 export function DocScreen(props: DocPageProps) {
   const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
-  const { doc, allNavs, allNightlyNavs, allBeta4Navs } = props;
+  const { doc, allNavs, allNightlyNavs, allBeta5Navs } = props;
   const [versionSet, setVersionSet] = useState<VersionSet>('default');
   const version = useVersion();
   const showWarning = useShowWarning();
@@ -29,8 +29,8 @@ export function DocScreen(props: DocPageProps) {
       } else {
         setIsAlertVisible(false);
       }
-    } else if (version === 'Beta-4' || doc?.versionSet === 'beta-4') {
-      setVersionSet('beta-4');
+    } else if (version === 'beta-5' || doc?.versionSet === 'beta-5') {
+      setVersionSet('beta-5');
       setIsAlertVisible(false);
     } else {
       setVersionSet('default');
@@ -42,7 +42,7 @@ export function DocScreen(props: DocPageProps) {
     versionSet,
     allNavs,
     allNightlyNavs,
-    allBeta4Navs,
+    allBeta5Navs,
     doc
   );
 
@@ -51,7 +51,7 @@ export function DocScreen(props: DocPageProps) {
     if (versionSet === 'nightly') {
       versions = props.nightlyVersions;
     } else {
-      versions = props.beta4Versions;
+      versions = props.beta5Versions;
     }
   }
 

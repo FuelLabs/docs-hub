@@ -15,7 +15,7 @@ export type Config = {
   };
 };
 
-export type VersionSet = 'default' | 'nightly' | 'beta-4';
+export type VersionSet = 'default' | 'nightly' | 'beta-5';
 
 export type DocType = {
   _raw: RawDocumentData;

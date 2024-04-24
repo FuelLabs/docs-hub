@@ -21,7 +21,7 @@ import type { DocType, NavOrder, SidebarLinkItem, Versions } from '../types';
 export type DocPageProps = {
   allNavs: NavOrder[];
   allNightlyNavs: NavOrder[];
-  allBeta4Navs: NavOrder[];
+  allBeta5Navs: NavOrder[];
   codeLight?: string;
   codeDark?: string;
   md?: MdDoc;
@@ -31,7 +31,7 @@ export type DocPageProps = {
   theme: string;
   versions: Versions;
   nightlyVersions: Versions;
-  beta4Versions: Versions;
+  beta5Versions: Versions;
   fuelCoreVersion?: string;
   nodeVersion?: string;
   nodeVersionMax?: string;
@@ -61,8 +61,8 @@ export function getStaticPaths() {
 export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   const slugArray = params?.slug as string[];
   const slug = slugArray.join('/');
-  const { allNavs, allNightlyNavs, allBeta4Navs } = getNavs();
-  const { versions, nightlyVersions, beta4Versions } = getAllVersions();
+  const { allNavs, allNightlyNavs, allBeta5Navs } = getNavs();
+  const { versions, nightlyVersions, beta5Versions } = getAllVersions();
 
   if (slug === 'guides') {
     const guidesPath = join(DOCS_DIRECTORY, './guides/docs/guides.json');
@@ -72,10 +72,10 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
         guides,
         allNavs,
         allNightlyNavs,
-        allBeta4Navs,
+        allBeta5Navs,
         versions,
         nightlyVersions,
-        beta4Versions,
+        beta5Versions,
       },
     };
   }
@@ -98,7 +98,7 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
     props: {
       allNavs,
       allNightlyNavs,
-      allBeta4Navs,
+      allBeta5Navs,
       codeLight: light,
       codeDark: dark,
       md: doc.md,
@@ -107,7 +107,7 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
       docLink: doc.navLinks,
       versions,
       nightlyVersions,
-      beta4Versions,
+      beta5Versions,
       fuelCoreVersion,
       nodeVersion,
       nodeVersionMax,

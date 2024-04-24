@@ -26,8 +26,8 @@ export function handleLinks(
   let versionSet: VersionSet = 'default';
   if (dirname.includes('/nightly/')) {
     versionSet = 'nightly';
-  } else if (dirname.includes('/beta-4/')) {
-    versionSet = 'beta-4';
+  } else if (dirname.includes('/beta-5/')) {
+    versionSet = 'beta-5';
   }
 
   if (dirname.includes('sway/docs/book/src/forc')) {
@@ -53,11 +53,11 @@ export function handleLinks(
       newUrl = newUrl.replace('docs/', 'docs/nightly/');
     }
     if (
-      versionSet === 'beta-4' &&
-      !newUrl.includes('/beta-4/') &&
+      versionSet === 'beta-5' &&
+      !newUrl.includes('/beta-5/') &&
       (newUrl.startsWith('docs/') || newUrl.startsWith('/docs/'))
     ) {
-      newUrl = newUrl.replace('docs/', 'docs/beta-4/');
+      newUrl = newUrl.replace('docs/', 'docs/beta-5/');
     }
 
     if (newUrl.includes('github.com/FuelLabs/')) {

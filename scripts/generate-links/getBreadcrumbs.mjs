@@ -3,7 +3,7 @@ import { editLabel } from './editLabel.mjs';
 export function getBreadcrumbs(
   isGuide,
   isNightly,
-  isBeta4,
+  isBeta5,
   slug,
   type,
   hasIndex,
@@ -18,8 +18,8 @@ export function getBreadcrumbs(
 
   if (isNightly) {
     breadcrumbs.push({ label: 'Nightly' });
-  } else if (isBeta4) {
-    breadcrumbs.push({ label: 'Beta-4' });
+  } else if (isBeta5) {
+    breadcrumbs.push({ label: 'Beta-5' });
   }
 
   if (slug.includes('docs/intro/')) {
@@ -27,14 +27,14 @@ export function getBreadcrumbs(
   } else if (slug.includes('docs/contributing/')) {
     breadcrumbs.push({ label: 'Contributing', link: '/docs/contributing/' });
   } else {
-    const i = isNightly || isBeta4 ? 2 : 1;
+    const i = isNightly || isBeta5 ? 2 : 1;
     if (type === 'submenu') {
       breadcrumbs = handleSubmenuCrumb(
         breadcrumbs,
         hasIndex,
         isGuide,
         isNightly,
-        isBeta4,
+        isBeta5,
         splitSlug,
         shouldBeLowerCase,
         thisCategory,
@@ -45,7 +45,7 @@ export function getBreadcrumbs(
         breadcrumbs,
         isGuide,
         isNightly,
-        isBeta4,
+        isBeta5,
         splitSlug,
         i,
         shouldBeLowerCase
@@ -73,7 +73,7 @@ function handleSubmenuCrumb(
   hasIndex,
   isGuide,
   isNightly,
-  isBeta4,
+  isBeta5,
   splitSlug,
   shouldBeLowerCase,
   thisCategory,
@@ -93,7 +93,7 @@ function handleSubmenuCrumb(
   }
   if (!isGuide) {
     if (!hasIndex) {
-      const i = isNightly || isBeta4 ? 3 : 2;
+      const i = isNightly || isBeta5 ? 3 : 2;
       const link = `/${splitSlug.slice(0, splitSlug.length - 1).join('/')}`;
       breadcrumbs.push({
         label: editLabel(splitSlug[i], shouldBeLowerCase),
@@ -122,13 +122,13 @@ function handleSubmenuItemCrumb(
   initialBreadcrumbs,
   isGuide,
   isNightly,
-  isBeta4,
+  isBeta5,
   splitSlug,
   i,
   shouldBeLowerCase
 ) {
   const breadcrumbs = initialBreadcrumbs;
-  const l = isGuide ? 2 : isNightly || isBeta4 ? 4 : 3;
+  const l = isGuide ? 2 : isNightly || isBeta5 ? 4 : 3;
   if (splitSlug.length > l) {
     const p = isGuide ? 1 : 2;
     const link1 = `/${splitSlug.slice(0, splitSlug.length - p).join('/')}`;

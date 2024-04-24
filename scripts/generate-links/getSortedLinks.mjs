@@ -6,10 +6,10 @@ import { getBreadcrumbs } from './getBreadcrumbs.mjs';
 const LOWER_CASE_NAV_PATHS = [
   'docs/forc/commands/',
   'docs/nightly/forc/commands/',
-  'docs/beta-4/forc/commands/',
+  'docs/beta-5/forc/commands/',
   'docs/forc/plugins/',
   'docs/nightly/forc/plugins/',
-  'docs/beta-4/forc/plugins/',
+  'docs/beta-5/forc/plugins/',
 ];
 
 export default function getSortedLinks(config, docs) {
@@ -17,12 +17,12 @@ export default function getSortedLinks(config, docs) {
     o.toLowerCase().replaceAll('-', '_').replaceAll(' ', '_')
   );
   const isNightly = docs[0].slug.includes('/nightly/');
-  const isBeta4 = docs[0].slug.includes('/beta-4/');
-  const links = createLinks(docs, isNightly, isBeta4);
-  let sortedLinks = sortLinks(lcOrder, links, config, isNightly, isBeta4);
+  const isBeta5 = docs[0].slug.includes('/beta-5/');
+  const links = createLinks(docs, isNightly, isBeta5);
+  let sortedLinks = sortLinks(lcOrder, links, config, isNightly, isBeta5);
 
   // TODO: FIX FUELS-TS NAV AT SOURCE
-  if (config.menu[0] === 'fuels-ts' && !isBeta4) {
+  if (config.menu[0] === 'fuels-ts' && !isBeta5) {
     sortedLinks = sortedLinks.filter((link) => {
       const remove =
         link.label !== 'Guide' &&
@@ -38,7 +38,7 @@ export default function getSortedLinks(config, docs) {
   return sortedLinks;
 }
 
-function createLinks(docs, isNightly, isBeta4) {
+function createLinks(docs, isNightly, isBeta5) {
   const links = [];
 
   for (let i = 0; i < docs.length; i++) {
@@ -55,7 +55,7 @@ function createLinks(docs, isNightly, isBeta4) {
     const finalSlug = doc.slug
       .toLowerCase()
       .replace('nightly/guides', 'guides/nightly')
-      .replace('beta-4/guides', 'guides/beta-4');
+      .replace('beta-5/guides', 'guides/beta-5');
     const isGuide = finalSlug.startsWith('guides');
 
     const splitSlug = finalSlug.split('/');
@@ -76,7 +76,7 @@ function createLinks(docs, isNightly, isBeta4) {
         isNightly,
         isExternal,
         isGuide,
-        isBeta4
+        isBeta5
       );
       links.push(newLink);
       continue;
@@ -97,7 +97,7 @@ function createLinks(docs, isNightly, isBeta4) {
         splitSlug,
         isExternal,
         isGuide,
-        isBeta4
+        isBeta5
       );
       continue;
     }
@@ -112,7 +112,7 @@ function createLinks(docs, isNightly, isBeta4) {
       isExternal,
       isNightly,
       isGuide,
-      isBeta4
+      isBeta5
     );
     links.push(newSubMenu);
   }
@@ -120,7 +120,7 @@ function createLinks(docs, isNightly, isBeta4) {
   return links;
 }
 
-function sortLinks(lcOrder, links, config, isNightly, isBeta4) {
+function sortLinks(lcOrder, links, config, isNightly, isBeta5) {
   const sortedLinks = lcOrder
     ? links
         /** Sort first level links */
@@ -184,7 +184,7 @@ function sortLinks(lcOrder, links, config, isNightly, isBeta4) {
               .replaceAll('-', '_');
 
             if (a.slug.includes('fuels-ts')) {
-              const pathLength = isNightly || isBeta4 ? 4 : 3;
+              const pathLength = isNightly || isBeta5 ? 4 : 3;
               const isIndexA = a.slug.split('/').length === pathLength;
               if (isIndexA) {
                 return -1;
@@ -224,7 +224,7 @@ function updateSlug(docSlug, isExternal) {
   if (
     !slug.startsWith('guides') &&
     !slug.startsWith('nightly/guides') &&
-    !slug.startsWith('beta-4/guides') &&
+    !slug.startsWith('beta-5/guides') &&
     !isExternal
   ) {
     slug = `docs/${slug}`;
@@ -249,9 +249,9 @@ function handleLink(
   isNightly,
   isExternal,
   isGuide,
-  isBeta4
+  isBeta5
 ) {
-  let newLabel = title.replace('nightly/', '').replace('beta-4/', '');
+  let newLabel = title.replace('nightly/', '').replace('beta-5/', '');
   if (newLabel === 'index' || newLabel === 'README') {
     newLabel = splitSlug[splitSlug.length - 1];
   }
@@ -260,7 +260,7 @@ function handleLink(
   const breadcrumbs = getBreadcrumbs(
     isGuide,
     isNightly,
-    isBeta4,
+    isBeta5,
     slug,
     'link',
     false,
@@ -289,7 +289,7 @@ function handleSubmenuItem(
   splitSlug,
   isExternal,
   isGuide,
-  isBeta4
+  isBeta5
 ) {
   const submenu = links[categoryIdx].submenu || [];
   let newLabel = title;
@@ -312,7 +312,7 @@ function handleSubmenuItem(
   const breadcrumbs = getBreadcrumbs(
     isGuide,
     isNightly,
-    isBeta4,
+    isBeta5,
     slug,
     'submenuItem',
     false,
@@ -342,14 +342,14 @@ function handleSubmenu(
   isExternal,
   isNightly,
   isGuide,
-  isBeta4
+  isBeta5
 ) {
   const hasIndex = thisCategory === title;
   const subpath = getSubmenuSubpath(splitSlug);
   const breadcrumbs = getBreadcrumbs(
     isGuide,
     isNightly,
-    isBeta4,
+    isBeta5,
     slug,
     'submenu',
     hasIndex,
@@ -381,15 +381,15 @@ function getSubmenuSubpath(splitSlug) {
   let subpath;
   if (splitSlug[1] === 'nightly') {
     subpath = `nightly/${splitSlug[2]}`;
-  } else if (splitSlug[1] === 'beta-4') {
-    subpath = `beta-4/${splitSlug[2]}`;
+  } else if (splitSlug[1] === 'beta-5') {
+    subpath = `beta-5/${splitSlug[2]}`;
   } else {
     subpath = splitSlug[1];
   }
 
   subpath = subpath
     .replace('nightly/guides', 'guides/nightly')
-    .replace('beta-4/guides', 'guides/beta-4');
+    .replace('beta-5/guides', 'guides/beta-5');
 
   return subpath;
 }
