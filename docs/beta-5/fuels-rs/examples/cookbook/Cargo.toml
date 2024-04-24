@@ -1,0 +1,19 @@
+[package]
+name = "fuels-example-cookbook"
+version = { workspace = true }
+authors = { workspace = true }
+edition = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+publish = false
+repository = { workspace = true }
+description = "Fuel Rust SDK cookbook examples."
+
+[dev-dependencies]
+fuels = { workspace = true }
+rand = { workspace = true }
+tokio = { workspace = true, features = ["full"] }
+
+[features]
+rocksdb = ["fuels/rocksdb"]
+fuel-core-lib = ["fuels/fuel-core-lib"]

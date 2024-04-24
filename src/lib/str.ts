@@ -24,6 +24,7 @@ const specialCapsWords = [
   { word: 'abi', newWord: 'ABI' },
   { word: 'graphql', newWord: 'graphQL' },
   { word: 'lsp', newWord: 'LSP' },
+  { word: 'sdk', newWord: 'SDK' },
 ];
 
 export function capitalize(val: string): string {
