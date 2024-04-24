@@ -339,9 +339,21 @@ action={{
 }}
 />
 
+<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
+
 ```sh
-cargo generate --init fuellabs/sway templates/sway-test-rs --name counter-contract
+cargo generate --init fuellabs/sway templates/sway-test-rs --name counter-contract --tag v0.49.3
 ```
+
+</ConditionalContent>
+
+<ConditionalContent versionSet={props.versionSet} showForVersions={['beta-4']}>
+
+```sh
+cargo generate --init fuellabs/sway templates/sway-test-rs --name counter-contract --tag v0.46.1
+```
+
+</ConditionalContent>
 
 ```sh
 ⚠️   Favorite `fuellabs/sway` not found in config, using it as a git repository: https://github.com/fuellabs/sway.git
