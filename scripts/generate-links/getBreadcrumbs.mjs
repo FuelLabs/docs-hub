@@ -24,8 +24,15 @@ export function getBreadcrumbs(
 
   if (slug.includes('docs/intro/')) {
     breadcrumbs.push({ label: 'Intro' });
+  } else if (slug.includes('docs/fuel-101/')) {
+    breadcrumbs.push({ label: 'Fuel 101', link: '/docs/fuel-101' });
   } else if (slug.includes('docs/contributing/')) {
     breadcrumbs.push({ label: 'Contributing', link: '/docs/contributing/' });
+  } else if (slug.includes('docs/notices/')) {
+    breadcrumbs.push({
+      label: 'Notices',
+      link: '/docs/notices/releasenotes-changelogs/',
+    });
   } else {
     const i = isNightly || isBeta4 ? 2 : 1;
     if (type === 'submenu') {

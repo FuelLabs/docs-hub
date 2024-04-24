@@ -62,7 +62,9 @@ export function Sidebar({
 
           {allNavs.map((navOrder) => {
             const catIndex = versionSet === 'default' ? 1 : 2;
-            let key = navOrder.links[0].slug.split('/')[catIndex];
+            let key = navOrder.links[0].slug
+              ? navOrder.links[0].slug.split('/')[catIndex]
+              : navOrder.links[0].submenu[0].slug.split('/')[catIndex];
             if (key === 'sway') {
               key = 'forc';
             }

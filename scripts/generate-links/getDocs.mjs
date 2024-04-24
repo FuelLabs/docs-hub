@@ -189,10 +189,19 @@ export async function getDocs(key, order) {
         './guides/docs/migration-guide/breaking-change-log/breaking-changes-log.md',
       ];
       break;
+    case 'notices':
+      paths = ['./notices/*.mdx'];
+      break;
     case 'intro':
       paths = [
         // INTRO
         './intro/*.mdx',
+      ];
+      break;
+    case 'fuel-101':
+      paths = [
+        // FUEL 101
+        './fuel-101/*.mdx',
       ];
       break;
     case 'contributing':
