@@ -53,56 +53,56 @@ const getHighlighter: RehypeCodeOptions["getHighlighter"] = async (options) => {
     ...(options as any),
     langs: [
       {
+        ...getLanguageGrammer("rust.tmLanguage.json"),
         name: "rust",
         scopeName: "source.rust",
         displayName: "Rust",
         aliases: ["rs"],
-        ...getLanguageGrammer("rust.tmLanguage.json"),
       },
       {
+        ...getLanguageGrammer("javascript.tmLanguage.json"),
         name: "javascript",
         scopeName: "source.js",
         displayName: "JavaScript",
         aliases: ["js"],
-        ...getLanguageGrammer("javascript.tmLanguage.json"),
       },
       {
+        ...getLanguageGrammer("typescript.tmLanguage.json"),
         name: "typescript",
         scopeName: "source.ts",
         displayName: "TypeScript",
         aliases: ["ts"],
-        ...getLanguageGrammer("typescript.tmLanguage.json"),
       },
       {
+        ...getLanguageGrammer("tsx.tmLanguage.json"),
         name: "tsx",
         scopeName: "source.tsx",
         displayName: "TSX",
-        ...getLanguageGrammer("tsx.tmLanguage.json"),
       },
       {
+        ...getLanguageGrammer("jsx.tmLanguage.json"),
         name: "jsx",
         scopeName: "source.js.jsx",
         displayName: "JSX",
-        ...getLanguageGrammer("jsx.tmLanguage.json"),
       },
       {
+        ...getLanguageGrammer("json.tmLanguage.json"),
         name: "json",
         scopeName: "source.json",
         displayName: "JSON",
-        ...getLanguageGrammer("json.tmLanguage.json"),
       },
       {
+        ...getLanguageGrammer("toml.tmLanguage.json"),
         name: "toml",
         scopeName: "source.toml",
         displayName: "TOML",
-        ...getLanguageGrammer("toml.tmLanguage.json"),
       },
       {
+        ...getLanguageGrammer("graphql.tmLanguage.json"),
         name: "graphql",
         scopeName: "source.graphql",
         displayName: "GraphQL",
         embeddedLangs: ["javascript", "typescript", "jsx", "tsx"],
-        ...getLanguageGrammer("graphql.tmLanguage.json"),
       },
       {
         ...getLanguageGrammer("sway.tmLanguage.json"),
@@ -110,10 +110,10 @@ const getHighlighter: RehypeCodeOptions["getHighlighter"] = async (options) => {
         scopeName: "source.sway",
       },
       {
+        ...getLanguageGrammer("html.tmLanguage.json"),
         id: "html",
         name: "html",
         scopeName: "text.html.basic",
-        ...getLanguageGrammer("html.tmLanguage.json"),
       },
     ],
   });
@@ -281,8 +281,10 @@ function codeLanguage() {
       if (lang?.includes("tsx")) {
         node.properties.className[0] = "language-typescript";
       }
+      // Since rehype-pretty-code now adds languages found in className
+      // and we don't want styling for sh, overwrite to make it plaintext
       if (lang?.includes("sh")) {
-        node.properties.className[0] = "language-sh";
+        node.properties.className[0] = "language-plaintext";
       }
       if (lang?.includes("json")) {
         node.properties.className[0] = "language-json";
@@ -471,11 +473,15 @@ const getRehypeCodeOptions = (
   theme: "light" | "dark"
 ): Partial<RehypeCodeOptions> => {
   const themeFileName: string = theme === "light" ? "github-light" : "dracula";
-  const temp = {
+  return {
     theme: JSON.parse(
       readFileSync(`${getShikiPath()}/themes/${themeFileName}.json`, "utf-8")
     ),
     getHighlighter,
+    // filterMetaString: (str: string) => {
+    //   console.log(`str`, str);
+    //   return str.replace("sh", "");
+    // },
     // transformers: [
     //   {
     //     name: "test",
@@ -494,7 +500,6 @@ const getRehypeCodeOptions = (
     //   },
     // ],
   };
-  return temp;
 };
 
 export const getMdxCode = (theme: "light" | "dark"): PluggableList => [
