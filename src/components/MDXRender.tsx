@@ -30,7 +30,6 @@ import { Link } from './Link';
 import { OL, UL } from './List';
 import { Paragraph } from './Paragraph';
 import { Pre } from './Pre';
-import { QuickstartCallout } from './QuickstartCallout';
 import { QuickstartCards } from './QuickstartCards';
 import { Table } from './Table';
 
@@ -57,7 +56,6 @@ export const mdxComponents = {
   Box,
   Player,
   CardSection,
-  QuickstartCallout,
   CodeTabs,
   ConditionalContent,
   QuickstartCards,
