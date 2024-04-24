@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fuels/connectors": "^0.1.1",
+    "@fuels/connectors": "^0.2.2",
     "@fuels/react": "^0.18.0",
     "@tanstack/react-query": "^5.28.9",
     "@testing-library/jest-dom": "^5.16.5",

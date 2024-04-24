@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  useBalance,
   useConnectUI,
   useIsConnected,
   useWallet
@@ -8,6 +9,7 @@ import {
 // You can also do command + space and the compiler will suggest the correct name.
 import { CounterContractAbi__factory  } from "./sway-api"
 import type { CounterContractAbi } from "./sway-api";
+import { BaseAssetId } from "fuels";
 
 const CONTRACT_ID = 
   "0x...";
@@ -18,6 +20,10 @@ export default function Home() {
   const { connect, isConnecting } = useConnectUI();
   const { isConnected } = useIsConnected();
   const { wallet } = useWallet();
+  const { balance } = useBalance({
+    address: wallet?.address.toAddress(),
+    assetId: BaseAssetId,
+  });
 
   useEffect(() => {
     async function getInitialCount(){
@@ -73,12 +79,22 @@ export default function Home() {
             <div style={styles.counter}>
               {counter ?? 0}
             </div>
+
+            {balance && balance.toNumber() === 0 ? (
+              <p>Get testnet funds from the <a target="_blank" rel="noopener noreferrer"  href={`https://faucet-testnet.fuel.network/?address=${wallet?.address.toAddress()}`}>Fuel Faucet</a> to increment the counter.</p>
+          ) : 
+          (
             <button
             onClick={onIncrementPressed}
             style={styles.button}
             >
               Increment Counter
             </button>
+          )
+          }
+            
+          <p>Your Fuel Wallet address is:</p>
+          <p>{wallet?.address.toAddress()}</p>
           </>
         ) : (
           <button
@@ -118,7 +134,7 @@ const styles = {
   },
   button: {
     borderRadius: "8px",
-    marginTop: "24px",
+    margin: "24px 0px",
     backgroundColor: "#707070",
     fontSize: "16px",
     color: "#ffffffec",
