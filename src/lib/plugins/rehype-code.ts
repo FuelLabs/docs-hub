@@ -105,9 +105,9 @@ const getHighlighter: RehypeCodeOptions["getHighlighter"] = async (options) => {
         ...getLanguageGrammer("graphql.tmLanguage.json"),
       },
       {
-        name: "sway",
-        scopeName: "source.sway",
         ...getLanguageGrammer("sway.tmLanguage.json"),
+        name: "sway", // The language grammer has the name as "Sway" and we need it to be "sway"
+        scopeName: "source.sway",
       },
       {
         id: "html",
@@ -417,8 +417,6 @@ function addShowPlayground() {
       // WARNING this could break if rehype-pretty-code changes its implementation
       // or we stop using rehype-pretty-code
       // rehype-pretty-code wraps our pre elements in a div which is why this is needed
-      console.log(`node`, node);
-      console.log(`parent`, parent);
       if (node.tagName !== "pre" || parent?.tagName !== "div") return;
       if (!node.properties) node.properties = {};
       node.properties.showOpenPlayground = parent.attributes?.find(
