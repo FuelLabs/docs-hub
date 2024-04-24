@@ -29,7 +29,7 @@ export function DocScreen(props: DocPageProps) {
       } else {
         setIsAlertVisible(false);
       }
-    } else if (version === 'beta-5' || doc?.versionSet === 'beta-5') {
+    } else if (version === 'Beta-5' || doc?.versionSet === 'beta-5') {
       setVersionSet('beta-5');
       setIsAlertVisible(false);
     } else {

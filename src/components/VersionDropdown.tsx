@@ -131,7 +131,7 @@ const styles = {
     border: 'none',
     height: '100%',
     fontSize: '$xs',
-    width: '140px',
+    width: '142px',
     '@sm': {
       fontSize: '$sm',
       width: '156px',
