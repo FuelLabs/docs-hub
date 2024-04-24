@@ -270,9 +270,9 @@ function handleTSDocs(
     } else if (node.type === 'image') {
       if (node.url.includes('/public/')) {
         const path = node.url
-        .replace('../../public/', '')
-        .replace('./public/', '')
-        .replace('.png', '');
+          .replace('../../public/', '')
+          .replace('./public/', '')
+          .replace('.png', '');
         node.url = `/api/image/${path}`;
       }
     }
