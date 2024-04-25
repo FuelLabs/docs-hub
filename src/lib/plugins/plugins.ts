@@ -10,7 +10,7 @@ import { handleForcGenDocs } from './forc-gen-docs';
 import { handleLinks } from './links';
 import { handleExampleImports } from './mdbook-example-import';
 import { handleRustVersion } from './rust-versions';
-import { TSVersions, handleScriptLink } from './ts-docs';
+import { type TSVersions, handleScriptLink } from './ts-docs';
 import {
   handleDemoComp,
   handlePlayerComp,
