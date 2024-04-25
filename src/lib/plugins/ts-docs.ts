@@ -1,14 +1,14 @@
 import { EOL } from 'os';
 import type { Root } from 'remark-gfm';
 
-export function handleScriptLink(
-  tree: Root,
-  versions: {
-    FORC: string;
-    FUELS: string;
-    FUEL_CORE: string;
-  }
-) {
+export type TSVersions = {
+  forc: string;
+  fuelCore: string;
+  fuels: string;
+  fuelsInstallVersion?: string;
+};
+
+export function handleScriptLink(tree: Root, versions: TSVersions) {
   let url = '';
   // biome-ignore lint/suspicious/noImplicitAnyLet:
   let paragraphIndex;
@@ -22,7 +22,7 @@ export function handleScriptLink(
   for (let i = 0; i < lines.length; i++) {
     const trimmed = lines[i].trimStart();
     if (trimmed.startsWith('http')) {
-      url = trimmed.replace('${forc}', versions.FORC);
+      url = trimmed.replace('${forc}', versions.forc);
     }
   }
   if (url !== '') {

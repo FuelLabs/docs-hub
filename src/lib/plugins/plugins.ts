@@ -2,26 +2,20 @@ import { join } from 'path';
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
 import type { Parent } from 'unist-util-visit/lib';
-import { versions as beta4Versions } from '~/docs/beta-4/fuels-ts/packages/versions/src';
-import { versions as defaultVersions } from '~/docs/fuels-ts/packages/versions/src';
-import { versions as nightlyVersions } from '~/docs/nightly/fuels-ts/packages/versions/src';
+import beta4Versions from '~/docs/beta-4/fuels-ts/apps/docs/src/versions.data';
+import defaultVersions from '~/docs/fuels-ts/apps/docs/src/versions.data';
+import nightlyVersions from '~/docs/nightly/fuels-ts/apps/docs/src/versions.data';
 
 import { handleForcGenDocs } from './forc-gen-docs';
 import { handleLinks } from './links';
 import { handleExampleImports } from './mdbook-example-import';
 import { handleRustVersion } from './rust-versions';
-import { handleScriptLink } from './ts-docs';
+import { TSVersions, handleScriptLink } from './ts-docs';
 import {
   handleDemoComp,
   handlePlayerComp,
   handleWalletImages,
 } from './wallet-docs';
-
-type TSVersions = {
-  FORC: string;
-  FUEL_CORE: string;
-  FUELS: string;
-};
 
 // biome-ignore lint/suspicious/noExplicitAny:
 type NodeArray = [any, number | null, Parent<any, any>][];
@@ -67,7 +61,8 @@ const conditions = {
       typeof node.value === 'string' &&
       (node.value.includes('{{fuels}}') ||
         node.value.includes('{{fuelCore}}') ||
-        node.value.includes('{{forc}}'))
+        node.value.includes('{{forc}}') ||
+        node.value.includes('{{fuelsInstallVersion}}'))
     );
   },
   // biome-ignore lint/suspicious/noExplicitAny:
@@ -86,11 +81,11 @@ export function handlePlugins() {
     const rootDir = process.cwd();
     const filepath = join(rootDir, file.data.rawDocumentData?.sourceFilePath);
     const dirname = file.data.rawDocumentData?.sourceFileDir;
-    let versions = defaultVersions;
+    let versions: TSVersions = defaultVersions.load();
     if (filepath.includes('/nightly/')) {
-      versions = nightlyVersions;
+      versions = nightlyVersions.load();
     } else if (filepath.includes('/beta-4/')) {
-      versions = beta4Versions;
+      versions = beta4Versions.load();
     }
 
     if (filepath.includes('/fuel-graphql-docs/')) {
@@ -259,9 +254,13 @@ function handleTSDocs(
     } else if (conditions.tsBookVersions(node)) {
       if (typeof node.value === 'string') {
         node.value = node.value
-          .replaceAll('{{fuels}}', versions.FUELS)
-          .replaceAll('{{fuelCore}}', versions.FUEL_CORE)
-          .replaceAll('{{forc}}', versions.FORC);
+          .replaceAll('{{fuels}}', versions.fuels)
+          .replaceAll('{{fuelCore}}', versions.fuelCore)
+          .replaceAll('{{forc}}', versions.forc)
+          .replaceAll(
+            '{{fuelsInstallVersion}}',
+            versions.fuelsInstallVersion ?? ''
+          );
       }
     } else if (node.type === 'code' && node.lang === 'ts:line-numbers') {
       node.lang = 'ts';
@@ -270,9 +269,9 @@ function handleTSDocs(
     } else if (node.type === 'image') {
       if (node.url.includes('/public/')) {
         const path = node.url
-        .replace('../../public/', '')
-        .replace('./public/', '')
-        .replace('.png', '');
+          .replace('../../public/', '')
+          .replace('./public/', '')
+          .replace('.png', '');
         node.url = `/api/image/${path}`;
       }
     }
