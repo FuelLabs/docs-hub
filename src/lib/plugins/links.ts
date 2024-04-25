@@ -127,7 +127,7 @@ function handleTSLinks(url: string | null, versionSet: VersionSet) {
         .replace('/providers', '/api-providers');
     }
     newUrl = newUrl
-    .replace("/guide/", "/fuels-ts/")
+    .replace("/guide/", "/")
     .replace("/fuels-ts/../", "/fuels-ts/");
   }
   return newUrl;
