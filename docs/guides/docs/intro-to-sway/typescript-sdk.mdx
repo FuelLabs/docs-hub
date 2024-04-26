@@ -41,7 +41,7 @@ action={{
 />
 
 ```sh
-npm install fuels@0.79.0 @fuels/react@0.18.0 @fuels/connectors@0.1.1 @tanstack/react-query@5.28.9
+npm install fuels@0.82.0 @fuels/react@0.18.0 @fuels/connectors@0.1.1 @tanstack/react-query@5.28.9
 ```
 
 ## Generate contract types
@@ -60,7 +60,7 @@ action={{
 />
 
 ```sh
-npx fuels init --contracts ../contract/ --output ./src/contracts
+npx fuels@0.82.0 init --contracts ../contract/ --output ./src/contracts
 ```
 
 Now that you have a `fuels.config.ts` file, you can use the `fuels build` command to rebuild your contract and generate types.
@@ -88,7 +88,7 @@ action={{
 />
 
 ```sh
-npx fuels build
+npx fuels@0.82.0 build
 ```
 
 A successful process should print and output like the following:
