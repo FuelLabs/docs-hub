@@ -9,6 +9,7 @@ import {
   Text,
   toast,
 } from '@fuel-ui/react';
+import { toText } from 'hast-util-to-text';
 import { Children, type ReactNode, useState } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import darkTheme from 'react-syntax-highlighter/dist/cjs/styles/prism/night-owl';
@@ -45,9 +46,6 @@ export function Pre({
       ? codeStr.slice(0, -1)
       : codeStr;
 
-  console.log(`showOpenPlayground`, showOpenPlayground);
-  console.log(`className`, props.className);
-
   function handleCopy() {
     const copiedCode = code ?? gqlCode;
     typeof window !== 'undefined' &&
@@ -57,12 +55,19 @@ export function Pre({
   }
 
   async function openSwayPlayground() {
+    console.log(`code`, code);
     const playgroundCode = code ?? '';
-    // TODO: this will break if sway playground changes urls
-    window.open('https://www.sway-playground.org/', '_blank');
-    // TODO: this will break if the storage key in sway playground is changed
-    // or the playground changes how it stores the abi
-    localStorage.setItem('playground_abi', playgroundCode);
+    // WARNING: this will break if sway playground changes urls
+    const playgroundWindow = window.open(
+      'https://www.sway-playground.org/',
+      '_blank'
+    );
+    // WARNING: this will break if the storage key in sway playground is changed
+    // or the playground changes how it stores the contract code
+    playgroundWindow?.localStorage.setItem(
+      'playground_contract',
+      playgroundCode
+    );
   }
 
   function toggleExpand() {

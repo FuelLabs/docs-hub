@@ -282,7 +282,7 @@ function codeLanguage() {
         node.properties.className[0] = "language-typescript";
       }
       // Since rehype-pretty-code now adds languages found in className
-      // and we don't want styling for sh, overwrite to make it plaintext
+      // and we don't want styling for sh we overwrite className to make it plaintext
       if (lang?.includes("sh")) {
         node.properties.className[0] = "language-plaintext";
       }
@@ -412,33 +412,21 @@ function addLines() {
   };
 }
 
+// WARNING this could break if rehype-pretty-code changes its implementation
+// or we stop using rehype-pretty-code
+// rehype-pretty-code wraps our pre elements in a div which is why this is needed
 function addShowPlayground() {
   return function transformer(tree: Root) {
     // biome-ignore lint/suspicious/noExplicitAny:
     visit(tree, "", (node: any, _, parent: any) => {
-      // WARNING this could break if rehype-pretty-code changes its implementation
-      // or we stop using rehype-pretty-code
-      // rehype-pretty-code wraps our pre elements in a div which is why this is needed
-      if (node.tagName !== "pre" || parent?.tagName !== "div") return;
+      // This is less efficient than checking if the parent tagName is "figure"
+      // but I think it will be more resistant to breaking changes
+      const showOpenPlayground =
+        parent?.attributes?.find((i: any) => i.name === "showOpenPlayground")
+          ?.value.value || parent?.properties?.showOpenPlayground;
+      if (node.tagName !== "pre" || !showOpenPlayground) return;
       if (!node.properties) node.properties = {};
-      node.properties.showOpenPlayground = parent.attributes?.find(
-        (i: any) => i.name === "showOpenPlayground"
-      )?.value.value;
-    });
-  };
-}
-
-function addShowPlaygroundFromCode() {
-  return function transformer(tree: Root) {
-    // biome-ignore lint/suspicious/noExplicitAny:
-    visit(tree, "", (node: any, _, parent: any) => {
-      // WARNING this could break if rehype-pretty-code changes its implementation
-      // or we stop using rehype-pretty-code
-      // rehype-pretty-code wraps our pre elements in a div which is why this is needed
-      if (node.tagName !== "code" || parent?.tagName !== "pre") return;
-      console.log(`parent`, parent);
-      // if (!parent.properties) parent.properties = {};
-      // parent.properties.showOpenPlayground = node.properties.showOpenPlayground;
+      node.properties.showOpenPlayground = showOpenPlayground;
     });
   };
 }
@@ -478,27 +466,6 @@ const getRehypeCodeOptions = (
       readFileSync(`${getShikiPath()}/themes/${themeFileName}.json`, "utf-8")
     ),
     getHighlighter,
-    // filterMetaString: (str: string) => {
-    //   console.log(`str`, str);
-    //   return str.replace("sh", "");
-    // },
-    // transformers: [
-    //   {
-    //     name: "test",
-    //     preprocess() {
-    //       console.log("here");
-    //     },
-    //     code(node) {
-    //       console.log(`code`, node);
-    //     },
-    //     pre(node) {
-    //       console.log(`node`, node);
-    //     },
-    //     span(node, _1, _2) {
-    //       console.log(`node`, node);
-    //     },
-    //   },
-    // ],
   };
 };
 
