@@ -14,22 +14,25 @@ Transactions and blocks on the Fuel network have a unique structure that is opti
 
 ## What are the different types of transactions?
 
-There are currently three types of transactions:
+There are five types of transactions:
 
 <CodeImport
   file="../fuel-specs/src/tx-format/transaction.md"
   lang="rust"
   lineStart="4"
-  lineEnd="8"
+  lineEnd="10"
 />
 
 1. **Script Transactions** are transactions that require some type of execution and don't hold internal state.
 2. **Create Transactions** create new contracts on the Fuel network. This is the type of transaction that occurs when you run `forc deploy`.
 3. **Mint Transactions** are used when new coins are minted as part of a coinbase transaction. `Mint` transactions are created by the block producer and are not signed.
+4. **Upgrade Transactions** are used to upgrade the network.
+5. **Upload Transactions** are used to upload chunks of state transition bytecode before network upgrades.
 
 ## What data is included in a transaction?
 
-Transactions on the Fuel network utilize a UTXO model (add link to UTXO page).
+{/*TODO: add link to UTXO page*/}
+Transactions on the Fuel network utilize a UTXO model.
 There are several types of data contained in a transaction:
 
 - [Transaction Policies](#transaction-policies)
@@ -40,11 +43,24 @@ There are several types of data contained in a transaction:
 
 ### Transaction Policies
 
-A transaction must set certain policies in order to be valid. The policies include the gas price, witness limit, maturity, and the maximum fee allowed.
+A transaction must set certain [policies](/docs/specs/tx-format/policy/) in order to be valid.
+
+<CodeImport
+  file="../fuel-specs/src/tx-format/policy.md"
+  lang="rust"
+  lineStart="4"
+  lineEnd="10"
+/>
+
+The policies include:
+- The [**tip**](/docs/specs/tx-format/policy#tip) amount, which is the amount of the base asset tipped to the block producer.
+- The [**witnessLimit**](/docs/specs/tx-format/policy#witnesslimit), or the maximum amount of witnesses allowed for the transaction.
+- The [**maturity**](/docs/specs/tx-format/policy#maturity), which is the earliest block that the transaction can be included in.
+- The [**maxFee**](/docs/specs/tx-format/policy#maxfee), or maximum fee, allowed. This amount includes the tip amount.
 
 ### Transaction Witnesses
 
-A transction must contain the signatures of all parties involved in the transaction. Signatures are a type of witness data. Witness data is malleable, which means that it is not included in the transaction hash calculation.
+A transaction must contain the signatures of all parties involved in the transaction. Signatures are a type of witness data. Witness data is malleable, which means that it is not included in the transaction hash calculation.
 
 ### Transaction Inputs
 
