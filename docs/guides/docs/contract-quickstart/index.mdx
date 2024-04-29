@@ -47,7 +47,7 @@ Getting started with Fuel as a smart contract developer is as simple as:
 Run the command below to generate a counter contract in Sway:
 
 ```sh
-forc template --template-name counter my_counter_project
+forc template --template-name counter counter-contract
 ```
 
 The contract will be in the `src/main.sw` file.
@@ -60,7 +60,7 @@ The contract will be in the `src/main.sw` file.
 
 ## Building and deploying the contract
 
-To build a contract, you can use:
+To build a contract, inside the `counter-contract` folder you can run:
 
 ```sh
 forc build
@@ -69,10 +69,8 @@ forc build
 To deploy the contract to the testnet, you can run:
 
 ```sh
-forc deploy --testnet
+forc deploy --node-url https://testnet.fuel.network/v1/graphql
 ```
-
-> Note that without the `--testnet` flag, `forc` will attempt to deploy to a local node running at `http://127.0.0.1:4000/graphql`.
 
 <TextImport
   file="../counter-dapp/building-a-smart-contract.mdx"
@@ -82,7 +80,7 @@ forc deploy --testnet
 
 ## Next Steps
 
-Want to learn more? Check out the following resources:
+Ready to learn more? Check out the following resources:
 
 - Learn the step-by-step instructions for how to build a full-stack [counter contract dapp](/guides/counter-dapp)
 - Build a full-stack marketplace dapp with the [Intro to Sway](/guides/intro-to-sway) guide

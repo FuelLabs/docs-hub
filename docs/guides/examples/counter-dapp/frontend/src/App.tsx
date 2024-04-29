@@ -9,7 +9,6 @@ import {
 // You can also do command + space and the compiler will suggest the correct name.
 import { CounterContractAbi__factory  } from "./sway-api"
 import type { CounterContractAbi } from "./sway-api";
-import { BaseAssetId } from "fuels";
 
 const CONTRACT_ID = 
   "0x...";
@@ -22,7 +21,7 @@ export default function Home() {
   const { wallet } = useWallet();
   const { balance } = useBalance({
     address: wallet?.address.toAddress(),
-    assetId: BaseAssetId,
+    assetId: wallet?.provider.getBaseAssetId(),
   });
 
   useEffect(() => {
@@ -41,10 +40,6 @@ export default function Home() {
     try{
       const { value } = await counterContract.functions
       .count()
-      .txParams({
-        gasPrice: 1,
-        gasLimit: 100_000,
-      })
       .get();
       setCounter(value.toNumber());
     } catch(error) {
@@ -59,10 +54,6 @@ export default function Home() {
     try {
       await contract.functions
       .increment()
-      .txParams({
-        gasPrice: 1,
-        gasLimit: 100_000,
-      })
       .call();
       await getCount(contract);
     } catch(error) {

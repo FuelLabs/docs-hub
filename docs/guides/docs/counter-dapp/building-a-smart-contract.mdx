@@ -464,19 +464,19 @@ In order to deploy a contract, you need to have a wallet to sign the transaction
 
 ### Deploy To Testnet
 
-Now, you can deploy the contract to the latest testnet with the `forc deploy --testnet` command.
+Now, you can deploy the contract to the latest testnet with the `forc deploy` command.
 
 If you don't have a wallet installed, the terminal will help you to create one. Then you can use the {props.faucetLink} to get some testnet coins.
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['beta-5']}>
+<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
 
 ```sh
-forc deploy --node-url https://beta-5.fuel.network/graphql --gas-price 1
+forc deploy --node-url https://testnet.fuel.network/v1/graphql
 ```
 
 </ConditionalContent>
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
+<ConditionalContent versionSet={props.versionSet} showForVersions={['beta-5']}>
 
 ```sh
 forc deploy --testnet

@@ -92,20 +92,18 @@ npm run dev
 
 The frontend will be running at [`http://localhost:3000`](http://localhost:3000).
 
-While the local node is running, any changes you make to the Sway contract  inside the `sway-contract` folder will automatically trigger several updates:
+While the local node is running, any changes you make to the Sway contract inside the `sway-contract` folder will automatically trigger several updates:
 
-1. The contract gets rebuilt using `forc build`.
-2. The contract will be redeployed to the local node using `forc deploy`.
+1. The contract gets rebuilt using the `forc build` command.
+2. The contract will be redeployed to the local node using the `forc deploy` command .
 3. New TypeScript types for the contract and a file called `contract-ids.json` with the new contract ID will be generated in the `src/sway-api` folder.
 
 This means you don't need to worry about updating the contract ID, ABI, or TypeScript types while you develop.
 
-> Note that a git repository is not initialized by default. If you want to use git, you can run `git init` in the project directory.
-
 ## Next Steps
 
-Want to learn more? Check out the following resources:
+Ready to learn more? Check out the following resources:
 
-- Learn the step-by-step instructions for how to build a full-stack [counter contract dapp](/guides/counter-dapp)
-- Learn more about the [fuels CLI](/docs/fuels-ts/fuels#fuels-cli)
+- Learn the step-by-step instructions for how to build and deploy a full-stack [counter contract dapp](/guides/counter-dapp)
+- Learn more about the [fuels CLI](/docs/fuels-ts/fuels-cli)
 - Learn about [wallet connectors](/docs/wallet/dev/connectors/)
