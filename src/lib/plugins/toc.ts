@@ -13,6 +13,9 @@ export function rehypeExtractHeadings({
   // biome-ignore lint/suspicious/noExplicitAny:
   return () => (tree: any) => {
     visit(tree, 'element', (node) => {
+      if(node.properties.id === 'on'){
+        node.properties.id = "fuel-on"
+      }
       node.properties['data-nightly'] = slug.includes('/nightly');
       const rank = headingRank(node);
       if (rank) {

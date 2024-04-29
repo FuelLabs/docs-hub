@@ -82,7 +82,8 @@ export function handleLinks(
             return '/libs/src/merkle';
           }
           return `/libs/src/${p1}`;
-        });
+        }).replace("/src/src/", "/src/");
+
       } else if (newUrl.includes('/sway-standards/')) {
         newUrl = newUrl.replace(
           '/standards/src5-ownership',
@@ -94,8 +95,6 @@ export function handleLinks(
     if (newUrl.includes('docs.rs/fuel-types/{{versions.fuel-types}}')) {
       newUrl = newUrl.replace('{{versions.fuel-types}}', 'latest');
     }
-
-    newUrl = newUrl.replace('fuels-ts/abi-typegen/', 'fuels-ts/typegen/');
 
     return newUrl;
   }
@@ -127,6 +126,9 @@ function handleTSLinks(url: string | null, versionSet: VersionSet) {
         .replace('/api/', '/')
         .replace('/providers', '/api-providers');
     }
+    newUrl = newUrl
+    .replace("/guide/", "/")
+    .replace("/fuels-ts/../", "/fuels-ts/");
   }
   return newUrl;
 }
