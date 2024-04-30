@@ -2,6 +2,7 @@
 
 # List of directories to delete unused files from
 TARGET_DIRS=(
+"./docs/fuel-core" 
 "./docs/sway" 
 "./docs/nightly/sway" 
 "./docs/builds/sway" 
@@ -20,6 +21,7 @@ EXCLUSIONS_sway=("Cargo.toml" "forc-pkg" "sway-lib-std" "docs" "examples" "maste
 EXCLUSIONS_fuels_rs=("Cargo.toml" "docs" "examples" "packages")
 EXCLUSIONS_fuels_ts=("apps" "packages" "package.json", "demo-wallet-sdk-react")
 EXCLUSIONS_fuels_wallet=("package.json" "packages")
+EXCLUSIONS_fuel_core=("Cargo.toml" "bin")
 
 for TARGET_DIR in "${TARGET_DIRS[@]}"; do
     # Check if directory exists

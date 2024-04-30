@@ -6,6 +6,7 @@ import type { MdDoc } from 'contentlayer/generated';
 import { codeExamples as beta5CodeExamples } from '~/docs/beta-5/fuel-graphql-docs/src/lib/code-examples';
 import { codeImport as beta5WalletCodeImport } from '~/docs/beta-5/fuels-wallet/packages/docs/src/lib/code-import';
 import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
+import { codeImport as gqlCodeImport } from '~/docs/fuel-graphql-docs/src/lib/code-import';
 import { codeImport as walletCodeImport } from '~/docs/fuels-wallet/packages/docs/src/lib/code-import';
 import { codeExamples as nightlyCodeExamples } from '~/docs/nightly/fuel-graphql-docs/src/lib/code-examples';
 import { codeImport as nightlyWalletCodeImport } from '~/docs/nightly/fuels-wallet/packages/docs/src/lib/code-import';
@@ -294,8 +295,11 @@ export class Doc {
       // biome-ignore lint/suspicious/noExplicitAny:
       plugins = plugins.concat([[beta5WalletCodeImport, { filepath }] as any]);
     } else if (slug.startsWith('docs/graphql/')) {
+      plugins = plugins
       // biome-ignore lint/suspicious/noExplicitAny:
-      plugins = plugins.concat([[codeExamples, { filepath }] as any]);
+      .concat([[codeExamples, { filepath }] as any])
+      // biome-ignore lint/suspicious/noExplicitAny:
+      .concat([[gqlCodeImport, { filepath }] as any]);
     } else if (slug.startsWith('docs/nightly/graphql/')) {
       // biome-ignore lint/suspicious/noExplicitAny:
       plugins = plugins.concat([[nightlyCodeExamples, { filepath }] as any]);
