@@ -1,0 +1,20 @@
+name: "Fetch Release Notes"
+
+on: workflow_dispatch
+
+jobs:
+  fetch-release-notes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/setup-node
+
+      - name: Run PNPM install
+        id: pnpm-cache
+        run: pnpm install
+
+      - name: Compile TS
+        run: pnpm exec tsc src/lib/versions.ts --outDir dist
+      
+      - name: Fetch Release Notes
+        run: pnpm fetch:release-notes
+
