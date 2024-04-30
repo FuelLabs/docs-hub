@@ -1,6 +1,10 @@
 name: "Fetch Release Notes"
 
-on: workflow_dispatch
+on:
+  workflow_dispatch
+
+env:
+  GITHUB_AUTH: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   fetch-release-notes:
@@ -17,4 +21,11 @@ jobs:
       
       - name: Fetch Release Notes
         run: pnpm fetch:release-notes
+
+      - name: Commit changes
+        if: ${{ github.ref != 'refs/heads/master' }}
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: 'docs: update release notes and changelogs'
+          add: './docs/notices/releasenotes-changelogs.mdx'
 
