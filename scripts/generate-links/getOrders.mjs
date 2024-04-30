@@ -33,6 +33,10 @@ const CONFIG = {
     type: 'json',
     path: './guides/docs/nav.json',
   },
+  notices: {
+    type: 'json',
+    path: './notices/nav.json',
+  },
   intro: {
     type: 'json',
     path: './intro/nav.json',
@@ -92,7 +96,9 @@ export async function getOrders() {
 
   Object.keys(CONFIG).forEach((key) => {
     const book = CONFIG[key];
-    if (!['guides', 'intro', 'fuel-101', 'contributing'].includes(key)) {
+    if (
+      !['guides', 'intro', 'fuel-101', 'notices', 'contributing'].includes(key)
+    ) {
       const bookOrder = handleOrder(book.type, book.path, key);
       orders[key] = bookOrder.betaOrders.order;
       orders[`nightly-${key}`] = bookOrder.nightlyOrders.order;

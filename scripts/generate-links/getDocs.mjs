@@ -189,6 +189,9 @@ export async function getDocs(key, order) {
         './guides/docs/migration-guide/breaking-change-log/breaking-changes-log.md',
       ];
       break;
+    case 'notices':
+      paths = ['./notices/*.mdx'];
+      break;
     case 'intro':
       paths = [
         // INTRO

@@ -101,6 +101,12 @@ const getHighlighter: RehypeCodeOptions['getHighlighter'] = async (options) => {
         scopeName: 'source.sway',
         path: `${pathFolder}/sway.tmLanguage.json`,
       },
+      {
+        id: 'html',
+        name: "html",
+        scopeName: "text.html.basic",
+        path: `${pathFolder}/html.tmLanguage.json`,
+      },
     ],
   });
 
