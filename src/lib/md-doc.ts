@@ -296,10 +296,10 @@ export class Doc {
       plugins = plugins.concat([[beta5WalletCodeImport, { filepath }] as any]);
     } else if (slug.startsWith('docs/graphql/')) {
       plugins = plugins
-      // biome-ignore lint/suspicious/noExplicitAny:
-      .concat([[codeExamples, { filepath }] as any])
-      // biome-ignore lint/suspicious/noExplicitAny:
-      .concat([[gqlCodeImport, { filepath }] as any]);
+        // biome-ignore lint/suspicious/noExplicitAny:
+        .concat([[codeExamples, { filepath }] as any])
+        // biome-ignore lint/suspicious/noExplicitAny:
+        .concat([[gqlCodeImport, { filepath }] as any]);
     } else if (slug.startsWith('docs/nightly/graphql/')) {
       // biome-ignore lint/suspicious/noExplicitAny:
       plugins = plugins.concat([[nightlyCodeExamples, { filepath }] as any]);
