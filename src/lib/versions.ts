@@ -81,8 +81,8 @@ export function getFullFuelCoreVersion(versionSet: VersionSet) {
     return {
       name: 'fuel-graphql-docs',
       category: 'GraphQL API',
-      version: '0.20.5',
-      url: 'https://github.com/FuelLabs/fuel-core/tree/v0.20.5',
+      version: '0.22.1',
+      url: 'https://github.com/FuelLabs/fuel-core/tree/v0.22.1',
     };
   }
   const filedir = join(DOCS_DIRECTORY, 'fuel-core/Cargo.toml');
