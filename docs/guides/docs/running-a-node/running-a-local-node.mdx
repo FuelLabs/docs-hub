@@ -43,10 +43,11 @@ To modify the initial state of the chain, you must configure a `chainConfig.json
 Here is an example of what that looks like using version {props.versionSet === '0.22.4' ? 'beta-5' : props.fuelCoreVersion} of `fuel-core`:
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
-<CodeImport
+{/* <CodeImport
   file="../../../fuel-core/deployment/scripts/chainspec/dev_chainspec.json"
   lang="json"
-/>
+/> */}
+
 </ConditionalContent>
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['beta-5']}>
