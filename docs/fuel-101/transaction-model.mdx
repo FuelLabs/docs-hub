@@ -54,9 +54,9 @@ A transaction must set certain [policies](/docs/specs/tx-format/policy/) in orde
 
 The policies include:
 - The [**tip**](/docs/specs/tx-format/policy#tip) amount, which is the amount of the base asset tipped to the block producer.
-- The [**witnessLimit**](/docs/specs/tx-format/policy#witnesslimit), or the maximum amount of witnesses allowed for the transaction.
+- The [**witness limit**](/docs/specs/tx-format/policy#witnesslimit), or the maximum amount of witnesses allowed for the transaction.
 - The [**maturity**](/docs/specs/tx-format/policy#maturity), which is the earliest block that the transaction can be included in.
-- The [**maxFee**](/docs/specs/tx-format/policy#maxfee), or maximum fee, allowed. This amount includes the tip amount.
+- The [**maximum fee**](/docs/specs/tx-format/policy#maxfee) allowed. This amount includes the tip amount.
 
 ### Transaction Witnesses
 
@@ -96,15 +96,15 @@ There are five types of transaction outputs:
 
 ### Transaction Receipts
 
-After a transaction is executed, a list of receipts that contain all of the output information is generated. For example, if a contract logs a value, or panics during execution, this information will be contained in the receipts list.
+After a transaction is executed, a list of [receipts](/docs/specs/abi/receipts/) that contain all of the output information is generated. For example, if a contract logs a value, or panics during execution, this information will be contained in the receipts list. The merkle root of the receipts list is stored in the transaction.
 
 ### Transaction Pointer
 
-The transaction pointer is a unique identifier that is used to reference the location of a transaction within a block.
+The [transaction pointer](/docs/specs/tx-format/tx-pointer/) is a unique identifier that is used to reference the location of a transaction within a block.
 
 ## How are transactions validated?
 
-All transactions are validated by the FuelVM. Some validation checks only apply to certain types of transactions, while other validation rules are universal.
+All transactions are [validated](/docs/specs/protocol/tx-validity/) by the FuelVM. Some validation checks only apply to certain types of transactions, while other validation rules are universal.
 
 ### Universal Validation Rules
 
@@ -114,7 +114,7 @@ All transactions must conform to the following rules:
 - All transaction parameters are within the network's [consensus parameters](/docs/specs/tx-format/consensus_parameters).
 - There are no invalid inputs or outputs. For example, a `ChangeOutput` cannot exist for a transaction that does not have an `InputCoin` for the same asset.
 - There are no duplicate or competing transaction inputs or outputs. For example, a transaction cannot have two `InputCoin` inputs for the same coin.
-- The transaction must have enough gas to cover the execution cost.
+- The transaction's maximum fee must be enough to cover the execution cost.
 
 ### Transaction-Specific Validation
 
@@ -144,9 +144,9 @@ In addition to the universal validation rules above, each transaction type has i
 
 ## What does the Fuel block model look like?
 
-Blocks on Fuel contain 4 main components:
+Blocks on the Fuel network contain 4 main components:
 
 1. [**Block ID**](/docs/graphql/reference/scalars#blockid) - A unique identifier for the block.
-2. [**Header**](/docs/graphql/reference/objects#header) - Contains metadata about the block, such as the block height, the time the block was created, and the previous block's root.
+2. [**Header**](/docs/specs/protocol/block-header/) - Contains metadata about the block, such as the block height, the time the block was created, and the previous block's root.
 3. [**Consensus**](/docs/graphql/reference/unions#consensus) - Contains network-specific consensus data.
 4. [**Transactions**](/docs/graphql/reference/objects#transaction) - A list of transactions that are included in the block.

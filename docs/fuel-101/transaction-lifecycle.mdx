@@ -7,50 +7,45 @@ category: Fuel 101
 
 A transaction on the Fuel network goes through a complex series of steps before it is considered final:
 
-1. **Transaction Creation**: Someone sends a transaction to a node.
-2. **Pre-Validation**: The transaction goes through an extensive series of pre-checks, including UTXO validation.
-3. **Transaction Pool**: The transaction gets placed in the transaction pool.
-4. **Selection**: Transactions are selected from the pool.
-5. **Execution & Validation**: The transaction is executed in the Fuel Virtual Machine (Fuel VM).
-6. **Block Production**: The transaction is included in a block.
-7. **Gossiping & Validation**: The block is broadcast to the network and the validatation process is repeated.
+1. [**Transaction Creation**](#1-transaction-creation): Someone creates a transaction and sends it to a node.
+2. [**Selection and Validation**](#2-selection-and-validation): Transactions are selected from the transaction pool and all stateless checks are validated.
+3. [**Transaction Gossiping**](#3-transaction-gossiping): The transaction is broadcast to the network and the selection and validatation process is repeated by other nodes.
+4. [**Block Production**](#4-block-production): The transaction is received by the block producer node, gets fully executed and validated, and gets included in a block.
+5. [**Block Gossiping and Validation**](#5-block-gossiping-and-validation): The block is broadcast to the network and gets validated by other nodes.
 
 ## 1. Transaction Creation
 
-The transaction is created by someone.
+The first step in any transaction's lifecycle is creation.
 
 One way a transaction can be created is by interacting with an application that uses the `fuels` SDK. In this case, the SDK will do some validation to make sure that the transaction appears valid before sending it to the node. If the SDK detects that the transaction is not valid, the transaction will not move on to the next step.
 
-## 2. Pre-Validation
+If the transaction appears valid, the SDK will send the transaction to a node. The node will then add the transaction to the transaction pool.
 
-All transactions are fully [validated](/docs/fuel-101/transaction-model#transaction-validation) by the Fuel VM.
+## 2. Selection and Validation
 
-Before a transaction makes it to the transaction pool, it goes through a extensive pre-checks. These checks are done to ensure that the transaction appears valid before attempting to execute it.
+The transaction pool sorts and selects pending transactions by their tip amount, which is the amount of the base asset that the transaction will pay to the block producer.
 
-## 3. Transaction Pool
+The transaction is run through an initial set of [validation checks](/docs/specs/protocol/tx-validity/#vm-precondition-validity-rules), such as predicate verification, signature verification, and making sure the transaction doesn't "double spend" an input that is already in use from another transaction in the pool.
 
-The transaction pool sorts pending transactions by their gas price. Note that a transaction's gas represents the total amount of work that the VM did to execute the transaction, while the gas price represents the amount that the transaction is going to pay for each unit of gas (or `GasSpend`).
+If the transaction contains a predicate, the predicate is validated to make sure it returns a `true` value. If the predicate fails, the transaction is prevented from being included in the block entirely. If a node broadcasts a transaction with a faulty predicate, the `p2p` reputation of the node will decrease.
 
-## 4. Selection
+## 3. Transaction Gossiping
 
-Transactions are selected from the pool to be included in the block. They are selected in a way that maximizes the block producer's reward and overall throughput of the network.
+Once the transaction has been validated, it is broadcast to the network. The transaction is received by other nodes, which repeat the validation process. One of these nodes will be the block producer, also known as the authority node.
 
-## 5. Execution & Validation
+## 4. Block Production
 
-First, if the transaction contains a predicate, the predicate is executed and validated. If the predicate fails, the transaction is prevented from being included in the block entirely.
+Once selected from the transaction pool, the transaction gets fully executed and validated.
 
-Next, if a transaction contains a script, the script will be executed.
-The transaction execution is completed by removing the spent UTXOs and adding any new UTXOs that were created.
+The transaction execution is completed by removing the spent UTXOs and calculating the transaction outputs (new UTXOs) and receipts. The transactions is validated further at this point with [postcondition validity rules](/docs/specs/protocol/tx-validity/#vm-postcondition-validity-rules) to make sure the outputs and receipts created during the execution process are valid.
 
-The transaction undergoes further validation at this step.
+The block producer creates a new block through a `Mint` type transaction that includes the transaction we are following here. Each block contains one `Mint` type transaction at the end of the block.
 
-## 6. Block Production
+The block producer can take all, part, or none of the fees.
 
-The block producer creates a new block that includes the transaction.
-
-## 7. Gossiping & Validation
+## 5. Block Gossiping and Validation
 
 The block is broadcast to the network, and the nodes gossip with each other.
 Validators connected to the block producer will receive the block, repeat the validation and execution steps, and continue to broadcast the block.
 
-If a validating fullnode attempts to synchronize with a block that contains any faulty predicates, the entire block is rejected.
+If a validating full node attempts to synchronize with a block that contains any faulty information, such as a predicate that evaluates to `false`, the entire block is rejected.
