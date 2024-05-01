@@ -1,0 +1,116 @@
+---
+title: Shared Sequencer
+category: Fuel 101
+---
+
+# Shared Sequencer
+
+## What is a Sequencer?
+
+A sequencer is an entity responsible for ordering transactions on layer 2 blockchains.
+
+In a rollup-centric world, most layer 2 networks rely on a single sequencer to manage their transaction ordering. However, there are two main problems with this current approach.
+
+### 1. Isolation
+
+Having a single sequencer means that each layer 2 blockchain operates within its own silo. For instance, in the current blockchain landscape, to execute a simple token swap between rollup A and rollup B, a user must depend on fragmented entities such as bridges or cross-chain exchanges to facilitate the asset transfer. These solutions are inherently limited and cannot ensure trustless atomicity like atomic swaps or flashloans.
+
+### 2. Centralization
+
+Relying on a single sequencer exposes them to centralization risks, creating a single point of failure. Blockchains must be censorship-resistant to guarantee fairness and ensure that all valid transactions can and will be included.
+
+## What is a Shared Sequencer?
+
+A shared sequencer layer functions as the interoperability hub, receiving transactions from any rollup that wishes to participate. The term "shared" implies that the sequencer is utilized by 1 to n number of rollups. The main goal is to decentralize the transaction ordering process and unite all rollups to reduce fragmentation, resulting in better user experiences.
+
+TODO [DIAGRAM - Shared Sequencer vs Single Sequencer]
+
+## Architecture Overview
+
+Below is a high-level flow of when a user submits a transaction to the Fuel network until it achieves finality on the Ethereum network. Understanding this flow is essential prerequisite knowledge when delving into each section in more detail:
+
+TODO [DIAGRAM - Nick's Architecture]
+
+1. A user submits a transaction on one of n Fuel rollups.
+2. A builder retrieves these transactions from a shared mempool and assembles them into a block.
+3. The network of shared sequencer validators takes the block from the builders and orders these transactions within the block.
+4. A relayer takes these blocks and sends it as blob data to be settled on Layer 1 (Ethereum).
+5. Ethereum ensures the finality of Layer 2 transactions.
+
+## Transaction Broadcast
+
+When a user submits a transaction on a Fuel rollup via Fuel nodes, these transactions from various rollups reside within a shared mempool, awaiting pickup by builders. Each transaction carries a unique identification linked to the rollup it originates from.
+
+## Block Building
+
+Builders are tasked with orchestrating the sequence of transactions from the shared mempool into the Fuel block template for each rollup. Depending on the builder they use algorithms such as first-come-first-served or first-price auctions to maximize profit in this process.
+
+## Transaction Sequencing
+
+TODO [DIAGRAM - Specs]
+https://github.com/fuel-infrastructure/notes/blob/main/spec/Spec.md#overview
+
+The sequencing layer operates as a Tendermint layer one network. Validators serve as referees in the sequencing process and remain unaware of the rollups associated with the transactions they sequence. Their primary responsibility is to propose and submit blocks. 
+
+Validators receive blobs of data from builders via a unique 32-byte identifier topic. This topic will constantly queue up the next expected blob for the sequencers. Upon receiving the blobs, the following steps commence:
+
+### Prepare Proposal
+
+At each block, a validator operating on the sequencer network is selected as the block proposer based on their voting power. The proposer is also tasked with gathering outstanding transactions from the mempool.
+
+### Process Proposal
+All validators participating in the shared sequencer network are summoned to verify the content of each proposed block.
+
+### Block Finalization and Broadcast
+User transactions, injected transactions, and supply-related transactions are generated. The L2 sequencer incorporates the sequenceed transactions into a block, which is then broadcasted to subscribers. Among these subscribers, the rollup node executes the transaction, along with any other transactions in the block associated with that rollup. A commitment to the block containing the transaction is sent to the relayer to be stored in the L1 sequencer contract, accompanied by proof that the block has achieved finality through consensus on the tendermint layer.
+
+### Relayer
+A relaying operator is a subscriber and monitors the sequencer layer. The relayer generates a zero-knowledge (ZK) proof against the data data, up to 1000 blocks.
+
+### Ethereum Settlement 
+
+Stored on the rollup contract, the L1 rollup contract verifies any proofs associated with the state update. It utilizes the certified block commitment from the sequencer contract to ensure that the state update aligns with the correct block.
+
+## Finality
+
+Finality of any given transaction is stated below
+
+1. **Pending on L2**: Transactions are pending on Layer 2 rollup. A soft commitment is provided by the rollup's sequencer.
+2. **Finality on L2**: The sequencer has committed to the state transition function (STF) of the rollup and added it to the rollup's chain.
+3. **Pending on L1**: Transaction input/output state transaction function is posted to Layer 1. The dispute period has not yet ended.
+4. **Finality on L1**: The dispute period has concluded, and the transaction is confirmed within 2 epochs.
+
+## Forced Transaction Inclusion
+
+In the event of a complete system compromise or breakdown, users retain the option to directly submit their transactions to the rollup contract on Ethereum.
+
+## Why is Fuel building its own shared sequencer?
+
+To address this question, let's explore the concept of an atomic token swap facilitated by a predicate. A true cross-chain swap is an atomic exchange of tokens between two parties without the involvement of an middleman.
+
+### 1. Token Lockup
+User A locks 1 ETH on rollup A within a predicate, with a spending condition contingent on the receipt.
+User B similarly locks 1 ETH on rollup B within a predicate, also with a spending condition.
+
+### 2. Receipt Lock
+Locking tokens on both rollups A and B generates a transaction receipt for each, including:
+- Tendermint blockheader
+- Transaction Merkle proof
+- Fuel blockheader
+- Transaction Merkle proof
+- Transaction
+- Receipt proof
+- Receipt
+
+### 3. Builder Cross-Chain Introspection
+With context from both chains, the builder injects header and proof of rollup A and transaction A, enabling cryptographic verification. This allows the data from one rollup to be injected into another.
+
+### 4. Predicate Spending Condition
+Within the predicate, there's a spending condition based on the aforementioned actions. Tokens can be unlocked to their respective parties based on these conditions.
+
+
+Fuel opted to develop its own shared sequencer solutions to leverage the distinct block designs, aiming for improved rollup communication. Within the example provided, these innovations play a crucial role.
+
+
+
+
