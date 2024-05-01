@@ -25,7 +25,7 @@ If the transaction appears valid, the SDK will send the transaction to a node. T
 
 The transaction pool sorts and selects pending transactions by their tip amount, which is the amount of the base asset that the transaction will pay to the block producer.
 
-The transaction is run through an initial set of [validation checks](/docs/specs/protocol/tx-validity/#vm-precondition-validity-rules), such as predicate verification, signature verification, and making sure the transaction doesn't "double spend" an input that is already in use from another transaction in the pool.
+The transaction is run through an initial set of [validation checks](/docs/specs/protocol/tx-validity/#vm-precondition-validity-rules), such as [predicate verification](/docs/specs/fuel-vm/#predicate-verification), [signature validation](/docs/specs/protocol/tx-validity/#valid-signatures), and making sure the transaction doesn't "double spend" an input that is already in use from another transaction in the pool.
 
 If the transaction contains a predicate, the predicate is validated to make sure it returns a `true` value. If the predicate fails, the transaction is prevented from being included in the block entirely. If a node broadcasts a transaction with a faulty predicate, the `p2p` reputation of the node will decrease.
 
@@ -39,7 +39,7 @@ Once selected from the transaction pool, the transaction gets fully executed and
 
 The transaction execution is completed by removing the spent UTXOs and calculating the transaction outputs (new UTXOs) and receipts. The transactions is validated further at this point with [postcondition validity rules](/docs/specs/protocol/tx-validity/#vm-postcondition-validity-rules) to make sure the outputs and receipts created during the execution process are valid.
 
-The block producer creates a new block through a `Mint` type transaction that includes the transaction we are following here. Each block contains one `Mint` type transaction at the end of the block.
+The block producer creates a new block through a [`Mint`](/docs/specs/tx-format/transaction/#transactionmint) type transaction that includes the transaction we are following here. Each block contains one `Mint` type transaction at the end of the block.
 
 The block producer can take all, part, or none of the fees.
 
