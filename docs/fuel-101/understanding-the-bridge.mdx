@@ -98,5 +98,7 @@ The architecture of the Fuel bridge is designed to be secure. However, there are
 - There could potentially be an unknown bug in the bridge contracts or the Fuel VM.
 - The contracts themselves could potentially be compromised, as they are upgradable.
 - The Fuel block producer could be compromised and produce blocks with invalid messages.
+= The whitelisted addresses that commit Fuel block data to Ethereum could be compromised, and post malicious block headers.
 
-To mitigate these risks, the Fuel team has implemented a number of security measures, including the ability to pause the bridge contracts in case of emergency.
+To mitigate these risks, the Fuel team has implemented a number of security measures, including a watch tower that detects and reports any malicious behavior, and the ability to pause the bridge contracts in case of emergency.
+In the future, these risks will be further mitigated by decentralizing the Fuel block production and block commitment processes.
