@@ -1,6 +1,6 @@
-import fs from 'fs';
+import * as fs from 'fs';
 import { join } from 'path';
-import toml from 'toml';
+import * as toml from 'toml';
 
 import {
   BETA_4_DOCS_DIRECTORY,
