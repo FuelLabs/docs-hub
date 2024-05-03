@@ -41,6 +41,10 @@ const CONFIG = {
     type: 'json',
     path: './contributing/nav.json',
   },
+  'sway-libs': {
+    type: 'mdbook',
+    path: './sway-libs/docs/book/src/SUMMARY.md',
+  },
 };
 
 const forcLines = [];

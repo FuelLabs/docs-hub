@@ -61,6 +61,7 @@ const includeDirs = [
   'docs/guides/docs',
   'docs/intro',
   'docs/contributing',
+  'docs/sway-libs/docs',
   // NIGHTLY DOCS
   'docs/nightly/sway/docs/book/src',
   'docs/nightly/fuels-rs/docs/src',
