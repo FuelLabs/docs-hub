@@ -1,0 +1,18 @@
+---
+title: Fuel VM
+category: Fuel 101
+---
+
+# Fuel Virtual Machine (Fuel VM)
+
+The Fuel VM is a runtime environment designed to execute transactions through smart contracts, scripts, and predicates. This virtual machine establishes the rules for computing a new valid state from one block to the next. It operates on bytecode compiled from Sway. The FuelVM is written in Rust and utilizes 64-bit computing, which is faster than the 256-bit computing used by Ethereum's VM. This approach maximizes speed and performance without compromising security.
+
+# Architecture
+
+Unlike the EVM, Fuel's virtual machine is built a register-based architecture instead of a stack-based one, which enables faster runtime. This efficiency is due to the compiler's ability to perform more optimizations at the memory access level. FuelVM includes 64 registers, each 8 bytes wide, with the first 16 being reserved.
+
+
+
+
+
+
