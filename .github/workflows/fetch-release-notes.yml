@@ -1,0 +1,31 @@
+name: "Fetch Release Notes"
+
+on:
+  workflow_dispatch
+
+env:
+  GITHUB_AUTH: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  fetch-release-notes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/setup-node
+
+      - name: Run PNPM install
+        id: pnpm-cache
+        run: pnpm install
+
+      - name: Compile TS
+        run: pnpm exec tsc src/lib/versions.ts --outDir dist
+      
+      - name: Fetch Release Notes
+        run: pnpm fetch:release-notes
+
+      - name: Commit changes
+        if: ${{ github.ref != 'refs/heads/master' }}
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: 'docs: update release notes and changelogs'
+          add: './docs/notices/releasenotes-changelogs.mdx'
+

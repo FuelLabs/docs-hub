@@ -29,9 +29,10 @@
     "test:guides": "npx playwright test tests/test.spec.ts",
     "test:guides:debug": "DEBUG=pw:api npx playwright test tests/test.spec.ts",
     "ts:check": "tsc --noEmit",
-    "lint:guides:check": "markdownlint --config .markdownlint.yaml --ignore-path .markdownlintignore '**/*.mdx'",
+    "lint:guides:check": "markdownlint --config .markdownlint.yaml --ignore-path .markdownlintignore --ignore docs/notices/releasenotes-changelogs.mdx '**/*.mdx'",
     "lint:guides:fix": "markdownlint --config .markdownlint.yaml --ignore-path .markdownlintignore '**/*.mdx' --fix",
-    "lint:fix:all": "run-s lint:fix lint:guides:fix"
+    "lint:fix:all": "run-s lint:fix lint:guides:fix",
+    "fetch:release-notes": "node scripts/fetch-release-notes/index.mjs"
   },
   "dependencies": {
     "@actions/exec": "^1.1.1",
@@ -42,7 +43,7 @@
     "@fuel-ui/icons": "0.21.0-pr-305-04b8434",
     "@fuel-ui/react": "0.21.0-pr-305-04b8434",
     "@fuel-wallet/playwright-utils": "^0.13.10",
-    "@fuel-wallet/sdk": "^0.16.1",
+    "@fuel-wallet/sdk": "0.16.2-master-a0e5cbf",
     "@fuels/connectors": "0.1.1",
     "@fuels/react": "^0.16.0",
     "@fuels/ts-config": "^0.15.1",

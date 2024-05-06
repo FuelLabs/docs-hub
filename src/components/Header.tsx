@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import type { NavOrder, VersionSet, Versions } from '~/src/types';
 
 import { use, useEffect, useState } from 'react';
+import { useSetShowWarning } from '../hooks/useShowWarning';
 import { MobileMenu } from './MobileMenu';
 import { Navigation } from './Navigation';
 
@@ -28,6 +29,8 @@ export function Header({
   setIsAlertVisible,
   isAlertVisible,
 }: HeaderProps) {
+  const setShowWarning = useSetShowWarning();
+
   return (
     <Box as='header' css={styles.root}>
       <Box.Flex css={styles.header}>
@@ -59,7 +62,10 @@ export function Header({
           </Alert.Description>
           <Alert.Actions>
             <Alert.Button
-              onClick={() => setIsAlertVisible(false)}
+              onClick={() => {
+                setIsAlertVisible(false);
+                setShowWarning('false');
+              }}
               title='Dismiss'
             >
               <Icon icon={'X'} css={styles.closeButton} />

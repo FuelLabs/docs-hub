@@ -1,6 +1,6 @@
-import fs from 'fs';
+import * as fs from 'fs';
 import { join } from 'path';
-import toml from 'toml';
+import * as toml from 'toml';
 
 import {
   BETA_4_DOCS_DIRECTORY,
@@ -18,7 +18,7 @@ function itemFromPackageJson(docsDir: string, filename: string) {
 function getWalletVersion(docsDir: string) {
   const json = itemFromPackageJson(
     docsDir,
-    'fuels-wallet/packages/sdk/package.json'
+    'fuels-wallet/packages/app/package.json'
   );
   return {
     name: 'fuels-wallet',

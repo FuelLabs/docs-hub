@@ -50,10 +50,14 @@ async function main() {
         fs.mkdirSync(folderPath, { recursive: true });
       }
       fs.writeFileSync(`${folderPath}/${key}.json`, json, 'utf-8');
-      if (!key.includes('guides') && key !== 'contributing') {
+      if (
+        !key.includes('guides') &&
+        key !== 'contributing' &&
+        key !== 'notices'
+      ) {
         if (
           key.includes('nightly') ||
-          ['intro', 'fuel-101', 'contributing'].includes(key)
+          ['intro', 'fuel-101', 'contributing', 'notices'].includes(key)
         ) {
           const cleanKey = key.replace('nightly-', '');
           allNightlyOrders.push({
@@ -103,6 +107,9 @@ function getSidebarName(key) {
       break;
     case 'specs':
       newKey = 'Specifications';
+      break;
+    case 'fuel-101':
+      newKey = 'Fuel 101';
       break;
     default:
   }
