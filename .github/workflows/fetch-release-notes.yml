@@ -1,7 +1,11 @@
 name: "Fetch Release Notes"
 
 on:
-  workflow_dispatch
+  schedule:
+    # This runs at 12:00 UTC everyday Monday through Friday
+    - cron: '0 12 * * 1-5'
+  # Option to run the workflow manually
+  workflow_dispatch:
 
 env:
   GITHUB_AUTH: ${{ secrets.GITHUB_TOKEN }}
