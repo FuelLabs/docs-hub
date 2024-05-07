@@ -49,12 +49,15 @@ importers:
       '@fuel-wallet/sdk':
         specifier: 0.16.2-master-a0e5cbf
         version: 0.16.2-master-a0e5cbf(dexie@3.2.4)(fuels@0.79.0(dexie@3.2.4))
+      '@fuel-wallet/types':
+        specifier: ^0.16.1
+        version: 0.16.1(dexie@3.2.4)(fuels@0.79.0(dexie@3.2.4))
       '@fuels/connectors':
         specifier: 0.1.1
         version: 0.1.1(fuels@0.79.0(dexie@3.2.4))
       '@fuels/react':
-        specifier: ^0.16.0
-        version: 0.16.0(@types/react-dom@18.2.7)(@types/react@18.2.21)(fuels@0.79.0(dexie@3.2.4))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: ^0.19.0
+        version: 0.19.0(@tanstack/react-query@4.33.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@types/react-dom@18.2.7)(@types/react@18.2.21)(fuels@0.79.0(dexie@3.2.4))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@fuels/ts-config':
         specifier: ^0.15.1
         version: 0.15.1(typescript@5.2.2)
@@ -879,6 +882,11 @@ packages:
     peerDependencies:
       fuels: '>=0.75.0'
 
+  '@fuel-wallet/types@0.16.1':
+    resolution: {integrity: sha512-x90HaNvjbyBfFF/ZWeoeVdfiJj3wdFkk4IaneQBAB5tVAoF0QzXStWJHSbGnsPm38xzlme+Oo0k+y11OnU3MUw==}
+    peerDependencies:
+      fuels: '>=0.73.0'
+
   '@fuel-wallet/types@0.16.2-master-a0e5cbf':
     resolution: {integrity: sha512-/mxfIajLR1mdfJsLk+qZVHlPLU/ZrqDFLRINb2f24N+7SFTaNpy01t46138IZYU2RY0Iip1GwuKW6Qel8GbXsA==}
     peerDependencies:
@@ -895,10 +903,11 @@ packages:
     peerDependencies:
       fuels: '>=0.77.0'
 
-  '@fuels/react@0.16.0':
-    resolution: {integrity: sha512-+VE2yczITKhAW9343f9MrOV29YSRpyS/oRa46A9yCY/Ks/BtG1XwbC2lCs5amGHRDmBB35kQcuUL9cvL36+gdA==}
+  '@fuels/react@0.19.0':
+    resolution: {integrity: sha512-Cq+fnCHUSIi7jiFyC0yPnWL+sE4cYfSbftr1KBvQNO12HMVzm2BE9F9veGOres3gGXvKOH7kPELtlSn5rHxF/w==}
     peerDependencies:
-      fuels: '>=0.74.0'
+      '@tanstack/react-query': '>=5.0.0'
+      fuels: '>=0.84.0'
       react: ^18.2.0
 
   '@fuels/ts-config@0.15.1':
@@ -2228,23 +2237,8 @@ packages:
   '@tanstack/query-core@4.33.0':
     resolution: {integrity: sha512-qYu73ptvnzRh6se2nyBIDHGBQvPY1XXl3yR769B7B6mIDD7s+EZhdlWHQ67JI6UOTFRaI7wupnTnwJ3gE0Mr/g==}
 
-  '@tanstack/query-core@4.36.1':
-    resolution: {integrity: sha512-DJSilV5+ytBP1FbFcEJovv4rnnm/CokuVvrBEtW/Va9DvuJ3HksbXUJEpI0aV1KtuL4ZoO9AVE6PyNLzF7tLeA==}
-
   '@tanstack/react-query@4.33.0':
     resolution: {integrity: sha512-97nGbmDK0/m0B86BdiXzx3EW9RcDYKpnyL2+WwyuLHEgpfThYAnXFaMMmnTDuAO4bQJXEhflumIEUfKmP7ESGA==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-native: '*'
-    peerDependenciesMeta:
-      react-dom:
-        optional: true
-      react-native:
-        optional: true
-
-  '@tanstack/react-query@4.36.1':
-    resolution: {integrity: sha512-y7ySVHFyyQblPl3J3eQBWpXZkliroki3ARnBKsdJchlgt7yJLRDUcf4B8soufgiYt3pEQIkBWBx1N9/ZPIeUWw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -6391,6 +6385,15 @@ snapshots:
     transitivePeerDependencies:
       - dexie
 
+  '@fuel-wallet/types@0.16.1(dexie@3.2.4)(fuels@0.79.0(dexie@3.2.4))':
+    dependencies:
+      '@fuels/assets': 0.1.5
+      dexie-observable: 4.0.1-beta.13(dexie@3.2.4)
+      fuels: 0.79.0(dexie@3.2.4)
+      json-rpc-2.0: 1.7.0
+    transitivePeerDependencies:
+      - dexie
+
   '@fuel-wallet/types@0.16.2-master-a0e5cbf(dexie@3.2.4)(fuels@0.79.0(dexie@3.2.4))':
     dependencies:
       '@fuels/assets': 0.15.3
@@ -6409,10 +6412,10 @@ snapshots:
       fuels: 0.79.0(dexie@3.2.4)
       json-rpc-2.0: 1.7.0
 
-  '@fuels/react@0.16.0(@types/react-dom@18.2.7)(@types/react@18.2.21)(fuels@0.79.0(dexie@3.2.4))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@fuels/react@0.19.0(@tanstack/react-query@4.33.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@types/react-dom@18.2.7)(@types/react@18.2.21)(fuels@0.79.0(dexie@3.2.4))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@radix-ui/react-dialog': 1.0.5(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@tanstack/react-query': 4.36.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@tanstack/react-query': 4.33.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       events: 3.3.0
       fuels: 0.79.0(dexie@3.2.4)
       react: 18.2.0
@@ -6420,7 +6423,6 @@ snapshots:
       - '@types/react'
       - '@types/react-dom'
       - react-dom
-      - react-native
 
   '@fuels/ts-config@0.15.1(typescript@5.2.2)':
     dependencies:
@@ -7016,7 +7018,7 @@ snapshots:
 
   '@radix-ui/react-dialog@1.0.5(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
-      '@babel/runtime': 7.22.11
+      '@babel/runtime': 7.23.9
       '@radix-ui/primitive': 1.0.1
       '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.21)(react@18.2.0)
       '@radix-ui/react-context': 1.0.1(@types/react@18.2.21)(react@18.2.0)
@@ -8265,19 +8267,9 @@ snapshots:
 
   '@tanstack/query-core@4.33.0': {}
 
-  '@tanstack/query-core@4.36.1': {}
-
   '@tanstack/react-query@4.33.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@tanstack/query-core': 4.33.0
-      react: 18.2.0
-      use-sync-external-store: 1.2.0(react@18.2.0)
-    optionalDependencies:
-      react-dom: 18.2.0(react@18.2.0)
-
-  '@tanstack/react-query@4.36.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
-    dependencies:
-      '@tanstack/query-core': 4.36.1
       react: 18.2.0
       use-sync-external-store: 1.2.0(react@18.2.0)
     optionalDependencies:
