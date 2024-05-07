@@ -15,6 +15,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import darkTheme from 'react-syntax-highlighter/dist/cjs/styles/prism/night-owl';
 import lightTheme from 'react-syntax-highlighter/dist/cjs/styles/prism/one-light';
 import useTheme from '~/src/hooks/useTheme';
+import { SWAY_PLAYGROUND_URL } from '../config';
 
 type PreProps = {
   children: ReactNode;
@@ -55,18 +56,15 @@ export function Pre({
   }
 
   async function openSwayPlayground() {
-    console.log(`code`, code);
     const playgroundCode = code ?? '';
     // WARNING: this will break if sway playground changes urls
-    const playgroundWindow = window.open(
-      'https://www.sway-playground.org/',
-      '_blank'
-    );
-    // WARNING: this will break if the storage key in sway playground is changed
-    // or the playground changes how it stores the contract code
-    playgroundWindow?.localStorage.setItem(
-      'playground_contract',
-      playgroundCode
+    const playgroundWindow = window.open(SWAY_PLAYGROUND_URL, '_blank');
+    // wait a bit for the page to load
+    // 30 ms was the minimum that worked, but I made it 45 for wiggle room
+    await new Promise((resolve) => setTimeout(resolve, 45));
+    playgroundWindow?.postMessage(
+      JSON.stringify({ swayCode: playgroundCode }),
+      SWAY_PLAYGROUND_URL
     );
   }
 
