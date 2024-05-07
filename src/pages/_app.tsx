@@ -5,6 +5,7 @@ import type { AppProps } from 'next/app';
 import '../styles/docsearch.css';
 import '../styles/index.css';
 
+import { defaultConnectors } from '@fuels/connectors';
 import { Provider } from '../components/Provider';
 import { ShowWarningProvider } from '../hooks/useShowWarning';
 import { VersionProvider } from '../hooks/useVersion';
@@ -13,8 +14,13 @@ const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <FuelProvider>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <FuelProvider
+        theme='dark'
+        fuelConfig={{
+          connectors: defaultConnectors({ devMode: true }),
+        }}
+      >
         <VersionProvider>
           <ShowWarningProvider>
             <Provider>
@@ -30,7 +36,7 @@ export default function App({ Component, pageProps }: AppProps) {
             </Provider>
           </ShowWarningProvider>
         </VersionProvider>
-      </QueryClientProvider>
-    </FuelProvider>
+      </FuelProvider>
+    </QueryClientProvider>
   );
 }
