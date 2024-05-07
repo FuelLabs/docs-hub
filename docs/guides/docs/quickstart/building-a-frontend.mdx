@@ -109,7 +109,7 @@ action={{
 <ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
 
 ```sh
-npm install fuels@0.79.0 @fuels/react@0.18.0 @fuels/connectors@0.1.1 @tanstack/react-query@5.28.9
+npm install fuels@0.82.0 @fuels/react@0.18.0 @fuels/connectors@0.2.2 @tanstack/react-query@5.28.9
 ```
 
 </ConditionalContent>
@@ -159,7 +159,7 @@ action={{
 />
 
 ```sh
-npx fuels init --contracts ../counter-contract/ --output ./src/sway-api
+npx fuels@0.82.0 init --contracts ../counter-contract/ --output ./src/sway-api
 ```
 
 Now that you have a `fuels.config.ts` file, you can use the `fuels build` command to rebuild your contract and generate types.
@@ -177,7 +177,7 @@ action={{
 />
 
 ```sh
-npx fuels build
+npx fuels@0.82.0 build
 ```
 
 A successful process should print and output like the following:
@@ -210,7 +210,7 @@ action={{
 />
 
 ```console
-npx fuels typegen -i ../counter-contract/out/debug/*-abi.json -o ./src/contracts
+npx fuels@0.67.0 typegen -i ../counter-contract/out/debug/*-abi.json -o ./src/contracts
 ```
 
 A successful process should print and output like the following:
@@ -364,14 +364,14 @@ Tweet us [@fuel_network](https://twitter.com/fuel_network) letting us know you j
 ### Updating The Contract
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
-To develop and test faster, we recommend using the [`fuels dev` command](/docs/fuels-ts/fuels/commands/) to start a local node and automatically redeploy and generate types for your contract on each change.
+To develop and test faster, we recommend using the [`fuels dev` command](/docs/fuels-ts/fuels-cli/commands/) to start a local node and automatically redeploy and generate types for your contract on each change.
 </ConditionalContent>
 
 Once you're ready to redeploy your contract to the testnet, here are the steps you should take to get your frontend and contract back in sync:
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
 
-- In your frontend directory, re-run this command: `npx fuels build`.
+- In your frontend directory, re-run this command: `npx fuels@0.82.0 build`.
 - In your contract directory, redeploy the contract by running this command and following the same steps as above to sign the transaction with your wallet: `forc deploy --testnet`.
 - In your frontend directory, update the contract ID in your `App.tsx` file.
 </ConditionalContent>
@@ -380,7 +380,7 @@ Once you're ready to redeploy your contract to the testnet, here are the steps y
 
 - In your contract directory, run `forc build`
 - In your contract directory, redeploy the contract by running this command and following the same steps as above to sign the transaction with your wallet: `forc deploy --node-url https://beta-4.fuel.network/graphql --gas-price 1`
-- In your frontend directory, re-run this command: `npx fuels typegen -i ../counter-contract/out/debug/*-abi.json -o ./src/contracts`
+- In your frontend directory, re-run this command: `npx fuels@0.67.0 typegen -i ../counter-contract/out/debug/*-abi.json -o ./src/contracts`
 - In your frontend directory, update the contract ID in your `App.tsx` file
 </ConditionalContent>
 
