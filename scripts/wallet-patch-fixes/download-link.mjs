@@ -34,7 +34,7 @@ function handleConstantsFile(filePath, version) {
 
   if (start !== undefined && end !== undefined) {
     const downloadLink =
-      'https://wallet.fuel.network/app/fuel-wallet-0.16.1.zip';
+      'https://wallet.fuel.network/app/fuel-wallet-0.16.6.zip';
     const modifiedContent = `export const DOWNLOAD_LINK = '${downloadLink}';`;
     lines.splice(start, end - start + 1, modifiedContent);
     const newFileContent = lines.join(EOL);
