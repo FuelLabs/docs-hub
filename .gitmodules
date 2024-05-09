@@ -18,10 +18,6 @@
 [submodule "docs/fuels-wallet"]
 	path = docs/fuels-wallet
 	url = https://github.com/FuelLabs/fuels-wallet.git
-	# branch = release
-[submodule "docs/fuelup"]
-	path = docs/fuelup
-	url = https://github.com/FuelLabs/fuelup.git
 [submodule "docs/fuel-specs"]
 	path = docs/fuel-specs
 	url = https://github.com/FuelLabs/fuel-specs.git

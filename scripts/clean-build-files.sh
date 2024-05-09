@@ -6,7 +6,6 @@ TARGET_DIRS=(
 "./docs/nightly/sway" 
 "./docs/builds/sway" 
 "./docs/nightly/builds/sway" 
-"./docs/fuelup"
 "./docs/fuels-rs"
 "./docs/nightly/fuels-rs"
 "./docs/fuels-ts"
