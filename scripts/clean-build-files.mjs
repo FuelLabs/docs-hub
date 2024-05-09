@@ -75,6 +75,7 @@ function cleanupFiles(currentExclusions, dirPath) {
       fs.existsSync(subFilePath) &&
       fs.lstatSync(subFilePath).isDirectory()
     ) {
+      shouldDelete = false;
       cleanupFiles(currentExclusions, subFilePath);
     }
 
