@@ -71,15 +71,6 @@
       "image": ""
     }
   },
-  "fuelup": {
-    "title": "Fuelup",
-    "slug": "fuelup",
-    "repository": "https://github.com/FuelLabs/fuelup",
-    "ogTags": {
-      "description": "Official documentation for fuelup",
-      "image": ""
-    }
-  },
   "specs": {
     "title": "Fuel Specifications",
     "slug": "specs",

@@ -2,7 +2,6 @@ workflow
 docs/nightly
 docs/sway
 docs/builds
-docs/fuelup
 docs/fuels-rs
 docs/fuels-ts
 docs/fuels-wallet

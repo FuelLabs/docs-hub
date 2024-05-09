@@ -371,7 +371,6 @@ function replaceInternalLinks(href: string, base: string) {
     )
     .replace('specs/fuel-vm/instruction_set', 'specs/fuel-vm/instruction-set')
     .replace('specs/protocol/tx_format', 'specs/tx-format/')
-    .replace('docs/fuelup/latest', 'docs/fuelup')
     .replace('specs/protocol/id/contract', 'specs/identifiers/contract-id')
     .replace('specs/protocol/abi', 'specs/abi')
     .replace('/packag/', '/packages/')

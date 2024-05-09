@@ -18,7 +18,6 @@
     "**/fuels-rs": true,
     "**/fuels-ts": true,
     "**/fuels-wallet": true,
-    "**/fuelup": true,
     "**/guides/examples": true
   },
   "git.ignoreLimitWarning": true,
