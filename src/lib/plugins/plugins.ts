@@ -103,7 +103,7 @@ export function handlePlugins() {
       handleTSDocs(tree, rootDir, dirname, versions);
     } else if (filepath.includes('/fuels-rs/')) {
       handleRustBooks(tree, rootDir, dirname);
-    } else if (filepath.includes('/fuel-specs/')) {
+    } else {
       handleMDBooks(tree, rootDir, dirname);
     }
   };

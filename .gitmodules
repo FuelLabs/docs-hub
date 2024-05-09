@@ -58,3 +58,9 @@
 [submodule "docs/nightly/fuels-wallet"]
 	path = docs/nightly/fuels-wallet
 	url = https://github.com/FuelLabs/fuels-wallet.git
+[submodule "docs/sway-libs"]
+	path = docs/sway-libs
+	url = https://github.com/FuelLabs/sway-libs.git
+[submodule "docs/nightly/sway-libs"]
+	path = docs/nightly/sway-libs
+	url = https://github.com/FuelLabs/sway-libs.git

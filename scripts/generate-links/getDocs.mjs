@@ -41,6 +41,30 @@ export async function getDocs(key, order) {
         '!./beta-5/sway/docs/book/src/forc/**/*.md',
       ];
       break;
+    case 'sway-libs':
+      paths = [
+        // SWAY LIBS DOCS
+        './sway-libs/docs/book/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
+    case 'nightly-sway-libs':
+      paths = [
+        // SWAY LIBS DOCS
+        './nightly/sway-libs/docs/book/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
+    case 'beta-5-sway-libs':
+      paths = [
+        // SWAY DOCS
+        './beta-5/sway-libs/docs/book/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
     case 'forc':
       paths = [
         // FORC DOCS

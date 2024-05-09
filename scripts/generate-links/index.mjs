@@ -62,7 +62,7 @@ async function main() {
             links: sortedLinks,
           });
         }
-        if (key.includes('beta-5') || key === 'intro') {
+        if (key.includes('beta-5') || ['intro'].includes(key)) {
           const cleanKey = key.replace('beta-5-', '');
           allBeta5Orders.push({
             key: capitalize(cleanKey),
@@ -104,6 +104,9 @@ function getSidebarName(key) {
     case 'specs':
       newKey = 'Specifications';
       break;
+    case 'sway-libs':
+      newKey = 'Sway Libs';
+      break;
     default:
   }
 
@@ -114,6 +117,7 @@ function handleAllOrders(allOrders, folderPath, filename) {
   const correctOrder = [
     'intro',
     'sway',
+    'sway-libs',
     'fuels-ts',
     'fuels-rs',
     'wallet',
