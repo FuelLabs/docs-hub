@@ -23,7 +23,7 @@ const exclusions = {
     'sway/sway-lib-std',
     'sway/docs/book/src',
     'sway/examples',
-    'sway/master',
+    'sway/master/book',
     'sway/test/src/sdk-harness/test_projects/run_external_proxy',
   ],
   fuels_rs: [
@@ -64,6 +64,7 @@ function cleanupFiles(currentExclusions, dirPath) {
     const basePath = process.cwd().split('/docs/')[1];
     const thisFilePath = path
       .join(basePath, dirPath, item)
+      .replace('builds/', '')
       .replace('nightly/', '');
     const subFilePath = `./${thisFilePath.split('/').slice(1).join('/')}`;
 
