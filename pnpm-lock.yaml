@@ -23,13 +23,13 @@ importers:
   .:
     dependencies:
       '@actions/exec':
-        specifier: ^1.1.1
+        specifier: 1.1.1
         version: 1.1.1
       '@actions/github':
         specifier: 4.0.0
         version: 4.0.0
       '@docsearch/css':
-        specifier: ^3.5.2
+        specifier: 3.5.2
         version: 3.5.2
       '@docsearch/react':
         specifier: 3.5.2
@@ -44,206 +44,206 @@ importers:
         specifier: 0.21.0-pr-305-04b8434
         version: 0.21.0-pr-305-04b8434(@types/react-dom@18.2.7)(@types/react@18.2.21)(csstype@3.1.3)
       '@fuel-wallet/playwright-utils':
-        specifier: ^0.13.10
+        specifier: 0.13.10
         version: 0.13.10(@playwright/test@1.42.1)
       '@fuel-wallet/sdk':
         specifier: 0.16.2-master-a0e5cbf
         version: 0.16.2-master-a0e5cbf(dexie@3.2.4)(fuels@0.79.0(dexie@3.2.4))
       '@fuel-wallet/types':
-        specifier: ^0.16.1
+        specifier: 0.16.1
         version: 0.16.1(dexie@3.2.4)(fuels@0.79.0(dexie@3.2.4))
       '@fuels/connectors':
         specifier: 0.1.1
         version: 0.1.1(fuels@0.79.0(dexie@3.2.4))
       '@fuels/react':
-        specifier: ^0.19.0
+        specifier: 0.19.0
         version: 0.19.0(@tanstack/react-query@4.33.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@types/react-dom@18.2.7)(@types/react@18.2.21)(fuels@0.79.0(dexie@3.2.4))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@fuels/ts-config':
-        specifier: ^0.15.1
+        specifier: 0.15.1
         version: 0.15.1(typescript@5.2.2)
       '@mdx-js/mdx':
-        specifier: ^2.3.0
+        specifier: 2.3.0
         version: 2.3.0
       '@mdx-js/react':
-        specifier: ^2.3.0
+        specifier: 2.3.0
         version: 2.3.0(react@18.2.0)
       '@tanstack/react-query':
-        specifier: ^4.33.0
+        specifier: 4.33.0
         version: 4.33.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@vercel/analytics':
-        specifier: ^1.0.2
+        specifier: 1.0.2
         version: 1.0.2
       acorn:
-        specifier: ^8.10.0
+        specifier: 8.10.0
         version: 8.10.0
       acorn-loose:
-        specifier: ^8.3.0
+        specifier: 8.3.0
         version: 8.3.0
       acorn-walk:
-        specifier: ^8.2.0
+        specifier: 8.2.0
         version: 8.2.0
       adm-zip:
-        specifier: ^0.5.10
+        specifier: 0.5.10
         version: 0.5.10
       airtable:
-        specifier: ^0.12.2
+        specifier: 0.12.2
         version: 0.12.2
       contentlayer:
-        specifier: ^0.3.4
+        specifier: 0.3.4
         version: 0.3.4(esbuild@0.19.11)
       cookie:
-        specifier: ^0.5.0
+        specifier: 0.5.0
         version: 0.5.0
       dotenv:
-        specifier: ^16.3.1
+        specifier: 16.3.1
         version: 16.3.1
       framer-motion:
-        specifier: ^10.16.4
+        specifier: 10.16.4
         version: 10.16.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       fuels:
-        specifier: ^0.79.0
+        specifier: 0.79.0
         version: 0.79.0(dexie@3.2.4)
       globby:
-        specifier: ^13.2.2
+        specifier: 13.2.2
         version: 13.2.2
       gray-matter:
-        specifier: ^4.0.3
+        specifier: 4.0.3
         version: 4.0.3
       hast-util-from-text:
-        specifier: ^2.0.1
+        specifier: 2.0.1
         version: 2.0.1
       hast-util-heading-rank:
-        specifier: ^2.1.1
+        specifier: 2.1.1
         version: 2.1.1
       hast-util-to-string:
-        specifier: ^2.0.0
+        specifier: 2.0.0
         version: 2.0.0
       hast-util-to-text:
-        specifier: ^3.1.2
+        specifier: 3.1.2
         version: 3.1.2
       hastscript:
-        specifier: ^7.2.0
+        specifier: 7.2.0
         version: 7.2.0
       markdownlint-cli:
-        specifier: ^0.37.0
+        specifier: 0.37.0
         version: 0.37.0
       next:
-        specifier: ^13.5.6
+        specifier: 13.5.6
         version: 13.5.6(@opentelemetry/api@1.4.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       next-contentlayer:
-        specifier: ^0.3.4
+        specifier: 0.3.4
         version: 0.3.4(contentlayer@0.3.4(esbuild@0.19.11))(esbuild@0.19.11)(next@13.5.6(@opentelemetry/api@1.4.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       node-html-markdown:
-        specifier: ^1.3.0
+        specifier: 1.3.0
         version: 1.3.0
       plyr-react:
-        specifier: ^5.3.0
+        specifier: 5.3.0
         version: 5.3.0(plyr@3.7.8)(react@18.2.0)
       prettier:
         specifier: 2.8.0
         version: 2.8.0
       react:
-        specifier: ^18.2.0
+        specifier: 18.2.0
         version: 18.2.0
       react-aria:
-        specifier: ^3.27.0
+        specifier: 3.27.0
         version: 3.27.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-dom:
-        specifier: ^18.2.0
+        specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
       react-hook-form:
-        specifier: ^7.46.1
+        specifier: 7.46.1
         version: 7.46.1(react@18.2.0)
       react-syntax-highlighter:
-        specifier: ^15.5.0
+        specifier: 15.5.0
         version: 15.5.0(react@18.2.0)
       rehype-pretty-code:
-        specifier: ^0.10.0
+        specifier: 0.10.0
         version: 0.10.0(shiki@0.14.4)
       remark:
-        specifier: ^14.0.3
+        specifier: 14.0.3
         version: 14.0.3
       remark-frontmatter:
-        specifier: ^4.0.1
+        specifier: 4.0.1
         version: 4.0.1
       remark-gfm:
-        specifier: ^3.0.1
+        specifier: 3.0.1
         version: 3.0.1
       remark-mdx:
-        specifier: ^2.3.0
+        specifier: 2.3.0
         version: 2.3.0
       remark-parse:
-        specifier: ^10.0.2
+        specifier: 10.0.2
         version: 10.0.2
       remark-slug:
-        specifier: ^7.0.1
+        specifier: 7.0.1
         version: 7.0.1
       shiki:
-        specifier: ^0.14.4
+        specifier: 0.14.4
         version: 0.14.4
       strip-indent:
-        specifier: ^4.0.0
+        specifier: 4.0.0
         version: 4.0.0
       swr:
-        specifier: ^2.2.2
+        specifier: 2.2.2
         version: 2.2.2(react@18.2.0)
       toml:
-        specifier: ^3.0.0
+        specifier: 3.0.0
         version: 3.0.0
       unified:
-        specifier: ^10.1.2
+        specifier: 10.1.2
         version: 10.1.2
       unist-util-visit:
-        specifier: ^5.0.0
+        specifier: 5.0.0
         version: 5.0.0
       updates:
-        specifier: ^15.0.2
+        specifier: 15.0.2
         version: 15.0.2
       vfile:
-        specifier: ^6.0.1
+        specifier: 6.0.1
         version: 6.0.1
     devDependencies:
       '@biomejs/biome':
         specifier: 1.6.1
         version: 1.6.1
       '@playwright/test':
-        specifier: ^1.39.1
+        specifier: 1.42.1
         version: 1.42.1
       '@types/chrome':
-        specifier: ^0.0.245
+        specifier: 0.0.245
         version: 0.0.245
       '@types/cookie':
-        specifier: ^0.5.2
+        specifier: 0.5.2
         version: 0.5.2
       '@types/node':
-        specifier: ^20.5.9
+        specifier: 20.5.9
         version: 20.5.9
       '@types/react':
-        specifier: ^18.2.21
+        specifier: 18.2.21
         version: 18.2.21
       '@types/react-dom':
-        specifier: ^18.2.7
+        specifier: 18.2.7
         version: 18.2.7
       '@types/react-syntax-highlighter':
-        specifier: ^15.5.7
+        specifier: 15.5.7
         version: 15.5.7
       husky:
-        specifier: ^8.0.3
+        specifier: 8.0.3
         version: 8.0.3
       lint-staged:
-        specifier: ^14.0.1
+        specifier: 14.0.1
         version: 14.0.1(enquirer@2.3.6)
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
       pm2:
-        specifier: ^5.3.1
+        specifier: 5.3.1
         version: 5.3.1
       sharp:
-        specifier: ^0.32.6
+        specifier: 0.32.6
         version: 0.32.6
       typescript:
-        specifier: ^5.2.2
+        specifier: 5.2.2
         version: 5.2.2
 
 packages:
@@ -2583,9 +2583,6 @@ packages:
     resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
     engines: {node: '>=10.16.0'}
 
-  call-bind@1.0.2:
-    resolution: {integrity: sha512-7O+FbCihrB5WGbFYesctwmTKae6rOiIzmz1icreWJ+0aA7LJfuqhEso2T9ncpcFtzMQtzXf2QGGueWJGTYsqrA==}
-
   call-bind@1.0.6:
     resolution: {integrity: sha512-Mj50FLHtlsoVfRfnHaZvyrooHcrlceNZdL/QBvJJVd9Ta55qCQK0gs4ss2oZDeV9zFCs6ewzYgVE5yfVmfFpVg==}
     engines: {node: '>= 0.4'}
@@ -2797,9 +2794,6 @@ packages:
     resolution: {integrity: sha512-0LrrStPOdJj+SPCCrGhzryycLjwcgUSHBtxNA8aIDxf0GLsRh1cKYhB00Gd1lDOS4yGH69+SNn13+TWbVHETFQ==}
     engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0, npm: '>=7.0.0'}
 
-  csstype@3.1.2:
-    resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
-
   csstype@3.1.3:
     resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
 
@@ -2860,10 +2854,6 @@ packages:
 
   define-data-property@1.1.2:
     resolution: {integrity: sha512-SRtsSqsDbgpJBbW3pABMCOt6rQyeM8s8RiyeSN8jYG8sYmt/kGJejbydttUsnDs1tadr19tvhT4ShwMyoqAm4g==}
-    engines: {node: '>= 0.4'}
-
-  define-properties@1.2.0:
-    resolution: {integrity: sha512-xvqAVKGfT1+UAvPwKTVw/njhdQ8ZhXK4lI0bCIuCMrp2up9nPnaDftrLtmpTazqd1o+UY4zgzU+avtMbDP+ldA==}
     engines: {node: '>= 0.4'}
 
   define-properties@1.2.1:
@@ -3210,9 +3200,6 @@ packages:
     resolution: {integrity: sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==}
     engines: {node: 6.* || 8.* || >= 10.*}
 
-  get-intrinsic@1.2.1:
-    resolution: {integrity: sha512-2DcsyfABl+gVHEfCOaTrWgyt+tb6MSEGmKq+kI5HwLbIYgjgmMcV8KQ41uaKz1xxUcn9tJtgFbQUEVcEbd0FYw==}
-
   get-intrinsic@1.2.4:
     resolution: {integrity: sha512-5uYhsJH8VJBTv7oslg4BznJYhDoRI6waYCxMmCdnTrcCrHA/fCFKoTFz2JKKE0HdDFUF7/oQuhzumXJK7paBRQ==}
     engines: {node: '>= 0.4'}
@@ -3331,9 +3318,6 @@ packages:
   has-own-prop@2.0.0:
     resolution: {integrity: sha512-Pq0h+hvsVm6dDEa8x82GnLSYHOzNDt7f0ddFa3FqcQlgzEiptPqL+XrOJNavjOzSYiYWIrgeVYYgGlLmnxwilQ==}
     engines: {node: '>=8'}
-
-  has-property-descriptors@1.0.0:
-    resolution: {integrity: sha512-62DVLZGoiEBDHQyqG4w9xCuZ7eJEwNmJRWw2VY84Oedb7WFcA27fiEVe8oUQx9hAUJ4ekurquucTGwsyO1XGdQ==}
 
   has-property-descriptors@1.0.1:
     resolution: {integrity: sha512-VsX8eaIewvas0xnvinAe9bw4WfIeODpGYikiWYLH+dma0Jw6KHYqWiWfhQlgOVK8D6PvjubK5Uc4P0iIhIcNVg==}
@@ -6450,20 +6434,20 @@ snapshots:
 
   '@internationalized/date@3.4.0':
     dependencies:
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
 
   '@internationalized/message@3.1.1':
     dependencies:
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       intl-messageformat: 10.5.0
 
   '@internationalized/number@3.2.1':
     dependencies:
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
 
   '@internationalized/string@3.1.1':
     dependencies:
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
 
   '@isaacs/cliui@8.0.2':
     dependencies:
@@ -7381,7 +7365,7 @@ snapshots:
       '@react-aria/utils': 3.19.0(react@18.2.0)
       '@react-types/breadcrumbs': 3.6.1(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-aria/button@3.8.1(react@18.2.0)':
@@ -7392,7 +7376,7 @@ snapshots:
       '@react-stately/toggle': 3.6.1(react@18.2.0)
       '@react-types/button': 3.7.4(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-aria/calendar@3.4.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
@@ -7406,7 +7390,7 @@ snapshots:
       '@react-types/button': 3.7.4(react@18.2.0)
       '@react-types/calendar': 3.3.1(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
@@ -7419,7 +7403,7 @@ snapshots:
       '@react-stately/toggle': 3.6.1(react@18.2.0)
       '@react-types/checkbox': 3.5.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-aria/combobox@3.6.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
@@ -7439,7 +7423,7 @@ snapshots:
       '@react-types/button': 3.7.4(react@18.2.0)
       '@react-types/combobox': 3.7.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
@@ -7460,7 +7444,7 @@ snapshots:
       '@react-types/datepicker': 3.5.0(react@18.2.0)
       '@react-types/dialog': 3.5.4(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
@@ -7472,7 +7456,7 @@ snapshots:
       '@react-stately/overlays': 3.6.1(react@18.2.0)
       '@react-types/dialog': 3.5.4(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
     transitivePeerDependencies:
       - react-dom
@@ -7489,7 +7473,7 @@ snapshots:
       '@react-stately/dnd': 3.2.3(react@18.2.0)
       '@react-types/button': 3.7.4(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
@@ -7517,7 +7501,7 @@ snapshots:
       '@react-types/checkbox': 3.5.0(react@18.2.0)
       '@react-types/grid': 3.2.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
@@ -7532,7 +7516,7 @@ snapshots:
       '@react-stately/list': 3.9.1(react@18.2.0)
       '@react-types/checkbox': 3.5.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
     transitivePeerDependencies:
       - react-dom
@@ -7546,7 +7530,7 @@ snapshots:
       '@react-aria/ssr': 3.7.1(react@18.2.0)
       '@react-aria/utils': 3.19.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-aria/interactions@3.17.0(react@18.2.0)':
@@ -7562,7 +7546,7 @@ snapshots:
       '@react-aria/utils': 3.19.0(react@18.2.0)
       '@react-types/label': 3.7.5(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-aria/link@3.5.3(react@18.2.0)':
@@ -7572,7 +7556,7 @@ snapshots:
       '@react-aria/utils': 3.19.0(react@18.2.0)
       '@react-types/link': 3.4.4(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-aria/listbox@3.10.1(react@18.2.0)':
@@ -7586,12 +7570,12 @@ snapshots:
       '@react-stately/list': 3.9.1(react@18.2.0)
       '@react-types/listbox': 3.4.3(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-aria/live-announcer@3.3.1':
     dependencies:
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
 
   '@react-aria/menu@3.10.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
@@ -7607,7 +7591,7 @@ snapshots:
       '@react-types/button': 3.7.4(react@18.2.0)
       '@react-types/menu': 3.9.3(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
@@ -7616,7 +7600,7 @@ snapshots:
       '@react-aria/progress': 3.4.4(react@18.2.0)
       '@react-types/meter': 3.3.3(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-aria/numberfield@3.7.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
@@ -7632,7 +7616,7 @@ snapshots:
       '@react-types/numberfield': 3.5.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
       '@react-types/textfield': 3.7.3(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
@@ -7659,7 +7643,7 @@ snapshots:
       '@react-aria/utils': 3.19.0(react@18.2.0)
       '@react-types/progress': 3.4.2(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-aria/radio@3.7.0(react@18.2.0)':
@@ -7672,7 +7656,7 @@ snapshots:
       '@react-stately/radio': 3.8.3(react@18.2.0)
       '@react-types/radio': 3.5.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-aria/searchfield@3.5.4(react@18.2.0)':
@@ -7685,7 +7669,7 @@ snapshots:
       '@react-types/button': 3.7.4(react@18.2.0)
       '@react-types/searchfield': 3.4.3(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-aria/select@3.12.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
@@ -7702,7 +7686,7 @@ snapshots:
       '@react-types/button': 3.7.4(react@18.2.0)
       '@react-types/select': 3.8.2(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
@@ -7715,14 +7699,14 @@ snapshots:
       '@react-stately/collections': 3.10.0(react@18.2.0)
       '@react-stately/selection': 3.13.3(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-aria/separator@3.3.4(react@18.2.0)':
     dependencies:
       '@react-aria/utils': 3.19.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-aria/slider@3.6.0(react@18.2.0)':
@@ -7737,7 +7721,7 @@ snapshots:
       '@react-types/radio': 3.5.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
       '@react-types/slider': 3.6.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-aria/spinbutton@3.5.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
@@ -7747,13 +7731,13 @@ snapshots:
       '@react-aria/utils': 3.19.0(react@18.2.0)
       '@react-types/button': 3.7.4(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
   '@react-aria/ssr@3.7.1(react@18.2.0)':
     dependencies:
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-aria/switch@3.5.3(react@18.2.0)':
@@ -7761,7 +7745,7 @@ snapshots:
       '@react-aria/toggle': 3.7.0(react@18.2.0)
       '@react-stately/toggle': 3.6.1(react@18.2.0)
       '@react-types/switch': 3.4.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-aria/table@3.11.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
@@ -7782,7 +7766,7 @@ snapshots:
       '@react-types/grid': 3.2.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
       '@react-types/table': 3.8.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
@@ -7797,7 +7781,7 @@ snapshots:
       '@react-stately/tabs': 3.5.1(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
       '@react-types/tabs': 3.3.1(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-aria/tag@3.1.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
@@ -7811,7 +7795,7 @@ snapshots:
       '@react-stately/list': 3.9.1(react@18.2.0)
       '@react-types/button': 3.7.4(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
     transitivePeerDependencies:
       - react-dom
@@ -7823,7 +7807,7 @@ snapshots:
       '@react-aria/utils': 3.19.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
       '@react-types/textfield': 3.7.3(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-aria/toggle@3.7.0(react@18.2.0)':
@@ -7835,7 +7819,7 @@ snapshots:
       '@react-types/checkbox': 3.5.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
       '@react-types/switch': 3.4.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-aria/tooltip@3.6.1(react@18.2.0)':
@@ -7846,7 +7830,7 @@ snapshots:
       '@react-stately/tooltip': 3.4.3(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
       '@react-types/tooltip': 3.4.3(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-aria/utils@3.19.0(react@18.2.0)':
@@ -7863,7 +7847,7 @@ snapshots:
       '@react-aria/interactions': 3.17.0(react@18.2.0)
       '@react-aria/utils': 3.19.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       clsx: 1.2.1
       react: 18.2.0
 
@@ -7874,7 +7858,7 @@ snapshots:
       '@react-types/calendar': 3.3.1(react@18.2.0)
       '@react-types/datepicker': 3.5.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/checkbox@3.4.4(react@18.2.0)':
@@ -7883,13 +7867,13 @@ snapshots:
       '@react-stately/utils': 3.7.0(react@18.2.0)
       '@react-types/checkbox': 3.5.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/collections@3.10.0(react@18.2.0)':
     dependencies:
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/combobox@3.6.0(react@18.2.0)':
@@ -7901,13 +7885,13 @@ snapshots:
       '@react-stately/utils': 3.7.0(react@18.2.0)
       '@react-types/combobox': 3.7.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/data@3.10.1(react@18.2.0)':
     dependencies:
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/datepicker@3.6.0(react@18.2.0)':
@@ -7918,14 +7902,14 @@ snapshots:
       '@react-stately/utils': 3.7.0(react@18.2.0)
       '@react-types/datepicker': 3.5.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/dnd@3.2.3(react@18.2.0)':
     dependencies:
       '@react-stately/selection': 3.13.3(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/flags@3.0.0':
@@ -7938,7 +7922,7 @@ snapshots:
       '@react-stately/selection': 3.13.3(react@18.2.0)
       '@react-types/grid': 3.2.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/layout@3.13.0(react@18.2.0)':
@@ -7949,7 +7933,7 @@ snapshots:
       '@react-types/grid': 3.2.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
       '@react-types/table': 3.8.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/list@3.9.1(react@18.2.0)':
@@ -7958,7 +7942,7 @@ snapshots:
       '@react-stately/selection': 3.13.3(react@18.2.0)
       '@react-stately/utils': 3.7.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/menu@3.5.4(react@18.2.0)':
@@ -7967,7 +7951,7 @@ snapshots:
       '@react-stately/utils': 3.7.0(react@18.2.0)
       '@react-types/menu': 3.9.3(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/numberfield@3.6.0(react@18.2.0)':
@@ -7976,14 +7960,14 @@ snapshots:
       '@react-stately/utils': 3.7.0(react@18.2.0)
       '@react-types/numberfield': 3.5.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/overlays@3.6.1(react@18.2.0)':
     dependencies:
       '@react-stately/utils': 3.7.0(react@18.2.0)
       '@react-types/overlays': 3.8.1(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/radio@3.8.3(react@18.2.0)':
@@ -7991,7 +7975,7 @@ snapshots:
       '@react-stately/utils': 3.7.0(react@18.2.0)
       '@react-types/radio': 3.5.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/searchfield@3.4.4(react@18.2.0)':
@@ -7999,7 +7983,7 @@ snapshots:
       '@react-stately/utils': 3.7.0(react@18.2.0)
       '@react-types/searchfield': 3.4.3(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/select@3.5.3(react@18.2.0)':
@@ -8011,7 +7995,7 @@ snapshots:
       '@react-stately/utils': 3.7.0(react@18.2.0)
       '@react-types/select': 3.8.2(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/selection@3.13.3(react@18.2.0)':
@@ -8019,7 +8003,7 @@ snapshots:
       '@react-stately/collections': 3.10.0(react@18.2.0)
       '@react-stately/utils': 3.7.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/slider@3.4.1(react@18.2.0)':
@@ -8029,7 +8013,7 @@ snapshots:
       '@react-stately/utils': 3.7.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
       '@react-types/slider': 3.6.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/table@3.11.0(react@18.2.0)':
@@ -8042,7 +8026,7 @@ snapshots:
       '@react-types/grid': 3.2.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
       '@react-types/table': 3.8.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/tabs@3.5.1(react@18.2.0)':
@@ -8051,7 +8035,7 @@ snapshots:
       '@react-stately/utils': 3.7.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
       '@react-types/tabs': 3.3.1(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/toggle@3.6.1(react@18.2.0)':
@@ -8059,7 +8043,7 @@ snapshots:
       '@react-stately/utils': 3.7.0(react@18.2.0)
       '@react-types/checkbox': 3.5.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/tooltip@3.4.3(react@18.2.0)':
@@ -8067,7 +8051,7 @@ snapshots:
       '@react-stately/overlays': 3.6.1(react@18.2.0)
       '@react-stately/utils': 3.7.0(react@18.2.0)
       '@react-types/tooltip': 3.4.3(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/tree@3.7.1(react@18.2.0)':
@@ -8076,19 +8060,19 @@ snapshots:
       '@react-stately/selection': 3.13.3(react@18.2.0)
       '@react-stately/utils': 3.7.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/utils@3.7.0(react@18.2.0)':
     dependencies:
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-stately/virtualizer@3.6.1(react@18.2.0)':
     dependencies:
       '@react-aria/utils': 3.19.0(react@18.2.0)
       '@react-types/shared': 3.19.0(react@18.2.0)
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.2
       react: 18.2.0
 
   '@react-types/breadcrumbs@3.6.1(react@18.2.0)':
@@ -8373,7 +8357,7 @@ snapshots:
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.3
-      csstype: 3.1.2
+      csstype: 3.1.3
 
   '@types/resolve@1.20.2': {}
 
@@ -8501,7 +8485,7 @@ snapshots:
 
   array-buffer-byte-length@1.0.0:
     dependencies:
-      call-bind: 1.0.2
+      call-bind: 1.0.6
       is-array-buffer: 3.0.2
 
   array-timsort@1.0.3: {}
@@ -8509,9 +8493,9 @@ snapshots:
   arraybuffer.prototype.slice@1.0.1:
     dependencies:
       array-buffer-byte-length: 1.0.0
-      call-bind: 1.0.2
-      define-properties: 1.2.0
-      get-intrinsic: 1.2.1
+      call-bind: 1.0.6
+      define-properties: 1.2.1
+      get-intrinsic: 1.2.4
       is-array-buffer: 3.0.2
       is-shared-array-buffer: 1.0.2
 
@@ -8598,11 +8582,6 @@ snapshots:
   busboy@1.6.0:
     dependencies:
       streamsearch: 1.1.0
-
-  call-bind@1.0.2:
-    dependencies:
-      function-bind: 1.1.2
-      get-intrinsic: 1.2.1
 
   call-bind@1.0.6:
     dependencies:
@@ -8830,8 +8809,6 @@ snapshots:
     dependencies:
       css-tree: 2.2.1
 
-  csstype@3.1.2: {}
-
   csstype@3.1.3: {}
 
   culvert@0.1.2: {}
@@ -8865,9 +8842,9 @@ snapshots:
   deep-equal@2.2.2:
     dependencies:
       array-buffer-byte-length: 1.0.0
-      call-bind: 1.0.2
+      call-bind: 1.0.6
       es-get-iterator: 1.1.3
-      get-intrinsic: 1.2.1
+      get-intrinsic: 1.2.4
       is-arguments: 1.1.1
       is-array-buffer: 3.0.2
       is-date-object: 1.0.5
@@ -8894,15 +8871,10 @@ snapshots:
       gopd: 1.0.1
       has-property-descriptors: 1.0.1
 
-  define-properties@1.2.0:
-    dependencies:
-      has-property-descriptors: 1.0.0
-      object-keys: 1.1.1
-
   define-properties@1.2.1:
     dependencies:
       define-data-property: 1.1.2
-      has-property-descriptors: 1.0.0
+      has-property-descriptors: 1.0.1
       object-keys: 1.1.1
 
   degenerator@5.0.1:
@@ -8996,16 +8968,16 @@ snapshots:
       array-buffer-byte-length: 1.0.0
       arraybuffer.prototype.slice: 1.0.1
       available-typed-arrays: 1.0.5
-      call-bind: 1.0.2
+      call-bind: 1.0.6
       es-set-tostringtag: 2.0.1
       es-to-primitive: 1.2.1
       function.prototype.name: 1.1.6
-      get-intrinsic: 1.2.1
+      get-intrinsic: 1.2.4
       get-symbol-description: 1.0.0
       globalthis: 1.0.3
       gopd: 1.0.1
       has: 1.0.3
-      has-property-descriptors: 1.0.0
+      has-property-descriptors: 1.0.1
       has-proto: 1.0.1
       has-symbols: 1.0.3
       internal-slot: 1.0.5
@@ -9037,8 +9009,8 @@ snapshots:
 
   es-get-iterator@1.1.3:
     dependencies:
-      call-bind: 1.0.2
-      get-intrinsic: 1.2.1
+      call-bind: 1.0.6
+      get-intrinsic: 1.2.4
       has-symbols: 1.0.3
       is-arguments: 1.1.1
       is-map: 2.0.2
@@ -9049,7 +9021,7 @@ snapshots:
 
   es-set-tostringtag@2.0.1:
     dependencies:
-      get-intrinsic: 1.2.1
+      get-intrinsic: 1.2.4
       has: 1.0.3
       has-tostringtag: 1.0.0
 
@@ -9379,21 +9351,14 @@ snapshots:
 
   function.prototype.name@1.1.6:
     dependencies:
-      call-bind: 1.0.2
-      define-properties: 1.2.0
+      call-bind: 1.0.6
+      define-properties: 1.2.1
       es-abstract: 1.22.1
       functions-have-names: 1.2.3
 
   functions-have-names@1.2.3: {}
 
   get-caller-file@2.0.5: {}
-
-  get-intrinsic@1.2.1:
-    dependencies:
-      function-bind: 1.1.2
-      has: 1.0.3
-      has-proto: 1.0.1
-      has-symbols: 1.0.3
 
   get-intrinsic@1.2.4:
     dependencies:
@@ -9411,8 +9376,8 @@ snapshots:
 
   get-symbol-description@1.0.0:
     dependencies:
-      call-bind: 1.0.2
-      get-intrinsic: 1.2.1
+      call-bind: 1.0.6
+      get-intrinsic: 1.2.4
 
   get-uri@6.0.3:
     dependencies:
@@ -9474,7 +9439,7 @@ snapshots:
 
   gopd@1.0.1:
     dependencies:
-      get-intrinsic: 1.2.1
+      get-intrinsic: 1.2.4
 
   graceful-fs@4.2.11: {}
 
@@ -9528,10 +9493,6 @@ snapshots:
   has-flag@4.0.0: {}
 
   has-own-prop@2.0.0: {}
-
-  has-property-descriptors@1.0.0:
-    dependencies:
-      get-intrinsic: 1.2.1
 
   has-property-descriptors@1.0.1:
     dependencies:
@@ -9740,7 +9701,7 @@ snapshots:
 
   internal-slot@1.0.5:
     dependencies:
-      get-intrinsic: 1.2.1
+      get-intrinsic: 1.2.4
       has: 1.0.3
       side-channel: 1.0.4
 
@@ -9776,13 +9737,13 @@ snapshots:
 
   is-arguments@1.1.1:
     dependencies:
-      call-bind: 1.0.2
+      call-bind: 1.0.6
       has-tostringtag: 1.0.0
 
   is-array-buffer@3.0.2:
     dependencies:
-      call-bind: 1.0.2
-      get-intrinsic: 1.2.1
+      call-bind: 1.0.6
+      get-intrinsic: 1.2.4
       is-typed-array: 1.1.12
 
   is-arrayish@0.2.1: {}
@@ -9799,7 +9760,7 @@ snapshots:
 
   is-boolean-object@1.1.2:
     dependencies:
-      call-bind: 1.0.2
+      call-bind: 1.0.6
       has-tostringtag: 1.0.0
 
   is-buffer@2.0.5: {}
@@ -9858,14 +9819,14 @@ snapshots:
 
   is-regex@1.1.4:
     dependencies:
-      call-bind: 1.0.2
+      call-bind: 1.0.6
       has-tostringtag: 1.0.0
 
   is-set@2.0.2: {}
 
   is-shared-array-buffer@1.0.2:
     dependencies:
-      call-bind: 1.0.2
+      call-bind: 1.0.6
 
   is-stream@3.0.0: {}
 
@@ -9885,7 +9846,7 @@ snapshots:
 
   is-weakref@1.0.2:
     dependencies:
-      call-bind: 1.0.2
+      call-bind: 1.0.6
 
   is-weakset@2.0.2:
     dependencies:
@@ -10714,15 +10675,15 @@ snapshots:
 
   object-is@1.1.5:
     dependencies:
-      call-bind: 1.0.2
-      define-properties: 1.2.0
+      call-bind: 1.0.6
+      define-properties: 1.2.1
 
   object-keys@1.1.1: {}
 
   object.assign@4.1.4:
     dependencies:
-      call-bind: 1.0.2
-      define-properties: 1.2.0
+      call-bind: 1.0.6
+      define-properties: 1.2.1
       has-symbols: 1.0.3
       object-keys: 1.1.1
 
@@ -11180,7 +11141,7 @@ snapshots:
 
   react-syntax-highlighter@15.5.0(react@18.2.0):
     dependencies:
-      '@babel/runtime': 7.22.11
+      '@babel/runtime': 7.23.9
       highlight.js: 10.7.3
       lowlight: 1.20.0
       prismjs: 1.29.0
@@ -11221,8 +11182,8 @@ snapshots:
 
   regexp.prototype.flags@1.5.0:
     dependencies:
-      call-bind: 1.0.2
-      define-properties: 1.2.0
+      call-bind: 1.0.6
+      define-properties: 1.2.1
       functions-have-names: 1.2.3
 
   rehype-pretty-code@0.10.0(shiki@0.14.4):
@@ -11357,8 +11318,8 @@ snapshots:
 
   safe-array-concat@1.0.0:
     dependencies:
-      call-bind: 1.0.2
-      get-intrinsic: 1.2.1
+      call-bind: 1.0.6
+      get-intrinsic: 1.2.4
       has-symbols: 1.0.3
       isarray: 2.0.5
 
@@ -11366,8 +11327,8 @@ snapshots:
 
   safe-regex-test@1.0.0:
     dependencies:
-      call-bind: 1.0.2
-      get-intrinsic: 1.2.1
+      call-bind: 1.0.6
+      get-intrinsic: 1.2.4
       is-regex: 1.1.4
 
   safer-buffer@2.1.2: {}
@@ -11434,8 +11395,8 @@ snapshots:
 
   side-channel@1.0.4:
     dependencies:
-      call-bind: 1.0.2
-      get-intrinsic: 1.2.1
+      call-bind: 1.0.6
+      get-intrinsic: 1.2.4
       object-inspect: 1.12.3
 
   signal-exit@3.0.7: {}
@@ -11542,26 +11503,26 @@ snapshots:
 
   string.prototype.padend@3.1.4:
     dependencies:
-      call-bind: 1.0.2
-      define-properties: 1.2.0
+      call-bind: 1.0.6
+      define-properties: 1.2.1
       es-abstract: 1.22.1
 
   string.prototype.trim@1.2.7:
     dependencies:
-      call-bind: 1.0.2
-      define-properties: 1.2.0
+      call-bind: 1.0.6
+      define-properties: 1.2.1
       es-abstract: 1.22.1
 
   string.prototype.trimend@1.0.6:
     dependencies:
-      call-bind: 1.0.2
-      define-properties: 1.2.0
+      call-bind: 1.0.6
+      define-properties: 1.2.1
       es-abstract: 1.22.1
 
   string.prototype.trimstart@1.0.6:
     dependencies:
-      call-bind: 1.0.2
-      define-properties: 1.2.0
+      call-bind: 1.0.6
+      define-properties: 1.2.1
       es-abstract: 1.22.1
 
   string_decoder@1.3.0:
@@ -11712,13 +11673,13 @@ snapshots:
 
   typed-array-buffer@1.0.0:
     dependencies:
-      call-bind: 1.0.2
-      get-intrinsic: 1.2.1
+      call-bind: 1.0.6
+      get-intrinsic: 1.2.4
       is-typed-array: 1.1.12
 
   typed-array-byte-length@1.0.0:
     dependencies:
-      call-bind: 1.0.2
+      call-bind: 1.0.6
       for-each: 0.3.3
       has-proto: 1.0.1
       is-typed-array: 1.1.12
@@ -11726,14 +11687,14 @@ snapshots:
   typed-array-byte-offset@1.0.0:
     dependencies:
       available-typed-arrays: 1.0.5
-      call-bind: 1.0.2
+      call-bind: 1.0.6
       for-each: 0.3.3
       has-proto: 1.0.1
       is-typed-array: 1.1.12
 
   typed-array-length@1.0.4:
     dependencies:
-      call-bind: 1.0.2
+      call-bind: 1.0.6
       for-each: 0.3.3
       is-typed-array: 1.1.12
 
@@ -11746,7 +11707,7 @@ snapshots:
 
   unbox-primitive@1.0.2:
     dependencies:
-      call-bind: 1.0.2
+      call-bind: 1.0.6
       has-bigints: 1.0.2
       has-symbols: 1.0.3
       which-boxed-primitive: 1.0.2
@@ -11945,7 +11906,7 @@ snapshots:
   which-typed-array@1.1.11:
     dependencies:
       available-typed-arrays: 1.0.5
-      call-bind: 1.0.2
+      call-bind: 1.0.6
       for-each: 0.3.3
       gopd: 1.0.1
       has-tostringtag: 1.0.0
