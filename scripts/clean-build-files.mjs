@@ -13,6 +13,9 @@ const targetDirs = [
   './docs/nightly/fuels-ts',
   './docs/fuels-wallet',
   './docs/nightly/fuels-wallet',
+  './docs/fuel-graphql-docs',
+  './docs/nightly/fuel-graphql-docs',
+  './docs/fuel-core',
 ];
 
 // Exclusions for each type of directory
@@ -39,11 +42,20 @@ const exclusions = {
     'fuels-ts/demo-wallet-sdk-react',
   ],
   fuels_wallet: ['fuels-wallet/package.json', 'fuels-wallet/packages'],
+  fuel_core: ['fuel-core/deployment/scripts/chainspec', 'fuel-core/Cargo.toml'],
+  fuel_graphql_docs: [
+    'fuel-graphql-docs/docs',
+    'fuel-graphql-docs/examples',
+    'fuel-graphql-docs/src',
+  ],
 };
 
 function main() {
   for (const targetDir of targetDirs) {
     if (!fs.existsSync(targetDir)) {
+      console.log(`Directory ${targetDir} does not exist!`);
+      const basePath = process.cwd();
+      console.log(`Current directory: ${basePath}`);
       return;
     }
     // Change to the target directory
@@ -53,7 +65,14 @@ function main() {
     cleanupFiles(currentExclusions, '.');
     console.log(`Cleanup done for ${targetDir}!`);
     // Return to the original directory
-    process.chdir(path.resolve(process.cwd(), '..'));
+    let x = '../..';
+    if (process.cwd().includes('nightly')) {
+      x = `${x}/..`;
+    }
+    if (process.cwd().includes('builds')) {
+      x = `${x}/..`;
+    }
+    process.chdir(path.resolve(process.cwd(), x));
   }
 }
 
@@ -85,6 +104,7 @@ function cleanupFiles(currentExclusions, dirPath) {
 
 function deleteFolder(shouldDelete, subFilePath) {
   if (shouldDelete) {
+    console.log('DELETING: ', subFilePath);
     fs.rmSync(subFilePath, { recursive: true, force: true });
   }
 }
