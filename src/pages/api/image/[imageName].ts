@@ -17,8 +17,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       let versionSet: VersionSet = 'default';
       if (req.headers.referer?.includes('/nightly/')) {
         versionSet = 'nightly';
-      } else if (req.headers.referer?.includes('/beta-5/')) {
-        versionSet = 'beta-5';
       }
       const walletPath = 'fuels-wallet/packages/docs';
       const tsPath = 'fuels-ts/apps/docs/src';
