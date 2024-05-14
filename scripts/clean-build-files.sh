@@ -17,7 +17,7 @@ TARGET_DIRS=(
 )
 
 # File/folder names to exclude from deletion in each book
-EXCLUSIONS_sway=("Cargo.toml" "forc-pkg" "sway-lib-std" "docs" "examples" "master", "test")
+EXCLUSIONS_sway=("Cargo.toml" "forc-pkg" "sway-lib-std" "docs" "examples" "master" "v0.58.0" "test")
 EXCLUSIONS_fuels_rs=("Cargo.toml" "docs" "examples" "packages")
 EXCLUSIONS_fuels_ts=("apps" "packages" "package.json", "demo-wallet-sdk-react")
 EXCLUSIONS_fuels_wallet=("package.json" "packages")
