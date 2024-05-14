@@ -17,7 +17,9 @@ overrides:
   ip@<1.1.9: '>=1.1.9'
   ip@=2.0.0: '>=2.0.1'
   follow-redirects@<=1.15.5: '>=1.15.6'
-  unist-util-visit@<5.0.0: '>=5.0.0'
+  unist-util-visit@<5.0.0: 5.0.0
+  rehype-pretty-code@>0.10.0: 0.10.0
+  shiki@>0.14.4: 0.14.4
 
 importers:
 
@@ -180,7 +182,7 @@ importers:
         specifier: ^7.0.1
         version: 7.0.1
       shiki:
-        specifier: ^0.14.4
+        specifier: 0.14.4
         version: 0.14.4
       strip-indent:
         specifier: ^4.0.0
@@ -4572,7 +4574,7 @@ packages:
     resolution: {integrity: sha512-qCD071Y+vUxEy9yyrATPk2+W9q7qCbzZgtc9suZhu75bmRQvOlBhJt4d3WvqSMTamkKoFkvqtCjyAk+ggH+aXQ==}
     engines: {node: '>=16'}
     peerDependencies:
-      shiki: 0.x
+      shiki: 0.14.4
 
   rehype-stringify@9.0.4:
     resolution: {integrity: sha512-Uk5xu1YKdqobe5XpSskwPvo1XeHUUucWEQSl8hTrXt5selvca1e8K1EZ37E6YoZ4BT8BCqCdVfQW7OfHfthtVQ==}
