@@ -20,7 +20,6 @@ import type { DocType, NavOrder, SidebarLinkItem, Versions } from '../types';
 export type DocPageProps = {
   allNavs: NavOrder[];
   allNightlyNavs: NavOrder[];
-  allBeta5Navs: NavOrder[];
   codeLight?: string;
   codeDark?: string;
   md?: MdDoc;
@@ -60,7 +59,7 @@ export function getStaticPaths() {
 export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   const slugArray = params?.slug as string[];
   const slug = slugArray.join('/');
-  const { allNavs, allNightlyNavs, allBeta5Navs } = getNavs();
+  const { allNavs, allNightlyNavs } = getNavs();
   const { versions, nightlyVersions } = getAllVersions();
 
   if (slug === 'guides') {
@@ -71,7 +70,6 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
         guides,
         allNavs,
         allNightlyNavs,
-        allBeta5Navs,
         versions,
         nightlyVersions,
       },
@@ -96,7 +94,6 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
     props: {
       allNavs,
       allNightlyNavs,
-      allBeta5Navs,
       codeLight: light,
       codeDark: dark,
       md: doc.md,

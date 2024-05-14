@@ -16,7 +16,7 @@ import { GuidesPage } from './GuidesPage';
 
 export function DocScreen(props: DocPageProps) {
   const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
-  const { doc, allNavs, allNightlyNavs, allBeta5Navs } = props;
+  const { doc, allNavs, allNightlyNavs } = props;
   const [versionSet, setVersionSet] = useState<VersionSet>('default');
   const version = useVersion();
   const showWarning = useShowWarning();
@@ -38,13 +38,7 @@ export function DocScreen(props: DocPageProps) {
     }
   }, [version, doc]);
 
-  const navs = getActiveNav(
-    versionSet,
-    allNavs,
-    allNightlyNavs,
-    allBeta5Navs,
-    doc
-  );
+  const navs = getActiveNav(versionSet, allNavs, allNightlyNavs, doc);
 
   let versions = props.versions;
   if (versionSet !== 'default') {
