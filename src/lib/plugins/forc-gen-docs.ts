@@ -62,7 +62,8 @@ function transformContent(node: any, rootDir: string) {
 
   let swayBuildFilePath = '/builds/sway/master/book/forc';
   if (versionSet === 'default') {
-    swayBuildFilePath = `docs${swayBuildFilePath}`;
+    // TODO: make this dynamic
+    swayBuildFilePath = 'docs/builds/sway/v0.58.0/book/forc';
   } else {
     swayBuildFilePath = `docs/${versionSet}${swayBuildFilePath}`;
   }
