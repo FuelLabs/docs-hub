@@ -14,14 +14,8 @@ export default function VersionDropdown({
 }) {
   const [opened, setOpened] = useState(false);
   const [activeVersion, setActiveVersion] = useState<
-    typeof FUEL_TESTNET_UPPER_CASE | 'Nightly' | 'Beta-5'
-  >(
-    versionSet === 'default'
-      ? FUEL_TESTNET_UPPER_CASE
-      : versionSet === 'nightly'
-        ? 'Nightly'
-        : 'Beta-5'
-  );
+    typeof FUEL_TESTNET_UPPER_CASE | 'Nightly'
+  >(versionSet === 'default' ? FUEL_TESTNET_UPPER_CASE : 'Nightly');
   const router = useRouter();
   const setVersion = useSetVersion();
   const splitPath = router.asPath.split('/');
@@ -37,11 +31,7 @@ export default function VersionDropdown({
 
   useEffect(() => {
     const newActiveVersion =
-      versionSet === 'default'
-        ? FUEL_TESTNET_UPPER_CASE
-        : versionSet === 'nightly'
-          ? 'Nightly'
-          : 'Beta-5';
+      versionSet === 'default' ? FUEL_TESTNET_UPPER_CASE : 'Nightly';
     setActiveVersion(newActiveVersion);
   }, [versionSet]);
 
@@ -64,8 +54,6 @@ export default function VersionDropdown({
           if (setVersion) {
             if (action === FUEL_TESTNET) {
               setVersion(FUEL_TESTNET_UPPER_CASE);
-            } else if (action === 'beta-5') {
-              setVersion('Beta-5');
             } else {
               setVersion('Nightly');
             }
@@ -91,15 +79,6 @@ export default function VersionDropdown({
         >
           <Text>{FUEL_TESTNET_UPPER_CASE}</Text>
           {versionSet === 'default' && <Icon icon='Check' color='accent11' />}
-        </Dropdown.MenuItem>
-
-        <Dropdown.MenuItem
-          css={styles.menuItem}
-          key='beta-5'
-          aria-label='beta-5'
-        >
-          <Text>Beta-5</Text>
-          {versionSet === 'beta-5' && <Icon icon='Check' color='accent11' />}
         </Dropdown.MenuItem>
 
         <Dropdown.MenuItem

@@ -1,15 +1,11 @@
 import dynamic from 'next/dynamic';
 import type { ComponentType } from 'react';
-import * as beta5GQLExamples from '~/docs/beta-5/fuel-graphql-docs/examples';
-import * as beta5FuelExamples from '~/docs/beta-5/fuels-wallet/packages/docs/examples';
 import * as GQLExamples from '~/docs/fuel-graphql-docs/examples';
 import * as FuelExamples from '~/docs/fuels-wallet/packages/docs/examples';
 import * as nightlyGQLExamples from '~/docs/nightly/fuel-graphql-docs/examples';
 import * as nightlyFuelExamples from '~/docs/nightly/fuels-wallet/packages/docs/examples';
 import { TD, TH } from '~/src/components/Table';
 import TestAction from '~/src/components/TestAction';
-import { COMPONENTS as BETA_5_GQL_COMPONENTS } from '~/src/generated/components/beta-5-graphql';
-import { COMPONENTS as BETA_5_WALLET_COMPONENTS } from '~/src/generated/components/beta-5-wallet';
 import { COMPONENTS as GQL_COMPONENTS } from '~/src/generated/components/graphql';
 import { COMPONENTS as NIGHTLY_GQL_COMPONENTS } from '~/src/generated/components/nightly-graphql';
 import { COMPONENTS as NIGHTLY_WALLET_COMPONENTS } from '~/src/generated/components/nightly-wallet';
@@ -34,8 +30,7 @@ export interface ComponentsObject {
     | typeof GQLExamples
     | typeof FuelExamples
     | typeof nightlyGQLExamples
-    | typeof nightlyFuelExamples
-    | typeof beta5GQLExamples;
+    | typeof nightlyFuelExamples;
 }
 
 export function getComponents(docSlug: string, versionSet: VersionSet) {
@@ -65,9 +60,6 @@ export function getComponents(docSlug: string, versionSet: VersionSet) {
     if (versionSet === 'nightly') {
       components.Examples = nightlyFuelExamples;
       addComponents(NIGHTLY_WALLET_COMPONENTS);
-    } else if (versionSet === 'beta-5') {
-      components.Examples = beta5FuelExamples;
-      addComponents(BETA_5_WALLET_COMPONENTS);
     } else {
       components.Examples = FuelExamples;
       addComponents(WALLET_COMPONENTS);

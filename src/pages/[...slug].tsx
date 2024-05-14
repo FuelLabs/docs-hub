@@ -13,7 +13,6 @@ import {
   getAllVersions,
   getFuelCoreVersion,
   getNodeVersion,
-  getVersions,
 } from '../lib/versions';
 import { DocScreen } from '../screens/DocPage';
 import type { DocType, NavOrder, SidebarLinkItem, Versions } from '../types';
@@ -62,7 +61,7 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   const slugArray = params?.slug as string[];
   const slug = slugArray.join('/');
   const { allNavs, allNightlyNavs, allBeta5Navs } = getNavs();
-  const { versions, nightlyVersions, beta5Versions } = getAllVersions();
+  const { versions, nightlyVersions } = getAllVersions();
 
   if (slug === 'guides') {
     const guidesPath = join(DOCS_DIRECTORY, './guides/docs/guides.json');
@@ -75,7 +74,6 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
         allBeta5Navs,
         versions,
         nightlyVersions,
-        beta5Versions,
       },
     };
   }
@@ -107,7 +105,6 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
       docLink: doc.navLinks,
       versions,
       nightlyVersions,
-      beta5Versions,
       fuelCoreVersion,
       nodeVersion,
       nodeVersionMax,

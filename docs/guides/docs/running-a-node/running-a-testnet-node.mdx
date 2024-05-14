@@ -48,18 +48,6 @@ parent:
   commentType="{/*"
 />
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['beta-5']}>
-To run a `beta-5` node, you will need to install the `beta-5` toolchain.
-
-You can do this by running the commands below:
-
-```sh
-fuelup toolchain install beta-5
-fuelup default beta-5
-```
-
-</ConditionalContent>
-
 ## Getting a Sepolia (Ethereum Testnet) API Key
 
 {/*get_ethereum_api_key:example:start*/}
@@ -113,20 +101,6 @@ fuel-core-keygen new --key-type peering
 
 </ConditionalContent>
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['beta-5']}>
-
-```sh
-fuel-core-keygen new --key-type peering
-{
-  "peer_id":"16Uiu2HAmEtVt2nZjzpXcAH7dkPcFDiL3z7haj6x78Tj659Ri8nrs",
-  "secret":"b0ab3227974e06d236d265bd1077bb0522d38ead16c4326a5dff2f30edf88496",
-  "type":"peering"
-}
-### Do not share or lose this private key! Press any key to complete. ###
-```
-
-</ConditionalContent>
-
 {/*// ANCHOR_END: generate_fuel_p2p_key_command*/}
 
 {/*generate_fuel_p2p_key_end:example:start*/}
@@ -144,15 +118,6 @@ Here is the [specific configuration](https://github.com/FuelLabs/fuel-core/blob/
   file="../../../fuel-core/deployment/scripts/chainspec/beta_chainspec.json"
   lang="json"
 />*/}
-</ConditionalContent>
-
-<ConditionalContent versionSet={props.versionSet} showForVersions={['beta-5']}>
-Here is the [specific configuration](https://github.com/FuelLabs/fuel-core/blob/v0.20.4/deployment/scripts/chainspec/beta_chainspec.json) for `beta-5`:
-
-<CodeImport
-  file="../../../beta-5/fuel-core/deployment/scripts/chainspec/beta_chainspec.json"
-  lang="json"
-/>
 </ConditionalContent>
 
 ## Running a Local Node

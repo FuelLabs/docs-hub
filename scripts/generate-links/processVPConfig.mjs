@@ -12,11 +12,6 @@ const nightlyTsAPIOrderFile = getFile(
   'nightly',
   true
 );
-const beta5TsAPIOrderFile = getFile(
-  './fuels-ts/apps/docs/.typedoc/api-links.json',
-  'beta-5',
-  true
-);
 
 function extractData(inputString) {
   // used for api.json order
@@ -91,8 +86,6 @@ function handleVPLine(
     let apiJSON;
     if (isNightly) {
       apiJSON = nightlyTsAPIOrderFile;
-    } else if (isBeta5) {
-      apiJSON = beta5TsAPIOrderFile;
     } else {
       apiJSON = tsAPIOrderFile;
     }

@@ -140,9 +140,9 @@ export function getVersions(versionSet: VersionSet) {
 export function getAllVersions() {
   const versions = getVersions('default');
   const nightlyVersions = getVersions('nightly');
-  const beta5Versions = getVersions('beta-5');
+  // const beta5Versions = getVersions('beta-5');
 
-  return { versions, nightlyVersions, beta5Versions };
+  return { versions, nightlyVersions };
 }
 
 // gets the correct url tag for github links

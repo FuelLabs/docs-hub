@@ -70,14 +70,6 @@ const includeDirs = [
   'docs/nightly/fuel-graphql-docs/docs',
   'docs/nightly/fuels-wallet/packages/docs/docs',
   'docs/nightly/sway-libs/docs/book/src',
-  // BETA-5 DOCS
-  'docs/beta-5/sway/docs/book/src',
-  'docs/beta-5/fuels-rs/docs/src',
-  'docs/beta-5/fuels-ts/apps/docs/src',
-  'docs/beta-5/fuel-specs/src',
-  'docs/beta-5/fuel-graphql-docs/docs',
-  'docs/beta-5/fuels-wallet/packages/docs/docs',
-  'docs/beta-5/sway-libs/docs/book/src',
 ];
 
 const excludeDirs = [
@@ -98,11 +90,6 @@ const excludeDirs = [
   'docs/nightly/fuels-rs/docs/src/SUMMARY.md',
   'docs/nightly/fuel-specs/src/SUMMARY.md',
   'docs/nightly/sway-libs/docs/book/src/SUMMARY.md',
-  // BETA-5 DOCS
-  'docs/beta-5/sway/docs/book/src/SUMMARY.md',
-  'docs/beta-5/fuels-rs/docs/src/SUMMARY.md',
-  'docs/beta-5/fuel-specs/src/SUMMARY.md',
-  'docs/beta-5/sway-libs/docs/book/src/SUMMARY.md',
 ];
 
 export default makeSource({

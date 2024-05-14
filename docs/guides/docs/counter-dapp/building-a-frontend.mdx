@@ -82,21 +82,9 @@ action={{
 }}
 />
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
-
 ```sh
-npm install fuels@0.79.0 @fuels/react@0.18.0 @fuels/connectors@0.1.1 @tanstack/react-query@5.28.9
+npm install fuels @fuels/react @fuels/connectors @tanstack/react-query
 ```
-
-</ConditionalContent>
-
-<ConditionalContent versionSet={props.versionSet} showForVersions={['beta-5']}>
-
-```sh
-npm install fuels@0.79.0 @fuels/react@0.18.0 @fuels/connectors@0.1.1 @tanstack/react-query@5.28.9
-```
-
-</ConditionalContent>
 
 ## Generate contract types
 
@@ -199,19 +187,10 @@ action={{
 }}
 />
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
 <CodeImport
   file="../../examples/counter-dapp/frontend/src/App.tsx"
   lang="tsx"
 />
-</ConditionalContent>
-
-<ConditionalContent versionSet={props.versionSet} showForVersions={['beta-5']}>
-<CodeImport
-  file="../../../beta-5/guides/examples/counter-dapp/frontend/src/App.tsx"
-  lang="tsx"
-/>
-</ConditionalContent>
 
 Finally, replace the value of the `CONTRACT_ID` variable at the top of your `App.tsx` file with the address of the contract you just deployed.
 
@@ -266,13 +245,7 @@ If you have testnet ETH on Fuel, you should see the counter value and increment 
 
 ## You just built a fullstack dapp on Fuel! ⛽
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
 [Here is the repo for this project](https://github.com/FuelLabs/docs-hub/tree/master/docs/guides/examples/counter-dapp).
-</ConditionalContent>
-
-<ConditionalContent versionSet={props.versionSet} showForVersions={['beta-5']}>
-[Here is the repo for this project](https://github.com/FuelLabs/docs-hub/tree/master/docs/beta-5/guides/examples/counter-dapp).
-</ConditionalContent>
 
 If you run into any problems, a good first step is to compare your code to this repo and resolve any differences.
 
