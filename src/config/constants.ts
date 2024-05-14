@@ -7,13 +7,13 @@ export const FIELDS = ['title', 'slug', 'content', 'category'];
 
 export const FUEL_TESTNET = 'testnet';
 export const FUEL_TESTNET_UPPER_CASE = 'Testnet';
-export const FAUCET_LINK = `https://faucet-${FUEL_TESTNET}.fuel.network/`;
+export const FAUCET_LINK = 'https://faucet-devnet.fuel.network/';
 export const BETA_5_FAUCET_LINK = 'https://faucet-beta-5.fuel.network/';
-export const PLAYGROUND_LINK = `https://${FUEL_TESTNET}.fuel.network/playground/`;
+export const PLAYGROUND_LINK = 'https://devnet.fuel.network/v1/playground';
 export const BETA_5_PLAYGROUND_LINK = 'https://beta-5.fuel.network/playground/';
 export const EXPLORER_LINK = 'https://app.fuel.network/';
 export const BETA_5_EXPLORER_LINK =
-  'https://fuellabs.github.io/block-explorer-v2/beta-5/';
+  'https://app.fuel.network/';
 export const BRIDGE_LINK = 'https://app.fuel.network/bridge';
 
 export type LinkObject = {
@@ -41,7 +41,7 @@ export const EXTERNAL_NAVIGATION_LINKS: LinkObject[] = [
   },
   {
     name: 'Faucet',
-    link: 'https://faucet-beta-5.fuel.network/',
+    link:  FAUCET_LINK,
   },
   {
     name: 'Contributing',
