@@ -79,7 +79,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.46.1",
     "react-syntax-highlighter": "^15.5.0",
-    "rehype-pretty-code": "^0.10.0",
+    "rehype-pretty-code": "0.10.0",
     "remark": "^14.0.3",
     "remark-frontmatter": "^4.0.1",
     "remark-gfm": "^3.0.1",
@@ -91,7 +91,7 @@
     "swr": "^2.2.2",
     "toml": "^3.0.0",
     "unified": "^10.1.2",
-    "unist-util-visit": "^5.0.0",
+    "unist-util-visit": "5.0.0",
     "updates": "^15.0.2",
     "vfile": "^6.0.1"
   },
@@ -126,7 +126,8 @@
       "sharp@<0.32.6": ">=0.32.6",
       "ip@<1.1.9": ">=1.1.9",
       "ip@=2.0.0": ">=2.0.1",
-      "follow-redirects@<=1.15.5": ">=1.15.6"
+      "follow-redirects@<=1.15.5": ">=1.15.6",
+      "unist-util-visit@<5.0.0": ">=5.0.0"
     }
   }
 }
