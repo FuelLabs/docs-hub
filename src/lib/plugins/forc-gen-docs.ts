@@ -60,12 +60,12 @@ function transformContent(node: any, rootDir: string) {
     versionSet = 'beta-5';
   }
 
-  let swayBuildFilePath = '/builds/sway/master/book/forc';
-  if (versionSet === 'default') {
-    // TODO: make this dynamic
-    swayBuildFilePath = 'docs/builds/sway/v0.58.0/book/forc';
-  } else {
-    swayBuildFilePath = `docs/${versionSet}${swayBuildFilePath}`;
+  // TODO: make this dynamic
+  let swayBuildFilePath = 'docs/builds/sway/v0.58.0/book/forc';
+  if (versionSet === 'nightly') {
+    swayBuildFilePath = 'docs/nightly/builds/sway/v0.58.0/book/forc';
+  } else if (versionSet === 'beta-5') {
+    swayBuildFilePath = 'docs/beta-5/builds/sway/master/book/forc';
   }
 
   const folders = thisFilePath.split('/forc/')[1].split('/');
