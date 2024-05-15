@@ -8,8 +8,6 @@ const constantsPath = join(
 );
 const nightlyConstantsPath =
   'docs/nightly/fuels-wallet/packages/docs/src/constants.ts';
-const beta4ConstantsPath =
-  'docs/beta-4/fuels-wallet/packages/docs/src/constants.ts';
 
 const downloadVarName = 'DOWNLOAD_LINK';
 
@@ -49,5 +47,4 @@ function handleConstantsFile(filePath, version) {
 export default function patchFixWalletDownloadLink() {
   handleConstantsFile(constantsPath, 'default');
   handleConstantsFile(nightlyConstantsPath, 'nightly');
-  handleConstantsFile(beta4ConstantsPath, 'beta-4');
 }

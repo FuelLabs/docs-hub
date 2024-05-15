@@ -102,27 +102,18 @@ export function MDXRender({
     <provider.MDXProvider components={{ ...components, ...mdxComponents }}>
       <Content
         versionSet={versionSet}
-        fuelTestnet={versionSet === 'beta-4' ? 'beta-4' : FUEL_TESTNET}
+        fuelTestnet={FUEL_TESTNET}
         fuelTestnetInlineCode={<Code>{FUEL_TESTNET}</Code>}
         faucetLink={
-          <Link
-            href={versionSet === 'beta-4' ? BETA_4_FAUCET_LINK : FAUCET_LINK}
-          >
-            <Code>{versionSet === 'beta-4' ? 'beta-4' : FUEL_TESTNET}</Code>{' '}
-            faucet
+          <Link href={FAUCET_LINK}>
+            <Code>{FUEL_TESTNET}</Code> faucet
           </Link>
         }
-        faucetUrl={versionSet === 'beta-4' ? BETA_4_FAUCET_LINK : FAUCET_LINK}
-        explorerUrl={
-          versionSet === 'beta-4' ? BETA_4_EXPLORER_LINK : EXPLORER_LINK
-        }
+        faucetUrl={FAUCET_LINK}
+        explorerUrl={EXPLORER_LINK}
         bridgeUrl={BRIDGE_LINK}
         GQLPlaygroundLink={
-          <Link
-            href={
-              versionSet === 'beta-4' ? BETA_4_PLAYGROUND_LINK : PLAYGROUND_LINK
-            }
-          >
+          <Link href={PLAYGROUND_LINK}>
             <Code>{FUEL_TESTNET}</Code> graphQL playground
           </Link>
         }

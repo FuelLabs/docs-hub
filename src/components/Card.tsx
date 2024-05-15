@@ -8,13 +8,12 @@ import {
   Text,
 } from '@fuel-ui/react';
 
-import type { GuideInfo } from '../pages/guides';
+import type { GuideInfo } from '../pages/[...slug]';
 import type { VersionSet } from '../types';
 
 export type CardInfo = {
   link: string;
   nightlyLink?: string;
-  beta4Link?: string;
   isExternal: boolean;
   heading: string;
   headingIcon?: string;
@@ -34,8 +33,6 @@ export function Card({ guideInfo, cardInfo, cardName, versionSet }: CardProps) {
     href = `/guides/${cardName.replaceAll('_', '-')}`;
   } else if (versionSet === 'nightly' && cardInfo?.nightlyLink) {
     href = cardInfo?.nightlyLink;
-  } else if (versionSet === 'beta-4' && cardInfo?.beta4Link) {
-    href = cardInfo?.beta4Link;
   } else {
     href = cardInfo?.link ?? '';
   }

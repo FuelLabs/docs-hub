@@ -56,8 +56,6 @@ function transformContent(node: any, rootDir: string) {
   let versionSet: VersionSet = 'default';
   if (thisFilePath.includes('/nightly')) {
     versionSet = 'nightly';
-  } else if (thisFilePath.includes('/beta-4')) {
-    versionSet = 'beta-4';
   }
 
   let swayBuildFilePath = '/builds/sway/master/book/forc';

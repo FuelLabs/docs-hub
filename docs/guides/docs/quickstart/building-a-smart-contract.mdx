@@ -38,15 +38,6 @@ parent:
 
 If you already have `fuelup` installed, run the commands below to make sure you are on the most up-to-date toolchain.
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['beta-4']}>
-
-```sh
-fuelup toolchain install beta-4
-fuelup default beta-4
-```
-
-</ConditionalContent>
-
 <ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
 
 ```sh
@@ -363,14 +354,6 @@ cargo generate --init fuellabs/sway templates/sway-test-rs --name counter-contra
 
 </ConditionalContent>
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['beta-4']}>
-
-```sh
-cargo generate --init fuellabs/sway templates/sway-test-rs --name counter-contract --tag v0.46.1
-```
-
-</ConditionalContent>
-
 ```sh
 ⚠️   Favorite `fuellabs/sway` not found in config, using it as a git repository: https://github.com/fuellabs/sway.git
 🔧   Destination: /home/user/path/to/counter-contract ...
@@ -484,14 +467,6 @@ Now, you can deploy the contract to the latest testnet with the `forc deploy --t
 
 If you don't have a wallet installed, the terminal will help you to create one. Then you can use the {props.faucetLink} to get some testnet coins.
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['beta-4']}>
-
-```sh
-forc deploy --node-url https://beta-4.fuel.network/graphql --gas-price 1
-```
-
-</ConditionalContent>
-
 <ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
 
 ```sh
@@ -520,18 +495,6 @@ Then you'll enter the number of the account of preference and press `Y` when pro
 
 Finally, you will get back the network endpoint where the contract was deployed, a `Contract ID` and the block where the transaction was signed.
 Save the `Contract ID`, as you'll need this later to connect the frontend.
-
-<ConditionalContent versionSet={props.versionSet} showForVersions={['beta-4']}>
-
-```sh
-Contract deploy-to-beta-4 Deployed!
-
-Network: https://beta-4.fuel.network
-Contract ID: 0x8342d413de2a678245d9ee39f020795800c7e6a4ac5ff7daae275f533dc05e08
-Deployed in block 0x4ea52b6652836c499e44b7e42f7c22d1ed1f03cf90a1d94cd0113b9023dfa636
-```
-
-</ConditionalContent>
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
 
