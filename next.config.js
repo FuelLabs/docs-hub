@@ -51,27 +51,27 @@ const nextConfig = {
       {
         source: '/docs/',
         destination: '/',
-        permanent: true,
+        permanent: false,
       },
       {
         source: '/docs/wallet/',
         destination: '/docs/wallet/install/',
-        permanent: true,
+        permanent: false,
       },
       {
         source: '/docs/nightly/wallet/',
         destination: '/docs/nightly/wallet/install/',
-        permanent: true,
+        permanent: false,
       },
       {
         source: '/docs/graphql/',
         destination: '/docs/graphql/overview/',
-        permanent: true,
+        permanent: false,
       },
       {
         source: '/docs/nightly/graphql/',
         destination: '/docs/nightly/graphql/overview/',
-        permanent: true,
+        permanent: false,
       },
       {
         source: '/guides/testnet-migration/',
@@ -96,17 +96,17 @@ const nextConfig = {
       {
         source: '/docs/fuels-rs/contributing/',
         destination: '/docs/fuels-rs/contributing/contributing/',
-        permanent: true,
+        permanent: false,
       },
       {
         source: '/docs/wallet/contributing/',
         destination: '/docs/wallet/contributing/running-locally/',
-        permanent: true,
+        permanent: false,
       },
       {
         source: '/docs/wallet/dev/',
         destination: '/docs/wallet/dev/getting-started/',
-        permanent: true,
+        permanent: false,
       },
       {
         source: '/guides/running-a-node/running-a-beta-4-node/',
@@ -116,7 +116,32 @@ const nextConfig = {
       {
         source: '/docs/fuelup/:slug*',
         destination: 'https://install.fuel.network/latest/',
-        permanent: true,
+        permanent: false,
+      },
+      {
+        source: '/docs/intro/quickstart-contract/',
+        destination: '/docs/intro/quickstart',
+        permanent: false,
+      },
+      {
+        source: '/docs/intro/quickstart-frontend/',
+        destination: '/docs/intro/quickstart',
+        permanent: false,
+      },
+      {
+        source: '/guides/quickstart/',
+        destination: '/docs/intro/quickstart',
+        permanent: false,
+      },
+      {
+        source: '/guides/quickstart/building-a-smart-contract/',
+        destination: '/guides/counter-dapp/building-a-smart-contract/',
+        permanent: false,
+      },
+      {
+        source: '/guides/quickstart/building-a-frontend/',
+        destination: '/guides/counter-dapp/building-a-frontend/',
+        permanent: false,
       },
     ];
   },
