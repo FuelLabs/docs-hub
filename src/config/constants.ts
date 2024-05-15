@@ -4,8 +4,8 @@ export const DOCS_DIRECTORY = join(process.cwd(), './docs');
 export const NIGHTLY_DOCS_DIRECTORY = join(process.cwd(), './docs/nightly');
 export const FIELDS = ['title', 'slug', 'content', 'category'];
 
-export const FUEL_TESTNET = 'devnet';
-export const FUEL_TESTNET_UPPER_CASE = 'Devnet';
+export const FUEL_TESTNET = 'testnet';
+export const FUEL_TESTNET_UPPER_CASE = 'Testnet';
 export const TESTNET_VERSION = 'v1';
 export const FAUCET_LINK = `https://faucet-${FUEL_TESTNET}.fuel.network/`;
 export const PLAYGROUND_LINK = `https://${FUEL_TESTNET}.fuel.network/${TESTNET_VERSION}/playground/`;
