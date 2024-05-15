@@ -1,5 +1,4 @@
 import {
-  BETA_4_DOCS_DIRECTORY,
   DOCS_DIRECTORY,
   NIGHTLY_DOCS_DIRECTORY,
 } from '~/src/config/constants';
