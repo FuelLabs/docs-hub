@@ -33,16 +33,16 @@ jobs:
       - name: Lint Check
         run: markdownlint --config .markdownlint.yaml --ignore-path .markdownlintignore '**/*.mdx'
 
-  ## QUICKSTART E2E TESTS
-  quickstart-e2e-tests:
+  ## GUIDES E2E TESTS
+  guides-e2e-tests:
     timeout-minutes: 30
-    name: Quickstart E2E Tests
+    name: Guides E2E Tests
     runs-on: ubuntu-latest
     strategy:
       matrix:
         # note: must match the names in test.spec.ts 
         guide:
-          - "dev quickstart" 
+          - "counter-dapp" 
           - "intro to sway"
           - "intro to predicates"
 

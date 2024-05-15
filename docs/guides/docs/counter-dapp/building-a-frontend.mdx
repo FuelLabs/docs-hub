@@ -1,6 +1,6 @@
 ---
 title: Building a Frontend
-category: Quickstart
+category: Counter Dapp
 parent:
   label: All Guides
   link: /guides
@@ -19,17 +19,9 @@ To build a frontend application for the counter contract, we'll do the following
 
 ## Install the Fuel Browser Wallet
 
-> Make sure your browser is using the latest version of chromium.
-
 Our frontend application will allow users to connect with a wallet, so you'll need to have a browser wallet installed.
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
-Before going to the next steps, install the Fuel Wallet [here](https://chrome.google.com/webstore/detail/fuel-wallet/dldjpboieedgcmpkchcjcbijingjcgok).
-
-If you have previously installed the wallet, make sure you have updated to the latest version.
-</ConditionalContent>
-
-Once you've setup your wallet, click the "Faucet" button in the wallet to get some testnet tokens.
+You can use the [Fuel Wallet](https://chromewebstore.google.com/detail/fuel-wallet/dldjpboieedgcmpkchcjcbijingjcgok), [Fuelet](https://fuelet.app/), or [Metamask](https://metamask.io/).
 
 ## Initialize a React project
 
@@ -90,17 +82,12 @@ action={{
 }}
 />
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
-
 ```sh
-npm install fuels@0.82.0 @fuels/react@0.18.0 @fuels/connectors@0.2.2 @tanstack/react-query@5.28.9
+npm install fuels @fuels/react @fuels/connectors @tanstack/react-query
 ```
-
-</ConditionalContent>
 
 ## Generate contract types
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
 The `fuels init` command generates a `fuels.config.ts` file that is used by the SDK to generate contract types.
 Use the `contracts` flag to define where your contract folder is located, and the `output` flag to define where you want the generated files to be created.
 
@@ -115,7 +102,7 @@ action={{
 />
 
 ```sh
-npx fuels@0.82.0 init --contracts ../counter-contract/ --output ./src/sway-api
+npx fuels init --contracts ../counter-contract/ --output ./src/sway-api
 ```
 
 Now that you have a `fuels.config.ts` file, you can use the `fuels build` command to rebuild your contract and generate types.
@@ -133,7 +120,7 @@ action={{
 />
 
 ```sh
-npx fuels@0.82.0 build
+npx fuels build
 ```
 
 A successful process should print and output like the following:
@@ -145,16 +132,12 @@ Generating types..
 🎉  Build completed successfully!
 ```
 
-> If you're having any issues with this part, try adding `useBuiltinForc: false,` to your `fuels.config.ts` config file to make sure it's using the same version of `forc` as your default toolchain.
-
 Now you should be able to find a new folder `fuel-project/frontend/src/sway-api`.
-</ConditionalContent>
 
 ## Modify the App
 
 Inside the `frontend/src` folder let's add code that interacts with our contract.
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
 Because we'll be using `@fuels/react`, first we need to wrap our app with the `FuelProvider` component.
 
 Add the imports below to the top of your `frontend/src/index.tsx` file and setup a query client:
@@ -169,10 +152,10 @@ action={{
 />
 
 <CodeImport
-  file="../../examples/quickstart/frontend/src/index.tsx"
+  file="../../examples/counter-dapp/frontend/src/index.tsx"
   lang="tsx"
   lineStart="6"
-  lineEnd="14"
+  lineEnd="15"
 />
 
 Next, modify your `frontend/src/index.tsx` file to wrap the `App` component with the `FuelProvider` and `QueryClientProvider` components.
@@ -182,18 +165,17 @@ id="fuel-wallet-provider"
 action={{
   name: 'modifyFile',
   filepath: 'guides-testing/fuel-project/frontend/src/index.tsx',
-  atLine: 21,
-  removeLines: [21],
+  atLine: 22,
+  removeLines: [22],
 }}
 />
 
 <CodeImport
-  file="../../examples/quickstart/frontend/src/index.tsx"
+  file="../../examples/counter-dapp/frontend/src/index.tsx"
   lang="tsx"
-  lineStart="21"
-  lineEnd="33"
+  lineStart="22"
+  lineEnd="35"
 />
-</ConditionalContent>
 
 Next, change the file `fuel-project/frontend/src/App.tsx` to:
 
@@ -205,12 +187,10 @@ action={{
 }}
 />
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
 <CodeImport
-  file="../../examples/quickstart/frontend/src/App.tsx"
+  file="../../examples/counter-dapp/frontend/src/App.tsx"
   lang="tsx"
 />
-</ConditionalContent>
 
 Finally, replace the value of the `CONTRACT_ID` variable at the top of your `App.tsx` file with the address of the contract you just deployed.
 
@@ -221,7 +201,7 @@ action={{
   filepath: 'guides-testing/fuel-project/frontend/src/App.tsx',
   atLine: 13,
   removeLines: [13],
-  useSetData: '  "0xf2402a4c375550abc8c781bb59761135f88799dcfa81862f8233dfe234894dfe";'
+  useSetData: '  "0x92073699bd78dac70756a9e0e8bca1c7121c7adc4b90570800f0916fe4ac33dd";'
 }}
 />
 
@@ -253,20 +233,19 @@ Note that the development build is not optimized.
 To create a production build, use npm run build.
 ```
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
-Click the "Connect" button and select "Fuel Wallet Development" to connect your wallet.
-Once connected, you should see the counter value and increment button:
+Click the "Connect" button and select the wallet you have installed to connect your wallet.
+
+Once connected, if there are no funds in your wallet, you will see a link to get testnet funds.
+
+If you have testnet ETH on Fuel, you should see the counter value and increment button:
 
 <Box.Centered>
 ![screenshot of the UI](/images/quickstart-frontend.png)
 </Box.Centered>
-</ConditionalContent>
 
 ## You just built a fullstack dapp on Fuel! ⛽
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
-[Here is the repo for this project](https://github.com/FuelLabs/docs-hub/tree/master/docs/guides/examples/quickstart).
-</ConditionalContent>
+[Here is the repo for this project](https://github.com/FuelLabs/docs-hub/tree/master/docs/guides/examples/counter-dapp).
 
 If you run into any problems, a good first step is to compare your code to this repo and resolve any differences.
 
@@ -274,18 +253,13 @@ Tweet us [@fuel_network](https://twitter.com/fuel_network) letting us know you j
 
 ### Updating The Contract
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
-To develop and test faster, we recommend using the [`fuels dev` command](/docs/fuels-ts/fuels-cli/commands/) to start a local node and automatically redeploy and generate types for your contract on each change.
-</ConditionalContent>
+To develop and test faster, we recommend using the [`fuels dev` command](/docs/fuels-ts/fuels/commands/) to start a local node and automatically redeploy and generate types for your contract on each change.
 
 Once you're ready to redeploy your contract to the testnet, here are the steps you should take to get your frontend and contract back in sync:
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
-
-- In your frontend directory, re-run this command: `npx fuels@0.82.0 build`.
-- In your contract directory, redeploy the contract by running this command and following the same steps as above to sign the transaction with your wallet: `forc deploy --testnet`.
+- In your frontend directory, re-run this command: `npx fuels build`.
+- In your contract directory, redeploy the contract.
 - In your frontend directory, update the contract ID in your `App.tsx` file.
-</ConditionalContent>
 
 ## Need Help?
 

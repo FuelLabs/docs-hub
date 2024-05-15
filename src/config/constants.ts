@@ -37,7 +37,7 @@ export const EXTERNAL_NAVIGATION_LINKS: LinkObject[] = [
   },
   {
     name: 'Faucet',
-    link: 'https://faucet-beta-5.fuel.network/',
+    link:  FAUCET_LINK,
   },
   {
     name: 'Contributing',

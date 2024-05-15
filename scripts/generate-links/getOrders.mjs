@@ -9,6 +9,10 @@ const CONFIG = {
     type: 'mdbook',
     path: './sway/docs/book/src/SUMMARY.md',
   },
+  'sway-libs': {
+    type: 'mdbook',
+    path: './sway-libs/docs/book/src/SUMMARY.md',
+  },
   'fuels-rs': {
     type: 'mdbook',
     path: './fuels-rs/docs/src/SUMMARY.md',

@@ -100,7 +100,7 @@ export function handlePlugins() {
       handleTSDocs(tree, rootDir, dirname, versions);
     } else if (filepath.includes('/fuels-rs/')) {
       handleRustBooks(tree, rootDir, dirname);
-    } else if (filepath.includes('/fuel-specs/')) {
+    } else {
       handleMDBooks(tree, rootDir, dirname);
     }
   };
@@ -267,9 +267,9 @@ function handleTSDocs(
     } else if (node.type === 'image') {
       if (node.url.includes('/public/')) {
         const path = node.url
-        .replace('../../public/', '')
-        .replace('./public/', '')
-        .replace('.png', '');
+          .replace('../../public/', '')
+          .replace('./public/', '')
+          .replace('.png', '');
         node.url = `/api/image/${path}`;
       }
     }

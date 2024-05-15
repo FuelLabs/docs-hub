@@ -1,6 +1,6 @@
 ---
 title: Building a Smart Contract
-category: Quickstart
+category: Counter Dapp
 parent:
   label: All Guides
   link: /guides
@@ -38,33 +38,13 @@ parent:
 
 If you already have `fuelup` installed, run the commands below to make sure you are on the most up-to-date toolchain.
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
-
 ```sh
 fuelup self update
 fuelup update
 fuelup default latest
 ```
 
-</ConditionalContent>
-
 ## Your First Sway Project
-
-<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
-<QuickstartCallout>
-<CodeTabs>
-
-```sh
-pnpm create fuels@82.0
-```
-
-```sh
-npm create fuels@82.0
-```
-
-</CodeTabs>
-</QuickstartCallout>
-</ConditionalContent>
 
 We'll build a simple counter contract with two functions: one to increment the counter, and one to return the value of the counter.
 
@@ -165,7 +145,7 @@ action={{
 />
 
 <CodeImport
-  file="../../examples/quickstart/counter-contract/src/main.sw"
+  file="../../examples/counter-dapp/counter-contract/src/main.sw"
   comment="contract"
   commentType="//"
   lang="sway"
@@ -183,7 +163,7 @@ action={{
 />
 
 <CodeImport
-  file="../../examples/quickstart/counter-contract/src/main.sw"
+  file="../../examples/counter-dapp/counter-contract/src/main.sw"
   comment="storage"
   commentType="//"
   lang="sway"
@@ -209,7 +189,7 @@ action={{
 />
 
 <CodeImport
-  file="../../examples/quickstart/counter-contract/src/main.sw"
+  file="../../examples/counter-dapp/counter-contract/src/main.sw"
   comment="abi"
   commentType="//"
   lang="sway"
@@ -228,7 +208,7 @@ action={{
 />
 
 <CodeImport
-  file="../../examples/quickstart/counter-contract/src/main.sw"
+  file="../../examples/counter-dapp/counter-contract/src/main.sw"
   comment="counter-contract"
   commentType="//"
   lang="sway"
@@ -249,7 +229,7 @@ action={{
 />
 
 <CodeImport
-  file="../../examples/quickstart/counter-contract/src/main.sw"
+  file="../../examples/counter-dapp/counter-contract/src/main.sw"
   comment="all"
   commentType="/*"
   lang="sway"
@@ -414,7 +394,7 @@ action={{
 />
 
 <CodeImport
-  file="../../examples/quickstart/counter-contract/tests/harness.rs"
+  file="../../examples/counter-dapp/counter-contract/tests/harness.rs"
   comment="contract-test"
   commentType="//"
   lang="rust"
@@ -433,7 +413,7 @@ action={{
 />
 
 <CodeImport
-  file="../../examples/quickstart/counter-contract/tests/harness.rs"
+  file="../../examples/counter-dapp/counter-contract/tests/harness.rs"
   comment="contract-test-all"
   commentType="/*"
   lang="rust"
@@ -463,11 +443,19 @@ In order to deploy a contract, you need to have a wallet to sign the transaction
 
 ### Deploy To Testnet
 
-Now, you can deploy the contract to the latest testnet with the `forc deploy --testnet` command.
+Now, you can deploy the contract to the latest testnet with the `forc deploy` command.
 
 If you don't have a wallet installed, the terminal will help you to create one. Then you can use the {props.faucetLink} to get some testnet coins.
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
+
+```sh
+forc deploy --node-url https://devnet.fuel.network/v1/graphql
+```
+
+</ConditionalContent>
+
+<ConditionalContent versionSet={props.versionSet} showForVersions={['']}>
 
 ```sh
 forc deploy --testnet
@@ -475,6 +463,7 @@ forc deploy --testnet
 
 </ConditionalContent>
 
+{/*forc_wallet:example:start*/}
 The terminal will ask for the password of the wallet:
 
 `Please provide the password of your encrypted wallet vault at "~/.fuel/wallets/.wallet":`
@@ -494,14 +483,28 @@ Just below the list, you'll see this prompt:
 Then you'll enter the number of the account of preference and press `Y` when prompted to accept the transaction.
 
 Finally, you will get back the network endpoint where the contract was deployed, a `Contract ID` and the block where the transaction was signed.
+{/*forc_wallet:example:end*/}
+
 Save the `Contract ID`, as you'll need this later to connect the frontend.
+
+<ConditionalContent versionSet={props.versionSet} showForVersions={['']}>
+
+```sh
+Contract counter-contract Deployed!
+
+Network: https://.fuel.network
+Contract ID: 0x8342d413de2a678245d9ee39f020795800c7e6a4ac5ff7daae275f533dc05e08
+Deployed in block 0x4ea52b6652836c499e44b7e42f7c22d1ed1f03cf90a1d94cd0113b9023dfa636
+```
+
+</ConditionalContent>
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
 
 ```sh
-Contract deploy-to-beta-5 Deployed!
+Contract counter-contract Deployed!
 
-Network: https://beta-5.fuel.network
+Network: https://devnet.fuel.network
 Contract ID: 0x8342d413de2a678245d9ee39f020795800c7e6a4ac5ff7daae275f533dc05e08
 Deployed in block 0x4ea52b6652836c499e44b7e42f7c22d1ed1f03cf90a1d94cd0113b9023dfa636
 ```
@@ -510,7 +513,7 @@ Deployed in block 0x4ea52b6652836c499e44b7e42f7c22d1ed1f03cf90a1d94cd0113b9023df
 
 ### Congrats, you have completed your first smart contract on Fuel ⛽
 
-[Here is the repo for this project](https://github.com/FuelLabs/docs-hub/tree/master/docs/guides/examples/quickstart). If you run into any problems, a good first step is to compare your code to this repo and resolve any differences.
+[Here is the repo for this project](https://github.com/FuelLabs/docs-hub/tree/master/docs/guides/examples/counter-dapp). If you run into any problems, a good first step is to compare your code to this repo and resolve any differences.
 
 Tweet us [@fuel_network](https://twitter.com/fuel_network) letting us know you just built a dapp on Fuel, you might get invited to a private group of builders, be invited to the next Fuel dinner, get alpha on the project, or something 👀.
 

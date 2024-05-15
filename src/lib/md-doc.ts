@@ -4,6 +4,7 @@ import { compile } from '@mdx-js/mdx';
 import { addRawDocumentToVFile } from 'contentlayer/core';
 import type { MdDoc } from 'contentlayer/generated';
 import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
+import { codeImport as gqlCodeImport } from '~/docs/fuel-graphql-docs/src/lib/code-import';
 import { codeImport as walletCodeImport } from '~/docs/fuels-wallet/packages/docs/src/lib/code-import';
 import { codeExamples as nightlyCodeExamples } from '~/docs/nightly/fuel-graphql-docs/src/lib/code-examples';
 import { codeImport as nightlyWalletCodeImport } from '~/docs/nightly/fuels-wallet/packages/docs/src/lib/code-import';
@@ -32,27 +33,10 @@ export class Doc {
   config: Config;
 
   constructor(slug: string[], mdDocs: MdDoc[]) {
-    const isIntroQuickstartContract =
-      slug[slug.length - 1] === 'quickstart-contract';
-    const isIntroQuickstartFrontend =
-      slug[slug.length - 1] === 'quickstart-frontend';
-
-    let actualSlug = slug;
-    if (isIntroQuickstartContract) {
-      actualSlug = ['guides', 'quickstart', 'building-a-smart-contract'];
-    } else if (isIntroQuickstartFrontend) {
-      actualSlug = ['guides', 'quickstart', 'building-a-frontend'];
-    }
-
+    const actualSlug = slug;
     const item = Docs.findDoc(actualSlug, mdDocs);
     if (!item) {
       throw new Error(`${slug} not found`);
-    }
-
-    if (isIntroQuickstartContract) {
-      item.title = 'Quickstart Contract';
-    } else if (isIntroQuickstartFrontend) {
-      item.title = 'Quickstart Frontend';
     }
 
     const config = this.#getConfig(slug.join('/'));
@@ -298,8 +282,11 @@ export class Doc {
         [nightlyWalletCodeImport, { filepath }] as any,
       ]);
     } else if (slug.startsWith('docs/graphql/')) {
-      // biome-ignore lint/suspicious/noExplicitAny:
-      plugins = plugins.concat([[codeExamples, { filepath }] as any]);
+      plugins = plugins
+        // biome-ignore lint/suspicious/noExplicitAny:
+        .concat([[codeExamples, { filepath }] as any])
+        // biome-ignore lint/suspicious/noExplicitAny:
+        .concat([[gqlCodeImport, { filepath }] as any]);
     } else if (slug.startsWith('docs/nightly/graphql/')) {
       // biome-ignore lint/suspicious/noExplicitAny:
       plugins = plugins.concat([[nightlyCodeExamples, { filepath }] as any]);

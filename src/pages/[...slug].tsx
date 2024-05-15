@@ -13,7 +13,6 @@ import {
   getAllVersions,
   getFuelCoreVersion,
   getNodeVersion,
-  getVersions,
 } from '../lib/versions';
 import { DocScreen } from '../screens/DocPage';
 import type { DocType, NavOrder, SidebarLinkItem, Versions } from '../types';
@@ -83,7 +82,7 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   let nodeVersionMax = null;
 
   const isGuide = slug.startsWith('guides/');
-  if (isGuide || slug.includes('/intro/quickstart')) {
+  if (isGuide) {
     fuelCoreVersion = getFuelCoreVersion();
     nodeVersion = getNodeVersion().substring(1);
     const majorVersionMax = Number.parseInt(nodeVersion.substring(0, 2)) + 1;

@@ -1,0 +1,88 @@
+---
+title: Contract Quickstart
+category: Contract Quickstart
+parent:
+  label: All Guides
+  link: /guides
+---
+
+# Smart Contract Quickstart
+
+Getting started with Fuel as a smart contract developer is as simple as:
+
+1. [Installing](#installation) `fuelup`
+2. [Generating a counter contract](#generating-a-counter-contract)
+3. [Building and deploying the contract](#building-and-deploying-the-contract)
+
+## Installation
+
+<TextImport
+  file="../installation/index.mdx"
+  comment="install_fuelup"
+  commentType="{/*"
+/>
+
+<CodeImport
+  file="../installation/index.mdx"
+  comment="install_fuelup_command"
+  commentType="{/*"
+  lang="sh"
+  trim="true"
+/>
+
+<TextImport
+  file="../counter-dapp/building-a-smart-contract.mdx"
+  comment="install_help"
+  commentType="{/*"
+/>
+
+<TextImport
+  file="../installation/index.mdx"
+  comment="install_VSCode_extensions"
+  commentType="{/*"
+/>
+
+## Generating a counter contract
+
+Run the command below to generate a counter contract in Sway:
+
+```sh
+forc template --template-name counter counter-contract
+```
+
+The contract will be in the `src/main.sw` file.
+
+<TextImport
+  file="../counter-dapp/building-a-smart-contract.mdx"
+  comment="forc_new"
+  commentType="{/*"
+/>
+
+## Building and deploying the contract
+
+To build a contract, inside the `counter-contract` folder you can run:
+
+```sh
+forc build
+```
+
+To deploy the contract to the testnet, you can run:
+
+```sh
+forc deploy --node-url https://devnet.fuel.network/v1/graphql
+```
+
+<TextImport
+  file="../counter-dapp/building-a-smart-contract.mdx"
+  comment="forc_wallet"
+  commentType="{/*"
+/>
+
+## Next Steps
+
+Ready to learn more? Check out the following resources:
+
+- Learn the step-by-step instructions for how to build a full-stack [counter contract dapp](/guides/counter-dapp)
+- Build a full-stack marketplace dapp with the [Intro to Sway](/guides/intro-to-sway) guide
+- Try building with [Predicates](/guides/intro-to-predicates)
+- Read the [Sway docs](/docs/sway)

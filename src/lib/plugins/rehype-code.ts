@@ -103,8 +103,8 @@ const getHighlighter: RehypeCodeOptions['getHighlighter'] = async (options) => {
       },
       {
         id: 'html',
-        name: "html",
-        scopeName: "text.html.basic",
+        name: 'html',
+        scopeName: 'text.html.basic',
         path: `${pathFolder}/html.tmLanguage.json`,
       },
     ],

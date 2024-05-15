@@ -6,9 +6,9 @@ import 'plyr-react/plyr.css';
 import { useEffect, useMemo, useState } from 'react';
 
 import {
-  BETA_4_EXPLORER_LINK,
-  BETA_4_FAUCET_LINK,
-  BETA_4_PLAYGROUND_LINK,
+  BETA_5_EXPLORER_LINK,
+  BETA_5_FAUCET_LINK,
+  BETA_5_PLAYGROUND_LINK,
   BRIDGE_LINK,
   EXPLORER_LINK,
   FAUCET_LINK,
@@ -30,7 +30,7 @@ import { Link } from './Link';
 import { OL, UL } from './List';
 import { Paragraph } from './Paragraph';
 import { Pre } from './Pre';
-import { QuickstartCallout } from './QuickstartCallout';
+import { QuickstartCards } from './QuickstartCards';
 import { Table } from './Table';
 
 const Player = dynamic(() => import('./Player'), {
@@ -56,9 +56,9 @@ export const mdxComponents = {
   Box,
   Player,
   CardSection,
-  QuickstartCallout,
   CodeTabs,
   ConditionalContent,
+  QuickstartCards,
   // biome-ignore lint/suspicious/noExplicitAny:
 } as any;
 

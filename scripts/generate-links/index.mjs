@@ -94,6 +94,9 @@ function getSidebarName(key) {
     case 'specs':
       newKey = 'Specifications';
       break;
+    case 'sway-libs':
+      newKey = 'Sway Libs';
+      break;
     default:
   }
 
@@ -104,6 +107,7 @@ function handleAllOrders(allOrders, folderPath, filename) {
   const correctOrder = [
     'intro',
     'sway',
+    'sway-libs',
     'fuels-ts',
     'fuels-rs',
     'wallet',

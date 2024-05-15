@@ -68,13 +68,14 @@ export function handleLinks(
       }
 
       if (newUrl.includes('/sway-libs')) {
-        newUrl = newUrl.replace(/\/libs\/([^\/]+)/g, (match, p1) => {
-          if (p1 === 'merkle_proof') {
-            return '/libs/src/merkle';
-          }
-          return `/libs/src/${p1}`;
-        }).replace("/src/src/", "/src/");
-
+        newUrl = newUrl
+          .replace(/\/libs\/([^\/]+)/g, (match, p1) => {
+            if (p1 === 'merkle_proof') {
+              return '/libs/src/merkle';
+            }
+            return `/libs/src/${p1}`;
+          })
+          .replace('/src/src/', '/src/');
       } else if (newUrl.includes('/sway-standards/')) {
         newUrl = newUrl.replace(
           '/standards/src5-ownership',
@@ -118,8 +119,8 @@ function handleTSLinks(url: string | null, versionSet: VersionSet) {
         .replace('/providers', '/api-providers');
     }
     newUrl = newUrl
-    .replace("/guide/", "/")
-    .replace("/fuels-ts/../", "/fuels-ts/");
+      .replace('/guide/', '/')
+      .replace('/fuels-ts/../', '/fuels-ts/');
   }
   return newUrl;
 }
@@ -354,11 +355,11 @@ function replaceInternalLinks(href: string, base: string) {
   newHref = newHref
     .replace(
       'docs/fuel-docs/quickstart/developer-quickstart',
-      'guides/quickstart/'
+      'intro/quickstart/'
     )
     .replace(
       'https://fuelbook.fuel.network/master/quickstart/developer-quickstart.html',
-      'guides/quickstart/'
+      'intro/quickstart/'
     )
     .replace('specs/fuel-vm/instruction_set', 'specs/fuel-vm/instruction-set')
     .replace('specs/protocol/tx_format', 'specs/tx-format/')

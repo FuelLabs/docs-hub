@@ -15,7 +15,8 @@
         "./*",
         "./docs/fuels-wallet/packages/docs/*",
         "./docs/nightly/fuels-wallet/packages/docs/*",
-        "../fuel-ui/design-system/react/src/*"
+        "../fuel-ui/design-system/react/src/*",
+        "./docs/fuel-graphql-docs/*"
       ],
       "contentlayer/generated": ["./.contentlayer/generated"]
     }

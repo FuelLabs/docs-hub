@@ -53,9 +53,6 @@ export function getRustSDKVersion(docsDir: string) {
 }
 
 function getForcVersion(docsDir: string) {
-  const swayfile = join(docsDir, 'sway/Cargo.toml');
-  const file = fs.readFileSync(swayfile, 'utf-8');
-  const swaitomfile = toml.parse(file);
   const forcfiledir = join(docsDir, 'sway/forc-pkg/Cargo.toml');
   const forcfile = fs.readFileSync(forcfiledir, 'utf-8');
   const version = forcfile?.match(/version = "(.*)"/)?.[1];
@@ -67,6 +64,19 @@ function getForcVersion(docsDir: string) {
     url: `https://github.com/FuelLabs/sway/tree/v${version}`,
   };
 }
+
+// function getSwayLibsVersion(docsDir: string) {
+//   const forcfiledir = join(docsDir, 'sway-libs/forc-pkg/Cargo.toml');
+//   const forcfile = fs.readFileSync(forcfiledir, 'utf-8');
+//   const version = forcfile?.match(/version = "(.*)"/)?.[1];
+
+//   return {
+//     name: 'forc',
+//     category: 'Forc',
+//     version,
+//     url: `https://github.com/FuelLabs/sway/tree/v${version}`,
+//   };
+// }
 
 export function getFuelCoreVersion() {
   const filedir = join(DOCS_DIRECTORY, 'fuel-core/Cargo.toml');
