@@ -95,7 +95,7 @@ function getSidebarName(key) {
       newKey = 'Specifications';
       break;
     case 'sway-libs':
-      newKey = 'Sway Libs';
+      newKey = 'Sway Libraries';
       break;
     default:
   }

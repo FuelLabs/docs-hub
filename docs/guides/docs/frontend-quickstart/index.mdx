@@ -42,6 +42,16 @@ Getting started with Fuel as a frontend or fullstack developer is as simple as:
   commentType="{/*"
 />
 
+### Devnet toolchain
+
+To use the `devnet` toolchain, run the commands below:
+
+```sh
+fuelup self update
+fuelup toolchain install devnet
+fuelup default devnet
+```
+
 ## Generating a counter dapp
 
 You can generate a full-stack counter dapp in seconds with the `create fuels` CLI:
@@ -60,7 +70,13 @@ npm create fuels
 
 ## Running the project locally
 
-In the project directory, run the following command to start a local development node:
+Move into the project directory. Assuming you named the project `my-fuel-project`, you can run:
+
+```sh
+cd my-fuel-project
+```
+
+Next, run the following command to start a local development node:
 
 <CodeTabs>
 

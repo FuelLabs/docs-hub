@@ -42,6 +42,16 @@ Getting started with Fuel as a smart contract developer is as simple as:
   commentType="{/*"
 />
 
+### Devnet toolchain
+
+To use the `devnet` toolchain, run the commands below:
+
+```sh
+fuelup self update
+fuelup toolchain install devnet
+fuelup default devnet
+```
+
 ## Generating a counter contract
 
 Run the command below to generate a counter contract in Sway:
@@ -60,16 +70,22 @@ The contract will be in the `src/main.sw` file.
 
 ## Building and deploying the contract
 
-To build a contract, inside the `counter-contract` folder you can run:
+To build a contract, move inside the `counter-contract` folder:
+
+```sh
+cd counter-contract
+```
+
+Next, run the `forc build` command:
 
 ```sh
 forc build
 ```
 
-To deploy the contract to the testnet, you can run:
+To deploy the contract to the devnet, you can run:
 
 ```sh
-forc deploy --node-url https://devnet.fuel.network/v1/graphql
+forc deploy --testnet
 ```
 
 <TextImport
