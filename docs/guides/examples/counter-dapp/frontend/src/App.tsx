@@ -5,11 +5,10 @@ import {
   useIsConnected,
   useWallet
 } from '@fuels/react';
-// Import the contract factory -- you can find the name in src/contracts/contracts/index.ts.
-// You can also do command + space and the compiler will suggest the correct name.
 import { CounterContractAbi__factory  } from "./sway-api"
 import type { CounterContractAbi } from "./sway-api";
 
+// REPLACE WITH YOUR CONTRACT ID
 const CONTRACT_ID = 
   "0x...";
 

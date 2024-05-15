@@ -336,13 +336,9 @@ action={{
 }}
 />
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
-
 ```sh
-cargo generate --init fuellabs/sway templates/sway-test-rs --name counter-contract --tag v0.49.3
+cargo generate --init fuellabs/sway templates/sway-test-rs --name counter-contract
 ```
-
-</ConditionalContent>
 
 ```sh
 ⚠️   Favorite `fuellabs/sway` not found in config, using it as a git repository: https://github.com/fuellabs/sway.git
@@ -389,6 +385,14 @@ We have two new files!
 
 - The `Cargo.toml` is the manifest for our new test harness and specifies the required dependencies including `fuels` (the Fuel Rust SDK).
 - The `tests/harness.rs` contains some boilerplate test code to get us started, though doesn't call any contract methods just yet.
+
+Open your `Cargo.toml` file and check the version of `fuels` used under `dev-dependencies`. Change the version to `0.61.0` if it's not already:
+
+```toml
+[dev-dependencies]
+fuels = { version = "0.61.0", features = ["fuel-core-lib"] }
+tokio = { version = "1.12", features = ["rt", "macros"] }
+```
 
 Now that we have our default test harness, let's add a useful test to it.
 
@@ -457,21 +461,9 @@ Now, you can deploy the contract to the latest testnet with the `forc deploy` co
 
 If you don't have a wallet installed, the terminal will help you to create one. Then you can use the {props.faucetLink} to get some testnet coins.
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
-
-```sh
-forc deploy --node-url https://devnet.fuel.network/v1/graphql
-```
-
-</ConditionalContent>
-
-<ConditionalContent versionSet={props.versionSet} showForVersions={['']}>
-
 ```sh
 forc deploy --testnet
 ```
-
-</ConditionalContent>
 
 {/*forc_wallet:example:start*/}
 The terminal will ask for the password of the wallet:
@@ -497,20 +489,6 @@ Finally, you will get back the network endpoint where the contract was deployed,
 
 Save the `Contract ID`, as you'll need this later to connect the frontend.
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['']}>
-
-```sh
-Contract counter-contract Deployed!
-
-Network: https://.fuel.network
-Contract ID: 0x8342d413de2a678245d9ee39f020795800c7e6a4ac5ff7daae275f533dc05e08
-Deployed in block 0x4ea52b6652836c499e44b7e42f7c22d1ed1f03cf90a1d94cd0113b9023dfa636
-```
-
-</ConditionalContent>
-
-<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
-
 ```sh
 Contract counter-contract Deployed!
 
@@ -518,8 +496,6 @@ Network: https://devnet.fuel.network
 Contract ID: 0x8342d413de2a678245d9ee39f020795800c7e6a4ac5ff7daae275f533dc05e08
 Deployed in block 0x4ea52b6652836c499e44b7e42f7c22d1ed1f03cf90a1d94cd0113b9023dfa636
 ```
-
-</ConditionalContent>
 
 ### Congrats, you have completed your first smart contract on Fuel ⛽
 

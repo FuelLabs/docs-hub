@@ -21,7 +21,9 @@ To build a frontend application for the counter contract, we'll do the following
 
 Our frontend application will allow users to connect with a wallet, so you'll need to have a browser wallet installed.
 
-You can use the [Fuel Wallet](https://chromewebstore.google.com/detail/fuel-wallet/dldjpboieedgcmpkchcjcbijingjcgok), [Fuelet](https://fuelet.app/), or [Metamask](https://metamask.io/).
+The current Fuel Wallet release can only be used with the `beta-5` network. To test the new `devnet`, you must use the [Fuel Development Wallet](https://chromewebstore.google.com/detail/fuel-wallet-development/hcgmehahnlbhpilepakbdinkhhaackmc).
+
+You can get test funds for the `devnet` by visiting the [Devnet Faucet](https://faucet-devnet.fuel.network/).
 
 ## Initialize a React project
 
@@ -127,7 +129,7 @@ A successful process should print and output like the following:
 
 ```sh
 Building..
-Building Sway programs using built-in 'forc' binary
+Building Sway programs using source 'forc' binary
 Generating types..
 🎉  Build completed successfully!
 ```
@@ -155,7 +157,7 @@ action={{
   file="../../examples/counter-dapp/frontend/src/index.tsx"
   lang="tsx"
   lineStart="6"
-  lineEnd="15"
+  lineEnd="13"
 />
 
 Next, modify your `frontend/src/index.tsx` file to wrap the `App` component with the `FuelProvider` and `QueryClientProvider` components.
@@ -165,16 +167,16 @@ id="fuel-wallet-provider"
 action={{
   name: 'modifyFile',
   filepath: 'guides-testing/fuel-project/frontend/src/index.tsx',
-  atLine: 22,
-  removeLines: [22],
+  atLine: 19,
+  removeLines: [19],
 }}
 />
 
 <CodeImport
   file="../../examples/counter-dapp/frontend/src/index.tsx"
   lang="tsx"
-  lineStart="22"
-  lineEnd="35"
+  lineStart="19"
+  lineEnd="29"
 />
 
 Next, change the file `fuel-project/frontend/src/App.tsx` to:

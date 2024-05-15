@@ -109,3 +109,5 @@ DeFi
 onboarding
 Fuelet
 Metamask
+Devnet
+devnet
