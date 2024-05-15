@@ -11,7 +11,7 @@
     "copy:icons": "cp -r ./node_modules/@fuel-ui/icons/dist/icons/sprite.svg ./public/icons",
     "deps:update": "updates -gu",
     "dev": "./scripts/dev.sh",
-    "docs:clean": "sh ./scripts/clean-build-files.sh",
+    "docs:clean": "node ./scripts/clean-build-files.mjs",
     "docs:sync": "sh ./scripts/sync-repos.sh",
     "docs:update": "node scripts/update-nightly/index.mjs",
     "docs:update:nightly": "node scripts/update-nightly/index.mjs --nightly",
