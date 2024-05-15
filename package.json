@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "build:ci": "run-s docs:clean docs:sync generate:* patch:wallet build",
+    "build:ci": "run-s docs:sync docs:clean generate:* patch:wallet build",
     "build:content": "contentlayer build",
     "check": "run-s lint",
     "check:prod": "run-s lint:prod",
