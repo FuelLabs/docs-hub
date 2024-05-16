@@ -1,0 +1,104 @@
+---
+title: Understanding The Bridge
+category: Fuel 101
+---
+
+# Understanding The Bridge
+
+## What is a bridge?
+
+Different blockchain protocols cannot communicate with each other directly without a special mechanism to work together. A bridge is a mechanism that allows just that: bridges allow different blockchains to communicate with each other.
+
+Fuel uses a bridge to connect the Ethereum blockchain with the Fuel blockchain. In the future, Fuel could be connected to a number of different blockchains using bridges.
+
+## Why would someone need a bridge?
+
+Bridges allow users to move assets and information between different blockchains. For example, if you own ETH on the Ethereum blockchain, you can use a bridge to move it to the Fuel blockchain.
+
+This allows users to take advantage of faster execution and cheaper transactions on the Fuel network using the same assets they already own on another network. It also allows developers to build cross-chain applications that work with assets and information on multiple blockchains.
+
+## How does the Fuel bridge work?
+
+Once a bridge is available between two blockchains, assets and data from one network are not automatically available on the other. Users must initiate the bridging process. Fuel provides a convenient [UI](https://app.fuel.network/bridge) to make this process easy for users, but it is possible to use the bridge without a UI as well.
+
+The Fuel bridge utilizes smart contracts on both the Ethereum and Fuel networks.
+The underlying mechanism that allows the bridge to work is the messaging protocol. This protocol allows messages to be sent between the two blockchains.
+
+Messages are sent from Ethereum to Fuel (L1 -> L2) through events containing the message data that are emited from the contract on Ethereum. These messages then get relayed to the Fuel network.
+
+Messages are sent from Fuel to Ethereum (L2 -> L1) by committing the merkle tree proofs of Fuel blocks to Ethereum, which allows anyone to prove the the inclusion of a certain message in a block on Fuel.
+
+## What types of things can be bridged?
+
+You can bridge almost anything! The UI currently only supports bridging ETH & ERC-20 tokens, but the underlying bridge architecture can support the bridging of almost any type of asset or data. This means, for example, you can bridge an ENS domain, a gaming asset, a DAO proposal, or even a simple text message between the two networks.
+
+## Are there any limitations?
+
+Fuel uses 64-bit integers that can support up to 9 decimals as standard for all assets. This is different than Ethereum, which uses 256-bit integers and support up to 18 decimals.
+
+Because of this difference, you cannot bridge any amounts that are too small (more than 9 decimals). For example, you cannot bridge 1.0000000011 of an asset. You must round to the nearest 9th decimal place, which would be 1.000000001.
+
+Conversly, you cannot bridge any amounts that are too large. For certain assets that have a very high supply value that is too large be stored in a 64-bit integer, there is a limit to the amount of tokens that can be bridged.
+
+Another limitation is that tokens with an elastic supply (a.k.a. rebasing tokens) are not supported. However, there may be wrapped versions of these tokens that can be bridged.
+
+## How does a deposit work?
+
+The process for depositing, or bridging something from Ethereum to Fuel, is slightly different depending on whether or not you are bridging ETH.
+
+For any deposit:
+
+1. A user initiates the deposit on the bridge contract on Ethereum.
+2. An event is emitted in the transaction that contains information about the deposit.
+3. The transction is confirmed and gets included in a block on Ethereum.
+4. A Fuel node (`fuel-core`) picks up the event from the Fuel message portal. If the user is depositing ETH, the node will mint the ETH to the destination wallet on Fuel and the process is complete. If the user is depositing anything besides ETH:
+5. The Fuel node will generate a message UTXO and send it to a [predicate](/docs/sway/sway-program-types/predicates/) that validates the correctness of the bridging operation.
+6. At this point another transaction is required. Someone must unlock the predicate so that the message UTXO gets sent to `process_message` function. This function mints the final UTXO containing a "mirror" of the asset from Ethereum.
+7. The transaction is confirmed and included in a block on Fuel.
+
+You can follow the actual implementation via:
+
+- the `deposit` function in the [`FuelERC20Gateway`](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/solidity-contracts/contracts/messaging/gateway/FuelERC20Gateway.sol) Solidity contract
+- the `sendMessage` function in the [`FuelMessagePortal`](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/solidity-contracts/contracts/fuelchain/FuelMessagePortal.sol) Solidity contract
+(and if the deposit is not ETH:)
+- the [Message Predicate](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/message-predicates)
+- the `process_message` function in the [Bridge Fundible Token](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/fungible-token/bridge-fungible-token/src/main.sw) Sway contract
+
+## How does a withdrawl work?
+
+To withdraw, or bridge something from Fuel to Ethereum:
+
+1. A user initiates a withdrawl of anything on the bridge contract on Fuel.
+2. In the transaction, the asset/data on the Fuel network is burned, and a message with the withdrawl information is included in the receipts.
+3. The transaction is confirmed and included in a block on Fuel.
+4. The block is included in an epoch on the Fuel network. An epoch a group of Fuel blocks, packed together and identified by the last block of the epoch.
+5. Once the epoch is reached, the last block hash in the epoch is committed to the L1 blockchain in the [Chain State contract](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/solidity-contracts/contracts/fuelchain/FuelChainState.sol). This allows anyone to prove the inclusion of all the blocks in the epoch with the Merkle root of the Fuel `rootBlock` (the last block of a Fuel epoch).
+6. The transaction is confirmed and included in a block on Ethereum.
+7. A grace period must pass before this data is considered finalized and usable to prove the withdrawl was initiated.
+8. The user must finalize the withdrawl on the bridge contract on Ethereum by calling the `relayMessage` function with the commmited block and merkle proof data.
+This function will then trigger `finalizeWithdrawal` function in the `FuelERC20Gateway` contract on Ethereum with the withdrawl information.
+9. Once this final transaction confirmed and included in a block on Ethereum, the assets will be available in the destination wallet.
+
+You can follow the actual implementation via:
+
+- the `withdraw` function in the [Bridge Fundible Token](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/fungible-token/bridge-fungible-token/src/main.sw) Sway contract
+- the `commit` and `finalized` functions in the [`FuelChainState`](../packages/solidity-contracts/contracts/fuelchain/FuelChainState.sol) Solidity contract
+- the `relayMessage` function in the [`FuelMessagePortal`](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/solidity-contracts/contracts/fuelchain/FuelMessagePortal.sol) Solidity contract
+- the `finalizeWithdrawal` function in the [`FuelERC20Gateway`](https://github.com/FuelLabs/fuel-bridge/tree/main/packages/solidity-contracts/contracts/messaging/gateway/FuelERC20Gateway.sol) Solidity contract
+
+## How can I use the bridge?
+
+You can try out the Fuel bridge by going to the [bridge UI](https://app.fuel.network/bridge), connecting your wallet, and following the instructions on the page.
+You can close the page at any time and check the status of your transaction in the "History" tab of the bridge page.
+
+## What are the risks involved?
+
+The architecture of the Fuel bridge is designed to be secure. However, there are still some risks involved in using the bridge:
+
+- There could potentially be an unknown bug in the bridge contracts or the Fuel VM.
+- The contracts themselves could potentially be compromised, as they are upgradable.
+- The Fuel block producer could be compromised and produce blocks with invalid messages.
+- The whitelisted addresses that commit Fuel block data to Ethereum could be compromised, and post malicious block headers.
+
+To mitigate these risks, the Fuel team has implemented a number of security measures, including a watch tower that detects and reports any malicious behavior, and the ability to pause the bridge contracts in case of emergency.
+In the future, these risks will be further mitigated by decentralizing the Fuel block production and block commitment processes.

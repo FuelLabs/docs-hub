@@ -3,6 +3,151 @@ title: Transaction Model
 category: Fuel 101
 ---
 
-# Transaction Model
+# Transaction and Block Models
 
-Fuel's transaction model explained.
+Transactions and blocks on the Fuel network have a unique structure that is optimized for speed and scalability. Below you can find an outline of the structure of transactions and blocks on the Fuel network.
+
+- [Transaction Types](#what-are-the-different-types-of-transactions)
+- [Transaction Data](#what-data-is-included-in-a-transaction)
+- [Transaction Validation](#how-are-transactions-validated)
+- [Block Model](#what-does-the-fuel-block-model-look-like)
+
+## What are the different types of transactions?
+
+There are five types of transactions:
+
+<CodeImport
+  file="../fuel-specs/src/tx-format/transaction.md"
+  lang="rust"
+  lineStart="4"
+  lineEnd="10"
+/>
+
+1. **Script Transactions** are transactions that require some type of execution and don't hold internal state.
+2. **Create Transactions** create new contracts on the Fuel network. This is the type of transaction that occurs when you run `forc deploy`.
+3. **Mint Transactions** are used when new coins are minted as part of a coinbase transaction. `Mint` transactions are created by the block producer and are not signed.
+4. **Upgrade Transactions** are used to upgrade the network.
+5. **Upload Transactions** are used to upload chunks of state transition bytecode before network upgrades.
+
+## What data is included in a transaction?
+
+{/*TODO: add link to UTXO page*/}
+Transactions on the Fuel network utilize a UTXO model.
+There are several types of data contained in a transaction:
+
+- [Transaction Policies](#transaction-policies)
+- [Transaction Witnesses](#transaction-witnesses)
+- [Transaction Inputs](#transaction-inputs)
+- [Transaction Outputs](#transaction-outputs)
+- [Transaction Receipts](#transaction-receipts)
+
+### Transaction Policies
+
+A transaction must set certain [policies](/docs/specs/tx-format/policy/) in order to be valid.
+
+<CodeImport
+  file="../fuel-specs/src/tx-format/policy.md"
+  lang="rust"
+  lineStart="4"
+  lineEnd="10"
+/>
+
+The policies include:
+
+- The [**tip**](/docs/specs/tx-format/policy#tip) amount, which is the amount of the base asset tipped to the block producer.
+- The [**witness limit**](/docs/specs/tx-format/policy#witnesslimit), or the maximum amount of witnesses allowed for the transaction.
+- The [**maturity**](/docs/specs/tx-format/policy#maturity), which is the earliest block that the transaction can be included in.
+- The [**maximum fee**](/docs/specs/tx-format/policy#maxfee) allowed. This amount includes the tip amount.
+
+### Transaction Witnesses
+
+A transaction must contain the signatures of all parties involved in the transaction. Signatures are a type of witness data. Witness data is malleable, which means that it is not included in the transaction hash calculation.
+
+### Transaction Inputs
+
+There are three parent types of transaction inputs:
+
+<CodeImport
+  file="../fuel-specs/src/tx-format/input.md"
+  lang="rust"
+  lineStart="4"
+  lineEnd="8"
+/>
+
+1. [**Coin**](/docs/graphql/reference/objects#inputcoin) inputs represent funds that are being spent.
+2. [**Contract**](/docs/graphql/reference/objects#inputcontract) inputs are used when a contract is being called.
+3. [**Message**](/docs/graphql/reference/objects#inputmessage) inputs are used for messages.
+
+### Transaction Outputs
+
+There are five types of transaction outputs:
+
+<CodeImport
+  file="../fuel-specs/src/tx-format/output.md"
+  lang="rust"
+  lineStart="4"
+  lineEnd="10"
+/>
+
+1. [**Coin**](/docs/graphql/reference/objects#coinoutput) outputs represent a transfer of an asset. This type of output is only used when a transaction does not have any malleable fields. This means that the recipient, asset, and amount is known before the transaction is fully executed.
+2. [**Contract**](/docs/graphql/reference/objects#contractoutput) outputs are created when a transaction changes the state of a contract.
+3. [**Change**](/docs/graphql/reference/objects#changeoutput) outputs are similar to coin outputs, but are used when the amount is not known.
+4. [**Variable**](/docs/graphql/reference/objects#variableoutput) outputs are similar to coin outputs, but the recipient, asset, and amount are not known before the transaction is fully executed.
+5. [**Contract Created**](/docs/graphql/reference/objects#contractcreated) outputs are used when a contract is deployed.
+
+### Transaction Receipts
+
+After a transaction is executed, a list of [receipts](/docs/specs/abi/receipts/) that contain all of the output information is generated. For example, if a contract logs a value, or panics during execution, this information will be contained in the receipts list. The merkle root of the receipts list is stored in the transaction.
+
+### Transaction Pointer
+
+The [transaction pointer](/docs/specs/tx-format/tx-pointer/) is a unique identifier that is used to reference the location of a transaction within a block.
+
+## How are transactions validated?
+
+All transactions are [validated](/docs/specs/protocol/tx-validity/) by the FuelVM. Some validation checks only apply to certain types of transactions, while other validation rules are universal.
+
+### Universal Validation Rules
+
+All transactions must conform to the following rules:
+
+- The transaction type must match one of the supported [transaction types](#what-are-the-different-types-of-transactions).
+- All transaction parameters are within the network's [consensus parameters](/docs/specs/tx-format/consensus_parameters).
+- There are no invalid inputs or outputs. For example, a `ChangeOutput` cannot exist for a transaction that does not have an `InputCoin` for the same asset.
+- There are no duplicate or competing transaction inputs or outputs. For example, a transaction cannot have two `InputCoin` inputs for the same coin.
+- The transaction's maximum fee must be enough to cover the execution cost.
+
+### Transaction-Specific Validation
+
+In addition to the universal validation rules above, each transaction type has its own set of validation rules.
+
+#### Script Transaction Validation
+
+- The script cannot have an output type of `ContractCreated`.
+- The script data cannot be empty.
+- The transaction cannot be missing any required policy types.
+- The transacation cannot contain any unsupported policy types.
+- Predicates must pass [predicate verification](/docs/specs/fuel-vm#predicate-verification).
+
+#### Create Transaction Validation
+
+- The transaction cannot perform any other operations besides creating a contract. This includes sending a message, interacting with another contract, sending any assets, etc.
+- The transaction must have exactly one `ContractCreated` output.
+- The keys of `storageSlots` must be in ascending lexicographic order. (who does this ordering?)
+- The contract ID must not already be in use. The Sparse Merkle tree root of the `storageSlots` is not equal to the `stateRoot` of a deployed contract.
+- The transaction cannot be missing any required policy types.
+- The transacation cannot contain any unsupported policy types.
+
+#### Mint Transaction Validation
+
+- The `txPointer` must match the block. The value cannot be zero.
+- The `inputIndex` of the `outputContract` is not zero.
+
+## What does the Fuel block model look like?
+
+Blocks on the Fuel network contain 4 main components:
+
+1. [**Block ID**](/docs/graphql/reference/scalars#blockid) - A unique identifier for the block.
+2. [**Header**](/docs/specs/protocol/block-header/) - Contains metadata about the block, such as the block height, the time the block was created, and the previous block's root.
+3. [**Consensus**](/docs/graphql/reference/unions#consensus) - Contains network-specific consensus data.
+4. [**Transactions**](/docs/graphql/reference/objects#transaction) - A list of transactions that are included in the block.

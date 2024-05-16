@@ -28,5 +28,18 @@
   },
   "[javascript]": {
     "editor.defaultFormatter": "biomejs.biome"
-  }
+  },
+  "[mdx]": {
+    "editor.quickSuggestions": {
+        "other": false,
+        "comments": false,
+        "strings": false
+    },
+    "[javascript]": {
+        "editor.suggest.enabled": false
+    },
+    "[typescript]": {
+        "editor.suggest.enabled": false
+    }
+}
 }
