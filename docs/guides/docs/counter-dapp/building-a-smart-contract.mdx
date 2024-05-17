@@ -386,11 +386,11 @@ We have two new files!
 - The `Cargo.toml` is the manifest for our new test harness and specifies the required dependencies including `fuels` (the Fuel Rust SDK).
 - The `tests/harness.rs` contains some boilerplate test code to get us started, though doesn't call any contract methods just yet.
 
-Open your `Cargo.toml` file and check the version of `fuels` used under `dev-dependencies`. Change the version to `0.61.0` if it's not already:
+Open your `Cargo.toml` file and check the version of `fuels` used under `dev-dependencies`. Change the version to `0.62.0` if it's not already:
 
 ```toml
 [dev-dependencies]
-fuels = { version = "0.61.0", features = ["fuel-core-lib"] }
+fuels = { version = "0.62.0", features = ["fuel-core-lib"] }
 tokio = { version = "1.12", features = ["rt", "macros"] }
 ```
 
