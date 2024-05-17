@@ -35,6 +35,7 @@ const exclusions = {
     'fuels-rs/docs',
     'fuels-rs/examples',
     'fuels-rs/packages',
+    'fuels-rs/e2e',
   ],
   fuels_ts: [
     'fuels-ts/apps',
