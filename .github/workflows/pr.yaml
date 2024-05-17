@@ -22,12 +22,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
+      - uses: FuelLabs/github-actions/setups/node@master
         with:
-          install: false
-      - run: |
-          pnpm install
-          pnpm audit --prod
+          node-version: 18.14.1
+          pnpm-version: 8.15.7
+      - run: pnpm audit --prod
 
   lint:
     name: Lint
@@ -40,11 +39,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - uses: ./.github/actions/setup-node
+      - uses: FuelLabs/github-actions/setups/node@master
         with:
-          install: false
+          node-version: 18.14.1
+          pnpm-version: 8.15.7
 
       - name: Run lint
-        run: |
-          pnpm install
-          pnpm check:prod
+        run: pnpm check:prod

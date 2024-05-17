@@ -20,11 +20,10 @@ jobs:
       with:
         submodules: 'true'
     
-    - uses: ./.github/actions/setup-node
+    - uses: FuelLabs/github-actions/setups/node@master
       with:
-        install: false
+        node-version: 18.14.1
+        pnpm-version: 8.15.7
 
     - name: Run Script
-      run: |
-        pnpm install
-        pnpm docs:update:nightly --from-workflow
+      run: pnpm docs:update:nightly --from-workflow
