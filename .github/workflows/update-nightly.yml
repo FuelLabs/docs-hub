@@ -20,7 +20,7 @@ jobs:
       with:
         submodules: 'true'
     
-    - uses: FuelLabs/github-actions/setups/node@master
+    - uses: FuelLabs/github-actions/setups/node@hf/fix/setup-pnpm
       with:
         node-version: 18.18.2
         pnpm-version: 8.15.7
