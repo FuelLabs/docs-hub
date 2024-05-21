@@ -26,6 +26,7 @@ jobs:
         with:
           node-version: 18.18.2
           pnpm-version: 8.15.7
+          pnpm-recursive: false
       - run: pnpm audit --prod
 
   lint:
@@ -43,6 +44,6 @@ jobs:
         with:
           node-version: 18.18.2
           pnpm-version: 8.15.7
-
+          pnpm-recursive: false
       - name: Run lint
         run: pnpm check:prod

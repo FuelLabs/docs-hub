@@ -28,6 +28,7 @@ jobs:
         with:
           node-version: 18.18.2
           pnpm-version: 8.15.7
+          pnpm-recursive: false
       # RUN LINT CHECK
       - name: Lint Check
         run: markdownlint --config .markdownlint.yaml --ignore-path .markdownlintignore '**/*.mdx'
@@ -54,6 +55,7 @@ jobs:
         with:
           node-version: 18.18.2
           pnpm-version: 8.15.7
+          pnpm-recursive: false
       - uses: dtolnay/rust-toolchain@stable
 
     # INSTALLATIONS
