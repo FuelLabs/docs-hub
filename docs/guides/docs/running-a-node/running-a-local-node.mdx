@@ -39,8 +39,35 @@ forc deploy --unsigned --node-url 127.0.0.1:4000/graphql
 
 ## Chain Configuration
 
-To modify the initial state of the chain, you must configure a `chainConfig.json` file.
+To modify the initial state of the chain, you must configure the `state_config.json` file in your chain configuration folder.
 Here is an example of what that looks like using version {props.fuelCoreVersion} of `fuel-core`:
+
+<ConditionalContent versionSet={props.versionSet} showForVersions={["default", "nightly"]}>
+  Here is the [specific configuration](https://github.com/FuelLabs/fuel-core/tree/v0.26.0/bin/fuel-core/chainspec/testnet)
+
+  `chain_config.json`
+
+  <CodeImport
+    file="../../../fuel-core/bin/fuel-core/chainspec/testnet/chain_config.json"
+  />
+
+  `metadata.json`
+
+  <CodeImport
+    file="../../../fuel-core/bin/fuel-core/chainspec/testnet/metadata.json"
+  />
+
+  `state_config.json`
+
+  <CodeImport
+    file="../../../fuel-core/bin/fuel-core/chainspec/testnet/state_config.json"
+  />
+
+  `state_transition_bytecode.wasm`
+
+  Which is too large to display on this page, but you can find it [here](https://github.com/FuelLabs/fuel-core/blob/v0.26.0/bin/fuel-core/chainspec/testnet/state_transition_bytecode.wasm)
+
+</ConditionalContent>
 
 To start the node with a custom configuration, you can use the command below:
 
@@ -48,11 +75,9 @@ To start the node with a custom configuration, you can use the command below:
 fuel-core run --snapshot ./your/path/to/chain_config_folder --db-type in-memory --debug
 ```
 
-To find an example chain configuration file for a specific `fuel-core` version, refer to the [`fuel-core`](https://github.com/FuelLabs/fuel-core/tree/v0.22.0/deployment/scripts/chainspec) repo.
-
 ### Funding a wallet locally
 
-You can edit the `coins` array inside the `inital_state` object to modify the initial assets owned by a given address.
+You can edit the `coins` array inside `state_config.json` to modify the initial assets owned by a given address.
 
 The `owner` address must be a `B256` type address (begins with `0x`) instead of a `Bech32` type (begins with `fuel`).
 
