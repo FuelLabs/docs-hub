@@ -8,12 +8,6 @@ parent:
 
 # Running a local Fuel node connected to Testnet using P2P
 
-> **Note:** This guide has not yet been updated for the new `testnet` network.
-
-{/*install_help:example:start*/}
-> P2P syncing is currently disabled for the Beta-5 network. Please check this page or the [Forum](https://forum.fuel.network) for updates.
-{/*install_help:example:end*/}
-
 ## Installation
 
 <TextImport
@@ -43,6 +37,18 @@ parent:
   lang="sh"
   trim="true"
 />
+
+<ConditionalContent versionSet={props.versionSet} showForVersions={["default"]}>
+To run a `testnet` node, you will need to install the `testnet` toolchain.
+
+You can do this by running the commands below.
+
+```sh
+fuelup toolchain install testnet
+fuelup default testnet
+```
+
+</ConditionalContent>
 
 <TextImport
   file="../counter-dapp/building-a-smart-contract.mdx"
@@ -111,7 +117,34 @@ Make sure you save this somewhere safe so you don't need to generate a new key p
 
 ## Chain Configuration
 
-To run a local node with persistence, you must configure a `chainConfig.json` file.
+To run a local node with persistence, you must have a folder with the following chain configuration files:
+
+<ConditionalContent versionSet={props.versionSet} showForVersions={["default", "nightly"]}>
+  Here is the [specific configuration](https://github.com/FuelLabs/fuel-core/tree/v0.26.0/bin/fuel-core/chainspec/testnet)
+
+  `chain_config.json`
+
+  <CodeImport
+    file="../../../fuel-core/bin/fuel-core/chainspec/testnet/chain_config.json"
+  />
+
+  `metadata.json`
+
+  <CodeImport
+    file="../../../fuel-core/bin/fuel-core/chainspec/testnet/metadata.json"
+  />
+
+  `state_config.json`
+
+  <CodeImport
+    file="../../../fuel-core/bin/fuel-core/chainspec/testnet/state_config.json"
+  />
+
+  `state_transition_bytecode.wasm`
+
+  Which is too large to display on this page, but you can find it [here](https://github.com/FuelLabs/fuel-core/blob/v0.26.0/bin/fuel-core/chainspec/testnet/state_transition_bytecode.wasm)
+
+</ConditionalContent>
 
 ## Running a Local Node
 
@@ -125,17 +158,17 @@ Finally to put everything together to start the node, run the following command:
 fuel-core run \
 --service-name {ANY_SERVICE_NAME} \
 --keypair {P2P_SECRET} \
---relayer {ETH_RPC_ENDPOINT}\
+--relayer {ETH_RPC_ENDPOINT} \
 --ip 0.0.0.0 --port 4000 --peering-port 30333 \
---db-path  ~/.fuel_beta5 \
---chain ./chainConfig.json \
+--db-path  ~/.testnet \
+--snapshot ./your/path/to/chain_config_folder \
 --utxo-validation --poa-instant false --enable-p2p \
 --min-gas-price 1 --max-block-size 18874368  --max-transmit-size 18874368 \
---reserved-nodes /dns4/p2p-beta-5.fuel.network/tcp/30333/p2p/16Uiu2HAmSMqLSibvGCvg8EFLrpnmrXw1GZ2ADX3U2c9ttQSvFtZX,/dns4/p2p-beta-5.fuel.network/tcp/30334/p2p/16Uiu2HAmVUHZ3Yimoh4fBbFqAb3AC4QR1cyo8bUF4qyi8eiUjpVP \
+--reserved-nodes /dns4/p2p-devnet.fuel.network/tcp/30333/p2p/16Uiu2HAm6pmJUedRFjennk4A8yWL6zCApHCuykzRRroqMjjxZ8o6  \
 --sync-header-batch-size 100 \
 --enable-relayer \
---relayer-v2-listening-contracts 0x557c5cE22F877d975C2cB13D0a961a182d740fD5 \
---relayer-da-deploy-height 4867877 \
+--relayer-v2-listening-contracts 0x01855B78C1f8868DE70e84507ec735983bf262dA \
+--relayer-da-deploy-height 5827607 \
 --relayer-log-page-size 2000
 ```
 

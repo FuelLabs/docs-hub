@@ -8,8 +8,6 @@ parent:
 
 # Running a local Fuel node
 
-> **Note:** This guide has not yet been updated for the new `testnet` network.
-
 In addition to deploying and testing on the Fuel Testnet, you can also run a local Fuel Node.
 
 There are two types of Fuel networks that can be run:
@@ -47,7 +45,7 @@ Here is an example of what that looks like using version {props.fuelCoreVersion}
 To start the node with a custom configuration, you can use the command below:
 
 ```sh
-fuel-core run --chain ./chainConfig.json --db-type in-memory --debug
+fuel-core run --snapshot ./your/path/to/chain_config_folder --db-type in-memory --debug
 ```
 
 To find an example chain configuration file for a specific `fuel-core` version, refer to the [`fuel-core`](https://github.com/FuelLabs/fuel-core/tree/v0.22.0/deployment/scripts/chainspec) repo.
@@ -68,7 +66,7 @@ To run a local node with persistence a chain configuration file is required.
 To start the node, run the following command:
 
 ```sh
-fuel-core run --ip 127.0.0.1 --port 4000 --chain ./chainConfig.json --db-path ./.fueldb --debug
+fuel-core run --ip 127.0.0.1 --port 4000 --snapshot ./your/path/to/chain_config_folder --db-path ./.fueldb --debug
 ```
 
 ## Connecting to the local node from a browser wallet
