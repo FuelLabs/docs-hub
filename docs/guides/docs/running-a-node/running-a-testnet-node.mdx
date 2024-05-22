@@ -12,20 +12,6 @@ parent:
 
 <TextImport
   file="../installation/index.mdx"
-  comment="install_rust"
-  commentType="{/*"
-/>
-
-<CodeImport
-  file="../installation/index.mdx"
-  comment="install_rust_command"
-  commentType="{/*"
-  lang="sh"
-  trim="true"
-/>
-
-<TextImport
-  file="../installation/index.mdx"
   comment="install_fuelup"
   commentType="{/*"
 />
@@ -38,7 +24,6 @@ parent:
   trim="true"
 />
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={["default"]}>
 To run a `testnet` node, you will need to install the `testnet` toolchain.
 
 You can do this by running the commands below.
@@ -47,8 +32,6 @@ You can do this by running the commands below.
 fuelup toolchain install testnet
 fuelup default testnet
 ```
-
-</ConditionalContent>
 
 <TextImport
   file="../counter-dapp/building-a-smart-contract.mdx"
