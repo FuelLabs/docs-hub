@@ -19,10 +19,10 @@ There are two types of Fuel networks that can be run:
 
 An in-memory node does not persist the blockchain state anywhere, it is only stored in memory as long as the node is active and running.
 
-To spin-up a local in-memory Fuel node, run the following command:
+To spin-up a local in-memory Fuel node download or copy the local snapshot from [here](https://github.com/FuelLabs/chain-configuration/tree/master/local), then run the following command:
 
 ```sh
-fuel-core run --db-type in-memory --debug
+fuel-core run --db-type in-memory --debug --snapshot ./your/path/to/chain_config_folder
 ```
 
 To deploy a contract to the local node, run the following command:
@@ -31,7 +31,7 @@ To deploy a contract to the local node, run the following command:
 forc deploy <signing-key> --node-url 127.0.0.1:4000/graphql
 ```
 
-Or to deploy without using a signing key:
+Or to deploy with the default signer that is pre-funded by fuel-core:
 
 ```sh
 forc deploy --default-signer --node-url 127.0.0.1:4000/graphql
@@ -43,7 +43,7 @@ To modify the initial state of the chain, you must configure the `state_config.j
 Here is an example of what that looks like using version {props.fuelCoreVersion} of `fuel-core`:
 
 <ConditionalContent versionSet={props.versionSet} showForVersions={["default", "nightly"]}>
-  Here is the [specific configuration](https://github.com/FuelLabs/fuel-core/tree/v0.26.0/bin/fuel-core/chainspec/testnet)
+  Here is the [specific configuration](https://github.com/FuelLabs/fuel-core/tree/9fddeccb4d112c148f6793bc3d21131a13778a25/bin/fuel-core/chainspec/testnet)
 
   `chain_config.json`
 
@@ -65,7 +65,7 @@ Here is an example of what that looks like using version {props.fuelCoreVersion}
 
   `state_transition_bytecode.wasm`
 
-  Which is too large to display on this page, but you can find it [here](https://github.com/FuelLabs/fuel-core/blob/v0.26.0/bin/fuel-core/chainspec/testnet/state_transition_bytecode.wasm)
+  Which is too large to display on this page, but you can find it [here](https://github.com/FuelLabs/fuel-core/blob/9fddeccb4d112c148f6793bc3d21131a13778a25/bin/fuel-core/chainspec/testnet/state_transition_bytecode.wasm)
 
 </ConditionalContent>
 
@@ -75,7 +75,7 @@ To start the node with a custom configuration, you can use the command below:
 fuel-core run --snapshot ./your/path/to/chain_config_folder --db-type in-memory --debug
 ```
 
-To find an example chain configuration file for a specific `fuel-core` version, refer to the [`fuel-core`](https://github.com/FuelLabs/fuel-core/tree/v0.26.0/bin/fuel-core/chainspec/testnet) repo.
+To find an example chain configuration folder for a specific `fuel-core` version, refer to the [`fuel-core`](https://github.com/FuelLabs/fuel-core/tree/9fddeccb4d112c148f6793bc3d21131a13778a25/bin/fuel-core/chainspec/testnet) repo.
 
 ### Funding a wallet locally
 
@@ -83,7 +83,7 @@ You can edit the `coins` array inside `state_config.json` to modify the initial 
 
 The `owner` address must be a `B256` type address (begins with `0x`) instead of a `Bech32` type (begins with `fuel`).
 
-The `amount` is a hex value. In this example, the value translates to `1,125,899.9 ETH`.
+The `amount` is a numerical value. In this example, the value translates to `11,152,921,504 ETH`.
 
 ## Local node (with state persistence)
 
