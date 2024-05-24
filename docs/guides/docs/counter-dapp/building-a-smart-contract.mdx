@@ -381,6 +381,7 @@ tree .
 4 directories, 8 files
 ```
 
+{/*rust_harness:example:start*/}
 We have two new files!
 
 - The `Cargo.toml` is the manifest for our new test harness and specifies the required dependencies including `fuels` (the Fuel Rust SDK).
@@ -393,6 +394,7 @@ Open your `Cargo.toml` file and check the version of `fuels` used under `dev-dep
 fuels = { version = "0.62.0", features = ["fuel-core-lib"] }
 tokio = { version = "1.12", features = ["rt", "macros"] }
 ```
+{/*rust_harness:example:end*/}
 
 Now that we have our default test harness, let's add a useful test to it.
 
