@@ -1,7 +1,4 @@
-import {
-  DOCS_DIRECTORY,
-  NIGHTLY_DOCS_DIRECTORY,
-} from '~/src/config/constants';
+import { DOCS_DIRECTORY, NIGHTLY_DOCS_DIRECTORY } from '~/src/config/constants';
 
 import { getRustSDKVersion } from '../versions';
 

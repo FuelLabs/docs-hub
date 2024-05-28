@@ -97,8 +97,7 @@ export class Doc {
     const split = item.slug.split('/');
     let category = item.category;
     if (!category && item.slug.includes('docs/')) {
-      const isNotDefault =
-        item.slug.includes('/nightly/');
+      const isNotDefault = item.slug.includes('/nightly/');
       const index = isNotDefault ? 3 : 2;
       const isIndex = split.length === index;
       category = split[isIndex ? index - 1 : index].replaceAll('-', ' ');
@@ -130,8 +129,7 @@ export class Doc {
   }
 
   #getConfig(slug: string): Config {
-    let newSlug = slug
-      .replace('docs/nightly/', 'docs/');
+    let newSlug = slug.replace('docs/nightly/', 'docs/');
     try {
       if (newSlug.startsWith('docs/')) {
         newSlug = newSlug.replace('docs/', '');
@@ -200,8 +198,7 @@ export class Doc {
     );
     const links = JSON.parse(readFileSync(linksPath, 'utf8'));
     if (
-      (configSlug === 'guides' ||
-        configSlug === 'nightly-guides') &&
+      (configSlug === 'guides' || configSlug === 'nightly-guides') &&
       guideName
     ) {
       if (configSlug === 'nightly-guides') {

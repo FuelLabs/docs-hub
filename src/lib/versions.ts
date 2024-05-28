@@ -2,10 +2,7 @@ import fs from 'fs';
 import { join } from 'path';
 import toml from 'toml';
 
-import {
-  DOCS_DIRECTORY,
-  NIGHTLY_DOCS_DIRECTORY,
-} from '../config/constants';
+import { DOCS_DIRECTORY, NIGHTLY_DOCS_DIRECTORY } from '../config/constants';
 import type { VersionSet } from '../types';
 
 function itemFromPackageJson(docsDir: string, filename: string) {

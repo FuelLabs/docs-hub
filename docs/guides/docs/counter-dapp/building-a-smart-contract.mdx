@@ -34,25 +34,17 @@ parent:
   commentType="{/*"
 />
 
-### Testnet toolchain
+### Already have `fuelup` installed?
 
-To use the `testnet` toolchain, run the commands below:
-
-```sh
-fuelup self update
-fuelup toolchain install testnet
-fuelup default testnet
-```
-
-{/* ### Already have `fuelup` installed?
-
+{/*already_installed:example:start*/}
 If you already have `fuelup` installed, run the commands below to make sure you are on the most up-to-date toolchain.
 
 ```sh
 fuelup self update
 fuelup update
 fuelup default latest
-``` */}
+```
+{/*already_installed:example:end*/}
 
 ## Your First Sway Project
 
@@ -394,6 +386,7 @@ Open your `Cargo.toml` file and check the version of `fuels` used under `dev-dep
 fuels = { version = "0.62.0", features = ["fuel-core-lib"] }
 tokio = { version = "1.12", features = ["rt", "macros"] }
 ```
+
 {/*rust_harness:example:end*/}
 
 Now that we have our default test harness, let's add a useful test to it.
