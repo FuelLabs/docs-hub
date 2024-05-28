@@ -37,7 +37,7 @@ export const EXTERNAL_NAVIGATION_LINKS: LinkObject[] = [
   },
   {
     name: 'Faucet',
-    link:  FAUCET_LINK,
+    link: FAUCET_LINK,
   },
   {
     name: 'Contributing',

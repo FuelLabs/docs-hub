@@ -1,7 +1,7 @@
 import { join } from 'path';
 import type { GetStaticProps } from 'next';
 
-import { existsSync, readFileSync, writeFileSync } from 'fs';
+import { readFileSync } from 'fs';
 import type { MdDoc } from '../../.contentlayer/generated';
 import { allMdDocs } from '../../.contentlayer/generated';
 import { DOCS_DIRECTORY } from '../config/constants';
