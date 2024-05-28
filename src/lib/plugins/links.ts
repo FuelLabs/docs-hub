@@ -367,6 +367,7 @@ function replaceInternalLinks(href: string, base: string) {
     .replace('specs/protocol/id/contract', 'specs/identifiers/contract-id')
     .replace('specs/protocol/abi', 'specs/abi')
     .replace('/packag/', '/packages/')
+    .replace('docs/sway-libs/book/', 'docs/sway-libs/')
     .replace('standards/src_5', 'standards/src5-ownership')
     .replace('/index#', '#');
 
