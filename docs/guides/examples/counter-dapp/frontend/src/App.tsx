@@ -10,7 +10,7 @@ import type { CounterContractAbi } from "./sway-api";
 
 // REPLACE WITH YOUR CONTRACT ID
 const CONTRACT_ID = 
-  "0x...";
+  "0xb19d1dd02d062a9ad7241b507db03ac9b6d2a642f74dea0869c593075c66d9a2";
 
 export default function Home() {
   const [contract, setContract] = useState<CounterContractAbi>();
