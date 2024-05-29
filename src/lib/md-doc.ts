@@ -71,7 +71,10 @@ export class Doc {
       .replace('docs/sway/', '')
       .replace('docs/fuel-specs/', '')}`;
 
-    let pageLink = `${config.repository}${actualPath.replace("tree/master/docs/sway-libs/docs", "tree/master/docs")}${fileType}`;
+    let pageLink = `${config.repository}${actualPath.replace(
+      'tree/master/docs/sway-libs/docs',
+      'tree/master/docs'
+    )}${fileType}`;
 
     if (pageLink.includes('breaking-change-log/breaking-changes-log')) {
       pageLink =
