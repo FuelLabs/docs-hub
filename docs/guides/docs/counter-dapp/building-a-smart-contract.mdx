@@ -451,11 +451,19 @@ It's now time to deploy . We will show how to do this using `forc` from the comm
 
 In order to deploy a contract, you need to have a wallet to sign the transaction and coins to pay for gas. `Fuelup` will guide you in this process.
 
+### Setting up a local wallet
+
+<TextImport
+  file="../installation/index.mdx"
+  comment="forc_wallet_setup"
+  commentType="{/*"
+/>
+
+You can get test funds using the [faucet](https://faucet-testnet.fuel.network/).
+
 ### Deploy To Testnet
 
 Now, you can deploy the contract to the latest testnet with the `forc deploy` command.
-
-If you don't have a wallet installed, the terminal will help you to create one. Then you can use the {props.faucetLink} to get some testnet coins.
 
 ```sh
 forc deploy --testnet

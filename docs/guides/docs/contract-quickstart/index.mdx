@@ -12,7 +12,9 @@ Getting started with Fuel as a smart contract developer is as simple as:
 
 1. [Installing](#installation) `fuelup`
 2. [Generating a counter contract](#generating-a-counter-contract)
-3. [Building and deploying the contract](#building-and-deploying-the-contract)
+3. [Building the contract](#building-the-contract)
+4. [Setting up a local wallet](#setting-up-a-local-wallet)
+5. [Deploying the contract](#deploying-the-contract)
 
 ## Installation
 
@@ -58,7 +60,7 @@ The contract will be in the `src/main.sw` file.
   commentType="{/*"
 />
 
-## Building and deploying the contract
+## Building the contract
 
 To build a contract, move inside the `counter-contract` folder:
 
@@ -71,6 +73,18 @@ Next, run the `forc build` command:
 ```sh
 forc build
 ```
+
+## Setting up a local wallet
+
+<TextImport
+  file="../installation/index.mdx"
+  comment="forc_wallet_setup"
+  commentType="{/*"
+/>
+
+You can get test funds using the [faucet](https://faucet-testnet.fuel.network/).
+
+## Deploying the contract
 
 To deploy the contract to the testnet, you can run:
 
