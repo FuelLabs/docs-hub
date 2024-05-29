@@ -19,10 +19,10 @@ There are two types of Fuel networks that can be run:
 
 An in-memory node does not persist the blockchain state anywhere, it is only stored in memory as long as the node is active and running.
 
-To spin-up a local in-memory Fuel node, run the following command:
+To spin-up a local in-memory Fuel node download or copy the local snapshot from [here](https://github.com/FuelLabs/chain-configuration/tree/master/local), then run the following command:
 
 ```sh
-fuel-core run --db-type in-memory --debug
+fuel-core run --db-type in-memory --debug --snapshot ./your/path/to/chain_config_folder
 ```
 
 To deploy a contract to the local node, run the following command:
@@ -31,46 +31,59 @@ To deploy a contract to the local node, run the following command:
 forc deploy <signing-key> --node-url 127.0.0.1:4000/graphql
 ```
 
-Or to deploy without using a signing key:
+Or to deploy with the default signer that is pre-funded by fuel-core:
 
 ```sh
-forc deploy --unsigned --node-url 127.0.0.1:4000/graphql
+forc deploy --default-signer --node-url 127.0.0.1:4000/graphql
 ```
 
 ## Chain Configuration
 
-To modify the initial state of the chain, you must configure a `chainConfig.json` file.
-Here is an example of what that looks like using version {props.versionSet === '0.20.4' ? 'beta-4' : props.fuelCoreVersion} of `fuel-core`:
+To modify the initial state of the chain, you must configure the `state_config.json` file in your chain configuration folder.
+Here is an example of what that looks like using version {props.fuelCoreVersion} of `fuel-core`:
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
-<CodeImport
-  file="../../../fuel-core/deployment/scripts/chainspec/dev_chainspec.json"
-  lang="json"
-/>
-</ConditionalContent>
+<ConditionalContent versionSet={props.versionSet} showForVersions={["default", "nightly"]}>
+  Here is the [specific configuration](https://github.com/FuelLabs/fuel-core/tree/9fddeccb4d112c148f6793bc3d21131a13778a25/bin/fuel-core/chainspec/testnet)
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['beta-4']}>
-<CodeImport
-  file="../../../beta-4/fuel-core/deployment/scripts/chainspec/dev_chainspec.json"
-  lang="json"
-/>
+  `chain_config.json`
+
+  <CodeImport
+    file="../../../fuel-core/bin/fuel-core/chainspec/testnet/chain_config.json"
+  />
+
+  `metadata.json`
+
+  <CodeImport
+    file="../../../fuel-core/bin/fuel-core/chainspec/testnet/metadata.json"
+  />
+
+  `state_config.json`
+
+  <CodeImport
+    file="../../../fuel-core/bin/fuel-core/chainspec/testnet/state_config.json"
+  />
+
+  `state_transition_bytecode.wasm`
+
+  Which is too large to display on this page, but you can find it [here](https://github.com/FuelLabs/fuel-core/blob/9fddeccb4d112c148f6793bc3d21131a13778a25/bin/fuel-core/chainspec/testnet/state_transition_bytecode.wasm)
+
 </ConditionalContent>
 
 To start the node with a custom configuration, you can use the command below:
 
 ```sh
-fuel-core run --chain ./chainConfig.json --db-type in-memory --debug
+fuel-core run --snapshot ./your/path/to/chain_config_folder --db-type in-memory --debug
 ```
 
-To find an example chain configuration file for a specific `fuel-core` version, refer to the [`fuel-core`](https://github.com/FuelLabs/fuel-core/tree/v0.22.0/deployment/scripts/chainspec) repo.
+To find an example chain configuration folder for a specific `fuel-core` version, refer to the [`fuel-core`](https://github.com/FuelLabs/fuel-core/tree/9fddeccb4d112c148f6793bc3d21131a13778a25/bin/fuel-core/chainspec/testnet) repo.
 
 ### Funding a wallet locally
 
-You can edit the `coins` array inside the `inital_state` object to modify the initial assets owned by a given address.
+You can edit the `coins` array inside `state_config.json` to modify the initial assets owned by a given address.
 
 The `owner` address must be a `B256` type address (begins with `0x`) instead of a `Bech32` type (begins with `fuel`).
 
-The `amount` is a hex value. In this example, the value translates to `1,125,899.9 ETH`.
+The `amount` is a numerical value. In this example, the value translates to `11,152,921,504 ETH`.
 
 ## Local node (with state persistence)
 
@@ -80,7 +93,7 @@ To run a local node with persistence a chain configuration file is required.
 To start the node, run the following command:
 
 ```sh
-fuel-core run --ip 127.0.0.1 --port 4000 --chain ./chainConfig.json --db-path ./.fueldb --debug
+fuel-core run --ip 127.0.0.1 --port 4000 --snapshot ./your/path/to/chain_config_folder --db-path ./.fueldb --debug
 ```
 
 ## Connecting to the local node from a browser wallet

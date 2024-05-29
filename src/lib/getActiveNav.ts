@@ -4,7 +4,6 @@ export function getActiveNav(
   versionSet: VersionSet,
   allNavs: NavOrder[],
   allNightlyNavs: NavOrder[],
-  allBeta4Navs: NavOrder[],
   doc?: DocType
 ) {
   let navs = undefined;
@@ -15,8 +14,6 @@ export function getActiveNav(
   ) {
     if (versionSet === 'nightly') {
       navs = allNightlyNavs;
-    } else if (versionSet === 'beta-4') {
-      navs = allBeta4Navs;
     } else {
       navs = allNavs;
     }

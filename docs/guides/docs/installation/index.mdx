@@ -12,28 +12,10 @@ This guide will help you to install the Fuel toolchain binaries and prerequisite
 
 This guide covers the following topics:
 
-1. [Installing Rust](#installing-rust)
-2. [Installing the Fuel toolchain using `fuelup`](#installing-the-fuel-toolchain-using-fuelup)
-3. [Changing your default toolchain](#changing-your-default-toolchain)
-4. [Setting up a local wallet](#setting-up-a-local-wallet)
-
-## Installing Rust
-
-{/*install_rust:example:start*/}
-The Fuel toolchain is built on top of the Rust programming language. To install Rust, you can use the `rustup` tool.
-{/*install_rust:example:end*/}
-
-Run the following command in your shell; this downloads and runs `rustup-init.sh`, which in turn downloads and runs the correct version of the `rustup-init` executable for your platform.
-
-{/*ANCHOR: install_rust_command*/}
-
-```sh
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-```
-
-{/*ANCHOR: install_rust_command*/}
-
-Check the official Rust documentation to get more information on [installing the Rust toolchain](https://www.rust-lang.org/tools/install).
+1. [Installing the Fuel toolchain using `fuelup`](#installing-the-fuel-toolchain-using-fuelup)
+2. [Changing your default toolchain](#changing-your-default-toolchain)
+3. [Setting up a local wallet](#setting-up-a-local-wallet)
+4. [Installing Rust](#installing-rust)
 
 ## Installing the Fuel toolchain using fuelup
 
@@ -140,10 +122,7 @@ Moving /var/folders/tp/0l8zdx9j4s9_n609ykwxl0qw0000gn/T/.tmpiNJQHt/fuelup to /Us
 
 ### Using the latest toolchain
 
-The {props.fuelTestnetInlineCode} network is the latest Fuel testnet.
-This includes public infrastructure such as the {props.faucetLink} and the {props.GQLPlaygroundLink}.
-
-To properly interact with the {props.fuelTestnetInlineCode} network it is necessary to use the `latest` toolchain which is installed by default.
+To properly interact with the testnet network it is necessary to use the `latest` toolchain, which is installed by default.
 
 👉 Run the following command to verify the installation of `latest` toolchain:
 
@@ -237,10 +216,9 @@ forc : 0.45
 forc-wallet : 0.45
 ```
 
-As you can see, the {props.fuelTestnetInlineCode} toolchain is active 🚀
-
 ## Setting up a local wallet
 
+{/*forc_wallet_setup:example:start*/}
 The `forc-wallet` plugin is packaged alongside the default distributed toolchains when installed using `fuelup`, so you should already have this installed if you've followed the instructions above.
 
 To initialize a new wallet with `forc-wallet`, you can run the command below:
@@ -265,11 +243,33 @@ If you need to list your accounts, you can run the command below:
 forc wallet accounts
 ```
 
+{/*forc_wallet_setup:example:end*/}
+
+## Installing Rust
+
+{/*install_rust:example:start*/}
+If you want to develop with the `fuels` Rust SDK, you will need to install Rust on your machine. To install Rust, you can use the `rustup` tool.
+{/*install_rust:example:end*/}
+
+> You don't need to install Rust if you don't plan on using the Rust SDK.
+
+Run the following command in your shell; this downloads and runs `rustup-init.sh`, which in turn downloads and runs the correct version of the `rustup-init` executable for your platform.
+
+{/*ANCHOR: install_rust_command*/}
+
+```sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+{/*ANCHOR: install_rust_command*/}
+
+Check the official Rust documentation to get more information on [installing the Rust toolchain](https://www.rust-lang.org/tools/install).
+
 ## What's next?
 
 Now you are ready to start building with Fuel.
 
-👉 Check out the [quickstart guide](/guides/quickstart) to deploy your first smart contract.
+👉 Check out the [counter dapp guide](/guides/counter-dapp) to deploy your first smart contract.
 
 ## Beyond the basics
 

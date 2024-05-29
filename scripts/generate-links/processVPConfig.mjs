@@ -12,11 +12,6 @@ const nightlyTsAPIOrderFile = getFile(
   'nightly',
   true
 );
-const beta4TsAPIOrderFile = getFile(
-  './fuels-ts/apps/docs/.typedoc/api-links.json',
-  'beta-4',
-  true
-);
 
 function extractData(inputString) {
   // used for api.json order
@@ -34,8 +29,7 @@ function handleVPLine(
   index,
   thisOrder,
   thisCat,
-  isNightly,
-  isBeta4
+  isNightly
 ) {
   const regex = /'([^']+)'/;
   // Create a shallow copy
@@ -91,8 +85,6 @@ function handleVPLine(
     let apiJSON;
     if (isNightly) {
       apiJSON = nightlyTsAPIOrderFile;
-    } else if (isBeta4) {
-      apiJSON = beta4TsAPIOrderFile;
     } else {
       apiJSON = tsAPIOrderFile;
     }
@@ -105,8 +97,7 @@ function handleVPLine(
         apiIndex,
         newVPOrder,
         category,
-        isNightly,
-        isBeta4
+        isNightly
       );
       category = results.category;
       newVPOrder = results.newVPOrder;
@@ -116,7 +107,7 @@ function handleVPLine(
   return { newVPOrder, category };
 }
 
-export function processVPConfig(lines, isNightly, isBeta4) {
+export function processVPConfig(lines, isNightly) {
   let tsOrder = { menu: ['fuels-ts'] };
   let currentCategory;
   let foundStart = false;
@@ -129,8 +120,7 @@ export function processVPConfig(lines, isNightly, isBeta4) {
         index,
         tsOrder,
         currentCategory,
-        isNightly,
-        isBeta4
+        isNightly
       );
       tsOrder = newVPOrder;
       currentCategory = category;

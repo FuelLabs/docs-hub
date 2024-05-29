@@ -11,23 +11,35 @@
     "featured": true,
     "tags": ["Full Stack"]
   },
-  "quickstart": {
-    "title": "Developer Quickstart",
-    "description": "Get started by building a counter dApp in Fuel.",
+  "contract-quickstart": {
+    "title": "Smart Contract Quickstart",
+    "description": "Get started by generating a counter contract in Sway.",
+    "featured": false,
+    "tags": ["Getting Started"]
+  },
+  "frontend-quickstart": {
+    "title": "Frontend/Fullstack Quickstart",
+    "description": "Get started by generating a full-stack counter dapp on Fuel.",
     "featured": false,
     "tags": ["Getting Started", "Full Stack"]
   },
-  "installation": {
-    "title": "Toolchain Installation",
-    "description": "Install the Fuel toolchain and binaries.",
+  "counter-dapp": {
+    "title": "Counter Dapp",
+    "description": "Step-by-step guide to build a counter dApp on Fuel",
     "featured": false,
-    "tags": ["Getting Started"]
+    "tags": ["Getting Started", "Full Stack"]
   },
   "running_a_node": {
     "title": "Running a Node",
     "description": "Run a local Fuel node.",
     "featured": false,
     "tags": ["fuel-core"]
+  },
+  "installation": {
+    "title": "Toolchain Installation",
+    "description": "Install the Fuel toolchain and binaries.",
+    "featured": false,
+    "tags": ["Getting Started"]
   },
   "migration_guide": {
     "title": "Migration Guide",

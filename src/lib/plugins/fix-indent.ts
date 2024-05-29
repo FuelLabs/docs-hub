@@ -44,17 +44,16 @@ function setValueOnNode(node: any, cb: (value: string) => string) {
 export function fixIndent() {
   // biome-ignore lint/suspicious/noExplicitAny:
   return function transformer(tree: Root, _file: any) {
-
     function normalizeIndentation(lines: string[]) {
       const minLeadingIndentations = lines.reduce((min, line) => {
         const match = line.match(/^[\s\t]*/);
-        if(/^\s*$/.test(line)){
+        if (/^\s*$/.test(line)) {
           return min;
         }
         const leadingIndentations = match ? match[0].length : 0;
         return Math.min(min, leadingIndentations);
       }, Number.POSITIVE_INFINITY);
-      return lines.map(line => line.substring(minLeadingIndentations));
+      return lines.map((line) => line.substring(minLeadingIndentations));
     }
 
     // biome-ignore lint/suspicious/noExplicitAny:

@@ -81,8 +81,6 @@ export function handleExampleImports(
   let versionSet: VersionSet = 'default';
   if (dirname.includes('docs/nightly/')) {
     versionSet = 'nightly';
-  } else if (dirname.includes('docs/beta-4/')) {
-    versionSet = 'beta-4';
   }
 
   if (node.type === 'code') {
@@ -132,8 +130,11 @@ export function handleExampleImports(
   try {
     if (fileAbsPath.includes('/fuels-ts/')) {
       fileAbsPath = fileAbsPath
-      .replace('fuels-ts/demo', 'fuels-ts/apps/demo')
-      .replace('fuels-ts/create-fuels-counter-guide', 'fuels-ts/apps/create-fuels-counter-guide');
+        .replace('fuels-ts/demo', 'fuels-ts/apps/demo')
+        .replace(
+          'fuels-ts/create-fuels-counter-guide',
+          'fuels-ts/apps/create-fuels-counter-guide'
+        );
     }
     const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
     const cachedFile = getFilesOnCache(fileAbsPath);
