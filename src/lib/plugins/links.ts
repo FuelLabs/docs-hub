@@ -317,7 +317,9 @@ function replaceInternalLinks(href: string, base: string) {
     !newHref.includes('fuellabs.github.io/block-explorer-v2') &&
     !newHref.startsWith('https://fuellabs.github.io/sway/master/std/') &&
     !newHref.includes('LICENSE') &&
-    !newHref.includes('/fuelup/')
+    !newHref.includes('/fuelup/') &&
+    // ignore sway-libs reference links
+    !/fuellabs\.github\.io\/sway-libs\/.*?\/sway_libs\//.test(newHref)
   ) {
     newHref = newHref
       .replace('https://fuellabs.github.io', '')
