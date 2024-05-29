@@ -2,11 +2,7 @@ import fs from 'fs';
 import { join } from 'path';
 import toml from 'toml';
 
-import {
-  BETA_4_DOCS_DIRECTORY,
-  DOCS_DIRECTORY,
-  NIGHTLY_DOCS_DIRECTORY,
-} from '../config/constants';
+import { DOCS_DIRECTORY, NIGHTLY_DOCS_DIRECTORY } from '../config/constants';
 import type { VersionSet } from '../types';
 
 function itemFromPackageJson(docsDir: string, filename: string) {
@@ -54,9 +50,6 @@ export function getRustSDKVersion(docsDir: string) {
 }
 
 function getForcVersion(docsDir: string) {
-  const swayfile = join(docsDir, 'sway/Cargo.toml');
-  const file = fs.readFileSync(swayfile, 'utf-8');
-  const swaitomfile = toml.parse(file);
   const forcfiledir = join(docsDir, 'sway/forc-pkg/Cargo.toml');
   const forcfile = fs.readFileSync(forcfiledir, 'utf-8');
   const version = forcfile?.match(/version = "(.*)"/)?.[1];
@@ -69,6 +62,19 @@ function getForcVersion(docsDir: string) {
   };
 }
 
+// function getSwayLibsVersion(docsDir: string) {
+//   const forcfiledir = join(docsDir, 'sway-libs/forc-pkg/Cargo.toml');
+//   const forcfile = fs.readFileSync(forcfiledir, 'utf-8');
+//   const version = forcfile?.match(/version = "(.*)"/)?.[1];
+
+//   return {
+//     name: 'forc',
+//     category: 'Forc',
+//     version,
+//     url: `https://github.com/FuelLabs/sway/tree/v${version}`,
+//   };
+// }
+
 export function getFuelCoreVersion() {
   const filedir = join(DOCS_DIRECTORY, 'fuel-core/Cargo.toml');
   const file = fs.readFileSync(filedir, 'utf-8');
@@ -77,14 +83,6 @@ export function getFuelCoreVersion() {
 }
 
 export function getFullFuelCoreVersion(versionSet: VersionSet) {
-  if (versionSet === 'beta-4') {
-    return {
-      name: 'fuel-graphql-docs',
-      category: 'GraphQL API',
-      version: '0.20.5',
-      url: 'https://github.com/FuelLabs/fuel-core/tree/v0.20.5',
-    };
-  }
   const filedir = join(DOCS_DIRECTORY, 'fuel-core/Cargo.toml');
   const file = fs.readFileSync(filedir, 'utf-8');
   const tomfile = toml.parse(file);
@@ -108,8 +106,6 @@ export function getVersions(versionSet: VersionSet) {
   let docsDir = DOCS_DIRECTORY;
   if (versionSet === 'nightly') {
     docsDir = NIGHTLY_DOCS_DIRECTORY;
-  } else if (versionSet === 'beta-4') {
-    docsDir = BETA_4_DOCS_DIRECTORY;
   }
   const wallet = getWalletVersion(docsDir);
   const tsSDK = getTSSDKVersion(docsDir);
@@ -130,9 +126,8 @@ export function getVersions(versionSet: VersionSet) {
 export function getAllVersions() {
   const versions = getVersions('default');
   const nightlyVersions = getVersions('nightly');
-  const beta4Versions = getVersions('beta-4');
 
-  return { versions, nightlyVersions, beta4Versions };
+  return { versions, nightlyVersions };
 }
 
 // gets the correct url tag for github links

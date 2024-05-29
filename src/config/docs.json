@@ -35,6 +35,15 @@
       "image": ""
     }
   },
+  "sway-libs": {
+    "title": "Sway Libs",
+    "slug": "sway-libs",
+    "repository": "https://github.com/FuelLabs/sway-libs",
+    "ogTags": {
+      "description": "Official documentation for Fuel's Sway Libraries",
+      "image": ""
+    }
+  },
   "fuels-rs": {
     "title": "Fuel Rust SDK",
     "slug": "fuels-rs",

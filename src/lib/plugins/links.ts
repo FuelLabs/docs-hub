@@ -26,8 +26,6 @@ export function handleLinks(
   let versionSet: VersionSet = 'default';
   if (dirname.includes('/nightly/')) {
     versionSet = 'nightly';
-  } else if (dirname.includes('/beta-4/')) {
-    versionSet = 'beta-4';
   }
 
   if (dirname.includes('sway/docs/book/src/forc')) {
@@ -52,13 +50,6 @@ export function handleLinks(
     ) {
       newUrl = newUrl.replace('docs/', 'docs/nightly/');
     }
-    if (
-      versionSet === 'beta-4' &&
-      !newUrl.includes('/beta-4/') &&
-      (newUrl.startsWith('docs/') || newUrl.startsWith('/docs/'))
-    ) {
-      newUrl = newUrl.replace('docs/', 'docs/beta-4/');
-    }
 
     if (newUrl.includes('github.com/FuelLabs/')) {
       // TODO: REMOVE THIS ONCE FIXED IN SOURCE
@@ -77,13 +68,14 @@ export function handleLinks(
       }
 
       if (newUrl.includes('/sway-libs')) {
-        newUrl = newUrl.replace(/\/libs\/([^\/]+)/g, (match, p1) => {
-          if (p1 === 'merkle_proof') {
-            return '/libs/src/merkle';
-          }
-          return `/libs/src/${p1}`;
-        }).replace("/src/src/", "/src/");
-
+        newUrl = newUrl
+          .replace(/\/libs\/([^\/]+)/g, (match, p1) => {
+            if (p1 === 'merkle_proof') {
+              return '/libs/src/merkle';
+            }
+            return `/libs/src/${p1}`;
+          })
+          .replace('/src/src/', '/src/');
       } else if (newUrl.includes('/sway-standards/')) {
         newUrl = newUrl.replace(
           '/standards/src5-ownership',
@@ -127,8 +119,8 @@ function handleTSLinks(url: string | null, versionSet: VersionSet) {
         .replace('/providers', '/api-providers');
     }
     newUrl = newUrl
-    .replace("/guide/", "/")
-    .replace("/fuels-ts/../", "/fuels-ts/");
+      .replace('/guide/', '/')
+      .replace('/fuels-ts/../', '/fuels-ts/');
   }
   return newUrl;
 }
@@ -363,11 +355,11 @@ function replaceInternalLinks(href: string, base: string) {
   newHref = newHref
     .replace(
       'docs/fuel-docs/quickstart/developer-quickstart',
-      'guides/quickstart/'
+      'intro/quickstart/'
     )
     .replace(
       'https://fuelbook.fuel.network/master/quickstart/developer-quickstart.html',
-      'guides/quickstart/'
+      'intro/quickstart/'
     )
     .replace('specs/fuel-vm/instruction_set', 'specs/fuel-vm/instruction-set')
     .replace('specs/protocol/tx_format', 'specs/tx-format/')
@@ -375,6 +367,7 @@ function replaceInternalLinks(href: string, base: string) {
     .replace('specs/protocol/id/contract', 'specs/identifiers/contract-id')
     .replace('specs/protocol/abi', 'specs/abi')
     .replace('/packag/', '/packages/')
+    .replace('docs/sway-libs/book/', 'docs/sway-libs/')
     .replace('standards/src_5', 'standards/src5-ownership')
     .replace('/index#', '#');
 

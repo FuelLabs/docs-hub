@@ -56,15 +56,12 @@ function transformContent(node: any, rootDir: string) {
   let versionSet: VersionSet = 'default';
   if (thisFilePath.includes('/nightly')) {
     versionSet = 'nightly';
-  } else if (thisFilePath.includes('/beta-4')) {
-    versionSet = 'beta-4';
   }
 
-  let swayBuildFilePath = '/builds/sway/master/book/forc';
-  if (versionSet === 'default') {
-    swayBuildFilePath = `docs${swayBuildFilePath}`;
-  } else {
-    swayBuildFilePath = `docs/${versionSet}${swayBuildFilePath}`;
+  // TODO: make this dynamic
+  let swayBuildFilePath = 'docs/builds/sway/master/book/forc';
+  if (versionSet === 'nightly') {
+    swayBuildFilePath = 'docs/nightly/builds/sway/master/book/forc';
   }
 
   const folders = thisFilePath.split('/forc/')[1].split('/');

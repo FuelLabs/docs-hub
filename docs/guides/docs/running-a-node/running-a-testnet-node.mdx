@@ -8,25 +8,7 @@ parent:
 
 # Running a local Fuel node connected to Testnet using P2P
 
-{/*install_help:example:start*/}
-> P2P syncing is currently disabled for the Beta-5 network. Please check this page or the [Forum](https://forum.fuel.network) for updates.
-{/*install_help:example:end*/}
-
 ## Installation
-
-<TextImport
-  file="../installation/index.mdx"
-  comment="install_rust"
-  commentType="{/*"
-/>
-
-<CodeImport
-  file="../installation/index.mdx"
-  comment="install_rust_command"
-  commentType="{/*"
-  lang="sh"
-  trim="true"
-/>
 
 <TextImport
   file="../installation/index.mdx"
@@ -42,23 +24,20 @@ parent:
   trim="true"
 />
 
+To run a `testnet` node, you will need to install the `testnet` toolchain.
+
+You can do this by running the commands below.
+
+```sh
+fuelup toolchain install testnet
+fuelup default testnet
+```
+
 <TextImport
-  file="../quickstart/building-a-smart-contract.mdx"
+  file="../counter-dapp/building-a-smart-contract.mdx"
   comment="install_help"
   commentType="{/*"
 />
-
-<ConditionalContent versionSet={props.versionSet} showForVersions={['beta-4']}>
-To run a `beta-4` node, you will need to install the `beta-4` toolchain.
-
-You can do this by running the commands below:
-
-```sh
-fuelup toolchain install beta-4
-fuelup default beta-4
-```
-
-</ConditionalContent>
 
 ## Getting a Sepolia (Ethereum Testnet) API Key
 
@@ -113,19 +92,6 @@ fuel-core-keygen new --key-type peering
 
 </ConditionalContent>
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['beta-4']}>
-
-```sh
-fuel-core-keygen new --key-type peering
-{
-  "peer_id":"16Uiu2HAm8kCaJaaKTujrSwdBxyCELTY979KYaP9YBkWVLTGTo7Bf",
-  "secret":"361b3275a3dd4150ea4c786b8dff7822205331e56ac2e73c32b17cb295978c8c",
-  "type":"p2p"
-}
-```
-
-</ConditionalContent>
-
 {/*// ANCHOR_END: generate_fuel_p2p_key_command*/}
 
 {/*generate_fuel_p2p_key_end:example:start*/}
@@ -134,24 +100,33 @@ Make sure you save this somewhere safe so you don't need to generate a new key p
 
 ## Chain Configuration
 
-To run a local node with persistence, you must configure a `chainConfig.json` file.
+To run a local node with persistence, you must have a folder with the following chain configuration files:
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['default', 'nightly']}>
-Here is the [specific configuration](https://github.com/FuelLabs/fuel-core/blob/v0.22.0/deployment/scripts/chainspec/beta_chainspec.json) for `beta-5`:
+<ConditionalContent versionSet={props.versionSet} showForVersions={["default", "nightly"]}>
+  Here is the [specific configuration](https://github.com/FuelLabs/fuel-core/tree/9fddeccb4d112c148f6793bc3d21131a13778a25/bin/fuel-core/chainspec/testnet)
 
-<CodeImport
-  file="../../../fuel-core/deployment/scripts/chainspec/beta_chainspec.json"
-  lang="json"
-/>
-</ConditionalContent>
+  `chain_config.json`
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={['beta-4']}>
-Here is the [specific configuration](https://github.com/FuelLabs/fuel-core/blob/v0.20.4/deployment/scripts/chainspec/beta_chainspec.json) for `beta-4`:
+  <CodeImport
+    file="../../../fuel-core/bin/fuel-core/chainspec/testnet/chain_config.json"
+  />
 
-<CodeImport
-  file="../../../beta-4/fuel-core/deployment/scripts/chainspec/beta_chainspec.json"
-  lang="json"
-/>
+  `metadata.json`
+
+  <CodeImport
+    file="../../../fuel-core/bin/fuel-core/chainspec/testnet/metadata.json"
+  />
+
+  `state_config.json`
+
+  <CodeImport
+    file="../../../fuel-core/bin/fuel-core/chainspec/testnet/state_config.json"
+  />
+
+  `state_transition_bytecode.wasm`
+
+  Which is too large to display on this page, but you can find it [here](https://github.com/FuelLabs/fuel-core/tree/9fddeccb4d112c148f6793bc3d21131a13778a25/bin/fuel-core/chainspec/testnet/state_transition_bytecode.wasm)
+
 </ConditionalContent>
 
 ## Running a Local Node
@@ -166,39 +141,17 @@ Finally to put everything together to start the node, run the following command:
 fuel-core run \
 --service-name {ANY_SERVICE_NAME} \
 --keypair {P2P_SECRET} \
---relayer {ETH_RPC_ENDPOINT}\
+--relayer {ETH_RPC_ENDPOINT} \
 --ip 0.0.0.0 --port 4000 --peering-port 30333 \
---db-path  ~/.fuel_beta5 \
---chain ./chainConfig.json \
+--db-path  ~/.testnet \
+--snapshot ./your/path/to/chain_config_folder \
 --utxo-validation --poa-instant false --enable-p2p \
 --min-gas-price 1 --max-block-size 18874368  --max-transmit-size 18874368 \
---reserved-nodes /dns4/p2p-beta-5.fuel.network/tcp/30333/p2p/16Uiu2HAmSMqLSibvGCvg8EFLrpnmrXw1GZ2ADX3U2c9ttQSvFtZX,/dns4/p2p-beta-5.fuel.network/tcp/30334/p2p/16Uiu2HAmVUHZ3Yimoh4fBbFqAb3AC4QR1cyo8bUF4qyi8eiUjpVP \
+--reserved-nodes /dns4/p2p-devnet.fuel.network/tcp/30333/p2p/16Uiu2HAm6pmJUedRFjennk4A8yWL6zCApHCuykzRRroqMjjxZ8o6,/dns4/p2p-devnet.fuel.network/tcp/30334/p2p/16Uiu2HAm8dBwTRzqazCMqQDdR8thMa7BKiW4ep2B4DoQQp6Qhyfd  \
 --sync-header-batch-size 100 \
 --enable-relayer \
---relayer-v2-listening-contracts 0x557c5cE22F877d975C2cB13D0a961a182d740fD5 \
---relayer-da-deploy-height 4867877 \
---relayer-log-page-size 2000
-```
-
-</ConditionalContent>
-
-<ConditionalContent versionSet={props.versionSet} showForVersions={['beta-4']}>
-
-```sh
-fuel-core run \
---service-name {ANY_SERVICE_NAME} \
---keypair {P2P_SECRET} \
---relayer {RPC_ENDPOINT} \
---ip 0.0.0.0 --port 4000 --peering_port 30333 \
---db-path  ~/.fuel_beta4 \
---chain ./chainConfig.json \
---utxo-validation --poa-instant false --network beta-4 --enable-p2p \
---min-gas-price 1 --max_block_size 18874368  --max_transmit_size 18874368 \
---bootstrap_nodes /dns4/p2p-beta-4.fuel.network/tcp/30333/p2p/16Uiu2HAm3xjsqASZ68KpaJPkPCMUiMgquhjyDHtxcVxVdFkMgRFf,/dns4/p2p-beta-4.fuel.network/tcp/30334/p2p/16Uiu2HAmJyoJ2HrtPRdBALMT8fs5Q25xVj57gZj5s6G6dzbHypoS \
---sync_max_get_header 100 --sync_max_get_txns 100 \
---relayer-v2-listening-contracts 0x03f2901Db5723639978deBed3aBA66d4EA03aF73 \
---relayer-da-finalization 4 \
---relayer-da-deploy-height 4111672 \
+--relayer-v2-listening-contracts 0x01855B78C1f8868DE70e84507ec735983bf262dA \
+--relayer-da-deploy-height 5827607 \
 --relayer-log-page-size 2000
 ```
 
