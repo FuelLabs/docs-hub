@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { FuelProvider } from '@fuels/react';
 import {
-  FuelWalletDevelopmentConnector,
+  defaultConnectors,
 } from '@fuels/connectors';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -19,9 +19,7 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <FuelProvider
         fuelConfig={{
-          connectors: [
-            new FuelWalletDevelopmentConnector(),
-          ],
+          connectors: defaultConnectors(),
         }}
       >
         <App />

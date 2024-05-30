@@ -27,7 +27,8 @@ export function SidebarSection({
 }: SectionProps) {
   const [isOpened, setIsOpened] = useState<boolean | undefined>(
     book === 'guides' ||
-      docSlug?.includes(book.toLowerCase()) ||
+      docSlug?.includes(`/${book.toLowerCase()}/`) ||
+      docSlug === `docs/${book.toLowerCase()}` ||
       (book === 'Intro' && !docSlug)
   );
 
