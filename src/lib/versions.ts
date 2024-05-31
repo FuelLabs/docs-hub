@@ -62,18 +62,31 @@ function getForcVersion(docsDir: string) {
   };
 }
 
-// function getSwayLibsVersion(docsDir: string) {
-//   const forcfiledir = join(docsDir, 'sway-libs/forc-pkg/Cargo.toml');
-//   const forcfile = fs.readFileSync(forcfiledir, 'utf-8');
-//   const version = forcfile?.match(/version = "(.*)"/)?.[1];
+// TODO: ADD Cargo.toml to sway-libs with version
 
+// function getSwayLibsVersion(docsDir: string) {
+//   const filedir = join(docsDir, 'sway-libs/Cargo.toml');
+//   const file = fs.readFileSync(filedir, 'utf-8');
+//   const tomfile = toml.parse(file);
 //   return {
-//     name: 'forc',
-//     category: 'Forc',
-//     version,
-//     url: `https://github.com/FuelLabs/sway/tree/v${version}`,
+//     name: 'sway-libs',
+//     category: 'Sway Libraries',
+//     version: tomfile.package.version,
+//     url: `https://github.com/FuelLabs/sway-libs/tree/v${tomfile.package.version}`,
 //   };
 // }
+
+function getSwayStandardsVersion(docsDir: string) {
+  const filedir = join(docsDir, 'sway-standards/Cargo.toml');
+  const file = fs.readFileSync(filedir, 'utf-8');
+  const tomfile = toml.parse(file);
+  return {
+    name: 'sway-standards',
+    category: 'Sway Standards',
+    version: tomfile.package.version,
+    url: `https://github.com/FuelLabs/sway-standards/tree/v${tomfile.package.version}`,
+  };
+}
 
 export function getFuelCoreVersion() {
   const filedir = join(DOCS_DIRECTORY, 'fuel-core/Cargo.toml');
@@ -112,6 +125,7 @@ export function getVersions(versionSet: VersionSet) {
   const rust = getRustSDKVersion(docsDir);
   const forc = getForcVersion(docsDir);
   const fuelCore = getFullFuelCoreVersion(versionSet);
+  const swayStandards = getSwayStandardsVersion(docsDir);
 
   return {
     Forc: forc,
@@ -120,6 +134,7 @@ export function getVersions(versionSet: VersionSet) {
     'Fuel TS SDK': tsSDK,
     'Fuel Wallet': wallet,
     'GraphQL API': fuelCore,
+    'Sway Standards': swayStandards
   };
 }
 
@@ -139,6 +154,10 @@ export default function getDocVersion(link: string, versionSet: VersionSet) {
 
   if (link.includes('/fuels-rs/')) {
     return `v${versions['Fuel Rust SDK'].version}`;
+  }
+
+  if (link.includes('/sway-standards/')) {
+    return `v${versions['Sway Standards'].version}`;
   }
 
   if (link.includes('/sway/')) {
