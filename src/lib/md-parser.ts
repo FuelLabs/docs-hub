@@ -26,6 +26,11 @@ export class DocParser {
       const value = pathsConfig[key];
       slug = slug.replaceAll(key, value as string);
     }
+
+    if(slug.endsWith('sway-standards/src')){
+      slug = slug.replace('sway-standards/src', 'sway-standards');
+    }
+
     return slug.toLowerCase();
   }
 }

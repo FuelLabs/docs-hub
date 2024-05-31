@@ -44,6 +44,15 @@
       "image": ""
     }
   },
+  "sway-standards": {
+    "title": "Sway Standards",
+    "slug": "sway-standards",
+    "repository": "https://github.com/FuelLabs/sway-standards",
+    "ogTags": {
+      "description": "Official documentation for Sway Standards",
+      "image": ""
+    }
+  },
   "fuels-rs": {
     "title": "Fuel Rust SDK",
     "slug": "fuels-rs",
