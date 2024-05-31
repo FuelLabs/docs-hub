@@ -27,8 +27,8 @@ export class DocParser {
       slug = slug.replaceAll(key, value as string);
     }
 
-    if(slug.endsWith('sway-standards/src')){
-      slug = slug.replace('sway-standards/src', 'sway-standards');
+    if(slug.endsWith('/src')){
+      slug = slug.replace('/src', '');
     }
 
     return slug.toLowerCase();
