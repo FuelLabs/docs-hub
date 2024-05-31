@@ -371,7 +371,8 @@ function replaceInternalLinks(href: string, base: string) {
     .replace('/packag/', '/packages/')
     .replace('docs/sway-libs/book/', 'docs/sway-libs/')
     .replace('standards/src_5', 'standards/src5-ownership')
-    .replace('/index#', '#');
+    .replace('/index#', '#')
+    .replace('sway-standards/src/', 'sway-standards/');
 
   if (newHref.startsWith('/docs/')) {
     newHref = newHref.replace('/docs/', 'docs/');
