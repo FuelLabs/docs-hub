@@ -184,9 +184,7 @@ function sortLinks(lcOrder, links, config, isNightly) {
     : links;
 
   return sortedLinks.map((link) => {
-    if (link.label.includes('sway-standards')) {
-      link.label = handleStandards(link.label);
-    }
+    link.label = handleStandards(link.label);
     return link;
   });
 }
