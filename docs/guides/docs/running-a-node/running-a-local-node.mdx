@@ -42,29 +42,29 @@ forc deploy --default-signer --node-url 127.0.0.1:4000/v1/graphql
 To modify the initial state of the chain, you must configure the `state_config.json` file in your chain configuration folder.
 Here is an example of what that looks like using version {props.fuelCoreVersion} of `fuel-core`:
 
-Here is the [specific configuration](https://github.com/FuelLabs/fuel-core/tree/9fddeccb4d112c148f6793bc3d21131a13778a25/bin/fuel-core/chainspec/testnet)
+Here is the [specific configuration](https://github.com/FuelLabs/chain-configuration/tree/master/local)
 
 `chain_config.json`
 
 <CodeImport
-  file="../../../fuel-core/bin/fuel-core/chainspec/local-testnet/chain_config.json"
+  file="../../../chain-configuration/local/chain_config.json"
 />
 
 `metadata.json`
 
 <CodeImport
-  file="../../../fuel-core/bin/fuel-core/chainspec/local-testnet/metadata.json"
+  file="../../../chain-configuration/local/metadata.json"
 />
 
 `state_config.json`
 
 <CodeImport
-  file="../../../fuel-core/bin/fuel-core/chainspec/local-testnet/state_config.json"
+  file="../../../chain-configuration/local/state_config.json"
 />
 
 `state_transition_bytecode.wasm`
 
-Which is too large to display on this page, but you can find it [here](https://github.com/FuelLabs/fuel-core/blob/master/bin/fuel-core/chainspec/local-testnet/state_transition_bytecode.wasm)
+Which is too large to display on this page, but you can find it [here](https://github.com/FuelLabs/chain-configuration/blob/master/local/state_transition_bytecode.wasm)
 
 To start the node with a custom configuration, you can use the command below:
 
@@ -72,7 +72,7 @@ To start the node with a custom configuration, you can use the command below:
 fuel-core run --snapshot ./your/path/to/chain_config_folder --db-type in-memory --debug
 ```
 
-To find an example chain configuration folder for a specific `fuel-core` version, refer to the [`fuel-core`](https://github.com/FuelLabs/fuel-core/tree/master/bin/fuel-core/chainspec/local-testnet) repo.
+To find an example chain configuration folder for a specific `fuel-core` version, refer to the [`chain-configuration`](https://github.com/FuelLabs/chain-configuration/tree/master) repo.
 
 ### Funding a wallet locally
 
