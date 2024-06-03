@@ -28,13 +28,13 @@ fuel-core run --db-type in-memory --debug --snapshot ./your/path/to/chain_config
 To deploy a contract to the local node, run the following command:
 
 ```sh
-forc deploy <signing-key> --node-url 127.0.0.1:4000/graphql
+forc deploy <signing-key> --node-url 127.0.0.1:4000/v1/graphql
 ```
 
 Or to deploy with the default signer that is pre-funded by fuel-core:
 
 ```sh
-forc deploy --default-signer --node-url 127.0.0.1:4000/graphql
+forc deploy --default-signer --node-url 127.0.0.1:4000/v1/graphql
 ```
 
 ## Chain Configuration
@@ -101,5 +101,5 @@ fuel-core run --ip 127.0.0.1 --port 4000 --snapshot ./your/path/to/chain_config_
 To connect to the local node using a browser wallet, import the network address as:
 
 ```sh
-http://127.0.0.1:4000/graphql
+http://127.0.0.1:4000/v1/graphql
 ```
