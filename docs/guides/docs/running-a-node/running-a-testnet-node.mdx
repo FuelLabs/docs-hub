@@ -90,7 +90,11 @@ Make sure you save this somewhere safe so you don't need to generate a new key p
 
 To run a local node with persistence, you must have a folder with the following chain configuration files:
 
-Here is the [specific configuration](https://github.com/FuelLabs/chain-configuration/tree/master/ignition)
+For simplicity, clone the [repository](https://github.com/FuelLabs/chain-configuration/tree/master) into the directory of your choice.
+
+When using the `--snapshot` flag later, you can replace `./your/path/to/chain_config_folder` with the repository you just cloned `./chain-configuration/ignition/`.
+
+Inside you should find these [specific configuration files](https://github.com/FuelLabs/chain-configuration/tree/master/ignition)
 
 `chain_config.json`
 
@@ -122,20 +126,20 @@ Finally to put everything together to start the node, run the following command:
 
 ```sh
 fuel-core run \
---service-name {ANY_SERVICE_NAME} \
---keypair {P2P_SECRET} \
---relayer {ETH_RPC_ENDPOINT} \
---ip 0.0.0.0 --port 4000 --peering-port 30333 \
---db-path  ~/.testnet \
---snapshot ./your/path/to/chain_config_folder \
+--service-name=fuel-sepolia-testnet-node \
+--keypair {P2P_PRIVATE_KEY} \
+--relayer {ETHEREUM_RPC_ENDPOINT} \
+--ip=0.0.0.0 --port=4000 --peering-port=30333 \
+--db-path=~/.fuel-sepolia-testnet \
+--snapshot chain-configuration/ignition \
 --utxo-validation --poa-instant false --enable-p2p \
---min-gas-price 1 --max-block-size 18874368  --max-transmit-size 18874368 \
---reserved-nodes /dns4/p2p-devnet.fuel.network/tcp/30333/p2p/16Uiu2HAm6pmJUedRFjennk4A8yWL6zCApHCuykzRRroqMjjxZ8o6,/dns4/p2p-devnet.fuel.network/tcp/30334/p2p/16Uiu2HAm8dBwTRzqazCMqQDdR8thMa7BKiW4ep2B4DoQQp6Qhyfd  \
+--reserved-nodes /dns4/p2p-testnet.fuel.network/tcp/30333/p2p/16Uiu2HAmDxoChB7AheKNvCVpD4PHJwuDGn8rifMBEHmEynGHvHrf \
 --sync-header-batch-size 100 \
 --enable-relayer \
---relayer-v2-listening-contracts 0x01855B78C1f8868DE70e84507ec735983bf262dA \
---relayer-da-deploy-height 5827607 \
---relayer-log-page-size 2000
+--relayer-v2-listening-contracts=0x01855B78C1f8868DE70e84507ec735983bf262dA \
+--relayer-da-deploy-height=5827607 \
+--relayer-log-page-size=500 \
+--sync-block-stream-buffer-size 30
 ```
 
 {/*running_a_local_node_end:example:start*/}
