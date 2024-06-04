@@ -34,7 +34,7 @@ const exclusions = {
     'sway/test/src/sdk-harness/test_projects/run_external_proxy',
     'sway/test/src/sdk-harness/test_projects/run_external_target',
   ],
-  sway_libs: ['sway-libs/docs', 'sway-libs/examples'],
+  sway_libs: ['sway-libs/docs', 'sway-libs/examples', 'sway-libs/Cargo.toml'],
   sway_standards: [
     'sway-standards/docs',
     'sway-standards/examples',
