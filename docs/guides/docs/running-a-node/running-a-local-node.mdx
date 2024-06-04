@@ -42,7 +42,11 @@ forc deploy --default-signer --node-url 127.0.0.1:4000/v1/graphql
 To modify the initial state of the chain, you must configure the `state_config.json` file in your chain configuration folder.
 Here is an example of what that looks like using version {props.fuelCoreVersion} of `fuel-core`:
 
-Here is the [specific configuration](https://github.com/FuelLabs/chain-configuration/tree/master/local)
+For simplicity, clone the [repository](https://github.com/FuelLabs/chain-configuration/tree/master) into the directory of your choice.
+
+When using the `--snapshot` flag later, you can replace `./your/path/to/chain_config_folder` with the repository you just cloned `./chain-configuration/ignition/`.
+
+Inside you should find these [specific configuration files](https://github.com/FuelLabs/chain-configuration/tree/master/local)
 
 `chain_config.json`
 
