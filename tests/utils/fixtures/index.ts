@@ -6,7 +6,7 @@ import { test as base, chromium } from '@playwright/test';
 import { getExtensionsData } from './utils/getExtensionsData';
 import { waitForExtensions } from './utils/waitForExtenssions';
 
-import versions from '../../../src/config/versions.json' with { type: "json" };
+import * as versions from '../../../src/config/versions.json';
 
 export const test = base.extend<{
   context: BrowserContext;
@@ -15,6 +15,7 @@ export const test = base.extend<{
   // biome-ignore lint/correctness/noEmptyPattern:
   context: async ({}, use) => {
     // download fuel wallet
+    console.log("DOWNLOADING WALLET VERSION", versions.default.wallet)
     const fuelPathExtension = await downloadFuel(versions.default.wallet);
     // prepare browser args
     const browserArgs = [

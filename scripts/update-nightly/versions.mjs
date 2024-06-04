@@ -8,12 +8,16 @@ export function getExistingVersions() {
     rust: getRustSDKVersion(false),
     ts: getTSSDKVersion(false),
     wallet: getWalletVersion(false),
+    sway_libs: getSwayLibsVersion(false),
+    sway_standards: getSwayStandardsVersion(false),
   };
   versions.nightly = {
     forc: getForcVersion(true),
     rust: getRustSDKVersion(true),
     ts: getTSSDKVersion(true),
     wallet: getWalletVersion(true),
+    sway_libs: getSwayLibsVersion(true),
+    sway_standards: getSwayStandardsVersion(true),
   };
 
   return versions;
@@ -25,6 +29,8 @@ export async function getNightlyVersions() {
   versions.rust = await getNightlyRelease('fuels-rs');
   versions.ts = await getNightlyRelease('fuels-ts');
   versions.wallet = await getNightlyRelease('fuels-wallet');
+  versions.sway_libs = await getNightlyRelease('sway-libs');
+  versions.sway_standards = await getNightlyRelease('sway-standards');
   return versions;
 }
 
@@ -52,6 +58,18 @@ function getRustSDKVersion(isNightly) {
 function getWalletVersion(isNightly) {
   return getVersionFromJSONFile(
     `docs${isNightly ? '/nightly' : ''}/fuels-wallet/packages/app/package.json`
+  );
+}
+
+function getSwayLibsVersion(isNightly) {
+  return getVersionFromTOMLFile(
+    `docs${isNightly ? '/nightly' : ''}/sway-libs/Cargo.toml`
+  );
+}
+
+function getSwayStandardsVersion(isNightly) {
+  return getVersionFromTOMLFile(
+    `docs${isNightly ? '/nightly' : ''}/sway-standards/Cargo.toml`
   );
 }
 

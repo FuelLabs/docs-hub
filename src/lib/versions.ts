@@ -62,19 +62,17 @@ function getForcVersion(docsDir: string) {
   };
 }
 
-// TODO: ADD Cargo.toml to sway-libs with version
-
-// function getSwayLibsVersion(docsDir: string) {
-//   const filedir = join(docsDir, 'sway-libs/Cargo.toml');
-//   const file = fs.readFileSync(filedir, 'utf-8');
-//   const tomfile = toml.parse(file);
-//   return {
-//     name: 'sway-libs',
-//     category: 'Sway Libraries',
-//     version: tomfile.package.version,
-//     url: `https://github.com/FuelLabs/sway-libs/tree/v${tomfile.package.version}`,
-//   };
-// }
+function getSwayLibsVersion(docsDir: string) {
+  const filedir = join(docsDir, 'sway-libs/Cargo.toml');
+  const file = fs.readFileSync(filedir, 'utf-8');
+  const tomfile = toml.parse(file);
+  return {
+    name: 'sway-libs',
+    category: 'Sway Libraries',
+    version: tomfile.package.version,
+    url: `https://github.com/FuelLabs/sway-libs/tree/v${tomfile.package.version}`,
+  };
+}
 
 function getSwayStandardsVersion(docsDir: string) {
   const filedir = join(docsDir, 'sway-standards/Cargo.toml');
@@ -126,6 +124,7 @@ export function getVersions(versionSet: VersionSet) {
   const forc = getForcVersion(docsDir);
   const fuelCore = getFullFuelCoreVersion(versionSet);
   const swayStandards = getSwayStandardsVersion(docsDir);
+  const swayLibraries = getSwayLibsVersion(docsDir);
 
   return {
     Forc: forc,
@@ -134,7 +133,8 @@ export function getVersions(versionSet: VersionSet) {
     'Fuel TS SDK': tsSDK,
     'Fuel Wallet': wallet,
     'GraphQL API': fuelCore,
-    'Sway Standards': swayStandards
+    'Sway Standards': swayStandards,
+    'Sway Libraries': swayLibraries
   };
 }
 
@@ -158,6 +158,10 @@ export default function getDocVersion(link: string, versionSet: VersionSet) {
 
   if (link.includes('/sway-standards/')) {
     return `v${versions['Sway Standards'].version}`;
+  }
+
+  if (link.includes('/sway-libs/')) {
+    return `v${versions['Sway Libraries'].version}`;
   }
 
   if (link.includes('/sway/')) {
