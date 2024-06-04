@@ -64,3 +64,6 @@
 [submodule "docs/nightly/sway-libs"]
 	path = docs/nightly/sway-libs
 	url = https://github.com/FuelLabs/sway-libs.git
+[submodule "docs/chain-configuration"]
+	path = docs/chain-configuration
+	url = https://github.com/FuelLabs/chain-configuration

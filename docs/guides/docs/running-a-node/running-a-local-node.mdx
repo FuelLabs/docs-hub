@@ -42,32 +42,33 @@ forc deploy --default-signer --node-url 127.0.0.1:4000/v1/graphql
 To modify the initial state of the chain, you must configure the `state_config.json` file in your chain configuration folder.
 Here is an example of what that looks like using version {props.fuelCoreVersion} of `fuel-core`:
 
-<ConditionalContent versionSet={props.versionSet} showForVersions={["default", "nightly"]}>
-  Here is the [specific configuration](https://github.com/FuelLabs/fuel-core/tree/9fddeccb4d112c148f6793bc3d21131a13778a25/bin/fuel-core/chainspec/testnet)
+For simplicity, clone the [repository](https://github.com/FuelLabs/chain-configuration/tree/master) into the directory of your choice.
 
-  `chain_config.json`
+When using the `--snapshot` flag later, you can replace `./your/path/to/chain_config_folder` with the repository you just cloned `./chain-configuration/ignition/`.
 
-  <CodeImport
-    file="../../../fuel-core/bin/fuel-core/chainspec/testnet/chain_config.json"
-  />
+Inside you should find these [specific configuration files](https://github.com/FuelLabs/chain-configuration/tree/master/local)
 
-  `metadata.json`
+`chain_config.json`
 
-  <CodeImport
-    file="../../../fuel-core/bin/fuel-core/chainspec/testnet/metadata.json"
-  />
+<CodeImport
+  file="../../../chain-configuration/local/chain_config.json"
+/>
 
-  `state_config.json`
+`metadata.json`
 
-  <CodeImport
-    file="../../../fuel-core/bin/fuel-core/chainspec/testnet/state_config.json"
-  />
+<CodeImport
+  file="../../../chain-configuration/local/metadata.json"
+/>
 
-  `state_transition_bytecode.wasm`
+`state_config.json`
 
-  Which is too large to display on this page, but you can find it [here](https://github.com/FuelLabs/fuel-core/blob/9fddeccb4d112c148f6793bc3d21131a13778a25/bin/fuel-core/chainspec/testnet/state_transition_bytecode.wasm)
+<CodeImport
+  file="../../../chain-configuration/local/state_config.json"
+/>
 
-</ConditionalContent>
+`state_transition_bytecode.wasm`
+
+Which is too large to display on this page, but you can find it [here](https://github.com/FuelLabs/chain-configuration/blob/master/local/state_transition_bytecode.wasm)
 
 To start the node with a custom configuration, you can use the command below:
 
@@ -75,7 +76,7 @@ To start the node with a custom configuration, you can use the command below:
 fuel-core run --snapshot ./your/path/to/chain_config_folder --db-type in-memory --debug
 ```
 
-To find an example chain configuration folder for a specific `fuel-core` version, refer to the [`fuel-core`](https://github.com/FuelLabs/fuel-core/tree/9fddeccb4d112c148f6793bc3d21131a13778a25/bin/fuel-core/chainspec/testnet) repo.
+To find an example chain configuration folder for a specific `fuel-core` version, refer to the [`chain-configuration`](https://github.com/FuelLabs/chain-configuration/tree/master) repo.
 
 ### Funding a wallet locally
 
@@ -83,7 +84,21 @@ You can edit the `coins` array inside `state_config.json` to modify the initial 
 
 The `owner` address must be a `B256` type address (begins with `0x`) instead of a `Bech32` type (begins with `fuel`).
 
-The `amount` is a numerical value. In this example, the value translates to `11,152,921,504 ETH`.
+The `amount` is a numerical value. In the example below, the value translates to 1 ETH.
+
+```json
+"coins": [
+  {
+    "tx_id": "0x0000000000000000000000000000000000000000000000000000000000000001",
+    "output_index": 0,
+    "tx_pointer_block_height": 0,
+    "tx_pointer_tx_idx": 0,
+    "owner": "0x488284d46414347c78221d3bad71dfebcff61ab2ae26d71129701d50796f714d",
+    "amount": 1000000000,
+    "asset_id": "0xf8f8b6283d7fa5b672b530cbb84fcccb4ff8dc40f8176ef4544ddb1f1952ad07"
+  }
+]
+```
 
 ## Local node (with state persistence)
 
