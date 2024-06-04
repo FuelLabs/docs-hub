@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { EOL } from 'os';
 import { join } from 'path';
+import versions from '../../src/config/versions.json';
 
 const constantsPath = join(
   process.cwd(),
@@ -31,8 +32,8 @@ function handleConstantsFile(filePath, version) {
   }
 
   if (start !== undefined && end !== undefined) {
-    const downloadLink =
-      'https://github.com/FuelLabs/fuels-wallet/releases/download/v0.19.0/fuel-wallet-0.19.0.zip';
+    const walletVersion = versions.default.wallet;
+    const downloadLink = `https://github.com/FuelLabs/fuels-wallet/releases/download/v${walletVersion}/fuel-wallet-${walletVersion}.zip`;
     const modifiedContent = `export const DOWNLOAD_LINK = '${downloadLink}';`;
     lines.splice(start, end - start + 1, modifiedContent);
     const newFileContent = lines.join(EOL);

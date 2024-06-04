@@ -6,6 +6,8 @@ import { test as base, chromium } from '@playwright/test';
 import { getExtensionsData } from './utils/getExtensionsData';
 import { waitForExtensions } from './utils/waitForExtenssions';
 
+import versions from '../../../src/config/versions.json'
+
 export const test = base.extend<{
   context: BrowserContext;
   extensionId: string;
@@ -13,7 +15,7 @@ export const test = base.extend<{
   // biome-ignore lint/correctness/noEmptyPattern:
   context: async ({}, use) => {
     // download fuel wallet
-    const fuelPathExtension = await downloadFuel('0.16.6');
+    const fuelPathExtension = await downloadFuel(versions.default.wallet);
     // prepare browser args
     const browserArgs = [
       `--disable-extensions-except=${fuelPathExtension}`,
