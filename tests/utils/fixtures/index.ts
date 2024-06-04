@@ -6,7 +6,11 @@ import { test as base, chromium } from '@playwright/test';
 import { getExtensionsData } from './utils/getExtensionsData';
 import { waitForExtensions } from './utils/waitForExtenssions';
 
-import * as versions from '../../../src/config/versions.json';
+import { readFileSync } from 'fs';
+import { join } from 'path';
+
+const versionFile = readFileSync(join(process.cwd(), 'src/config/versions.json'), 'utf-8');
+const versions = JSON.parse(versionFile);
 
 export const test = base.extend<{
   context: BrowserContext;

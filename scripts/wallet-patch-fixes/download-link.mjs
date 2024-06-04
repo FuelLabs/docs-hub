@@ -1,7 +1,12 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { EOL } from 'os';
 import { join } from 'path';
-import versions from '../../src/config/versions.json';
+
+const versionFile = readFileSync(
+  join(process.cwd(), 'src/config/versions.json'),
+  'utf-8'
+);
+const versions = JSON.parse(versionFile);
 
 const constantsPath = join(
   process.cwd(),
