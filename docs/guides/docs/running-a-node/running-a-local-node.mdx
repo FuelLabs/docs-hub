@@ -44,31 +44,7 @@ Here is an example of what that looks like using version {props.fuelCoreVersion}
 
 For simplicity, clone the [repository](https://github.com/FuelLabs/chain-configuration/tree/master) into the directory of your choice.
 
-When using the `--snapshot` flag later, you can replace `./your/path/to/chain_config_folder` with the repository you just cloned `./chain-configuration/ignition/`.
-
-Inside you should find these [specific configuration files](https://github.com/FuelLabs/chain-configuration/tree/master/local)
-
-`chain_config.json`
-
-<CodeImport
-  file="../../../chain-configuration/local/chain_config.json"
-/>
-
-`metadata.json`
-
-<CodeImport
-  file="../../../chain-configuration/local/metadata.json"
-/>
-
-`state_config.json`
-
-<CodeImport
-  file="../../../chain-configuration/local/state_config.json"
-/>
-
-`state_transition_bytecode.wasm`
-
-Which is too large to display on this page, but you can find it [here](https://github.com/FuelLabs/chain-configuration/blob/master/local/state_transition_bytecode.wasm)
+When using the `--snapshot` flag later, you can replace `./your/path/to/chain_config_folder` with the `local` folder of the repository you just cloned `./chain-configuration/local/`.
 
 To start the node with a custom configuration, you can use the command below:
 
@@ -76,7 +52,7 @@ To start the node with a custom configuration, you can use the command below:
 fuel-core run --snapshot ./your/path/to/chain_config_folder --db-type in-memory --debug
 ```
 
-To find an example chain configuration folder for a specific `fuel-core` version, refer to the [`chain-configuration`](https://github.com/FuelLabs/chain-configuration/tree/master) repo.
+To find an example `local` chain configuration folder for a specific `fuel-core` version, refer to the [`chain-configuration/local`](https://github.com/FuelLabs/chain-configuration/tree/master/local) repo.
 
 ### Funding a wallet locally
 
