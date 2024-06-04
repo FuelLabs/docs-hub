@@ -41,7 +41,7 @@ export function SidebarSection({
   if (!version && book !== 'Intro') {
     switch (book) {
       case 'GraphQL':
-        githubLink = 'https://github.com/FuelLabs/fuel-core/tree/v0.26.0';
+        githubLink = 'https://github.com/FuelLabs/fuel-core/tree/v0.27.0';
         break;
       case 'Specs':
         githubLink = 'https://github.com/FuelLabs/fuel-specs';
