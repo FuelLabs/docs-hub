@@ -78,6 +78,7 @@ const excludeDirs = [
   'docs/guides/docs/nav.json',
   'docs/guides/docs/migration-guide/breaking-change-log/README.md',
   'docs/guides/docs/migration-guide/breaking-change-log/package.json',
+  'docs/guides/docs/migration-guide/breaking-change-log/node_modules',
   'docs/guides/docs/migration-guide/breaking-change-log/pnpm-lock.yaml',
   'docs/intro/nav.json',
   'docs/contributing/nav.json',
