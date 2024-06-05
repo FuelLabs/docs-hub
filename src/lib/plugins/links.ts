@@ -69,7 +69,8 @@ export function handleLinks(
 
       if (newUrl.includes('/sway-libs')) {
         newUrl = newUrl
-          .replace('/src/src/', '/src/');
+          .replace('/src/src/', '/src/')
+          .replace('sway-libs/tree/libs/nft','sway-libs/tree/v0.12.0/libs/nft');
       }
     }
 
