@@ -8,7 +8,8 @@ export function getExistingVersions() {
     rust: getRustSDKVersion(false),
     ts: getTSSDKVersion(false),
     wallet: getWalletVersion(false),
-    sway_libs: getSwayLibsVersion(false),
+    // TODO: uncomment when sway-libs is bumped to 0.22.0
+    // sway_libs: getSwayLibsVersion(false),
     sway_standards: getSwayStandardsVersion(false),
   };
   versions.nightly = {
@@ -16,7 +17,7 @@ export function getExistingVersions() {
     rust: getRustSDKVersion(true),
     ts: getTSSDKVersion(true),
     wallet: getWalletVersion(true),
-    sway_libs: getSwayLibsVersion(true),
+    // sway_libs: getSwayLibsVersion(true),
     sway_standards: getSwayStandardsVersion(true),
   };
 
