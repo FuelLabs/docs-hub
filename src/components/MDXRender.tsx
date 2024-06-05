@@ -1,4 +1,4 @@
-import { Box } from '@fuel-ui/react';
+import { Box, HStack } from '@fuel-ui/react';
 import { runSync } from '@mdx-js/mdx';
 import * as provider from '@mdx-js/react';
 import dynamic from 'next/dynamic';
@@ -6,9 +6,6 @@ import 'plyr-react/plyr.css';
 import { useEffect, useMemo, useState } from 'react';
 
 import {
-  BETA_5_EXPLORER_LINK,
-  BETA_5_FAUCET_LINK,
-  BETA_5_PLAYGROUND_LINK,
   BRIDGE_LINK,
   EXPLORER_LINK,
   FAUCET_LINK,
@@ -53,6 +50,7 @@ export const mdxComponents = {
   ul: UL,
   ol: OL,
   hr: Divider,
+  HStack: HStack,
   Box,
   Player,
   CardSection,
