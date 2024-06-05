@@ -350,6 +350,22 @@ function replaceInternalLinks(href: string, base: string) {
     }
     newHref = `docs/sway-standards/${docName}`
   }
+
+  if(newHref.includes('specs.fuel.network/')){
+    newHref = newHref
+    .replace('.html', '')
+    .replace('/protocol/abi/', '/abi/')
+    .replace(/\/index$/, '/')
+    .replace('https://', '')
+    .replace('http://', '')
+    .replace('specs.fuel.network/', 'docs/specs/')
+    .replace('/master/', '/')
+    .replace('/tree/', '/')
+    .replace('/blob/', '/')
+    .replace(/\/v\d+\.\d+\.\d+\//, '/')
+  }
+
+
   if (
     newHref.startsWith('https://fuellabs.github.io') &&
     !newHref.includes('fuellabs.github.io/block-explorer-v2') &&
