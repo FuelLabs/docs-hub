@@ -303,7 +303,51 @@ function replaceInternalLinks(href: string, base: string) {
   let newHref = href;
   if(newHref.startsWith('https://github.com/FuelLabs/sway-standards/') && newHref.endsWith('.md') && !newHref.includes('README.md')){
     const split = newHref.split('/');
-    newHref = `docs/sway-standards/${split[split.length -1].replace(".md", "")}`
+    let docName = split[split.length -1].replace(".md", "");
+    switch (docName) {
+      case 'src-2':
+        docName = 'src-2-inline-documentation'
+        break;
+      case 'src-3':
+        docName = 'src-3-minting-and-burning'
+        break;
+      case 'src-5':
+        docName = 'src-5-ownership'
+        break;
+      case 'src-6':
+        docName = 'src-6-vault'
+        break;
+      case 'src-7':
+        docName = 'src-7-asset-metadata'
+        break;
+      case 'src-8':
+        docName = 'src-8-bridged-asset'
+        break;
+      case 'src-9':
+        docName = 'src-9-metadata-keys'
+        break;
+      case 'src-10':
+        docName = 'src-10-native-bridge'
+        break;
+      case 'src-11':
+        docName = 'src-11-security-information'
+        break;
+      case 'src-12':
+        docName = 'src-12-contract-factory'
+        break;
+      case 'src-13':
+        docName = 'src-13-soulbound-address'
+        break;
+      case 'src-14':
+        docName = 'src-14-simple-upgradeable-proxies'
+        break;
+      case 'src-20':
+        docName = 'src-20-native-asset'
+        break;
+      default:
+        break;
+    }
+    newHref = `docs/sway-standards/${docName}`
   }
   if (
     newHref.startsWith('https://fuellabs.github.io') &&
