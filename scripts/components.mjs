@@ -377,6 +377,7 @@ async function exportComponents(
 ) {
   const componentsConfigFile = fs.readFileSync(configPath, 'utf8');
   const componentsConfig = JSON.parse(componentsConfigFile);
+  componentsConfig.ignore.push('HStack');
 
   const paths = await getMDXFilesFromFolder(docsDirectory);
   const components = findComponentsInMDXFiles(paths, componentsConfig);
