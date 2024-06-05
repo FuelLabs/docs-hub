@@ -69,18 +69,7 @@ export function handleLinks(
 
       if (newUrl.includes('/sway-libs')) {
         newUrl = newUrl
-          .replace(/\/libs\/([^\/]+)/g, (match, p1) => {
-            if (p1 === 'merkle_proof') {
-              return '/libs/src/merkle';
-            }
-            return `/libs/src/${p1}`;
-          })
           .replace('/src/src/', '/src/');
-      } else if (newUrl.includes('/sway-standards/')) {
-        newUrl = newUrl.replace(
-          '/standards/src5-ownership',
-          '/standards/src/src5.sw'
-        );
       }
     }
 
@@ -312,6 +301,10 @@ function handleNewURLs(
 
 function replaceInternalLinks(href: string, base: string) {
   let newHref = href;
+  if(newHref.startsWith('https://github.com/FuelLabs/sway-standards/') && newHref.endsWith('.md') && !newHref.includes('README.md')){
+    const split = newHref.split('/');
+    newHref = `docs/sway-standards/${split[split.length -1].replace(".md", "")}`
+  }
   if (
     newHref.startsWith('https://fuellabs.github.io') &&
     !newHref.includes('fuellabs.github.io/block-explorer-v2') &&
