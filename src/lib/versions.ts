@@ -63,14 +63,17 @@ function getForcVersion(docsDir: string) {
 }
 
 function getSwayLibsVersion(docsDir: string) {
-  const filedir = join(docsDir, 'sway-libs/Cargo.toml');
-  const file = fs.readFileSync(filedir, 'utf-8');
-  const tomfile = toml.parse(file);
+  // TODO: uncomment this once sway-libs 0.22.0 is released
+  // const filedir = join(docsDir, 'sway-libs/Cargo.toml');
+  // const file = fs.readFileSync(filedir, 'utf-8');
+  // const tomfile = toml.parse(file);
+  // const version = tomfile.package.version;
+  const version = '0.21.0';
   return {
     name: 'sway-libs',
     category: 'Sway Libraries',
-    version: tomfile.package.version,
-    url: `https://github.com/FuelLabs/sway-libs/tree/v${tomfile.package.version}`,
+    version,
+    url: `https://github.com/FuelLabs/sway-libs/tree/v${version}`,
   };
 }
 
