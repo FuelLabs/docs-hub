@@ -5,7 +5,7 @@ import type { AppProps } from 'next/app';
 import '../styles/docsearch.css';
 import '../styles/index.css';
 
-import { defaultConnectors } from '@fuels/connectors';
+import { FuelWalletConnector, FueletWalletConnector } from '@fuels/connectors';
 import { Provider } from '../components/Provider';
 import { ShowWarningProvider } from '../hooks/useShowWarning';
 import { VersionProvider } from '../hooks/useVersion';
@@ -16,9 +16,8 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <FuelProvider
-        theme='dark'
         fuelConfig={{
-          connectors: defaultConnectors({ devMode: true }),
+          connectors: [new FuelWalletConnector(), new FueletWalletConnector()],
         }}
       >
         <VersionProvider>
