@@ -1,0 +1,28 @@
+---
+başlık: Ana
+Kategori: Yüklemlere Giriş
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Ana
+
+Artık tüm bileşenlere sahip olduğumuza göre, onları bir araya getirelim!
+
+Fonksiyonu tüm multisig'lerde çağırıp geçerli imzaların sayısını sayarak yapılandırmada belirlenen eşiği karşılayıp karşılamadığını görürüz. Varlıkların kilidinin açılıp açılamayacağını belirlemek için true veya false döndürmelidir.
+
+<TestAction
+id=“sway-main”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/src/main.sw”
+  comment=“main”
+  commentType=“//”
+  lang=“sway”
+/>

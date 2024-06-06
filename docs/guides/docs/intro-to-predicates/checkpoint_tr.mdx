@@ -1,0 +1,56 @@
+---
+başlık: Kontrol Noktası
+Kategori: Yüklemlere Giriş
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Kontrol Noktası
+
+Adımları doğru bir şekilde izlediyseniz, `main.sw` yükleminiz aşağıdaki kod gibi görünmelidir:
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/src/main.sw”
+  comment=“all”
+  commentType=“//”
+  lang=“sway”
+/>
+
+## Yüklemi oluşturmak
+
+Sözleşmenizi biçimlendirmek için şu komutu çalıştırın:
+
+<TestAction
+id=“format-predicate”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/multisig-predicate/predicate'
+}}
+/>
+
+```sh
+forc fmt
+```
+
+Yüklem kökünü almak için yüklem klasörüne gidin ve çalıştırın:
+
+<TestAction
+id=“build-predicate”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/multisig-predicate/predicate'
+}}
+/>
+
+```sh
+forc yapı
+```
+
+Yüklem kökünüz tam olarak şöyle olmalıdır:
+
+```sh
+0x9cdce04cdb323e5982bbd0c07f667c6ea2b97781a8ce6f3e2d96c0e1b5acde73
+```
+
+İşte bu kadar! İlk **durumsuz** merkezi olmayan uygulamanızı oluşturdunuz ve bizim onu dağıtmamız bile gerekmedi!

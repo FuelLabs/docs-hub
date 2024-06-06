@@ -1,0 +1,381 @@
+---
+başlık: Ön Uç Oluşturma
+kategori̇ Sayaç Dapp
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Sözleşmenizle Etkileşim Kurmak için Bir Ön Uç Oluşturma
+
+Sayaç sözleşmesi için bir ön uç uygulaması oluşturmak için aşağıdakileri yapacağız:
+
+1. [Yakıt Tarayıcı Cüzdanını yükleyin **](#install-the-fuel-browser-wallet)
+2. [**Bir React projesini başlatın.**](#initialize-a-react-project)
+3. [**fuels` SDK bağımlılığını yükleyin.**](#install-the-fuels-sdk-dependency)
+4. [**Sözleşme türleri oluşturun.**](#generate-contract-types)
+5. [**Ön uç kodumuzu yazın.**](#uygulamayı değiştir)
+6. [**Projemizi çalıştırın.**](#projenizi-çalıştırın)
+
+## Fuel Browser Cüzdanını Yükleyin
+
+{/*install_wallet:example:start*/}
+Ön uç uygulamamız kullanıcıların bir cüzdanla bağlanmasına izin verecektir, bu nedenle bir tarayıcı cüzdanının yüklü olması gerekir.
+
+Sonraki adımlara geçmeden önce [Fuel Wallet](https://chromewebstore.google.com/detail/fuel-wallet/dldjpboieedgcmpkchcjcbijingjcgok) uzantısını yükleyin.
+
+Cüzdanınızı kurduktan sonra, bazı testnet tokenleri almak için cüzdandaki “Faucet” düğmesine tıklayın.
+{/*install_wallet:example:end*/}
+
+## Bir React projesini başlatın
+
+Projemizin sözleşmesini ön uç kodundan ayırmak için, ön uç projemizi başlatalım: terminalinizin sözleşmenizin `/home/user/path/to/counter-contract` klasöründe açık olduğunu varsayarak bir dizin geri gidelim.
+
+```sh
+cd ..
+```
+
+Şimdi, [`Create React App`](https://create-react-app.dev/) kullanarak TypeScript ile bir React projesi başlatın.
+
+<TestAction
+id=“create-react-app”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project'
+}}
+/>
+
+```sh
+npx create-react-app frontend --template typescript
+```
+
+Çıktı şuna benzer olmalıdır:
+
+```sh
+Başarılar! Fuel/fuel-project/frontend adresinde ön uç oluşturuldu
+```
+
+Artık `fuel-project` klasörünüzün içinde iki klasörünüz olmalıdır: `counter-contract` ve `frontend`.
+
+<Box.Centered>
+![proje klasör yapısı](/images/quickstart-folder-structure.png)
+</Box.Centered>
+
+## `fuels` SDK bağımlılığını yükleyin
+
+Yakıtlar` paketi, Sway programlarınız ve Yakıt ağı ile etkileşim kurmak için ihtiyacınız olan tüm ana araçları içerir.
+@fuel-wallet` paketleri kullanıcı cüzdanları ile etkileşim için ihtiyacınız olan her şeyi içerir.
+
+### Yükleme
+
+Çalıştırarak `frontend` klasörüne taşıyın:
+
+```sh
+cd frontend
+```
+
+> `fuels` Node sürümü {props.nodeVersion} gerektirir.
+
+Aşağıdaki paketleri `frontend` klasörünüze yükleyin:
+
+<TestAction
+id=“install-deps”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/frontend'
+}}
+/>
+
+```sh
+npm install fuels @fuels/react @fuels/connectors @tanstack/react-query
+```
+
+## Sözleşme türleri oluşturun
+
+fuels init` komutu, SDK tarafından sözleşme türleri oluşturmak için kullanılan bir `fuels.config.ts` dosyası oluşturur.
+Sözleşme klasörünüzün nerede olduğunu tanımlamak için `contracts` bayrağını ve oluşturulan dosyaların nerede oluşturulmasını istediğinizi tanımlamak için `output` bayrağını kullanın.
+
+Yapılandırma dosyasını oluşturmak için ön uç klasörünüzde aşağıdaki komutu çalıştırın:
+
+<TestAction
+id=“fuels_config”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/frontend'
+}}
+/>
+
+```sh
+npx fuels init --contracts ../counter-contract/ --output ./src/sway-api
+```
+
+Artık bir `fuels.config.ts` dosyanız olduğuna göre, sözleşmenizi yeniden oluşturmak ve türleri oluşturmak için `fuels build` komutunu kullanabilirsiniz.
+Bu komutu çalıştırmak, sözleşmenizden gelen ABI JSON çıktısını yorumlayacak ve doğru TypeScript tanımlarını oluşturacaktır.
+Eğer `fuel-project/counter-contract/out` klasörünü görürseniz, ABI JSON'u orada görebilirsiniz.
+
+fuel-project/frontend` dizini içinde çalıştırın:
+
+<TestAction
+id=“typegen”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/frontend'
+}}
+/>
+
+```sh
+npx yakıt yapısı
+```
+
+Başarılı bir işlem aşağıdaki gibi çıktı vermelidir:
+
+```sh
+Bina...
+Kaynak 'forc' ikili dosyasını kullanarak Sway programları oluşturma
+Türler oluşturuluyor...
+🎉 Derleme başarıyla tamamlandı!
+```
+
+Şimdi yeni bir `fuel-project/frontend/src/sway-api` klasörü bulabilmelisiniz.
+
+## Uygulamayı Değiştirin
+
+Frontend/src` klasörünün içine sözleşmemizle etkileşime giren kodu ekleyelim.
+
+Çünkü `@fuels/react` kullanacağız, öncelikle uygulamamızı `FuelProvider` bileşeniyle sarmalamamız gerekiyor.
+
+Aşağıdaki importları `frontend/src/index.tsx` dosyanızın en üstüne ekleyin ve bir sorgu istemcisi kurun:
+
+<TestAction
+id=“provider-import”
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/index.tsx',
+  atLine: 6,
+}}
+/>
+
+<CodeImport
+  file=“../../examples/counter-dapp/frontend/src/index.tsx”
+  lang=“tsx”
+  lineStart=“6”
+  lineEnd=“13”
+/>
+
+Ardından, `frontend/src/index.tsx` dosyanızı `App` bileşenini `FuelProvider` ve `QueryClientProvider` bileşenleriyle saracak şekilde değiştirin.
+
+<TestAction
+id=“fuel-wallet-provider”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/index.tsx',
+  atLine: 19,
+  removeLines: [19],
+}}
+/>
+
+<CodeImport
+  file=“../../examples/counter-dapp/frontend/src/index.tsx”
+  lang=“tsx”
+  lineStart=“19”
+  lineEnd=“27”
+/>
+
+Ardından, `fuel-project/frontend/src/App.tsx` dosyasını şu şekilde değiştirin:
+
+<TestAction
+id=“app-code”
+action={{
+  isim: 'writeToFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/App.tsx'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/counter-dapp/frontend/src/App.tsx”
+  lang=“tsx”
+/>
+
+Son olarak, `App.tsx` dosyanızın üst kısmındaki `CONTRACT_ID` değişkeninin değerini yeni dağıttığınız sözleşmenin adresiyle değiştirin.
+
+<TestAction
+id=“app-contract-id”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/App.tsx',
+  atLine: 13,
+  removeLines: [13],
+  useSetData: ' “0x92073699bd78dac70756a9e0e8bca1c7121c7adc4b90570800f0916fe4ac33dd”;'
+}}
+/>
+
+## Projenizi çalıştırın
+
+Yakıt projesi/frontend` dizini içinde çalıştırın:
+
+<TestAction
+id=“start-app”
+action={{
+  isim: 'runCommand',
+  preCommand: “pnpm pm2 start ‘PORT=4000 BROWSER=none <COMMAND>’ --name ‘react-dapp’ --cwd ./guides-testing/fuel-project/frontend”
+}}
+/>
+
+```sh
+npm start
+```
+
+```sh
+Başarıyla derlendi!
+
+Artık tarayıcıda ön ucu görüntüleyebilirsiniz.
+
+  Yerel: http://localhost:3000
+  Ağınızda: http://192.168.4.48:3000
+
+Geliştirme derlemesinin optimize edilmediğini unutmayın.
+Bir üretim derlemesi oluşturmak için npm run build kullanın.
+```
+
+“Bağlan” düğmesine tıklayın ve cüzdanınızı bağlamak için yüklediğiniz cüzdanı seçin.
+
+Bağlandıktan sonra, cüzdanınızda hiç para yoksa, testnet fonlarını almak için bir bağlantı göreceksiniz.
+
+Fuel üzerinde testnet ETH'niz varsa, sayaç değerini ve artırma düğmesini görmelisiniz:
+
+<Kutu.Ortalanmış>
+![kullanıcı arayüzünün ekran görüntüsü](/images/quickstart-frontend.png)
+</Box.Centered>
+
+## Fuel üzerinde fullstack bir dapp inşa ettiniz! ⛽
+
+[İşte bu projenin deposu] (https://github.com/FuelLabs/docs-hub/tree/master/docs/guides/examples/counter-dapp).
+
+Herhangi bir sorunla karşılaşırsanız, kodunuzu bu depo ile karşılaştırmak ve farklılıkları gidermek iyi bir ilk adımdır.
+
+Bize [@fuel_network](https://twitter.com/fuel_network) tweet atarak Fuel üzerinde bir dapp oluşturduğunuzu bildirin, özel bir kurucu grubuna davet edilebilir, bir sonraki Fuel yemeğine davet edilebilir, projede alfa alabilirsiniz veya başka bir şey 👀.
+
+### Sözleşmenin Güncellenmesi
+
+Daha hızlı geliştirmek ve test etmek için, yerel bir düğüm başlatmak ve her değişiklikte sözleşmeniz için otomatik olarak yeniden dağıtmak ve türler oluşturmak için [`fuels dev` komutunu] (/docs/fuels-ts/fuels-cli) kullanmanızı öneririz.
+
+Sözleşmenizi test ağına yeniden dağıtmaya hazır olduğunuzda, ön uç ve sözleşmenizi tekrar senkronize etmek için atmanız gereken adımlar şunlardır:
+
+- Ön uç dizininizde bu komutu yeniden çalıştırın: `npx fuels build`.
+- Sözleşme dizininizde, sözleşmeyi yeniden dağıtın.
+- Ön uç dizininizde, `App.tsx` dosyanızdaki sözleşme kimliğini güncelleyin.
+
+## Yardıma mı ihtiyacınız var?
+
+Sorunuzu [Yakıt Forumu]'na (https://forum.fuel.network/) göndererek ekipten yardım alın.
+
+<TestAction
+id=“wait-after-start-app”
+action={{
+  isim: 'bekle',
+  zaman aşımı: 20000
+}}
+/>
+
+<TestAction
+id=“go-to-frontend”
+action={{
+  isim: 'goToUrl',
+  url: “http://localhost:4000”
+}}
+/>
+
+<TestAction
+id=“click-connect-button”
+action={{
+  isim: 'clickByRole',
+  rol: “düğme”,
+  elementName: “Connect”
+}}
+/>
+
+<TestAction
+id=“click-fuel-wallet”
+action={{
+  isim: 'clickByLabel',
+  etiket: 'Yakıt Cüzdanına Bağlan'
+}}
+/>
+
+<TestAction
+id=“approve-connect”
+action={{
+  ad: 'walletApproveConnect',
+}}
+/>
+
+<TestAction
+id=“wait-after-connect”
+action={{
+  isim: 'bekle',
+  zaman aşımı: 5000
+}}
+/>
+
+<TestAction
+id=“get-initial-count”
+action={{
+  isim: 'getByLocator-save',
+  konumlandırıcı: “h3 ~ div”,
+}}
+/>
+
+{/*
+<TestAction
+id=“click-increment-button”
+action={{
+  isim: 'clickByRole',
+  rol: “düğme”,
+  elementName: “Artış”
+}}
+/>
+<TestAction
+id=“approve-txn”
+action={{
+  isim: 'walletApprove',
+}}
+/>
+
+<TestAction
+id=“wait-after-approve”
+action={{
+  isim: 'bekle',
+  zaman aşımı: 15000
+}}
+/>
+
+<TestAction
+id=“reload-after-approve”
+action={{
+  isim: 'yeniden yükle',
+}}
+/>
+
+<TestAction
+id=“wait-after-reload”
+action={{
+  isim: 'bekle',
+  zaman aşımı: 7000
+}}
+/>
+
+<TestAction
+id=“get-final-count”
+action={{
+  isim: 'getByLocator-save',
+  konumlandırıcı: “h3 ~ div”,
+}}
+/>
+
+<TestAction
+id=“check-count”
+action={{
+  ad: 'checkIfIsIncremented',
+  initialIndex: 0,
+  finalIndex: 1
+}}
+/> */}

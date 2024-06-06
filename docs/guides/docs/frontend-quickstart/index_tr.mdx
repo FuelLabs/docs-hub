@@ -1,0 +1,123 @@
+---
+başlık: Ön Uç Hızlı Başlangıç
+kategori̇ Ön Uç Hızlı Başlangıç
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Frontend/Fullstack Hızlı Başlangıç
+
+Fuel ile bir frontend veya fullstack geliştiricisi olarak başlamak kadar basit:
+
+1. [Installing](#installation) `fuelup`
+2. [Bir sayaç dapp'ı oluşturma](#generating-a-counter-dapp)
+3. [Projeyi yerel olarak çalıştırma](#running-the-project-locally)
+
+## Kurulum
+
+<TextImport
+  file=“../installation/index.mdx”
+  comment=“install_fuelup”
+  commentType=“{/*”
+/>
+
+<CodeImport
+  file=“../installation/index.mdx”
+  comment=“install_fuelup_command”
+  commentType=“{/*”
+  lang=“sh”
+  trim=“true”
+/>
+
+<TextImport
+  file=“../counter-dapp/building-a-smart-contract.mdx”
+  comment=“install_help”
+  commentType=“{/*”
+/>
+
+<TextImport
+  file=“../installation/index.mdx”
+  comment=“install_VSCode_extensions”
+  commentType=“{/*”
+/>
+
+### Zaten `fuelup` yüklü mü?
+
+<TextImport
+  file=“../counter-dapp/building-a-smart-contract.mdx”
+  comment=“already_installed”
+  commentType=“{/*”
+/>
+
+## Bir sayaç dapp'ı oluşturma
+
+Yakıt oluştur CLI ile saniyeler içinde tam yığın bir sayaç dapp'ı oluşturabilirsiniz:
+
+<CodeTabs>
+
+```sh
+pnpm yakıt oluştur
+```
+
+```sh
+npm create yakıtlar
+```
+
+</CodeTabs>
+
+## Projeyi yerel olarak çalıştırma
+
+Proje dizinine geçin. Projeye `my-fuel-project` adını verdiğinizi varsayarsak, çalıştırabilirsiniz:
+
+``sh
+cd my-fuel-project
+```
+
+Ardından, yerel bir geliştirme düğümü başlatmak için aşağıdaki komutu çalıştırın:
+
+<CodeTabs>
+
+```sh
+pnpm fuels:dev
+```
+
+```sh
+npm run fuels:dev
+```
+
+</CodeTabs>
+
+Node için yerel uç nokta `http://localhost:4000/v1/graphql` olacaktır.
+
+Ardından, proje dizininde yeni bir terminal açın ve ön ucu başlatmak için aşağıdaki komutu çalıştırın:
+
+<CodeTabs>
+
+```sh
+pnpm dev
+```
+
+```sh
+npm run dev
+```
+
+</CodeTabs>
+
+Ön uç [`http://localhost:3000`](http://localhost:3000) adresinde çalışacaktır.
+
+Yerel düğüm çalışırken, `sway-contract` klasörü içindeki Sway sözleşmesinde yaptığınız herhangi bir değişiklik otomatik olarak birkaç güncellemeyi tetikleyecektir:
+
+1. Sözleşme `forc build` komutu kullanılarak yeniden oluşturulur.
+2. Sözleşme, `forc deploy` komutu kullanılarak yerel düğüme yeniden dağıtılacaktır.
+3. Sözleşme için yeni TypeScript türleri ve yeni sözleşme kimliğini içeren `contract-ids.json` adlı bir dosya `src/sway-api` klasöründe oluşturulacaktır.
+
+Bu, geliştirme yaparken sözleşme kimliğini, ABI'yi veya TypeScript türlerini güncelleme konusunda endişelenmenize gerek olmadığı anlamına gelir.
+
+## Sonraki Adımlar
+
+Daha fazlasını öğrenmeye hazır mısınız? Aşağıdaki kaynaklara göz atın:
+
+- Tam yığın [counter contract dapp] (/guides/counter-dapp) oluşturmaya ve dağıtmaya yönelik adım adım talimatları öğrenin
+- fuels CLI](/docs/fuels-ts/fuels-cli) hakkında daha fazla bilgi edinin
+- Cüzdan bağlayıcıları] hakkında bilgi edinin(/docs/wallet/dev/connectors/)
