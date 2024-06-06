@@ -12,6 +12,7 @@
     "**/sway": true,
     "**/sway-libs": true,
     "**/sway-standards": true,
+    "**/sway-by-example-lib": true,
     "**/builds": true,
     "**/fuel-graphql-docs": true,
     "**/fuel-indexer": true,
