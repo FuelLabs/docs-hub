@@ -97,6 +97,7 @@ const excludeDirs = [
   "docs/nightly/fuel-specs/src/SUMMARY.md",
   "docs/nightly/sway-libs/docs/book/src/SUMMARY.md",
   "docs/nightly/sway-standards/docs/src/SUMMARY.md",
+  "docs/nightly/sway-by-example-lib/docs/src/SUMMARY.md",
 ];
 
 export default makeSource({

@@ -74,14 +74,14 @@ export async function getDocs(key, order) {
       ];
       break;
     case 'nightly-sway-by-example-lib':
-        paths = [
-          // SWAY STANDARDS DOCS
-          './sway-by-example-lib/docs/src/*.md',
-          './sway-by-example-lib/docs/src/**/*.md',
-          // IGNORE ALL SUMMARY PAGES
-          '!**/SUMMARY.md',
-        ];
-        break;
+      paths = [
+        // SWAY STANDARDS DOCS
+        './nightly/sway-by-example-lib/docs/src/*.md',
+        './nightly/sway-by-example-lib/docs/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
     case 'forc':
       paths = [
         // FORC DOCS
