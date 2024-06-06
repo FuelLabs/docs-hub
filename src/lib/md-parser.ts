@@ -26,6 +26,11 @@ export class DocParser {
       const value = pathsConfig[key];
       slug = slug.replaceAll(key, value as string);
     }
+
+    if(slug.endsWith('/src')){
+      slug = slug.replace('/src', '');
+    }
+
     return slug.toLowerCase();
   }
 }
