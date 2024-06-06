@@ -15,7 +15,11 @@ const targetDirs = [
   './docs/nightly/fuels-wallet',
   './docs/fuel-graphql-docs',
   './docs/nightly/fuel-graphql-docs',
-  //   './docs/fuel-core',
+  './docs/fuel-core',
+  './docs/sway-libs',
+  './docs/nightly/sway-libs',
+  './docs/sway-standards',
+  './docs/nightly/sway-standards',
 ];
 
 // Exclusions for each type of directory
@@ -29,6 +33,12 @@ const exclusions = {
     'sway/master/book',
     'sway/test/src/sdk-harness/test_projects/run_external_proxy',
     'sway/test/src/sdk-harness/test_projects/run_external_target',
+  ],
+  sway_libs: ['sway-libs/docs', 'sway-libs/examples', 'sway-libs/Cargo.toml'],
+  sway_standards: [
+    'sway-standards/docs',
+    'sway-standards/examples',
+    'sway-standards/Cargo.toml',
   ],
   fuels_rs: [
     'fuels-rs/Cargo.toml',
@@ -44,7 +54,7 @@ const exclusions = {
     'fuels-ts/demo-wallet-sdk-react',
   ],
   fuels_wallet: ['fuels-wallet/package.json', 'fuels-wallet/packages'],
-  //   fuel_core: ['fuel-core/deployment/scripts/chainspec', 'fuel-core/Cargo.toml'],
+  fuel_core: ['fuel-core/deployment', 'fuel-core/bin', 'fuel-core/Cargo.toml'],
   fuel_graphql_docs: [
     'fuel-graphql-docs/docs',
     'fuel-graphql-docs/examples',
