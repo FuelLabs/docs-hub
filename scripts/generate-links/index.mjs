@@ -97,6 +97,9 @@ function getSidebarName(key) {
     case 'sway-libs':
       newKey = 'Sway Libraries';
       break;
+    case 'sway-standards':
+      newKey = 'Sway Standards';
+      break;
     default:
   }
 
@@ -108,6 +111,7 @@ function handleAllOrders(allOrders, folderPath, filename) {
     'intro',
     'sway',
     'sway-libs',
+    'sway-standards',
     'fuels-ts',
     'fuels-rs',
     'wallet',

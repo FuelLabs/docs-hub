@@ -183,7 +183,10 @@ function sortLinks(lcOrder, links, config, isNightly) {
         })
     : links;
 
-  return sortedLinks;
+  return sortedLinks.map((link) => {
+    link.label = handleStandards(link.label);
+    return link;
+  });
 }
 
 function getCategory(category) {
@@ -360,4 +363,13 @@ function getSubmenuSubpath(splitSlug) {
   subpath = subpath.replace('nightly/guides', 'guides/nightly');
 
   return subpath;
+}
+
+function handleStandards(input) {
+  const regex = /^src (\d{1,3}) (.+)$/i;
+  const match = input.match(regex);
+  if (match) {
+    return `SRC-${match[1]}: ${match[2]}`;
+  }
+  return input;
 }

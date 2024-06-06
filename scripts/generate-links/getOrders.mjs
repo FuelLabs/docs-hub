@@ -13,6 +13,10 @@ const CONFIG = {
     type: 'mdbook',
     path: './sway-libs/docs/book/src/SUMMARY.md',
   },
+  'sway-standards': {
+    type: 'mdbook',
+    path: './sway-standards/docs/src/SUMMARY.md',
+  },
   'fuels-rs': {
     type: 'mdbook',
     path: './fuels-rs/docs/src/SUMMARY.md',
