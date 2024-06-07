@@ -63,12 +63,10 @@ function getForcVersion(docsDir: string) {
 }
 
 function getSwayLibsVersion(docsDir: string) {
-  // TODO: uncomment this once sway-libs 0.22.0 is released
-  // const filedir = join(docsDir, 'sway-libs/Cargo.toml');
-  // const file = fs.readFileSync(filedir, 'utf-8');
-  // const tomfile = toml.parse(file);
-  // const version = tomfile.package.version;
-  const version = '0.21.0';
+  const filedir = join(docsDir, 'sway-libs/Cargo.toml');
+  const file = fs.readFileSync(filedir, 'utf-8');
+  const tomfile = toml.parse(file);
+  const version = tomfile.package.version;
   return {
     name: 'sway-libs',
     category: 'Sway Libraries',
