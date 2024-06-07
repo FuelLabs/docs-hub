@@ -45,6 +45,7 @@ jobs:
           - "counter-dapp" 
           - "intro to sway"
           - "intro to predicates"
+          - "quickstart"
 
     steps:
     # SETUP
