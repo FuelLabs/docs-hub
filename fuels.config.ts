@@ -9,8 +9,7 @@ export default createConfig({
     'docs/guides/examples/fuelnaut/vault',
   ],
   output: './src/fuelnaut-api',
-  useBuiltinForc: false,
-  chainConfig: './src/config/chainConfig.json',
+  snapshotDir: './src/config/chain-snapshot',
 });
 
 /**

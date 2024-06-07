@@ -24,10 +24,10 @@ export async function getNewInstance(
     configurableConstants,
   );
   const instanceId: ContractIdInput = {
-    value: newInstance.id.toB256(),
+    bits: newInstance.id.toB256(),
   };
   const factory = getLevelContractFactory(level.key);
-  const levelContract = factory.connect(instanceId.value, wallet);
+  const levelContract = factory.connect(instanceId.bits, wallet);
 
   // without this, the newly deployed contract instance may not be found
   await timeout(2000);
@@ -69,7 +69,6 @@ export async function getNewInstance(
   await contract.functions
       .create_instance(instanceId, level.index)
       .addContracts([levelContract])
-      .txParams({ gasPrice: 1, gasLimit: 1_000_000 })
       .call();
   }
   thisWindow.instance = newInstance;

@@ -4,9 +4,9 @@
 /* eslint-disable */
 
 /*
-  Fuels version: 0.79.0
-  Forc version: 0.49.3
-  Fuel-Core version: 0.22.1
+  Fuels version: 0.89.1
+  Forc version: 0.60.0
+  Fuel-Core version: 0.27.0
 */
 
 import { Interface, Contract, ContractFactory } from "fuels";
@@ -14,6 +14,7 @@ import type { Provider, Account, AbstractAddress, BytesLike, DeployContractOptio
 import type { FuelnautAbi, FuelnautAbiInterface } from "../FuelnautAbi";
 
 const _abi = {
+  "encoding": "1",
   "types": [
     {
       "typeId": 0,
@@ -189,7 +190,7 @@ const _abi = {
       "type": "struct Address",
       "components": [
         {
-          "name": "value",
+          "name": "bits",
           "type": 3,
           "typeArguments": null
         }
@@ -201,7 +202,7 @@ const _abi = {
       "type": "struct ContractId",
       "components": [
         {
-          "name": "value",
+          "name": "bits",
           "type": 3,
           "typeArguments": null
         }
@@ -462,12 +463,6 @@ const _abi = {
       },
       "attributes": [
         {
-          "name": "storage",
-          "arguments": [
-            "read"
-          ]
-        },
-        {
           "name": "doc-comment",
           "arguments": [
             " returns a vector of bool options representing the statuses of each level"
@@ -489,6 +484,12 @@ const _abi = {
           "name": "doc-comment",
           "arguments": [
             " if the option is Some(false), the level has been started but not completed"
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read"
           ]
         }
       ]
@@ -736,7 +737,7 @@ const _abi = {
   ],
   "loggedTypes": [
     {
-      "logId": 0,
+      "logId": "5679770223941778533",
       "loggedType": {
         "name": "",
         "type": 6,
@@ -744,23 +745,7 @@ const _abi = {
       }
     },
     {
-      "logId": 1,
-      "loggedType": {
-        "name": "",
-        "type": 6,
-        "typeArguments": []
-      }
-    },
-    {
-      "logId": 2,
-      "loggedType": {
-        "name": "",
-        "type": 6,
-        "typeArguments": []
-      }
-    },
-    {
-      "logId": 3,
+      "logId": "2161305517876418151",
       "loggedType": {
         "name": "",
         "type": 8,
@@ -768,7 +753,7 @@ const _abi = {
       }
     },
     {
-      "logId": 4,
+      "logId": "16280289466020123285",
       "loggedType": {
         "name": "",
         "type": 15,
@@ -776,7 +761,7 @@ const _abi = {
       }
     },
     {
-      "logId": 5,
+      "logId": "4571204900286667806",
       "loggedType": {
         "name": "",
         "type": 5,
@@ -784,15 +769,7 @@ const _abi = {
       }
     },
     {
-      "logId": 6,
-      "loggedType": {
-        "name": "",
-        "type": 5,
-        "typeArguments": []
-      }
-    },
-    {
-      "logId": 7,
+      "logId": "12970362301975156672",
       "loggedType": {
         "name": "",
         "type": 16,
@@ -800,15 +777,7 @@ const _abi = {
       }
     },
     {
-      "logId": 8,
-      "loggedType": {
-        "name": "",
-        "type": 3,
-        "typeArguments": null
-      }
-    },
-    {
-      "logId": 9,
+      "logId": "8961848586872524460",
       "loggedType": {
         "name": "",
         "type": 3,
@@ -831,33 +800,31 @@ const _storageSlots: StorageSlot[] = [
   }
 ];
 
-export class FuelnautAbi__factory {
-  static readonly abi = _abi;
+export const FuelnautAbi__factory = {
+  abi: _abi,
 
-  static readonly storageSlots = _storageSlots;
+  storageSlots: _storageSlots,
 
-  static createInterface(): FuelnautAbiInterface {
+  createInterface(): FuelnautAbiInterface {
     return new Interface(_abi) as unknown as FuelnautAbiInterface
-  }
+  },
 
-  static connect(
+  connect(
     id: string | AbstractAddress,
     accountOrProvider: Account | Provider
   ): FuelnautAbi {
     return new Contract(id, _abi, accountOrProvider) as unknown as FuelnautAbi
-  }
+  },
 
-  static async deployContract(
+  async deployContract(
     bytecode: BytesLike,
     wallet: Account,
     options: DeployContractOptions = {}
   ): Promise<FuelnautAbi> {
     const factory = new ContractFactory(bytecode, _abi, wallet);
 
-    const { storageSlots } = FuelnautAbi__factory;
-
     const contract = await factory.deployContract({
-      storageSlots,
+      storageSlots: _storageSlots,
       ...options,
     });
 

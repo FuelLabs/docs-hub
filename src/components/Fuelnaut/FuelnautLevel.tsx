@@ -1,6 +1,6 @@
 import { Box, Button, Spinner, toast } from '@fuel-ui/react';
 import { useIsConnected, useWallet } from '@fuels/react';
-import { BaseAssetId, Wallet } from 'fuels';
+import { Wallet } from 'fuels';
 import type { BytesLike, JsonAbi } from 'fuels';
 import { useEffect, useMemo, useState } from 'react';
 import { FUELNAUT_CONTRACT_ID } from '~/src/config/fuelnautLevels';
@@ -49,7 +49,7 @@ export function FuelnautLevel({
     const thisWindow = window as any;
     if (wallet) {
       thisWindow.player = wallet;
-      thisWindow.baseAssetId = BaseAssetId;
+      thisWindow.baseAssetId = wallet.provider.getBaseAssetId();
       thisWindow.getBalance = (address: string, assetId: string) => {
         const thisWallet = Wallet.fromAddress(address, wallet?.provider);
         return thisWallet.getBalance(assetId);
@@ -68,7 +68,7 @@ export function FuelnautLevel({
         return wallet?.provider.getBlockNumber();
       };
       thisWindow.getNetwork = () => {
-        return wallet?.provider.getNetwork();
+        return wallet?.provider.url;
       };
       thisWindow.help = () => {
         console.table({
@@ -93,13 +93,12 @@ export function FuelnautLevel({
     const fetchInstance = async () => {
       if (contract && wallet) {
         try {
-          const address: AddressInput = { value: wallet?.address.toB256() };
+          const address: AddressInput = { bits: wallet?.address.toB256() };
           const response = await contract.functions
             .get_instance_contract(address, level.index)
-            .txParams({ gasPrice: 1, gasLimit: 800_000 })
             .get();
           if (response.value) {
-            const thisInstanceId = response.value[0].value;
+            const thisInstanceId = response.value[0].bits;
             const thisFactory = getLevelContractFactory(level.key);
             const thisInstance = thisFactory.connect(thisInstanceId, wallet);
             setInstance(thisInstance);
@@ -144,10 +143,9 @@ export function FuelnautLevel({
     try {
       if (contract && wallet) {
         const address = wallet?.address.toB256();
-        const addressInput: AddressInput = { value: address! };
+        const addressInput: AddressInput = { bits: address! };
         await contract.functions
           .complete_instance(addressInput, level.index)
-          .txParams({ gasPrice: 1, gasLimit: 800_000 })
           .call();
         setIsCompleted(true);
         toast.success('Challenge completed!');

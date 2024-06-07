@@ -10,7 +10,6 @@ export async function setup(contract: FuelnautAbi, wallet: Account) {
   try {
     await contract.functions
       .my_constructor()
-      .txParams({ gasPrice: 1, gasLimit: 800_000 })
       .call();
 
     for (const key of Object.keys(LEVELS_CONFIG)) {
@@ -33,12 +32,8 @@ async function setupLevel(
   const levelContract = factory.connect(level.contractId, wallet);
 
   const response = await contract.functions
-    .get_bytecode_root({ value: level.contractId })
+    .get_bytecode_root({ bits: level.contractId })
     .addContracts([levelContract])
-    .txParams({
-      gasPrice: 1,
-      gasLimit: 800_000,
-    })
     .get();
 
   const contractRoot = response.value;
@@ -46,10 +41,6 @@ async function setupLevel(
 
   const { value } = await contract.functions
     .register_level(contractRoot)
-    .txParams({
-      gasPrice: 1,
-      gasLimit: 800_000,
-    })
     .call();
   const formattedValue = new BN(value).toNumber();
   console.log('INDEX VALUE:', formattedValue);

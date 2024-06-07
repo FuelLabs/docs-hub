@@ -15,12 +15,10 @@ export async function deployNewInstance(
     Buffer.from(bytecodeString, 'base64'),
   );
   const factory = new ContractFactory(bytecode, abiJSON, wallet);
-  const { minGasPrice: gasPrice } = wallet.provider.getGasConfig();
   const salt = randomBytes(32);
 
   const contract = await factory.deployContract({
     configurableConstants,
-    gasPrice,
     salt,
   });
   return contract;

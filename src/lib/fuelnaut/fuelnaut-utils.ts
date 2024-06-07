@@ -8,11 +8,7 @@ export const getLevelStatuses = async (
   try {
     const address = new Address(account);
     const { value } = await contract.functions
-      .get_all_levels_status({ value: address.toB256() })
-      .txParams({
-        gasPrice: 1,
-        gasLimit: 100_000,
-      })
+      .get_all_levels_status({ bits: address.toB256() })
       .get();
     return value;
   } catch (error) {

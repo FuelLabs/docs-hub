@@ -4,9 +4,9 @@
 /* eslint-disable */
 
 /*
-  Fuels version: 0.79.0
-  Forc version: 0.49.3
-  Fuel-Core version: 0.22.1
+  Fuels version: 0.89.1
+  Forc version: 0.60.0
+  Fuel-Core version: 0.27.0
 */
 
 import { Interface, Contract, ContractFactory } from "fuels";
@@ -14,6 +14,7 @@ import type { Provider, Account, AbstractAddress, BytesLike, DeployContractOptio
 import type { CoinFlipAbi, CoinFlipAbiInterface } from "../CoinFlipAbi";
 
 const _abi = {
+  "encoding": "1",
   "types": [
     {
       "typeId": 0,
@@ -96,7 +97,7 @@ const _abi = {
   ],
   "loggedTypes": [
     {
-      "logId": 0,
+      "logId": "5679770223941778533",
       "loggedType": {
         "name": "",
         "type": 2,
@@ -104,31 +105,7 @@ const _abi = {
       }
     },
     {
-      "logId": 1,
-      "loggedType": {
-        "name": "",
-        "type": 2,
-        "typeArguments": []
-      }
-    },
-    {
-      "logId": 2,
-      "loggedType": {
-        "name": "",
-        "type": 3,
-        "typeArguments": null
-      }
-    },
-    {
-      "logId": 3,
-      "loggedType": {
-        "name": "",
-        "type": 3,
-        "typeArguments": null
-      }
-    },
-    {
-      "logId": 4,
+      "logId": "15520703124961489725",
       "loggedType": {
         "name": "",
         "type": 3,
@@ -151,33 +128,31 @@ const _storageSlots: StorageSlot[] = [
   }
 ];
 
-export class CoinFlipAbi__factory {
-  static readonly abi = _abi;
+export const CoinFlipAbi__factory = {
+  abi: _abi,
 
-  static readonly storageSlots = _storageSlots;
+  storageSlots: _storageSlots,
 
-  static createInterface(): CoinFlipAbiInterface {
+  createInterface(): CoinFlipAbiInterface {
     return new Interface(_abi) as unknown as CoinFlipAbiInterface
-  }
+  },
 
-  static connect(
+  connect(
     id: string | AbstractAddress,
     accountOrProvider: Account | Provider
   ): CoinFlipAbi {
     return new Contract(id, _abi, accountOrProvider) as unknown as CoinFlipAbi
-  }
+  },
 
-  static async deployContract(
+  async deployContract(
     bytecode: BytesLike,
     wallet: Account,
     options: DeployContractOptions = {}
   ): Promise<CoinFlipAbi> {
     const factory = new ContractFactory(bytecode, _abi, wallet);
 
-    const { storageSlots } = CoinFlipAbi__factory;
-
     const contract = await factory.deployContract({
-      storageSlots,
+      storageSlots: _storageSlots,
       ...options,
     });
 
