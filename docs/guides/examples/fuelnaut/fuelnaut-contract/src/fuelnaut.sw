@@ -1,6 +1,11 @@
 library;
 
-use src5::State;
+pub enum State {
+    Uninitialized: (),
+    Initialized: Identity,
+    Revoked: (),
+}
+
 abi Fuelnaut
  {
     fn get_bytecode_root(id: ContractId) -> b256;

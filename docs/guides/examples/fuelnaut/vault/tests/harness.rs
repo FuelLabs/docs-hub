@@ -1,6 +1,6 @@
 use fuels::{
     prelude::*,
-    types::{Bits256, ContractId},
+    types::ContractId,
 };
 
 // Load abi from json
@@ -9,9 +9,8 @@ abigen!(Contract(
     abi = "out/debug/vault-abi.json"
 ));
 
-fn get_password() -> Bits256 {
-    let hex_str = "0101010101010101010101010101010101010101010101010101010101010101";
-    Bits256::from_hex_str(hex_str).unwrap()
+fn get_password() -> u64 {
+    5832034
 }
 
 async fn get_contract_instance() -> (MyContract<WalletUnlocked>, ContractId) {
@@ -31,7 +30,9 @@ async fn get_contract_instance() -> (MyContract<WalletUnlocked>, ContractId) {
 
     let password = get_password();
 
-    let configurables = MyContractConfigurables::new().with_PASSWORD(password);
+    let configurables = MyContractConfigurables::default()
+        .with_PASSWORD(password)
+        .unwrap();
 
     let id = Contract::load_from(
         "./out/debug/vault.bin",
@@ -48,7 +49,7 @@ async fn get_contract_instance() -> (MyContract<WalletUnlocked>, ContractId) {
 }
 
 #[tokio::test]
-async fn can_get_contract_id() {
+async fn can_pass_test() {
     let (instance, _id) = get_contract_instance().await;
 
     let password = get_password();

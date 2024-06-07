@@ -1,33 +1,19 @@
 [[package]]
-name = "bytecode"
-source = "git+https://github.com/FuelLabs/sway-libs?tag=v0.19.0#dcbbec000a9051e71c0c21f4b720eebbb55c199a"
-dependencies = ["std"]
-
-[[package]]
 name = "coin-flip"
 source = "member"
 dependencies = ["std"]
 
 [[package]]
 name = "core"
-source = "path+from-root-566CA1D5F8BEAFBF"
+source = "path+from-root-E19CE48B3E858B72"
 
 [[package]]
 name = "fuelnaut"
 source = "member"
 dependencies = [
-    "bytecode",
-    "ownership",
-    "src5",
+    "standards",
     "std",
-]
-
-[[package]]
-name = "ownership"
-source = "git+https://github.com/FuelLabs/sway-libs?tag=v0.18.0#8d196e9379463d4596ac582a20a84ed52ff58c69"
-dependencies = [
-    "src_5",
-    "std",
+    "sway_libs",
 ]
 
 [[package]]
@@ -36,19 +22,22 @@ source = "member"
 dependencies = ["std"]
 
 [[package]]
-name = "src5"
-source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.3.3#4198b4b07449ad16104cc8a0501f3013670fdcfd"
-dependencies = ["std"]
-
-[[package]]
-name = "src_5"
-source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.2.2#6989cf8224b0d8aabea62f3d3c648fc754948705"
+name = "standards"
+source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.5.0#348f7175df4c012b23c86cdb18aab79025ca1f18"
 dependencies = ["std"]
 
 [[package]]
 name = "std"
-source = "git+https://github.com/fuellabs/sway?tag=v0.49.3#0dc6570377ee9c4a6359ade597fa27351e02a728"
+source = "git+https://github.com/fuellabs/sway?tag=v0.60.0#2f0392ee35a1e4dd80bd8034962d5b4083dfb8b6"
 dependencies = ["core"]
+
+[[package]]
+name = "sway_libs"
+source = "git+https://github.com/FuelLabs/sway-libs?tag=v0.22.0#172adbbcc36e561a56c5820209445f86f0856bfc"
+dependencies = [
+    "standards",
+    "std",
+]
 
 [[package]]
 name = "vault"

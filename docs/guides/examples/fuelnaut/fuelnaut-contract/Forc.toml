@@ -5,6 +5,5 @@ license = "Apache-2.0"
 name = "fuelnaut"
 
 [dependencies]
-bytecode = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.19.0" }
-ownership = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.18.0" }
-src5 = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.3.3" }
+sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.22.0" }
+standards = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.5.0" }

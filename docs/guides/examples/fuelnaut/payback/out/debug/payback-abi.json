@@ -1,4 +1,5 @@
 {
+  "encoding": "1",
   "types": [
     {
       "typeId": 0,
@@ -47,14 +48,14 @@
       },
       "attributes": [
         {
+          "name": "payable",
+          "arguments": []
+        },
+        {
           "name": "storage",
           "arguments": [
             "read"
           ]
-        },
-        {
-          "name": "payable",
-          "arguments": []
         }
       ]
     },
@@ -82,15 +83,7 @@
   ],
   "loggedTypes": [
     {
-      "logId": 0,
-      "loggedType": {
-        "name": "",
-        "type": 2,
-        "typeArguments": null
-      }
-    },
-    {
-      "logId": 1,
+      "logId": "1515152261580153489",
       "loggedType": {
         "name": "",
         "type": 2,

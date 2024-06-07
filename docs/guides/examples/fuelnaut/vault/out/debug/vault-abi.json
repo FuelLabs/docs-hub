@@ -1,4 +1,5 @@
 {
+  "encoding": "1",
   "types": [
     {
       "typeId": 0,
@@ -80,7 +81,7 @@
   ],
   "loggedTypes": [
     {
-      "logId": 0,
+      "logId": "1515152261580153489",
       "loggedType": {
         "name": "",
         "type": 3,
@@ -88,15 +89,7 @@
       }
     },
     {
-      "logId": 1,
-      "loggedType": {
-        "name": "",
-        "type": 2,
-        "typeArguments": []
-      }
-    },
-    {
-      "logId": 2,
+      "logId": "5679770223941778533",
       "loggedType": {
         "name": "",
         "type": 2,
@@ -113,7 +106,7 @@
         "type": 3,
         "typeArguments": null
       },
-      "offset": 1220
+      "offset": 6120
     }
   ]
 }

@@ -1,4 +1,5 @@
 {
+  "encoding": "1",
   "types": [
     {
       "typeId": 0,
@@ -174,7 +175,7 @@
       "type": "struct Address",
       "components": [
         {
-          "name": "value",
+          "name": "bits",
           "type": 3,
           "typeArguments": null
         }
@@ -186,7 +187,7 @@
       "type": "struct ContractId",
       "components": [
         {
-          "name": "value",
+          "name": "bits",
           "type": 3,
           "typeArguments": null
         }
@@ -447,12 +448,6 @@
       },
       "attributes": [
         {
-          "name": "storage",
-          "arguments": [
-            "read"
-          ]
-        },
-        {
           "name": "doc-comment",
           "arguments": [
             " returns a vector of bool options representing the statuses of each level"
@@ -474,6 +469,12 @@
           "name": "doc-comment",
           "arguments": [
             " if the option is Some(false), the level has been started but not completed"
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read"
           ]
         }
       ]
@@ -721,7 +722,7 @@
   ],
   "loggedTypes": [
     {
-      "logId": 0,
+      "logId": "5679770223941778533",
       "loggedType": {
         "name": "",
         "type": 6,
@@ -729,23 +730,7 @@
       }
     },
     {
-      "logId": 1,
-      "loggedType": {
-        "name": "",
-        "type": 6,
-        "typeArguments": []
-      }
-    },
-    {
-      "logId": 2,
-      "loggedType": {
-        "name": "",
-        "type": 6,
-        "typeArguments": []
-      }
-    },
-    {
-      "logId": 3,
+      "logId": "2161305517876418151",
       "loggedType": {
         "name": "",
         "type": 8,
@@ -753,7 +738,7 @@
       }
     },
     {
-      "logId": 4,
+      "logId": "16280289466020123285",
       "loggedType": {
         "name": "",
         "type": 15,
@@ -761,7 +746,7 @@
       }
     },
     {
-      "logId": 5,
+      "logId": "4571204900286667806",
       "loggedType": {
         "name": "",
         "type": 5,
@@ -769,15 +754,7 @@
       }
     },
     {
-      "logId": 6,
-      "loggedType": {
-        "name": "",
-        "type": 5,
-        "typeArguments": []
-      }
-    },
-    {
-      "logId": 7,
+      "logId": "12970362301975156672",
       "loggedType": {
         "name": "",
         "type": 16,
@@ -785,15 +762,7 @@
       }
     },
     {
-      "logId": 8,
-      "loggedType": {
-        "name": "",
-        "type": 3,
-        "typeArguments": null
-      }
-    },
-    {
-      "logId": 9,
+      "logId": "8961848586872524460",
       "loggedType": {
         "name": "",
         "type": 3,

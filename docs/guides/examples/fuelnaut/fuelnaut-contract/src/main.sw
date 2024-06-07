@@ -3,16 +3,16 @@ contract;
 mod fuelnaut;
 
 use std::{
-    call_frames::contract_id,
     constants::ZERO_B256,
     external::bytecode_root,
     hash::Hash,
     storage::storage_vec::*,
 };
 use fuelnaut::*;
-use src5::{State};
-use ownership::*;
-use bytecode::*;
+use sway_libs::{
+    ownership::*,
+    bytecode::*,
+};
 
 storage {
     owner: State = State::Uninitialized,
