@@ -14,14 +14,8 @@ export default function VersionDropdown({
 }) {
   const [opened, setOpened] = useState(false);
   const [activeVersion, setActiveVersion] = useState<
-    typeof FUEL_TESTNET_UPPER_CASE | 'Nightly' | 'Beta-4'
-  >(
-    versionSet === 'default'
-      ? FUEL_TESTNET_UPPER_CASE
-      : versionSet === 'nightly'
-        ? 'Nightly'
-        : 'Beta-4'
-  );
+    typeof FUEL_TESTNET_UPPER_CASE | 'Nightly'
+  >(versionSet === 'default' ? FUEL_TESTNET_UPPER_CASE : 'Nightly');
   const router = useRouter();
   const setVersion = useSetVersion();
   const splitPath = router.asPath.split('/');
@@ -30,18 +24,11 @@ export default function VersionDropdown({
     !router.asPath.includes('/intro/') &&
     !router.asPath.includes('docs/contributing');
   const bookIndex =
-    versionSet !== 'default' &&
-    (router.asPath.includes('nightly') || router.asPath.includes('beta-4'))
-      ? 3
-      : 2;
+    versionSet !== 'default' && router.asPath.includes('nightly') ? 3 : 2;
 
   useEffect(() => {
     const newActiveVersion =
-      versionSet === 'default'
-        ? FUEL_TESTNET_UPPER_CASE
-        : versionSet === 'nightly'
-          ? 'Nightly'
-          : 'Beta-4';
+      versionSet === 'default' ? FUEL_TESTNET_UPPER_CASE : 'Nightly';
     setActiveVersion(newActiveVersion);
   }, [versionSet]);
 
@@ -64,8 +51,6 @@ export default function VersionDropdown({
           if (setVersion) {
             if (action === FUEL_TESTNET) {
               setVersion(FUEL_TESTNET_UPPER_CASE);
-            } else if (action === 'beta-4') {
-              setVersion('Beta-4');
             } else {
               setVersion('Nightly');
             }
@@ -91,15 +76,6 @@ export default function VersionDropdown({
         >
           <Text>{FUEL_TESTNET_UPPER_CASE}</Text>
           {versionSet === 'default' && <Icon icon='Check' color='accent11' />}
-        </Dropdown.MenuItem>
-
-        <Dropdown.MenuItem
-          css={styles.menuItem}
-          key='beta-4'
-          aria-label='beta-4'
-        >
-          <Text>Beta-4</Text>
-          {versionSet === 'beta-4' && <Icon icon='Check' color='accent11' />}
         </Dropdown.MenuItem>
 
         <Dropdown.MenuItem
@@ -131,10 +107,10 @@ const styles = {
     border: 'none',
     height: '100%',
     fontSize: '$xs',
-    width: '140px',
+    width: '142px',
     '@sm': {
       fontSize: '$sm',
-      width: '154px',
+      width: '156px',
     },
     '&:hover': {
       border: 'none !important',

@@ -3,9 +3,8 @@ import { join } from 'path';
 import { compile } from '@mdx-js/mdx';
 import { addRawDocumentToVFile } from 'contentlayer/core';
 import type { MdDoc } from 'contentlayer/generated';
-import { codeExamples as beta4CodeExamples } from '~/docs/beta-4/fuel-graphql-docs/src/lib/code-examples';
-import { codeImport as beta4WalletCodeImport } from '~/docs/beta-4/fuels-wallet/packages/docs/src/lib/code-import';
 import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
+import { codeImport as gqlCodeImport } from '~/docs/fuel-graphql-docs/src/lib/code-import';
 import { codeImport as walletCodeImport } from '~/docs/fuels-wallet/packages/docs/src/lib/code-import';
 import { codeExamples as nightlyCodeExamples } from '~/docs/nightly/fuel-graphql-docs/src/lib/code-examples';
 import { codeImport as nightlyWalletCodeImport } from '~/docs/nightly/fuels-wallet/packages/docs/src/lib/code-import';
@@ -34,27 +33,10 @@ export class Doc {
   config: Config;
 
   constructor(slug: string[], mdDocs: MdDoc[]) {
-    const isIntroQuickstartContract =
-      slug[slug.length - 1] === 'quickstart-contract';
-    const isIntroQuickstartFrontend =
-      slug[slug.length - 1] === 'quickstart-frontend';
-
-    let actualSlug = slug;
-    if (isIntroQuickstartContract) {
-      actualSlug = ['guides', 'quickstart', 'building-a-smart-contract'];
-    } else if (isIntroQuickstartFrontend) {
-      actualSlug = ['guides', 'quickstart', 'building-a-frontend'];
-    }
-
+    const actualSlug = slug;
     const item = Docs.findDoc(actualSlug, mdDocs);
     if (!item) {
       throw new Error(`${slug} not found`);
-    }
-
-    if (isIntroQuickstartContract) {
-      item.title = 'Quickstart Contract';
-    } else if (isIntroQuickstartFrontend) {
-      item.title = 'Quickstart Frontend';
     }
 
     const config = this.#getConfig(slug.join('/'));
@@ -87,9 +69,13 @@ export class Doc {
       .replace('docs/fuels-wallet/', '')
       .replace('docs/fuel-graphql-docs/', '')
       .replace('docs/sway/', '')
+      .replace('docs/sway-standards/', '')
       .replace('docs/fuel-specs/', '')}`;
 
-    let pageLink = `${config.repository}${actualPath}${fileType}`;
+    let pageLink = `${config.repository}${actualPath.replace(
+      'tree/master/docs/sway-libs/docs',
+      'tree/master/docs'
+    )}${fileType}`;
 
     if (pageLink.includes('breaking-change-log/breaking-changes-log')) {
       pageLink =
@@ -102,7 +88,8 @@ export class Doc {
         versionSet = 'nightly';
       }
       const version = getDocVersion(pageLink, versionSet);
-      if (version !== 'master') {
+      // TODO: remove the exception for sway-standards once version is bumped past 0.5.0
+      if (version !== 'master' && !pageLink.includes("/FuelLabs/sway-standards")) {
         pageLink = pageLink
           .replace('/tree/master/', `/tree/${version}/`)
           .replace('/blob/master/', `/blob/${version}/`);
@@ -115,8 +102,7 @@ export class Doc {
     const split = item.slug.split('/');
     let category = item.category;
     if (!category && item.slug.includes('docs/')) {
-      const isNotDefault =
-        item.slug.includes('/nightly/') || item.slug.includes('/beta-4/');
+      const isNotDefault = item.slug.includes('/nightly/');
       const index = isNotDefault ? 3 : 2;
       const isIndex = split.length === index;
       category = split[isIndex ? index - 1 : index].replaceAll('-', ' ');
@@ -125,8 +111,6 @@ export class Doc {
     let versionSet = 'default';
     if (item.slug.includes('/nightly/')) {
       versionSet = 'nightly';
-    } else if (item.slug.includes('/beta-4/')) {
-      versionSet = 'beta-4';
     }
 
     const doc = {
@@ -150,9 +134,7 @@ export class Doc {
   }
 
   #getConfig(slug: string): Config {
-    let newSlug = slug
-      .replace('docs/nightly/', 'docs/')
-      .replace('docs/beta-4/', 'docs/');
+    let newSlug = slug.replace('docs/nightly/', 'docs/');
     try {
       if (newSlug.startsWith('docs/')) {
         newSlug = newSlug.replace('docs/', '');
@@ -213,8 +195,6 @@ export class Doc {
     let configSlug = this.config.slug;
     if (slug.includes('/nightly/')) {
       configSlug = `nightly-${this.config.slug}`;
-    } else if (slug.includes('/beta-4/')) {
-      configSlug = `beta-4-${this.config.slug}`;
     }
     let guideName = this.item.slug.split('/')[0];
     const linksPath = join(
@@ -223,15 +203,11 @@ export class Doc {
     );
     const links = JSON.parse(readFileSync(linksPath, 'utf8'));
     if (
-      (configSlug === 'guides' ||
-        configSlug === 'nightly-guides' ||
-        configSlug === 'beta-4-guides') &&
+      (configSlug === 'guides' || configSlug === 'nightly-guides') &&
       guideName
     ) {
       if (configSlug === 'nightly-guides') {
         guideName = `${guideName}/nightly`;
-      } else if (configSlug === 'beta-4-guides') {
-        guideName = `${guideName}/beta-4`;
       }
       const slug = this.item.slug
         .replace(`${guideName}/`, '')
@@ -307,18 +283,15 @@ export class Doc {
         // biome-ignore lint/suspicious/noExplicitAny:
         [nightlyWalletCodeImport, { filepath }] as any,
       ]);
-    } else if (slug.startsWith('docs/beta-4/wallet/')) {
-      // biome-ignore lint/suspicious/noExplicitAny:
-      plugins = plugins.concat([[beta4WalletCodeImport, { filepath }] as any]);
     } else if (slug.startsWith('docs/graphql/')) {
-      // biome-ignore lint/suspicious/noExplicitAny:
-      plugins = plugins.concat([[codeExamples, { filepath }] as any]);
+      plugins = plugins
+        // biome-ignore lint/suspicious/noExplicitAny:
+        .concat([[codeExamples, { filepath }] as any])
+        // biome-ignore lint/suspicious/noExplicitAny:
+        .concat([[gqlCodeImport, { filepath }] as any]);
     } else if (slug.startsWith('docs/nightly/graphql/')) {
       // biome-ignore lint/suspicious/noExplicitAny:
       plugins = plugins.concat([[nightlyCodeExamples, { filepath }] as any]);
-    } else if (slug.startsWith('docs/beta-4/graphql/')) {
-      // biome-ignore lint/suspicious/noExplicitAny:
-      plugins = plugins.concat([[beta4CodeExamples, { filepath }] as any]);
     } else if (slug.includes('guides') || slug.includes('/intro/')) {
       // biome-ignore lint/suspicious/noExplicitAny:
       plugins = plugins.concat([[codeImport, { filepath }] as any]);

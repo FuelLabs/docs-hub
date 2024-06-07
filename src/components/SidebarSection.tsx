@@ -27,9 +27,9 @@ export function SidebarSection({
 }: SectionProps) {
   const [isOpened, setIsOpened] = useState<boolean | undefined>(
     book === 'guides' ||
-      docSlug?.includes(book.toLowerCase()) ||
-      (book === 'Intro' &&
-        (docSlug?.includes('guides/quickstart/') || !docSlug))
+      docSlug?.includes(`/${book.toLowerCase()}/`) ||
+      docSlug === `docs/${book.toLowerCase()}` ||
+      (book === 'Intro' && !docSlug)
   );
 
   const isGuide = book === 'guides';
@@ -41,10 +41,16 @@ export function SidebarSection({
   if (!version && book !== 'Intro') {
     switch (book) {
       case 'GraphQL':
-        githubLink = 'https://github.com/FuelLabs/fuel-core/tree/v0.22.1';
+        githubLink = 'https://github.com/FuelLabs/fuel-core/tree/v0.27.0';
         break;
       case 'Specs':
         githubLink = 'https://github.com/FuelLabs/fuel-specs';
+        break;
+      case 'Sway-libs':
+        githubLink = 'https://github.com/FuelLabs/sway-libs';
+        break;
+      case 'Sway-standards':
+        githubLink = 'https://github.com/FuelLabs/sway-standards';
         break;
       default:
         break;

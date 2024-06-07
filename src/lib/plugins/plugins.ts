@@ -2,7 +2,6 @@ import { join } from 'path';
 import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
 import type { Parent } from 'unist-util-visit/lib';
-import { versions as beta4Versions } from '~/docs/beta-4/fuels-ts/packages/versions/src';
 import { versions as defaultVersions } from '~/docs/fuels-ts/packages/versions/src';
 import { versions as nightlyVersions } from '~/docs/nightly/fuels-ts/packages/versions/src';
 
@@ -89,8 +88,6 @@ export function handlePlugins() {
     let versions = defaultVersions;
     if (filepath.includes('/nightly/')) {
       versions = nightlyVersions;
-    } else if (filepath.includes('/beta-4/')) {
-      versions = beta4Versions;
     }
 
     if (filepath.includes('/fuel-graphql-docs/')) {
@@ -103,7 +100,7 @@ export function handlePlugins() {
       handleTSDocs(tree, rootDir, dirname, versions);
     } else if (filepath.includes('/fuels-rs/')) {
       handleRustBooks(tree, rootDir, dirname);
-    } else if (filepath.includes('/fuel-specs/')) {
+    } else {
       handleMDBooks(tree, rootDir, dirname);
     }
   };
@@ -242,7 +239,8 @@ function handleTSDocs(
       // handle TS book versions
       conditions.tsBookVersions(node) ||
       (node.type === 'code' && node.lang === 'ts:line-numbers') ||
-      (node.type === 'code' && !node.lang)
+      (node.type === 'code' && !node.lang) ||
+      node.type === 'image'
     ) {
       // biome-ignore lint/suspicious/noExplicitAny:
       nodes.push([node as any, idx ?? null, parent as Parent<any, any>]);
@@ -264,8 +262,16 @@ function handleTSDocs(
       }
     } else if (node.type === 'code' && node.lang === 'ts:line-numbers') {
       node.lang = 'ts';
-    } else {
+    } else if (node.type === 'code' && !node.lang) {
       node.lang = 'sh';
+    } else if (node.type === 'image') {
+      if (node.url.includes('/public/')) {
+        const path = node.url
+          .replace('../../public/', '')
+          .replace('./public/', '')
+          .replace('.png', '');
+        node.url = `/api/image/${path}`;
+      }
     }
   });
 }

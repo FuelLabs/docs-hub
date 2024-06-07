@@ -41,7 +41,7 @@ action={{
 />
 
 ```sh
-npm install fuels@0.79.0 @fuels/react@0.18.0 @fuels/connectors@0.1.1 @tanstack/react-query@5.28.9
+npm install fuels @fuels/react @fuels/connectors @tanstack/react-query
 ```
 
 ## Generate contract types
@@ -100,11 +100,32 @@ Generating types..
 🎉  Build completed successfully!
 ```
 
-> If you're having any issues with this part, try adding `useBuiltinForc: false` to your `fuels.config.ts` config file to make sure it's using the same version of `forc` as your default toolchain.
-
 Now you should be able to find a new folder `fuel-project/frontend/src/contracts`.
 
-Open the `src/App.tsx` file, and replace the boilerplate code with the template below:
+## Wallet Providers
+
+In your  `index.tsx` file, wrap your `App` component with the `FuelProvider` and `QueryClientProvider` components to enable Fuel's custom React hooks for wallet functionalities.
+
+This is where you can pass in custom wallet connectors to customize which wallets your users can use to connect to your app.
+
+<TestAction
+id="fe-index-all"
+action={{
+  name: 'writeToFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/index.tsx'
+}}
+/>
+
+<CodeImport
+  file="../../examples/intro-to-sway/frontend/src/index.tsx"
+  comment="fe_index_all"
+  commentType="//"
+  lang="tsx"
+/>
+
+## Connecting to the contract
+
+Next, open the `src/App.tsx` file, and replace the boilerplate code with the template below:
 
 <TestAction
 id="fe-app-template"
@@ -126,44 +147,6 @@ At the top of the file, change the `CONTRACT_ID` to the contract ID that you dep
 <CodeImport
   file="../../examples/intro-to-sway/frontend/src/App.tsx"
   comment="fe_contract_id"
-  commentType="//"
-  lang="tsx"
-/>
-
-Copy and paste the CSS code below in your `App.css` file to add some simple styling.
-
-<TestAction
-id="fe-css-template"
-action={{
-  name: 'writeToFile',
-  filepath: 'guides-testing/fuel-project/frontend/src/App.css'
-}}
-/>
-
-<CodeImport
-  file="../../examples/intro-to-sway/frontend/src/App.css"
-  comment="fe_css"
-  commentType="//"
-  lang="tsx"
-/>
-
-### Connecting to the contract
-
-Wrap your components with the `FuelProvider` and `QueryClientProvider` components to enable Fuel's custom React hooks for wallet functionalities in `index.tsx`.
-
-This is where you can pass in custom wallet connectors to customize which wallets your users can use to connect to your app.
-
-<TestAction
-id="fe-index-all"
-action={{
-  name: 'writeToFile',
-  filepath: 'guides-testing/fuel-project/frontend/src/index.tsx'
-}}
-/>
-
-<CodeImport
-  file="../../examples/intro-to-sway/frontend/src/index.tsx"
-  comment="fe_index_all"
   commentType="//"
   lang="tsx"
 />
@@ -197,16 +180,26 @@ The `useMemo` hook is used to connect to our contract with the connected wallet.
   lang="tsx"
 />
 
+## Styling
+
+Copy and paste the CSS code below in your `App.css` file to add some simple styling.
+
+<TestAction
+id="fe-css-template"
+action={{
+  name: 'writeToFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/App.css'
+}}
+/>
+
 <CodeImport
-  file="../../examples/intro-to-sway/frontend/src/App.tsx"
-  comment="fe_fuel_obj"
+  file="../../examples/intro-to-sway/frontend/src/App.css"
+  comment="fe_css"
   commentType="//"
   lang="tsx"
 />
 
-Now we have our contract connection ready. You can console log the contract here to make sure this is working correctly.
-
-### UI
+## UI
 
 In our app we're going to have two tabs: one to see all of the items listed for sale, and one to list a new item for sale.
 
@@ -221,7 +214,7 @@ We use another state variable called `active` that we can use to toggle between 
 
 Next we can create our components to show and list items.
 
-### Listing an Item
+## Listing an Item
 
 Create a new folder in the `src` folder called `components`.
 
@@ -358,7 +351,7 @@ action={{
 Now, try listing an item to make sure this works.
 You should see the message `Item successfully listed!`.
 
-### Show All Items
+## Show All Items
 
 Next, let's create a new file called `AllItems.tsx` in the `components` folder.
 
@@ -447,7 +440,7 @@ action={{
   lang="tsx"
 />
 
-### Item Card
+## Item Card
 
 Now let's create the item card component.
 Create a new file called `ItemCard.tsx` in the components folder.
@@ -539,7 +532,7 @@ action={{
 
 Now you should be able to see and buy all of the items listed in your contract.
 
-### Checkpoint
+## Checkpoint
 
 Ensure that all your files are correctly configured by examining the code below. If you require additional assistance, refer to the repository [here](https://github.com/FuelLabs/intro-to-sway/tree/main/frontend)
 
@@ -579,7 +572,7 @@ Ensure that all your files are correctly configured by examining the code below.
   lang="tsx"
 />
 
-### Run your project
+## Run your project
 
 Inside the `fuel-project/frontend` directory run:
 

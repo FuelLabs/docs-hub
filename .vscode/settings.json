@@ -9,6 +9,8 @@
     "**/node_modules": true,
     "**/.git": true,
     "**/sway": true,
+    "**/sway-libs": true,
+    "**/sway-standards": true,
     "**/builds": true,
     "**/fuel-graphql-docs": true,
     "**/fuel-indexer": true,

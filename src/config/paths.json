@@ -4,7 +4,7 @@
   "/book/": "/",
   "/packages/": "/",
   "/apps/": "/",
-  "/src": "",
+  "/src/": "/",
   "/index.md": ".md",
   "/README.md": ".md",
   "/guide/": "/",

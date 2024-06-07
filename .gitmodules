@@ -58,3 +58,18 @@
 [submodule "docs/nightly/fuels-wallet"]
 	path = docs/nightly/fuels-wallet
 	url = https://github.com/FuelLabs/fuels-wallet.git
+[submodule "docs/sway-libs"]
+	path = docs/sway-libs
+	url = https://github.com/FuelLabs/sway-libs.git
+[submodule "docs/nightly/sway-libs"]
+	path = docs/nightly/sway-libs
+	url = https://github.com/FuelLabs/sway-libs.git
+[submodule "docs/sway-standards"]
+	path = docs/sway-standards
+	url = https://github.com/FuelLabs/sway-standards
+[submodule "docs/nightly/sway-standards"]
+	path = docs/nightly/sway-standards
+	url = https://github.com/FuelLabs/sway-standards
+[submodule "docs/chain-configuration"]
+	path = docs/chain-configuration
+	url = https://github.com/FuelLabs/chain-configuration

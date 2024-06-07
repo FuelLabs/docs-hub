@@ -9,6 +9,14 @@ const CONFIG = {
     type: 'mdbook',
     path: './sway/docs/book/src/SUMMARY.md',
   },
+  'sway-libs': {
+    type: 'mdbook',
+    path: './sway-libs/docs/book/src/SUMMARY.md',
+  },
+  'sway-standards': {
+    type: 'mdbook',
+    path: './sway-standards/docs/src/SUMMARY.md',
+  },
   'fuels-rs': {
     type: 'mdbook',
     path: './fuels-rs/docs/src/SUMMARY.md',
@@ -45,42 +53,34 @@ const CONFIG = {
 
 const forcLines = [];
 const nightlyForcLines = [];
-const beta4ForcLines = [];
 
 function handleOrder(orderType, filepath, orderName) {
   let betaOrders;
   let nightlyOrders;
-  let beta4Orders;
   const isJSON = orderType === 'json';
   const orderFile = getFile(filepath, 'default', isJSON);
   const nightlyOrderFile = getFile(filepath, 'nightly', isJSON);
-  const beta4OrderFile = getFile(filepath, 'beta-4', isJSON);
 
   if (isJSON) {
     betaOrders = { order: orderFile };
     nightlyOrders = { order: nightlyOrderFile };
-    beta4Orders = { order: beta4OrderFile };
   } else if (orderType === 'mdbook') {
     if (orderName === 'forc') {
       // FORC ORDER
       const newForcLines = forcLines.map(handleForcLines);
       const newNightlyForcLines = nightlyForcLines.map(handleForcLines);
-      const newBeta4ForcLines = beta4ForcLines.map(handleForcLines);
       betaOrders = processSummary(newForcLines, 'forc');
       nightlyOrders = processSummary(newNightlyForcLines, 'forc');
-      beta4Orders = processSummary(newBeta4ForcLines, 'forc');
     } else {
       betaOrders = processSummary(orderFile.split(EOL), orderName);
       nightlyOrders = processSummary(nightlyOrderFile.split(EOL), orderName);
-      beta4Orders = processSummary(beta4OrderFile.split(EOL), orderName);
     }
   } else if (orderType === 'vp') {
     betaOrders = processVPConfig(orderFile.split(EOL), false, false);
     nightlyOrders = processVPConfig(nightlyOrderFile.split(EOL), true, false);
-    beta4Orders = processVPConfig(beta4OrderFile.split(EOL), false, true);
   }
 
-  return { betaOrders, nightlyOrders, beta4Orders };
+  return { betaOrders, nightlyOrders };
 }
 
 export async function getOrders() {
@@ -92,16 +92,13 @@ export async function getOrders() {
       const bookOrder = handleOrder(book.type, book.path, key);
       orders[key] = bookOrder.betaOrders.order;
       orders[`nightly-${key}`] = bookOrder.nightlyOrders.order;
-      orders[`beta-4-${key}`] = bookOrder.beta4Orders.order;
 
       if (key === 'sway') {
         forcLines.push(...bookOrder.betaOrders.forcLines);
         nightlyForcLines.push(...bookOrder.nightlyOrders.forcLines);
-        beta4ForcLines.push(...bookOrder.beta4Orders.forcLines);
         const forcBookOrder = handleOrder(book.type, book.path, 'forc');
         orders.forc = forcBookOrder.betaOrders.order;
         orders['nightly-forc'] = forcBookOrder.nightlyOrders.order;
-        orders['beta-4-forc'] = forcBookOrder.beta4Orders.order;
       }
     } else {
       orders[key] = getFile(book.path, false, true);

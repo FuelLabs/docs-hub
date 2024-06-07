@@ -34,6 +34,12 @@ action={{
 cargo generate --init fuellabs/sway templates/sway-test-rs --name sway-store
 ```
 
+<TextImport
+  file="../counter-dapp/building-a-smart-contract.mdx"
+  comment="rust_harness"
+  commentType="{/*"
+/>
+
 ## Imports
 
 We will be changing the existing `harness.rs` test file that has been generated. Firstly we need to change the imports. By importing the Fuel Rust SDK you will get majority of the functionalities housed within the prelude.
@@ -96,7 +102,7 @@ action={{
 ## Test Cases
 
 Given the immutable nature of smart contracts, it's important to cover all potential edge cases in your tests.
-Let's write the test cases at the bottom of our `harness.rs` file.
+Let's delete the example `can_get_contract_id` test case and start writing some test cases at the bottom of our `harness.rs` file.
 
 ### Setting Owner
 
@@ -194,7 +200,7 @@ If you have followed the previous steps correctly your `harness.rs` test file sh
 
 ## Running the Tests
 
-To run the test located in `tests/harness.rs`, use:
+To run the test located in `tests/harness.rs`, run the command below inside your `contract` folder:
 
 <TestAction
 id="cargo-test"

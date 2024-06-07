@@ -1,8 +1,3 @@
-import {
-  FuelWalletConnector,
-  FuelWalletDevelopmentConnector,
-  FueletWalletConnector,
-} from '@fuels/connectors';
 import { FuelProvider } from '@fuels/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Analytics } from '@vercel/analytics/react';
@@ -10,6 +5,7 @@ import type { AppProps } from 'next/app';
 import '../styles/docsearch.css';
 import '../styles/index.css';
 
+import { FuelWalletConnector, FueletWalletConnector } from '@fuels/connectors';
 import { Provider } from '../components/Provider';
 import { ShowWarningProvider } from '../hooks/useShowWarning';
 import { VersionProvider } from '../hooks/useVersion';
@@ -18,16 +14,12 @@ const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <FuelProvider
+    <QueryClientProvider client={queryClient}>
+      <FuelProvider
         fuelConfig={{
-          connectors: [
-            new FuelWalletConnector(),
-            new FuelWalletDevelopmentConnector(),
-            new FueletWalletConnector(),
-          ],
+          connectors: [new FuelWalletConnector(), new FueletWalletConnector()],
         }}
       >
-      <QueryClientProvider client={queryClient}>
         <VersionProvider>
           <ShowWarningProvider>
             <Provider>
@@ -43,7 +35,7 @@ export default function App({ Component, pageProps }: AppProps) {
             </Provider>
           </ShowWarningProvider>
         </VersionProvider>
-      </QueryClientProvider>
-    </FuelProvider>
+      </FuelProvider>
+    </QueryClientProvider>
   );
 }

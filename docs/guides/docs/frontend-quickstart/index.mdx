@@ -1,0 +1,123 @@
+---
+title: Frontend Quickstart
+category: Frontend Quickstart
+parent:
+  label: All Guides
+  link: /guides
+---
+
+# Frontend/Fullstack Quickstart
+
+Getting started with Fuel as a frontend or fullstack developer is as simple as:
+
+1. [Installing](#installation) `fuelup`
+2. [Generating a counter dapp](#generating-a-counter-dapp)
+3. [Running the project locally](#running-the-project-locally)
+
+## Installation
+
+<TextImport
+  file="../installation/index.mdx"
+  comment="install_fuelup"
+  commentType="{/*"
+/>
+
+<CodeImport
+  file="../installation/index.mdx"
+  comment="install_fuelup_command"
+  commentType="{/*"
+  lang="sh"
+  trim="true"
+/>
+
+<TextImport
+  file="../counter-dapp/building-a-smart-contract.mdx"
+  comment="install_help"
+  commentType="{/*"
+/>
+
+<TextImport
+  file="../installation/index.mdx"
+  comment="install_VSCode_extensions"
+  commentType="{/*"
+/>
+
+### Already have `fuelup` installed?
+
+<TextImport
+  file="../counter-dapp/building-a-smart-contract.mdx"
+  comment="already_installed"
+  commentType="{/*"
+/>
+
+## Generating a counter dapp
+
+You can generate a full-stack counter dapp in seconds with the `create fuels` CLI:
+
+<CodeTabs>
+
+```sh
+pnpm create fuels
+```
+
+```sh
+npm create fuels
+```
+
+</CodeTabs>
+
+## Running the project locally
+
+Move into the project directory. Assuming you named the project `my-fuel-project`, you can run:
+
+```sh
+cd my-fuel-project
+```
+
+Next, run the following command to start a local development node:
+
+<CodeTabs>
+
+```sh
+pnpm fuels:dev
+```
+
+```sh
+npm run fuels:dev
+```
+
+</CodeTabs>
+
+The local endpoint for node will be `http://localhost:4000/v1/graphql`.
+
+Next, open a new terminal in the project directory, and run the following command to start the frontend:
+
+<CodeTabs>
+
+```sh
+pnpm dev
+```
+
+```sh
+npm run dev
+```
+
+</CodeTabs>
+
+The frontend will be running at [`http://localhost:3000`](http://localhost:3000).
+
+While the local node is running, any changes you make to the Sway contract inside the `sway-contract` folder will automatically trigger several updates:
+
+1. The contract gets rebuilt using the `forc build` command.
+2. The contract will be redeployed to the local node using the `forc deploy` command .
+3. New TypeScript types for the contract and a file called `contract-ids.json` with the new contract ID will be generated in the `src/sway-api` folder.
+
+This means you don't need to worry about updating the contract ID, ABI, or TypeScript types while you develop.
+
+## Next Steps
+
+Ready to learn more? Check out the following resources:
+
+- Learn the step-by-step instructions for how to build and deploy a full-stack [counter contract dapp](/guides/counter-dapp)
+- Learn more about the [fuels CLI](/docs/fuels-ts/fuels-cli)
+- Learn about [wallet connectors](/docs/wallet/dev/connectors/)

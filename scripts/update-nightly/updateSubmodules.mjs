@@ -4,6 +4,7 @@ import {
   commitAll,
   createPR,
   fetchBranch,
+  fetchGitRef,
   fetchTag,
   getCommitFromTitle,
   getVersionCommit,
@@ -93,6 +94,7 @@ export async function update(version, dir, branch) {
     if (dir.includes('fuels-ts')) {
       title = `docs: API docs - ${version}`;
     } else if (dir.includes('builds/sway')) {
+      await fetchGitRef(version, dir);
       const versionCommit = await getVersionCommit(version, dir);
       title = `deploy: ${versionCommit}`;
     }

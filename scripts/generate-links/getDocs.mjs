@@ -30,15 +30,38 @@ export async function getDocs(key, order) {
         '!./nightly/sway/docs/book/src/forc/**/*.md',
       ];
       break;
-    case 'beta-4-sway':
+    case 'sway-libs':
       paths = [
-        // SWAY DOCS
-        './beta-4/sway/docs/book/src/**/*.md',
+        // SWAY LIBS DOCS
+        './sway-libs/docs/book/src/**/*.md',
         // IGNORE ALL SUMMARY PAGES
         '!**/SUMMARY.md',
-        // IGNORE FORC PAGES
-        '!./beta-4/sway/docs/book/src/forc/*.md',
-        '!./beta-4/sway/docs/book/src/forc/**/*.md',
+      ];
+      break;
+    case 'nightly-sway-libs':
+      paths = [
+        // SWAY LIBS DOCS
+        './nightly/sway-libs/docs/book/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
+    case 'sway-standards':
+      paths = [
+        // SWAY STANDARDS DOCS
+        './sway-standards/docs/src/*.md',
+        './sway-standards/docs/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
+    case 'nightly-sway-standards':
+      paths = [
+        // SWAY STANDARDS DOCS
+        './nightly/sway-standards/docs/src/*.md',
+        './nightly/sway-standards/docs/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
       ];
       break;
     case 'forc':
@@ -53,13 +76,6 @@ export async function getDocs(key, order) {
         // FORC DOCS
         './nightly/sway/docs/book/src/forc/*.md',
         './nightly/sway/docs/book/src/forc/**/*.md',
-      ];
-      break;
-    case 'beta-4-forc':
-      paths = [
-        // FORC DOCS
-        './beta-4/sway/docs/book/src/forc/*.md',
-        './beta-4/sway/docs/book/src/forc/**/*.md',
       ];
       break;
     case 'fuels-rs':
@@ -80,15 +96,6 @@ export async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
-    case 'beta-4-fuels-rs':
-      paths = [
-        // RUST SDK DOCS
-        './beta-4/fuels-rs/docs/src/**/*.md',
-        './beta-4/fuels-rs/docs/src/*.md',
-        // IGNORE ALL SUMMARY PAGES
-        '!**/SUMMARY.md',
-      ];
-      break;
     case 'fuels-ts':
       paths = [
         // TS SDK DOCS
@@ -105,14 +112,6 @@ export async function getDocs(key, order) {
         './nightly/fuels-ts/apps/docs/src/**/*.md',
       ];
       break;
-    case 'beta-4-fuels-ts':
-      paths = [
-        // TS SDK DOCS
-        './beta-4/fuels-ts/apps/docs/src/*.md',
-        './beta-4/fuels-ts/apps/docs/src/**/*.md',
-        './beta-4/fuels-ts/apps/docs/src/**/*.md',
-      ];
-      break;
     case 'wallet':
       paths = [
         // WALLET DOCS
@@ -125,13 +124,6 @@ export async function getDocs(key, order) {
         // WALLET DOCS
         './nightly/fuels-wallet/packages/docs/docs/**/*.mdx',
         './nightly/fuels-wallet/packages/docs/docs/*.mdx',
-      ];
-      break;
-    case 'beta-4-wallet':
-      paths = [
-        // WALLET DOCS
-        './beta-4/fuels-wallet/packages/docs/docs/**/*.mdx',
-        './beta-4/fuels-wallet/packages/docs/docs/*.mdx',
       ];
       break;
     case 'graphql':
@@ -148,13 +140,6 @@ export async function getDocs(key, order) {
         './nightly/fuel-graphql-docs/docs/**/*.mdx',
       ];
       break;
-    case 'beta-4-graphql':
-      paths = [
-        // GRAPHQL DOCS
-        './beta-4/fuel-graphql-docs/docs/*.mdx',
-        './beta-4/fuel-graphql-docs/docs/**/*.mdx',
-      ];
-      break;
     case 'specs':
       paths = [
         // SPECS DOCS
@@ -169,15 +154,6 @@ export async function getDocs(key, order) {
         // SPECS DOCS
         './nightly/fuel-specs/src/*.md',
         './nightly/fuel-specs/src/**/*.md',
-        // IGNORE ALL SUMMARY PAGES
-        '!**/SUMMARY.md',
-      ];
-      break;
-    case 'beta-4-specs':
-      paths = [
-        // SPECS DOCS
-        './beta-4/fuel-specs/src/*.md',
-        './beta-4/fuel-specs/src/**/*.md',
         // IGNORE ALL SUMMARY PAGES
         '!**/SUMMARY.md',
       ];
@@ -326,10 +302,6 @@ export function getDocBySlug(slug, slugs) {
 
   if (doc.slug.includes('fuels-ts/API-')) {
     doc.category = `API-${doc.category}`;
-  }
-
-  if (slugPath.slug.includes('beta-4/fuels-ts/cli/built-in-binaries.md')) {
-    doc.category = 'cli';
   }
 
   return {

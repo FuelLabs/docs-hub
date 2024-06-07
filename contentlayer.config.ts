@@ -61,6 +61,8 @@ const includeDirs = [
   'docs/guides/docs',
   'docs/intro',
   'docs/contributing',
+  'docs/sway-libs/docs/book/src',
+  'docs/sway-standards/docs/src',
   // NIGHTLY DOCS
   'docs/nightly/sway/docs/book/src',
   'docs/nightly/fuels-rs/docs/src',
@@ -68,13 +70,8 @@ const includeDirs = [
   'docs/nightly/fuel-specs/src',
   'docs/nightly/fuel-graphql-docs/docs',
   'docs/nightly/fuels-wallet/packages/docs/docs',
-  // BETA-4 DOCS
-  'docs/beta-4/sway/docs/book/src',
-  'docs/beta-4/fuels-rs/docs/src',
-  'docs/beta-4/fuels-ts/apps/docs/src',
-  'docs/beta-4/fuel-specs/src',
-  'docs/beta-4/fuel-graphql-docs/docs',
-  'docs/beta-4/fuels-wallet/packages/docs/docs',
+  'docs/nightly/sway-libs/docs/book/src',
+  'docs/nightly/sway-standards/docs/src',
 ];
 
 const excludeDirs = [
@@ -83,20 +80,22 @@ const excludeDirs = [
   'docs/guides/docs/nav.json',
   'docs/guides/docs/migration-guide/breaking-change-log/README.md',
   'docs/guides/docs/migration-guide/breaking-change-log/package.json',
+  'docs/guides/docs/migration-guide/breaking-change-log/node_modules',
   'docs/guides/docs/migration-guide/breaking-change-log/pnpm-lock.yaml',
   'docs/intro/nav.json',
   'docs/contributing/nav.json',
   'docs/sway/docs/book/src/SUMMARY.md',
   'docs/fuels-rs/docs/src/SUMMARY.md',
   'docs/fuel-specs/src/SUMMARY.md',
+  'docs/sway-libs/docs/book/src/SUMMARY.md',
+  'docs/sway-standards/docs/src/SUMMARY.md',
+  'docs/guides/docs/migration-guide/breaking-change-log/node_modules',
   // NIGHTLY DOCS
   'docs/nightly/sway/docs/book/src/SUMMARY.md',
   'docs/nightly/fuels-rs/docs/src/SUMMARY.md',
   'docs/nightly/fuel-specs/src/SUMMARY.md',
-  // BETA-4 DOCS
-  'docs/beta-4/sway/docs/book/src/SUMMARY.md',
-  'docs/beta-4/fuels-rs/docs/src/SUMMARY.md',
-  'docs/beta-4/fuel-specs/src/SUMMARY.md',
+  'docs/nightly/sway-libs/docs/book/src/SUMMARY.md',
+  'docs/nightly/sway-standards/docs/src/SUMMARY.md',
 ];
 
 export default makeSource({

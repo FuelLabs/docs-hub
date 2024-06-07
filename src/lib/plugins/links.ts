@@ -26,8 +26,6 @@ export function handleLinks(
   let versionSet: VersionSet = 'default';
   if (dirname.includes('/nightly/')) {
     versionSet = 'nightly';
-  } else if (dirname.includes('/beta-4/')) {
-    versionSet = 'beta-4';
   }
 
   if (dirname.includes('sway/docs/book/src/forc')) {
@@ -52,13 +50,6 @@ export function handleLinks(
     ) {
       newUrl = newUrl.replace('docs/', 'docs/nightly/');
     }
-    if (
-      versionSet === 'beta-4' &&
-      !newUrl.includes('/beta-4/') &&
-      (newUrl.startsWith('docs/') || newUrl.startsWith('/docs/'))
-    ) {
-      newUrl = newUrl.replace('docs/', 'docs/beta-4/');
-    }
 
     if (newUrl.includes('github.com/FuelLabs/')) {
       // TODO: REMOVE THIS ONCE FIXED IN SOURCE
@@ -77,25 +68,15 @@ export function handleLinks(
       }
 
       if (newUrl.includes('/sway-libs')) {
-        newUrl = newUrl.replace(/\/libs\/([^\/]+)/g, (match, p1) => {
-          if (p1 === 'merkle_proof') {
-            return '/libs/src/merkle';
-          }
-          return `/libs/src/${p1}`;
-        });
-      } else if (newUrl.includes('/sway-standards/')) {
-        newUrl = newUrl.replace(
-          '/standards/src5-ownership',
-          '/standards/src/src5.sw'
-        );
+        newUrl = newUrl
+          .replace('/src/src/', '/src/')
+          .replace('sway-libs/tree/libs/nft','sway-libs/tree/v0.12.0/libs/nft');
       }
     }
 
     if (newUrl.includes('docs.rs/fuel-types/{{versions.fuel-types}}')) {
       newUrl = newUrl.replace('{{versions.fuel-types}}', 'latest');
     }
-
-    newUrl = newUrl.replace("fuels-ts/abi-typegen/", "fuels-ts/typegen/");
 
     return newUrl;
   }
@@ -127,6 +108,9 @@ function handleTSLinks(url: string | null, versionSet: VersionSet) {
         .replace('/api/', '/')
         .replace('/providers', '/api-providers');
     }
+    newUrl = newUrl
+      .replace('/guide/', '/')
+      .replace('/fuels-ts/../', '/fuels-ts/');
   }
   return newUrl;
 }
@@ -318,12 +302,78 @@ function handleNewURLs(
 
 function replaceInternalLinks(href: string, base: string) {
   let newHref = href;
+  if(newHref.startsWith('https://github.com/FuelLabs/sway-standards/') && newHref.endsWith('.md') && !newHref.includes('README.md')){
+    const split = newHref.split('/');
+    let docName = split[split.length -1].replace(".md", "");
+    switch (docName) {
+      case 'src-2':
+        docName = 'src-2-inline-documentation'
+        break;
+      case 'src-3':
+        docName = 'src-3-minting-and-burning'
+        break;
+      case 'src-5':
+        docName = 'src-5-ownership'
+        break;
+      case 'src-6':
+        docName = 'src-6-vault'
+        break;
+      case 'src-7':
+        docName = 'src-7-asset-metadata'
+        break;
+      case 'src-8':
+        docName = 'src-8-bridged-asset'
+        break;
+      case 'src-9':
+        docName = 'src-9-metadata-keys'
+        break;
+      case 'src-10':
+        docName = 'src-10-native-bridge'
+        break;
+      case 'src-11':
+        docName = 'src-11-security-information'
+        break;
+      case 'src-12':
+        docName = 'src-12-contract-factory'
+        break;
+      case 'src-13':
+        docName = 'src-13-soulbound-address'
+        break;
+      case 'src-14':
+        docName = 'src-14-simple-upgradeable-proxies'
+        break;
+      case 'src-20':
+        docName = 'src-20-native-asset'
+        break;
+      default:
+        break;
+    }
+    newHref = `docs/sway-standards/${docName}`
+  }
+
+  if(newHref.includes('specs.fuel.network/')){
+    newHref = newHref
+    .replace('.html', '')
+    .replace('/protocol/abi/', '/abi/')
+    .replace(/\/index$/, '/')
+    .replace('https://', '')
+    .replace('http://', '')
+    .replace('specs.fuel.network/', 'docs/specs/')
+    .replace('/master/', '/')
+    .replace('/tree/', '/')
+    .replace('/blob/', '/')
+    .replace(/\/v\d+\.\d+\.\d+\//, '/')
+  }
+
+
   if (
     newHref.startsWith('https://fuellabs.github.io') &&
     !newHref.includes('fuellabs.github.io/block-explorer-v2') &&
     !newHref.startsWith('https://fuellabs.github.io/sway/master/std/') &&
     !newHref.includes('LICENSE') &&
-    !newHref.includes('/fuelup/')
+    !newHref.includes('/fuelup/') &&
+    // ignore sway-libs reference links
+    !/fuellabs\.github\.io\/sway-libs\/.*?\/sway_libs\//.test(newHref)
   ) {
     newHref = newHref
       .replace('https://fuellabs.github.io', '')
@@ -361,11 +411,11 @@ function replaceInternalLinks(href: string, base: string) {
   newHref = newHref
     .replace(
       'docs/fuel-docs/quickstart/developer-quickstart',
-      'guides/quickstart/'
+      'intro/quickstart/'
     )
     .replace(
       'https://fuelbook.fuel.network/master/quickstart/developer-quickstart.html',
-      'guides/quickstart/'
+      'intro/quickstart/'
     )
     .replace('specs/fuel-vm/instruction_set', 'specs/fuel-vm/instruction-set')
     .replace('specs/protocol/tx_format', 'specs/tx-format/')
@@ -373,11 +423,15 @@ function replaceInternalLinks(href: string, base: string) {
     .replace('specs/protocol/id/contract', 'specs/identifiers/contract-id')
     .replace('specs/protocol/abi', 'specs/abi')
     .replace('/packag/', '/packages/')
+    .replace('docs/sway-libs/book/', 'docs/sway-libs/')
     .replace('standards/src_5', 'standards/src5-ownership')
     .replace('/index#', '#');
 
   if (newHref.startsWith('/docs/')) {
     newHref = newHref.replace('/docs/', 'docs/');
+  }
+  if(newHref.startsWith('docs/')){
+    newHref = newHref.replace('/src/', '/');
   }
 
   if (newHref.includes('github.com/FuelLabs/fuels-ts')) {

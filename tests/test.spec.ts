@@ -4,9 +4,9 @@ import { setupFolders, startServers, stopServers } from './utils/setup';
 import { useFuelWallet } from './utils/wallet';
 
 test.describe('Guides', () => {
-  test('dev quickstart', async ({ context, extensionId, page }) => {
-    const CONTRACT_PAGE_URL = 'guides/quickstart/building-a-smart-contract';
-    const FRONTEND_PAGE_URL = 'guides/quickstart/building-a-frontend';
+  test('counter-dapp', async ({ context, extensionId, page }) => {
+    const CONTRACT_PAGE_URL = 'guides/counter-dapp/building-a-smart-contract';
+    const FRONTEND_PAGE_URL = 'guides/counter-dapp/building-a-frontend';
 
     // SETUP
     stopServers();

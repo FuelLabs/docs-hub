@@ -23,7 +23,6 @@ import type { DocType, NavOrder, SidebarLinkItem, Versions } from '../types';
 export type DocPageProps = {
   allNavs: NavOrder[];
   allNightlyNavs: NavOrder[];
-  allBeta4Navs: NavOrder[];
   codeLight?: string;
   codeDark?: string;
   md?: MdDoc;
@@ -33,7 +32,6 @@ export type DocPageProps = {
   theme: string;
   versions: Versions;
   nightlyVersions: Versions;
-  beta4Versions: Versions;
   fuelCoreVersion?: string;
   nodeVersion?: string;
   nodeVersionMax?: string;
@@ -70,8 +68,8 @@ export function getStaticPaths() {
 export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   const slugArray = params?.slug as string[];
   const slug = slugArray.join('/');
-  const { allNavs, allNightlyNavs, allBeta4Navs } = getNavs();
-  const { versions, nightlyVersions, beta4Versions } = getAllVersions();
+  const { allNavs, allNightlyNavs } = getNavs();
+  const { versions, nightlyVersions } = getAllVersions();
 
   if (slug === 'guides') {
     const guidesPath = join(DOCS_DIRECTORY, './guides/docs/guides.json');
@@ -81,10 +79,8 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
         guides,
         allNavs,
         allNightlyNavs,
-        allBeta4Navs,
         versions,
         nightlyVersions,
-        beta4Versions,
       },
     };
   }
@@ -96,7 +92,7 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   let nodeVersionMax = null;
 
   const isGuide = slug.startsWith('guides/');
-  if (isGuide || slug.includes('/intro/quickstart')) {
+  if (isGuide) {
     fuelCoreVersion = getFuelCoreVersion();
     nodeVersion = getNodeVersion().substring(1);
     const majorVersionMax = Number.parseInt(nodeVersion.substring(0, 2)) + 1;
@@ -129,7 +125,6 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
     props: {
       allNavs,
       allNightlyNavs,
-      allBeta4Navs,
       codeLight: light,
       codeDark: dark,
       md: doc.md,
@@ -138,7 +133,6 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
       docLink: doc.navLinks,
       versions,
       nightlyVersions,
-      beta4Versions,
       fuelCoreVersion,
       nodeVersion,
       nodeVersionMax,

@@ -124,7 +124,7 @@ Next, we'll utilize the `require` statement to ensure the sent asset is the corr
 
 The `require` statement accepts two arguments: a condition, and a value that's logged when the condition is false. Should the condition evaluate as false, the entire transaction is rolled back, leaving no changes.
 
-In this case, the condition checks if the `asset_id` matches the `BASE_ASSET_ID`—the default asset associated with the base blockchain, imported from the standard library. For example, if the base blockchain is Ethereum, the base asset would be ETH.
+In this case, the condition checks if the `asset_id` matches the base asset ID — the default asset associated with the base blockchain - using `AssetId::base()`. For example, if the base blockchain is Ethereum, the base asset would be ETH.
 
 If there's a mismatch in the asset, for instance, if someone attempts to purchase an item using a different coin, we'll trigger the custom error previously defined, passing along the `asset_id`.
 
@@ -207,14 +207,16 @@ To get the details for an item, we can create a read-only function that returns 
   lang="sway"
 />
 
-To return a value in a function, you can use the `return` keyword, similar to JavaScript. Alternatively, you can omit the semicolon in the last line to return that value like in Rust. Although both methods are effective.
+To return a value in a function, you can use the `return` keyword, similar to JavaScript. Alternatively, you can omit the semicolon in the last line to return that value like in Rust.
 
 ```sway
-fn my_function(num: u64) -> u64{
-    // returning the num variable
+fn my_function_1(num: u64) -> u64{
+    // returns the num variable
     return num;
-    
-    // this would also work:
+}
+
+fn my_function_2(num: u64) -> u64{
+    // returns the num variable
     num
 }
 ```

@@ -34,20 +34,6 @@ const NIGHTLY_GRAPHQL_COMPONENTS_CONFIG_PATH = path.join(
   './src/components.json'
 );
 
-// BETA-4 GRAPHQL DOCS COMPONENTS
-const BETA_4_GRAPHQL_DIRECTORY = path.join(
-  DOCS_DIRECTORY,
-  `./beta-4/${GRAPHQL_BOOK_NAME}`
-);
-const BETA_4_GRAPHQL_DOCS_DIRECTORY = path.join(
-  BETA_4_GRAPHQL_DIRECTORY,
-  './docs'
-);
-const BETA_4_GRAPHQL_COMPONENTS_CONFIG_PATH = path.join(
-  BETA_4_GRAPHQL_DIRECTORY,
-  './src/components.json'
-);
-
 // WALLET COMPONENTS
 const WALLET_BOOK_NAME = 'fuels-wallet';
 const WALLET_PATH = path.join(DOCS_DIRECTORY, WALLET_BOOK_NAME);
@@ -78,25 +64,6 @@ const NIGHTLY_WALLET_COMPONENTS_CONFIG_PATH = path.join(
   NIGHTLY_WALLET_DIRECTORY,
   './src/components.json'
 );
-
-// BETA-4 WALLET COMPONENTS
-const BETA_4_WALLET_PATH = path.join(
-  DOCS_DIRECTORY,
-  `beta-4/${WALLET_BOOK_NAME}`
-);
-const BETA_4_WALLET_DIRECTORY = path.join(
-  DOCS_DIRECTORY,
-  `./beta-4/${WALLET_BOOK_NAME}/packages/docs`
-);
-const BETA_4_WALLET_DOCS_DIRECTORY = path.join(
-  BETA_4_WALLET_DIRECTORY,
-  './docs'
-);
-const BETA_4_WALLET_COMPONENTS_CONFIG_PATH = path.join(
-  BETA_4_WALLET_DIRECTORY,
-  './src/components.json'
-);
-
 const completedExports = [];
 const completedObjects = [];
 
@@ -120,14 +87,6 @@ async function main() {
     NIGHTLY_GRAPHQL_COMPONENTS_CONFIG_PATH,
     'nightly-graphql.ts'
   );
-  // BETA-4 GRAPHQL DOCS COMPONENTS
-  await exportComponents(
-    BETA_4_GRAPHQL_DIRECTORY,
-    BETA_4_GRAPHQL_DOCS_DIRECTORY,
-    `beta-4/${GRAPHQL_BOOK_NAME}`,
-    BETA_4_GRAPHQL_COMPONENTS_CONFIG_PATH,
-    'beta-4-graphql.ts'
-  );
   // WALLET COMPONENTS
   await exportComponents(
     WALLET_PATH,
@@ -143,14 +102,6 @@ async function main() {
     `nightly/${WALLET_BOOK_NAME}`,
     NIGHTLY_WALLET_COMPONENTS_CONFIG_PATH,
     'nightly-wallet.ts'
-  );
-  // BETA-4 WALLET COMPONENTS
-  await exportComponents(
-    BETA_4_WALLET_PATH,
-    BETA_4_WALLET_DOCS_DIRECTORY,
-    `beta-4/${WALLET_BOOK_NAME}`,
-    BETA_4_WALLET_COMPONENTS_CONFIG_PATH,
-    'beta-4-wallet.ts'
   );
 }
 
@@ -426,6 +377,7 @@ async function exportComponents(
 ) {
   const componentsConfigFile = fs.readFileSync(configPath, 'utf8');
   const componentsConfig = JSON.parse(componentsConfigFile);
+  componentsConfig.ignore.push('HStack');
 
   const paths = await getMDXFilesFromFolder(docsDirectory);
   const components = findComponentsInMDXFiles(paths, componentsConfig);

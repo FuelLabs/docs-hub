@@ -111,3 +111,8 @@ Fuelnaut
 Ethernaut
 FuelnautLevel
 abiJSON
+Fuelet
+Metamask
+Devnet
+devnet
+pre
