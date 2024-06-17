@@ -194,7 +194,7 @@ In step 3, when the multisig holders decide to use the locked funds, we build a 
   lang="rust"
 />
 
-The correct wallet addresses configured in the configurables must sign the transactions. This information, loaded as witness data, will evaluate our predicate to true. It's crucial to provide enough correct, unique signatures; otherwise, the transaction will fail, as demonstrated in later tests. Since our test only requires 2 signatures, we need to provide just those.
+The correct wallet addresses configured in the configurables must sign the transactions. This information, loaded as witness data, will evaluate our predicate to be true. It's crucial to provide enough correct, unique signatures; otherwise, the transaction will fail, as demonstrated in later tests. Since our test only requires 2 signatures, we need to provide just those.
 
 <CodeImport
   file="../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs"
