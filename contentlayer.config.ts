@@ -63,6 +63,7 @@ const includeDirs = [
   "docs/contributing",
   "docs/sway-libs/docs/book/src",
   "docs/sway-standards/docs/src",
+  "docs/sway-by-example-lib/docs/src/",
   // NIGHTLY DOCS
   "docs/nightly/sway/docs/book/src",
   "docs/nightly/fuels-rs/docs/src",
@@ -72,6 +73,7 @@ const includeDirs = [
   "docs/nightly/fuels-wallet/packages/docs/docs",
   "docs/nightly/sway-libs/docs/book/src",
   "docs/nightly/sway-standards/docs/src",
+  "docs/sway-by-example-lib/docs/src/",
 ];
 
 const excludeDirs = [
