@@ -35,6 +35,12 @@
     "featured": false,
     "tags": ["fuel-core"]
   },
+  "fuelnaut": {
+    "title": "Fuelnaut",
+    "description": "Play The Fuelnaut: a security-focused smart contract game",
+    "featured": false,
+    "tags": []
+  },
   "installation": {
     "title": "Toolchain Installation",
     "description": "Install the Fuel toolchain and binaries.",
