@@ -64,6 +64,24 @@ export async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
+    case 'breaking-change-log':
+      paths = [
+        // BREAKING CHANGE LOG DOCS
+        './breaking-change-logdocs/src/*.md',
+        './breaking-change-log/docs/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
+    case 'nightly-breaking-change-log':
+      paths = [
+        // BREAKING CHANGE LOG DOCS
+        './nightly/breaking-change-log/docs/src/*.md',
+        './nightly/breaking-change-log/docs/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
     case 'forc':
       paths = [
         // FORC DOCS
