@@ -73,3 +73,9 @@
 [submodule "docs/chain-configuration"]
 	path = docs/chain-configuration
 	url = https://github.com/FuelLabs/chain-configuration
+[submodule "docs/breaking-change-log"]
+	path = docs/breaking-change-log
+	url = https://github.com/FuelLabs/breaking-change-log.git
+[submodule "docs/nightly/breaking-change-log"]
+	path = docs/nightly/breaking-change-log
+	url = https://github.com/FuelLabs/breaking-change-log.git
