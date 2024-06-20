@@ -70,6 +70,7 @@ export class Doc {
       .replace('docs/fuel-graphql-docs/', '')
       .replace('docs/sway/', '')
       .replace('docs/sway-standards/', '')
+      .replace('docs/sway-by-example-lib/', '')
       .replace('docs/fuel-specs/', '')}`;
 
     let pageLink = `${config.repository}${actualPath.replace(

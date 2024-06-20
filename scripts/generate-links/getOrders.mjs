@@ -17,6 +17,10 @@ const CONFIG = {
     type: 'mdbook',
     path: './sway-standards/docs/src/SUMMARY.md',
   },
+  'sway-by-example-lib': {
+    type: 'mdbook',
+    path: './sway-by-example-lib/docs/src/SUMMARY.md',
+  },
   'fuels-rs': {
     type: 'mdbook',
     path: './fuels-rs/docs/src/SUMMARY.md',

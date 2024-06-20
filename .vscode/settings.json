@@ -21,7 +21,8 @@
     "**/fuels-ts": true,
     "**/fuels-wallet": true,
     "**/fuelup": true,
-    "**/guides/examples": true
+    "**/guides/examples": true,
+    "**/sway-by-example-lib": true,
   },
   "git.ignoreLimitWarning": true,
   "[typescriptreact]": {

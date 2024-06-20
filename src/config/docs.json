@@ -53,6 +53,15 @@
       "image": ""
     }
   },
+  "sway-by-example-lib": {
+    "title": "Sway By Example Lib",
+    "slug": "sway-by-example-lib",
+    "repository": "https://github.com/FuelLabs/sway-by-example-lib",
+    "ogTags": {
+      "description": "An introduction to Sway with simple examples",
+      "image": ""
+    }
+  },
   "fuels-rs": {
     "title": "Fuel Rust SDK",
     "slug": "fuels-rs",
