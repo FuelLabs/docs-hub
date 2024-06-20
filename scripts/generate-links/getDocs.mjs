@@ -67,7 +67,7 @@ export async function getDocs(key, order) {
     case 'breaking-change-log':
       paths = [
         // BREAKING CHANGE LOG DOCS
-        './breaking-change-logdocs/src/*.md',
+        './breaking-change-log/docs/src/*.md',
         './breaking-change-log/docs/src/**/*.md',
         // IGNORE ALL SUMMARY PAGES
         '!**/SUMMARY.md',
