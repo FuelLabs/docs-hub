@@ -69,6 +69,11 @@ export async function getDocs(key, order) {
         // SWAY BY EXAMPLE DOCS
         './sway-by-example-lib/docs/src/*.md',
         './sway-by-example-lib/docs/src/**/*.md',
+    case 'breaking-change-log':
+      paths = [
+        // BREAKING CHANGE LOG DOCS
+        './breaking-change-log/docs/src/*.md',
+        './breaking-change-log/docs/src/**/*.md',
         // IGNORE ALL SUMMARY PAGES
         '!**/SUMMARY.md',
       ];
@@ -78,6 +83,11 @@ export async function getDocs(key, order) {
         // SWAY BY EXAMPLE DOCS
         './nightly/sway-by-example-lib/docs/src/*.md',
         './nightly/sway-by-example-lib/docs/src/**/*.md',
+    case 'nightly-breaking-change-log':
+      paths = [
+        // BREAKING CHANGE LOG DOCS
+        './nightly/breaking-change-log/docs/src/*.md',
+        './nightly/breaking-change-log/docs/src/**/*.md',
         // IGNORE ALL SUMMARY PAGES
         '!**/SUMMARY.md',
       ];

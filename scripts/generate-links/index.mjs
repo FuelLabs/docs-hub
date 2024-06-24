@@ -102,6 +102,8 @@ function getSidebarName(key) {
       break;
     case 'sway-by-example-lib':
       newKey = 'Sway By Example';
+    case 'breaking-change-log':
+      newKey = 'Breaking Change Notices';
       break;
     default:
   }
@@ -111,6 +113,7 @@ function getSidebarName(key) {
 
 function handleAllOrders(allOrders, folderPath, filename) {
   const correctOrder = [
+    'breaking-change-log',
     'intro',
     'sway',
     'sway-libs',

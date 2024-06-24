@@ -79,3 +79,9 @@
 [submodule "docs/nightly/sway-by-example-lib"]
 	path = docs/nightly/sway-by-example-lib
 	url = https://github.com/FuelLabs/sway-by-example-lib.git
+[submodule "docs/breaking-change-log"]
+	path = docs/breaking-change-log
+	url = https://github.com/FuelLabs/breaking-change-log.git
+[submodule "docs/nightly/breaking-change-log"]
+	path = docs/nightly/breaking-change-log
+	url = https://github.com/FuelLabs/breaking-change-log.git
