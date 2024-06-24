@@ -102,6 +102,7 @@ function getSidebarName(key) {
       break;
     case 'sway-by-example-lib':
       newKey = 'Sway By Example';
+      break;
     case 'breaking-change-log':
       newKey = 'Breaking Change Notices';
       break;

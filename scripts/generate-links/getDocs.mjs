@@ -69,6 +69,8 @@ export async function getDocs(key, order) {
         // SWAY BY EXAMPLE DOCS
         './sway-by-example-lib/docs/src/*.md',
         './sway-by-example-lib/docs/src/**/*.md',
+      ];
+      break;
     case 'breaking-change-log':
       paths = [
         // BREAKING CHANGE LOG DOCS
@@ -83,6 +85,8 @@ export async function getDocs(key, order) {
         // SWAY BY EXAMPLE DOCS
         './nightly/sway-by-example-lib/docs/src/*.md',
         './nightly/sway-by-example-lib/docs/src/**/*.md',
+      ];
+      break;
     case 'nightly-breaking-change-log':
       paths = [
         // BREAKING CHANGE LOG DOCS
