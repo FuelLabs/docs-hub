@@ -20,6 +20,8 @@ const targetDirs = [
   './docs/nightly/sway-libs',
   './docs/sway-standards',
   './docs/nightly/sway-standards',
+  './docs/breaking-change-log',
+  './docs/nightly/breaking-change-log',
 ];
 
 // Exclusions for each type of directory
@@ -59,6 +61,9 @@ const exclusions = {
     'fuel-graphql-docs/docs',
     'fuel-graphql-docs/examples',
     'fuel-graphql-docs/src',
+  ],
+  breaking_change_log: [
+    'breaking-change-log/docs',
   ],
 };
 

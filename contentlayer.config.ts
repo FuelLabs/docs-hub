@@ -63,6 +63,7 @@ const includeDirs = [
   'docs/contributing',
   'docs/sway-libs/docs/book/src',
   'docs/sway-standards/docs/src',
+  'docs/breaking-change-log/docs/src',
   // NIGHTLY DOCS
   'docs/nightly/sway/docs/book/src',
   'docs/nightly/fuels-rs/docs/src',
@@ -72,6 +73,7 @@ const includeDirs = [
   'docs/nightly/fuels-wallet/packages/docs/docs',
   'docs/nightly/sway-libs/docs/book/src',
   'docs/nightly/sway-standards/docs/src',
+  'docs/nightly/breaking-change-log/docs/src',
 ];
 
 const excludeDirs = [
@@ -90,12 +92,14 @@ const excludeDirs = [
   'docs/sway-libs/docs/book/src/SUMMARY.md',
   'docs/sway-standards/docs/src/SUMMARY.md',
   'docs/guides/docs/migration-guide/breaking-change-log/node_modules',
+  'docs/breaking-change-log/docs/src/SUMMARY.md',
   // NIGHTLY DOCS
   'docs/nightly/sway/docs/book/src/SUMMARY.md',
   'docs/nightly/fuels-rs/docs/src/SUMMARY.md',
   'docs/nightly/fuel-specs/src/SUMMARY.md',
   'docs/nightly/sway-libs/docs/book/src/SUMMARY.md',
   'docs/nightly/sway-standards/docs/src/SUMMARY.md',
+  'docs/nightly/breaking-change-log/docs/src/SUMMARY.md',
 ];
 
 export default makeSource({

@@ -5,6 +5,10 @@ import processSummary from './processSummary.mjs';
 import { processVPConfig } from './processVPConfig.mjs';
 
 const CONFIG = {
+  'breaking-change-log': {
+    type: 'mdbook',
+    path: './breaking-change-log/docs/src/SUMMARY.md',
+  },
   sway: {
     type: 'mdbook',
     path: './sway/docs/book/src/SUMMARY.md',
