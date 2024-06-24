@@ -40,11 +40,5 @@
     "description": "Install the Fuel toolchain and binaries.",
     "featured": false,
     "tags": ["Getting Started"]
-  },
-  "migration_guide": {
-    "title": "Migration Guide",
-    "description": "Sway and SDK's breaking changes reference.",
-    "featured": false,
-    "tags": []
   }
 }

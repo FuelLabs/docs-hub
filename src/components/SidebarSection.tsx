@@ -52,6 +52,9 @@ export function SidebarSection({
       case 'Sway-standards':
         githubLink = 'https://github.com/FuelLabs/sway-standards';
         break;
+      case 'Breaking-change-log':
+          githubLink = 'https://github.com/FuelLabs/breaking-change-log';
+          break;
       default:
         break;
     }

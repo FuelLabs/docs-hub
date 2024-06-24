@@ -70,6 +70,7 @@ export class Doc {
       .replace('docs/fuel-graphql-docs/', '')
       .replace('docs/sway/', '')
       .replace('docs/sway-standards/', '')
+      .replace('docs/breaking-change-log/', '')
       .replace('docs/fuel-specs/', '')}`;
 
     let pageLink = `${config.repository}${actualPath.replace(
@@ -89,7 +90,10 @@ export class Doc {
       }
       const version = getDocVersion(pageLink, versionSet);
       // TODO: remove the exception for sway-standards once version is bumped past 0.5.0
-      if (version !== 'master' && !pageLink.includes("/FuelLabs/sway-standards")) {
+      if (
+        version !== 'master' &&
+        !pageLink.includes('/FuelLabs/sway-standards')
+      ) {
         pageLink = pageLink
           .replace('/tree/master/', `/tree/${version}/`)
           .replace('/blob/master/', `/blob/${version}/`);

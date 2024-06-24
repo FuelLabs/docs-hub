@@ -1,4 +1,13 @@
 {
+  "breaking-change-log": {
+    "title": "Breaking Change Notices",
+    "slug": "breaking-change-log",
+    "repository": "https://github.com/FuelLabs/breaking-change-log",
+    "ogTags": {
+      "description": "Fuel Network Breaking Change Log",
+      "image": ""
+    }
+  },
   "intro": {
     "title": "Intro",
     "slug": "intro",
