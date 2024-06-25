@@ -24,7 +24,7 @@ export function Pre({
   __lines: lines = 0,
   ...props
 }: PreProps) {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true);
   const { theme } = useTheme();
   const needExpand = lines >= 32;
   // biome-ignore lint/suspicious/noExplicitAny:
