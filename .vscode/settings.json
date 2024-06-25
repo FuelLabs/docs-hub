@@ -22,6 +22,7 @@
     "**/fuels-wallet": true,
     "**/fuelup": true,
     "**/guides/examples": true,
+    "**/sway-by-example-lib": true,
     "**/breaking-change-log": true
   },
   "git.ignoreLimitWarning": true,

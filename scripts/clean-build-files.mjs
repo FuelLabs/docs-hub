@@ -20,6 +20,8 @@ const targetDirs = [
   './docs/nightly/sway-libs',
   './docs/sway-standards',
   './docs/nightly/sway-standards',
+  './docs/sway-by-example-lib',
+  './docs/nightly/sway-by-example-lib',
   './docs/breaking-change-log',
   './docs/nightly/breaking-change-log',
 ];
@@ -41,6 +43,10 @@ const exclusions = {
     'sway-standards/docs',
     'sway-standards/examples',
     'sway-standards/Cargo.toml',
+  ],
+  sway_by_example_lib: [
+    'sway-by-example-lib/docs',
+    'sway-by-example-lib/examples',
   ],
   fuels_rs: [
     'fuels-rs/Cargo.toml',

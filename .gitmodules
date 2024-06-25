@@ -73,6 +73,12 @@
 [submodule "docs/chain-configuration"]
 	path = docs/chain-configuration
 	url = https://github.com/FuelLabs/chain-configuration
+[submodule "docs/sway-by-example-lib"]
+	path = docs/sway-by-example-lib
+	url = https://github.com/FuelLabs/sway-by-example-lib.git
+[submodule "docs/nightly/sway-by-example-lib"]
+	path = docs/nightly/sway-by-example-lib
+	url = https://github.com/FuelLabs/sway-by-example-lib.git
 [submodule "docs/breaking-change-log"]
 	path = docs/breaking-change-log
 	url = https://github.com/FuelLabs/breaking-change-log.git
