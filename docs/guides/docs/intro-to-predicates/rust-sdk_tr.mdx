@@ -1,0 +1,288 @@
+---
+başlık: Pas Testi
+Kategori: Yüklemlere Giriş
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Yüklemin test edilmesi
+
+Hadi tekrar MultiSig projemize geri dönelim!
+
+```sh
+cd ../../multisig-predicate/predicate
+```
+
+## Rust'ta Test Şablonu Oluşturma
+
+Daha önce yaptığımız gibi predicate proje dizininde `cargo-generate` ile bu adımları tekrar izleyin:
+
+1. cargo-generate` programını yükleyin:
+
+``bash
+cargo install cargo-generate --locked
+```
+
+{/*markdownlint-disable*/}
+2. Şablonu oluşturun:
+{/*markdownlint-disable*/}
+
+<TestAction
+id=“cargo-generate-test”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/multisig-predicate/predicate/'
+}}
+/>
+
+```bash
+cargo generate --init fuellabs/sway templates/sway-test-rs --name sway-store
+```
+
+## İthalat
+
+Şablon kodu silin ve aşağıdaki içe aktarmaları koşum dosyanıza kopyalayın. İki ana içe aktarıma dikkat etmek önemlidir: Açık nedenlerden dolayı `predicates` ve işlemleri oluşturmak için kullanacağımız `ScriptTransactionBuilder`. Bu işlemler yerel ağımıza yayınlanmadan önce imzalanmalıdır.
+
+<TestAction
+id=“multisig-predicate-test-imports”
+action={{
+  isim: 'writeToFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/tests/harness.rs'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs”
+  comment=“imports”
+  commentType=“//”
+  lang=“rust”
+/>
+
+Sözleşmeler için Rust testine benzer şekilde, onunla etkileşim kurmak için ABI (Application Binary Interface) yüklemini içe aktaracağız. Yükleminizin adının çalıştığınız yüklemle eşleştiğinden emin olun.
+
+<TestAction
+id=“multisig-predicate-test-abi”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/tests/harness.rs'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs”
+  comment=“predicate_abi”
+  commentType=“//”
+  lang=“rust”
+/>
+
+## Kurulum
+
+Sway projeleri için Rust testlerine aşina iseniz, kurulumun çoğu benzer olacaktır. Setup_wallets_and_network` fonksiyonunu kopyalayıp koşum dosyanıza yapıştırın.
+
+<TestAction
+id=“multisig-predicate-test-setup”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/tests/harness.rs'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs”
+  comment=“kurulum”
+  commentType=“//”
+  lang=“rust”
+/>
+
+Üç temel kurulum adımı şunlardır:
+
+1. Daha sonra testlerde göreceğiniz yapılandırılabilirler aracılığıyla multisig'imizin sahibi olarak hareket edecek cüzdanları yapılandırmak.
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs”
+  comment=“wallet_setup”
+  commentType=“//”
+  lang=“rust”
+/>
+
+{/*markdownlint-disable*/}
+2. Varsayılan jetonu (sıfırıncı adres) ayarlayın ve her cüzdana bazı jetonlar yükleyin.
+{/*markdownlint-disable*/}
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs”
+  comment=“token_setup”
+  commentType=“//”
+  lang=“rust”
+/>
+
+{/*markdownlint-disable*/}
+3. Ağı işlemimizi yayınlamak için hazırlayarak, daha sonra yüklemden tokenların kilidini başarıyla açmamızı sağlar.
+{/*markdownlint-disable*/}
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs”
+  comment=“network_setup”
+  commentType=“//”
+  lang=“rust”
+/>
+
+Yüklem adresi deterministik olduğundan, her seferinde farklı bir adresle konuşlandırılan akıllı sözleşmelerde yaptığımız gibi kopyalamamız gerekmez. Yüklemi oluşturmak için SDK'lardan yararlanabilir ve hatasız bir şekilde doğru adresle çalıştığımızdan emin olabiliriz!
+
+## Test Durumları
+
+### 3 imzadan geçerli 2'si
+
+Şimdi, gerçek dünya senaryosunu simüle etmek için yapacağımız işlem sırasını gözden geçirelim, aşağıdaki ilk testi kopyalayıp yapıştıralım ve adım adım inceleyelim:
+
+<TestAction
+id=“multisig-predicate-test-valid-two-of-three”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/tests/harness.rs'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs”
+  comment=“ordered_two_signatures”
+  commentType=“//”
+  lang=“rust”
+/>
+
+1. Bir grup veya birey, fonları koruyacak cüzdanları belirleyerek multisig'lerini oluşturur.
+2. Yüklemi finanse etmek.
+3. Bir işlem oluşturarak ve orijinal cüzdanların bunu imzalamasını sağlayarak gerektiğinde tokenların çıkarılması.
+4. Yüklemdeki fonların kilidini açmak için işlemin yayınlanması.
+
+1. adım için, daha önce de belirtildiği gibi, gerekli imza sayısını (3'e kadar) ve fonlarımızı koruyacak 3 adresi yapılandırdığımızda. ABI içe aktarıldığında otomatik olarak bir `PredicateNameConfigurable` tipi yüklenecektir. Bizim durumumuzda bu `MultiSigConfigurables` olacaktır. Her bir yapılandırılabiliri yüklemenize yardımcı olmak için karşılık gelen bir with_configurable işlevi olacaktır. Bizim durumumuzda, `with_REQUIRED_SIGNATURES` ve `with_SIGNERS` fonksiyonlarının her ikisi de yüklenmiştir!
+
+Ne kadar kullanışlı!
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs”
+  comment=“configurables”
+  commentType=“//”
+  lang=“rust”
+/>
+
+Ardından, kişiselleştirilmiş yüklem örneğimizi oluşturmak için orijinal yüklem ikilimizi yeni yapılandırılabilirlerimizle yükleyeceğiz. Basitçe `with_configurables` fonksiyonunu kullanarak yapılandırılabilirlerinizi girin ve bu bize girdilerimize dayalı benzersiz bir yüklem kökü verecektir.
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs”
+  comment=“predicate_test”
+  commentType=“//”
+  lang=“rust”
+/>
+
+2. adımda, yeni oluşturulan yüklem kökümüze fon aktarmak diğer blok zinciri aktarımları kadar basittir.
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs”
+  comment=“fund_predicate”
+  commentType=“//”
+  lang=“rust”
+/>
+
+3. adımda, multisig sahipleri kilitli fonları kullanmaya karar verdiğinde, girdileri ve çıktıları belirten bir işlem oluştururuz. Çıktılara çok dikkat edin; yüklemden gelen tokenların nereye gideceğini, hangi yerel varlığı içerdiğini ve miktarını belirtmemiz gerekir. Esasen, yüklemin içine gönderilen orijinal temel varlığın bir kısmını çıkarıyoruz.
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs”
+  comment=“transaction_building”
+  commentType=“//”
+  lang=“rust”
+/>
+
+Yapılandırılabilirlerde yapılandırılan doğru cüzdan adresleri işlemleri imzalamalıdır. Tanık verisi olarak yüklenen bu bilgi, yüklemimizi true olarak değerlendirecektir. Yeterince doğru, benzersiz imza sağlamak çok önemlidir; aksi takdirde, daha sonraki testlerde gösterildiği gibi işlem başarısız olur. Testimiz yalnızca 2 imza gerektirdiğinden, yalnızca bunları sağlamamız gerekir.
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs”
+  comment=“sign_transaction”
+  commentType=“//”
+  lang=“rust”
+/>
+
+Değerlendirme doğru bir şekilde yapıldıktan sonra, tek yapmamız gereken işlemi yayınlamaktır ve istenen fonlar cüzdan 1'e geri dönmelidir.
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs”
+  comment=“broadcast_transaction”
+  commentType=“//”
+  lang=“rust”
+/>
+
+### Geçerli sırasız 3'lü imza
+
+İkinci test olan `multisig_mixed_three_of_three` için kurulum aynı şemayı izler ve işlem imzalamasının geçerli cüzdanlar tarafından herhangi bir sırada yapılabileceğini gösterir.
+
+<TestAction
+id=“multisig-predicate-test-valid-3-of-3”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/tests/harness.rs'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs”
+  comment=“unordered_three_signatures”
+  commentType=“//”
+  lang=“rust”
+/>
+
+### Insufficient valid Signatures
+
+The same principle applies to the third test, `multisig_not_enough_signatures_fails`, where the transaction will fail if there aren't enough signatures.
+
+<TestAction
+id="multisig-predicate-test-insufficient-1-of-3"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/tests/harness.rs'
+}}
+/>
+
+<CodeImport
+  file="../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs"
+  comment="not_enough_signatures"
+  commentType="//"
+  lang="rust"
+/>
+
+## Checkpoint
+
+If you have followed the previous steps correctly, your `harness.rs` test file should look like this:
+
+<CodeImport
+  file="../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs"
+  comment="all"
+  commentType="//"
+  lang="rust"
+/>
+
+## Running the Tests
+
+To run the test located in `tests/harness.rs`, use:
+
+<TestAction
+id="cargo-test"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/multisig-predicate/predicate/'
+}}
+/>
+
+```sh
+cargo test
+```
+
+If you want to print outputs to the console during tests, use the `nocapture` flag:
+
+```sh
+cargo test -- --nocapture
+```
+
+Congratulations on making it this far! We've confirmed that our Multisig works.
+
+Predicates aren't meant to be intimidating. State-minimized DeFi applications should be the standard, rather than resorting to gas golfing or writing assembly code for these optimizations. Now that you have predicates in your toolbox, go out and explore what other state-minimized DeFi applications you can build!

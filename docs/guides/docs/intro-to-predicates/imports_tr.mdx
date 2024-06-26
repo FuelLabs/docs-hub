@@ -1,0 +1,97 @@
+---
+başlık: İthalat
+Kategori: Yüklemlere Giriş
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# İthalat
+
+Predicate anahtar sözcüğü, programın bir yüklem olduğunu tanımlamak için kullanılır.
+
+<TestAction
+id=“sway-program-türü”
+action={{
+  isim: 'writeToFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/src/main.sw”
+  comment=“predicate”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Yüklemimizde [Sway standart kütüphanesini] (https://github.com/FuelLabs/sway/tree/master/sway-lib-std) kullanacağız. Predicate anahtar sözcüğü hariç şablon kodunu silin ve aşağıdaki içe aktarımları kopyalayın:
+
+<TestAction
+id=“sway-import”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/src/main.sw”
+  comment=“import_parent”
+  commentType=“//”
+  lang=“sway”
+/>
+
+## İşlemler
+
+MultiSig'i oluşturmak için, standart kütüphane aracılığıyla işlemden üç özel bileşen elde etmemiz gerekir:
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/src/main.sw”
+  comment=“import_tx”
+  commentType=“//”
+  lang=“sway”
+/>
+
+1. İşlem Tanık Verileri: Bunu işleme imza eklemek için kullanacağız.
+2. İşlem Tanık Sayısı: Bu, eklenen imza sayısını belirlememize yardımcı olacaktır.
+3. İşlem Kimliği: İşlemin karması.
+
+## Sabitler
+
+Sabit kütüphanesinden, yer tutucu olarak `ZERO_B256` kullanacağız.
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/src/main.sw”
+  comment=“import_zero_b256”
+  commentType=“//”
+  lang=“sway”
+/>
+
+## İmzalar
+
+İmzalar `b512` tipinde olduğu için `b512`ye ihtiyacımız olacak.
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/src/main.sw”
+  comment=“import_b512”
+  commentType=“//”
+  lang=“sway”
+/>
+
+## Eliptik Eğri
+
+Son olarak, eliptik eğri kurtarma adresinin kısaltması olan `ec_recover_address` kullanacağız. Bu, bir veri parçasını imzalayan adresi kriptografik olarak kurtarmamızı sağlayan bir işlevdir:
+
+```rust
+signing_address = ec_recover_address(signed_data, original_data)
+```
+
+Bu adım, fonları korumak ve yalnızca doğru cüzdanların gerekli imzaları sağlayabilmesini sağlamak için çok önemlidir.
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/src/main.sw”
+  comment=“import_ecr”
+  commentType=“//”
+  lang=“sway”
+/>

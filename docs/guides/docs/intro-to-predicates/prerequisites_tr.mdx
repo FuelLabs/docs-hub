@@ -1,0 +1,114 @@
+---
+başlık: Ön Koşullar
+Kategori: Yüklemlere Giriş
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Önkoşullar
+
+## Kurulum
+
+<TextImport
+  file=“../installation/index.mdx”
+  comment=“install_fuelup”
+  commentType=“{/*”
+/>
+
+<CodeImport
+  file=“../installation/index.mdx”
+  comment=“install_fuelup_command”
+  commentType=“{/*”
+  lang=“sh”
+  trim=“true”
+/>
+
+<TextImport
+  file=“../counter-dapp/building-a-smart-contract.mdx”
+  comment=“install_help”
+  commentType=“{/*”
+/>
+
+<TextImport
+  file=“../installation/index.mdx”
+  comment=“install_VSCode_extensions”
+  commentType=“{/*”
+/>
+
+### Zaten `fuelup` yüklü mü?
+
+<TextImport
+  file=“../counter-dapp/building-a-smart-contract.mdx”
+  comment=“already_installed”
+  commentType=“{/*”
+/>
+
+## Proje Kurulumu
+
+Yeni boş bir klasörle başlayın ve `multisig-predicate` olarak adlandırın.
+
+<TestAction
+id=“create-project-folder”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing'
+}}
+/>
+
+```sh
+mkdir multisig-predicate
+```
+
+multisig-predicate` klasörüne gidin:
+
+```sh
+cd multisig-predicate
+```
+
+Terminalinizde `predicate` adında yeni bir sway projesi oluşturarak başlayın:
+
+<TestAction
+id=“create-predicate”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/multisig-predicate'
+}}
+/>
+
+```sh
+forc new --predicate yüklem
+```
+
+> İpucu: Öntanımlı **contract** program türü yerine **predicate** temelinde bir proje oluşturmak istediğinizi `forc`a söyleyen `--predicate` bayrağına dikkat edin.
+
+forc` komutundan oluşturulan proje yapınız aşağıdaki gibi olmalıdır:
+
+<TestAction
+id=“predicate-tree”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/multisig-predicate'
+}}
+/>
+
+```sh
+ağaç yüklemi
+```
+
+```sh
+yüklem
+├── Forc.toml
+└── src
+    └── main.sw
+
+1 dizin, 2 dosya
+```
+
+Yüklem klasörünüze taşıyın:
+
+```sh
+cd yüklem
+```
+
+VSCode'da, `predicate` klasörü içindeki `src` klasörüne gidin, burada `main.sw` adlı bir dosya bulacaksınız. Bu, Sway yükleminizin yazılacağı dosyadır.

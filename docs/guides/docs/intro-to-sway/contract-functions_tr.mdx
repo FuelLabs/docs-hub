@@ -1,0 +1,339 @@
+---
+başlık: Fonksiyonlar
+Kategori: Sway'e Giriş
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Sözleşme İşlevlerinin Tanımlanması
+
+Son olarak, sözleşme fonksiyonlarımızı oluşturmanın zamanı geldi. Daha önce özetlediğimiz ABI'yi kopyalayıp yapıştırarak başlayın. Sözleşme içindeki fonksiyonların ABI ile *tam olarak* uyumlu olduğundan emin olmak çok önemlidir; aksi takdirde derleyici bir hata üretecektir. Şimdi, her bir fonksiyonun sonundaki noktalı virgülleri küme parantezleri ile değiştirin. Ayrıca, `abi SwayStore` ifadesini aşağıda gösterildiği gibi `impl SwayStore for Contract` olarak değiştirin:
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/docs_hub_misc.sw”
+  comment=“contract_skeleton”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Bu kılavuz ilk olarak yukarıdaki tamamlanmış fonksiyonların her birini gösterecektir. Daha sonra, her bir bölümü açıklamak, belirli sözdizimini netleştirmek ve Sway'deki temel kavramları tartışmak için parçalara ayıracağız.
+
+## 1. Bir öğeyi listeleme
+
+İlk işlevimiz satıcıların bir ürünü satış için listelemesini sağlar. Öğenin fiyatını belirtebilir ve öğe hakkında harici olarak depolanan verilere başvuran bir dize sağlayabilirler.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“list_item_parent”
+  commentType=“//”
+  lang=“sway”
+/>
+
+### Liste depolama alanı güncelleniyor
+
+İlk adım, öğenin kimliği olarak kullanılacak olan `item_counter`ın depoda artırılmasını içerir. Sway'de tüm depolama değişkenleri `storage` anahtar sözcüğü içinde yer alır, böylece netlik sağlanır ve diğer değişken adlarıyla çakışmalar önlenir. Bu aynı zamanda geliştiricilerin depolama alanına ne zaman ve nerede erişildiğini veya değiştirildiğini kolayca takip etmelerini sağlar. Sway'deki standart kütüphane, sözleşme depolamasına erişmek veya onu değiştirmek için `read()`, `write()` ve `try_read()` yöntemleri sağlar. Başlatılmamış depolama alanına erişimden kaynaklanan olası sorunları önlemek için mümkün olduğunda `try_read()` kullanılması tavsiye edilir. Bu durumda, listelenen öğelerin mevcut sayısını okuyor, değiştiriyor ve ardından iyi organize edilmiş ve çakışmasız depolama sisteminden yararlanarak güncellenmiş sayıyı depolama alanına geri depoluyoruz.
+
+Bir fonksiyon bir `Option` veya `Result` tipi döndürdüğünde, iç değerine erişmek için `unwrap()` fonksiyonunu kullanabiliriz. Örneğin, `try_read()` bir `Option` türü döndürür. Eğer `Some` döndürürse, içerdiği değeri alırız; ancak `None` döndürürse, sözleşme çağrısı hemen durdurulur.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“list_item_increment”
+  commentType=“//”
+  lang=“sway”
+/>
+
+### Mesaj göndericisini alma
+
+Daha sonra, öğeyi listeleyen hesabın `Identity`sini alacağız.
+
+Kimlik`i elde etmek için standart kütüphaneden `msg_sender` fonksiyonunu kullanın. msg_sender` mevcut fonksiyon çağrısını başlatan varlığın adresini (bir kullanıcı adresi veya başka bir sözleşme adresi olabilir) temsil eder.
+
+Bu fonksiyon, OK veya hata olabilen bir enum tipi olan bir `Result` verir. Hata ile sonuçlanabilecek bir değer beklerken `Result` türünü kullanın. Örneğin, `msg_sender` durumunda, harici bir arayan söz konusu olduğunda ve jeton girdi sahipleri farklı olduğunda, arayanı tanımlamak imkansız hale gelir. Bu tür uç durumlarda, bir `Err(AuthError)` döndürülür.
+
+```sway
+enum Result<T, E> {
+    Tamam (T),
+    Err(E),
+}
+```
+
+Sway'de, `let` veya `const` kullanarak bir değişken tanımlayabilirsiniz.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“list_item_sender”
+  commentType=“//”
+  lang=“sway”
+/>
+
+İç değeri almak için `unwrap` yöntemini kullanabilirsiniz. Bu yöntem, `Result` tamamsa içerdiği değeri döndürür ve sonuç bir hataya işaret ediyorsa bir panik tetikler.
+
+### Yeni bir öğe oluşturma
+
+Item` yapısını kullanarak yeni bir öğe oluşturabilirsiniz. ID olarak depodaki `item_counter` değerini kullanın, girdi parametrelerine göre fiyatı ve meta verileri ayarlayın ve `total_bought` değerini 0 olarak başlatın.
+
+Owner` alanı bir `Identity` türü gerektirdiğinden, `msg_sender()`dan elde edilen sender değerini kullanmalısınız.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“list_item_new_item”
+  commentType=“//”
+  lang=“sway”
+/>
+
+### Bir StorageMap'i Güncelleme
+
+Son olarak, `insert` yöntemini kullanarak öğeyi depolama alanındaki `item_map`e ekleyin. Anahtar için aynı ID'yi kullanın ve öğeyi karşılık gelen değer olarak belirleyin.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“list_item_insert”
+  commentType=“//”
+  lang=“sway”
+/>
+
+## 2. Bir ürün satın almak
+
+Daha sonra, alıcıların listelenen ürünleri satın almasına izin vermeyi amaçlıyoruz. Bunu başarmak için şunları yapmamız gerekecek:
+
+1. Alıcıdan istenen ürün kimliğini bir fonksiyon parametresi olarak kabul edin.
+2. Alıcının geçerli paralarla doğru fiyatı ödediğinden emin olun.
+3. Bu öğe için `toplam_satınalma` sayısını artırın.
+4. Öğenin maliyetinden bir sözleşme ücreti düşer ve kalan tutarı satıcıya aktarır.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“buy_item_parent”
+  commentType=“//”
+  lang=“sway”
+/>
+
+### Ödemenin doğrulanması
+
+Standart kütüphanedeki `msg_asset_id` fonksiyonunu kullanarak işlemde transfer edilen coinlerin varlık ID'sini elde edebiliriz.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“buy_item_asset”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Daha sonra, gönderilen varlığın doğru varlık olduğundan emin olmak için `require` deyimini kullanacağız.
+
+Require` deyimi iki argüman kabul eder: bir koşul ve koşul yanlış olduğunda günlüğe kaydedilen bir değer. Koşul yanlış olarak değerlendirilirse, tüm işlem geri alınır ve hiçbir değişiklik yapılmaz.
+
+Bu durumda koşul, `AssetId::base()` kullanılarak `asset_id`nin temel varlık kimliğiyle (temel blok zinciriyle ilişkili varsayılan varlık) eşleşip eşleşmediğini kontrol eder. Örneğin, temel blok zinciri Ethereum ise, temel varlık ETH olacaktır.
+
+Varlıkta bir uyumsuzluk varsa, örneğin birisi farklı bir coin kullanarak bir öğe satın almaya çalışırsa, daha önce tanımlanan özel hatayı tetikleriz ve `asset_id`yi iletiriz.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“buy_item_require_not_base”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Daha sonra, standart kütüphaneden `msg_amount` fonksiyonunu kullanarak işlem dahilinde alıcı tarafından iletilen madeni para miktarını alabiliriz.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“buy_item_msg_amount”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Gönderilen tutarın ürünün fiyatından az olmadığından emin olmak için, `item_id` parametresini kullanarak ürün ayrıntılarını almalıyız.
+
+Bir depolama eşlemesinde belirli bir anahtarın değerini elde etmek için, anahtar değerinin aktarıldığı `get` yöntemi kullanışlıdır. Depolama erişimini eşlemek için `try_read()` yöntemi kullanılır. Bu yöntem bir `Result` türü ürettiğinden, öğe değerini çıkarmak için `unwrap` yöntemi uygulanabilir.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“buy_item_get_item”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Sway'de, ister `let` ister `const` ile bildirilmiş olsun, tüm değişkenler varsayılan olarak değişmezdir. Herhangi bir değişkenin değerini değiştirmek için, `mut` anahtar sözcüğü kullanılarak mutable olarak bildirilmesi gerekir. Öğenin `total_bought` değerini güncellemeyi planladığımız için, bu değer mutable olarak tanımlanmalıdır.
+
+Ek olarak, öğe için gönderilen jeton miktarının öğenin fiyatından az olmadığından emin olmak önemlidir.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“buy_item_require_ge_amount”
+  commentType=“//”
+  lang=“sway”
+/>
+
+### Satın alma deposu güncelleniyor
+
+Öğenin `total_bought` alan değerini artırabilir ve daha sonra `item_map` içine yeniden ekleyebiliriz. Bu eylem, önceki değeri revize edilmiş öğe ile değiştirecektir.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“buy_item_require_update_storage”
+  commentType=“//”
+  lang=“sway”
+/>
+
+### Ödeme aktarılıyor
+
+Son olarak, satıcıya yapılan ödemeyi işleme koyabiliriz. Varlıkların yalnızca [reentrancy saldırılarını] önlemek için tüm depolama değişiklikleri tamamlandıktan sonra aktarılması önerilir (/docs/sway/blockchain-development/calling_contracts/#handling-re-entrancy).
+
+Belirli bir fiyat eşiğine ulaşan öğeler için, koşullu bir `if` deyimi kullanılarak bir ücret kesilebilir. Sway`deki `if` deyimlerinin yapısı, `()` parantezleri dışında JavaScript`tekini yansıtır.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“buy_item_require_transferring_payment”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Yukarıda bahsedilen if koşulunda, iletilen miktarın 100.000.000'u aşıp aşmadığını değerlendiriyoruz. 100000000` gibi büyük sayılarda netlik sağlamak için bunu `100_000_000` olarak gösterebiliriz. Bu kontratın temel varlığı ETH ise, Fuel'in 9 ondalıklı bir sistem kullandığı göz önüne alındığında bu 0,1 ETH'ye eşittir.
+
+Tutar 0,1 ETH'yi aşarsa, bir komisyon belirlenir ve ardından toplamdan düşülür.
+
+Öğenin sahibine ödemeyi kolaylaştırmak için `transfer` işlevi kullanılır. Standart kütüphaneden alınan bu işlev üç parametre gerektirir: coinlerin gönderildiği Kimlik, coinin varlık kimliği ve transfer için coin miktarı.
+
+## 3. Bir öğe alın
+
+Bir öğenin ayrıntılarını almak için, belirli bir öğe kimliği için `Item` yapısını döndüren salt okunur bir işlev oluşturabiliriz.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“get_item”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Bir fonksiyonda bir değer döndürmek için JavaScript'e benzer şekilde `return` anahtar sözcüğünü kullanabilirsiniz. Alternatif olarak, Rust'ta olduğu gibi bu değeri döndürmek için son satırdaki noktalı virgülü atlayabilirsiniz.
+
+```sway
+fn my_function_1(num: u64) -> u64{
+    // num değişkenini döndürür
+    return num;
+}
+
+fn my_function_2(num: u64) -> u64{
+    // num değişkenini döndürür
+    num
+}
+```
+
+## 4. Sahibi başlatın
+
+Bu yöntem, sözleşme için sahibin `Kimliğini` yalnızca bir kez ayarlar.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“initialize_owner_parent”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Bu işlevin yalnızca bir kez, özellikle de sözleşmenin konuşlandırılmasından hemen sonra çağrılabilmesini sağlamak için, sahibinin değerinin `None` olarak ayarlı kalması zorunludur. Bu doğrulamayı, bir Option türünün `None` olup olmadığını değerlendiren `is_none` yöntemini kullanarak gerçekleştirebiliriz.
+
+Bu bağlamda [front running] (https://scsfg.io/hackers/frontrunning/) potansiyel riskine dikkat etmek de önemlidir, bu kod denetlenmemiştir.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“initialize_owner_get_owner”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Mesaj göndericisi olarak `sahip`i atamak için, `Sonuç` türünü bir `Seçenek` türüne dönüştürmek gerekir.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“initialize_owner_set_owner”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Son olarak, mesajı gönderenin `Kimliğini` döndüreceğiz.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“initialize_owner_return_owner”
+  commentType=“//”
+  lang=“sway”
+/>
+
+## 5. Para çekme
+
+withdraw_funds` fonksiyonu, sahibinin sözleşmeden birikmiş fonları çekmesine izin verir.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“withdraw_funds_parent”
+  commentType=“//”
+  lang=“sway”
+/>
+
+İlk olarak, sahibin belirli bir adrese başlatıldığından emin olacağız.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“withdraw_funds_set_owner”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Ardından, fonları çekmeye çalışan kişinin gerçekten fon sahibi olduğunu doğrulayacağız.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“withdraw_funds_require_owner”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Ayrıca, standart kütüphanedeki `this_balance` fonksiyonunu kullanarak para çekme için fonların kullanılabilirliğini teyit edebiliriz. Bu fonksiyon sözleşmenin mevcut bakiyesini döndürür.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“withdraw_funds_require_base_asset”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Son olarak, sözleşmenin tüm bakiyesini mal sahibine aktaracağız.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“withdraw_funds_transfer_owner”
+  commentType=“//”
+  lang=“sway”
+/>
+
+## 6. Toplam öğeleri alın
+
+Tanıtacağımız son fonksiyon `get_count`. Bu basit getter fonksiyonu, kontratın deposunda saklanan `item_counter` değişkeninin değerini döndürür.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“get_count_parent”
+  commentType=“//”
+  lang=“sway”
+/>
+
+## İnceleme
+
+Şimdi `main.sw` dosyanızdaki `SwayStore` sözleşme uygulaması, daha önce yazdığımız diğer her şeyi takip ederek aşağıdaki gibi görünmelidir:
+
+<TestAction
+id=“sway-functions”
+action={{
+  isim: 'writeToFile',
+  filepath: 'guides-testing/fuel-project/contract/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“uygulama”
+  commentType=“//”
+  lang=“sway”
+/>

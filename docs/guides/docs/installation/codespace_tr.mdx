@@ -1,0 +1,73 @@
+---
+başlık: Yakıt Github Kod Alanı
+Kategori: Kurulum
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Github Codespace
+
+## Giriş
+
+Github Codespaces] (https://github.com/features/codespaces) hakkında düşünmenin yolu aslında bir tarayıcıdaki VSCode'dur. Kurulumu son derece kolay olan bir uzaktan geliştirme ortamıdır. Tüm VS Code eklentileri desteklenmese de, Sway LSP eklentisi desteklenir ve kutudan çıkar çıkmaz çalışır.
+
+## Yeni bir repo için nasıl kurulum yapılır
+
+1. Bir `devcontainer.json` dosyası oluşturun. Bunun en kolay yolu depoya gidip Code → ... → Configure dev container'a tıklamaktır
+
+    <Kutu.Ortalanmış>
+    ![dev container walkthrough](/images/dev-container.gif)
+    </Box.Centered>
+
+2. Dosyayı aşağıdaki özellikleri içerecek şekilde düzenleyin:
+
+    ```json
+    “özellikler”: {
+        “ghcr.io/devcontainers/features/common-utils:1”: {},
+        “ghcr.io/FuelLabs/devcontainer-features/fuelup:1.0.1”: {},
+    }
+    ```
+
+3. Bu repo için yüklenmesini istediğiniz eklentileri “customizations” altına ekleyin.
+
+    ``json
+    “customizations”: {
+        “vscode”: {
+            “uzantılar”: [
+                “fuellabs.sway-vscode-plugin”
+            ]
+        }
+    }
+    ```
+
+    İşte Sway LSP eklentisini içeren örnekler.
+
+    3.1. [`https://github.com/FuelLabs/sway/blob/master/.devcontainer/devcontainer.json`](https://github.com/FuelLabs/sway/blob/master/.devcontainer/devcontainer.json)
+
+    3.2. [`https://github.com/FuelLabs/quickstart/blob/master/.devcontainer/devcontainer.json`](https://github.com/FuelLabs/quickstart/blob/master/.devcontainer/devcontainer.json)
+
+## Kod alanı nasıl başlatılır
+
+1. Github Codespaces'in yapılandırıldığı repoya gidin.
+2. Kod → Master üzerinde kod alanı oluştur'u seçin
+
+    <Kutu.Ortalanmış>
+    ![Kod alanı oluşturma izlenecek yol](/images/create-codespace.gif)
+    </Box.Centered>
+
+3. Bu, kod alanınızla birlikte yeni bir sekme açacaktır. Başlaması birkaç dakika sürebilir.
+
+    3.1.  Artık Fuel araç zincirinin yüklü olduğu tamamen işlevsel bir uzaktan geliştirme ortamına sahipsiniz! Sway kodunu oluşturmak ve dağıtmak için `forc` veya araç zinciri sürümünü yönetmek için `fuelup` kullanabilirsiniz. Ayrıca, sözdizimi vurgulama, gezinme dokümanları, go-to tanımları vb. gibi Sway için tam özellik desteğine sahip Sway LSP eklentisine de sahipsiniz.
+
+    3.2. Not: Büyük bir depo üzerinde çalışıyorsanız ve kod alanının yavaş çalıştığını fark ederseniz, Code → ... → çalışan bir örnekte makine türünü değiştir seçeneğine tıklayarak veya Code → ... → New with options ile yeni bir örnek başlatarak daha büyük bir örnek kullanacak şekilde yapılandırabilirsiniz.
+
+### Fiyatlandırma ve faturalandırma
+
+Fatura bilgilerini girmeniz gerekecektir, ancak önemli bir ücretsiz katman vardır.
+
+## Sırada ne var?
+
+Artık Fuel ile oluşturmaya başlamaya hazırsınız.
+
+👉 İlk akıllı sözleşmenizi dağıtmak için [counter dapp guide](/guides/counter-dapp)'a göz atın.

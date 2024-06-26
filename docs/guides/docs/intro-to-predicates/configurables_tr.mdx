@@ -1,0 +1,30 @@
+---
+başlık: Yapılandırılabilirler
+Kategori: Yüklemlere Giriş
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Yapılandırılabilirler
+
+Yapılandırılabilirler, derleme zamanında değiştirilebilen özel sabitlerdir. Burada, yüklemdeki fonları korumaktan sorumlu imzalayıcıları ve gerekli imza sayısını tanımlayabiliriz.
+
+Bu bilgiler daha sonra bir işlem oluşturmadan önce SDK'lar ile yapılandırılabilir.
+
+<TestAction
+id=“sway-configurable”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/src/main.sw”
+  comment=“yapılandırılabilir”
+  commentType=“//”
+  lang=“sway”
+/>
+
+İşletmelere ve kullanıcılara kendi multisig'lerini kurmalarında yardımcı olan bir multisig sağlayıcısı olduğunuzu düşünün. Bu ayrıntıları her seferinde sabit kodlamak istemezsiniz, bunun yerine kullanıcıların kendilerinin yapılandırabileceği birkaç parametre sağlarsınız.

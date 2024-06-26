@@ -1,0 +1,83 @@
+---
+başlık: Rust testlerinde günlük kaydı
+Kategori: Yüklemlere Giriş
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Rust testlerinde oturum açma
+
+## Rust'ta Test Şablonu Oluşturma
+
+Rust kullanarak kendi test şablonunuzu oluşturmak için, script proje dizinindeki `cargo-generate` ile aşağıdaki adımları izleyin:
+
+1. cargo-generate` programını yükleyin:
+
+``bash
+cargo install cargo-generate --locked
+```
+
+{/*markdownlint-disable*/}
+2. Şablonu oluşturun:
+{/*markdownlint-disable*/}
+
+<TestAction
+id=“cargo-generate-test”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/predicate-script-logging/'
+}}
+/>
+
+```bash
+cargo generate --init fuellabs/sway templates/sway-test-rs --name sway-store
+```
+
+## Günlük kaydı
+
+Daha önce Sway'e giriş eğitiminde, özellikle [Rust testi bölümünde] (https://docs.fuel.network/guides/intro-to-sway/rust-sdk/) içe aktarma ve yüklem kurma konularını ele almıştık. Henüz kontrol etmediyseniz, bunu yapmanızı şiddetle tavsiye ederim.
+
+Aşağıdaki rust testini kopyalayıp yapıştırın:
+
+<TestAction
+id=“sway-program-türü”
+action={{
+  isim: 'writeToFile',
+  filepath: 'guides-testing/predicate-script-logging/tests/harness.rs'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/predicate-script-logging/tests/harness.rs”
+  comment=“all”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Şimdi, dikkatinizi buradaki kodun belirli bir bölümüne çekmek istiyorum:
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/predicate-script-logging/tests/harness.rs”
+  comment=“logs”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Artık gizli numaramızı çıkarmak için `decode_logs` çağrısı yapabiliriz, bu da yüklemlerle test ederken yapamadığımız bir şeydi.
+
+Testler sırasında çıktıların konsolda görünmesini sağlamak için `nocapture` bayrağını kullanabilirsiniz.
+
+<TestAction
+id=“cargo-test”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/predicate-script-logging/'
+}}
+/>
+
+```sh
+cargo test -- --nocapture
+```
+
+Bu yöntemi hatırlamak, daha karmaşık yüklemler geliştirirken, özellikle de hata ayıklama giderek zorlaştığında çok önemlidir.

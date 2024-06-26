@@ -1,0 +1,146 @@
+---
+başlık: Testnet Düğümü Çalıştırma
+Kategori: Düğüm Çalıştırma
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# P2P kullanarak Testnet'e bağlı yerel bir Yakıt düğümü çalıştırma
+
+## Kurulum
+
+<TextImport
+  file=“../installation/index.mdx”
+  comment=“install_fuelup”
+  commentType=“{/*”
+/>
+
+<CodeImport
+  file=“../installation/index.mdx”
+  comment=“install_fuelup_command”
+  commentType=“{/*”
+  lang=“sh”
+  trim=“true”
+/>
+
+<TextImport
+  file=“../counter-dapp/building-a-smart-contract.mdx”
+  comment=“install_help”
+  commentType=“{/*”
+/>
+
+## Sepolia (Ethereum Testnet) API Anahtarı Edinme
+
+{/*get_ethereum_api_key:example:start*/}
+Sepolia ağını destekleyen herhangi bir RPC sağlayıcısından alınan bir API anahtarı işe yarayacaktır. Aktarıcılar, Ethereum ağından gelen olayları dinlemeye yardımcı olacaktır. Biz [Infura](https://www.infura.io/) veya [Alchemy](https://www.alchemy.com/) öneriyoruz.
+
+Uç noktalar aşağıdaki gibi görünmelidir:
+{/*get_ethereum_api_key:example:end*/}
+
+### Infura
+
+{/*// ANCHOR: infura_key*/}
+
+```sh
+https://sepolia.infura.io/v3/{YOUR_API_KEY}
+```
+
+{/*// ANCHOR_END: infura_key*/}
+
+### Simya
+
+{/*// ANCHOR: alchemy_key*/}
+
+```sh
+https://eth-sepolia.g.alchemy.com/v2/{YOUR_API_KEY}
+```
+
+{/*// ANCHOR_END: alchemy_key*/}
+
+{/*get_ethereum_api_key_end:example:start*/}
+Diğer ağ uç noktalarının kullanılmasının aktarıcının başlatılamamasına neden olacağını unutmayın.
+{/*get_ethereum_api_key_end:example:end*/}
+
+## P2P Anahtarı Oluşturma
+
+{/*generate_fuel_p2p_key:example:start*/}
+Aşağıdaki komutu çalıştırarak yeni bir P2P anahtar eşleştirmesi oluşturun:
+{/*generate_fuel_p2p_key:example:end*/}
+
+{/*// ANCHOR: generate_fuel_p2p_key_command*/}
+
+```sh
+fuel-core-keygen new --key-type peering
+{
+  “peer_id”:“16Uiu2HAmEtVt2nZjzpXcAH7dkPcFDiL3z7haj6x78Tj659Ri8nrs”,
+  “secret”:“b0ab3227974e06d236d265bd1077bb0522d38ead16c4326a5dff2f30edf88496”,
+  “type”: “peering”
+}
+### Bu özel anahtarı paylaşmayın veya kaybetmeyin! Tamamlamak için herhangi bir tuşa basın. ###
+```
+
+{/*// ANCHOR_END: generate_fuel_p2p_key_command*/}
+
+{/*generate_fuel_p2p_key_end:example:start*/}
+Bunu güvenli bir yere kaydettiğinizden emin olun, böylece gelecekte yeni bir anahtar çifti oluşturmanız gerekmez.
+{/*generate_fuel_p2p_key_end:example:end*/}
+
+## Zincir Yapılandırması
+
+Yerel bir düğümü kalıcılıkla çalıştırmak için aşağıdaki zincir yapılandırma dosyalarını içeren bir klasöre sahip olmanız gerekir:
+
+Basitlik için, [repository](https://github.com/FuelLabs/chain-configuration/tree/master)'yi seçtiğiniz dizine klonlayın.
+
+Daha sonra `--snapshot` bayrağını kullanırken, `./your/path/to/chain_config_folder` yerine az önce klonladığınız deponun `ignition` klasörünü `./chain-configuration/ignition/` olarak değiştirebilirsiniz.
+
+## Yerel Düğüm Çalıştırma
+
+{/*running_a_local_node:example:start*/}
+Son olarak düğümü başlatmak üzere her şeyi bir araya getirmek için aşağıdaki komutu çalıştırın:
+{/*running_a_local_node:example:end*/}
+
+```sh
+yakıt-çekirdek çalışması \
+--service-name=fuel-sepolia-testnet-node \
+-anahtar çifti {P2P_PRIVATE_KEY} \
+--relayer {ETHEREUM_RPC_ENDPOINT} \
+--ip=0.0.0.0 --port=4000 --peering-port=30333 \
+--db-path=~/.fuel-sepolia-testnet \
+--snapshot ./your/path/to/chain_config_folder \
+--utxo-validation --poa-instant false --enable-p2p \
+--reserved-nodes /dns4/p2p-testnet.fuel.network/tcp/30333/p2p/16Uiu2HAmDxoChB7AheKNvCVpD4PHJwuDGn8rifMBEHmEynGHvHrf \
+--sync-header-batch-size 100 \
+--enable-relayer \
+--relayer-v2-listening-contracts=0x01855B78C1f8868DE70e84507ec735983bf262dA \
+--relayer-da-deploy-height=5827607 \
+--relayer-log-page-size=500 \
+--sync-block-stream-buffer-size 30
+```
+
+{/*running_a_local_node_end:example:start*/}
+Yukarıdaki her bir bayrağın tam açıklama detayları için çalıştırın:
+{/*running_a_local_node_end:example:end*/}
+
+{/*// ANCHOR: fuel_core_help_command*/}
+
+```sh
+fuel-core run --help
+```
+
+{/*// ANCHOR_END: fuel_core_help_command*/}
+
+## Bir tarayıcı cüzdanından yerel düğüme bağlanma
+
+{/*connecting_to_local_node:example:start*/}
+Bir tarayıcı cüzdanı kullanarak yerel düğüme bağlanmak için ağ adresini şu şekilde içe aktarın:
+{/*connecting_to_local_node:example:end*/}
+
+{/*// ANCHOR: connecting_to_local_node_endpoint*/}
+
+```sh
+http://0.0.0.0:4000/v1/graphql
+```
+
+{/*// ANCHOR_END: connecting_to_local_node_endpoint*/}
+

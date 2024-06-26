@@ -1,0 +1,216 @@
+---
+başlık: Kurulum
+Kategori: Kurulum
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Araç zinciri kurulumu
+
+Bu kılavuz, Fuel araç zinciri ikili dosyalarını ve önkoşullarını yüklemenize yardımcı olacaktır.
+
+Bu kılavuz aşağıdaki konuları kapsamaktadır:
+
+1. [Fuel araç zincirini `fuelup` kullanarak yükleme](#installing-the-fuel-toolchain-using-fuelup)
+2. [Varsayılan araç zincirinizi değiştirme](#changing-your-default-toolchain)
+3. [Yerel cüzdan kurma](#setting-up-a-local-wallet)
+4. [Rust Kurulumu](#installing-rust)
+
+## fuelup kullanarak Fuel araç zincirini yükleme
+
+`fuelup` Fuel için Fuel araç zincirini yükleyen resmi paket yöneticisidir
+farklı sürümler arasında kolayca geçiş yapabilmenizi sağlar.
+araç zincirleri ve bunları güncel tutun. Yaygın platformlar için [`forc`](/docs/forc) ve [`fuel-core`](https://github.com/FuelLabs/fuel-core) ile Sway uygulamalarının oluşturulmasını ve bakımını daha basit hale getirir.
+
+> 💡 Daha fazla bilgi için [fuelup docs](https://install.fuel.network/latest/)'a göz atın.
+
+### `fuelup-init` çalıştırılıyor
+
+{/*install_fuelup:example:start*/}
+Fuel araç zincirini kurmak için `fuelup-init` betiğini kullanabilirsiniz.
+Bu `~/.fuelup/bin` içine `forc`, `forc-client`, `forc-fmt`, `forc-lsp`, `forc-wallet` ve `fuel-core` yükleyecektir.
+{/*install_fuelup:example:end*/}
+
+👉 Aşağıdaki satırı terminalinize yapıştırın ve *Enter* tuşuna basın.
+
+{/*ANCHOR: install_fuelup_command*/}
+
+```sh
+curl https://install.fuel.network | sh
+```
+
+{/*ANCHOR_END: install_fuelup_command*/}
+
+> 🚧 Şu anda Windows'u yerel olarak desteklemediğimizi unutmayın. Windows üzerinde `fuelup` kullanmak istiyorsanız, lütfen Linux için Windows Alt Sistemini kullanın.
+
+### Kurulum YOLU
+
+Komut dosyası indirildikten sonra otomatik olarak çalıştırılacaktır.
+fuelup-init` betiği size aşağıdaki soruyu soracaktır:
+
+```sh
+fuelup, Fuel araç zincirini yönetmek için ev dizini olarak “/home/kullanıcıadı/.fuelup” kullanır ve ikili dosyaları buraya yükler.
+
+Araç zincirini kullanmak için, makinenize `fuelup` ve Fuel araç zincirinin nerede bulunacağını söyleyen PATH'inizi yapılandırmanız gerekecektir.
+
+İzin verilirse, fuelup-init aşağıdakileri çalıştırarak PATH'inizi sizin için yapılandıracaktır:
+
+    echo “export PATH=”$HOME/.fuelup/bin:$PATH“” >> /home/kullanıcıadı/.bashrc
+
+fuelup-init'in PATH değişkeninizi sizin için değiştirmesini ister misiniz? (Hayır/y)
+```
+
+👉 Terminalinizde `Y` tuşuna basın ve PATH'inizi değiştirmek için *Enter* tuşuna basın.
+
+### Kurulumun kontrol edilmesi
+
+Fuelup-init` betiğinin `PATH` değişkeninizi değiştirmesine izin verdikten sonra, indirilen ve kurulan paketler hakkında birçok bilgi göreceksiniz. Her şey beklendiği gibi giderse aşağıdaki mesajı göreceksiniz:
+
+```sh
+Yakıt araç zinciri yüklü ve güncel
+
+fuelup 0.20.0 /home/kullanıcıadı/.fuelup/bin dosyasına yüklenmiştir. 
+forc ve fuel-core ikili dosyalarını içeren en son araç zincirini almak için 'fuelup toolchain install latest' komutunu çalıştırın. 
+Kabuğunuz için tamamlamalar oluşturmak için 'fuelup completions --shell=SHELL' komutunu çalıştırın.
+```
+
+👉 Kullandığınız paketin hangi sürümde olduğunu kontrol etmek için istediğiniz zaman `fuelup --version` kullanın.
+
+```sh
+ fuelup --version
+```
+
+Bu, mevcut `fuelup` sürümünüzün çıktısını verecektir:
+
+```sh
+fuelup 0.21.0
+```
+
+### VSCode uzantıları
+
+{/*install_VSCode_extensions:example:start*/}
+VSCode kullanıyorsanız, [Sway extension] (https://marketplace.visualstudio.com/items?itemName=FuelLabs.sway-vscode-plugin) yüklemenizi öneririz.
+{/*install_VSCode_extensions:example:end*/}
+
+## Varsayılan araç zincirinizi değiştirme
+
+Tıpkı [Rust](https://rust-lang.github.io/rustup/concepts/toolchains.html)'da olduğu gibi, Fuel birden fazla araç zincirini destekler.
+Bir araç zinciri bir araçlar koleksiyonudur (derleyici, LSP, vb. gibi).
+Varsayılan olarak, `fuelup` birbiriyle çalışması test edilmiş bir dizi paket içerir ve güvenilir bir araç seti sağlar.
+
+fuelup`ı yüklediğinizde yapılandırılan varsayılan araç zinciri, mevcut {props.fuelTestnetInlineCode} ağıyla uyumlu kararlı araç zinciri olan `latest` araç zinciridir.
+
+### fuelup güncelleniyor
+
+### Mevcut araç zincirinizi kontrol etme
+
+Bazen aynı anda birden fazla araç zinciri kullanmanız gerekebilir.
+Hangi araç zincirini kullandığınız konusunda kafanız karışırsa endişelenmeyin, çünkü mevcut araç zincirinizi istediğiniz zaman kontrol edebilirsiniz.
+
+👉 Araç zincirini ve kullandığınız her aracın sürümlerini görmek için `fuelup show` komutunu çalıştırın.
+
+```sh
+fuelup gösteri̇si̇
+```
+
+Bu komut size aşağıdaki çıktıyı verecektir
+
+```sh
+aktif araç zinciri
+-----------------
+beta-4-x86_64-unknown-linux-gnu (varsayılan)
+  forc : 0.45.0
+    - forc-istemci
+      - forc-deploy : 0.45.0
+      - forc-run : 0.45.0
+    - forc-doc : 0.45.0
+    - forc-explore : 0.28.1
+    - forc-fmt : 0.45.0
+    - forc-index : 0.20.7
+    - forc-lsp : 0.45.0
+    - forc-tx : 0.45.0
+    - forc-cüzdan : 0.3.0
+  fuel-core : 0.20.4
+  fuel-core-keygen : Sürüm dizesi alınırken hata oluştu
+
+yakıt versiyonları
+---------------
+forc : 0.45
+forc-cüzdan : 0.45
+```
+
+## Yerel bir cüzdan kurma
+
+{/*forc_wallet_setup:example:start*/}
+forc-wallet` eklentisi, `fuelup` kullanılarak yüklendiğinde varsayılan dağıtılmış araç zincirleriyle birlikte paketlenir, bu nedenle yukarıdaki talimatları izlediyseniz bunu zaten yüklemiş olmanız gerekir.
+
+Yeni bir cüzdanı `forc-wallet` ile başlatmak için aşağıdaki komutu çalıştırabilirsiniz:
+
+``console
+forc cüzdan yeni̇
+```
+
+Bir parola yazdıktan sonra, çıkan anımsatıcı ifadeyi kaydettiğinizden emin olun.
+
+Ardından, ile yeni bir cüzdan hesabı oluşturun:
+
+```console
+forc cüzdan hesabı yeni
+```
+
+Bu şekilde, aşağıdaki gibi görünen bir yakıt adresi elde edersiniz: `fuel1efz7lf36w9da9jekqzyuzqsfrqrlzwtt3j3clvemm6eru8fe9nvqj5kar8`.
+
+Hesaplarınızı listelemeniz gerekiyorsa aşağıdaki komutu çalıştırabilirsiniz:
+
+```console
+forc cüzdan hesapları
+```
+
+{/*forc_wallet_setup:example:end*/}
+
+## Rust Yükleniyor
+
+{/*install_rust:example:start*/}
+Eğer `fuels` Rust SDK ile geliştirme yapmak istiyorsanız, makinenize Rust yüklemeniz gerekecektir. Rust`ı yüklemek için `rustup` aracını kullanabilirsiniz.
+{/*install_rust:example:end*/}
+
+> Rust SDK'yı kullanmayı planlamıyorsanız Rust'ı yüklemenize gerek yoktur.
+
+Kabuğunuzda aşağıdaki komutu çalıştırın; bu `rustup-init.sh` dosyasını indirir ve çalıştırır, bu da platformunuz için `rustup-init` çalıştırılabilir dosyasının doğru sürümünü indirir ve çalıştırır.
+
+{/*ANCHOR: install_rust_command*/}
+
+```sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+{/*ANCHOR: install_rust_command*/}
+
+Rust araç zincirini yükleme](https://www.rust-lang.org/tools/install) hakkında daha fazla bilgi almak için resmi Rust belgelerine göz atın.
+
+## Sırada ne var?
+
+Artık Fuel ile oluşturmaya başlamaya hazırsınız.
+
+👉 İlk akıllı sözleşmenizi dağıtmak için [counter dapp guide](/guides/counter-dapp)'a göz atın.
+
+## Temellerin ötesinde
+
+### Özel araç zincirleri
+
+Kendi özel sürüm setinizi oluşturabilirsiniz, bu 'özel araç zincirleri' olarak bilinir.
+
+👉 Kendi özel araç zincirlerinizi nasıl kuracağınızı öğrenmek için [Fuelup docs](https://install.fuel.network/master/concepts/toolchains.html) adresini ziyaret edin.
+
+### Kaynaktan derleme
+
+Fuel paketlerini her zaman kaynaktan oluşturabilirsiniz.
+
+👉 Diğer kurulum türleri hakkında daha fazla bilgi almak için [Fuelup docs](https://install.fuel.network/master/installation/other.html) adresini ziyaret edin.
+
+### Github Kod Alanları
+
+Tarayıcıda bir geliştirme ortamı çalıştırmak her zaman mümkündür.
+
+👉 Tarayıcıda Fuel araç zincirini kullanmak için [Github Codespaces](/guides/installation/codespace) kılavuzumuzu ziyaret edin.

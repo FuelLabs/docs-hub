@@ -1,0 +1,512 @@
+---
+başlık: Akıllı Sözleşme Oluşturma
+kategori̇ Sayaç Dapp
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Bir Sway Akıllı Sözleşmesi Yazmak
+
+## Kurulum
+
+<TextImport
+  file=“../installation/index.mdx”
+  comment=“install_fuelup”
+  commentType=“{/*”
+/>
+
+<CodeImport
+  file=“../installation/index.mdx”
+  comment=“install_fuelup_command”
+  commentType=“{/*”
+  lang=“sh”
+  trim=“true”
+/>
+
+{/*install_help:example:start*/}
+> Sorun mu yaşıyorsunuz? Kurulum kılavuzunu](/guides/installation) ziyaret edin veya sorunuzu [forum](https://forum.fuel.network/) adresimize gönderin.
+{/*install_help:example:end*/}
+
+<TextImport
+  file=“../installation/index.mdx”
+  comment=“install_VSCode_extensions”
+  commentType=“{/*”
+/>
+
+### Zaten `fuelup` yüklü mü?
+
+{/*already_installed:example:start*/}
+Zaten `fuelup` yüklüyse, en güncel araç zincirinde olduğunuzdan emin olmak için aşağıdaki komutları çalıştırın.
+
+```sh
+fuelup kendi kendini güncelleme
+fuelup güncellemesi̇
+fuelup varsayılan en son
+```
+
+{/*already_installed:example:end*/}
+
+## İlk Sway Projeniz
+
+İki fonksiyonlu basit bir sayaç sözleşmesi oluşturacağız: biri sayacı artırmak için, diğeri de sayacın değerini döndürmek için.
+
+**Yeni, boş bir klasör oluşturarak başlayın. Buna `fuel-project` diyeceğiz.**
+
+<TestAction
+id=“create-project-folder”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing'
+}}
+/>
+
+```sh
+mkdir yakıt-proje
+```
+
+### Sözleşmenin Yazılması
+
+Yakıt-proje` klasörünüzün içine taşıyın:
+
+``sh
+cd yakıt-proje
+```
+
+Ardından `forc` kullanarak bir sözleşme projesi oluşturun:
+
+<TestAction
+id=“create-contract”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project'
+}}
+/>
+
+```sh
+forc yeni karşı sözleşme
+```
+
+Bu çıktıyı alacaksınız:
+
+```sh
+Derlemek için `forc build`, testleri çalıştırmak için ise `forc test` kullanın
+----
+Belgeleri okuyun:
+- Sway Kitabı: https://docs.fuel.network/docs/sway
+- Forc Kitap: https://docs.fuel.network/docs/forc
+- Rust SDK Kitabı: https://docs.fuel.network/docs/fuels-rs
+- TypeScript SDK: https://docs.fuel.network/docs/fuels-ts
+
+Topluluğa Katılın:
+- Bizi takip edin @SwayLang: https://twitter.com/SwayLang
+- Discourse'da soru sorun: https://forum.fuel.network/
+
+Hata Bildir:
+- Sway Sorunları: https://github.com/FuelLabs/sway/issues/new
+```
+
+{/*Bu örnek yeni bir `forc` projesi için bir ağaç içermeli ve boilerplate dosyalarını açıklamalıdır*/}
+{/*forc_new:example:start*/}
+İşte `forc`un başlattığı proje:
+
+<TestAction
+id=“contract-tree”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project'
+}}
+/>
+
+```sh
+ağaç karşı sözleşmesi
+```
+
+```sh
+karşı sözleşme
+├── Forc.toml
+└── src
+    └── main.sw
+
+1 dizin, 2 dosya
+```
+
+`forc.toml` bir *manifest dosyasıdır* (Cargo için `Cargo.toml` veya Node için `package.json` dosyasına benzer) ve proje adı ve bağımlılıklar gibi proje meta verilerini tanımlar.
+{/*forc_new:example:end*/}
+
+Projenizi bir kod editöründe açın ve `src/main.sw` dosyasındaki ilk satır dışındaki her şeyi silin.
+
+Her Sway dosyası, dosyanın ne tür bir program içerdiğine dair bir beyanla başlamalıdır; burada, bu dosyanın bir sözleşme olduğunu beyan ettik.
+Sway program türleri hakkında daha fazla bilgiyi [Sway Kitabı](/docs/sway/sway-program-types/)'nda bulabilirsiniz.
+
+<TestAction
+id=“program-türü”
+action={{
+  isim: 'writeToFile',
+  filepath: 'guides-testing/fuel-project/counter-contract/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/counter-dapp/counter-contract/src/main.sw”
+  comment=“sözleşme”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Daha sonra, bir depolama değeri tanımlayacağız.
+Bizim durumumuzda, `u64` (64 bit işaretsiz tamsayı) tipinde `counter` olarak adlandıracağımız ve 0 olarak başlatacağımız tek bir sayacımız var.
+
+<TestAction
+id=“storage”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/counter-contract/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/counter-dapp/counter-contract/src/main.sw”
+  comment=“storage”
+  commentType=“//”
+  lang=“sway”
+/>
+
+### ABI
+
+ABI, Uygulama İkili Arayüzü anlamına gelir.
+Bir ABI, bir sözleşme için bir arayüz tanımlar.
+Bir sözleşme ya bir ABI bildirimi tanımlamalı ya da içe aktarmalıdır.
+
+ABI'nizi ayrı bir kütüphanede tanımlamak ve bunu sözleşmenize aktarmak en iyi uygulama olarak kabul edilir.
+Bu, sözleşmeyi çağıranların ABI'yi daha kolay içe aktarmasına ve kullanmasına olanak tanır.
+
+Basitlik açısından, ABI'yi doğrudan sözleşme dosyasının kendisinde tanımlayacağız.
+
+<TestAction
+id=“abi”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/counter-contract/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/counter-dapp/counter-contract/src/main.sw”
+  comment=“abi”
+  commentType=“//”
+  lang=“sway”
+/>
+
+### ABI uygulayın
+
+ABI tanımınızın altına, ABI'nizde tanımlanan işlevlerin uygulamasını yazacaksınız.
+
+<TestAction
+id=“impl”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/counter-contract/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/counter-dapp/counter-contract/src/main.sw”
+  comment=“karşı sözleşme”
+  commentType=“//”
+  lang=“sway”
+/>
+
+> `storage.counter.read()` örtük bir geri dönüştür ve `return storage.counter.read();` ile eşdeğerdir.
+
+Kodunuz şu ana kadar şöyle görünmelidir:
+
+Dosya: `./counter-contract/src/main.sw`
+
+<TestAction
+id=“entire-contract”
+action={{
+  ad: 'compareToFile',
+  filepath: 'guides-testing/fuel-project/counter-contract/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/counter-dapp/counter-contract/src/main.sw”
+  comment=“all”
+  commentType=“/*”
+  lang=“sway”
+/>
+
+### Sözleşmeyi Oluşturun
+
+Sözleşme klasörünüze gidin:
+
+```sh
+cd karşı sözleşmesi
+```
+
+Ardından sözleşmenizi oluşturmak için aşağıdaki komutu çalıştırın:
+
+<TestAction
+id=“build-contract”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/counter-contract'
+}}
+/>
+
+```sh
+forc yapı
+```
+
+```sh
+  Derlenmiş kütüphane “core”.
+  Derlenmiş kütüphane “std”.
+  Derlenmiş sözleşme “counter-contract”.
+  Bytecode boyutu: 84 bayt.
+```
+
+Oluşturduktan sonra `counter-contract` klasörünün içeriğine bir göz atalım:
+
+<TestAction
+id=“built-contract-tree”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/counter-contract'
+}}
+/>
+
+```sh
+ağaç .
+```
+
+```sh
+.
+├── Forc.lock
+├── Forc.toml
+├── dışarı
+│ └── debug
+│ ├── counter-contract-abi.json
+│ ├── counter-contract-storage_slots.json
+│ └── karşı sözleşme.bin
+└── src
+    └── main.sw
+
+3 dizin, 6 dosya
+```
+
+Artık ABI'mızın JSON gösterimi ve sözleşme bayt kodu gibi derleme eserlerimizi içeren bir `out` dizinimiz var.
+
+## Sözleşmenizi Rust ile Test Etme
+
+> Rust ile test etmek istemiyor musunuz? Bu bölümü atlayın ve [Deploy the Contract] (#deploy-the-contract) bölümüne geçin.
+
+Cargo generate şablonunu kullanarak bir Rust entegrasyon test koşumu ekleyerek başlayacağız.
+Henüz `Rust` yüklü değilse, bu komutu çalıştırarak yükleyebilirsiniz:
+
+<CodeImport
+  file=“../installation/index.mdx”
+  comment=“install_rust_command”
+  commentType=“{/*”
+  lang=“sh”
+  trim=“true”
+/>
+
+Daha sonra, eğer henüz yüklemediyseniz, [`cargo generate`](https://github.com/cargo-generate/cargo-generate) yükleyelim:
+
+```sh
+cargo install cargo-generate --locked
+```
+
+Şimdi, aşağıdaki komutla varsayılan test koşum takımını oluşturalım:
+
+<TestAction
+id=“cargo-generate-test”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/counter-contract'
+}}
+/>
+
+```sh
+cargo generate --init fuellabs/sway templates/sway-test-rs --name counter-contract
+```
+
+```sh
+⚠️ Favorite `fuellabs/sway` not found in config, using it as a git repository: https://github.com/fuellabs/sway.git
+🔧 Hedef: /home/user/path/to/counter-contract ...
+🔧 proje-adı: karşı-sözleşme ...
+🔧 Şablon oluşturuluyor ...
+🔧 Oluşturulan dosyalar içine taşınıyor: `/home/user/path/to/counter-contract`...
+✨ Tamamlandı! Yeni proje oluşturuldu /home/user/path/to/counter-contract
+```
+
+Şimdi sonuca bir göz atalım:
+
+<TestAction
+id=“cargo-test-tree”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/counter-contract'
+}}
+/>
+
+```sh
+ağaç .
+```
+
+```sh
+.
+├── Cargo.toml
+├── Forc.lock
+├── Forc.toml
+├── dışarı
+│ └── debug
+│ ├── counter-contract-abi.json
+│ ├── counter-contract-storage_slots.json
+│ └── karşı sözleşme.bin
+├── src
+│ └── main.sw
+└── testler
+    └── harness.rs
+
+4 dizin, 8 dosya
+```
+
+{/*rust_harness:example:start*/}
+İki yeni dosyamız var!
+
+- Cargo.toml` yeni test koşumumuzun manifestosudur ve `fuels` (Fuel Rust SDK) dahil olmak üzere gerekli bağımlılıkları belirtir.
+- Testler/harness.rs`, henüz herhangi bir sözleşme yöntemini çağırmasa da, başlamamız için bazı temel test kodlarını içerir.
+
+Cargo.toml` dosyanızı açın ve `dev-dependencies` altında kullanılan `fuels` sürümünü kontrol edin. Eğer henüz değilse sürümü `0.62.0` olarak değiştirin:
+
+``toml
+[dev-dependencies]
+fuels = { version = “0.62.0”, features = [“fuel-core-lib”] }
+tokio = { version = “1.12”, features = [“rt”, “macros”] }
+```
+
+{/*rust_harness:example:end*/}
+
+Artık varsayılan test demetimize sahip olduğumuza göre, ona kullanışlı bir test ekleyelim.
+
+test/harness.rs` dosyasının alt kısmında `can_get_contract_id()` testinin altına, sayacın değerinin artırıldığını doğrulamak için aşağıdaki `test_increment` test fonksiyonunu ekleyin:
+
+<TestAction
+id=“test-harness”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/counter-contract/tests/harness.rs',
+  addSpacesBefore: 1,
+}}
+/>
+
+<CodeImport
+  file=“../../examples/counter-dapp/counter-contract/tests/harness.rs”
+  comment=“contract-test”
+  commentType=“//”
+  lang=“rust”
+/>
+
+İşte dosyanızın nasıl görünmesi gerektiği:
+
+Dosya: `./counter-contract/tests/harness.rs`
+
+<TestAction
+id=“final-test-harness”
+action={{
+  ad: 'compareToFile',
+  filepath: 'guides-testing/fuel-project/counter-contract/tests/harness.rs'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/counter-dapp/counter-contract/tests/harness.rs”
+  comment=“contract-test-all”
+  commentType=“/*”
+  lang=“rust”
+/>
+
+Terminalde `cargo test`i çalıştırın:
+
+``sh
+kargo testi̇
+```
+
+Her şey yolunda giderse, çıktı aşağıdaki gibi görünmelidir:
+
+```sh
+  ...
+  2 test çalıştırılıyor
+  test can_get_contract_id ... tamam
+  test test_increment ... tamam
+  test sonucu: tamam. 2 geçti; 0 başarısız; 0 göz ardı edildi; 0 ölçüldü; 0 filtrelendi; 0.25s içinde bitti
+```
+
+## Sözleşmeyi Dağıtın
+
+Şimdi dağıtma zamanı . Bunu komut satırından `forc` kullanarak nasıl yapacağınızı göstereceğiz, ancak [Rust SDK](/docs/fuels-rs/deploying) veya [TypeScript SDK](/docs/fuels-ts/contracts/deploying-contracts) kullanarak da yapabilirsiniz.
+
+Bir sözleşmeyi dağıtmak için, işlemi imzalamak için bir cüzdanınız ve gaz için ödeme yapmak için paralarınız olması gerekir. Bu süreçte `Fuelup` size rehberlik edecektir.
+
+### Yerel bir cüzdan kurma
+
+<TextImport
+  file=“../installation/index.mdx”
+  comment=“forc_wallet_setup”
+  commentType=“{/*”
+/>
+
+Faucet](https://faucet-testnet.fuel.network/) kullanarak test fonları alabilirsiniz.
+
+### Testnet'e Dağıtın
+
+Şimdi, `forc deploy` komutu ile sözleşmeyi en son test ağına dağıtabilirsiniz.
+
+```sh
+forc deploy --testnet
+```
+
+{/*forc_wallet:example:start*/}
+Terminal cüzdanın şifresini soracaktır:
+
+`Lütfen “~/.fuel/wallets/.wallet” adresindeki şifrelenmiş cüzdan kasanızın şifresini girin:`
+
+Cüzdanın kilidini açtıktan sonra, terminal hesapların bir listesini gösterecektir:
+
+``sh
+Hesap 0 -- yakıt18caanqmumttfnm8qp0eq7u9yluydxtqmzuaqtzdjlsww5t2jmg9skutn8n:
+  Varlık Kimliği Tutar
+  0000000000000000000000000000000000000000000000000000000000000000 499999940
+```
+
+Listenin hemen altında şu komut istemini göreceksiniz:
+
+`Lütfen imzalama için kullanılacak hesap dizinini girin:`
+
+Ardından tercih ettiğiniz hesabın numarasını girecek ve işlemi kabul etmeniz istendiğinde `Y` tuşuna basacaksınız.
+
+Son olarak, sözleşmenin konuşlandırıldığı ağ uç noktasını, bir `Sözleşme Kimliği` ve işlemin imzalandığı bloğu geri alacaksınız.
+{/*forc_wallet:example:end*/}
+
+Daha sonra ön ucu bağlamak için buna ihtiyacınız olacağından `Sözleşme Kimliği`ni kaydedin.
+
+```sh
+Sözleşme karşı sözleşmesi Dağıtıldı!
+
+Ağ: https://testnet.fuel.network
+Sözleşme Kimliği: 0x8342d413de2a678245d9ee39f020795800c7e6a4ac5ff7daae275f533dc05e08
+0x4ea52b6652836c499e44b7e42f7c22d1ed1f03cf90a1d94cd0113b9023dfa636 bloğunda dağıtıldı
+```
+
+### Tebrikler, Fuel üzerindeki ilk akıllı sözleşmenizi tamamladınız ⛽
+
+[İşte bu projenin deposu] (https://github.com/FuelLabs/docs-hub/tree/master/docs/guides/examples/counter-dapp). Herhangi bir sorunla karşılaşırsanız, kodunuzu bu depo ile karşılaştırmak ve farklılıkları gidermek iyi bir ilk adımdır.
+
+Bize [@fuel_network](https://twitter.com/fuel_network) tweet atarak Fuel üzerinde bir dapp oluşturduğunuzu bildirin, özel bir kurucu grubuna davet edilebilir, bir sonraki Fuel yemeğine davet edilebilir, projede alfa alabilirsiniz veya başka bir şey 👀.
+
+## Yardıma mı ihtiyacınız var?
+
+Sorunuzu [Fuel Forum] (https://forum.fuel.network/) adresine göndererek ekipten yardım alın.
