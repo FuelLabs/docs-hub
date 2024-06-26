@@ -74,7 +74,7 @@ jobs:
       - name: Run Playwright tests for ${{ matrix.guide }}
         run: xvfb-run --auto-servernum pnpm test:guides --grep "${{ matrix.guide }}"
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright-report-${{ matrix.guide }}
