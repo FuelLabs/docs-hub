@@ -104,7 +104,7 @@ function getSidebarName(key) {
       newKey = 'Sway By Example';
       break;
     case 'breaking-change-log':
-      newKey = 'Migrations and Disclosures';
+      newKey = 'Migrations & Disclosures';
       break;
     default:
   }
