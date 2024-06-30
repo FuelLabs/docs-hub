@@ -22,7 +22,7 @@ An in-memory node does not persist the blockchain state anywhere, it is only sto
 First ensure your environments [open files limit](https://askubuntu.com/questions/162229/how-do-i-increase-the-open-files-limit-for-a-non-root-user) `ulimit` is increased, example:
 
 ```sh
-ulimit -S -n 4096
+ulimit -S -n 32768
 ```
 
 After ensuring your file limit is increased, to spin-up a local in-memory Fuel node download or copy the local snapshot from [here](https://github.com/FuelLabs/chain-configuration/tree/master/local), then run the following command:
