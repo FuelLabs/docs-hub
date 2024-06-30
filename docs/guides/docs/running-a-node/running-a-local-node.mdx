@@ -19,7 +19,13 @@ There are two types of Fuel networks that can be run:
 
 An in-memory node does not persist the blockchain state anywhere, it is only stored in memory as long as the node is active and running.
 
-To spin-up a local in-memory Fuel node download or copy the local snapshot from [here](https://github.com/FuelLabs/chain-configuration/tree/master/local), then run the following command:
+First ensure your environments [open files limit](https://askubuntu.com/questions/162229/how-do-i-increase-the-open-files-limit-for-a-non-root-user) `ulimit` is increased, example:
+
+```sh
+ulimit -S -n 4096
+```
+
+After ensuring your file limit is increased, to spin-up a local in-memory Fuel node download or copy the local snapshot from [here](https://github.com/FuelLabs/chain-configuration/tree/master/local), then run the following command:
 
 ```sh
 fuel-core run --db-type in-memory --debug --snapshot ./your/path/to/chain_config_folder
