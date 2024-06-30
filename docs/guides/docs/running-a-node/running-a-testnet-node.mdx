@@ -96,6 +96,12 @@ When using the `--snapshot` flag later, you can replace `./your/path/to/chain_co
 
 ## Running a Local Node
 
+First ensure your environments [open files limit](https://askubuntu.com/questions/162229/how-do-i-increase-the-open-files-limit-for-a-non-root-user) `ulimit` is increased, example:
+
+```sh
+ulimit -S -n 4096
+```
+
 {/*running_a_local_node:example:start*/}
 Finally to put everything together to start the node, run the following command:
 {/*running_a_local_node:example:end*/}
