@@ -15,6 +15,5 @@
   "/forc_client/": "/",
   "fuel-graphql-docs": "graphql",
   "fuel-specs": "specs",
-  "fuels-wallet": "wallet",
-  "migrations-and-disclosures/breaking-changes-log": "breaking-changes-log"
+  "fuels-wallet": "wallet"
 }
