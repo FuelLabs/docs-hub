@@ -55,7 +55,7 @@ export function SidebarSection({
       case 'Sway-by-example-lib':
         githubLink = 'https://github.com/FuelLabs/sway-by-example-lib';
         break;
-      case 'migrations-and-disclosures':
+      case 'Migrations-and-disclosures':
         githubLink = 'https://github.com/FuelLabs/migrations-and-disclosures';
         break;
       default:
