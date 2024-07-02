@@ -31,9 +31,6 @@
 [submodule "docs/guides/examples/intro-to-predicates"]
 	path = docs/guides/examples/intro-to-predicates
 	url = https://github.com/FuelLabs/intro-to-predicates.git
-[submodule "docs/guides/docs/migration-guide/migrations-and-disclosures"]
-	path = docs/guides/docs/migration-guide/migrations-and-disclosures
-	url = https://github.com/FuelLabs/migrations-and-disclosures
 [submodule "docs/fuel-core"]
 	path = docs/fuel-core
 	url = https://github.com/FuelLabs/fuel-core
