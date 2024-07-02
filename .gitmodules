@@ -31,9 +31,9 @@
 [submodule "docs/guides/examples/intro-to-predicates"]
 	path = docs/guides/examples/intro-to-predicates
 	url = https://github.com/FuelLabs/intro-to-predicates.git
-[submodule "docs/guides/docs/migration-guide/breaking-change-log"]
-	path = docs/guides/docs/migration-guide/breaking-change-log
-	url = https://github.com/FuelLabs/breaking-change-log
+[submodule "docs/guides/docs/migration-guide/migrations-and-disclosures"]
+	path = docs/guides/docs/migration-guide/migrations-and-disclosures
+	url = https://github.com/FuelLabs/migrations-and-disclosures
 [submodule "docs/fuel-core"]
 	path = docs/fuel-core
 	url = https://github.com/FuelLabs/fuel-core
@@ -79,9 +79,9 @@
 [submodule "docs/nightly/sway-by-example-lib"]
 	path = docs/nightly/sway-by-example-lib
 	url = https://github.com/FuelLabs/sway-by-example-lib.git
-[submodule "docs/breaking-change-log"]
-	path = docs/breaking-change-log
-	url = https://github.com/FuelLabs/breaking-change-log.git
-[submodule "docs/nightly/breaking-change-log"]
-	path = docs/nightly/breaking-change-log
-	url = https://github.com/FuelLabs/breaking-change-log.git
+[submodule "docs/migrations-and-disclosures"]
+	path = docs/migrations-and-disclosures
+	url = https://github.com/FuelLabs/migrations-and-disclosures.git
+[submodule "docs/nightly/migrations-and-disclosures"]
+	path = docs/nightly/migrations-and-disclosures
+	url = https://github.com/FuelLabs/migrations-and-disclosures.git

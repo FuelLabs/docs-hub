@@ -16,5 +16,5 @@
   "fuel-graphql-docs": "graphql",
   "fuel-specs": "specs",
   "fuels-wallet": "wallet",
-  "breaking-change-log/breaking-changes-log": "breaking-changes-log"
+  "migrations-and-disclosures/breaking-changes-log": "breaking-changes-log"
 }
