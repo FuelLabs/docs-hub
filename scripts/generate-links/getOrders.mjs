@@ -5,9 +5,9 @@ import processSummary from './processSummary.mjs';
 import { processVPConfig } from './processVPConfig.mjs';
 
 const CONFIG = {
-  'breaking-change-log': {
+  'migrations-and-disclosures': {
     type: 'mdbook',
-    path: './breaking-change-log/docs/src/SUMMARY.md',
+    path: './migrations-and-disclosures/docs/src/SUMMARY.md',
   },
   sway: {
     type: 'mdbook',

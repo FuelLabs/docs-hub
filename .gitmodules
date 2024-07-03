@@ -85,3 +85,9 @@
 [submodule "docs/nightly/breaking-change-log"]
 	path = docs/nightly/breaking-change-log
 	url = https://github.com/FuelLabs/breaking-change-log.git
+[submodule "docs/migrations-and-disclosures"]
+	path = docs/migrations-and-disclosures
+	url = https://github.com/FuelLabs/migrations-and-disclosures.git
+[submodule "docs/nightly/migrations-and-disclosures"]
+	path = docs/nightly/migrations-and-disclosures
+	url = https://github.com/FuelLabs/migrations-and-disclosures.git
