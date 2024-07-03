@@ -33,8 +33,7 @@ export async function updateSubmodules(newDefaultVersions, newNightlyVersions) {
   // update everything that doesn't have a version
   const updateRegardless = [
     'docs/nightly/fuel-specs',
-    'docs/nightly/fuel-graphql-docs',
-    'docs/guides/docs/migration-guide/breaking-change-log',
+    'docs/nightly/fuel-graphql-docs'
   ];
   await Promise.all(
     updateRegardless.map(async (sub) => {

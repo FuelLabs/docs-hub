@@ -197,8 +197,7 @@ export async function getDocs(key, order) {
     case 'guides':
       paths = [
         // GUIDES
-        './guides/docs/**/*.mdx',
-        './guides/docs/migration-guide/breaking-change-log/breaking-changes-log.md',
+        './guides/docs/**/*.mdx'
       ];
       break;
     case 'intro':
