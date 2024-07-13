@@ -82,10 +82,6 @@ const excludeDirs = [
   // DEFAULT DOCS & GUIDES
   'docs/guides/docs/guides.json',
   'docs/guides/docs/nav.json',
-  'docs/guides/docs/migration-guide/breaking-change-log/README.md',
-  'docs/guides/docs/migration-guide/breaking-change-log/package.json',
-  'docs/guides/docs/migration-guide/breaking-change-log/node_modules',
-  'docs/guides/docs/migration-guide/breaking-change-log/pnpm-lock.yaml',
   'docs/intro/nav.json',
   'docs/contributing/nav.json',
   'docs/sway/docs/book/src/SUMMARY.md',
@@ -94,7 +90,6 @@ const excludeDirs = [
   'docs/sway-libs/docs/book/src/SUMMARY.md',
   'docs/sway-standards/docs/src/SUMMARY.md',
   'docs/sway-by-example-lib/docs/src/SUMMARY.md',
-  'docs/guides/docs/migration-guide/breaking-change-log/node_modules',
   'docs/breaking-change-log/docs/src/SUMMARY.md',
   // NIGHTLY DOCS
   'docs/nightly/sway/docs/book/src/SUMMARY.md',
