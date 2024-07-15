@@ -82,20 +82,20 @@ export async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
-    case 'breaking-change-log':
+    case 'migrations-and-disclosures':
       paths = [
         // BREAKING CHANGE LOG DOCS
-        './breaking-change-log/docs/src/*.md',
-        './breaking-change-log/docs/src/**/*.md',
+        './migrations-and-disclosures/docs/src/*.md',
+        './migrations-and-disclosures/docs/src/**/*.md',
         // IGNORE ALL SUMMARY PAGES
         '!**/SUMMARY.md',
       ];
       break;
-    case 'nightly-breaking-change-log':
+    case 'nightly-migrations-and-disclosures':
       paths = [
         // BREAKING CHANGE LOG DOCS
-        './nightly/breaking-change-log/docs/src/*.md',
-        './nightly/breaking-change-log/docs/src/**/*.md',
+        './nightly/migrations-and-disclosures/docs/src/*.md',
+        './nightly/migrations-and-disclosures/docs/src/**/*.md',
         // IGNORE ALL SUMMARY PAGES
         '!**/SUMMARY.md',
       ];
@@ -197,8 +197,7 @@ export async function getDocs(key, order) {
     case 'guides':
       paths = [
         // GUIDES
-        './guides/docs/**/*.mdx',
-        './guides/docs/migration-guide/breaking-change-log/breaking-changes-log.md',
+        './guides/docs/**/*.mdx'
       ];
       break;
     case 'intro':
