@@ -34,7 +34,7 @@ export async function updateSubmodules(newDefaultVersions, newNightlyVersions) {
   const updateRegardless = [
     'docs/nightly/fuel-specs',
     'docs/nightly/fuel-graphql-docs',
-    'docs/guides/docs/migration-guide/breaking-change-log',
+    'docs/nightly/migrations-and-disclosures'
   ];
   await Promise.all(
     updateRegardless.map(async (sub) => {
@@ -78,6 +78,12 @@ async function updateDocs(versions, isNightly) {
           break;
         case 'wallet':
           submoduleName = `docs${isNightly ? '/nightly' : ''}/fuels-wallet`;
+          break;
+        case 'sway_libs':
+          submoduleName = `docs${isNightly ? '/nightly' : ''}/sway-libs`;
+          break;
+        case 'sway_standards':
+          submoduleName = `docs${isNightly ? '/nightly' : ''}/sway-standards`;
           break;
         default:
       }
