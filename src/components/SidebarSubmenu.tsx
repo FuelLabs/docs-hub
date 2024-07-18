@@ -18,9 +18,6 @@ export function SidebarSubmenu({
   submenu,
   onClick,
 }: SidebarSubmenuProps) {
-  const pathname = usePathname();
-  const [isOpened, setIsOpened] = useState<boolean>();
-
   const thisItem = {
     label,
     slug: submenu![0].slug,
@@ -28,43 +25,26 @@ export function SidebarSubmenu({
     breadcrumbs: [],
   };
 
-  useEffect(() => {
-    if (pathname.includes('/guides/') && pathname !== '/guides/') {
-      setIsOpened(true);
-    } else {
-      let actualSlug = thisItem.slug;
-      if (!hasIndex) {
-        const split = thisItem.slug.split('/');
-        split.pop();
-        actualSlug = split.join('/');
-      }
-      const active = pathname.startsWith(`/${actualSlug}/`);
-      setIsOpened(active);
-    }
-  }, [pathname]);
-
   return (
     <Box.Flex css={styles.root}>
       <SidebarLink
         intent='base'
         onClick={onClick}
         item={thisItem}
-        isActiveMenu={isOpened}
+        isActiveMenu={true}
       />
 
-      {isOpened && (
-        <List>
-          {submenu?.map((item, index) => {
-            if (!hasIndex || index > 0) {
-              return (
-                <List.Item key={index}>
-                  <SidebarLink onClick={onClick} item={item} data-submenu />
-                </List.Item>
-              );
-            }
-          })}
-        </List>
-      )}
+      <List>
+        {submenu?.map((item, index) => {
+          if (!hasIndex || index > 0) {
+            return (
+              <List.Item key={index}>
+                <SidebarLink onClick={onClick} item={item} data-submenu />
+              </List.Item>
+            );
+          }
+        })}
+      </List>
     </Box.Flex>
   );
 }
