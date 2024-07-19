@@ -79,6 +79,8 @@
 [submodule "docs/migrations-and-disclosures"]
 	path = docs/migrations-and-disclosures
 	url = https://github.com/FuelLabs/migrations-and-disclosures.git
+	branch = propose/new-format
 [submodule "docs/nightly/migrations-and-disclosures"]
 	path = docs/nightly/migrations-and-disclosures
 	url = https://github.com/FuelLabs/migrations-and-disclosures.git
+	branch = propose/new-format
