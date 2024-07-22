@@ -23,13 +23,16 @@
     "**/fuelup": true,
     "**/guides/examples": true,
     "**/sway-by-example-lib": true,
-    "**/breaking-change-log": true
+    "**/migrations-and-disclosures": true
   },
   "git.ignoreLimitWarning": true,
   "[typescriptreact]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
   "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
     "editor.defaultFormatter": "biomejs.biome"
   }
 }

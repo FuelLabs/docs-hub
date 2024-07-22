@@ -1,10 +1,10 @@
 {
   "default": {
-    "forc": "0.60.0",
-    "rust": "0.63.0",
-    "ts": "0.90.0",
-    "wallet": "0.21.0",
+    "forc": "0.61.2",
+    "rust": "0.65.1",
+    "ts": "0.92.0",
+    "wallet": "0.23.0",
     "sway_libs": "0.22.0",
-    "sway_standards": "0.5.0"
+    "sway_standards": "0.5.1"
   }
 }

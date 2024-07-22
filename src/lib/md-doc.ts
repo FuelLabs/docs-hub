@@ -71,18 +71,12 @@ export class Doc {
       .replace('docs/sway/', '')
       .replace('docs/sway-standards/', '')
       .replace('docs/sway-by-example-lib/', '')
-      .replace('docs/breaking-change-log/', '')
       .replace('docs/fuel-specs/', '')}`;
 
     let pageLink = `${config.repository}${actualPath.replace(
       'tree/master/docs/sway-libs/docs',
       'tree/master/docs'
     )}${fileType}`;
-
-    if (pageLink.includes('breaking-change-log/breaking-changes-log')) {
-      pageLink =
-        'https://github.com/FuelLabs/breaking-change-log/blob/master/breaking-changes-log.md';
-    }
 
     if (pageLink.includes('/master/')) {
       let versionSet: VersionSet = 'default';
