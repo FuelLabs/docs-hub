@@ -10,7 +10,7 @@ jobs:
   update-docsearch:
     name: Update DocSearch
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success')
+    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.ref == 'refs/heads/main'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
