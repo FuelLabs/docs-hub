@@ -370,6 +370,7 @@ function replaceInternalLinks(href: string, base: string) {
     newHref.startsWith('https://fuellabs.github.io') &&
     !newHref.includes('fuellabs.github.io/block-explorer-v2') &&
     !newHref.startsWith('https://fuellabs.github.io/sway/master/std/') &&
+    !newHref.startsWith('https://fuellabs.github.io/sway/master/core/') &&
     !newHref.includes('LICENSE') &&
     !newHref.includes('/fuelup/') &&
     // ignore sway-libs reference links
