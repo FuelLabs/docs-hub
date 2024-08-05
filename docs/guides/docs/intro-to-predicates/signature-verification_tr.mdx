@@ -1,0 +1,51 @@
+---
+başlık: İmza Doğrulama
+Kategori: Yüklemlere Giriş
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+## İmza Doğrulama
+
+Verilen her imzanın geçerliliğini kontrol eden ve geçersiz olanları reddederek tüm imzaların benzersiz olmasını sağlayan `verify_signatures()` adlı bir yardımcı işlev tanımlayalım.
+
+İmza doğrulama yardımcı fonksiyonunu aşağıdaki main.sw dosyanıza kopyalayın:
+
+<TestAction
+id=“sway-function”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/multisig-predicate/src/main.sw”
+  comment=“signature_verification_parent”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Daha önce de belirtildiği gibi, her imzayı doğrulamak için işlem tanıklarını ve işlem karmasını kullanacağız ve bunları daha önce yapılandırılmış cüzdanlarla eşleştireceğiz.
+
+1. Parametre `i`: Bu parametre, yapılandırılabilirde tanımlanan önceden tanımlanmış bir imzalayanlar listesindeki bir imzalayanın indeksini temsil eder. İşlevin şu anda hangi imzalayanın imzasını doğrulamaya çalıştığını belirlemek için kullanılır.
+
+2. İmza Doğrulama Döngüsü: Fonksiyon daha sonra üç defaya kadar yinelenen bir döngüye girer. Bu döngü, imzayı işleme eklenmiş en fazla üç adet tanık verisine (imza) karşı doğrulama girişimini temsil eder.
+
+   - İmza Kurtarma: Döngü içinde, `j` ile tanımlanan her yineleme için, `tx_witness_data::<B512>(j)` kullanarak işlemin tanık verilerinden geçerli imzayı (`current_signature`) alır. Ardından, geçerli imzayı ve işlem özetini girdi olarak alan `ec_recover_address` işlevini kullanarak bu imzayı oluşturan adresi (`current_address`) kurtarmaya çalışır.
+
+   - Adres Eşleştirme: Adres kurtarıldıktan sonra, fonksiyon bu adresin `SIGNERS` listesindeki `i`nci imzacının adresiyle eşleşip eşleşmediğini kontrol eder. Bir eşleşme bulunursa, imzalayanlardan birinin imzasının başarıyla doğrulandığı anlamına gelir ve fonksiyon `1` döndürür.
+
+  <CodeImport
+    file=“../../examples/intro-to-predicates/multisig-predicate/src/main.sw”
+    comment=“verification_loop”
+    commentType=“//”
+    lang=“sway”
+  />
+
+{/*markdownlint-disable*/}
+3. Dönüş Değeri: Fonksiyon, `i`nci imzalayan için eşleşen bir imza bulunursa `1` döndürür ve doğrulamanın başarılı olduğunu gösterir. Üç imzaya kadar kontrol yapıldıktan sonra eşleşen bir imza bulunamazsa fonksiyon `0` döndürür ve `i`inci imzalayanın imzasının doğrulanamadığını belirtir.
+{/*markdownlint-disable*/}
+
+Bu, esnek imza doğrulamasına olanak tanır, gerekli imzalayanlardan gelen imzaların herhangi bir sırayla sunulabileceği senaryolara uyum sağlar ve aynı cüzdandan mükerrer imzalara izin vermeden her imzanın benzersiz bir şekilde hesaba katılmasını sağlar.

@@ -144,31 +144,6 @@ Next, we can use the `msg_amount` function from the standard library to retrieve
   lang="sway"
 />
 
-To ensure the sent amount is not less than the item's price, we should retrieve the item details using the `item_id` parameter.
-
-To obtain a value for a specific key in a storage map, the `get` method is handy, wherein the key value is passed. For mapping storage access, the `try_read()` method is utilized. As this method produces a `Result` type, the `unwrap` method can be applied to extract the item value.
-
-<CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
-  comment="buy_item_get_item"
-  commentType="//"
-  lang="sway"
-/>
-
-In Sway, all variables are immutable by default, whether declared with `let` or `const`. To modify the value of any variable, it must be declared mutable using the `mut` keyword. Since we plan to update the item's `total_bought` value, it should be defined as mutable.
-
-Additionally, it's essential to ensure that the quantity of coins sent for the item isn't less than the item's price.
-
-<CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
-  comment="buy_item_require_ge_amount"
-  commentType="//"
-  lang="sway"
-/>
-
-### Updating buy storage
-
-We can increase the item's `total_bought` field value and subsequently reinsert it into the `item_map`. This action will replace the earlier value with the revised item.
 
 <CodeImport
   file="../../examples/intro-to-sway/contract/src/main.sw"

@@ -1,0 +1,46 @@
+---
+başlık: İthalat
+Kategori: Sway'e Giriş
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# İthalat
+
+Sway standart kütüphanesi] (https://fuellabs.github.io/sway/master/std/), sözleşmemizde kullanabileceğimiz çeşitli yardımcı tipler ve yöntemler sağlar. Bir kütüphaneyi içe aktarmak için, `use` anahtar sözcüğünü ve `::` ad alanı niteleyicisi olarak da adlandırılan, kütüphane adlarını aşağıdaki gibi zincirlemek için kullanabilirsiniz:
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/docs_hub_misc.sw”
+  comment=“import_single”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Ayrıca küme parantezleri kullanarak içe aktarmaları gruplandırabilirsiniz:
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/docs_hub_misc.sw”
+  comment=“import_multi”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Bu sözleşme için içe aktarılması gerekenler şunlardır. Bunu `main.sw` dosyanıza kopyalayın:
+
+<TestAction
+id=“sway-import”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/contract/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“import”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Sonraki adımlarda bu içe aktarmaların her birinin ne işe yaradığını inceleyeceğiz.

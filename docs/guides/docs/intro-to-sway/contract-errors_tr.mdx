@@ -1,0 +1,40 @@
+---
+başlık: Hatalar
+Kategori: Sway'e Giriş
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Hata İşlemeyi Tanımlama
+
+Genellikle enum olarak adlandırılan numaralandırmalar, birkaç olası varyanttan birini temsil edebilen bir türdür. Sözleşmemizde, özel hata mesajları oluşturmak için enumları kullanabilir ve fonksiyonlar içinde daha hassas hata işlemeyi kolaylaştırabiliriz.
+
+Özel hata bloğunu `main.sw` dosyanıza kopyalayın:
+
+<TestAction
+id=“sway-errors”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/contract/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“error_handling”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Sözleşmemizde, bir hata vermek ve işlemi durdurmak isteyeceğimiz çeşitli senaryolar öngörebiliriz:
+
+1. Birisi bir ürün için yanlış bir para birimi kullanarak ödeme yapmaya çalışabilir.
+2. Bir kişi yeterli madeni paraya sahip olmadan bir ürün satın almaya çalışabilir.
+3. Sahibinden başka biri sözleşmeden para çekmeye çalışabilir.
+
+Her bir durum için, hatalara yönelik özel iade türleri tanımlayabiliriz:
+
+- IncorrectAssetId` hatası için, `AssetId` tipinde olan gönderilen varlık kimliğini döndürebiliriz.
+- NotEnoughTokens` hatası durumunda, ilgili jeton sayısını belirtmek için dönüş türünü `u64` olarak tanımlayabiliriz.
+- OnlyOwner` hatası için, geri dönüş değeri olarak mesajı gönderenin `Identity`sini kullanabiliriz.

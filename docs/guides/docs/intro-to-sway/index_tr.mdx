@@ -1,0 +1,43 @@
+---
+başlık: Sway'e Giriş
+Kategori: Sway'e Giriş
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# JavaScript Geliştiricileri için Sway Diline Giriş
+
+JavaScript'e aşina iseniz ve blok zinciri temelleri hakkında temel bir anlayışa sahipseniz, Sway kullanarak Fuel üzerinde tam yığın merkezi olmayan uygulamaların nasıl oluşturulacağını hızlı bir şekilde kavrayabilirsiniz. Sway'in temellerini öğrendikten sonra, kendi dapp'inizi oluşturmaya başlayabileceksiniz.
+
+Bu eğitimde, Amazon'a benzer bir çevrimiçi pazar yeri için bir Sway sözleşmesi hazırlayacağız:
+
+1. Satıcılar ürünleri listeleyebilir.
+2. Alıcılar bu ürünleri satın alabilir.
+
+<Box.Centered>
+![sway uygulamasına giriş](/images/intro-to-sway.gif)
+</Box.Centered>
+
+Akıllı sözleşmelerin zorlayıcı özelliklerinden biri değişmezlikleri ve izinsiz olmalarıdır. Bu, dağıtımından sonra tek bir kuruluşun pazarın kurallarını değiştirememesini veya ayarlayamamasını sağlar. Örneğin, bir ürün sözleşmede listelendikten sonra, dağıtıcı bu ürünün durumunu aniden değiştiremez. Benzer şekilde, bir komisyon tutarı sözleşmeye sabit olarak kodlanmışsa, sabit kalır ve ürünler için alınan komisyonda herhangi bir değişiklik yapılmasını önler.
+
+Ayrıca, sözleşme herkes tarafından etkileşime açık kalır. Bu evrensellik, herhangi bir kişinin izin gerektirmeden kendi özel ön uçlarını kullanarak pazaryeri ile etkileşime girmesine olanak tanır.
+
+Bu eğitimde dikkatimiz özellikle `contract` program türüne yöneltilecektir. Bu, Sway diline özgü [dört program türünden] (/docs/sway/sway-program-types/) sadece bir tanesidir.
+
+## Sway nedir?
+
+Sway, Fuel blok zincirinde akıllı sözleşmeler yazmak için tasarlanmış, Rust tabanlı güçlü tipli bir programlama dilidir. Rust'ın performans, kontrol ve güvenlik özelliklerinden yararlanarak, onu gaz maliyetleri ve sözleşme güvenliği için optimize edilmiş bir blok zinciri sanal makine ortamı için uygun hale getirir.
+
+Sway, sağlam bir derleyici ve araç zinciri ile desteklenmektedir. Bu araçlar karmaşıklıkları basitleştirir ve kodunuzun verimli, güvenli olmasını ve en iyi şekilde çalışmasını sağlar.
+
+Sway'i gerçekten farklı kılan şey, etrafında inşa edilen olağanüstü araç paketidir. Bu araçlar, sözleşmeleri tam yığın dapp'lere dönüştürmek için titizlikle tasarlanmıştır ve sorunsuz ve benzersiz bir geliştirici deneyimi sağlar.
+
+📚 [Sway Standart Kütüphanesi](https://fuellabs.github.io/sway/master/std/): Yararlı türler ve yöntemlerle donatılmış yerel bir kütüphane.
+
+🧑‍🔧 [Fuelup](https://install.fuel.network/latest/): Resmi Fuel araç zinciri yöneticisi, farklı sürümlerin yüklenmesine ve yönetilmesine yardımcı olur.
+
+🦀 [Fuel's Rust SDK](https://docs.fuel.network/docs/fuels-rs/): Rust kullanarak Sway sözleşmelerinizi test edin ve etkileşim kurun.
+
+⚡ [Fuel's TypeScript SDK](https://docs.fuel.network/docs/fuels-ts/): TypeScript kullanarak Sway sözleşmelerinizi test edin ve etkileşim kurun.
+

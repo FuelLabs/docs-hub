@@ -1,0 +1,73 @@
+---
+başlık: Kontrol Noktası
+Kategori: Sway'e Giriş
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Kontrol Noktası
+
+## Sway Sözleşmesi Kontrol Noktası
+
+Önceki adımları doğru bir şekilde izlediyseniz `main.sw` pazar yeri sözleşmeniz aşağıdaki gibi görünmelidir:
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“all”
+  commentType=“//”
+  lang=“sway”
+/>
+
+## Sözleşmenin oluşturulması
+
+İşte talimatlarınızın cilalanmış bir versiyonu:
+
+Sözleşmenizi biçimlendirmek için şu komutu çalıştırın:
+
+<TestAction
+id=“format-contract”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/contract'
+}}
+/>
+
+```sh
+forc fmt
+```
+
+Sözleşmenizi derlemek için sözleşme klasörüne gidin ve çalıştırın:
+
+<TestAction
+id=“build-contract”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/contract'
+}}
+/>
+
+```sh
+forc yapı
+```
+
+Tebrikler! Sway'de başarılı bir şekilde tam bir sözleşme yazdınız!
+
+Derleme sonrasında sistem otomatik olarak `abi.json`, `storage_slots.json` ve `contract.bin` dosyalarını oluşturacaktır. Bu dosyaları aşağıdaki dizinde bulabilirsiniz:
+
+```sh
+contract/out/debug/*
+```
+
+## Sözleşmenin dağıtılması
+
+Bu sözleşmenin dağıtılmasıyla ilgili ayrıntılı adımlar için resmi Fuel geliştirici counter dapp kılavuzuna bakın:
+[Sözleşmeyi Dağıtın](/guides/counter-dapp/building-a-smart-contract/#deploy-the-contract)
+
+Dağıtmak için, forc-wallet'ı zaten kurduysanız ve hesabınızda testnet fonları varsa aşağıdaki komutu kullanın. Değilse, yukarıdaki talimatları izleyin.
+
+```sh
+forc deploy --testnet
+```
+
+Dağıtımı yaptıktan sonra, sözleşme kimliğinizi `contract/out/deployments` klasöründe bulabileceksiniz. Ön uç entegrasyonu için buna ihtiyacınız olacak.
