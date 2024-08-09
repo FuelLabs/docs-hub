@@ -35,10 +35,10 @@ To split our project's contract from frontend code, let's initialize our fronten
 cd ..
 ```
 
-Now, initialize a React project with TypeScript using [`Create React App`](https://create-react-app.dev/).
+Now, initialize a React project with TypeScript using [`Vite`](https://vitejs.dev/).
 
 <TestAction
-id="create-react-app"
+id="create-vite-project"
 action={{
   name: 'runCommand',
   commandFolder: 'guides-testing/fuel-project'
@@ -46,13 +46,35 @@ action={{
 />
 
 ```sh
-npx create-react-app frontend --template typescript
+npm create vite@latest frontend -- --template react-ts
 ```
 
 The output should be similar to this:
 
 ```sh
-Success! Created frontend at Fuel/fuel-project/frontend
+Scaffolding project in Fuel/fuel-project/frontend...
+
+Done. Now run:
+
+  cd frontend
+  npm install
+  npm run dev
+```
+
+### Installing
+
+Move into the `frontend` folder and install the dependencies by running:
+
+<TestAction
+id="install-basic-deps"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project'
+}}
+/>
+
+```sh
+cd frontend && npm install
 ```
 
 You should now have two folders inside your `fuel-project` folder: `counter-contract` and `frontend`.
@@ -65,14 +87,6 @@ You should now have two folders inside your `fuel-project` folder: `counter-cont
 
 The `fuels` package includes all the main tools you need to interact with your Sway programs and the Fuel network.
 The `@fuel-wallet` packages include everything you need to interact with user wallets.
-
-### Installing
-
-Move into the `frontend` folder by running:
-
-```sh
-cd frontend
-```
 
 > `fuels` requires Node version {props.nodeVersion}.
 
@@ -144,41 +158,41 @@ Inside the `frontend/src` folder let's add code that interacts with our contract
 
 Because we'll be using `@fuels/react`, first we need to wrap our app with the `FuelProvider` component.
 
-Add the imports below to the top of your `frontend/src/index.tsx` file and setup a query client:
+Add the imports below to the top of your `frontend/src/main.tsx` file and setup a query client:
 
 <TestAction
 id="provider-import"
 action={{
   name: 'modifyFile',
-  filepath: 'guides-testing/fuel-project/frontend/src/index.tsx',
-  atLine: 6,
+  filepath: 'guides-testing/fuel-project/frontend/src/main.tsx',
+  atLine: 5,
 }}
 />
 
 <CodeImport
-  file="../../examples/counter-dapp/frontend/src/index.tsx"
+  file="../../examples/counter-dapp/frontend/src/main.tsx"
   lang="tsx"
-  lineStart="6"
-  lineEnd="13"
+  lineStart="5"
+  lineEnd="10"
 />
 
-Next, modify your `frontend/src/index.tsx` file to wrap the `App` component with the `FuelProvider` and `QueryClientProvider` components.
+Next, modify your `frontend/src/main.tsx` file to wrap the `App` component with the `FuelProvider` and `QueryClientProvider` components.
 
 <TestAction
 id="fuel-wallet-provider"
 action={{
   name: 'modifyFile',
-  filepath: 'guides-testing/fuel-project/frontend/src/index.tsx',
-  atLine: 19,
-  removeLines: [19],
+  filepath: 'guides-testing/fuel-project/frontend/src/main.tsx',
+  atLine: 11,
+  removeLines: [11,12,13,14,15],
 }}
 />
 
 <CodeImport
-  file="../../examples/counter-dapp/frontend/src/index.tsx"
+  file="../../examples/counter-dapp/frontend/src/main.tsx"
   lang="tsx"
-  lineStart="19"
-  lineEnd="27"
+  lineStart="11"
+  lineEnd="23"
 />
 
 Next, change the file `fuel-project/frontend/src/App.tsx` to:
@@ -217,24 +231,20 @@ Inside the `fuel-project/frontend` directory run:
 id="start-app"
 action={{
   name: 'runCommand',
-  preCommand: "pnpm pm2 start 'PORT=4000 BROWSER=none <COMMAND>' --name 'react-dapp' --cwd ./guides-testing/fuel-project/frontend"
+  preCommand: "pnpm pm2 start 'BROWSER=none <COMMAND>' --name 'react-dapp' --cwd ./guides-testing/fuel-project/frontend"
 }}
 />
 
 ```sh
-npm start
+npm run dev
 ```
 
 ```sh
-Compiled successfully!
+  VITE v5.3.5  ready in 108 ms
 
-You can now view frontend in the browser.
-
-  Local:            http://localhost:3000
-  On Your Network:  http://192.168.4.48:3000
-
-Note that the development build is not optimized.
-To create a production build, use npm run build.
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
 ```
 
 Click the "Connect" button and select the wallet you have installed to connect your wallet.
@@ -281,7 +291,7 @@ action={{
 id="go-to-frontend"
 action={{
   name: 'goToUrl',
-  url: "http://localhost:4000"
+  url: "http://localhost:5173"
 }}
 />
 
