@@ -2,12 +2,12 @@ import { createConfig } from 'fuels';
 
 export default createConfig({
   contracts: [
-    '../counter-contract',
+        '../counter-contract',
   ],
   output: './src/sway-api',
 });
 
 /**
  * Check the docs:
- * https://fuellabs.github.io/fuels-ts/tooling/cli/fuels/config-file
+ * https://docs.fuel.network/docs/fuels-ts/fuels-cli/config-file/
  */
