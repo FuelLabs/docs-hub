@@ -20,12 +20,12 @@ export type LinkObject = {
 
 export const EXTERNAL_NAVIGATION_LINKS: LinkObject[] = [
   {
-    name: "Sway Std Lib",
-    link: "https://fuellabs.github.io/sway/master/std/",
+    name: "Sway Core Lib",
+    link: "https://fuellabs.github.io/sway/master/core/",
   },
   {
-    name: "Sway Core",
-    link: "https://fuellabs.github.io/sway/master/core/",
+    name: "Sway Std Lib",
+    link: "https://fuellabs.github.io/sway/master/std/",
   },
   {
     name: "Example Applications",
@@ -76,6 +76,10 @@ export const NAVIGATION: any[] = [
         link: "https://fuellabs.github.io/sway/master/std/",
       },
       {
+        name: "Core Library",
+        link: "https://fuellabs.github.io/sway/master/core/",
+      },
+      {
         name: "Sway Playground",
         link: "https://sway-playground.org",
       },
@@ -86,10 +90,6 @@ export const NAVIGATION: any[] = [
       {
         name: "Example Apps",
         link: "https://github.com/FuelLabs/sway-applications/",
-      },
-      {
-        name: "Sway Core",
-        link: "https://fuellabs.github.io/sway/master/core/",
       },
       {
         name: "Tooling",
