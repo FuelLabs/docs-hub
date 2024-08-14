@@ -9,6 +9,7 @@ import { FuelWalletConnector, FueletWalletConnector } from '@fuels/connectors';
 import { Provider } from '../components/Provider';
 import { ShowWarningProvider } from '../hooks/useShowWarning';
 import { VersionProvider } from '../hooks/useVersion';
+import { AskCookbook } from '../components/AskCookbook';
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 }
               `}</style>
               <Component {...pageProps} />
+              <AskCookbook />
               <Analytics />
             </Provider>
           </ShowWarningProvider>
