@@ -1,0 +1,54 @@
+---
+başlık: Yapılar
+Kategori: Sway'e Giriş
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Bir Öğe Yapısı Tanımlama
+
+Struct, JavaScript'teki bir nesneye benzer bir veri yapısı olan yapının kısaltmasıdır. Sway'de `struct` anahtar sözcüğü ile bir struct tanımlarsınız ve bir struct'ın alanlarını küme parantezleri içinde tanımlarsınız.
+
+Programımızın özü `items` listeleme, satma ve alma yeteneğidir.
+
+Şimdi `main.sw` dosyanıza yazmak için Item tipini aşağıda gösterildiği gibi tanımlayalım:
+
+<TestAction
+id=“sway-struct”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/contract/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“struct”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Öğe yapısı bir kimlik, fiyat, sahibinin kimliği, öğe hakkında zincir dışı veriler için bir URL veya tanımlayıcıyı temsil eden bir dize (açıklaması ve fotoğrafları gibi) ve toplam satın alma sayısını izlemek için bir “toplam satın alınan” sayaç içerecektir.
+
+## Türler
+
+Item` yapısı üç tür kullanır: u64`, `str` ve `Identity`.
+
+u64`: 64 bitlik işaretsiz bir tamsayıdır.
+
+Sway'de dört yerel sayı türü vardır:
+
+- u8`: 8 bitlik işaretsiz tamsayı.
+- u16`: 16 bitlik işaretsiz tamsayı.
+- u32`: 32 bitlik işaretsiz tamsayı.
+- u64`: 64 bitlik işaretsiz tamsayı.
+- u256`: 256 bitlik işaretsiz tamsayı.
+
+İşaretsiz bir tamsayı, `+` veya `-` işareti olmadığı anlamına gelir ve değeri her zaman pozitif yapar. u64` Sway'de sayılar için kullanılan varsayılan türdür.
+
+JavaScript'te iki tür tamsayı vardır: `number` ve `BigInt`. Bu türler arasındaki temel fark, `BigInt` türünün çok daha büyük değerleri saklayabilmesidir. Benzer şekilde, Sway'deki her sayısal türün saklanabilecek maksimum değeri vardır.
+
+String Array`: string, Sway'de yerleşik bir ilkel tiptir. Köşeli parantezlerin içindeki sayı dizenin boyutunu gösterir.
+
+Kimlik: Bir kullanıcının `Adresini` ya da `Sözleşme Kimliğini` temsil eden bir enum türüdür. Sway'de, bir sözleşme ve bir EOA (Harici Olarak Sahip Olunan Hesap) belirgin bir şekilde ayırt edilir. Her ikisi de `b256` için tip güvenli sarmalayıcılardır.

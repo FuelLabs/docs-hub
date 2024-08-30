@@ -1,0 +1,147 @@
+---
+başlık: Ön Koşullar
+Kategori: Sway'e Giriş
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Önkoşullar
+
+## Kurulum
+
+<TextImport
+  file=“../installation/index.mdx”
+  comment=“install_fuelup”
+  commentType=“{/*”
+/>
+
+<CodeImport
+  file=“../installation/index.mdx”
+  comment=“install_fuelup_command”
+  commentType=“{/*”
+  lang=“sh”
+  trim=“true”
+/>
+
+<TextImport
+  file=“../counter-dapp/building-a-smart-contract.mdx”
+  comment=“install_help”
+  commentType=“{/*”
+/>
+
+<TextImport
+  file=“../installation/index.mdx”
+  comment=“install_VSCode_extensions”
+  commentType=“{/*”
+/>
+
+### Zaten `fuelup` yüklü mü?
+
+<TextImport
+  file=“../counter-dapp/building-a-smart-contract.mdx”
+  comment=“already_installed”
+  commentType=“{/*”
+/>
+
+### Yakıt Cüzdanı
+
+<TextImport
+  file=“../counter-dapp/building-a-frontend.mdx”
+  comment=“install_wallet”
+  commentType=“{/*”
+/>
+
+Ayrıca bu kılavuz için Node.js/npm sürümünü {props.nodeVersion} kullandığınızdan emin olun.
+Node.js sürümünüzü şu şekilde kontrol edebilirsiniz:
+
+```sh
+düğüm -v
+```
+
+## Proje Kurulumu
+
+Yeni boş bir klasörle başlayın ve `fuel-project` olarak adlandırın.
+
+<TestAction
+id=“create-project-folder”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing'
+}}
+/>
+
+```sh
+mkdir yakıt-proje
+```
+
+Yakıt-proje` klasörüne gidin:
+
+``sh
+cd yakıt-projesi
+```
+
+Terminalinizde `contract` adında yeni bir Sway projesi oluşturarak başlayın:
+
+<TestAction
+id=“create-contract”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project'
+}}
+/>
+
+```sh
+forc yeni̇ sözleşme
+```
+
+forc` komutundan oluşturulan proje yapınız aşağıdaki gibi olmalıdır:
+
+<TestAction
+id=“contract-tree”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project'
+}}
+/>
+
+```sh
+ağaç sözleşmesi̇
+```
+
+```sh
+sözleşme
+├── Forc.toml
+└── src
+    └── main.sw
+
+1 dizin, 2 dosya
+```
+
+Sözleşme klasörünüze taşıyın:
+
+```sh
+cd sözleşmesi
+```
+
+VSCode'da `contract` klasörünü açın ve `src` klasörünün içinde `main.sw` adında bir dosya görmelisiniz. Burası Sway sözleşmenizi yazacağınız yerdir.
+
+Yepyeni bir sözleşme oluşturduğumuz için bu dosyadaki `contract` anahtar sözcüğü dışındaki her şeyi silebilirsiniz.
+
+<TestAction
+id=“sway-program-türü”
+action={{
+  isim: 'writeToFile',
+  filepath: 'guides-testing/fuel-project/contract/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“sözleşme”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Dosyanın ilk satırı, derleyiciye bir sözleşme mi, kod mu, yüklem mi yoksa kütüphane mi yazdığımızı bildirmek için özel olarak ayrılmıştır. Dosyayı bir sözleşme olarak tanımlamak için `contract` anahtar sözcüğünü kullanın.
+

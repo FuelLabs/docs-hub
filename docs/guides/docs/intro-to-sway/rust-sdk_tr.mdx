@@ -1,0 +1,224 @@
+---
+başlık: Pas Testi
+Kategori: Sway'e Giriş
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Sözleşmenin test edilmesi
+
+## Rust'ta Test Şablonu Oluşturma
+
+Rust kullanarak kendi test şablonunuzu oluşturmak için, sözleşme proje dizininde `cargo-generate` ile aşağıdaki adımları izleyin:
+
+1. cargo-generate` programını yükleyin:
+
+``bash
+cargo install cargo-generate --locked
+```
+
+{/*markdownlint-disable*/}
+2. Şablonu oluşturun:
+{/*markdownlint-disable*/}
+
+<TestAction
+id=“cargo-generate-test”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/contract'
+}}
+/>
+
+```bash
+cargo generate --init fuellabs/sway templates/sway-test-rs --name sway-store
+```
+
+<TextImport
+  file=“../counter-dapp/building-a-smart-contract.mdx”
+  comment=“rust_harness”
+  commentType=“{/*”
+/>
+
+## İthalat
+
+Oluşturulmuş olan mevcut `harness.rs` test dosyasını değiştireceğiz. Öncelikle içe aktarımları değiştirmemiz gerekiyor. Fuel Rust SDK'yı içe aktararak, prelude içinde yer alan işlevlerin çoğunu elde edeceksiniz.
+
+<TestAction
+id=“harness-import”
+action={{
+  isim: 'writeToFile',
+  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/tests/harness.rs”
+  comment=“rs_import”
+  commentType=“//”
+  lang=“rust”
+/>
+
+Herhangi bir değişiklik yaptıktan sonra sözleşmelerinizi her zaman derleyin. Bu, üretilen en yeni `contract-abi` ile çalışmanızı sağlar.
+
+Sözleşme adınızı ve `abigen` makrosundaki ABI yolunu sözleşmenizin adıyla eşleşecek şekilde güncelleyin:
+
+<TestAction
+id=“harness-abi”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/tests/harness.rs”
+  comment=“rs_abi”
+  commentType=“//”
+  lang=“rust”
+/>
+
+## İşlevleri Başlatma
+
+Sway için testler yazarken, iki önemli nesne gereklidir: sözleşme örneği ve onunla etkileşime giren cüzdanlar. Bu yardımcı işlev, her yeni test senaryosu için yeni bir başlangıç sağlar, bu nedenle bunu test dosyanıza kopyalayın. Bu amaçla, konuşlandırılmış sözleşmeleri, sözleşme kimliğini ve oluşturulan tüm cüzdanları dışa aktaracaktır.
+
+Test koşum takımınızdaki `get_contract_instance` işlevini aşağıdaki işlevle değiştirin:
+
+<TestAction
+id=“harness-instance”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/tests/harness.rs”
+  comment=“rs_contract_instance_parent”
+  commentType=“//”
+  lang=“rust”
+/>
+
+## Test Durumları
+
+Akıllı sözleşmelerin değişmez doğası göz önüne alındığında, testlerinizdeki tüm olası uç durumları kapsaması önemlidir.
+Örnek `can_get_contract_id` test durumunu silelim ve `harness.rs` dosyamızın altına bazı test durumları yazmaya başlayalım.
+
+### Ayar Sahibi
+
+Bu test durumu için, sözleşme örneğini kullanıyoruz ve SDK'nın `.with_account()` yöntemini kullanıyoruz. Bu, ilk cüzdanı taklit etmemizi sağlar. Sahibin doğru ayarlanıp ayarlanmadığını kontrol etmek için, sözleşme tarafından verilen adresin cüzdan 1'in adresiyle eşleşip eşleşmediğini görebiliriz. Daha derine inmek isterseniz, sözleşme deposuna bakmak cüzdan 1'in adresinin düzgün bir şekilde saklanıp saklanmadığını gösterecektir.
+
+<TestAction
+id=“harness-test-set-owner”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/tests/harness.rs”
+  comment=“rs_test_set_owner”
+  commentType=“//”
+  lang=“rust”
+/>
+
+### Ayar Sahibi Bir Kez
+
+Dikkatli olmamız gereken bir uç durum, mal sahibini iki kez belirleme girişimidir. Sözleşmemizin yetkisiz sahiplik transferini kesinlikle istemeyiz! Bunu ele almak için, Sway sözleşmemize aşağıdaki satırı ekledik: `require(owner.is_none(), “owner already initialized”);`
+Bu, sahibin yalnızca daha önce belirlenmediğinde ayarlanabilmesini sağlar. Bunu test etmek için yeni bir sözleşme örneği oluşturuyoruz: başlangıçta, sahibi wallet 1 kullanarak ayarlıyoruz. Daha sonra sahibi cüzdan 2 ile ayarlama girişimleri başarısız olmalıdır.
+
+<TestAction
+id=“harness-test-set-owner-once”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/tests/harness.rs”
+  comment=“rs_test_set_owner_once”
+  commentType=“//”
+  lang=“rust”
+/>
+
+### Pazarda Alım ve Satım
+
+Bir akıllı sözleşmenin düzgün çalıştığından emin olmak için temel işlevlerini test etmek çok önemlidir.
+Bu test için iki cüzdan kurduk:
+
+1. İlk cüzdan, satılık bir öğeyi listelemek için bir işlem başlatır. Bu işlem `.list_item()` metodunu çağırarak ve sattıkları ürünün hem fiyatını hem de detaylarını belirterek yapılır.
+2. İkinci cüzdan, `.buy_item()` yöntemini kullanarak listelenen öğeyi satın almaya devam eder ve satın almak istedikleri öğenin dizinini sağlar.
+
+Bu işlemlerin ardından, işlemlerin başarılı bir şekilde yürütüldüğünü onaylamak için her iki cüzdanın bakiyelerini değerlendireceğiz.
+
+<TestAction
+id=“harness-test-buy-sell”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/tests/harness.rs”
+  comment=“rs_test_list_and_buy_item”
+  commentType=“//”
+  lang=“rust”
+/>
+
+### Sahip Ücretlerini Geri Çekin
+
+En önemlisi, pazaryerinin yaratıcısı olarak, karşılığını aldığınızdan emin olmanız gerekir. Önceki testlere benzer şekilde, bir takas yapmak için ilgili işlevleri çağıracağız. Bu sefer, fon farkını alıp alamayacağınızı doğrulayacağız.
+
+<TestAction
+id=“harness-test-owner-withdraw”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/tests/harness.rs”
+  comment=“rs_test_withdraw_funds”
+  commentType=“//”
+  lang=“rust”
+/>
+
+## Kontrol Noktası
+
+Önceki adımları doğru bir şekilde izlediyseniz, `harness.rs` test dosyanız aşağıdaki gibi görünmelidir:
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/tests/harness.rs”
+  comment=“all”
+  commentType=“//”
+  lang=“rust”
+/>
+
+## Testleri Çalıştırmak
+
+Testler/harness.rs` dosyasında bulunan testi çalıştırmak için aşağıdaki komutu `contract` klasörünüzün içinde çalıştırın:
+
+<TestAction
+id=“cargo-test”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/contract'
+}}
+/>
+
+```sh
+kargo testi̇
+```
+
+Testler sırasında çıktıları konsola yazdırmak istiyorsanız, `nocapture` bayrağını kullanın:
+
+```sh
+cargo test -- --nocapture
+```
+
+Artık akıllı sözleşmemizin işlevselliğinden emin olduğumuza göre, bir ön uç oluşturmanın zamanı geldi. Bu, kullanıcıların yeni pazar yerimizle sorunsuz bir şekilde etkileşime girmesine olanak tanıyacak!
+

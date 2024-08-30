@@ -1,0 +1,34 @@
+--
+başlık: Yüklemlere Giriş
+Kategori: Yüklemlere Giriş
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Predicates 101: Stateless DeFi Uygulamaları Oluşturma
+
+Predicates, Fuel'in durumsuz hesap soyutlamasına yaklaşımıdır. Blok zinciri alanında, sürekli olarak uzun vadede sürdürülebilir olmayan durum şişkinliğinin üstel büyümesiyle karşı karşıyayız.
+Ethereum ekosisteminde, dağıtılan her sözleşme blok zincirinde süresiz olarak durum depolanmasını gerektirir.
+Blok zinciri ölçeklenebilirliğine yardımcı olmak için, merkezi olmayan finans dünyası için temel olan durum minimize edilmiş uygulamaları yeniden tanımlamak için farklı yaklaşımları göz önünde bulundurmamız gerekir.
+
+Bu eğitim özellikle Sway dilindeki [dört program türünden] (/docs/sway/sway-program-types/) biri olan `predicate` program türüne ve giderek büyüyen bu sorunu nasıl çözebileceğimize odaklanacaktır.
+
+## Predicates nedir?
+
+Yüklemleri tek bir cümle ile tanımlamak gerekirse:
+
+> Yüklemler **true** veya **false** döndüren **durumsuz** programlardır.
+
+Bir yüklem, özel bir anahtar tarafından oluşturulan herhangi bir EOA (Harici Olarak Sahip Olunan Hesap) ile aynı olan bir Adres türü ile temsil edilir. Programın bytecode'u deterministik olarak hashlenebilir ve tamamı zincir dışı hesaplanan sıradan bir adres olarak temsil edilebilir.
+Bu nedenle, bu adres varlıklar içerdiğinde, HERKES yüklemin doğru olduğunu değerlendirebilirse yüklemin arkasında kilitli olan varlıkları harcayabilir. Kodu cüzdanın özel anahtarı olarak düşünmek faydalı olabilir.
+
+Bu kavram hala biraz belirsizse endişelenmeyin! Proje kurulumunun bir sonraki bölümünde basit bir örneği inceleyelim.
+
+📚 [Sway Standart Kütüphanesi](https://fuellabs.github.io/sway/master/std/): Yararlı türler ve yöntemlerle donatılmış yerel bir kütüphane.
+
+🧑‍🔧 [Fuelup](https://install.fuel.network/latest/): Resmi Fuel araç zinciri yöneticisi, farklı sürümlerin yüklenmesine ve yönetilmesine yardımcı olur.
+
+🦀 [Fuel's Rust SDK](https://docs.fuel.network/docs/fuels-rs/): Rust kullanarak Sway sözleşmelerinizi test edin ve etkileşim kurun.
+
+⚡ [Fuel's TypeScript SDK](https://docs.fuel.network/docs/fuels-ts/): TypeScript kullanarak Sway sözleşmelerinizi test edin ve etkileşim kurun.

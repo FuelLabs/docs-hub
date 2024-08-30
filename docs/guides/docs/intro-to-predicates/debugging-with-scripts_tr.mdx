@@ -1,0 +1,84 @@
+---
+başlık: Komut Dosyaları ile Hata Ayıklama
+Kategori: Yüklemlere Giriş
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Komut Dosyaları ile Hata Ayıklama
+
+Geliştirmenin her alanında ödünleşimler kaçınılmazdır. Daha önce de belirtildiği gibi, yüklemlerin saf olması gerektiğinden, yüklemlerle uğraşırken günlük kaydı mümkün değildir. Bu da önemli bir soruyu gündeme getirmektedir: yüklemlerde nasıl hata ayıklama yaparız?
+
+Bir programlama dili olan Sway, programları dört türe ayırır ve betikler de bunlardan biridir. Yüklemlerin aksine, komut dosyaları paylaşılan mantığa izin verir.
+
+MultiSig projemizin dışına çıkalım
+
+```sh
+cd ../..
+```
+
+ve `predicate-script-logging` adında ayrı bir proje oluşturun.
+
+<TestAction
+id=“create-predicate-script-logging”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/'
+}}
+/>
+
+```sh
+forc new --predicate predicate-script-logging
+```
+
+Bu yeni yüklemi kopyalayıp `src/main.sw` dosyanıza yapıştırın. Bu yüklemi oluşturmaya çalışmak, günlüğe kaydetmenin geçersiz bir işlem olduğunu belirten bir hatayla sonuçlanacaktır.
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/predicate-test-example/src/main.sw”
+  comment=“all”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Bununla birlikte, program türünü bir `predicate`den bir `script`e değiştirmeyi deneyelim.
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/predicate-script-logging/src/main.sw”
+  comment=“program_type”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Kodunuz şimdi aşağıdaki gibi görünmelidir:
+
+<TestAction
+id=“sway-program-türü”
+action={{
+  isim: 'writeToFile',
+  filepath: 'guides-testing/predicate-script-logging/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-predicates/predicate-script-logging/src/main.sw”
+  comment=“all”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Şimdi, betiğimizi oluşturmaya çalışırsak, herhangi bir sorun olmadan derlenmesi gerekir.
+
+<TestAction
+id=“build-predicate”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/predicate-script-logging/'
+}}
+/>
+
+```sh
+forc yapı
+```
+
+Daha sonra, bunu iş başında görmek için bir Rust şablonu oluşturacağız!

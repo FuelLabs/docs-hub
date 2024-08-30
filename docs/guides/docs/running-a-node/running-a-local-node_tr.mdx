@@ -1,0 +1,97 @@
+---
+başlık: Yerel Düğüm Çalıştırma
+Kategori: Düğüm Çalıştırma
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Yerel bir Yakıt düğümü çalıştırılıyor
+
+Fuel Testnet üzerinde dağıtım ve test yapmanın yanı sıra, yerel bir Fuel Node da çalıştırabilirsiniz.
+
+Çalıştırılabilecek iki tür Yakıt ağı vardır:
+
+1. Bellek içi ağ (kalıcılık olmadan)
+2. Kalıcılığı olan yerel ağ
+
+## Bellek içi yerel düğüm (durum sürekliliği olmadan)
+
+Bellek içi bir düğüm, blok zinciri durumunu hiçbir yerde kalıcı hale getirmez, yalnızca düğüm aktif ve çalışır durumda olduğu sürece bellekte saklanır.
+
+Yerel bir bellek içi Yakıt düğümünü açmak için yerel anlık görüntüyü [buradan] (https://github.com/FuelLabs/chain-configuration/tree/master/local) indirin veya kopyalayın, ardından aşağıdaki komutu çalıştırın:
+
+```sh
+fuel-core run --db-type in-memory --debug --snapshot ./your/path/to/chain_config_folder
+```
+
+Yerel düğüme bir sözleşme dağıtmak için aşağıdaki komutu çalıştırın:
+
+```sh
+forc deploy <signing-key> --node-url 127.0.0.1:4000/v1/graphql
+```
+
+Ya da fuel-core tarafından önceden finanse edilen varsayılan imzalayıcı ile dağıtmak için:
+
+```sh
+forc deploy --default-signer --node-url 127.0.0.1:4000/v1/graphql
+```
+
+## Zincir Yapılandırması
+
+Zincirin başlangıç durumunu değiştirmek için zincir yapılandırma klasörünüzdeki `state_config.json` dosyasını yapılandırmanız gerekir.
+İşte `fuel-core`un {props.fuelCoreVersion} sürümünü kullanarak bunun nasıl göründüğüne dair bir örnek:
+
+Basitlik için, [repository](https://github.com/FuelLabs/chain-configuration/tree/master)'yi seçtiğiniz dizine klonlayın.
+
+Daha sonra `--snapshot` bayrağını kullanırken, `./your/path/to/chain_config_folder` yerine `./chain-configuration/local/` klonladığınız deponun `local` klasörünü kullanabilirsiniz.
+
+Düğümü özel bir yapılandırmayla başlatmak için aşağıdaki komutu kullanabilirsiniz:
+
+``sh
+fuel-core run --snapshot ./your/path/to/chain_config_folder --db-type in-memory --debug
+```
+
+Belirli bir `fuel-core` sürümü için örnek bir `local` zincir yapılandırma klasörü bulmak için [`chain-configuration/local`](https://github.com/FuelLabs/chain-configuration/tree/master/local) reposuna bakın.
+
+### Bir cüzdanı yerel olarak fonlama
+
+Belirli bir adresin sahip olduğu ilk varlıkları değiştirmek için `state_config.json` içindeki `coins` dizisini düzenleyebilirsiniz.
+
+Sahip` adresi `Bech32` tipi (`fuel` ile başlar) yerine `B256` tipi (`0x` ile başlar) bir adres olmalıdır.
+
+Miktar` sayısal bir değerdir. Aşağıdaki örnekte, değer 1 ETH'ye karşılık gelir.
+
+``json
+“coins”: [
+  {
+    “tx_id”: “0x0000000000000000000000000000000000000000000000000000000000000001”,
+    “output_index”: 0,
+    “tx_pointer_block_height”: 0,
+    “tx_pointer_tx_idx”: 0,
+    “sahip”: “0x488284d46414347c78221d3bad71dfebcff61ab2ae26d71129701d50796f714d”,
+    “miktar”: 1000000000,
+    “asset_id”: “0xf8f8b6283d7fa5b672b530cbb84fcccb4ff8dc40f8176ef4544ddb1f1952ad07”
+  }
+]
+```
+
+## Yerel düğüm (durum sürekliliği ile)
+
+Bu düğüm blok zinciri durumunu yerel olarak sürdürür.
+Yerel bir node'u kalıcılıkla çalıştırmak için bir zincir yapılandırma dosyası gereklidir.
+
+Düğümü başlatmak için aşağıdaki komutu çalıştırın:
+
+``sh
+fuel-core run --ip 127.0.0.1 --port 4000 --snapshot ./your/path/to/chain_config_folder --db-path ./.fueldb --debug
+```
+
+## Bir tarayıcı cüzdanından yerel düğüme bağlanma
+
+Bir tarayıcı cüzdanı kullanarak yerel düğüme bağlanmak için ağ adresini şu şekilde alın:
+
+```sh
+http://127.0.0.1:4000/v1/graphql
+```
+

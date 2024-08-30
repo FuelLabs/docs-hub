@@ -1,0 +1,40 @@
+---
+başlık: ABI
+Kategori: Sway'e Giriş
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# ABI'nin Tanımlanması
+
+Daha sonra, ABI'mızı tanımlayacağız. ABI, Uygulama İkili Arayüzü anlamına gelir. Bir Sway sözleşmesinde, sözleşme içindeki tüm işlevlerin bir taslağı olarak hizmet eder. Her işlev için adını, girdi türlerini, dönüş türlerini, depolama erişim düzeyini ve ödenebilir olup olmadığını belirtmeniz gerekir.
+
+Sözleşmemiz için ABI aşağıdaki gibi yapılandırılmıştır. Aşağıda verilen ABI'yi `main.sw` dosyanıza yazın:
+
+<TestAction
+id=“sway-abi”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/contract/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“abi”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Şu anda her bir fonksiyonun özelliklerini anlamak konusunda endişelenmeyin. “Fonksiyonlar” bölümünde ayrıntılı açıklamalara gireceğiz.
+
+## Fonksiyonların Yapısı
+
+Bir fonksiyon `fn` anahtar sözcüğü kullanılarak tanımlanır. Sway'de yılan durumu kuraldır, bu nedenle bir fonksiyonu `myFunction` olarak adlandırmak yerine `my_function` olarak adlandırırsınız.
+
+Fonksiyon bir değer döndürüyorsa, dönüş tipi ince bir ok kullanılarak tanımlanmalıdır. Ayrıca, fonksiyonun parametreleri varsa, bunların türleri de belirtilmelidir. Her ifadenin sonunda noktalı virgül *gereklidir*.
+
+Bir fonksiyon depolama alanından okuyor ya da depolama alanına yazıyorsa, `#[storage(read)]` ya da `#[storage(read, write)]` gibi ek açıklamalar kullanarak fonksiyonun üzerindeki erişim seviyesini belirtmeniz gerekir.
+
+Çağrıldığında para alması beklenen `buy_item` fonksiyonu gibi fonksiyonlar için `#[payable]` ek açıklaması gereklidir.

@@ -1,0 +1,116 @@
+---
+başlık: Sözleşmeye Hızlı Başlangıç
+kategori̇: Sözleşmeye Hızlı Başlangıç
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Akıllı Sözleşme Hızlı Başlangıç
+
+Fuel ile akıllı sözleşme geliştiricisi olarak çalışmaya başlamak kadar basittir:
+
+1. [Installing](#installation) `fuelup`
+2. [Karşı sözleşme oluşturma](#karşı-sözleşme-oluşturma)
+3. [Sözleşmeyi inşa etmek] (#building-the-contract)
+4. [Yerel cüzdan kurma](#setting-up-a-local-wallet)
+5. [Sözleşmenin konuşlandırılması] (#deploying-the-contract)
+
+## Kurulum
+
+<TextImport
+  file=“../installation/index.mdx”
+  comment=“install_fuelup”
+  commentType=“{/*”
+/>
+
+<CodeImport
+  file=“../installation/index.mdx”
+  comment=“install_fuelup_command”
+  commentType=“{/*”
+  lang=“sh”
+  trim=“true”
+/>
+
+<TextImport
+  file=“../counter-dapp/building-a-smart-contract.mdx”
+  comment=“install_help”
+  commentType=“{/*”
+/>
+
+<TextImport
+  file=“../installation/index.mdx”
+  comment=“install_VSCode_extensions”
+  commentType=“{/*”
+/>
+
+### Zaten `fuelup` yüklü mü?
+
+<TextImport
+  file=“../counter-dapp/building-a-smart-contract.mdx”
+  comment=“already_installed”
+  commentType=“{/*”
+/>
+
+## Karşı sözleşme oluşturma
+
+Sway'de bir sayaç sözleşmesi oluşturmak için aşağıdaki komutu çalıştırın:
+
+```sh
+forc template --template-name karşı sözleşme
+```
+
+Sözleşme `src/main.sw` dosyası içinde olacaktır.
+
+<TextImport
+  file=“../counter-dapp/building-a-smart-contract.mdx”
+  comment=“forc_new”
+  commentType=“{/*”
+/>
+
+## Sözleşmenin oluşturulması
+
+Bir sözleşme oluşturmak için `counter-contract` klasörünün içine gidin:
+
+``sh
+cd karşı sözleşmesi
+```
+
+Ardından, `forc build` komutunu çalıştırın:
+
+```sh
+forc yapı
+```
+
+## Yerel bir cüzdan kurma
+
+<TextImport
+  file=“../installation/index.mdx”
+  comment=“forc_wallet_setup”
+  commentType=“{/*”
+/>
+
+Faucet](https://faucet-testnet.fuel.network/) kullanarak test fonları alabilirsiniz.
+
+## Sözleşmeyi dağıtma
+
+Sözleşmeyi test ağına dağıtmak için çalıştırabilirsiniz:
+
+```sh
+forc deploy --testnet
+```
+
+<TextImport
+  file=“../counter-dapp/building-a-smart-contract.mdx”
+  comment=“forc_wallet”
+  commentType=“{/*”
+/>
+
+## Sonraki Adımlar
+
+Daha fazlasını öğrenmeye hazır mısınız? Aşağıdaki kaynaklara göz atın:
+
+- Tam yığın [counter contract dapp] oluşturmaya yönelik adım adım talimatları öğrenin (/guides/counter-dapp)
+- Sway'e Giriş](/guides/intro-to-sway) kılavuzu ile tam yığın bir pazar yeri dapp'i oluşturun
+- Predicates](/guides/intro-to-predicates) ile oluşturmayı deneyin
+- Sway dokümanlarını okuyun](/docs/sway)

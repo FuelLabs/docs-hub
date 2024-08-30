@@ -1,0 +1,58 @@
+---
+başlık: Depolama
+Kategori: Sway'e Giriş
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Depolama Bloğunun Tanımlanması
+
+Daha sonra, depolama bloğunu tanıtacağız. Burası sözleşmenizdeki tüm kalıcı durum değişkenlerini sakladığınız yerdir.
+
+Bir işlev içinde bildirilen ve depolama bloğuna kaydedilmeyen değişkenler, işlev yürütülmesini tamamladığında atılacaktır. Aşağıdaki depolama bloğunu `main.sw` dosyanıza ekleyin:
+
+<TestAction
+id=“sway-storage”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/contract/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“storage”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Depoladığımız ilk değişken `item_counter`, 0'a ilklendirilmiş bir sayıdır. Bu sayaç, listelenen toplam öğe sayısını izlemek için kullanılabilir.
+
+## StorageMap
+
+Bir `StorageMap`, bir depolama bloğu içinde anahtar-değer çiftlerinin kaydedilmesine izin veren benzersiz bir türdür.
+
+Bir depolama eşlemesi tanımlamak için, hem anahtar hem de değer için türleri belirtmeniz gerekir. Örneğin, aşağıdaki örnekte, anahtar türü `u64`, değer türü ise bir `Item` yapısıdır.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“storage_map”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Burada, öğenin ID'sinden `Item` yapısına bir eşleme oluşturuyoruz. Bunu kullanarak, ID'sini kullanarak bir öğe hakkında bilgi alabiliriz.
+
+## Seçenekler
+
+Burada, `owner` değişkenini `None` olabilen ya da bir `Identity` tutabilen bir değişken olarak tanımlıyoruz.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/contract/src/main.sw”
+  comment=“storage_option”
+  commentType=“//”
+  lang=“sway”
+/>
+
+Bir değerin belirli koşullar altında potansiyel olarak null veya undefined olmasını istiyorsanız, `Option` türünü kullanabilirsiniz. Bu, `Some(value)` veya `None` değerlerinden birini alabilen bir enumdur. None` anahtar sözcüğü bir değerin olmadığını belirtirken, `Some` saklanan bir değerin varlığını belirtir.

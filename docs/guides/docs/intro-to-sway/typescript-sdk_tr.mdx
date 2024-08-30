@@ -1,0 +1,701 @@
+---
+başlık: Typescript Frontend
+Kategori: Sway'e Giriş
+ebeveyn:
+  etiket: Tüm Kılavuzlar
+  link: /rehberler
+---
+
+# Ön Uç Oluşturma
+
+## Kurulum
+
+Aşağıdaki komutu kullanarak sözleşmenizle aynı ana klasörde TypeScript ile yeni bir React uygulaması başlatın.
+
+<TestAction
+id=“create-frontend”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project'
+}}
+/>
+
+```sh
+npx create-react-app frontend --template typescript
+```
+
+Frontend klasörüne girelim:
+
+```sh
+cd frontend
+```
+
+Ardından, `frontend` klasörünüze aşağıdaki paketleri yükleyin:
+
+<TestAction
+id=“frontend-npm-install”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/frontend'
+}}
+/>
+
+```sh
+npm install fuels @fuels/react @fuels/connectors @tanstack/react-query
+```
+
+## Sözleşme türleri oluşturun
+
+fuels init` komutu, SDK tarafından sözleşme türleri oluşturmak için kullanılan bir `fuels.config.ts` dosyası oluşturur.
+Sözleşme klasörünüzün nerede olduğunu tanımlamak için `contracts` bayrağını ve oluşturulan dosyaların nerede oluşturulmasını istediğinizi tanımlamak için `output` bayrağını kullanın.
+
+Yapılandırma dosyasını oluşturmak için ön uç klasörünüzde aşağıdaki komutu çalıştırın:
+
+<TestAction
+id=“fuels_config”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/frontend'
+}}
+/>
+
+```sh
+npx fuels init --contracts ../contract/ --output ./src/contracts
+```
+
+Artık bir `fuels.config.ts` dosyanız olduğuna göre, sözleşmenizi yeniden oluşturmak ve türleri oluşturmak için `fuels build` komutunu kullanabilirsiniz.
+Bu komutu çalıştırmak, sözleşmenizden gelen ABI JSON çıktısını yorumlayacak ve doğru TypeScript tanımlarını oluşturacaktır.
+Eğer `fuel-project/counter-contract/out` klasörünü görürseniz, ABI JSON'u orada görebilirsiniz.
+
+fuel-project/frontend` dizini içinde çalıştırın:
+
+<TestAction
+id=“modify-fuels-config”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/fuels.config.ts',
+  atLine: 4,
+  useSetData: “ useBuiltinForc: false,”
+}}
+/>
+
+<TestAction
+id=“typegen”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/frontend'
+}}
+/>
+
+```sh
+npx yakıt yapısı
+```
+
+Başarılı bir işlem aşağıdaki gibi çıktı vermelidir:
+
+```sh
+Bina...
+Yerleşik 'forc' ikilisini kullanarak Sway programları oluşturma
+Türler oluşturuluyor...
+🎉 Derleme başarıyla tamamlandı!
+```
+
+Şimdi yeni bir `fuel-project/frontend/src/contracts` klasörü bulabilmelisiniz.
+
+## Cüzdan Sağlayıcıları
+
+Index.tsx` dosyanızda, Fuel'in cüzdan işlevlerine yönelik özel React kancalarını etkinleştirmek için `App` bileşeninizi `FuelProvider` ve `QueryClientProvider` bileşenleriyle sarın.
+
+Kullanıcılarınızın uygulamanıza bağlanmak için hangi cüzdanları kullanabileceğini özelleştirmek için özel cüzdan bağlayıcılarını buradan geçirebilirsiniz.
+
+<TestAction
+id=“fe-index-all”
+action={{
+  isim: 'writeToFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/index.tsx'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/index.tsx”
+  comment=“fe_index_all”
+  commentType=“//”
+  lang=“tsx”
+/>
+
+## Sözleşmeye bağlanma
+
+Ardından, `src/App.tsx` dosyasını açın ve boilerplate kodunu aşağıdaki şablonla değiştirin:
+
+<TestAction
+id=“fe-app-template”
+action={{
+  isim: 'writeToFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/App.tsx'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/App.tsx”
+  comment=“fe_app_all”
+  commentType=“//”
+  lang=“tsx”
+/>
+
+Dosyanın üst kısmındaki `CONTRACT_ID` ifadesini daha önce dağıttığınız ve sabit olarak ayarladığınız sözleşme kimliği ile değiştirin.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/App.tsx”
+  comment=“fe_contract_id”
+  commentType=“//”
+  lang=“tsx”
+/>
+
+Cüzdanımızı dapp'a bağlamak için `@fuels/react` paketindeki React kancaları kullanılır. App` fonksiyonu içinde bu kancaları şu şekilde çağırabiliriz:
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/App.tsx”
+  comment=“fe_call_hooks”
+  commentType=“//”
+  lang=“tsx”
+/>
+
+UseWallet` kancasından gelen `wallet` değişkeni `FuelWalletLocked` tipine sahip olacaktır.
+
+Kilitli bir cüzdanı, işlem imzalayamadığınız bir kullanıcı cüzdanı olarak ve kilitsiz bir cüzdanı da özel anahtara sahip olduğunuz ve işlem imzalayabildiğiniz bir cüzdan olarak düşünebilirsiniz.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/App.tsx”
+  comment=“fe_wallet”
+  commentType=“//”
+  lang=“tsx”
+/>
+
+useMemo` kancası, bağlı cüzdan ile sözleşmemize bağlanmak için kullanılır.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/App.tsx”
+  comment=“fe_use_memo”
+  commentType=“//”
+  lang=“tsx”
+/>
+
+## Şekillendirme
+
+Basit bir stil eklemek için aşağıdaki CSS kodunu kopyalayıp `App.css` dosyanıza yapıştırın.
+
+<TestAction
+id=“fe-css-template”
+action={{
+  isim: 'writeToFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/App.css'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/App.css”
+  comment=“fe_css”
+  commentType=“//”
+  lang=“tsx”
+/>
+
+## UI
+
+Uygulamamızda iki sekmemiz olacak: biri satış için listelenen tüm öğeleri görmek için, diğeri de yeni bir satış öğesi listelemek için.
+
+Sekmelerimiz arasında geçiş yapmak için kullanabileceğimiz `aktif` adlı başka bir durum değişkeni kullanıyoruz. Varsayılan sekmeyi listelenen tüm öğeleri gösterecek şekilde ayarlayabiliriz.
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/App.tsx”
+  comment=“fe_state_active”
+  commentType=“//”
+  lang=“tsx”
+/>
+
+Daha sonra öğeleri göstermek ve listelemek için bileşenlerimizi oluşturabiliriz.
+
+## Bir Öğe Listeleme
+
+src` klasöründe `components` adında yeni bir klasör oluşturun.
+
+<TestAction
+id=“create-components-folder”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/frontend/src/'
+}}
+/>
+
+```sh
+mkdir bileşenler
+```
+
+Ardından içinde `ListItem.tsx` adında bir dosya oluşturun.
+
+<TestAction
+id=“create-list-item-file”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/frontend/src/components'
+}}
+/>
+
+```sh
+ListItem.tsx dosyasına dokunun
+```
+
+Dosyanın üst kısmında, `react` klasöründen `useState` kancasını, `contracts` klasöründen oluşturulan sözleşme ABI'sini ve `fuels` klasöründen `bn` (büyük sayı) türünü içe aktarın.
+
+<TestAction
+id=“fe-list-item-import”
+action={{
+  isim: 'writeToFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/components/ListItem.tsx'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/components/ListItem.tsx”
+  comment=“fe_list_items_import”
+  commentType=“//”
+  lang=“tsx”
+/>
+
+Bu bileşen `App.tsx` içinde yaptığımız sözleşmeyi prop olarak alacaktır, bu yüzden bileşen için bir arayüz oluşturalım.
+
+<TestAction
+id=“fe-list-item-interface”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/components/ListItem.tsx'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/components/ListItem.tsx”
+  comment=“fe_list_items_interface”
+  commentType=“//”
+  lang=“tsx”
+/>
+
+Fonksiyon için şablonu şu şekilde ayarlayabiliriz.
+
+<TestAction
+id=“fe-list-item-list-item”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/components/ListItem.tsx'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/components/ListItem.tsx”
+  comment=“fe_list_items_function”
+  commentType=“//”
+  lang=“tsx”
+/>
+
+Bir öğeyi listelemek için, kullanıcının listelemek istediği öğenin metadata dizesini ve fiyatını girebileceği bir form oluşturacağız.
+Öncelikle `metadata` ve `price` için bazı durum değişkenleri ekleyelim. Gönderme durumunu izlemek için bir `status` değişkeni de ekleyebiliriz.
+
+<TestAction
+id=“fe-list-item-state-variables”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/components/ListItem.tsx'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/components/ListItem.tsx”
+  comment=“fe_list_items_state_variables”
+  commentType=“//”
+  lang=“tsx”
+/>
+
+HandleSubmit` fonksiyonunu eklememiz gerekiyor.
+List_item` fonksiyonunu çağırmak için sözleşme prop'unu kullanabilir ve formdan `fiyat` ve `metadata` bilgilerini aktarabiliriz.
+
+<TestAction
+id=“fe-list-item-handle-submit”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/components/ListItem.tsx'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/components/ListItem.tsx”
+  comment=“fe_list_items_handle_submit”
+  commentType=“//”
+  lang=“tsx”
+/>
+
+Başlığın altına form için aşağıdaki kodu ekleyin:
+
+<TestAction
+id=“fe-list-item-return-form”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/components/ListItem.tsx'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/components/ListItem.tsx”
+  comment=“fe_list_items_form”
+  commentType=“//”
+  lang=“tsx”
+/>
+
+Şimdi, çalıştığından emin olmak için bir öğe listelemeyi deneyin.
+“Öğe başarıyla listelendi!” mesajını görmelisiniz.
+
+## Tüm Öğeleri Göster
+
+Ardından, `components` klasöründe `AllItems.tsx` adında yeni bir dosya oluşturalım.
+
+<TestAction
+id=“create-all-item-file”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/frontend/src/components'
+}}
+/>
+
+```sh
+AllItems.tsx dosyasına dokunun
+```
+
+Bu bileşen için aşağıdaki şablon kodunu kopyalayıp yapıştırın:
+
+<TestAction
+id=“fe-all-item-template”
+action={{
+  isim: 'writeToFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/components/AllItems.tsx'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/components/AllItems.tsx”
+  comment=“fe_all_items_template”
+  commentType=“//”
+  lang=“tsx”
+/>
+
+Burada kaç öğenin listelendiğini görmek için öğe sayısını alabilir ve ardından öğe ayrıntılarını almak için her biri arasında döngü yapabiliriz.
+
+İlk olarak, listelenen öğe sayısını, öğe ayrıntılarının bir dizisini ve yükleme durumunu saklamak için bazı durum değişkenleri oluşturalım.
+
+<TestAction
+id=“fe-all-item-state-variables”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/components/AllItems.tsx'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/components/AllItems.tsx”
+  comment=“fe_all_items_state_variables”
+  commentType=“//”
+  lang=“tsx”
+/>
+
+Daha sonra, öğeleri bir `useEffect` kancası içinde getirelim.
+Bunlar salt okunur işlevler olduğundan, `call` yerine `get` yöntemini kullanarak işlemin kuru çalışmasını simüle edebiliriz, böylece kullanıcının herhangi bir şey imzalaması gerekmez.
+
+<TestAction
+id=“fe-all-item-use-effect”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/components/AllItems.tsx'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/components/AllItems.tsx”
+  comment=“fe_all_items_use_effect”
+  commentType=“//”
+  lang=“tsx”
+/>
+
+Eğer öğe sayısı `0`dan büyükse ve öğeleri başarılı bir şekilde yükleyebiliyorsak, bunları eşleyebilir ve bir öğe kartı görüntüleyebiliriz.
+
+Ürün kartı, ürün ayrıntılarını ve ürünü satın almak için bir satın alma düğmesi gösterecektir, bu nedenle sözleşmeyi ve ürünü prop olarak aktarmamız gerekecektir.
+
+<TestAction
+id=“fe-all-item-cards”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/components/AllItems.tsx'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/components/AllItems.tsx”
+  comment=“fe_all_items_cards”
+  commentType=“//”
+  lang=“tsx”
+/>
+
+## Ürün Kartı
+
+Şimdi öğe kartı bileşenini oluşturalım.
+Bileşenler klasöründe `ItemCard.tsx` adında yeni bir dosya oluşturun.
+
+<TestAction
+id=“create-item-card-file”
+action={{
+  isim: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/frontend/src/components/'
+}}
+/>
+
+```sh
+ItemCard.tsx dosyasına dokunun
+```
+
+Ardından, aşağıdaki şablon kodunu kopyalayıp yapıştırın.
+
+<TestAction
+id=“fe-item-card-template”
+action={{
+  isim: 'writeToFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/components/ItemCard.tsx'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/components/ItemCard.tsx”
+  comment=“fe_item_card_template”
+  commentType=“//”
+  lang=“tsx”
+/>
+
+Satın al düğmesinin durumunu izlemek için bir `status` değişkeni ekleyin.
+
+<TestAction
+id=“fe-item-card-status”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/components/ItemCard.tsx'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/components/ItemCard.tsx”
+  comment=“fe_item_card_status”
+  commentType=“//”
+  lang=“tsx”
+/>
+
+handleBuyItem` adında yeni bir asenkron fonksiyon oluşturun.
+Bu fonksiyon ödenebilir olduğundan ve madeni paraları öğe sahibine aktardığından, burada birkaç özel şey yapmamız gerekecek.
+
+Sway'de transfer veya mint fonksiyonlarını kullanan herhangi bir fonksiyonu çağırdığımızda, `txParams` metodu ile çağrıya eşleşen sayıda değişken çıkışı eklememiz gerekir. buy_item` işlevi sadece varlıkları öğe sahibine aktardığı için, değişken çıktı sayısı `1`dir.
+
+Daha sonra, bu işlev ödenebilir olduğundan ve kullanıcının öğenin fiyatını aktarması gerektiğinden, tutarı iletmek için `callParams` yöntemini kullanacağız. Fuel ile herhangi bir varlık türünü aktarabilirsiniz, bu nedenle hem tutarı hem de varlık kimliğini belirtmemiz gerekir.
+
+<TestAction
+id=“fe-item-card-buy-item”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/components/ItemCard.tsx'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/components/ItemCard.tsx”
+  comment=“fe_item_card_buy_item”
+  commentType=“//”
+  lang=“tsx”
+/>
+
+Ardından öğe ayrıntılarını ve durum mesajlarını karta ekleyin.
+
+<TestAction
+id=“fe-item-cards”
+action={{
+  isim: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/components/ItemCard.tsx'
+}}
+/>
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/components/ItemCard.tsx”
+  comment=“fe_item_cards”
+  commentType=“//”
+  lang=“tsx”
+/>
+
+Şimdi sözleşmenizde listelenen tüm kalemleri görebilmeli ve satın alabilmelisiniz.
+
+## Kontrol Noktası
+
+Aşağıdaki kodu inceleyerek tüm dosyalarınızın doğru yapılandırıldığından emin olun. Daha fazla yardıma ihtiyacınız varsa, [burada](https://github.com/FuelLabs/intro-to-sway/tree/main/frontend) deposuna bakın.
+
+`App.tsx`
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/App.tsx”
+  comment=“fe_app_all”
+  commentType=“/*”
+  lang=“tsx”
+/>
+
+`AllItems.tsx`
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/components/AllItems.tsx”
+  comment=“fe_all_items_all”
+  commentType=“/*”
+  lang=“tsx”
+/>
+
+`ItemCard.tsx`
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/components/ItemCard.tsx”
+  comment=“fe_item_card_all”
+  commentType=“/*”
+  lang=“tsx”
+/>
+
+`ListItem.tsx`
+
+<CodeImport
+  file=“../../examples/intro-to-sway/frontend/src/components/ListItem.tsx”
+  comment=“fe_list_item_all”
+  commentType=“/*”
+  lang=“tsx”
+/>
+
+## Projenizi çalıştırın
+
+Yakıt projesi/frontend` dizini içinde çalıştırın:
+
+<TestAction
+id=“start-app”
+action={{
+  isim: 'runCommand',
+  preCommand: “pnpm pm2 start ‘PORT=4000 BROWSER=none <COMMAND>’ --name ‘react-dapp’ --cwd ./guides-testing/fuel-project/frontend”
+}}
+/>
+
+```sh
+npm start
+```
+
+```sh
+Başarıyla derlendi!
+
+Artık tarayıcıda ön ucu görüntüleyebilirsiniz.
+
+  Yerel: http://localhost:3000
+  Ağınızda: http://192.168.4.48:3000
+
+Geliştirme derlemesinin optimize edilmediğini unutmayın.
+Bir üretim derlemesi oluşturmak için npm run build kullanın.
+```
+
+Ve ön uç için hepsi bu kadar! Fuel üzerinde bir dapp yarattınız!
+
+{/*TODO: BUNU DAHA GÜVENILIR HALE GETIRIN*/}
+{/*
+<TestAction
+id=“wait-after-start-app”
+action={{
+  isim: 'bekle',
+  zaman aşımı: 5000
+}}
+/>
+
+<TestAction
+id=“go-to-frontend”
+action={{
+  isim: 'goToUrl',
+  url: “http://localhost:4000”
+}}
+/>
+
+<TestAction
+id=“click-connect-button”
+action={{
+  isim: 'clickByRole',
+  rol: “düğme”,
+  elementName: “Connect”
+}}
+/>
+
+<TestAction
+id=“click-fuel-wallet”
+action={{
+  isim: 'clickByLabel',
+  etiket: 'Yakıt Cüzdanına Bağlan'
+}}
+/>
+
+<TestAction
+id=“approve-connect”
+action={{
+  ad: 'walletApproveConnect',
+}}
+/>
+
+<TestAction
+id=“wait-after-connect”
+action={{
+  isim: 'bekle',
+  zaman aşımı: 5000
+}}
+/>
+
+<TestAction
+id=“click-buy-item-button”
+action={{
+  ad: 'clickByTestId',
+  testId: “buy-button-1”
+}}
+/>
+
+<TestAction
+id=“approve-txn”
+action={{
+  isim: 'walletApprove',
+}}
+/>
+
+<TestAction
+id=“wait-after-approve”
+action={{
+  isim: 'bekle',
+  zaman aşımı: 5000
+}}
+/>
+
+<TestAction
+id=“check-text”
+action={{
+  isim: 'getByLocator-save',
+  konumlandırıcı: “h3 ~ div”,
+}}
+/>
+
+<TestAction
+id=“wait-after-buy”
+action={{
+  isim: 'bekle',
+  zaman aşımı: 18000
+}}
+/>
+
+<TestAction
+id=“check-if-purchased”
+action={{
+  isim: 'checkValue',
+  indeks: 0,
+  value: 'Satın alındı ✅'
+}}
+/>*/}
