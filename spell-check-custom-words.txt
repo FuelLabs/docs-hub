@@ -112,3 +112,4 @@ Metamask
 Devnet
 devnet
 pre
+NextJs

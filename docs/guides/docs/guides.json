@@ -7,9 +7,9 @@
   },
   "intro_to_sway": {
     "title": "Introduction to Sway for JavaScript developers",
-    "description": "Learn Sway fundamentals by building a marketplace dApp.",
+    "description": "Learn Sway fundamentals by building a marketplace React dApp.",
     "featured": true,
-    "tags": ["Full Stack"]
+    "tags": ["Full Stack", "React"]
   },
   "contract-quickstart": {
     "title": "Smart Contract Quickstart",
@@ -18,16 +18,16 @@
     "tags": ["Getting Started"]
   },
   "frontend-quickstart": {
-    "title": "Frontend/Fullstack Quickstart",
+    "title": "Next.js Fullstack Quickstart",
     "description": "Get started by generating a full-stack counter dapp on Fuel.",
     "featured": false,
-    "tags": ["Getting Started", "Full Stack"]
+    "tags": ["Getting Started", "Full Stack", "Next.js"]
   },
   "counter-dapp": {
-    "title": "Counter Dapp",
+    "title": "Counter React Dapp",
     "description": "Step-by-step guide to build a counter dApp on Fuel",
     "featured": false,
-    "tags": ["Getting Started", "Full Stack"]
+    "tags": ["Getting Started", "Full Stack", "React"]
   },
   "running_a_node": {
     "title": "Running a Node",

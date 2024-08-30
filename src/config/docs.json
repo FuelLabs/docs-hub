@@ -1,10 +1,10 @@
 {
-  "breaking-change-log": {
+  "migrations-and-disclosures": {
     "title": "Migrations & Disclosures",
-    "slug": "breaking-change-log",
-    "repository": "https://github.com/FuelLabs/breaking-change-log",
+    "slug": "migrations-and-disclosures",
+    "repository": "https://github.com/FuelLabs/migrations-and-disclosures",
     "ogTags": {
-      "description": "Fuel Network Breaking Change Log",
+      "description": "Fuel Network Migrations and Disclosures",
       "image": ""
     }
   },
