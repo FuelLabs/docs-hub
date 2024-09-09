@@ -5,15 +5,15 @@ import {
   useIsConnected,
   useWallet,
 } from "@fuels/react";
-import { CounterContractAbi__factory } from "./sway-api";
-import type { CounterContractAbi } from "./sway-api";
+import { CounterContract } from "./sway-api";
+
 
 // REPLACE WITH YOUR CONTRACT ID
 const CONTRACT_ID =
-  "0x...";
+  "0x1290a1e0005419795e18d60db793ddda53c7549032ff0e33ac239ed962636d11";
 
 export default function App() {
-  const [contract, setContract] = useState<CounterContractAbi>();
+  const [contract, setContract] = useState<CounterContract>();
   const [counter, setCounter] = useState<number>();
   const { connect, isConnecting } = useConnectUI();
   const { isConnected } = useIsConnected();
@@ -26,7 +26,7 @@ export default function App() {
   useEffect(() => {
     async function getInitialCount() {
       if (isConnected && wallet) {
-        const counterContract = CounterContractAbi__factory.connect(
+        const counterContract = new CounterContract(
           CONTRACT_ID,
           wallet
         );
@@ -38,7 +38,7 @@ export default function App() {
     getInitialCount();
   }, [isConnected, wallet]);
 
-  const getCount = async (counterContract: CounterContractAbi) => {
+  const getCount = async (counterContract: CounterContract) => {
     try {
       const { value } = await counterContract.functions.count().get();
       setCounter(value.toNumber());
