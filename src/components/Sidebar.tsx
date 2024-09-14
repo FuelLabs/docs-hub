@@ -59,13 +59,28 @@ export function Sidebar({
       {allNavs && (
         <>
           {/* DOCS */}
-
           {allNavs.map((navOrder) => {
             const catIndex = versionSet === 'default' ? 1 : 2;
-            let key = navOrder.links[0].slug.split('/')[catIndex];
+            console.log('nav', navOrder);
+
+            // Safely get the slug
+            let slug = navOrder.links[0]?.slug;
+
+            if (!slug && navOrder.links[0]?.submenu?.[0]?.slug) {
+              // Use the slug from the first submenu item
+              slug = navOrder.links[0].submenu[0].slug;
+            }
+
+            if (!slug) {
+              console.warn(`No slug found for navOrder.key: ${navOrder.key}`);
+              return null; // Handle the missing slug case appropriately
+            }
+
+            let key = slug.split('/')[catIndex];
             if (key === 'sway') {
               key = 'forc';
             }
+
             return (
               <Box key={navOrder.key}>
                 <SidebarSection

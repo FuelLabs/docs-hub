@@ -58,6 +58,9 @@ export function SidebarSection({
       case 'Migrations-and-disclosures':
         githubLink = 'https://github.com/FuelLabs/migrations-and-disclosures';
         break;
+      case 'Guides':
+        githubLink = 'https://github.com/FuelLabs/docs-hub';
+        break;
       default:
         break;
     }
@@ -91,6 +94,15 @@ export function SidebarSection({
           <Box.VStack gap='0' css={styles.sectionContainer}>
             {/* biome-ignore lint/suspicious/noExplicitAny: */}
             {links.map((link: any, index: number) => {
+              if (link.submenu) {
+                return (
+                  <SidebarSubmenu
+                    key={link.submenu[0].slug}
+                    onClick={onClick}
+                    {...link}
+                  />
+                );
+              }
               if (link.slug) {
                 return (
                   <SidebarLink
@@ -98,15 +110,6 @@ export function SidebarSection({
                     key={link.slug}
                     item={link}
                     isIndex={index === 0 && bookHasIndex}
-                  />
-                );
-              }
-              if (link.submenu) {
-                return (
-                  <SidebarSubmenu
-                    key={link.submenu[0].slug}
-                    onClick={onClick}
-                    {...link}
                   />
                 );
               }
