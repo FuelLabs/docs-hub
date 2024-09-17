@@ -26,8 +26,22 @@ jobs:
         with:
           install: false
       - run: |
-          pnpm install
-          pnpm audit --prod
+            pnpm audit --prod --json | jq '
+              def has_fix: 
+                .advisories | to_entries | map(.value.patched_versions != "<0.0.0") | any;
+              if has_fix then
+                1
+              else
+                0
+              end
+            ' > audit_result.txt
+            if [ "$(cat audit_result.txt)" -eq "1" ]; then
+              echo "Actionable vulnerabilities found"
+              exit 1
+            else
+              echo "No actionable vulnerabilities"
+              exit 0
+            fi
 
   lint:
     name: Lint
