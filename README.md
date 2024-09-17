@@ -6,7 +6,7 @@
 
 To begin, make sure you have installed the following dependencies:
 
-- [Node.js 18.18.1 or latest stable](https://nodejs.org/en/). We recommend using [nvm](https://github.com/nvm-sh/nvm) to install.
+- [Node.js 20.10.0 or latest stable](https://nodejs.org/en/). We recommend using [nvm](https://github.com/nvm-sh/nvm) to install.
 - [PNPM v9.0.0 or latest stable](https://pnpm.io/installation/)
 
 ### Clone the Repository
