@@ -215,7 +215,6 @@ export class Doc {
 
       const key = slug.split('/')[0].replace(/-/g, '_');
 
-      // Updated code: Find the link with matching key
       const guideLink = links.find((link) => link.key === key);
 
       if (guideLink && guideLink.submenu) {
@@ -224,9 +223,6 @@ export class Doc {
         console.warn(`No guide link found for key: ${key}`);
         return [];
       }
-      // const key = slug.split('/')[0].replaceAll('-', '_');
-      // const guideLinks = [links[key]];
-      // return guideLinks as SidebarLinkItem[];
     }
     return links as SidebarLinkItem[];
   }
