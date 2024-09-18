@@ -9,8 +9,8 @@ export function getActiveNav(
   let navs = undefined;
   if (
     !doc ||
-    (!doc.originalSlug.includes('guides') &&
-      !doc.originalSlug.includes('docs/contributing'))
+    // (!doc.originalSlug.includes('guides') &&
+    !doc.originalSlug.includes('docs/contributing')
   ) {
     if (versionSet === 'nightly') {
       navs = allNightlyNavs;

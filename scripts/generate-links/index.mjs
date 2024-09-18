@@ -20,6 +20,7 @@ async function main() {
       const final = slugs.map(({ slug }) => getDocBySlug(slug, slugs));
       let sortedLinks = getSortedLinks(orders[key], final);
 
+<<<<<<< Updated upstream
       // if (key === 'intro') {
       //   sortedLinks.push({
       //     slug: '/guides',
@@ -27,6 +28,8 @@ async function main() {
       //     isExternal: false,
       //   });
       // }
+=======
+>>>>>>> Stashed changes
       if (key.includes('guides')) {
         const newLinks = {};
         sortedLinks = sortedLinks.map((link) => {
@@ -55,7 +58,7 @@ async function main() {
       if (key !== 'contributing') {
         if (
           key.includes('nightly') ||
-          ['intro', 'contributing'].includes(key)
+          ['guides', 'intro', 'contributing'].includes(key)
         ) {
           const cleanKey = key.replace('nightly-', '');
           allNightlyOrders.push({
