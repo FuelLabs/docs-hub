@@ -29,8 +29,6 @@ async function main() {
             .replaceAll('-', '_');
           return link;
         });
-        // sortedLinks = newLinks;
-        console.log(sortedLinks);
       }
       if (Array.isArray(sortedLinks)) {
         sortedLinks = sortedLinks.map((link) => {

@@ -63,17 +63,15 @@ export function Sidebar({
             const catIndex = versionSet === 'default' ? 1 : 2;
             console.log('nav', navOrder);
 
-            // Safely get the slug
             let slug = navOrder.links[0]?.slug;
 
             if (!slug && navOrder.links[0]?.submenu?.[0]?.slug) {
-              // Use the slug from the first submenu item
               slug = navOrder.links[0].submenu[0].slug;
             }
 
             if (!slug) {
               console.warn(`No slug found for navOrder.key: ${navOrder.key}`);
-              return null; // Handle the missing slug case appropriately
+              return null;
             }
 
             let key = slug.split('/')[catIndex];
