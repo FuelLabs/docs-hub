@@ -200,12 +200,6 @@ export async function getDocs(key, order) {
         './guides/docs/**/*.mdx',
       ];
       break;
-    case 'nightly-guides':
-      paths = [
-        // GUIDES
-        './guides/docs/**/*.mdx',
-      ];
-      break;
     case 'intro':
       paths = [
         // INTRO

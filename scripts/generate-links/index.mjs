@@ -20,16 +20,6 @@ async function main() {
       const final = slugs.map(({ slug }) => getDocBySlug(slug, slugs));
       let sortedLinks = getSortedLinks(orders[key], final);
 
-<<<<<<< Updated upstream
-      // if (key === 'intro') {
-      //   sortedLinks.push({
-      //     slug: '/guides',
-      //     label: 'Guides',
-      //     isExternal: false,
-      //   });
-      // }
-=======
->>>>>>> Stashed changes
       if (key.includes('guides')) {
         const newLinks = {};
         sortedLinks = sortedLinks.map((link) => {
