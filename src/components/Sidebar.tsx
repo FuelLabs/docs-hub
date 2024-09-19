@@ -61,7 +61,6 @@ export function Sidebar({
           {/* DOCS */}
           {allNavs.map((navOrder) => {
             const catIndex = versionSet === 'default' ? 1 : 2;
-            console.log('nav', navOrder);
 
             let slug = navOrder.links[0]?.slug;
 
