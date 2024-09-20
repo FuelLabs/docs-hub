@@ -3,7 +3,7 @@
     "forc": "0.63.1",
     "rust": "0.66.2",
     "ts": "0.94.2",
-    "wallet": "0.25.0",
+    "wallet": "0.29.1",
     "sway_libs": "0.23.1",
     "sway_standards": "0.5.2"
   }
