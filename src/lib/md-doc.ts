@@ -71,6 +71,7 @@ export class Doc {
       .replace('docs/sway/', '')
       .replace('docs/sway-standards/', '')
       .replace('docs/sway-by-example-lib/', '')
+      .replace('docs/guides/', '')
       .replace('docs/fuel-specs/', '')}`;
 
     let pageLink = `${config.repository}${actualPath.replace(
@@ -201,6 +202,7 @@ export class Doc {
       `../src/generated/sidebar-links/${configSlug}.json`
     );
     const links = JSON.parse(readFileSync(linksPath, 'utf8'));
+
     if (
       (configSlug === 'guides' || configSlug === 'nightly-guides') &&
       guideName
@@ -212,9 +214,17 @@ export class Doc {
         .replace(`${guideName}/`, '')
         .replace('/index', '');
 
-      const key = slug.split('/')[0].replaceAll('-', '_');
-      const guideLinks = [links[key]];
-      return guideLinks as SidebarLinkItem[];
+      const key = slug.split('/')[0].replace(/-/g, '_');
+
+      // Updated code: Find the link with matching key
+      const guideLink = links.find((link) => link.key === key);
+
+      if (guideLink && guideLink.submenu) {
+        return guideLink.submenu as SidebarLinkItem[];
+      } else {
+        console.warn(`No guide link found for key: ${key}`);
+        return [];
+      }
     }
     return links as SidebarLinkItem[];
   }
@@ -222,7 +232,9 @@ export class Doc {
   get navLinks() {
     const slug = this.#parseSlug(this.item.originalSlug);
     const links = this.sidebarLinks(this.item.originalSlug);
-
+    console.log(slug);
+    console.log(links);
+    console.log(this.item);
     const result = [];
     for (const link of links) {
       if (link.submenu) {

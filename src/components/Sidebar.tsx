@@ -62,6 +62,7 @@ export function Sidebar({
 
           {allNavs.map((navOrder) => {
             const catIndex = versionSet === 'default' ? 1 : 2;
+            // console.log("hello", navOrder.links)
             let key = navOrder.links[0].slug.split('/')[catIndex];
             if (key === 'sway') {
               key = 'forc';

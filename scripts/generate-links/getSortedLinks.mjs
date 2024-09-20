@@ -343,7 +343,9 @@ function handleSubmenu(
     },
   ];
 
+  console.log(title, slug);
   return {
+    slug,
     subpath,
     label: thisCategory,
     isExternal,
