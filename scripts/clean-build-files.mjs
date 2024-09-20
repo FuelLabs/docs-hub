@@ -24,6 +24,7 @@ const targetDirs = [
   './docs/nightly/sway-by-example-lib',
   './docs/migrations-and-disclosures',
   './docs/nightly/migrations-and-disclosures',
+  './docs/integration-docs',
 ];
 
 // Exclusions for each type of directory
@@ -68,9 +69,8 @@ const exclusions = {
     'fuel-graphql-docs/examples',
     'fuel-graphql-docs/src',
   ],
-  migrations_and_disclosures: [
-    'migrations-and-disclosures/docs',
-  ],
+  migrations_and_disclosures: ['migrations-and-disclosures/docs'],
+  integration_docs: ['integration-docs/docs'],
 };
 
 function main() {

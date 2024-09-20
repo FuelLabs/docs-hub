@@ -106,6 +106,9 @@ function getSidebarName(key) {
     case 'migrations-and-disclosures':
       newKey = 'Migrations & Disclosures';
       break;
+    case 'integration-docs':
+      newKey = 'Integrations';
+      break;
     default:
   }
 

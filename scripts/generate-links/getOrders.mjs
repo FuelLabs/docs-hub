@@ -9,6 +9,10 @@ const CONFIG = {
     type: 'mdbook',
     path: './migrations-and-disclosures/docs/src/SUMMARY.md',
   },
+  'integration-docs': {
+    type: 'mdbook',
+    path: './integration-docs/docs/src/SUMMARY.md',
+  },
   sway: {
     type: 'mdbook',
     path: './sway/docs/book/src/SUMMARY.md',
@@ -96,7 +100,10 @@ export async function getOrders() {
 
   Object.keys(CONFIG).forEach((key) => {
     const book = CONFIG[key];
-    if (!['guides', 'intro', 'contributing'].includes(key)) {
+    if (key === 'integration-docs') {
+      const orderFile = getFile(book.path, 'default', false);
+      orders[key] = processSummary(orderFile.split(EOL), key).order;
+    } else if (!['guides', 'intro', 'contributing'].includes(key)) {
       const bookOrder = handleOrder(book.type, book.path, key);
       orders[key] = bookOrder.betaOrders.order;
       orders[`nightly-${key}`] = bookOrder.nightlyOrders.order;

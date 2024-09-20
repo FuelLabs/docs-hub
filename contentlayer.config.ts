@@ -65,8 +65,9 @@ const includeDirs = [
   'docs/sway-standards/docs/src',
   'docs/sway-by-example-lib/docs/src',
   'docs/migrations-and-disclosures/docs/src',
+  'docs/integration-docs/docs',
   // NIGHTLY DOCS
-  'docs/nightly/sway/docs/book/src',
+  'docs/nightly/sway/docs/book/src/src',
   'docs/nightly/fuels-rs/docs/src',
   'docs/nightly/fuels-ts/apps/docs/src',
   'docs/nightly/fuel-specs/src',
