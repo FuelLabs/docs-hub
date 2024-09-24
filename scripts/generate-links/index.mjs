@@ -106,6 +106,9 @@ function getSidebarName(key) {
     case 'migrations-and-disclosures':
       newKey = 'Migrations & Disclosures';
       break;
+    case 'integration-docs':
+      newKey = 'Integrations';
+      break;
     default:
   }
 
@@ -126,6 +129,7 @@ function handleAllOrders(allOrders, folderPath, filename) {
     'graphql',
     'forc',
     'specs',
+    'integration-docs',
   ];
 
   const finalAllOrders = allOrders.sort((a, b) => {
