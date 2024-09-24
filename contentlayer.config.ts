@@ -65,7 +65,7 @@ const includeDirs = [
   'docs/sway-standards/docs/src',
   'docs/sway-by-example-lib/docs/src',
   'docs/migrations-and-disclosures/docs/src',
-  'docs/integration-docs/docs',
+  'docs/integration-docs/docs/src',
   // NIGHTLY DOCS
   'docs/nightly/sway/docs/book/src',
   'docs/nightly/fuels-rs/docs/src',
@@ -77,7 +77,7 @@ const includeDirs = [
   'docs/nightly/sway-standards/docs/src',
   'docs/nightly/sway-by-example-lib/docs/src',
   'docs/nightly/migrations-and-disclosures/docs/src',
-  'docs/nightly/integration-docs/docs',
+  'docs/nightly/integration-docs/docs/src',
 ];
 
 const excludeDirs = [

@@ -129,6 +129,7 @@ function handleAllOrders(allOrders, folderPath, filename) {
     'graphql',
     'forc',
     'specs',
+    'integration-docs',
   ];
 
   const finalAllOrders = allOrders.sort((a, b) => {
