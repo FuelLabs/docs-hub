@@ -25,6 +25,7 @@ const targetDirs = [
   './docs/migrations-and-disclosures',
   './docs/nightly/migrations-and-disclosures',
   './docs/integration-docs',
+  './docs/nightly/integration-docs',
 ];
 
 // Exclusions for each type of directory

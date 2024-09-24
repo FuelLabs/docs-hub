@@ -109,6 +109,15 @@ export async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
+    case 'nightly-integration-docs':
+      paths = [
+        // INTEGRATION DOCS
+        './nightly/integration-docs/docs/src/**/*.md',
+        './nightly/integration-docs/docs/src/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
     case 'forc':
       paths = [
         // FORC DOCS

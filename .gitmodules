@@ -85,3 +85,6 @@
 [submodule "docs/integration-docs"]
 	path = docs/integration-docs
 	url = https://github.com/FuelLabs/integration-docs
+[submodule "docs/nightly/integration-docs"]
+	path = docs/nightly/integration-docs
+	url = https://github.com/FuelLabs/integration-docs

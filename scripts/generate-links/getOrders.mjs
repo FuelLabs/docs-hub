@@ -100,10 +100,7 @@ export async function getOrders() {
 
   Object.keys(CONFIG).forEach((key) => {
     const book = CONFIG[key];
-    if (key === 'integration-docs') {
-      const orderFile = getFile(book.path, 'default', false);
-      orders[key] = processSummary(orderFile.split(EOL), key).order;
-    } else if (!['guides', 'intro', 'contributing'].includes(key)) {
+    if (!['guides', 'intro', 'contributing'].includes(key)) {
       const bookOrder = handleOrder(book.type, book.path, key);
       orders[key] = bookOrder.betaOrders.order;
       orders[`nightly-${key}`] = bookOrder.nightlyOrders.order;
