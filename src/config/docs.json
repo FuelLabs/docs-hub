@@ -8,6 +8,15 @@
       "image": ""
     }
   },
+  "integration-docs": {
+    "title": "Integrations",
+    "slug": "integration-docs",
+    "repository": "https://github.com/FuelLabs/integration-docs",
+    "ogTags": {
+      "description": "Fuel Network Integrations",
+      "image": ""
+    }
+  },
   "intro": {
     "title": "Intro",
     "slug": "intro",
