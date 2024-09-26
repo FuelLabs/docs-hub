@@ -102,6 +102,7 @@ function getSidebarName(key) {
       break;
     case 'guides':
       newKey = 'Guides';
+      break;
     case 'integration-docs':
       newKey = 'Integrations';
       break;

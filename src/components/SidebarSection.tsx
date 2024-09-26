@@ -25,11 +25,15 @@ export function SidebarSection({
   docSlug,
   version,
 }: SectionProps) {
+  const lowerDocSlug = docSlug?.toLowerCase();
+  const lowerBook = book.toLowerCase();
+
   const [isOpened, setIsOpened] = useState<boolean | undefined>(
-    book === 'guides' ||
-      docSlug?.includes(`/${book.toLowerCase()}/`) ||
-      docSlug === `docs/${book.toLowerCase()}` ||
-      (book === 'Intro' && !docSlug)
+    lowerBook === 'guides' ||
+      lowerDocSlug?.includes('/guides/') ||
+      lowerDocSlug?.includes(`/${lowerBook}/`) ||
+      lowerDocSlug === `docs/${lowerBook}` ||
+      (lowerBook === 'intro' && !docSlug)
   );
 
   const isGuide = book === 'guides';
@@ -60,6 +64,7 @@ export function SidebarSection({
         break;
       case 'Guides':
         githubLink = 'https://github.com/FuelLabs/docs-hub';
+        break;
       case 'Integration-docs':
         githubLink = 'https://github.com/FuelLabs/integration-docs';
         break;
