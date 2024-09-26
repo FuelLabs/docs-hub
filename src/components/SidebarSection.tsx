@@ -25,7 +25,6 @@ export function SidebarSection({
   docSlug,
   version,
 }: SectionProps) {
-  console.log(docSlug, book.toLowerCase());
   const [isOpened, setIsOpened] = useState<boolean | undefined>(
     (book.toLowerCase() === 'guides' && docSlug?.includes('guides')) ||
       docSlug?.includes(`/${book.toLowerCase()}/`) ||
