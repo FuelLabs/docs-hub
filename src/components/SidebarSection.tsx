@@ -60,6 +60,8 @@ export function SidebarSection({
         break;
       case 'Guides':
         githubLink = 'https://github.com/FuelLabs/docs-hub';
+      case 'Integration-docs':
+        githubLink = 'https://github.com/FuelLabs/integration-docs';
         break;
       default:
         break;
