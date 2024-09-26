@@ -25,15 +25,12 @@ export function SidebarSection({
   docSlug,
   version,
 }: SectionProps) {
-  const lowerDocSlug = docSlug?.toLowerCase();
-  const lowerBook = book.toLowerCase();
-
+  console.log(docSlug, book.toLowerCase());
   const [isOpened, setIsOpened] = useState<boolean | undefined>(
-    lowerBook === 'guides' ||
-      lowerDocSlug?.includes('/guides/') ||
-      lowerDocSlug?.includes(`/${lowerBook}/`) ||
-      lowerDocSlug === `docs/${lowerBook}` ||
-      (lowerBook === 'intro' && !docSlug)
+    (book.toLowerCase() === 'guides' && docSlug?.includes('guides')) ||
+      docSlug?.includes(`/${book.toLowerCase()}/`) ||
+      docSlug === `docs/${book.toLowerCase()}` ||
+      (book === 'Intro' && !docSlug)
   );
 
   const isGuide = book === 'guides';
