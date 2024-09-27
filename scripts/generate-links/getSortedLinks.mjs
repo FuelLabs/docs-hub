@@ -344,6 +344,7 @@ function handleSubmenu(
   ];
 
   return {
+    slug,
     subpath,
     label: thisCategory,
     isExternal,
