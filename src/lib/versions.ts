@@ -50,9 +50,10 @@ export function getRustSDKVersion(docsDir: string) {
 }
 
 function getForcVersion(docsDir: string) {
-  const forcfiledir = join(docsDir, 'sway/forc-pkg/Cargo.toml');
-  const forcfile = fs.readFileSync(forcfiledir, 'utf-8');
-  const version = forcfile?.match(/version = "(.*)"/)?.[1];
+  const forcfiledir = join(docsDir, 'sway/Cargo.toml');
+  const forcfileContent = fs.readFileSync(forcfiledir, 'utf-8');
+  const forcfile = toml.parse(forcfileContent);
+  const version = forcfile.workspace.package.version;
 
   return {
     name: 'forc',
@@ -135,7 +136,7 @@ export function getVersions(versionSet: VersionSet) {
     'Fuel Wallet': wallet,
     'GraphQL API': fuelCore,
     'Sway Standards': swayStandards,
-    'Sway Libraries': swayLibraries
+    'Sway Libraries': swayLibraries,
   };
 }
 

@@ -35,11 +35,10 @@ export async function getNightlyVersions() {
 }
 
 function getForcVersion(isNightly) {
-  const forcfiledir = `docs${
-    isNightly ? '/nightly' : ''
-  }/sway/forc-pkg/Cargo.toml`;
-  const forcfile = fs.readFileSync(forcfiledir, 'utf-8');
-  const version = forcfile?.match(/version = "(.*)"/)?.[1];
+  const forcfiledir = `docs${isNightly ? '/nightly' : ''}/sway/Cargo.toml`;
+  const forcfileContent = fs.readFileSync(forcfiledir, 'utf-8');
+  const forcfile = toml.parse(forcfileContent);
+  const version = forcfile.workspace.package.version;
   return version;
 }
 
