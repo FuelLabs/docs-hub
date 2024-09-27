@@ -201,7 +201,12 @@ export class Doc {
       DOCS_DIRECTORY,
       `../src/generated/sidebar-links/${configSlug}.json`
     );
-    const links = JSON.parse(readFileSync(linksPath, 'utf8'));
+
+    // Explicitly type 'links' as 'SidebarLinkItem[]'
+    const links = JSON.parse(
+      readFileSync(linksPath, 'utf8')
+    ) as SidebarLinkItem[];
+
     if (
       (configSlug === 'guides' || configSlug === 'nightly-guides') &&
       guideName
@@ -215,14 +220,14 @@ export class Doc {
 
       const key = slug.split('/')[0].replace(/-/g, '_');
 
+      // TypeScript can now infer 'link' as 'SidebarLinkItem'
       const guideLink = links.find((link) => link.key === key);
 
-      if (guideLink && guideLink.submenu) {
+      if (guideLink?.submenu) {
         return guideLink.submenu as SidebarLinkItem[];
-      } else {
-        console.warn(`No guide link found for key: ${key}`);
-        return [];
       }
+      console.warn(`No guide link found for key: ${key}`);
+      return [];
     }
     return links as SidebarLinkItem[];
   }
