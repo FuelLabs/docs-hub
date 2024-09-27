@@ -20,21 +20,15 @@ async function main() {
       const final = slugs.map(({ slug }) => getDocBySlug(slug, slugs));
       let sortedLinks = getSortedLinks(orders[key], final);
 
-      if (key === 'intro') {
-        sortedLinks.push({
-          slug: '/guides',
-          label: 'Guides',
-          isExternal: false,
-        });
-      }
       if (key.includes('guides')) {
         const newLinks = {};
-        sortedLinks.forEach((link) => {
-          newLinks[
-            link.label.toLowerCase().replaceAll(' ', '_').replaceAll('-', '_')
-          ] = link;
+        sortedLinks = sortedLinks.map((link) => {
+          link.key = link.label
+            .toLowerCase()
+            .replaceAll(' ', '_')
+            .replaceAll('-', '_');
+          return link;
         });
-        sortedLinks = newLinks;
       }
       if (Array.isArray(sortedLinks)) {
         sortedLinks = sortedLinks.map((link) => {
@@ -49,10 +43,10 @@ async function main() {
         fs.mkdirSync(folderPath, { recursive: true });
       }
       fs.writeFileSync(`${folderPath}/${key}.json`, json, 'utf-8');
-      if (!key.includes('guides') && key !== 'contributing') {
+      if (key !== 'contributing') {
         if (
           key.includes('nightly') ||
-          ['intro', 'contributing'].includes(key)
+          ['guides', 'intro', 'contributing'].includes(key)
         ) {
           const cleanKey = key.replace('nightly-', '');
           allNightlyOrders.push({
@@ -106,6 +100,9 @@ function getSidebarName(key) {
     case 'migrations-and-disclosures':
       newKey = 'Migrations & Disclosures';
       break;
+    case 'guides':
+      newKey = 'Guides';
+      break;
     case 'integration-docs':
       newKey = 'Integrations';
       break;
@@ -119,6 +116,7 @@ function handleAllOrders(allOrders, folderPath, filename) {
   const correctOrder = [
     'migrations-and-disclosures',
     'intro',
+    'guides',
     'sway',
     'sway-libs',
     'sway-standards',
