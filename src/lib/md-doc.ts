@@ -71,6 +71,7 @@ export class Doc {
       .replace('docs/sway/', '')
       .replace('docs/sway-standards/', '')
       .replace('docs/sway-by-example-lib/', '')
+      .replace('docs/guides/', '')
       .replace('docs/fuel-specs/', '')}`;
 
     let pageLink = `${config.repository}${actualPath.replace(
@@ -212,9 +213,15 @@ export class Doc {
         .replace(`${guideName}/`, '')
         .replace('/index', '');
 
-      const key = slug.split('/')[0].replaceAll('-', '_');
-      const guideLinks = [links[key]];
-      return guideLinks as SidebarLinkItem[];
+      const key = slug.split('/')[0].replace(/-/g, '_');
+
+      const guideLink = links.find((link) => link.key === key);
+
+      if (guideLink?.submenu) {
+        return guideLink.submenu as SidebarLinkItem[];
+      }
+      console.warn(`No guide link found for key: ${key}`);
+      return [];
     }
     return links as SidebarLinkItem[];
   }

@@ -65,6 +65,7 @@ const includeDirs = [
   'docs/sway-standards/docs/src',
   'docs/sway-by-example-lib/docs/src',
   'docs/migrations-and-disclosures/docs/src',
+  'docs/integration-docs/docs/src',
   // NIGHTLY DOCS
   'docs/nightly/sway/docs/book/src',
   'docs/nightly/fuels-rs/docs/src',
@@ -76,6 +77,7 @@ const includeDirs = [
   'docs/nightly/sway-standards/docs/src',
   'docs/nightly/sway-by-example-lib/docs/src',
   'docs/nightly/migrations-and-disclosures/docs/src',
+  'docs/nightly/integration-docs/docs/src',
 ];
 
 const excludeDirs = [
@@ -91,6 +93,7 @@ const excludeDirs = [
   'docs/sway-standards/docs/src/SUMMARY.md',
   'docs/sway-by-example-lib/docs/src/SUMMARY.md',
   'docs/migrations-and-disclosures/docs/src/SUMMARY.md',
+  'docs/integration-docs/docs/src/SUMMARY.md',
   // NIGHTLY DOCS
   'docs/nightly/sway/docs/book/src/SUMMARY.md',
   'docs/nightly/fuels-rs/docs/src/SUMMARY.md',
@@ -99,6 +102,7 @@ const excludeDirs = [
   'docs/nightly/sway-standards/docs/src/SUMMARY.md',
   'docs/nightly/sway-by-example-lib/docs/src/SUMMARY.md',
   'docs/nightly/migrations-and-disclosures/docs/src/SUMMARY.md',
+  'docs/nightly/integration-docs/docs/src/SUMMARY.md',
 ];
 
 export default makeSource({

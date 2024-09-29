@@ -9,6 +9,10 @@ const CONFIG = {
     type: 'mdbook',
     path: './migrations-and-disclosures/docs/src/SUMMARY.md',
   },
+  'integration-docs': {
+    type: 'mdbook',
+    path: './integration-docs/docs/src/SUMMARY.md',
+  },
   sway: {
     type: 'mdbook',
     path: './sway/docs/book/src/SUMMARY.md',
