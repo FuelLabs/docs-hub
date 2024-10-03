@@ -1,17 +1,26 @@
 {
   "menu": [
+    "Installation",
+    "Running a Node",
+    "Counter Dapp",
     "Contract Quickstart",
     "Frontend Quickstart",
-    "Counter Dapp",
-    "Running a Node",
-    "Installation",
-    "Intro to Sway"
+    "Intro to Sway",
+    "Intro to Predicates"
   ],
-  "installation": ["Fuel Github Codespace"],
-  "counter-dapp": ["Building a Smart Contract", "Building a Frontend"],
+  "installation": [
+    "Fuel Github Codespace"
+  ],
+  "counter-dapp": [
+    "Building a Smart Contract",
+    "Building a Frontend"
+  ],
   "contract-quickstart": [],
   "frontend-quickstart": [],
-  "running_a_node": ["Running a Local Node", "Running a Testnet Node"],
+  "running_a_node": [
+    "Running a Local Node",
+    "Running a Testnet Node"
+  ],
   "intro_to_sway": [
     "Introduction to Sway",
     "Prerequisites",
