@@ -40,6 +40,23 @@ action={{
 cargo generate --init fuellabs/sway templates/sway-test-rs --name sway-store
 ```
 
+{/*markdownlint-disable*/}
+3. Update the Cargo.toml file
+{/*markdownlint-disable*/}
+
+<TestAction
+id="temp-update-cargo-toml-file"
+action={{
+  name: 'writeToFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/Cargo.toml'
+}}
+/>
+
+<CodeImport
+  file="../../examples/intro-to-predicates/multisig-predicate/Cargo.toml"
+  lang="rust"
+/> 
+
 ## Imports
 
 Delete the templated code and copy the following imports into your harness file. It's important to pay attention to two main imports: `predicates`, for obvious reasons, and the `ScriptTransactionBuilder`, which we'll use to create transactions. These transactions must be signed before being broadcasted to our local network.
@@ -129,6 +146,17 @@ The three key setup steps include:
 />
 
 Since the predicate address is deterministic, we don't need to copy it as we do with smart contracts, which are deployed with a different address each time. We can leverage SDKs to build the predicate, ensuring we're working with the correct address without error!
+
+{/*markdownlint-disable*/}
+4. Gas isn't just used by the script itself; you also pay for the size of the transaction, signature checks, VM initialization, etc. These costs do not count towards the script gas so it might be hidden.
+{/*markdownlint-disable*/}
+
+<CodeImport
+  file="../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs"
+  comment="get_accumulated_fee"
+  commentType="//"
+  lang="rust"
+/>
 
 ## Test Cases
 
