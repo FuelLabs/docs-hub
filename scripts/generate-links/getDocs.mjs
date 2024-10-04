@@ -100,6 +100,24 @@ export async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
+    case 'verified-addresses':
+      paths = [
+        // BREAKING CHANGE LOG DOCS
+        './verified-addresses/docs/src/*.md',
+        './verified-addresses/docs/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
+    case 'nightly-verified-addresses':
+      paths = [
+        // BREAKING CHANGE LOG DOCS
+        './nightly/verified-addresses/docs/src/*.md',
+        './nightly/verified-addresses/docs/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
     case 'integration-docs':
       paths = [
         // INTEGRATION DOCS

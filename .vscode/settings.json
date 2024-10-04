@@ -23,7 +23,8 @@
     "**/fuelup": true,
     "**/guides/examples": true,
     "**/sway-by-example-lib": true,
-    "**/migrations-and-disclosures": true
+    "**/migrations-and-disclosures": true,
+    "**/verified-addresses": true
   },
   "git.ignoreLimitWarning": true,
   "[typescriptreact]": {
