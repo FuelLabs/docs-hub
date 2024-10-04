@@ -44,6 +44,10 @@ export const EXTERNAL_NAVIGATION_LINKS: LinkObject[] = [
     link: FAUCET_LINK,
   },
   {
+    name: 'Audits',
+    link: 'https://github.com/FuelLabs/audits',
+  },
+  {
     name: 'Contributing',
     link: '/docs/contributing',
   },
