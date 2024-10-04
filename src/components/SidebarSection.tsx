@@ -58,7 +58,7 @@ export function SidebarSection({
       case 'Migrations-and-disclosures':
         githubLink = 'https://github.com/FuelLabs/migrations-and-disclosures';
         break;
-      case 'Migrations-and-disclosures':
+      case 'Verified-addresses':
         githubLink = 'https://github.com/FuelLabs/verified-addresses';
         break;
       case 'Guides':
