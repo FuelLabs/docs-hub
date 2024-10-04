@@ -35,7 +35,7 @@
       "image": ""
     }
   },
-  "guides": {
+  "verified-addresses": {
     "title": "Verified Addresses",
     "slug": "verified-addresses",
     "repository": "https://github.com/FuelLabs/verified-addresses",
