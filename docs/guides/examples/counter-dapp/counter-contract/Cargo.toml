@@ -7,7 +7,7 @@ authors = ["Fuel Labs <contact@fuel.sh>"]
 license = "Apache-2.0"
 
 [dev-dependencies]
-fuels = "0.66.1"
+fuels = { version = "0.66.5" }
 tokio = { version = "1.12", features = ["rt", "macros"] }
 
 [[test]]

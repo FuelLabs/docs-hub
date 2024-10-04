@@ -1,6 +1,7 @@
 import { execSync } from 'child_process';
 import { EOL } from 'os';
 import type { Page } from '@playwright/test';
+import fs from 'fs';
 
 import { clickCopyButton } from './button';
 import { expect } from './fixtures';
@@ -21,7 +22,15 @@ export async function runCommand(
       command = preCommand + copied.text;
     }
   }
-  if (goToFolder) {
+if (goToFolder) {
+    const projectPath = `guides-testing/${goToFolder}`;
+    if (fs.existsSync(projectPath)) {
+      console.log(`Directory ${projectPath} already exists. Deleting...`);
+      await fs.promises.rm(projectPath, {
+        recursive: true,
+        force: true,
+      });
+    }
     command = `cd ${goToFolder} && ${command}`;
   }
   console.log('COMMAND', command);
