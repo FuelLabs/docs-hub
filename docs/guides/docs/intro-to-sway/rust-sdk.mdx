@@ -26,7 +26,7 @@ cargo install cargo-generate --locked
 id="cargo-generate-test"
 action={{
   name: 'runCommand',
-  commandFolder: 'guides-testing/fuel-project/contract'
+  commandFolder: 'guides-testing/sway-store/sway-programs'
 }}
 />
 
@@ -34,10 +34,21 @@ action={{
 cargo generate --init fuellabs/sway templates/sway-test-rs --name sway-store
 ```
 
-<TextImport
-  file="../counter-dapp/building-a-smart-contract.mdx"
-  comment="rust_harness"
-  commentType="{/*"
+{/*markdownlint-disable*/}
+3. Update the Cargo.toml file
+{/*markdownlint-disable*/}
+
+<TestAction
+id="temp-update-cargo-toml-file"
+action={{
+  name: 'writeToFile',
+  filepath: 'guides-testing/sway-store/sway-programs/contract/Cargo.toml'
+}}
+/>
+
+<CodeImport
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/Cargo.toml"
+  lang="rust"
 />
 
 ## Imports
@@ -48,12 +59,12 @@ We will be changing the existing `harness.rs` test file that has been generated.
 id="harness-import"
 action={{
   name: 'writeToFile',
-  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs'
+  filepath: 'guides-testing/sway-store/sway-programs/contract/tests/harness.rs'
 }}
 />
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/tests/harness.rs"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/tests/harness.rs"
   comment="rs_import"
   commentType="//"
   lang="rust"
@@ -67,12 +78,12 @@ Update your contract name and ABI path in the `abigen` macro to match the name o
 id="harness-abi"
 action={{
   name: 'modifyFile',
-  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs'
+  filepath: 'guides-testing/sway-store/sway-programs/contract/tests/harness.rs'
 }}
 />
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/tests/harness.rs"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/tests/harness.rs"
   comment="rs_abi"
   commentType="//"
   lang="rust"
@@ -88,12 +99,12 @@ Replace the `get_contract_instance` function in your test harness with the funct
 id="harness-instance"
 action={{
   name: 'modifyFile',
-  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs'
+  filepath: 'guides-testing/sway-store/sway-programs/contract/tests/harness.rs'
 }}
 />
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/tests/harness.rs"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/tests/harness.rs"
   comment="rs_contract_instance_parent"
   commentType="//"
   lang="rust"
@@ -112,12 +123,12 @@ For this test case, we use the contract instance and use the SDK's `.with_accoun
 id="harness-test-set-owner"
 action={{
   name: 'modifyFile',
-  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs'
+  filepath: 'guides-testing/sway-store/sway-programs/contract/tests/harness.rs'
 }}
 />
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/tests/harness.rs"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/tests/harness.rs"
   comment="rs_test_set_owner"
   commentType="//"
   lang="rust"
@@ -132,12 +143,12 @@ This ensures the owner can only be set when it hasn't been previously establishe
 id="harness-test-set-owner-once"
 action={{
   name: 'modifyFile',
-  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs'
+  filepath: 'guides-testing/sway-store/sway-programs/contract/tests/harness.rs'
 }}
 />
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/tests/harness.rs"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/tests/harness.rs"
   comment="rs_test_set_owner_once"
   commentType="//"
   lang="rust"
@@ -157,12 +168,12 @@ Following these transactions, we'll assess the balances of both wallets to confi
 id="harness-test-buy-sell"
 action={{
   name: 'modifyFile',
-  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs'
+  filepath: 'guides-testing/sway-store/sway-programs/contract/tests/harness.rs'
 }}
 />
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/tests/harness.rs"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/tests/harness.rs"
   comment="rs_test_list_and_buy_item"
   commentType="//"
   lang="rust"
@@ -176,12 +187,12 @@ Most importantly, as the creator of the marketplace, you need to ensure you're c
 id="harness-test-owner-withdraw"
 action={{
   name: 'modifyFile',
-  filepath: 'guides-testing/fuel-project/contract/tests/harness.rs'
+  filepath: 'guides-testing/sway-store/sway-programs/contract/tests/harness.rs'
 }}
 />
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/tests/harness.rs"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/tests/harness.rs"
   comment="rs_test_withdraw_funds"
   commentType="//"
   lang="rust"
@@ -192,7 +203,7 @@ action={{
 If you have followed the previous steps correctly your `harness.rs` test file should look like this:
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/tests/harness.rs"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/tests/harness.rs"
   comment="all"
   commentType="//"
   lang="rust"
@@ -206,7 +217,7 @@ To run the test located in `tests/harness.rs`, run the command below inside your
 id="cargo-test"
 action={{
   name: 'runCommand',
-  commandFolder: 'guides-testing/fuel-project/contract'
+  commandFolder: 'guides-testing/sway-store/sway-programs/contract'
 }}
 />
 
