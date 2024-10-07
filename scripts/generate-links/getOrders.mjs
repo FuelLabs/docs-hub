@@ -9,6 +9,10 @@ const CONFIG = {
     type: 'mdbook',
     path: './migrations-and-disclosures/docs/src/SUMMARY.md',
   },
+  'fuel-book': {
+    type: 'mdbook',
+    path: './fuel-book/docs/src/SUMMARY.md',
+  },
   'integration-docs': {
     type: 'mdbook',
     path: './integration-docs/docs/src/SUMMARY.md',

@@ -100,6 +100,9 @@ function getSidebarName(key) {
     case 'migrations-and-disclosures':
       newKey = 'Migrations & Disclosures';
       break;
+    case 'fuel-book':
+      newKey = 'Fuel Book';
+      break;
     case 'guides':
       newKey = 'Guides';
       break;
@@ -115,6 +118,7 @@ function getSidebarName(key) {
 function handleAllOrders(allOrders, folderPath, filename) {
   const correctOrder = [
     'migrations-and-disclosures',
+    'fuel-book',
     'intro',
     'guides',
     'sway',
