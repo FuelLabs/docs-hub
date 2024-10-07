@@ -69,7 +69,7 @@ test.describe('Guides', () => {
     await runTest(page, context, ERRORS_PAGE_URL);
     await runTest(page, context, FUNCTIONS_PAGE_URL);
     await runTest(page, context, CHECKPOINT_PAGE_URL);
-    // await runTest(page, context, FUELS_RS_PAGE_URL);
+    await runTest(page, context, FUELS_RS_PAGE_URL);
     await runTest(page, context, FUELS_TS_PAGE_URL);
 
     // SHUT DOWN
