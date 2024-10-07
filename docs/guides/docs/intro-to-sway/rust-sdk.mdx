@@ -211,6 +211,23 @@ If you have followed the previous steps correctly your `harness.rs` test file sh
 
 ## Running the Tests
 
+{/*markdownlint-disable*/}
+3. Update the shared fuel-toolchain.toml file
+{/*markdownlint-disable*/}
+
+<TestAction
+id="temp-update-fuel-toolchain-toml-file"
+action={{
+  name: 'writeToFile',
+  filepath: 'guides-testing/sway-store/fuel-toolchain.toml'
+}}
+/>
+
+<CodeImport
+  file="../../examples/intro-to-sway/sway-store/fuel-toolchain.toml"
+  lang="rust"
+/>
+
 To run the test located in `tests/harness.rs`, run the command below inside your `contract` folder:
 
 <TestAction
