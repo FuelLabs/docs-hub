@@ -118,8 +118,8 @@ function getSidebarName(key) {
 function handleAllOrders(allOrders, folderPath, filename) {
   const correctOrder = [
     'migrations-and-disclosures',
-    'fuel-book',
     'intro',
+    'fuel-book',
     'guides',
     'sway',
     'sway-libs',
