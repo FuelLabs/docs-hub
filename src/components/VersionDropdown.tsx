@@ -35,13 +35,13 @@ export default function VersionDropdown({
   return (
     <Dropdown isOpen={opened} onOpenChange={setOpened}>
       <Dropdown.Trigger
-        intent="base"
-        variant="outlined"
+        intent='base'
+        variant='outlined'
         css={
           opened ? { ...styles.trigger, ...styles.triggerOpen } : styles.trigger
         }
       >
-        Version: {activeVersion === FUEL_TESTNET_UPPER_CASE || activeVersion === FUEL_TESTNET ? 'Stable' : activeVersion}
+        Version: {activeVersion === FUEL_TESTNET_UPPER_CASE ? 'Stable' : activeVersion}
       </Dropdown.Trigger>
       <Dropdown.Menu
         disabledKeys={versionSet === 'default' ? [FUEL_TESTNET] : [versionSet]}
@@ -75,16 +75,16 @@ export default function VersionDropdown({
           aria-label={FUEL_TESTNET}
         >
           <Text>Stable</Text> {/* Display 'Stable' instead of raw version */}
-          {versionSet === 'default' && <Icon icon="Check" color="accent11" />}
+          {versionSet === 'default' && <Icon icon='Check' color='accent11' />}
         </Dropdown.MenuItem>
 
         <Dropdown.MenuItem
           css={styles.menuItem}
-          key="nightly"
-          aria-label="nightly"
+          key='nightly'
+          aria-label='nightly'
         >
           <Text>Nightly</Text>
-          {versionSet === 'nightly' && <Icon icon="Check" color="accent11" />}
+          {versionSet === 'nightly' && <Icon icon='Check' color='accent11' />}
         </Dropdown.MenuItem>
       </Dropdown.Menu>
     </Dropdown>
