@@ -14,7 +14,7 @@ export default function VersionDropdown({
 }) {
   const [opened, setOpened] = useState(false);
   const [activeVersion, setActiveVersion] = useState<
-    typeof FUEL_TESTNET_UPPER_CASE | 'Nightly'
+    typeof FUEL_TESTNET_UPPER_CASE | typeof FUEL_TESTNET | 'Nightly'
   >(versionSet === 'default' ? FUEL_TESTNET_UPPER_CASE : 'Nightly');
   const router = useRouter();
   const setVersion = useSetVersion();
@@ -41,7 +41,7 @@ export default function VersionDropdown({
           opened ? { ...styles.trigger, ...styles.triggerOpen } : styles.trigger
         }
       >
-        Version: {activeVersion}
+        Version: {activeVersion === FUEL_TESTNET_UPPER_CASE ? 'Stable' : activeVersion}
       </Dropdown.Trigger>
       <Dropdown.Menu
         disabledKeys={versionSet === 'default' ? [FUEL_TESTNET] : [versionSet]}
@@ -74,7 +74,7 @@ export default function VersionDropdown({
           key={FUEL_TESTNET}
           aria-label={FUEL_TESTNET}
         >
-          <Text>{FUEL_TESTNET_UPPER_CASE}</Text>
+          <Text>Stable</Text> {/* Display 'Stable' instead of raw version */}
           {versionSet === 'default' && <Icon icon='Check' color='accent11' />}
         </Dropdown.MenuItem>
 
