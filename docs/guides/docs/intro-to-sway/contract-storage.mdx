@@ -16,12 +16,12 @@ Variables declared within a function and not saved in the storage block will be 
 id="sway-storage"
 action={{
   name: 'modifyFile',
-  filepath: 'guides-testing/fuel-project/contract/src/main.sw'
+  filepath: 'guides-testing/sway-store/sway-programs/contract/src/main.sw'
 }}
 />
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="storage"
   commentType="//"
   lang="sway"
@@ -36,7 +36,7 @@ A `StorageMap` is a unique type that permits the saving of key-value pairs withi
 To define a storage map, you need to specify the types for both the key and the value. For instance, in the example below, the key type is `u64`, and the value type is an `Item` struct.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="storage_map"
   commentType="//"
   lang="sway"
@@ -49,7 +49,7 @@ Here, we are creating a mapping from the item's ID to the `Item` struct. Using t
 Here, we are defining the `owner` variable as one that can either be `None` or hold an `Identity`.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="storage_option"
   commentType="//"
   lang="sway"

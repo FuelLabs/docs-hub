@@ -11,7 +11,7 @@ parent:
 Finally, it's time to compose our contract functions. Begin by copying and pasting the ABI we outlined earlier. It's crucial to ensure that the functions within the contract *exactly* align with the ABI; otherwise, the compiler will generate an error. Now, substitute the semicolons at the conclusion of each function with curly brackets. Also, modify `abi SwayStore` to `impl SwayStore for Contract`, as demonstrated below:
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/docs_hub_misc.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/docs_hub_misc.sw"
   comment="contract_skeleton"
   commentType="//"
   lang="sway"
@@ -24,7 +24,7 @@ This guide will first show each of the completed functions above. Then, we'll br
 Our first function enables sellers to list an item for sale. They can specify the item's price and provide a string that references externally-stored data about the item.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="list_item_parent"
   commentType="//"
   lang="sway"
@@ -37,7 +37,7 @@ The initial step involves incrementing the `item_counter` in storage, which will
 When a function returns an `Option` or `Result` type, we can use `unwrap()` to access its inner value. For instance, `try_read()` returns an `Option` type. If it yields `Some`, we get the contained value; but if it returns `None`, the contract call is immediately halted.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="list_item_increment"
   commentType="//"
   lang="sway"
@@ -61,7 +61,7 @@ enum Result<T, E> {
 In Sway, you can define a variable using either `let` or `const`.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="list_item_sender"
   commentType="//"
   lang="sway"
@@ -76,7 +76,7 @@ You can instantiate a new item using the `Item` struct. Use the `item_counter` v
 Since the `owner` field requires an `Identity` type, you should utilize the sender value obtained from `msg_sender()`.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="list_item_new_item"
   commentType="//"
   lang="sway"
@@ -87,7 +87,7 @@ Since the `owner` field requires an `Identity` type, you should utilize the send
 Lastly, add the item to the `item_map` within storage using the `insert` method. Utilize the same ID for the key and designate the item as its corresponding value.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="list_item_insert"
   commentType="//"
   lang="sway"
@@ -103,7 +103,7 @@ Next, we aim to allow buyers to purchase listed items. To achieve this, we'll ne
 4. Deduct a contract fee from the item's cost and transfer the remaining amount to the seller.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="buy_item_parent"
   commentType="//"
   lang="sway"
@@ -114,7 +114,7 @@ Next, we aim to allow buyers to purchase listed items. To achieve this, we'll ne
 We can use the `msg_asset_id` function from the standard library to obtain the asset ID of the coins being transferred in the transaction.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="buy_item_asset"
   commentType="//"
   lang="sway"
@@ -129,7 +129,7 @@ In this case, the condition checks if the `asset_id` matches the base asset ID â
 If there's a mismatch in the asset, for instance, if someone attempts to purchase an item using a different coin, we'll trigger the custom error previously defined, passing along the `asset_id`.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="buy_item_require_not_base"
   commentType="//"
   lang="sway"
@@ -138,7 +138,7 @@ If there's a mismatch in the asset, for instance, if someone attempts to purchas
 Next, we can use the `msg_amount` function from the standard library to retrieve the quantity of coins transmitted by the buyer within the transaction.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="buy_item_msg_amount"
   commentType="//"
   lang="sway"
@@ -149,7 +149,7 @@ To ensure the sent amount is not less than the item's price, we should retrieve 
 To obtain a value for a specific key in a storage map, the `get` method is handy, wherein the key value is passed. For mapping storage access, the `try_read()` method is utilized. As this method produces a `Result` type, the `unwrap` method can be applied to extract the item value.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="buy_item_get_item"
   commentType="//"
   lang="sway"
@@ -160,7 +160,7 @@ In Sway, all variables are immutable by default, whether declared with `let` or 
 Additionally, it's essential to ensure that the quantity of coins sent for the item isn't less than the item's price.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="buy_item_require_ge_amount"
   commentType="//"
   lang="sway"
@@ -171,7 +171,7 @@ Additionally, it's essential to ensure that the quantity of coins sent for the i
 We can increase the item's `total_bought` field value and subsequently reinsert it into the `item_map`. This action will replace the earlier value with the revised item.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="buy_item_require_update_storage"
   commentType="//"
   lang="sway"
@@ -184,7 +184,7 @@ Lastly, we can process the payment to the seller. It's recommended to transfer a
 For items reaching a specific price threshold, a fee can be deducted using a conditional `if` statement. The structure of `if` statements in Sway mirrors that in JavaScript except for the brackets `()`.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="buy_item_require_transferring_payment"
   commentType="//"
   lang="sway"
@@ -201,7 +201,7 @@ To facilitate the payment to the item's owner, the `transfer` function is utiliz
 To get the details for an item, we can create a read-only function that returns the `Item` struct for a given item ID.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="get_item"
   commentType="//"
   lang="sway"
@@ -226,7 +226,7 @@ fn my_function_2(num: u64) -> u64{
 This method sets the owner's `Identity` for the contract but only once.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="initialize_owner_parent"
   commentType="//"
   lang="sway"
@@ -237,7 +237,7 @@ To ensure that this function can only be called once, specifically right after t
 It's also important to note the potential risk of [front running](https://scsfg.io/hackers/frontrunning/) in this context this code has not been audited.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="initialize_owner_get_owner"
   commentType="//"
   lang="sway"
@@ -246,7 +246,7 @@ It's also important to note the potential risk of [front running](https://scsfg.
 To assign the `owner` as the message sender, it's necessary to transform the `Result` type into an `Option` type.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="initialize_owner_set_owner"
   commentType="//"
   lang="sway"
@@ -255,7 +255,7 @@ To assign the `owner` as the message sender, it's necessary to transform the `Re
 Finally, we'll return the `Identity` of the message sender.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="initialize_owner_return_owner"
   commentType="//"
   lang="sway"
@@ -266,7 +266,7 @@ Finally, we'll return the `Identity` of the message sender.
 The `withdraw_funds` function permits the owner to withdraw any accumulated funds from the contract.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="withdraw_funds_parent"
   commentType="//"
   lang="sway"
@@ -275,7 +275,7 @@ The `withdraw_funds` function permits the owner to withdraw any accumulated fund
 First, we'll ensure that the owner has been initialized to a specific address.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="withdraw_funds_set_owner"
   commentType="//"
   lang="sway"
@@ -284,7 +284,7 @@ First, we'll ensure that the owner has been initialized to a specific address.
 Next, we'll verify that the individual attempting to withdraw the funds is indeed the owner.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="withdraw_funds_require_owner"
   commentType="//"
   lang="sway"
@@ -293,7 +293,7 @@ Next, we'll verify that the individual attempting to withdraw the funds is indee
 Additionally, we can confirm the availability of funds for withdrawal using the `this_balance` function from the standard library. This function returns the current balance of the contract.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="withdraw_funds_require_base_asset"
   commentType="//"
   lang="sway"
@@ -302,7 +302,7 @@ Additionally, we can confirm the availability of funds for withdrawal using the 
 Lastly, we'll transfer the entire balance of the contract to the owner.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="withdraw_funds_transfer_owner"
   commentType="//"
   lang="sway"
@@ -313,7 +313,7 @@ Lastly, we'll transfer the entire balance of the contract to the owner.
 The final function we'll introduce is `get_count`. This straightforward getter function returns the value of the `item_counter` variable stored in the contract's storage.
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="get_count_parent"
   commentType="//"
   lang="sway"
@@ -327,12 +327,12 @@ The `SwayStore` contract implementation in your `main.sw` should now look like t
 id="sway-functions"
 action={{
   name: 'writeToFile',
-  filepath: 'guides-testing/fuel-project/contract/src/main.sw'
+  filepath: 'guides-testing/sway-store/sway-programs/contract/src/main.sw'
 }}
 />
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="implementation"
   commentType="//"
   lang="sway"
