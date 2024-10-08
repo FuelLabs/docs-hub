@@ -14,7 +14,7 @@ export default function VersionDropdown({
 }) {
   const [opened, setOpened] = useState(false);
   const [activeVersion, setActiveVersion] = useState<
-    typeof FUEL_TESTNET_UPPER_CASE | 'Nightly'
+    typeof FUEL_TESTNET_UPPER_CASE | typeof FUEL_TESTNET | 'Nightly'
   >(versionSet === 'default' ? FUEL_TESTNET_UPPER_CASE : 'Nightly');
   const router = useRouter();
   const setVersion = useSetVersion();
@@ -35,13 +35,13 @@ export default function VersionDropdown({
   return (
     <Dropdown isOpen={opened} onOpenChange={setOpened}>
       <Dropdown.Trigger
-        intent='base'
-        variant='outlined'
+        intent="base"
+        variant="outlined"
         css={
           opened ? { ...styles.trigger, ...styles.triggerOpen } : styles.trigger
         }
       >
-        Version: {activeVersion}
+        Version: {activeVersion === FUEL_TESTNET_UPPER_CASE || activeVersion === FUEL_TESTNET ? 'Stable' : activeVersion}
       </Dropdown.Trigger>
       <Dropdown.Menu
         disabledKeys={versionSet === 'default' ? [FUEL_TESTNET] : [versionSet]}
@@ -74,17 +74,17 @@ export default function VersionDropdown({
           key={FUEL_TESTNET}
           aria-label={FUEL_TESTNET}
         >
-          <Text>{FUEL_TESTNET_UPPER_CASE}</Text>
-          {versionSet === 'default' && <Icon icon='Check' color='accent11' />}
+          <Text>Stable</Text> {/* Display 'Stable' instead of raw version */}
+          {versionSet === 'default' && <Icon icon="Check" color="accent11" />}
         </Dropdown.MenuItem>
 
         <Dropdown.MenuItem
           css={styles.menuItem}
-          key='nightly'
-          aria-label='nightly'
+          key="nightly"
+          aria-label="nightly"
         >
           <Text>Nightly</Text>
-          {versionSet === 'nightly' && <Icon icon='Check' color='accent11' />}
+          {versionSet === 'nightly' && <Icon icon="Check" color="accent11" />}
         </Dropdown.MenuItem>
       </Dropdown.Menu>
     </Dropdown>
