@@ -100,6 +100,24 @@ export async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
+    case 'fuel-book':
+      paths = [
+        // BREAKING CHANGE LOG DOCS
+        './fuel-book/docs/src/*.md',
+        './fuel-book/docs/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
+    case 'nightly-fuel-book':
+      paths = [
+        // BREAKING CHANGE LOG DOCS
+        './nightly/fuel-book/docs/src/*.md',
+        './nightly/fuel-book/docs/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
     case 'integration-docs':
       paths = [
         // INTEGRATION DOCS

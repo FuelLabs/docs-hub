@@ -8,6 +8,15 @@
       "image": ""
     }
   },
+  "fuel-book": {
+    "title": "Fuel Book",
+    "slug": "fuel-book",
+    "repository": "https://github.com/FuelLabs/fuel-book",
+    "ogTags": {
+      "description": "Fuel Book",
+      "image": ""
+    }
+  },
   "integration-docs": {
     "title": "Integrations",
     "slug": "integration-docs",
