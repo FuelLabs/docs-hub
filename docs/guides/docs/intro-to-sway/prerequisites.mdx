@@ -61,7 +61,7 @@ node -v
 
 ## Project Setup
 
-Start with a new empty folder and name it `fuel-project`.
+Start with a Fuel template and name it `sway-store`.
 
 <TestAction
 id="create-project-folder"
@@ -72,56 +72,19 @@ action={{
 />
 
 ```sh
-mkdir fuel-project
+pnpm create fuels --pnpm sway-store
 ```
 
-Go into the `fuel-project` folder:
+Go into the `sway-store` folder:
 
 ```sh
-cd fuel-project
+cd sway-store
 ```
 
-Within your terminal start by creating a new Sway project called `contract`:
-
-<TestAction
-id="create-contract"
-action={{
-  name: 'runCommand',
-  commandFolder: 'guides-testing/fuel-project'
-}}
-/>
+There should already be a folder called `sway-programs` inside, where your Sway programs will live. Ignore the other programs as we will only focus on the `contract` program type in this tutorial. Move into your `contract` folder:
 
 ```sh
-forc new contract
-```
-
-Your project structure generated from the `forc` command should like this:
-
-<TestAction
-id="contract-tree"
-action={{
-  name: 'runCommand',
-  commandFolder: 'guides-testing/fuel-project'
-}}
-/>
-
-```sh
-tree contract
-```
-
-```sh
-contract
-├── Forc.toml
-└── src
-    └── main.sw
-
-1 directory, 2 files
-```
-
-Move into your contract folder:
-
-```sh
-cd contract
+cd sway-programs/contract
 ```
 
 Open up the `contract` folder in VSCode, and inside the `src` folder you should see a file called `main.sw`. This is where you will write your Sway contract.
@@ -132,12 +95,12 @@ Since we're creating a brand new contract you can delete everything in this file
 id="sway-program-type"
 action={{
   name: 'writeToFile',
-  filepath: 'guides-testing/fuel-project/contract/src/main.sw'
+  filepath: 'guides-testing/sway-store/sway-programs/contract/src/main.sw'
 }}
 />
 
 <CodeImport
-  file="../../examples/intro-to-sway/contract/src/main.sw"
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
   comment="contract"
   commentType="//"
   lang="sway"

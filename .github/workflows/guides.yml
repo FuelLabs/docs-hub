@@ -42,6 +42,7 @@ jobs:
       matrix:
         # note: must match the names in test.spec.ts 
         guide:
+          - "intro to sway"
           - "counter-dapp"
           - "intro to predicates"
           - "quickstart"
