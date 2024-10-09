@@ -100,6 +100,9 @@ function getSidebarName(key) {
     case 'migrations-and-disclosures':
       newKey = 'Migrations & Disclosures';
       break;
+    case 'verified-addresses':
+      newKey = 'Verified Addresses';
+      break;
     case 'guides':
       newKey = 'Guides';
       break;
@@ -116,6 +119,7 @@ function handleAllOrders(allOrders, folderPath, filename) {
   const correctOrder = [
     'migrations-and-disclosures',
     'intro',
+    'verified-addresses',
     'guides',
     'sway',
     'sway-libs',

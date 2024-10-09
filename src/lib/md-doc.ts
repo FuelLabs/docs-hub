@@ -71,6 +71,7 @@ export class Doc {
       .replace('docs/sway/', '')
       .replace('docs/sway-standards/', '')
       .replace('docs/sway-by-example-lib/', '')
+      .replace('docs/verified-addresses/', '')
       .replace('docs/guides/', '')
       .replace('docs/fuel-specs/', '')}`;
 

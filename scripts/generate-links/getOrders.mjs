@@ -13,6 +13,10 @@ const CONFIG = {
     type: 'mdbook',
     path: './integration-docs/docs/src/SUMMARY.md',
   },
+  'verified-addresses': {
+    type: 'mdbook',
+    path: './verified-addresses/docs/src/SUMMARY.md',
+  },
   sway: {
     type: 'mdbook',
     path: './sway/docs/book/src/SUMMARY.md',
