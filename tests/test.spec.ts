@@ -4,43 +4,43 @@ import { setupFolders, startServers, stopServers } from './utils/setup';
 import { useFuelWallet } from './utils/wallet';
 
 test.describe('Guides', () => {
-  // test('quickstart', async ({ context, extensionId, page }) => {
-  //   const CONTRACT_QUICKSTART_PAGE_URL = 'guides/contract-quickstart';
+  test('quickstart', async ({ context, extensionId, page }) => {
+    const CONTRACT_QUICKSTART_PAGE_URL = 'guides/contract-quickstart';
 
-  //   // SETUP
-  //   stopServers();
-  //   await useFuelWallet(context, extensionId, page);
-  //   await setupFolders('fuel-project');
-  //   await startServers(page);
+    // SETUP
+    stopServers();
+    await useFuelWallet(context, extensionId, page);
+    await setupFolders('fuel-project');
+    await startServers(page);
 
-  //   // TEST CONTRACT QUICKSTART
-  //   await runTest(page, context, CONTRACT_QUICKSTART_PAGE_URL);
+    // TEST CONTRACT QUICKSTART
+    await runTest(page, context, CONTRACT_QUICKSTART_PAGE_URL);
 
-  //   // SHUT DOWN
-  //   stopServers();
-  //   // context.close();
-  // });
+    // SHUT DOWN
+    stopServers();
+    // context.close();
+  });
 
-  // test('counter-dapp', async ({ context, extensionId, page }) => {
-  //   const CONTRACT_PAGE_URL = 'guides/counter-dapp/building-a-smart-contract';
-  //   const FRONTEND_PAGE_URL = 'guides/counter-dapp/building-a-frontend';
+  test('counter-dapp', async ({ context, extensionId, page }) => {
+    const CONTRACT_PAGE_URL = 'guides/counter-dapp/building-a-smart-contract';
+    const FRONTEND_PAGE_URL = 'guides/counter-dapp/building-a-frontend';
 
-  //   // SETUP
-  //   stopServers();
-  //   await useFuelWallet(context, extensionId, page);
-  //   await setupFolders('fuel-project');
-  //   await startServers(page);
+    // SETUP
+    stopServers();
+    await useFuelWallet(context, extensionId, page);
+    await setupFolders('fuel-project');
+    await startServers(page);
 
-  //   // TEST CONTRACT
-  //   await runTest(page, context, CONTRACT_PAGE_URL);
+    // TEST CONTRACT
+    await runTest(page, context, CONTRACT_PAGE_URL);
 
-  //   // TEST FRONTEND
-  //   await runTest(page, context, FRONTEND_PAGE_URL);
+    // TEST FRONTEND
+    await runTest(page, context, FRONTEND_PAGE_URL);
 
-  //   // SHUT DOWN
-  //   stopServers();
-  //   // context.close();
-  // });
+    // SHUT DOWN
+    stopServers();
+    // context.close();
+  });
 
   test('intro to sway', async ({ context, extensionId, page }) => {
     const PREREQUISITES_PAGE_URL = 'guides/intro-to-sway/prerequisites';
@@ -77,43 +77,43 @@ test.describe('Guides', () => {
     // context.close();
   });
 
-  // test('intro to predicates', async ({ context, extensionId, page }) => {
-  //   const PREREQUISITES_PAGE_URL = 'guides/intro-to-predicates/prerequisites';
-  //   const PREDICATE_ROOT_PAGE_URL = 'guides/intro-to-predicates/predicate-root';
-  //   const IMPORTS_PAGE_URL = 'guides/intro-to-predicates/imports';
-  //   const CONFIGURABLES_PAGE_URL = 'guides/intro-to-predicates/configurables';
-  //   const SIGNATURE_VERIFICATION_PAGE_URL =
-  //     'guides/intro-to-predicates/signature-verification';
-  //   const MAIN_PAGE_URL = 'guides/intro-to-predicates/main';
-  //   const CHECKPOINT_PAGE_URL = 'guides/intro-to-predicates/checkpoint';
-  //   const SCRIPT_DEBUG_PAGE_URL =
-  //     'guides/intro-to-predicates/debugging-with-scripts';
-  //   const SCRIPT_LOGS_PAGE_URL =
-  //     'guides/intro-to-predicates/debugging-with-scripts-rust';
-  //   const FUELS_RS_PAGE_URL = 'guides/intro-to-predicates/rust-sdk';
+  test('intro to predicates', async ({ context, extensionId, page }) => {
+    const PREREQUISITES_PAGE_URL = 'guides/intro-to-predicates/prerequisites';
+    const PREDICATE_ROOT_PAGE_URL = 'guides/intro-to-predicates/predicate-root';
+    const IMPORTS_PAGE_URL = 'guides/intro-to-predicates/imports';
+    const CONFIGURABLES_PAGE_URL = 'guides/intro-to-predicates/configurables';
+    const SIGNATURE_VERIFICATION_PAGE_URL =
+      'guides/intro-to-predicates/signature-verification';
+    const MAIN_PAGE_URL = 'guides/intro-to-predicates/main';
+    const CHECKPOINT_PAGE_URL = 'guides/intro-to-predicates/checkpoint';
+    const SCRIPT_DEBUG_PAGE_URL =
+      'guides/intro-to-predicates/debugging-with-scripts';
+    const SCRIPT_LOGS_PAGE_URL =
+      'guides/intro-to-predicates/debugging-with-scripts-rust';
+    const FUELS_RS_PAGE_URL = 'guides/intro-to-predicates/rust-sdk';
 
-  //   // SETUP
-  //   stopServers();
-  //   await useFuelWallet(context, extensionId, page);
-  //   await setupFolders('fuel-project');
-  //   await startServers(page);
+    // SETUP
+    stopServers();
+    await useFuelWallet(context, extensionId, page);
+    await setupFolders('fuel-project');
+    await startServers(page);
 
-  //   // TEST CONTRACT
-  //   await runTest(page, context, PREREQUISITES_PAGE_URL);
-  //   await runTest(page, context, PREDICATE_ROOT_PAGE_URL);
-  //   await runTest(page, context, IMPORTS_PAGE_URL);
-  //   await runTest(page, context, CONFIGURABLES_PAGE_URL);
-  //   await runTest(page, context, SIGNATURE_VERIFICATION_PAGE_URL);
-  //   await runTest(page, context, MAIN_PAGE_URL);
-  //   await runTest(page, context, CHECKPOINT_PAGE_URL);
+    // TEST CONTRACT
+    await runTest(page, context, PREREQUISITES_PAGE_URL);
+    await runTest(page, context, PREDICATE_ROOT_PAGE_URL);
+    await runTest(page, context, IMPORTS_PAGE_URL);
+    await runTest(page, context, CONFIGURABLES_PAGE_URL);
+    await runTest(page, context, SIGNATURE_VERIFICATION_PAGE_URL);
+    await runTest(page, context, MAIN_PAGE_URL);
+    await runTest(page, context, CHECKPOINT_PAGE_URL);
 
-  //   // TEST RUST
-  //   await runTest(page, context, SCRIPT_DEBUG_PAGE_URL);
-  //   await runTest(page, context, SCRIPT_LOGS_PAGE_URL);
-  //   await runTest(page, context, FUELS_RS_PAGE_URL);
+    // TEST RUST
+    await runTest(page, context, SCRIPT_DEBUG_PAGE_URL);
+    await runTest(page, context, SCRIPT_LOGS_PAGE_URL);
+    await runTest(page, context, FUELS_RS_PAGE_URL);
 
-  //   // SHUT DOWN
-  //   stopServers();
-  //   // context.close();
-  // });
+    // SHUT DOWN
+    stopServers();
+    // context.close();
+  });
 });
