@@ -24,6 +24,7 @@
     "**/guides/examples": true,
     "**/sway-by-example-lib": true,
     "**/migrations-and-disclosures": true,
+    "**/fuel-book": true,
     "**/verified-addresses": true
   },
   "git.ignoreLimitWarning": true,

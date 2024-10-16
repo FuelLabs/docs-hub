@@ -24,6 +24,8 @@ const targetDirs = [
   './docs/nightly/sway-by-example-lib',
   './docs/migrations-and-disclosures',
   './docs/nightly/migrations-and-disclosures',
+  './docs/fuel-book',
+  './docs/nightly/fuel-book',
   './docs/verified-addresses',
   './docs/nightly/verified-addresses',
   './docs/integration-docs',
@@ -73,6 +75,7 @@ const exclusions = {
     'fuel-graphql-docs/src',
   ],
   migrations_and_disclosures: ['migrations-and-disclosures/docs'],
+  fuel_book: ['fuel-book/docs'],
   verified_addresses: ['verified-addresses/docs'],
   integration_docs: ['integration-docs/docs'],
 };
