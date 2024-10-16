@@ -6,7 +6,8 @@
     "Contract Quickstart",
     "Frontend Quickstart",
     "Intro to Sway",
-    "Intro to Predicates"
+    "Intro to Predicates",
+    "Fuel Connectors"
   ],
   "installation": [
     "Fuel Github Codespace"
@@ -48,5 +49,9 @@
     "Debugging with Scripts",
     "Logging in Rust tests",
     "Rust Testing"
+  ],
+  "fuel_connectors": [
+    "Fuel Connectors",
+    "Non-technical Guide"
   ]
 }

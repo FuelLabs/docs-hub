@@ -3,42 +3,69 @@
     "title": "Predicates 101: Building Stateless DeFi Applications",
     "description": "Learn about predicates by building a MultiSig",
     "featured": true,
-    "tags": ["Full Stack"]
+    "tags": [
+      "Full Stack"
+    ]
   },
   "intro_to_sway": {
     "title": "Introduction to Sway for JavaScript developers",
     "description": "Learn Sway fundamentals by building a marketplace React dApp.",
     "featured": true,
-    "tags": ["Full Stack", "React"]
+    "tags": [
+      "Full Stack",
+      "React"
+    ]
   },
   "contract-quickstart": {
     "title": "Smart Contract Quickstart",
     "description": "Get started by generating a counter contract in Sway.",
     "featured": false,
-    "tags": ["Getting Started"]
+    "tags": [
+      "Getting Started"
+    ]
   },
   "frontend-quickstart": {
     "title": "Next.js Fullstack Quickstart",
     "description": "Get started by generating a full-stack counter dapp on Fuel.",
     "featured": false,
-    "tags": ["Getting Started", "Full Stack", "Next.js"]
+    "tags": [
+      "Getting Started",
+      "Full Stack",
+      "Next.js"
+    ]
   },
   "counter-dapp": {
     "title": "Counter React Dapp",
     "description": "Step-by-step guide to build a counter dApp on Fuel",
     "featured": false,
-    "tags": ["Getting Started", "Full Stack", "React"]
+    "tags": [
+      "Getting Started",
+      "Full Stack",
+      "React"
+    ]
   },
   "running_a_node": {
     "title": "Running a Node",
     "description": "Run a local Fuel node.",
     "featured": false,
-    "tags": ["fuel-core"]
+    "tags": [
+      "fuel-core"
+    ]
   },
   "installation": {
     "title": "Toolchain Installation",
     "description": "Install the Fuel toolchain and binaries.",
     "featured": false,
-    "tags": ["Getting Started"]
+    "tags": [
+      "Getting Started"
+    ]
+  },
+  "fuel_connectors": {
+    "title": "Fuel Connectors",
+    "description": "Fuel Connectors for Non-Technical People",
+    "featured": false,
+    "tags": [
+      "Getting Started"
+    ]
   }
 }
