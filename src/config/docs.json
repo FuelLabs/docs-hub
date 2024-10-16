@@ -44,6 +44,15 @@
       "image": ""
     }
   },
+  "verified-addresses": {
+    "title": "Verified Addresses",
+    "slug": "verified-addresses",
+    "repository": "https://github.com/FuelLabs/verified-addresses",
+    "ogTags": {
+      "description": "Verified asset and contract addresses",
+      "image": ""
+    }
+  },
   "guides": {
     "title": "Guides",
     "slug": "guides",

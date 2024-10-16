@@ -66,6 +66,7 @@ const includeDirs = [
   'docs/sway-by-example-lib/docs/src',
   'docs/migrations-and-disclosures/docs/src',
   'docs/fuel-book/docs/src',
+  'docs/verified-addresses/docs/src',
   'docs/integration-docs/docs/src',
   // NIGHTLY DOCS
   'docs/nightly/sway/docs/book/src',
@@ -79,6 +80,7 @@ const includeDirs = [
   'docs/nightly/sway-by-example-lib/docs/src',
   'docs/nightly/migrations-and-disclosures/docs/src',
   'docs/nightly/fuel-book/docs/src',
+  'docs/nightly/verified-addresses/docs/src',
   'docs/nightly/integration-docs/docs/src',
 ];
 
@@ -96,6 +98,7 @@ const excludeDirs = [
   'docs/sway-by-example-lib/docs/src/SUMMARY.md',
   'docs/migrations-and-disclosures/docs/src/SUMMARY.md',
   'docs/fuel-book/docs/src/SUMMARY.md',
+  'docs/verified-addresses/docs/src/SUMMARY.md',
   'docs/integration-docs/docs/src/SUMMARY.md',
   // NIGHTLY DOCS
   'docs/nightly/sway/docs/book/src/SUMMARY.md',
@@ -106,6 +109,7 @@ const excludeDirs = [
   'docs/nightly/sway-by-example-lib/docs/src/SUMMARY.md',
   'docs/nightly/migrations-and-disclosures/docs/src/SUMMARY.md',
   'docs/nightly/fuel-book/docs/src/SUMMARY.md',
+  'docs/nightly/verified-addresses/docs/src/SUMMARY.md',
   'docs/nightly/integration-docs/docs/src/SUMMARY.md',
 ];
 
