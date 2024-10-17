@@ -90,3 +90,15 @@
 [submodule "docs/nightly/integration-docs"]
 	path = docs/nightly/integration-docs
 	url = https://github.com/FuelLabs/integration-docs
+[submodule "docs/verified-addresses"]
+	path = docs/verified-addresses
+	url = https://github.com/FuelLabs/verified-addresses
+[submodule "docs/nightly/verified-addresses"]
+	path = docs/nightly/verified-addresses
+	url = https://github.com/FuelLabs/verified-addresses
+[submodule "docs/fuel-book"]
+	path = docs/fuel-book
+	url = https://github.com/FuelLabs/fuel-book
+[submodule "docs/nightly/fuel-book"]
+	path = docs/nightly/fuel-book
+	url = https://github.com/FuelLabs/fuel-book
