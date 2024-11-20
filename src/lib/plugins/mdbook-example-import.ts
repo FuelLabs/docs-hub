@@ -129,7 +129,8 @@ export function handleExampleImports(
         .replace(
           'fuels-ts/create-fuels-counter-guide',
           'fuels-ts/apps/create-fuels-counter-guide'
-        );
+        )
+        .replace('fuels-ts/docs', 'fuels-ts/apps/docs');
     }
     const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
     const cachedFile = getFilesOnCache(fileAbsPath);
