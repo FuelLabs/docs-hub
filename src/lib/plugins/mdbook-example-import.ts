@@ -90,14 +90,9 @@ export function handleExampleImports(
     if (paths.length > 1) exampleName = filePath.split(':').pop();
   } else if (node.type === 'text') {
     // handle ts-sdk docs example format
-    filePath = filePath.replace('<<< @/', '').replace('<<< @', '');
+    const relativePath = dirname.replace('docs/fuels-ts/', '')
+    filePath = filePath.replace('<<< @./', `${relativePath}/`).replace(/<<< @\/?/, '');
 
-    if (
-      filePath.startsWith('docs-snippets') ||
-      filePath.startsWith('demo-fuels')
-    ) {
-      filePath = `apps/${filePath}`;
-    }
     const pathData = filePath.split('{');
     filePath = pathData[0];
 
@@ -134,7 +129,8 @@ export function handleExampleImports(
         .replace(
           'fuels-ts/create-fuels-counter-guide',
           'fuels-ts/apps/create-fuels-counter-guide'
-        );
+        )
+        .replace('fuels-ts/docs', 'fuels-ts/apps/docs');
     }
     const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
     const cachedFile = getFilesOnCache(fileAbsPath);
