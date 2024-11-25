@@ -91,7 +91,7 @@ export function handleExampleImports(
   } else if (node.type === 'text') {
     // handle ts-sdk docs example format
     const relativePath = dirname.replace('docs/fuels-ts/', '')
-    filePath = filePath.replace('<<< @./', `${relativePath}/`).replace('<<< @/', '').replace('<<< @', '');
+    filePath = filePath.replace('<<< @./', `${relativePath}/`).replace(/<<< @\/?/, '');
 
     const pathData = filePath.split('{');
     filePath = pathData[0];
