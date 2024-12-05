@@ -90,8 +90,7 @@ export function handleExampleImports(
     if (paths.length > 1) exampleName = filePath.split(':').pop();
   } else if (node.type === 'text') {
     // handle ts-sdk docs example format
-    const relativePath = dirname.replace('docs/fuels-ts/', '')
-    filePath = filePath.replace('<<< @./', `${relativePath}/`).replace(/<<< @\/?/, '');
+    filePath = filePath.replace(/<<< @\/?/, '');
 
     const pathData = filePath.split('{');
     filePath = pathData[0];
@@ -132,6 +131,13 @@ export function handleExampleImports(
         )
         .replace('fuels-ts/docs', 'fuels-ts/apps/docs');
     }
+
+    // If the example snippet is a relative path
+    // Then we can just join up the current dir path with the relative snippet path
+    if (filePath.startsWith('./')) {
+      fileAbsPath = path.join(dirname, filePath)
+    }
+
     const fileContent = fs.readFileSync(fileAbsPath, 'utf8');
     const cachedFile = getFilesOnCache(fileAbsPath);
 
