@@ -74,7 +74,6 @@ async function updateDocs(versions, isNightly) {
           break;
         case 'ts':
           submoduleName = `docs${isNightly ? '/nightly' : ''}/fuels-ts`;
-          branch = 'docs';
           break;
         case 'wallet':
           submoduleName = `docs${isNightly ? '/nightly' : ''}/fuels-wallet`;

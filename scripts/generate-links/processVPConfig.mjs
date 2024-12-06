@@ -13,7 +13,6 @@ function handleVPLine(
   index,
   thisOrder,
   thisCat,
-  isNightly
 ) {
   const regex = /'([^']+)'/;
   // Create a shallow copy
