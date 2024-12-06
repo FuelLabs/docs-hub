@@ -41,7 +41,8 @@ export default function VersionDropdown({
           opened ? { ...styles.trigger, ...styles.triggerOpen } : styles.trigger
         }
       >
-        Version: {activeVersion === FUEL_TESTNET_UPPER_CASE ? 'Stable' : activeVersion}
+        Version:{' '}
+        {activeVersion === FUEL_TESTNET_UPPER_CASE ? 'Stable' : activeVersion}
       </Dropdown.Trigger>
       <Dropdown.Menu
         disabledKeys={versionSet === 'default' ? [FUEL_TESTNET] : [versionSet]}

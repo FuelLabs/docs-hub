@@ -34,7 +34,7 @@ export async function updateSubmodules(newDefaultVersions, newNightlyVersions) {
   const updateRegardless = [
     'docs/nightly/fuel-specs',
     'docs/nightly/fuel-graphql-docs',
-    'docs/nightly/migrations-and-disclosures'
+    'docs/nightly/migrations-and-disclosures',
   ];
   await Promise.all(
     updateRegardless.map(async (sub) => {
@@ -74,7 +74,6 @@ async function updateDocs(versions, isNightly) {
           break;
         case 'ts':
           submoduleName = `docs${isNightly ? '/nightly' : ''}/fuels-ts`;
-          branch = 'docs';
           break;
         case 'wallet':
           submoduleName = `docs${isNightly ? '/nightly' : ''}/fuels-wallet`;

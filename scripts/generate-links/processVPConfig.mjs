@@ -1,20 +1,4 @@
-import { EOL } from 'os';
-
-import { getFile } from './getFile.mjs';
-
-const tsAPIOrderFile = getFile(
-  './fuels-ts/apps/docs/.typedoc/api-links.json',
-  'default',
-  true
-);
-const nightlyTsAPIOrderFile = getFile(
-  './fuels-ts/apps/docs/.typedoc/api-links.json',
-  'nightly',
-  true
-);
-
 function extractData(inputString) {
-  // used for api.json order
   const regex = /"([^"]+)":\s*"([^"]+)"/g;
   const match = regex.exec(inputString);
   if (match !== null) {
@@ -29,11 +13,10 @@ function handleVPLine(
   index,
   thisOrder,
   thisCat,
-  isNightly
 ) {
   const regex = /'([^']+)'/;
   // Create a shallow copy
-  let newVPOrder = JSON.parse(JSON.stringify(thisOrder));
+  const newVPOrder = JSON.parse(JSON.stringify(thisOrder));
   let category = thisCat;
   if (
     trimmedLine.includes('collapsed:') ||
@@ -79,29 +62,6 @@ function handleVPLine(
         newVPOrder.menu.push(linkName);
       }
     }
-  } else if (trimmedLine.startsWith('apiLinks')) {
-    // handle API order
-    newVPOrder.menu.push('API');
-    let apiJSON;
-    if (isNightly) {
-      apiJSON = nightlyTsAPIOrderFile;
-    } else {
-      apiJSON = tsAPIOrderFile;
-    }
-    const apiLines = JSON.stringify(apiJSON, null, 2).split(EOL);
-    apiLines.forEach((apiLine, apiIndex) => {
-      const trimmedAPILine = apiLine.trimStart();
-      const results = handleVPLine(
-        trimmedAPILine,
-        apiLines,
-        apiIndex,
-        newVPOrder,
-        category,
-        isNightly
-      );
-      category = results.category;
-      newVPOrder = results.newVPOrder;
-    });
   }
 
   return { newVPOrder, category };
