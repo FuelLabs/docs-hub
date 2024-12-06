@@ -27,7 +27,7 @@ export class DocParser {
       slug = slug.replaceAll(key, value as string);
     }
 
-    if(slug.endsWith('/src')){
+    if (slug.endsWith('/src')) {
       slug = slug.replace('/src', '');
     }
 

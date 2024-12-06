@@ -6,10 +6,10 @@ import '../styles/docsearch.css';
 import '../styles/index.css';
 
 import { FuelWalletConnector, FueletWalletConnector } from '@fuels/connectors';
+import { AskCookbook } from '../components/AskCookbook';
 import { Provider } from '../components/Provider';
 import { ShowWarningProvider } from '../hooks/useShowWarning';
 import { VersionProvider } from '../hooks/useVersion';
-import { AskCookbook } from '../components/AskCookbook';
 
 const queryClient = new QueryClient();
 
