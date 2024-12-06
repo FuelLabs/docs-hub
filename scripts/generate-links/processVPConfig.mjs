@@ -17,7 +17,7 @@ function handleVPLine(
 ) {
   const regex = /'([^']+)'/;
   // Create a shallow copy
-  let newVPOrder = JSON.parse(JSON.stringify(thisOrder));
+  const newVPOrder = JSON.parse(JSON.stringify(thisOrder));
   let category = thisCat;
   if (
     trimmedLine.includes('collapsed:') ||

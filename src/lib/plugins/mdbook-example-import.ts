@@ -135,7 +135,7 @@ export function handleExampleImports(
     // If the example snippet is a relative path
     // Then we can just join up the current dir path with the relative snippet path
     if (filePath.startsWith('./')) {
-      fileAbsPath = path.join(dirname, filePath)
+      fileAbsPath = path.join(dirname, filePath);
     }
 
     const fileContent = fs.readFileSync(fileAbsPath, 'utf8');

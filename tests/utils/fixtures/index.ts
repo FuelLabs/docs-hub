@@ -9,7 +9,10 @@ import { waitForExtensions } from './utils/waitForExtenssions';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
-const versionFile = readFileSync(join(process.cwd(), 'src/config/versions.json'), 'utf-8');
+const versionFile = readFileSync(
+  join(process.cwd(), 'src/config/versions.json'),
+  'utf-8'
+);
 const versions = JSON.parse(versionFile);
 
 export const test = base.extend<{
@@ -19,7 +22,7 @@ export const test = base.extend<{
   // biome-ignore lint/correctness/noEmptyPattern:
   context: async ({}, use) => {
     // download fuel wallet
-    console.log("DOWNLOADING WALLET VERSION", versions.default.wallet)
+    console.log('DOWNLOADING WALLET VERSION', versions.default.wallet);
     const fuelPathExtension = await downloadFuel(versions.default.wallet);
     // prepare browser args
     const browserArgs = [
