@@ -15,7 +15,7 @@ const constantsPath = join(
 const nightlyConstantsPath =
   'docs/nightly/fuels-wallet/packages/docs/src/constants.ts';
 
-const downloadVarName = 'DOWNLOAD_LINK';
+const downloadVarName = 'WALLET_DOWNLOAD_PATH';
 
 function handleConstantsFile(filePath, version) {
   const file = readFileSync(filePath, 'utf8');
@@ -38,8 +38,8 @@ function handleConstantsFile(filePath, version) {
 
   if (start !== undefined && end !== undefined) {
     const walletVersion = versions.default.wallet;
-    const downloadLink = `https://github.com/FuelLabs/fuels-wallet/releases/download/v${walletVersion}/fuel-wallet-${walletVersion}.zip`;
-    const modifiedContent = `export const DOWNLOAD_LINK = '${downloadLink}';`;
+    const downloadLink = `https://wallet.fuel.network/app/fuel-wallet-${walletVersion}.zip`;
+    const modifiedContent = `export const ${downloadVarName} = '${downloadLink}';`;
     lines.splice(start, end - start + 1, modifiedContent);
     const newFileContent = lines.join(EOL);
     writeFileSync(filePath, newFileContent, 'utf8');
