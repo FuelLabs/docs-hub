@@ -140,7 +140,28 @@ export function getVersions(versionSet: VersionSet) {
   };
 }
 
-export function getAllVersions() {
+export class VersionsSingleton {
+  static #instance: VersionsSingleton;
+  #versions: ReturnType<typeof getAllGeneratedVersions>;
+
+  private constructor() {
+    this.#versions = getAllGeneratedVersions();
+  }
+
+  public static get instance(): VersionsSingleton {
+    if (!VersionsSingleton.#instance) {
+      VersionsSingleton.#instance = new VersionsSingleton();
+    }
+
+    return VersionsSingleton.#instance;
+  }
+
+  public getAllVersions() {
+    return this.#versions;
+  }
+}
+
+export function getAllGeneratedVersions() {
   const versions = getVersions('default');
   const nightlyVersions = getVersions('nightly');
 

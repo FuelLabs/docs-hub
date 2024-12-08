@@ -33,8 +33,8 @@ const depsLinkOpts = {
 const nextConfig = {
   basePath: process.env.DOCS_BASE_URL || '',
   experimental: {
-    esmExternals: false,
-    externalDir: true,
+    //esmExternals: false,
+    //externalDir: true,
     swcMinify: true,
   },
   eslint: {
@@ -153,7 +153,29 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
-  ...(HAS_LINK_DEPS ? depsLinkOpts : {}),
+  reactStrictMode: true,
+  compiler: {
+    removeConsole: false,
+  }
+  // webpack: (
+  //   config,
+  //   { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }
+  // ) => {
+  //   if (config.cache && !dev) {
+  //     config.cache = Object.freeze({
+  //       type: 'memory',
+  //     })
+  //   }
+  //   // Important: return the modified config
+  //   return config
+  // },
+  //...(HAS_LINK_DEPS ? depsLinkOpts : {}),
 };
 
-module.exports = withContentlayer(nextConfig);
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
+module.exports = withBundleAnalyzer(withContentlayer(nextConfig));
+
+//module.exports = withBundleAnalyzer(nextConfig);

@@ -1,16 +1,18 @@
 import { join } from 'path';
 import type { GetStaticProps } from 'next';
+import dynamic from 'next/dynamic';
 
 import { readFileSync } from 'fs';
 import type { MdDoc } from '../../.contentlayer/generated';
 import { allMdDocs } from '../../.contentlayer/generated';
 import { DOCS_DIRECTORY } from '../config/constants';
 import useTheme from '../hooks/useTheme';
-import { getNavs } from '../lib/getNavs';
+import { NavsSingleton, getGeneratedNavs } from '../lib/getNavs';
 import { Doc } from '../lib/md-doc';
 import { Docs } from '../lib/md-docs';
 import {
-  getAllVersions,
+  VersionsSingleton,
+  getAllGeneratedVersions,
   getFuelCoreVersion,
   getNodeVersion,
 } from '../lib/versions';
@@ -43,23 +45,43 @@ export interface GuideInfo {
   tags: string[];
 }
 
+// const DocPage = (props: DocPageProps) => {
+//   const { theme } = useTheme();
+//   return <DocScreen {...props} theme={theme} />;
+// };
+
+// export default dynamic(() => Promise.resolve(DocPage), {
+//   ssr: false,
+// });
+
 export default function DocPage(props: DocPageProps) {
   const { theme } = useTheme();
   return <DocScreen {...props} theme={theme} />;
 }
 
 export function getStaticPaths() {
-  const paths = Docs.getAllPaths(allMdDocs);
-  paths.push({ params: { slug: ['guides'], path: '/guides' } });
+  const paths = [{ params: { slug: ['guides'], path: '/guides' } }];
   return { paths, fallback: false };
 }
 
+// export function getStaticPaths() {
+//   const paths = Docs.getAllPaths(allMdDocs);
+//   console.log(`paths`, paths);
+//   paths.push({ params: { slug: ['guides'], path: '/guides' } });
+//   return { paths, fallback: false };
+// }
+
 // biome-ignore lint/suspicious/noExplicitAny:
 export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
+  // const { allNavs, allNightlyNavs } = NavsSingleton.instance.getNavs();
+  // const { versions, nightlyVersions } =
+  //   VersionsSingleton.instance.getAllVersions();
+  console.log(`params`, params);
   const slugArray = params?.slug as string[];
   const slug = slugArray.join('/');
-  const { allNavs, allNightlyNavs } = getNavs();
-  const { versions, nightlyVersions } = getAllVersions();
+
+  const { allNavs, allNightlyNavs } = getGeneratedNavs();
+  const { versions, nightlyVersions } = getAllGeneratedVersions();
 
   if (slug === 'guides') {
     const guidesPath = join(DOCS_DIRECTORY, './guides/docs/guides.json');
