@@ -1,12 +1,15 @@
+// @ts-nocheck
+
 import { readFileSync } from 'fs';
 import { join as pathJoin } from 'path';
 import * as fs from 'fs/promises';
 import { toText } from 'hast-util-to-text';
 import { h } from 'hastscript';
+import type { Root } from 'mdast';
 import prettier from 'prettier';
 import type { Options as RehypeCodeOptions } from 'rehype-pretty-code';
 import rehypeCode from 'rehype-pretty-code';
-import type { Root } from 'remark-gfm';
+import rehypeSlug from 'rehype-slug';
 import { getHighlighter as shikiGetHighlighter } from 'shiki';
 import type { PluggableList } from 'unified';
 import { visit } from 'unist-util-visit';
@@ -445,4 +448,5 @@ export const getMdxCode = (theme: 'light' | 'dark'): PluggableList => [
   addLines,
   addRawCode,
   addNumberOfLines,
+  rehypeSlug,
 ];

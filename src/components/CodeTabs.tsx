@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { cssObj } from '@fuel-ui/css';
 import { Tabs } from '@fuel-ui/react';
 

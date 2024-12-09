@@ -1,5 +1,4 @@
-import { join } from 'path';
-import type { Root } from 'remark-gfm';
+import type { Root } from 'mdast';
 import { visit } from 'unist-util-visit';
 
 // biome-ignore lint/suspicious/noExplicitAny:

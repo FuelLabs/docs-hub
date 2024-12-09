@@ -1,21 +1,22 @@
-import { join } from 'path';
-import type { GetStaticProps } from 'next';
-import dynamic from 'next/dynamic';
+'use server';
 
-import { readFileSync } from 'fs';
-import type { MdDoc } from '../../.contentlayer/generated';
+// import { join } from 'path';
+import type { GetStaticPaths, GetStaticProps } from 'next';
+// import dynamic from 'next/dynamic';
+
 import { allMdDocs } from '../../.contentlayer/generated';
-import { DOCS_DIRECTORY } from '../config/constants';
+//import { readFileSync } from 'fs';
+import type { MdDoc } from '../../.contentlayer/generated';
+//import { DOCS_DIRECTORY } from '../../config/constants';
 import useTheme from '../hooks/useTheme';
-import { NavsSingleton, getGeneratedNavs } from '../lib/getNavs';
+//import { getGeneratedNavs } from '../../lib/getNavs';
 import { Doc } from '../lib/md-doc';
 import { Docs } from '../lib/md-docs';
-import {
-  VersionsSingleton,
-  getAllGeneratedVersions,
-  getFuelCoreVersion,
-  getNodeVersion,
-} from '../lib/versions';
+// import {
+//   getAllGeneratedVersions,
+//     getFuelCoreVersion,
+//    getNodeVersion,
+// } from '../../lib/versions';
 import { DocScreen } from '../screens/DocPage';
 import type { DocType, NavOrder, SidebarLinkItem, Versions } from '../types';
 
@@ -54,79 +55,93 @@ export interface GuideInfo {
 //   ssr: false,
 // });
 
-export default function DocPage(props: DocPageProps) {
+export default function DocPage() {
   const { theme } = useTheme();
-  return <DocScreen {...props} theme={theme} />;
+
+  return <div>hello </div>;
 }
 
+// export const getStaticPaths = (async () => {
+//   const paths = [{ params: { slug: ['guides'], path: '/guides' } }];
+//   return { paths, fallback: false };
+// }) satisfies GetStaticPaths;
+
 export function getStaticPaths() {
-  const paths = [{ params: { slug: ['guides'], path: '/guides' } }];
+  const paths = Docs.getAllPaths(allMdDocs);
+  console.log(`paths`, paths);
+  //paths.push({ params: { slug: ['guides'], path: '/guides' } });
   return { paths, fallback: false };
 }
 
-// export function getStaticPaths() {
-//   const paths = Docs.getAllPaths(allMdDocs);
-//   console.log(`paths`, paths);
-//   paths.push({ params: { slug: ['guides'], path: '/guides' } });
-//   return { paths, fallback: false };
-// }
-
 // biome-ignore lint/suspicious/noExplicitAny:
 export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
-  // const { allNavs, allNightlyNavs } = NavsSingleton.instance.getNavs();
-  // const { versions, nightlyVersions } =
-  //   VersionsSingleton.instance.getAllVersions();
-  console.log(`params`, params);
   const slugArray = params?.slug as string[];
   const slug = slugArray.join('/');
 
-  const { allNavs, allNightlyNavs } = getGeneratedNavs();
-  const { versions, nightlyVersions } = getAllGeneratedVersions();
-
-  if (slug === 'guides') {
-    const guidesPath = join(DOCS_DIRECTORY, './guides/docs/guides.json');
-    const guides = JSON.parse(readFileSync(guidesPath, 'utf8'));
-    return {
-      props: {
-        guides,
-        allNavs,
-        allNightlyNavs,
-        versions,
-        nightlyVersions,
-      },
-    };
-  }
   const doc = new Doc(slugArray, allMdDocs);
   const { light, dark } = await doc.getCode();
 
-  let fuelCoreVersion = null;
-  let nodeVersion = null;
-  let nodeVersionMax = null;
-
-  const isGuide = slug.startsWith('guides/');
-  if (isGuide) {
-    fuelCoreVersion = getFuelCoreVersion();
-    nodeVersion = getNodeVersion().substring(1);
-    const majorVersionMax = Number.parseInt(nodeVersion.substring(0, 2)) + 1;
-    nodeVersionMax = `${majorVersionMax}.0.0`;
-  }
-
   return {
-    props: {
-      allNavs,
-      allNightlyNavs,
-      codeLight: light,
-      codeDark: dark,
-      md: doc.md,
-      doc: doc.item,
-      links: doc.sidebarLinks(slug),
-      docLink: doc.navLinks,
-      versions,
-      nightlyVersions,
-      fuelCoreVersion,
-      nodeVersion,
-      nodeVersionMax,
-      isGuide,
-    },
+    props: {},
   };
 };
+
+// biome-ignore lint/suspicious/noExplicitAny:
+// export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
+//   // const { allNavs, allNightlyNavs } = NavsSingleton.instance.getNavs();
+//   // const { versions, nightlyVersions } =
+//   //   VersionsSingleton.instance.getAllVersions();
+//   console.log(`params`, params);
+//   const slugArray = params?.slug as string[];
+//   const slug = slugArray.join('/');
+
+//   const { allNavs, allNightlyNavs } = getGeneratedNavs();
+//   const { versions, nightlyVersions } = getAllGeneratedVersions();
+
+//   if (slug === 'guides') {
+//     const guidesPath = join(DOCS_DIRECTORY, './guides/docs/guides.json');
+//     const guides = JSON.parse(readFileSync(guidesPath, 'utf8'));
+//     return {
+//       props: {
+//         guides,
+//         allNavs,
+//         allNightlyNavs,
+//         versions,
+//         nightlyVersions,
+//       },
+//     };
+//   }
+//   const doc = new Doc(slugArray, allMdDocs);
+//   const { light, dark } = await doc.getCode();
+
+//   let fuelCoreVersion = null;
+//   let nodeVersion = null;
+//   let nodeVersionMax = null;
+
+//   const isGuide = slug.startsWith('guides/');
+//   if (isGuide) {
+//     fuelCoreVersion = getFuelCoreVersion();
+//     nodeVersion = getNodeVersion().substring(1);
+//     const majorVersionMax = Number.parseInt(nodeVersion.substring(0, 2)) + 1;
+//     nodeVersionMax = `${majorVersionMax}.0.0`;
+//   }
+
+//   return {
+//     props: {
+//       allNavs,
+//       allNightlyNavs,
+//       codeLight: light,
+//       codeDark: dark,
+//       md: doc.md,
+//       doc: doc.item,
+//       links: doc.sidebarLinks(slug),
+//       docLink: doc.navLinks,
+//       versions,
+//       nightlyVersions,
+//       fuelCoreVersion,
+//       nodeVersion,
+//       nodeVersionMax,
+//       isGuide,
+//     },
+//   };
+// };

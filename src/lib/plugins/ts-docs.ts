@@ -1,5 +1,5 @@
 import { EOL } from 'os';
-import type { Root } from 'remark-gfm';
+import type { Root } from 'mdast';
 
 export function handleScriptLink(
   tree: Root,

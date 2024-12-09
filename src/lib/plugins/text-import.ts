@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import { EOL } from 'os';
 import path from 'path';
+import type { Root } from 'mdast';
 import { remark } from 'remark';
-import type { Root } from 'remark-gfm';
 import { visit } from 'unist-util-visit';
 import type { Parent } from 'unist-util-visit/lib';
 import { FUEL_TESTNET } from '~/src/config/constants';

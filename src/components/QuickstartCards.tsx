@@ -1,5 +1,4 @@
 import { cssObj } from '@fuel-ui/css';
-// import { cssObj } from '@fuel-ui/css';
 import {
   Box,
   Card as FuelCard,

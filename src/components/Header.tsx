@@ -3,7 +3,6 @@ import { Alert, Box, Icon, darkTheme, lightTheme } from '@fuel-ui/react';
 import dynamic from 'next/dynamic';
 import type { NavOrder, VersionSet, Versions } from '~/src/types';
 
-import { use, useEffect, useState } from 'react';
 import { useSetShowWarning } from '../hooks/useShowWarning';
 import { MobileMenu } from './MobileMenu';
 import { Navigation } from './Navigation';

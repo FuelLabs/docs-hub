@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import type { ButtonLinkProps, ButtonSizes } from '@fuel-ui/react';
 import { ButtonLink } from '@fuel-ui/react';
 import NextLink from 'next/link';

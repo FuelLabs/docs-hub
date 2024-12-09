@@ -1,8 +1,11 @@
+'use server';
+
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { compile } from '@mdx-js/mdx';
-import { addRawDocumentToVFile } from 'contentlayer/core';
 import type { MdDoc } from 'contentlayer/generated';
+import { addRawDocumentToVFile } from 'contentlayer2/core';
+//import { serialize } from 'next-mdx-remote/serialize';
 import { codeExamples } from '~/docs/fuel-graphql-docs/src/lib/code-examples';
 import { codeImport as gqlCodeImport } from '~/docs/fuel-graphql-docs/src/lib/code-import';
 import { codeImport as walletCodeImport } from '~/docs/fuels-wallet/packages/docs/src/lib/code-import';
@@ -19,13 +22,13 @@ import { rehypePlugins, remarkPlugins } from './md-plugins';
 import { rehypeExtractHeadings } from './plugins/toc';
 import getDocVersion from './versions';
 
-const isPreview = process.env.VERCEL_ENV === 'preview';
-const branchUrl = `https://${process.env.VERCEL_BRANCH_URL}/`;
+// const isPreview = process.env.VERCEL_ENV === 'preview';
+// const branchUrl = `https://${process.env.VERCEL_BRANCH_URL}/`;
 
 const docConfigPath = join(DOCS_DIRECTORY, '../src/config/docs.json');
 const configFile = JSON.parse(readFileSync(docConfigPath, 'utf8'));
-const BASE_URL =
-  isPreview && branchUrl ? branchUrl : 'https://docs.fuel.network/';
+// const BASE_URL =
+//   isPreview && branchUrl ? branchUrl : 'https://docs.fuel.network/';
 
 export class Doc {
   md: MdDoc;
@@ -38,11 +41,9 @@ export class Doc {
     if (!item) {
       throw new Error(`${slug} not found`);
     }
-
     const config = this.#getConfig(slug.join('/'));
     const splitPath = item._raw.flattenedPath.split('/');
     let fileType = '.md';
-
     if (
       config.repository.includes('docs-hub') ||
       config.repository.includes('graphql-docs') ||
@@ -50,17 +51,16 @@ export class Doc {
     ) {
       fileType = '.mdx';
     }
-
     if (
       item._raw.sourceFileName === 'index.md' ||
       item._raw.sourceFileName === 'index.mdx'
     ) {
       fileType = `/index${fileType}`;
     }
-
     const branch = config.repository.includes('graphql-docs')
       ? 'main'
       : 'master';
+
     const actualPath = `/tree/${branch}/${splitPath
       .join('/')
       .replace('/nightly/', '/')
@@ -103,6 +103,7 @@ export class Doc {
 
     const split = item.slug.split('/');
     let category = item.category;
+
     if (!category && item.slug.includes('docs/')) {
       const isNotDefault = item.slug.includes('/nightly/');
       const index = isNotDefault ? 3 : 2;
@@ -114,7 +115,6 @@ export class Doc {
     if (item.slug.includes('/nightly/')) {
       versionSet = 'nightly';
     }
-
     const doc = {
       pageLink,
       _raw: item._raw,
@@ -131,7 +131,6 @@ export class Doc {
       },
       versionSet,
     } as DocType;
-
     this.item = doc;
   }
 
@@ -160,14 +159,36 @@ export class Doc {
 
   async getCode() {
     const doc = this.md;
-    const codeLight = await this.getCodeForTheme('light', doc);
-    const codeDark = await this.getCodeForTheme('dark', doc);
+    const codeLightPromise = this.getCodeForTheme('light', doc);
+    const codeDarkPromise = this.getCodeForTheme('dark', doc);
 
-    return { light: String(codeLight), dark: String(codeDark) };
+    const results = await Promise.all([codeLightPromise, codeDarkPromise]);
+
+    return { light: String(results[0]), dark: String(results[1]) };
+    //return { light: String(codeLight), dark: String(codeDark) };
   }
 
   async getCodeForTheme(theme: 'light' | 'dark', doc: MdDoc) {
     const plugins = rehypePlugins(theme);
+
+    // per the docs we should use @next/mdx and next-mdx-remote
+    // https://mdxjs.com/docs/getting-started/#nextjs
+    // const code = await serialize(doc.body.raw, {
+    //   mdxOptions: {
+    //     outputFormat: 'function-body',
+    //     format: doc._raw.contentType === 'markdown' ? 'md' : 'mdx',
+    //     providerImportSource: '@mdx-js/react',
+    //     //remarkPlugins: this.#remarkPlugins(),
+    //     rehypePlugins: [
+    //       ...plugins,
+    //       rehypeExtractHeadings({
+    //         headings: this.item.headings,
+    //         slug: this.item.slug,
+    //       }),
+    //     ],
+    //   },
+    // });
+
     const code = await compile(doc.body.raw, {
       outputFormat: 'function-body',
       format: doc._raw.contentType === 'markdown' ? 'md' : 'mdx',
@@ -185,126 +206,125 @@ export class Doc {
     return code;
   }
 
-  slugForSitemap() {
-    let slug = this.item.slug;
-    if (slug.endsWith('/index')) {
-      slug = slug.replace('/index', '');
-    }
-    return this.#createUrl(slug);
-  }
+  // slugForSitemap() {
+  //   let slug = this.item.slug;
+  //   if (slug.endsWith('/index')) {
+  //     slug = slug.replace('/index', '');
+  //   }
+  //   return this.#createUrl(slug);
+  // }
 
-  sidebarLinks(slug: string) {
-    let configSlug = this.config.slug;
-    if (slug.includes('/nightly/')) {
-      configSlug = `nightly-${this.config.slug}`;
-    }
-    let guideName = this.item.slug.split('/')[0];
-    const linksPath = join(
-      DOCS_DIRECTORY,
-      `../src/generated/sidebar-links/${configSlug}.json`
-    );
-    const links = JSON.parse(readFileSync(linksPath, 'utf8'));
-    if (
-      (configSlug === 'guides' || configSlug === 'nightly-guides') &&
-      guideName
-    ) {
-      if (configSlug === 'nightly-guides') {
-        guideName = `${guideName}/nightly`;
-      }
-      const slug = this.item.slug
-        .replace(`${guideName}/`, '')
-        .replace('/index', '');
+  // sidebarLinks(slug: string) {
+  //   let configSlug = this.config.slug;
+  //   if (slug.includes('/nightly/')) {
+  //     configSlug = `nightly-${this.config.slug}`;
+  //   }
+  //   let guideName = this.item.slug.split('/')[0];
+  //   const linksPath = join(
+  //     DOCS_DIRECTORY,
+  //     `../src/generated/sidebar-links/${configSlug}.json`
+  //   );
+  //   const links = JSON.parse(readFileSync(linksPath, 'utf8'));
+  //   if (
+  //     (configSlug === 'guides' || configSlug === 'nightly-guides') &&
+  //     guideName
+  //   ) {
+  //     if (configSlug === 'nightly-guides') {
+  //       guideName = `${guideName}/nightly`;
+  //     }
+  //     const slug = this.item.slug
+  //       .replace(`${guideName}/`, '')
+  //       .replace('/index', '');
 
-      const key = slug.split('/')[0].replace(/-/g, '_');
+  //     const key = slug.split('/')[0].replace(/-/g, '_');
 
-      const guideLink = links.find((link) => link.key === key);
+  //     const guideLink = links.find((link) => link.key === key);
 
-      if (guideLink?.submenu) {
-        return guideLink.submenu as SidebarLinkItem[];
-      }
-      console.warn(`No guide link found for key: ${key}`);
-      return [];
-    }
-    return links as SidebarLinkItem[];
-  }
+  //     if (guideLink?.submenu) {
+  //       return guideLink.submenu as SidebarLinkItem[];
+  //     }
+  //     console.warn(`No guide link found for key: ${key}`);
+  //     return [];
+  //   }
+  //   return links as SidebarLinkItem[];
+  // }
 
-  get navLinks() {
-    const slug = this.#parseSlug(this.item.originalSlug);
-    const links = this.sidebarLinks(this.item.originalSlug);
+  // get navLinks() {
+  //   const slug = this.#parseSlug(this.item.originalSlug);
+  //   const links = this.sidebarLinks(this.item.originalSlug);
 
-    const result = [];
-    for (const link of links) {
-      if (link.submenu) {
-        for (const subItem of link.submenu) {
-          const newItem = subItem;
-          // biome-ignore lint/style/noCommaOperator:
-          (newItem.slug = this.#parseSlug(subItem.slug) ?? subItem.slug),
-            result.push(newItem);
-        }
-      } else {
-        const newItem = link;
-        // biome-ignore lint/style/noCommaOperator:
-        (newItem.slug = this.#parseSlug(link.slug) ?? link.slug),
-          result.push(newItem);
-      }
-    }
+  //   const result = [];
+  //   for (const link of links) {
+  //     if (link.submenu) {
+  //       for (const subItem of link.submenu) {
+  //         const newItem = subItem;
+  //         // biome-ignore lint/style/noCommaOperator:
+  //         (newItem.slug = this.#parseSlug(subItem.slug) ?? subItem.slug),
+  //           result.push(newItem);
+  //       }
+  //     } else {
+  //       const newItem = link;
+  //       // biome-ignore lint/style/noCommaOperator:
+  //       (newItem.slug = this.#parseSlug(link.slug) ?? link.slug),
+  //         result.push(newItem);
+  //     }
+  //   }
 
-    const idx = result.findIndex((i) => {
-      if (!i.slug) return false;
-      return (
-        `docs/${i.slug}`.startsWith(slug || '') || i.slug.startsWith(slug || '')
-      );
-    });
+  //   const idx = result.findIndex((i) => {
+  //     if (!i.slug) return false;
+  //     return (
+  //       `docs/${i.slug}`.startsWith(slug || '') || i.slug.startsWith(slug || '')
+  //     );
+  //   });
 
-    const prev = idx > 0 ? result[idx - 1] : null;
-    const next = idx + 1 < result.length ? result[idx + 1] : null;
-    const current = result[idx];
-    const link = { prev, next, ...current };
-    return link;
-  }
+  //   const prev = idx > 0 ? result[idx - 1] : null;
+  //   const next = idx + 1 < result.length ? result[idx + 1] : null;
+  //   const current = result[idx];
+  //   const link = { prev, next, ...current };
+  //   return link;
+  // }
 
-  #parseSlug(slug?: string) {
-    if (!slug) return null;
-    let newSlug = slug.replace('../', '');
-    newSlug = newSlug.startsWith('./') ? newSlug.slice(2) : newSlug;
-    if (newSlug.endsWith('/index')) {
-      newSlug = newSlug.replace('/index', '');
-    }
-    return newSlug;
-  }
+  // #parseSlug(slug?: string) {
+  //   if (!slug) return null;
+  //   let newSlug = slug.replace('../', '');
+  //   newSlug = newSlug.startsWith('./') ? newSlug.slice(2) : newSlug;
+  //   if (newSlug.endsWith('/index')) {
+  //     newSlug = newSlug.replace('/index', '');
+  //   }
+  //   return newSlug;
+  // }
 
-  #createUrl(slug: string) {
-    return `${BASE_URL}${slug.replace('../', '').replace('./', '')}`;
-  }
+  // #createUrl(slug: string) {
+  //   return `${BASE_URL}${slug.replace('../', '').replace('./', '')}`;
+  // }
 
   #remarkPlugins() {
     const filepath = this.md._raw.sourceFilePath;
-    let plugins = [addRawDocumentToVFile(this.md._raw), ...remarkPlugins];
+    const plugins = [addRawDocumentToVFile(this.md._raw), ...remarkPlugins];
 
     const slug = this.md.slug;
 
     if (slug.startsWith('docs/wallet/')) {
       // biome-ignore lint/suspicious/noExplicitAny:
-      plugins = plugins.concat([[walletCodeImport, { filepath }] as any]);
+      //plugins.push([walletCodeImport, { filepath }] as any);
     } else if (slug.startsWith('docs/nightly/wallet/')) {
-      plugins = plugins.concat([
-        // biome-ignore lint/suspicious/noExplicitAny:
-        [nightlyWalletCodeImport, { filepath }] as any,
-      ]);
+      //plugins.push(
+      // biome-ignore lint/suspicious/noExplicitAny:
+      //[nightlyWalletCodeImport, { filepath }] as any
+      //);
     } else if (slug.startsWith('docs/graphql/')) {
-      plugins = plugins
-        // biome-ignore lint/suspicious/noExplicitAny:
-        .concat([[codeExamples, { filepath }] as any])
-        // biome-ignore lint/suspicious/noExplicitAny:
-        .concat([[gqlCodeImport, { filepath }] as any]);
+      // biome-ignore lint/suspicious/noExplicitAny:
+      //plugins.push([codeExamples, { filepath }] as any);
+      // biome-ignore lint/suspicious/noExplicitAny:
+      //plugins.push([gqlCodeImport, { filepath }] as any);
     } else if (slug.startsWith('docs/nightly/graphql/')) {
       // biome-ignore lint/suspicious/noExplicitAny:
-      plugins = plugins.concat([[nightlyCodeExamples, { filepath }] as any]);
+      // plugins.push([nightlyCodeExamples, { filepath }] as any);
     } else if (slug.includes('guides') || slug.includes('/intro/')) {
       // biome-ignore lint/suspicious/noExplicitAny:
-      plugins = plugins.concat([[codeImport, { filepath }] as any]);
+      //plugins.push([codeImport, { filepath }] as any);
       // biome-ignore lint/suspicious/noExplicitAny:
-      plugins = plugins.concat([[textImport, { filepath }] as any]);
+      //plugins.push([textImport, { filepath }] as any);
     }
 
     return plugins;

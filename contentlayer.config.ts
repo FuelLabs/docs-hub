@@ -2,7 +2,7 @@ import {
   defineDocumentType,
   defineNestedType,
   makeSource,
-} from 'contentlayer/source-files';
+} from 'contentlayer2/source-files';
 
 import { DocParser } from './src/lib/md-parser';
 
@@ -50,38 +50,45 @@ const MdDoc = defineDocumentType(() => ({
   },
 }));
 
+// const includeDirs = [
+//   // DEFAULT DOCS & GUIDES
+//   'docs/sway/docs/book/src',
+//   'docs/fuels-rs/docs/src',
+//   'docs/fuels-ts/apps/docs/src',
+//   'docs/fuel-specs/src',
+//   'docs/fuel-graphql-docs/docs',
+//   'docs/fuels-wallet/packages/docs/docs',
+//   'docs/guides/docs',
+//   'docs/intro',
+//   'docs/contributing',
+//   'docs/sway-libs/docs/book/src',
+//   'docs/sway-standards/docs/src',
+//   'docs/sway-by-example-lib/docs/src',
+//   'docs/migrations-and-disclosures/docs/src',
+//   'docs/fuel-book/docs/src',
+//   'docs/verified-addresses/docs/src',
+//   'docs/integration-docs/docs/src',
+//   // NIGHTLY DOCS
+//   'docs/nightly/sway/docs/book/src',
+//   'docs/nightly/fuels-rs/docs/src',
+//   'docs/nightly/fuels-ts/apps/docs/src',
+//   'docs/nightly/fuel-specs/src',
+//   'docs/nightly/fuel-graphql-docs/docs',
+//   'docs/nightly/fuels-wallet/packages/docs/docs',
+//   'docs/nightly/sway-libs/docs/book/src',
+//   'docs/nightly/sway-standards/docs/src',
+//   'docs/nightly/sway-by-example-lib/docs/src',
+//   'docs/nightly/migrations-and-disclosures/docs/src',
+//   'docs/nightly/fuel-book/docs/src',
+//   'docs/nightly/verified-addresses/docs/src',
+//   'docs/nightly/integration-docs/docs/src',
+// ];
+
 const includeDirs = [
   // DEFAULT DOCS & GUIDES
-  'docs/sway/docs/book/src',
-  'docs/fuels-rs/docs/src',
-  'docs/fuels-ts/apps/docs/src',
-  'docs/fuel-specs/src',
-  'docs/fuel-graphql-docs/docs',
-  'docs/fuels-wallet/packages/docs/docs',
-  'docs/guides/docs',
-  'docs/intro',
-  'docs/contributing',
-  'docs/sway-libs/docs/book/src',
-  'docs/sway-standards/docs/src',
-  'docs/sway-by-example-lib/docs/src',
-  'docs/migrations-and-disclosures/docs/src',
-  'docs/fuel-book/docs/src',
-  'docs/verified-addresses/docs/src',
+  // 'docs/guides/docs',
+  // 'docs/intro',
   'docs/integration-docs/docs/src',
-  // NIGHTLY DOCS
-  'docs/nightly/sway/docs/book/src',
-  'docs/nightly/fuels-rs/docs/src',
-  'docs/nightly/fuels-ts/apps/docs/src',
-  'docs/nightly/fuel-specs/src',
-  'docs/nightly/fuel-graphql-docs/docs',
-  'docs/nightly/fuels-wallet/packages/docs/docs',
-  'docs/nightly/sway-libs/docs/book/src',
-  'docs/nightly/sway-standards/docs/src',
-  'docs/nightly/sway-by-example-lib/docs/src',
-  'docs/nightly/migrations-and-disclosures/docs/src',
-  'docs/nightly/fuel-book/docs/src',
-  'docs/nightly/verified-addresses/docs/src',
-  'docs/nightly/integration-docs/docs/src',
 ];
 
 const excludeDirs = [

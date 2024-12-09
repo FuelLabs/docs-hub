@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import type { ThemeUtilsCSS } from '@fuel-ui/css';
 import { cssObj } from '@fuel-ui/css';
 import { Box, Button, Icon, IconButton, Text, toast } from '@fuel-ui/react';

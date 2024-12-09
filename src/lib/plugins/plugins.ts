@@ -1,5 +1,5 @@
 import { join } from 'path';
-import type { Root } from 'remark-gfm';
+import type { Root } from 'mdast';
 import { visit } from 'unist-util-visit';
 import type { Parent } from 'unist-util-visit/lib';
 import { versions as defaultVersions } from '~/docs/fuels-ts/packages/versions/src';

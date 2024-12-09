@@ -1,10 +1,13 @@
 {
-  "extends": "@fuels/ts-config/base.json",
   "compilerOptions": {
     "types": ["@fuel-wallet/sdk"],
-    "plugins": [{ "name": "next" }],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "allowJs": true,
-    "noEmit": true,
+    "noEmit": false,
     "incremental": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -19,9 +22,28 @@
         "./docs/fuel-graphql-docs/*"
       ],
       "contentlayer/generated": ["./.contentlayer/generated"]
-    }
+    },
+    "ignoreDeprecations": "5.0",
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    "preserveSymlinks": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["dom", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "target": "es2020"
   },
-  "exclude": ["docs/**/**.ts", "docs/**/**.tsx"],
+  "exclude": ["docs/**/**.ts", "docs/**/**.tsx", "dos/**/*"],
   "include": [
     "src",
     "next-env.d.ts",

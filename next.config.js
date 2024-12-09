@@ -1,4 +1,5 @@
-const { withContentlayer } = require('next-contentlayer');
+const { withContentlayer } = require('next-contentlayer2');
+const withImages = require("next-images");
 const path = require('path');
 
 const HAS_LINK_DEPS = Boolean(
@@ -33,9 +34,10 @@ const depsLinkOpts = {
 const nextConfig = {
   basePath: process.env.DOCS_BASE_URL || '',
   experimental: {
+    optimizePackageImports: ['@radix-ui', 'contentlayer', 'next-contentlayer', '@fuel-ui/css', '@fuel-ui/react'],
     //esmExternals: false,
     //externalDir: true,
-    swcMinify: true,
+    //swcMinify: true,
   },
   eslint: {
     ignoreDuringBuilds: true,
@@ -154,21 +156,29 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   reactStrictMode: true,
-  compiler: {
-    removeConsole: false,
-  }
-  // webpack: (
-  //   config,
-  //   { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }
-  // ) => {
-  //   if (config.cache && !dev) {
-  //     config.cache = Object.freeze({
-  //       type: 'memory',
-  //     })
-  //   }
-  //   // Important: return the modified config
-  //   return config
-  // },
+  bundlePagesRouterDependencies: true,
+  output: 'standalone',
+  webpack: (
+    config,
+    { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }
+  ) => {
+
+    config.module.rules.push({
+     test: /\.node$/, use: "node-loader"
+    });
+
+    config.module.rules.push({
+      test: /\.ts$/,
+      use: "ts-loader",
+      exclude: /node_modules/
+     });
+    // config.module.rules.push({
+    //   test: /\.(gif|svg|jpg|png)$/,
+    //   use: ["file-loader"]
+    //  });
+    // Important: return the modified config
+    return config
+  },
   //...(HAS_LINK_DEPS ? depsLinkOpts : {}),
 };
 
@@ -176,6 +186,8 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
-module.exports = withBundleAnalyzer(withContentlayer(nextConfig));
+module.exports = withContentlayer(withImages(nextConfig));
+
+//module.exports = withBundleAnalyzer(withContentlayer(nextConfig));
 
 //module.exports = withBundleAnalyzer(nextConfig);

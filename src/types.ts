@@ -1,4 +1,4 @@
-import type { RawDocumentData } from 'contentlayer/core';
+import type { RawDocumentData } from 'contentlayer2/core';
 import type { ComponentType } from 'react';
 
 export type CategoryProps = {

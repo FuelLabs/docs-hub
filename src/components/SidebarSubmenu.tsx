@@ -1,8 +1,6 @@
 import { cssObj } from '@fuel-ui/css';
 import type { ButtonLinkProps } from '@fuel-ui/react';
 import { Box, List } from '@fuel-ui/react';
-import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import type { SidebarLinkItem } from '~/src/types';
 
 import { SidebarLink } from './SidebarLink';
