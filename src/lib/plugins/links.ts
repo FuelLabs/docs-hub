@@ -347,7 +347,7 @@ function replaceInternalLinks(href: string, base: string) {
         docName = 'src-13-soulbound-address';
         break;
       case 'src-14':
-        docName = 'src-14-simple-upgradeable-proxies';
+        docName = 'src-14-simple-upgradable-proxies';
         break;
       case 'src-20':
         docName = 'src-20-native-asset';
