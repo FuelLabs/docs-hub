@@ -322,9 +322,9 @@ export class Doc {
       // plugins.push([nightlyCodeExamples, { filepath }] as any);
     } else if (slug.includes('guides') || slug.includes('/intro/')) {
       // biome-ignore lint/suspicious/noExplicitAny:
-      //plugins.push([codeImport, { filepath }] as any);
+      plugins.push([codeImport, { filepath }] as any);
       // biome-ignore lint/suspicious/noExplicitAny:
-      //plugins.push([textImport, { filepath }] as any);
+      plugins.push([textImport, { filepath }] as any);
     }
 
     return plugins;
