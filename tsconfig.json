@@ -7,7 +7,7 @@
       }
     ],
     "allowJs": true,
-    "noEmit": false,
+    "noEmit": true,
     "incremental": true,
     "isolatedModules": true,
     "jsx": "preserve",

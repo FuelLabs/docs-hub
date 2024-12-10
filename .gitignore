@@ -49,3 +49,5 @@ notes
 
 # Generated files
 src/generated/
+
+/**/*.heapsnapshot
