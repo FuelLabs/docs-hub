@@ -58,11 +58,12 @@
 [submodule "docs/sway-libs"]
 	path = docs/sway-libs
 	url = https://github.com/FuelLabs/sway-libs.git
-	branch = fix/ignition-docs
+	# TODO: Remove this and nightly after master syncs up with the lastest released version
+	branch = master
 [submodule "docs/nightly/sway-libs"]
 	path = docs/nightly/sway-libs
 	url = https://github.com/FuelLabs/sway-libs.git
-	branch = fix/ignition-docs
+	branch = master
 [submodule "docs/sway-standards"]
 	path = docs/sway-standards
 	url = https://github.com/FuelLabs/sway-standards
