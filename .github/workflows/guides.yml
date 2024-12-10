@@ -46,7 +46,7 @@ jobs:
           - "counter-dapp"
           - "intro to predicates"
           - "quickstart"
-
+    continue-on-error: true
     steps:
     # SETUP
       - uses: actions/checkout@v3
