@@ -167,11 +167,11 @@ const nextConfig = {
      test: /\.node$/, use: "node-loader"
     });
 
-    config.module.rules.push({
-      test: /\.ts$/,
-      use: "ts-loader",
-      exclude: /node_modules/
-     });
+    // config.module.rules.push({
+    //   test: /\.ts$/,
+    //   use: "ts-loader",
+    //   exclude: /node_modules/
+    //  });
     // config.module.rules.push({
     //   test: /\.(gif|svg|jpg|png)$/,
     //   use: ["file-loader"]
