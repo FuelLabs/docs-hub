@@ -16,13 +16,13 @@ This action updates the Algolia search index by scraping the live [docs.fuel.net
 
 ## Guides (`guides.yml` )
 
-This action runs a spell check on all the guides to catch any mispelled words. It also runs Playwright tests for some of the guides to make sure they work as expected.
+This action runs a spell check on all the guides to catch any misspelled words. It also runs Playwright tests for some of the guides to make sure they work as expected.
 
 The files checked for spelling are configured in `.spellcheck.yml`. This is also where you can configure what types of elements are ignored.
 
 If the spell check test fails:
 
-- look up the word in the question to verify it is a real word and is correctly spelled
+- look up the word in the question to verify it is a real word and is correctly spelled.
 - If it is a file name or is code, use backticks to ignore the word.
 - If it is a real word that is spelled correctly, or an acronym that is either common or is defined already, add it to `spell-check-custom-words.txt`.
 
