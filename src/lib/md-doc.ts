@@ -73,6 +73,7 @@ export class Doc {
       .replace('docs/sway-by-example-lib/', '')
       .replace('docs/fuel-book/', '')
       .replace('docs/verified-addresses/', '')
+      .replace('docs/fuel-token-overview/', '')
       .replace('docs/fuel-specs/', '')}`;
 
     let pageLink = `${config.repository}${actualPath.replace(
