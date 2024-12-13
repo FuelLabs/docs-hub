@@ -86,11 +86,8 @@ export class Doc {
         versionSet = 'nightly';
       }
       const version = getDocVersion(pageLink, versionSet);
-      // TODO: remove the exception for sway-standards once version is bumped past 0.5.0
-      if (
-        version !== 'master' &&
-        !pageLink.includes('/FuelLabs/sway-standards')
-      ) {
+      // Special handling for sway-standards repository to maintain consistent linking
+      if (version !== 'master' && !pageLink.includes('/FuelLabs/sway-standards')) {
         pageLink = pageLink
           .replace('/tree/master/', `/tree/${version}/`)
           .replace('/blob/master/', `/blob/${version}/`);
