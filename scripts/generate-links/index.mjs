@@ -126,6 +126,7 @@ function handleAllOrders(allOrders, folderPath, filename) {
     'migrations-and-disclosures',
     'intro',
     'fuel-book',
+    'fuel-token-overview',
     'verified-addresses',
     'guides',
     'sway',
