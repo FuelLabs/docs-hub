@@ -64,6 +64,9 @@ export function SidebarSection({
       case 'Verified-addresses':
         githubLink = 'https://github.com/FuelLabs/verified-addresses';
         break;
+      case 'Fuel-token-overview':
+        githubLink = 'https://github.com/FuelLabs/fuel-token-overview';
+        break;
       case 'Guides':
         githubLink = 'https://github.com/FuelLabs/docs-hub';
         break;
