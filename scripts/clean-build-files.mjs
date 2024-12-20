@@ -28,6 +28,8 @@ const targetDirs = [
   './docs/nightly/fuel-book',
   './docs/verified-addresses',
   './docs/nightly/verified-addresses',
+  './docs/fuel-token-overview',
+  './docs/nightly/fuel-token-overview',
   './docs/integration-docs',
   './docs/nightly/integration-docs',
 ];
@@ -77,6 +79,7 @@ const exclusions = {
   migrations_and_disclosures: ['migrations-and-disclosures/docs'],
   fuel_book: ['fuel-book/docs'],
   verified_addresses: ['verified-addresses/docs'],
+  fuel_token_overview: ['fuel-token-overview/docs'],
   integration_docs: ['integration-docs/docs'],
 };
 

@@ -53,6 +53,15 @@
       "image": ""
     }
   },
+  "fuel-token-overview": {
+    "title": "Fuel Token Overview",
+    "slug": "fuel-token-overview",
+    "repository": "https://github.com/FuelLabs/fuel-token-overview",
+    "ogTags": {
+      "description": "An overview of the Fuel token",
+      "image": ""
+    }
+  },
   "guides": {
     "title": "Guides",
     "slug": "guides",

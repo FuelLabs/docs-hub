@@ -25,7 +25,8 @@
     "**/sway-by-example-lib": true,
     "**/migrations-and-disclosures": true,
     "**/fuel-book": true,
-    "**/verified-addresses": true
+    "**/verified-addresses": true,
+    "**/fuel-token-overview": true
   },
   "git.ignoreLimitWarning": true,
   "[typescriptreact]": {

@@ -106,6 +106,9 @@ function getSidebarName(key) {
     case 'verified-addresses':
       newKey = 'Verified Addresses';
       break;
+    case 'fuel-token-overview':
+      newKey = 'Fuel Token Overview';
+      break;
     case 'guides':
       newKey = 'Guides';
       break;
@@ -123,6 +126,7 @@ function handleAllOrders(allOrders, folderPath, filename) {
     'migrations-and-disclosures',
     'intro',
     'fuel-book',
+    'fuel-token-overview',
     'verified-addresses',
     'guides',
     'sway',

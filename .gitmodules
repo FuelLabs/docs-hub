@@ -103,3 +103,9 @@
 [submodule "docs/nightly/fuel-book"]
 	path = docs/nightly/fuel-book
 	url = https://github.com/FuelLabs/fuel-book
+[submodule "docs/fuel-token-overview"]
+	path = docs/fuel-token-overview
+	url = https://github.com/FuelLabs/fuel-token-overview.git
+[submodule "docs/nightly/fuel-token-overview"]
+	path = docs/nightly/fuel-token-overview
+	url = https://github.com/FuelLabs/fuel-token-overview.git
