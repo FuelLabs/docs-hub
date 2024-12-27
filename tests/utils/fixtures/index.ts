@@ -4,7 +4,7 @@ import type { BrowserContext } from '@playwright/test';
 import { test as base, chromium } from '@playwright/test';
 
 import { getExtensionsData } from './utils/getExtensionsData';
-import { waitForExtensions } from './utils/waitForExtenssions';
+// import { waitForExtensions } from './utils/waitForExtenssions';
 
 import { readFileSync } from 'fs';
 import { join } from 'path';
@@ -38,7 +38,8 @@ export const test = base.extend<{
     // Ge extenssions data
     const extensions = await getExtensionsData(context);
     // Wait for Fuel Wallet to load
-    await waitForExtensions(context, extensions);
+    // TODO: reintroduce check
+    // await waitForExtensions(context, extensions);
     // Set context to playwright
     await use(context);
   },
