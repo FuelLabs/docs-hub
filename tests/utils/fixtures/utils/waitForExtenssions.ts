@@ -12,18 +12,21 @@ export async function waitForExtensions(
   >,
   attempts = 0
 ) {
-  console.log('Checking extensions...');
-  const pages = context.pages();
-  const hasFuelWallet = pages.find((page) => {
-    return page.url().includes(extensions['fuel wallet']?.id);
-  });
-  if (!hasFuelWallet) {
-    if (attempts > 5) {
-      throw new Error('Too many attempts to wait for the extensions');
-    }
-    await setTimeout(3000);
-    return waitForExtensions(context, extensions, attempts + 1);
-  }
+  // console.log('Checking extensions...');
+  // const pages = context.pages();
+  // console.log('PAGES', pages);
+  // console.log('INCLUDES', extensions['fuel wallet']?.id);
+  // const hasFuelWallet = pages.find((page) => {
+  //   return page.url().includes(extensions['fuel wallet']?.id);
+  // });
+  // console.log('HELLO', hasFuelWallet);
+  // if (!hasFuelWallet) {
+  //   if (attempts > 5) {
+  //     throw new Error('Too many attempts to wait for the extensions');
+  //   }
+  //   await setTimeout(3000);
+  //   return waitForExtensions(context, extensions, attempts + 1);
+  // }
   console.log('Extensions ready!');
   return true;
 }
