@@ -137,6 +137,10 @@ export const NAVIGATION: any[] = [
         link: '/docs/specs',
       },
       {
+        name: 'Fuel Book',
+        link: '/docs/fuel-book',
+      },
+      {
         name: 'Explorer',
         link: EXPLORER_LINK,
       },
