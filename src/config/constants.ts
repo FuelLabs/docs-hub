@@ -137,6 +137,22 @@ export const NAVIGATION: any[] = [
         link: '/docs/specs',
       },
       {
+        name: 'Fuel Book',
+        link: '/docs/fuel-book',
+      },
+      {
+        name: 'Fuel Token Overview',
+        link: '/docs/fuel-token-overview',
+      },
+      {
+        name: 'Verified Addresses',
+        link: '/docs/verified-addresses',
+      },
+      {
+        name: 'Sway By Example',
+        link: '/docs/sway-by-example-lib',
+      },
+      {
         name: 'Explorer',
         link: EXPLORER_LINK,
       },
