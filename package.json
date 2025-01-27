@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "build:ci": "run-s docs:sync docs:clean generate:* patch:wallet build",
+    "build:ci": "run-s docs:sync docs:clean patch:ts generate:* patch:wallet build",
     "build:content": "contentlayer build",
     "check": "run-s lint",
     "check:prod": "run-s lint:prod",
@@ -26,6 +26,7 @@
     "prepare": "husky install && pnpm copy:icons",
     "start": "next start",
     "patch:wallet": "node scripts/wallet-patch-fixes/index.mjs",
+    "patch:ts": "node scripts/ts-patch-fixes/index.mjs",
     "test:guides": "npx playwright test tests/test.spec.ts",
     "test:guides:debug": "DEBUG=pw:api npx playwright test tests/test.spec.ts",
     "ts:check": "tsc --noEmit",
