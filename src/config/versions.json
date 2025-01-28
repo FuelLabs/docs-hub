@@ -4,7 +4,7 @@
     "rust": "0.66.10",
     "ts": "0.98.0",
     "wallet": "0.42.3",
-    "sway_libs": "0.24.0",
-    "sway_standards": "0.6.2"
+    "sway_libs": "0.24.1",
+    "sway_standards": "0.6.3"
   }
 }
