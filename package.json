@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "build:ci": "run-s docs:sync docs:clean patch:ts generate:* patch:wallet build",
+    "build:ci": "run-s docs:sync docs:clean generate:* patch:wallet build",
     "build:content": "contentlayer build",
     "check": "run-s lint",
     "check:prod": "run-s lint:prod",
@@ -18,7 +18,7 @@
     "export": "DOCS_DIST=${DOCS_DIST:=dist} next export -o $DOCS_DIST",
     "generate:links": "node scripts/generate-links/index.mjs",
     "generate:components": "node scripts/components.mjs",
-    "generate:sitemap": "run-s build:content sitemap",
+    "generate:sitemap": "run-s patch:ts build:content sitemap",
     "sitemap": "node scripts/generate-sitemap/index.mjs",
     "lint": "biome check --apply-unsafe .",
     "lint:fix": "biome format --write .",
