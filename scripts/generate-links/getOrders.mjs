@@ -13,6 +13,10 @@ const CONFIG = {
     type: 'mdbook',
     path: './fuel-book/docs/src/SUMMARY.md',
   },
+  'node-operator': {
+    type: 'mdbook',
+    path: './node-operator/docs/src/SUMMARY.md',
+  },
   'integration-docs': {
     type: 'mdbook',
     path: './integration-docs/docs/src/SUMMARY.md',

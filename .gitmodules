@@ -109,3 +109,9 @@
 [submodule "docs/nightly/fuel-token-overview"]
 	path = docs/nightly/fuel-token-overview
 	url = https://github.com/FuelLabs/fuel-token-overview.git
+[submodule "docs/node-operator"]
+	path = docs/node-operator
+	url = https://github.com/FuelLabs/node-operator
+[submodule "docs/nightly/node-operator"]
+	path = docs/nightly/node-operator
+	url = https://github.com/FuelLabs/node-operator.git
