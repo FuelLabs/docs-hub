@@ -26,7 +26,8 @@
     "**/migrations-and-disclosures": true,
     "**/fuel-book": true,
     "**/verified-addresses": true,
-    "**/fuel-token-overview": true
+    "**/fuel-token-overview": true,
+    "**/node-operator": true
   },
   "git.ignoreLimitWarning": true,
   "[typescriptreact]": {

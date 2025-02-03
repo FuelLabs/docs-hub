@@ -73,6 +73,9 @@ export function SidebarSection({
       case 'Integration-docs':
         githubLink = 'https://github.com/FuelLabs/integration-docs';
         break;
+      case 'Node-Operator':
+        githubLink = 'https://github.com/FuelLabs/node-operator';
+        break;
       default:
         break;
     }
