@@ -54,8 +54,8 @@ export function QuickstartCards() {
 
         <Card
           heading={'Node Operator'}
-          description={'Get started running a node on Fuel.'}
-          href={'/guides/running-a-node'}
+          description={'Get started running a node or validator on Fuel.'}
+          href={'https://docs.fuel.network/docs/node-operator/'}
           icon={'Broadcast'}
         />
       </Grid>
