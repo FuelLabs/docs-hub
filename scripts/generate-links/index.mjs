@@ -115,6 +115,9 @@ function getSidebarName(key) {
     case 'integration-docs':
       newKey = 'Integrations';
       break;
+    case 'node-operator':
+      newKey = 'Node Operator';
+      break;
     default:
   }
 
@@ -128,6 +131,7 @@ function handleAllOrders(allOrders, folderPath, filename) {
     'fuel-book',
     'fuel-token-overview',
     'verified-addresses',
+    'node-operator',
     'guides',
     'sway',
     'sway-libs',
