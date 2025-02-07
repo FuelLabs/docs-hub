@@ -17,6 +17,15 @@
       "image": ""
     }
   },
+  "node-operator": {
+    "title": "Node Operator",
+    "slug": "node-operator",
+    "repository": "https://github.com/FuelLabs/node-operator",
+    "ogTags": {
+      "description": "Node Operator",
+      "image": ""
+    }
+  },
   "integration-docs": {
     "title": "Integrations",
     "slug": "integration-docs",

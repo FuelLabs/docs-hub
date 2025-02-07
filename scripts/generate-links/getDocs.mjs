@@ -172,6 +172,24 @@ export async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
+    case 'node-operator':
+      paths = [
+        // INTEGRATION DOCS
+        './node-operator/docs/src/**/*.md',
+        './node-operator/docs/src/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
+    case 'nightly-node-operator':
+      paths = [
+        // INTEGRATION DOCS
+        './nightly/node-operator/docs/src/**/*.md',
+        './nightly/node-operator/docs/src/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
     case 'forc':
       paths = [
         // FORC DOCS
