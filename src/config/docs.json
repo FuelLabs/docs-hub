@@ -17,6 +17,15 @@
       "image": ""
     }
   },
+  "node-operator": {
+    "title": "Node Operator",
+    "slug": "node-operator",
+    "repository": "https://github.com/FuelLabs/node-operator",
+    "ogTags": {
+      "description": "Node Operator",
+      "image": ""
+    }
+  },
   "integration-docs": {
     "title": "Integrations",
     "slug": "integration-docs",
@@ -50,6 +59,15 @@
     "repository": "https://github.com/FuelLabs/verified-addresses",
     "ogTags": {
       "description": "Verified asset and contract addresses",
+      "image": ""
+    }
+  },
+  "fuel-token-overview": {
+    "title": "Fuel Token Overview",
+    "slug": "fuel-token-overview",
+    "repository": "https://github.com/FuelLabs/fuel-token-overview",
+    "ogTags": {
+      "description": "An overview of the Fuel token",
       "image": ""
     }
   },

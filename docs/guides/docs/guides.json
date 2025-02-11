@@ -44,14 +44,6 @@
       "React"
     ]
   },
-  "running_a_node": {
-    "title": "Running a Node",
-    "description": "Run a local Fuel node.",
-    "featured": false,
-    "tags": [
-      "fuel-core"
-    ]
-  },
   "installation": {
     "title": "Toolchain Installation",
     "description": "Install the Fuel toolchain and binaries.",

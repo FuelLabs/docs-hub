@@ -67,8 +67,12 @@
 [submodule "docs/sway-standards"]
 	path = docs/sway-standards
 	url = https://github.com/FuelLabs/sway-standards
+	# TODO: Remove this and nightly after master syncs up with the lastest released version
+	branch = docs/fix-16-examples
 [submodule "docs/nightly/sway-standards"]
 	path = docs/nightly/sway-standards
+	# TODO: Remove this and nightly after master syncs up with the lastest released version
+	branch = docs/fix-16-examples
 	url = https://github.com/FuelLabs/sway-standards
 [submodule "docs/chain-configuration"]
 	path = docs/chain-configuration
@@ -103,3 +107,15 @@
 [submodule "docs/nightly/fuel-book"]
 	path = docs/nightly/fuel-book
 	url = https://github.com/FuelLabs/fuel-book
+[submodule "docs/fuel-token-overview"]
+	path = docs/fuel-token-overview
+	url = https://github.com/FuelLabs/fuel-token-overview.git
+[submodule "docs/nightly/fuel-token-overview"]
+	path = docs/nightly/fuel-token-overview
+	url = https://github.com/FuelLabs/fuel-token-overview.git
+[submodule "docs/node-operator"]
+	path = docs/node-operator
+	url = https://github.com/FuelLabs/node-operator
+[submodule "docs/nightly/node-operator"]
+	path = docs/nightly/node-operator
+	url = https://github.com/FuelLabs/node-operator.git

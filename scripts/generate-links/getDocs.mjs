@@ -109,6 +109,15 @@ export async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
+    case 'fuel-token-overview':
+      paths = [
+        // BREAKING CHANGE LOG DOCS
+        './fuel-token-overview/docs/src/*.md',
+        './fuel-token-overview/docs/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
     case 'fuel-book':
       paths = [
         // BREAKING CHANGE LOG DOCS
@@ -123,6 +132,15 @@ export async function getDocs(key, order) {
         // BREAKING CHANGE LOG DOCS
         './nightly/verified-addresses/docs/src/*.md',
         './nightly/verified-addresses/docs/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
+    case 'nightly-fuel-token-overview':
+      paths = [
+        // BREAKING CHANGE LOG DOCS
+        './nightly/fuel-token-overview/docs/src/*.md',
+        './nightly/fuel-token-overview/docs/src/**/*.md',
         // IGNORE ALL SUMMARY PAGES
         '!**/SUMMARY.md',
       ];
@@ -150,6 +168,24 @@ export async function getDocs(key, order) {
         // INTEGRATION DOCS
         './nightly/integration-docs/docs/src/**/*.md',
         './nightly/integration-docs/docs/src/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
+    case 'node-operator':
+      paths = [
+        // INTEGRATION DOCS
+        './node-operator/docs/src/**/*.md',
+        './node-operator/docs/src/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
+    case 'nightly-node-operator':
+      paths = [
+        // INTEGRATION DOCS
+        './nightly/node-operator/docs/src/**/*.md',
+        './nightly/node-operator/docs/src/*.md',
         // IGNORE ALL SUMMARY PAGES
         '!**/SUMMARY.md',
       ];

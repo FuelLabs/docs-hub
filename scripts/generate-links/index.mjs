@@ -106,11 +106,17 @@ function getSidebarName(key) {
     case 'verified-addresses':
       newKey = 'Verified Addresses';
       break;
+    case 'fuel-token-overview':
+      newKey = 'Fuel Token Overview';
+      break;
     case 'guides':
       newKey = 'Guides';
       break;
     case 'integration-docs':
       newKey = 'Integrations';
+      break;
+    case 'node-operator':
+      newKey = 'Node Operator';
       break;
     default:
   }
@@ -123,7 +129,9 @@ function handleAllOrders(allOrders, folderPath, filename) {
     'migrations-and-disclosures',
     'intro',
     'fuel-book',
+    'fuel-token-overview',
     'verified-addresses',
+    'node-operator',
     'guides',
     'sway',
     'sway-libs',
