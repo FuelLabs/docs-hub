@@ -161,6 +161,7 @@ export async function getDocs(key, order) {
         // IGNORE ALL SUMMARY PAGES
         '!**/SUMMARY.md',
       ];
+      break;
     case 'nightly-security-best-practices':
       paths = [
         './nightly/security-best-practices/docs/src/*.md',
@@ -168,6 +169,7 @@ export async function getDocs(key, order) {
         // IGNORE ALL SUMMARY PAGES
         '!**/SUMMARY.md',
       ];
+      break;
     case 'integration-docs':
       paths = [
         // INTEGRATION DOCS

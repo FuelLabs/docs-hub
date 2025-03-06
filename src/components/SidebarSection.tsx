@@ -61,9 +61,6 @@ export function SidebarSection({
       case 'Fuel-book':
         githubLink = 'https://github.com/FuelLabs/fuel-book';
         break;
-      case 'Security-best-practices':
-        githubLink = 'https://github.com/FuelLabs/security-best-practices';
-        break;
       case 'Verified-addresses':
         githubLink = 'https://github.com/FuelLabs/verified-addresses';
         break;
@@ -78,6 +75,9 @@ export function SidebarSection({
         break;
       case 'Node-Operator':
         githubLink = 'https://github.com/FuelLabs/node-operator';
+        break;
+      case 'Security-best-practices':
+        githubLink = 'https://github.com/FuelLabs/security-best-practices';
         break;
       default:
         break;

@@ -17,21 +17,21 @@
       "image": ""
     }
   },
-  "security-best-practices": {
-    "title": "Security Best Practices",
-    "slug": "security-best-practices",
-    "repository": "https://github.com/FuelLabs/security-best-practices",
-    "ogTags": {
-      "description": "Security Best Practices",
-      "image": ""
-    }
-  },
   "node-operator": {
     "title": "Node Operator",
     "slug": "node-operator",
     "repository": "https://github.com/FuelLabs/node-operator",
     "ogTags": {
       "description": "Node Operator",
+      "image": ""
+    }
+  },
+  "security-best-practices": {
+    "title": "Security Best Practices",
+    "slug": "security-best-practices",
+    "repository": "https://github.com/FuelLabs/security-best-practices",
+    "ogTags": {
+      "description": "Security Best Practices",
       "image": ""
     }
   },
