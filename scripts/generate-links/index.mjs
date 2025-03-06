@@ -103,6 +103,9 @@ function getSidebarName(key) {
     case 'fuel-book':
       newKey = 'Fuel Book';
       break;
+    case 'security-best-practices':
+      newKey = 'Security Best Practices';
+      break;
     case 'verified-addresses':
       newKey = 'Verified Addresses';
       break;
@@ -136,6 +139,7 @@ function handleAllOrders(allOrders, folderPath, filename) {
     'sway',
     'sway-libs',
     'sway-standards',
+    'security-best-practices',
     'sway-by-example-lib',
     'fuels-ts',
     'fuels-rs',
