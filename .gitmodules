@@ -43,6 +43,7 @@
 [submodule "docs/nightly/fuels-rs"]
 	path = docs/nightly/fuels-rs
 	url = https://github.com/FuelLabs/fuels-rs.git
+	branch = docs/fix-custom-input-output-snippet
 [submodule "docs/nightly/fuel-graphql-docs"]
 	path = docs/nightly/fuel-graphql-docs
 	url = https://github.com/FuelLabs/fuel-graphql-docs.git
