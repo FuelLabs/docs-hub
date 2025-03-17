@@ -25,6 +25,7 @@
     "**/sway-by-example-lib": true,
     "**/migrations-and-disclosures": true,
     "**/fuel-book": true,
+    "**/security-best-practices": true,
     "**/verified-addresses": true,
     "**/fuel-token-overview": true,
     "**/node-operator": true
