@@ -11,10 +11,37 @@ export const setupUser = async () => {
 };
 
 export const push = async (branch, { force } = {}) => {
-  await exec(
-    'git',
-    ['push', 'origin', `HEAD:${branch}`, force && '--force'].filter(Boolean)
-  );
+  try {
+    // Try to fetch the remote branch first
+    await exec('git', ['fetch', 'origin', branch]);
+
+    // Check if the remote branch exists
+    const { stdout } = await exec(
+      'git',
+      ['ls-remote', '--heads', 'origin', branch],
+      { silent: true }
+    );
+    const remoteBranchExists = stdout.trim().length > 0;
+
+    if (remoteBranchExists) {
+      // If remote branch exists, pull the changes
+      await exec('git', [
+        'pull',
+        'origin',
+        branch,
+        '--allow-unrelated-histories',
+      ]);
+    }
+
+    // Push the changes
+    await exec(
+      'git',
+      ['push', 'origin', `HEAD:${branch}`, force && '--force'].filter(Boolean)
+    );
+  } catch (error) {
+    console.error('Error during push:', error);
+    throw error;
+  }
 };
 
 export const fetchTag = async (tag, dir) => {
