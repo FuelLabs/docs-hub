@@ -39,6 +39,12 @@ export function QuickstartCards() {
     <Box>
       <Grid css={styles.grid}>
         <Card
+          heading={'Fuel for Users'}
+          description='Users can get started with Fuel by using Fuel Bridge and by using dApps that are built on Fuel.'
+          href='/guides/user-quickstart'
+          icon='User'
+        />
+        <Card
           heading={'Smart Contract Developer'}
           description={'Generate and deploy a smart contract in Sway.'}
           href={'/guides/contract-quickstart'}
