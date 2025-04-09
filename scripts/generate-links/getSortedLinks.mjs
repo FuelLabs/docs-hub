@@ -141,8 +141,14 @@ function sortLinks(lcOrder, links, config, isNightly) {
           if (!catOrder) {
             const regex = /\/([^/]+)\/[^/]+$/;
             const match = link.submenu[0].slug.match(regex);
-            key = match[1];
-            catOrder = config[key];
+            if (match && match[1]) {
+              key = match[1];
+              catOrder = config[key];
+            } else {
+              // If no match found, use the original key
+              key = link.label.toLowerCase().replaceAll(' ', '-').replaceAll('_', '-');
+              catOrder = config[key];
+            }
           }
           if (!catOrder) {
             const newConfig = convertKeysToLowerCase(config);
