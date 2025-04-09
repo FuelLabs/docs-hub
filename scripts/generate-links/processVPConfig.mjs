@@ -7,13 +7,7 @@ function extractData(inputString) {
   return null;
 }
 
-function handleVPLine(
-  trimmedLine,
-  lines,
-  index,
-  thisOrder,
-  thisCat,
-) {
+function handleVPLine(trimmedLine, lines, index, thisOrder, thisCat) {
   const regex = /'([^']+)'/;
   // Create a shallow copy
   const newVPOrder = JSON.parse(JSON.stringify(thisOrder));
