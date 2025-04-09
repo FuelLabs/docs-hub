@@ -277,26 +277,40 @@ async function parseSubmoduleSummaries() {
         console.log(
           `Parsing submodule summary for ${submodule}: ${config.path} (Type: ${config.type})`
         );
-        const content = await fs.promises.readFile(config.path, 'utf8');
-        let structure = null;
+        let content = ''; // Initialize content variable
+        if (config.type !== 'vitepress') {
+          // Read content only if not VitePress
+          content = await fs.promises.readFile(config.path, 'utf8');
+        }
+
+        let structure = []; // Initialize structure as empty array
+
         if (config.type === 'mdbook') {
           structure = parseSummaryStructure(content);
         } else if (config.type === 'vitepress') {
-          // *** START DEBUG LOGGING ***
+          // *** START DEBUG LOGGING (Optional - keep for now) ***
+          // Read the config file content for debugging purposes if needed
+          const vitepressContentDebug = await fs.promises.readFile(
+            config.path,
+            'utf8'
+          );
           console.log(
             `--- Debug: Content passed to parseVitePressConfig for ${submodule} (first 500 chars) ---`
           );
-          console.log(content.substring(0, 500));
+          console.log(vitepressContentDebug.substring(0, 500));
           console.log('--- End Debug ---');
           // *** END DEBUG LOGGING ***
-          structure = parseVitePressConfig(content);
+
+          // Call the new parseVitePressConfig which uses import()
+          structure = await parseVitePressConfig(config.path);
         }
-        if (structure.length > 0) {
-          // Only add if structure was parsed
+
+        // Check if structure is not empty before pushing
+        if (structure && structure.length > 0) {
           parsedSummaries.push({
             submodule: submodule,
-            structure: { items: structure },
-          }); // Match expected format
+            structure: { items: structure }, // Ensure structure matches expected format
+          });
         } else {
           console.warn(
             `Parsed empty structure for ${submodule} from ${config.path}`
@@ -571,7 +585,7 @@ async function processDocument(docPath, submodule) {
 
           // Create a markdown code block with the snippet
           // TODO: Add anchor processing if needed
-          const replacementCodeBlock = `\`\`\`${lang}\\n${snippet.trim()}\\n\`\`\``;
+          const replacementCodeBlock = `${snippet.trim()}`;
 
           // Use a temporary unique object to ensure correct replacement order later
           replacements.push({
@@ -752,72 +766,94 @@ function generateStructuredSummary(
         console.log(
           `${indent}- Keeping anchor link: [${item.title}](${newPath})`
         );
-      } else if (!summaryDir) {
-        console.warn(
-          `${indent}- Cannot resolve link '${originalLink}' for submodule ${submodule} without a known SUMMARY.md path.`
-        );
-        newPath = `#link-error-unresolvable-${originalLink.replace(
-          /[^a-zA-Z0-9]/g,
-          '-'
-        )}`; // Placeholder
       } else {
+        let lookupKey = ''; // Initialize lookupKey
+        const submoduleConfig = SUBMODULE_CONFIG[submodule]; // Get submodule config
+
         try {
-          // *** Refactored Lookup Key Generation ***
-          // Use resolve + relative for more robust path calculation relative to project root
-          const resolvedOriginalPath = path.resolve(summaryDir, originalLink);
-          const pathFromProjectRoot = path.relative(
-            process.cwd(),
-            resolvedOriginalPath
-          );
-
-          // Normalize the lookup key exactly like the map keys
-          let lookupKey = pathFromProjectRoot.split(path.sep).join('/');
-          lookupKey = lookupKey.startsWith('./')
-            ? lookupKey.substring(2)
-            : lookupKey;
-
-          console.log(
-            `${indent}- Trying lookup for: [${item.title}] (Original Link: ${originalLink}, Lookup Key: ${lookupKey})` // Updated log message
-          );
-
-          // Look up the resolved original path in our global linkMap
-          newPath = linkMap.get(lookupKey);
-
-          // Try variations if direct lookup fails (like adding .md or index.md)
-          if (!newPath) {
+          // *** START: Modified Lookup Key Generation ***
+          if (
+            submoduleConfig?.type === 'vitepress' &&
+            submoduleConfig?.sourceBaseDir
+          ) {
+            // For VitePress, resolve the link relative to its sourceBaseDir
+            lookupKey = path.join(submoduleConfig.sourceBaseDir, originalLink);
+            // Normalize the lookup key exactly like the map keys
+            lookupKey = lookupKey.split(path.sep).join('/');
+            lookupKey = lookupKey.startsWith('./')
+              ? lookupKey.substring(2)
+              : lookupKey;
             console.log(
-              `${indent}  -> Direct map lookup failed for key: ${lookupKey}`
+              `${indent}- Trying lookup (VitePress): [${item.title}] (Original Link: ${originalLink}, SourceBase: ${submoduleConfig.sourceBaseDir}, Lookup Key: ${lookupKey})`
             );
-            const keyWithoutExt = lookupKey.replace(/\.mdx?$/, '');
-            const variations = [
-              // Try common index/readme variations first
-              `${keyWithoutExt}/index.md`,
-              `${keyWithoutExt}/README.md`,
-              `${lookupKey}.md`,
-              lookupKey.replace(/\/$/, '/index.md'), // Handle dir links like guide/contracts/
-              lookupKey.replace(/\/$/, '/README.md'),
-              keyWithoutExt, // Try key without any extension
-            ];
-            for (const variation of variations) {
-              if (linkMap.has(variation)) {
-                newPath = linkMap.get(variation);
-                console.log(
-                  `${indent}    -> Found with variation: ${variation} -> ${newPath}`
-                );
-                break;
-              }
-            }
-          }
-
-          if (!newPath) {
+          } else if (summaryDir) {
+            // For mdbook (default), resolve relative to the SUMMARY.md directory
+            const resolvedOriginalPath = path.resolve(summaryDir, originalLink);
+            const pathFromProjectRoot = path.relative(
+              process.cwd(),
+              resolvedOriginalPath
+            );
+            // Normalize the lookup key exactly like the map keys
+            lookupKey = pathFromProjectRoot.split(path.sep).join('/');
+            lookupKey = lookupKey.startsWith('./')
+              ? lookupKey.substring(2)
+              : lookupKey;
+            console.log(
+              `${indent}- Trying lookup (mdBook): [${item.title}] (Original Link: ${originalLink}, SummaryDir: ${summaryDir}, Lookup Key: ${lookupKey})`
+            );
+          } else {
+            // Handle case where resolution is not possible (e.g., missing summaryDir for mdbook type)
             console.warn(
-              `${indent}  -> Link mapping failed for '${originalLink}' (Lookup Key: ${lookupKey}). Inserting placeholder.`
+              `${indent}- Cannot resolve link '${originalLink}' for submodule ${submodule} without a known SUMMARY.md path or VitePress config.`
             );
-            // Use a placeholder anchor instead of the wrong original link
-            newPath = `#link-error-missing-${lookupKey.replace(
+            newPath = `#link-error-unresolvable-${originalLink.replace(
               /[^a-zA-Z0-9]/g,
               '-'
             )}`;
+          }
+          // *** END: Modified Lookup Key Generation ***
+
+          // Perform lookup only if a valid newPath wasn't already assigned (due to resolution error above)
+          if (newPath === '') {
+            // Look up the generated lookupKey in our global linkMap
+            newPath = linkMap.get(lookupKey);
+
+            // Try variations if direct lookup fails (like adding .md or index.md)
+            if (!newPath) {
+              console.log(
+                `${indent}  -> Direct map lookup failed for key: ${lookupKey}`
+              );
+              const keyWithoutExt = lookupKey.replace(/\.mdx?$/, '');
+              const variations = [
+                // Try common index/readme variations first
+                `${keyWithoutExt}/index.md`,
+                `${keyWithoutExt}/README.md`,
+                `${lookupKey}.md`,
+                lookupKey.replace(/\/$/, '/index.md'), // Handle dir links like guide/contracts/
+                lookupKey.replace(/\/$/, '/README.md'),
+                keyWithoutExt, // Try key without any extension
+              ];
+              for (const variation of variations) {
+                if (linkMap.has(variation)) {
+                  newPath = linkMap.get(variation);
+                  console.log(
+                    `${indent}    -> Found with variation: ${variation} -> ${newPath}`
+                  );
+                  break;
+                }
+              }
+            }
+
+            if (!newPath) {
+              console.warn(
+                `${indent}  -> Link mapping failed for '${originalLink}' (Lookup Key: ${lookupKey}). Inserting placeholder.`
+              );
+              // Use a placeholder anchor instead of the wrong original link
+              newPath = `#link-error-missing-${lookupKey.replace(
+                /[^a-zA-Z0-9]/g,
+                '-'
+              )}`;
+            }
           }
         } catch (resolveError) {
           console.error(
@@ -1034,169 +1070,131 @@ async function generateMdBook() {
 /**
  * Parses VitePress config file content to extract the sidebar structure.
  * Uses a recursive approach to handle nested items.
- * @param {string} content - The content of the config.ts file.
- * @returns {Array} - An array of objects representing the structure.
+ * @param {string} configPath - The path to the VitePress config file.
+ * @returns {Promise<Array>} - A promise resolving to an array of objects representing the structure.
  */
-function parseVitePressConfig(content) {
-  console.log('Parsing VitePress config...');
+async function parseVitePressConfig(configPath) {
+  console.log(`Parsing VitePress config via dynamic import: ${configPath}`);
+  try {
+    // Convert config path to file URL for dynamic import
+    const fileUrl = path.toNamespacedPath(path.resolve(configPath));
+    // On Windows, dynamic import needs file:/// prefix explicitly
+    const importPath =
+      process.platform === 'win32'
+        ? `file:///${fileUrl.replace(/\\/g, '/')}`
+        : fileUrl;
 
-  // 1. Find the sidebar configuration more reliably
-  const sidebarMatch = content.match(/sidebar:\\s*(\\[[\\s\\S]*?\\])/);
-  // *** START DEBUG LOGGING ***
-  console.log(
-    `--- Debug: Initial sidebarMatch result: ${
-      sidebarMatch ? 'Found' : 'Not Found'
-    } ---`
-  );
-  if (sidebarMatch) {
-    console.log(
-      `--- Debug: Matched sidebar content (first 300 chars): ${sidebarMatch[1]?.substring(
-        0,
-        300
-      )} ---`
-    );
-  }
-  // *** END DEBUG LOGGING ***
-  if (!sidebarMatch || !sidebarMatch[1]) {
-    console.warn('Could not find sidebar array structure in VitePress config.');
-    return [];
-  }
+    console.log(`--- Debug: Attempting dynamic import from: ${importPath} ---`);
+    const module = await import(importPath);
+    console.log('--- Debug: Dynamic import successful. ---');
 
-  const rawSidebarContent = sidebarMatch[1];
-  const trimmedContent = rawSidebarContent.trim();
-  let contentToParse = ''; // This will hold the string passed to parseItems
-
-  // 2. Determine the correct content string to pass to parseItems
-  // Check if the content is wrapped in a single object like { ... }
-  if (trimmedContent.startsWith('{') && trimmedContent.endsWith('}')) {
-    console.log(
-      "--- Debug: Sidebar content appears wrapped in an object {}. Checking for 'items' key. ---"
-    );
-    // Try to extract 'items: [...]' from within this object
-    // Using regex \bitems:\s*(\[[\s\S]*\]) to find the items array
-    const itemsMatch = trimmedContent.match(/\\bitems:\\s*(\\[[\\s\\S]*\\])/);
-
-    if (itemsMatch && itemsMatch[1]) {
-      console.log(
-        "--- Debug: Found 'items: [...]' within the object. Extracting its content. ---"
-      );
-      // Use the content *inside* the brackets matched for 'items'
-      contentToParse = itemsMatch[1].slice(1, -1).trim();
-    } else {
+    if (!module.default?.themeConfig?.sidebar) {
       console.warn(
-        "Found sidebar object {} but could not extract a top-level 'items: [...]' array within it. The structure might be unexpected. Returning empty structure."
+        `Could not find 'themeConfig.sidebar' in default export of ${configPath}`
       );
-      return []; // Return empty array as the structure is not as expected
+      return [];
     }
-  } else {
+
+    const sidebar = module.default.themeConfig.sidebar;
+    if (!Array.isArray(sidebar)) {
+      console.warn(
+        `Expected 'themeConfig.sidebar' to be an array in ${configPath}, but got type: ${typeof sidebar}`
+      );
+      return [];
+    }
     console.log(
-      "--- Debug: Sidebar content does not appear wrapped in {}. Assuming direct array content (e.g., '[{ text... }, { text... }]'). ---"
+      `--- Debug: Found sidebar structure with ${sidebar.length} top-level elements. ---`
     );
-    // Assume the trimmedContent is the direct content of the sidebar array,
-    // e.g., "{ text: ... }, { text: ... }" (content *inside* the main [])
-    contentToParse = trimmedContent;
-  }
 
-  // 3. Recursive function to parse items
-  function parseItems(itemsString) {
-    const items = [];
-    // Regex to find objects like { text: '...', link: '...', collapsed?: ..., items?: [...] }
-    // Allows single or double quotes for text/link. Handles optional collapsed property.
-    // Captures: 1=text, 2=link, 3=optional items array content (including brackets)
-    const itemRegex =
-      /\{\s*text:\s*['"](.*?)['"],\s*link:\s*['"](.*?)['"](?:,\s*collapsed:\s*(?:true|false))?(?:,\s*items:\s*(\[[\s\S]*?\]))?\s*\}/g;
+    // Recursive function to transform VitePress sidebar items to mdbook structure
+    function transformVitePressItems(items) {
+      if (!Array.isArray(items)) return [];
+      const result = [];
+      for (const item of items) {
+        if (!item || typeof item !== 'object') continue;
 
-    let match = itemRegex.exec(itemsString);
-    let lastIndex = 0;
-    while (match !== null) {
-      // *** START DEBUG LOGGING ***
-      console.log(
-        `--- Debug: parseItems loop - Match found at index ${match.index} ---`
-      );
-      console.log(`    Match[1] (title): ${match[1]}`);
-      console.log(`    Match[2] (link): ${match[2]}`);
-      console.log(
-        `    Match[3] (nestedItemsString): ${match[3]?.substring(0, 100)}...`
-      );
-      // *** END DEBUG LOGGING ***
-
-      // Prevent infinite loop if regex matches empty string or gets stuck
-      if (match.index === lastIndex && itemRegex.lastIndex === lastIndex) {
-        console.warn('Regex got stuck parsing VitePress items. Breaking loop.');
-        itemRegex.lastIndex++; // Manually advance regex index
-        // Re-run exec after advancing index to potentially get unstuck
-        match = itemRegex.exec(itemsString);
-        continue; // Skip the rest of the loop for this iteration
-      }
-      lastIndex = match.index;
-
-      const title = match[1];
-      let link = match[2];
-      const nestedItemsString = match[3]; // Content of items array, including brackets `[...]` or undefined
-
-      // Clean up the link:
-      // - Remove leading slash (as links seem root-relative to srcDir)
-      // - Ensure it ends with .md (VitePress often omits it for dir/index.md)
-      // - Preserve trailing slash if it exists (might indicate index file)
-      link = link.startsWith('/') ? link.substring(1) : link;
-      const hasTrailingSlash = link.endsWith('/');
-      if (link && !hasTrailingSlash && !path.extname(link)) {
-        link += '.md';
-      }
-      // Ensure forward slashes
-      link = link.split(path.sep).join('/');
-
-      const newItem = {
-        type: 'link',
-        title: title,
-        link: link,
-        items: [],
-      };
-
-      if (nestedItemsString) {
-        // Remove outer brackets and recursively parse nested items
-        const nestedContent = nestedItemsString.slice(1, -1).trim();
-        if (nestedContent) {
-          // Only recurse if there's actual content
-          newItem.items = parseItems(nestedContent);
+        // Handle nested sections like { items: [ ... ] } which are common grouping wrappers
+        if (item.items && !item.text && !item.link) {
+          result.push(...transformVitePressItems(item.items));
+          continue;
         }
+
+        if (!item.text) {
+          continue; // Skip items without text
+        }
+
+        let title = item.text;
+        let link = '#'; // Default for items without a link (like categories)
+
+        if (item.link) {
+          // Clean up the link: remove leading slash, ensure .md or index.md
+          link = item.link.startsWith('/') ? item.link.substring(1) : item.link;
+          const hasTrailingSlash = link.endsWith('/');
+          const baseSourceDir = SUBMODULE_CONFIG['fuels-ts']?.sourceBaseDir; // Get base dir safely
+
+          // Only add .md if it's not an external link and doesn't already have an extension
+          if (
+            link &&
+            !link.startsWith('http') &&
+            !link.startsWith('#') &&
+            !path.extname(link)
+          ) {
+            // Check if baseSourceDir exists, needed for context potentially
+            if (!baseSourceDir) {
+              console.warn(
+                '--- Debug: Cannot resolve link path properly, fuels-ts sourceBaseDir not found in config ---'
+              );
+            }
+            // Determine suffix based on original trailing slash
+            if (hasTrailingSlash) {
+              link = path.join(link, 'index.md').replace(/\\/g, '/');
+            } else {
+              // Default to adding .md for files without extensions
+              link += '.md';
+            }
+          } else if (hasTrailingSlash) {
+            // If it originally had a trailing slash (and an extension, e.g., '/api/'), assume index.md
+            link = path.join(link, 'index.md').replace(/\\/g, '/');
+          }
+          link = link.split(path.sep).join('/'); // Ensure forward slashes
+        } else if (!item.items || item.items.length === 0) {
+          // Optional: Skip items that have no link AND no sub-items
+          // console.log(`--- Debug: Skipping item without link or sub-items: ${title} ---`);
+          // continue;
+        }
+
+        const newItem = {
+          type: 'link', // Treat everything as a link initially for mdbook structure
+          title: title,
+          link: link, // Use the processed link
+          items: item.items ? transformVitePressItems(item.items) : [],
+        };
+        result.push(newItem);
       }
-      items.push(newItem);
-
-      // Get next match for the while loop condition
-      match = itemRegex.exec(itemsString);
+      return result;
     }
-    return items;
-  }
 
-  // 4. Start parsing from the determined content
-  console.log(
-    `--- Debug: Passing the following content string to parseItems (first 300 chars): ${contentToParse.substring(
-      0,
-      300
-    )} ---`
-  );
-  const structure = parseItems(contentToParse);
-
-  if (structure.length === 0 && contentToParse.length > 0) {
-    // Added check for contentToParse length
-    console.warn(
-      'VitePress sidebar parsing did not extract any items, although content was provided to the parser.'
-    );
-  } else if (structure.length > 0) {
+    const transformedStructure = transformVitePressItems(sidebar);
     console.log(
-      `Parsed ${structure.length} top-level items from VitePress config recursively.`
+      `--- Debug: Transformed structure has ${transformedStructure.length} top-level items. ---`
     );
-  }
+    // console.log("--- Debug: Transformed Structure Sample:", JSON.stringify(transformedStructure, null, 2).substring(0, 1000)); // Log sample if needed
 
-  return structure; // Return the parsed structure
+    return transformedStructure; // Return structure on success
+  } catch (error) {
+    console.error(
+      `Error dynamically importing or processing VitePress config ${configPath}:`,
+      error
+    );
+    return []; // Return empty array on error
+  }
 }
 
 /**
  * Parses the structure definition (SUMMARY.md or config.ts) for each relevant submodule.
  */
 
-// Execute the main function
+// Execute the main function (ensure this is outside any function definition)
 generateMdBook().catch((error) => {
   console.error('Error generating mdbook:', error);
   process.exit(1);
