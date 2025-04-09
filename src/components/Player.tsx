@@ -1,7 +1,11 @@
 import { cssObj } from '@fuel-ui/css';
 import { Box } from '@fuel-ui/react';
-import Plyr from 'plyr-react';
+import dynamic from 'next/dynamic';
 import type { PlyrProps } from 'plyr-react';
+
+const Plyr = dynamic(() => import('plyr-react'), {
+  ssr: false,
+});
 
 type PlayerProps = PlyrProps & {
   src: string;
