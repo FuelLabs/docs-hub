@@ -3,7 +3,13 @@
 
 The predicate keyword is used to identify that the program is a predicate.
 
-
+<TestAction
+id="sway-program-type"
+action={{
+  name: 'writeToFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/src/main.sw'
+}}
+/>
 
 <CodeImport
   file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"
@@ -14,7 +20,13 @@ The predicate keyword is used to identify that the program is a predicate.
 
 We're going to utilize the [Sway standard library](https://github.com/FuelLabs/sway/tree/master/sway-lib-std) in our predicate. Delete the template code except for the predicate keyword and copy in the imports below:
 
-
+<TestAction
+id="sway-import"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/src/main.sw'
+}}
+/>
 
 <CodeImport
   file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"

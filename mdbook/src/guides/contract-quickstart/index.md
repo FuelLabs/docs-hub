@@ -14,20 +14,94 @@ Getting started with Fuel as a smart contract developer is as simple as:
 <TextImport
   file="../installation/index.mdx"
   comment="install_fuelup"
-  commentType="
+  commentType="{/*"
+/>
 
+<CodeImport
+  file="../installation/index.mdx"
+  comment="install_fuelup_command"
+  commentType="{/*"
+  lang="sh"
+  trim="true"
+/>
 
+<TextImport
+  file="../counter-dapp/building-a-smart-contract.mdx"
+  comment="install_help"
+  commentType="{/*"
+/>
 
+<TextImport
+  file="../installation/index.mdx"
+  comment="install_VSCode_extensions"
+  commentType="{/*"
+/>
 
+### Already have `fuelup` installed?
+
+<TextImport
+  file="../counter-dapp/building-a-smart-contract.mdx"
+  comment="already_installed"
+  commentType="{/*"
+/>
+
+## Generating a counter contract
+
+Run the command below to generate a counter contract in Sway:
+
+{/* TODO: Replace when forc template command is stable
+
+```sh
+forc template --template-name counter counter-contract
+```
+
+*/}
+
+{/*TODO: Remove when forc template command is stable*/}
+
+<TestAction
+id="create-contract-project"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/'
+}}
+/>
 
 <CodeImport
   file="../counter-dapp/building-a-smart-contract.mdx"
   comment="new_forc_contract"
-  commentType="
+  commentType="{/*"
+  lang="sh"
+  trim="true"
+/>
+
+The contract will be in the `src/main.sw` file.
+
+<TextImport
+  file="../counter-dapp/building-a-smart-contract.mdx"
+  comment="forc_new"
+  commentType="{/*"
+/>
+
+## Building the contract
+
+To build a contract, move inside the `counter-contract` folder:
+
+```sh
+cd counter-contract
+```
+
+{/*TODO: Remove when forc template command is stable*/}
 
 Copy and paste the code below into your `src/main.sw` file
 
-
+<TestAction
+id="copy-contract"
+action={{
+  name: 'writeToFile',
+  filepath: 'guides-testing/counter-contract/src/main.sw'
+}}
+/>
 
 <CodeImport
   file="../../examples/counter-dapp/counter-contract/src/main.sw"
@@ -38,7 +112,13 @@ Copy and paste the code below into your `src/main.sw` file
 
 Next, run the `forc build` command:
 
-
+<TestAction
+id="build-contract"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/counter-contract'
+}}
+/>
 
 ```sh
 forc build

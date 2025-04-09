@@ -17,21 +17,33 @@ Again follow these steps with `cargo-generate` in the predicate project director
 cargo install cargo-generate --locked
 ```
 
-
+{/*markdownlint-disable*/}
 2. Generate the template:
+{/*markdownlint-disable*/}
 
-
-
+<TestAction
+id="cargo-generate-test"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/multisig-predicate/predicate/'
+}}
+/>
 
 ```bash
 cargo generate --init fuellabs/sway templates/sway-test-rs --name sway-store
 ```
 
-
+{/*markdownlint-disable*/}
 3. Update the Cargo.toml file
+{/*markdownlint-disable*/}
 
-
-
+<TestAction
+id="temp-update-cargo-toml-file"
+action={{
+  name: 'writeToFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/Cargo.toml'
+}}
+/>
 
 <CodeImport
   file="../../examples/intro-to-predicates/multisig-predicate/Cargo.toml"
@@ -42,7 +54,13 @@ cargo generate --init fuellabs/sway templates/sway-test-rs --name sway-store
 
 Delete the templated code and copy the following imports into your harness file. It's important to pay attention to two main imports: `predicates`, for obvious reasons, and the `ScriptTransactionBuilder`, which we'll use to create transactions. These transactions must be signed before being broadcasted to our local network.
 
-
+<TestAction
+id="multisig-predicate-test-imports"
+action={{
+  name: 'writeToFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/tests/harness.rs'
+}}
+/>
 
 <CodeImport
   file="../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs"
@@ -53,7 +71,13 @@ Delete the templated code and copy the following imports into your harness file.
 
 Similar to Rust testing for contracts, we'll import the predicate ABI (Application Binary Interface) to interact with it. Ensure the name of your predicate matches the one you're working with.
 
-
+<TestAction
+id="multisig-predicate-test-abi"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/tests/harness.rs'
+}}
+/>
 
 <CodeImport
   file="../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs"
@@ -66,7 +90,13 @@ Similar to Rust testing for contracts, we'll import the predicate ABI (Applicati
 
 If you're familiar with Rust testing for Sway projects, much of the setup will be similar. Copy and paste the `setup_wallets_and_network` function into your harness file.
 
-
+<TestAction
+id="multisig-predicate-test-setup"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/tests/harness.rs'
+}}
+/>
 
 <CodeImport
   file="../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs"
@@ -86,9 +116,9 @@ The three key setup steps include:
   lang="rust"
 />
 
-
+{/*markdownlint-disable*/}
 2. Setting up the default token (zeroth address) and loading some tokens into each wallet.
-
+{/*markdownlint-disable*/}
 
 <CodeImport
   file="../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs"
@@ -97,9 +127,9 @@ The three key setup steps include:
   lang="rust"
 />
 
-
+{/*markdownlint-disable*/}
 3. Preparing the network to broadcast our transaction, enabling us to successfully unlock the tokens from the predicate later.
-
+{/*markdownlint-disable*/}
 
 <CodeImport
   file="../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs"
@@ -110,9 +140,9 @@ The three key setup steps include:
 
 Since the predicate address is deterministic, we don't need to copy it as we do with smart contracts, which are deployed with a different address each time. We can leverage SDKs to build the predicate, ensuring we're working with the correct address without error!
 
-
+{/*markdownlint-disable*/}
 4. Gas isn't just used by the script itself; you also pay for the size of the transaction, signature checks, VM initialization, etc. These costs do not count towards the script gas so it might be hidden.
-
+{/*markdownlint-disable*/}
 
 <CodeImport
   file="../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs"
@@ -127,7 +157,13 @@ Since the predicate address is deterministic, we don't need to copy it as we do 
 
 Now, let's review the sequence of actions we'll take to simulate a real-world scenario, copy and paste the first test below and let's break it down step by step:
 
-
+<TestAction
+id="multisig-predicate-test-valid-two-of-three"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/tests/harness.rs'
+}}
+/>
 
 <CodeImport
   file="../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs"
@@ -201,7 +237,13 @@ After the evaluation is correctly done, all we need to do is broadcast the trans
 
 The setup for the second test, `multisig_mixed_three_of_three`, follows the same scheme, showcasing that the transaction signing can be done in any order by valid wallets.
 
-
+<TestAction
+id="multisig-predicate-test-valid-3-of-3"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/tests/harness.rs'
+}}
+/>
 
 <CodeImport
   file="../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs"
@@ -214,7 +256,13 @@ The setup for the second test, `multisig_mixed_three_of_three`, follows the same
 
 The same principle applies to the third test, `multisig_not_enough_signatures_fails`, where the transaction will fail if there aren't enough signatures.
 
-
+<TestAction
+id="multisig-predicate-test-insufficient-1-of-3"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/tests/harness.rs'
+}}
+/>
 
 <CodeImport
   file="../../examples/intro-to-predicates/multisig-predicate/tests/harness.rs"
@@ -238,7 +286,13 @@ If you have followed the previous steps correctly, your `harness.rs` test file s
 
 To run the test located in `tests/harness.rs`, use:
 
-
+<TestAction
+id="cargo-test"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/multisig-predicate/predicate/'
+}}
+/>
 
 ```sh
 cargo test

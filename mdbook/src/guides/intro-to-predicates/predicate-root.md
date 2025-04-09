@@ -3,7 +3,13 @@
 
 Let's pause here for a moment and build the predicate at the root of the predicate folder.
 
-
+<TestAction
+id="build-predicate"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/multisig-predicate/predicate'
+}}
+/>
 
 ```sh
 forc build

@@ -14,7 +14,13 @@ If you have followed the steps properly, your predicate `main.sw` should look li
 
 To format your contract, execute the command:
 
-
+<TestAction
+id="format-predicate"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/multisig-predicate/predicate'
+}}
+/>
 
 ```sh
 forc fmt
@@ -22,7 +28,13 @@ forc fmt
 
 To get the predicate root, go to the predicate folder and run:
 
-
+<TestAction
+id="build-predicate"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/multisig-predicate/predicate'
+}}
+/>
 
 ```sh
 forc build

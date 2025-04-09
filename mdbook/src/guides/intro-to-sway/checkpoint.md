@@ -18,7 +18,13 @@ Here's a polished version of your instructions:
 
 To format your contract, execute the command:
 
-
+<TestAction
+id="format-contract"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/sway-store/sway-programs/contract'
+}}
+/>
 
 ```sh
 forc fmt
@@ -26,7 +32,13 @@ forc fmt
 
 To compile your contract, navigate to the contract folder and run:
 
-
+<TestAction
+id="build-contract"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/sway-store/sway-programs/contract'
+}}
+/>
 
 ```sh
 forc build

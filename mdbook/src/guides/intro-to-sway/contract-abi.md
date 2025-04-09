@@ -5,7 +5,13 @@ Next, we will define our ABI. ABI stands for Application Binary Interface. In a 
 
 The ABI for our contract is structured as follows. Write the ABI provided below into your `main.sw` file:
 
-
+<TestAction
+id="sway-abi"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/sway-store/sway-programs/contract/src/main.sw'
+}}
+/>
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"

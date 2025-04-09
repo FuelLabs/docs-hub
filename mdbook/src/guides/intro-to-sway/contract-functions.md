@@ -316,7 +316,13 @@ The final function we'll introduce is `get_count`. This straightforward getter f
 
 The `SwayStore` contract implementation in your `main.sw` should now look like this, following everything else we have previously written:
 
-
+<TestAction
+id="sway-functions"
+action={{
+  name: 'writeToFile',
+  filepath: 'guides-testing/sway-store/sway-programs/contract/src/main.sw'
+}}
+/>
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"

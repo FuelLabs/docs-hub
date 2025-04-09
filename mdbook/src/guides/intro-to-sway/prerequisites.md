@@ -6,7 +6,46 @@
 <TextImport
   file="../installation/index.mdx"
   comment="install_fuelup"
-  commentType=".
+  commentType="{/*"
+/>
+
+<CodeImport
+  file="../installation/index.mdx"
+  comment="install_fuelup_command"
+  commentType="{/*"
+  lang="sh"
+  trim="true"
+/>
+
+<TextImport
+  file="../counter-dapp/building-a-smart-contract.mdx"
+  comment="install_help"
+  commentType="{/*"
+/>
+
+<TextImport
+  file="../installation/index.mdx"
+  comment="install_VSCode_extensions"
+  commentType="{/*"
+/>
+
+### Already have `fuelup` installed?
+
+<TextImport
+  file="../counter-dapp/building-a-smart-contract.mdx"
+  comment="already_installed"
+  commentType="{/*"
+/>
+
+### Fuel Wallet
+
+<TextImport
+  file="../counter-dapp/building-a-frontend.mdx"
+  comment="install_wallet"
+  commentType="{/*"
+/>
+
+Additionally for this guide, ensure you're using Node.js/npm version {props.nodeVersion}.
 You can check your Node.js version with:
 
 ```sh
@@ -17,7 +56,13 @@ node -v
 
 Start with a Fuel template and name it `sway-store`.
 
-
+<TestAction
+id="create-project-folder"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing'
+}}
+/>
 
 ```sh
 pnpm create fuels --pnpm sway-store
@@ -39,7 +84,13 @@ Open up the `contract` folder in VSCode, and inside the `src` folder you should 
 
 Since we're creating a brand new contract you can delete everything in this file except for the `contract` keyword.
 
-
+<TestAction
+id="sway-program-type"
+action={{
+  name: 'writeToFile',
+  filepath: 'guides-testing/sway-store/sway-programs/contract/src/main.sw'
+}}
+/>
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"

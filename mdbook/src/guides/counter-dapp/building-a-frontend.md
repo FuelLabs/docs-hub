@@ -12,13 +12,13 @@ To build a frontend application for the counter contract, we'll do the following
 
 ## Install the Fuel Browser Wallet
 
-
+{/*install_wallet:example:start*/}
 Our frontend application will allow users to connect with a wallet, so you'll need to have a browser wallet installed.
 
 Before going to the next steps, install the [Fuel Wallet](https://chromewebstore.google.com/detail/fuel-wallet/dldjpboieedgcmpkchcjcbijingjcgok) extension.
 
 Once you've setup your wallet, click the "Faucet" button in the wallet to get some testnet tokens.
-
+{/*install_wallet:example:end*/}
 
 ## Initialize a React project
 
@@ -30,7 +30,13 @@ cd ..
 
 Now, initialize a React project with TypeScript using [`Vite`](https://vitejs.dev/).
 
-
+<TestAction
+id="create-vite-project"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project'
+}}
+/>
 
 ```sh
 npm create vite@latest frontend -- --template react-ts
@@ -52,7 +58,13 @@ Done. Now run:
 
 Move into the `frontend` folder and install the dependencies by running:
 
-
+<TestAction
+id="install-basic-deps"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project'
+}}
+/>
 
 ```sh
 cd frontend && npm install
@@ -73,7 +85,13 @@ The `@fuel-wallet` packages include everything you need to interact with user wa
 
 Install the following packages in your `frontend` folder:
 
-
+<TestAction
+id="install-deps"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/frontend'
+}}
+/>
 
 ```sh
 npm install fuels @fuels/react @fuels/connectors @tanstack/react-query
@@ -86,7 +104,13 @@ Use the `contracts` flag to define where your contract folder is located, and th
 
 Run the command below in your frontend folder to generate the config file:
 
-
+<TestAction
+id="fuels_config"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/frontend'
+}}
+/>
 
 ```sh
 npx fuels init --contracts ../counter-contract/ --output ./src/sway-api
@@ -98,7 +122,13 @@ If you see the folder `fuel-project/counter-contract/out` you will be able to se
 
 Inside the `fuel-project/frontend` directory run:
 
-
+<TestAction
+id="typegen"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/fuel-project/frontend'
+}}
+/>
 
 ```sh
 npx fuels build
@@ -123,7 +153,14 @@ Because we'll be using `@fuels/react`, first we need to wrap our app with the `F
 
 Add the imports below to the top of your `frontend/src/main.tsx` file and setup a query client:
 
-
+<TestAction
+id="provider-import"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/main.tsx',
+  atLine: 5,
+}}
+/>
 
 <CodeImport
   file="../../examples/counter-dapp/frontend/src/main.tsx"
@@ -134,7 +171,15 @@ Add the imports below to the top of your `frontend/src/main.tsx` file and setup 
 
 Next, modify your `frontend/src/main.tsx` file to wrap the `App` component with the `FuelProvider` and `QueryClientProvider` components.
 
-
+<TestAction
+id="fuel-wallet-provider"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/main.tsx',
+  atLine: 11,
+  removeLines: [11,12,13,14,15],
+}}
+/>
 
 <CodeImport
   file="../../examples/counter-dapp/frontend/src/main.tsx"
@@ -145,7 +190,13 @@ Next, modify your `frontend/src/main.tsx` file to wrap the `App` component with 
 
 Next, change the file `fuel-project/frontend/src/App.tsx` to:
 
-
+<TestAction
+id="app-code"
+action={{
+  name: 'writeToFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/App.tsx'
+}}
+/>
 
 <CodeImport
   file="../../examples/counter-dapp/frontend/src/App.tsx"
@@ -154,13 +205,28 @@ Next, change the file `fuel-project/frontend/src/App.tsx` to:
 
 Finally, replace the value of the `CONTRACT_ID` variable at the top of your `App.tsx` file with the address of the contract you just deployed.
 
-
+<TestAction
+id="app-contract-id"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/fuel-project/frontend/src/App.tsx',
+  atLine: 13,
+  removeLines: [13],
+  useSetData: '  "0x92073699bd78dac70756a9e0e8bca1c7121c7adc4b90570800f0916fe4ac33dd";'
+}}
+/>
 
 ## Run your project
 
 Inside the `fuel-project/frontend` directory run:
 
-
+<TestAction
+id="start-app"
+action={{
+  name: 'runCommand',
+  preCommand: "pnpm pm2 start 'BROWSER=none <COMMAND>' --name 'react-dapp' --cwd ./guides-testing/fuel-project/frontend"
+}}
+/>
 
 ```sh
 npm run dev
@@ -206,18 +272,114 @@ Once you're ready to redeploy your contract to the testnet, here are the steps y
 
 Get help from the team by posting your question in the [Fuel Forum](https://forum.fuel.network/).
 
+<TestAction
+id="wait-after-start-app"
+action={{
+  name: 'wait',
+  timeout: 20000
+}}
+/>
 
+<TestAction
+id="go-to-frontend"
+action={{
+  name: 'goToUrl',
+  url: "http://localhost:5173"
+}}
+/>
 
+<TestAction
+id="click-connect-button"
+action={{
+  name: 'clickByRole',
+  role: "button",
+  elementName: "Connect"
+}}
+/>
 
+<TestAction
+id="click-fuel-wallet"
+action={{
+  name: 'clickByLabel',
+  label: 'Connect to Fuel Wallet'
+}}
+/>
 
+<TestAction
+id="approve-connect"
+action={{
+  name: 'walletApproveConnect',
+}}
+/>
 
+<TestAction
+id="wait-after-connect"
+action={{
+  name: 'wait',
+  timeout: 5000
+}}
+/>
 
+<TestAction
+id="get-initial-count"
+action={{
+  name: 'getByLocator-save',
+  locator: "h3 ~ div",
+}}
+/>
 
+{/*
+<TestAction
+id="click-increment-button"
+action={{
+  name: 'clickByRole',
+  role: "button",
+  elementName: "Increment"
+}}
+/>
+<TestAction
+id="approve-txn"
+action={{
+  name: 'walletApprove',
+}}
+/>
 
+<TestAction
+id="wait-after-approve"
+action={{
+  name: 'wait',
+  timeout: 15000
+}}
+/>
 
+<TestAction
+id="reload-after-approve"
+action={{
+  name: 'reload',
+}}
+/>
 
+<TestAction
+id="wait-after-reload"
+action={{
+  name: 'wait',
+  timeout: 7000
+}}
+/>
 
+<TestAction
+id="get-final-count"
+action={{
+  name: 'getByLocator-save',
+  locator: "h3 ~ div",
+}}
+/>
 
-
-
-
+<TestAction
+id="check-count"
+action={{
+  name: 'checkIfIsIncremented',
+  initialIndex: 0,
+  finalIndex: 1
+}}
+/> */}
