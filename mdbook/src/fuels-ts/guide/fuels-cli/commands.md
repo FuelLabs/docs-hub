@@ -42,7 +42,7 @@ npx fuels@{{fuels}} init --workspace ./sway-programs --output ./src/sway-program
 
 This will give you a minimal configuration:
 
-<<< @/../../demo-fuels/fuels.config.minimal.ts#config{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../demo-fuels/fuels.config.minimal.ts' -->
 
 In a nutshell:
 
@@ -113,7 +113,7 @@ The `fuels deploy` command does two things:
 
 Use it when instantiating your contracts:
 
-<<< @/../../demo-fuels/src/index.test.ts#using-generated-files{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../demo-fuels/src/index.test.ts' -->
 
 For a complete example, see:
 
@@ -153,7 +153,7 @@ Starts a short-lived `fuel-core` node and requires a `fuels.config.ts` config fi
 
 Generate one with [`fuels init`](#fuels-init):
 
-<<< @/../../demo-fuels/fuels.config.minimal.ts#config{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../demo-fuels/fuels.config.minimal.ts' -->
 
 ## `fuels typegen`
 

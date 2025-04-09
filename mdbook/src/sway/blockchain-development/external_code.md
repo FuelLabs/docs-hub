@@ -12,19 +12,6 @@ Upgradeable contracts are designed to allow the logic of a smart contract to be 
 Consider this example proxy contract:
 
 ```sway
-contract;
-
-use std::execution::run_external;
-
-abi Proxy {
-    #[storage(write)]
-    fn set_target_contract(id: ContractId);
-
-    #[storage(read)]
-    fn double_input(_value: u64) -> u64;
-}
-
-// ANCHOR: proxy
 #[namespace(my_storage_namespace)]
 storage {
     target_contract: Option<ContractId> = None,
@@ -42,7 +29,6 @@ impl Proxy for Contract {
         run_external(target)
     }
 }
-// ANCHOR_END: proxy
 ```
 
 The contract has two functions:
@@ -56,14 +42,6 @@ Notice in the `Proxy` example above, the storage block has a `namespace` attribu
 Below is what an implementation contract could look like for this:
 
 ```sway
-contract;
-
-abi Implementation {
-    #[storage(write)]
-    fn double_input(value: u64) -> u64;
-}
-
-// ANCHOR: target
 storage {
     value: u64 = 0,
     // to stay compatible, this has to stay the same in the next version
@@ -77,7 +55,6 @@ impl Implementation for Contract {
         new_value
     }
 }
-// ANCHOR_END: target
 ```
 
 This contract has one function called `double_input`, which calculates the input value times two, updates the `value` variable in storage, and returns the new value.
@@ -106,67 +83,13 @@ You can access function parameters for fallback functions using the `call_frames
 For example, to access the `_foo` input parameter in the proxy function below, you can use the `called_args` method in the `fallback` function:
 
 ```sway
-contract;
-
-use std::execution::run_external;
-
-configurable {
-    TARGET: ContractId = ContractId::zero(),
-}
-
-abi RunExternalTest {
-    fn double_value(foo: u64) -> u64;
-    fn large_value() -> b256;
-    fn does_not_exist_in_the_target(foo: u64) -> u64;
-}
-impl RunExternalTest for Contract {
-    fn double_value(_foo: u64) -> u64 {
-        __log(1);
+fn does_not_exist_in_the_target(_foo: u64) -> u64 {
         run_external(TARGET)
     }
-
-    fn large_value() -> b256 {
-        run_external(TARGET)
-    }
-
-    // ANCHOR: does_not_exist_in_the_target
-    fn does_not_exist_in_the_target(_foo: u64) -> u64 {
-        run_external(TARGET)
-    }
-    // ANCHOR_END: does_not_exist_in_the_target
-}
 ```
 
 ```sway
-contract;
-
-abi RunExternalTest {
-    fn double_value(foo: u64) -> u64;
-    fn large_value() -> b256;
-}
-
-impl RunExternalTest for Contract {
-    fn double_value(foo: u64) -> u64 {
-        __log(2);
-        foo * 2
-    }
-    fn large_value() -> b256 {
-       0x00000000000000000000000059F2f1fCfE2474fD5F0b9BA1E73ca90b143Eb8d0
-    }
-}
-
-// ANCHOR: fallback
-#[fallback]
-fn fallback() -> u64 {
-    use std::call_frames::*;
-    __log(3);
-    __log(called_method());
-    __log("double_value");
-    __log(called_method() == "double_value");
-    let foo = called_args::<u64>();
-    foo * 3
-}
-// ANCHOR_END: fallback
+{{#include ../../../../test/src/sdk-harness/test_projects/run_external_target/src/main.sw:fallback}}
 ```
 
 In this case, the `does_not_exist_in_the_target` function will return `_foo * 3`.

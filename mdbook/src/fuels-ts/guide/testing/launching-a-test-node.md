@@ -10,7 +10,12 @@ For usage information for `launchTestNode` including it's inputs, outputs and op
 
 We support [explicit resource management](https://www.typescriptlang.org/docs/handbook/variable-declarations.html#using-declarations), introduced in TypeScript 5.2, which automatically calls a `cleanup` function after a variable instantiated with the `using` keyword goes out of block scope:
 
-<<< @./snippets/launching-a-test-node.ts#automatic-cleanup{ts:line-numbers}
+```ts\nusing launched = await launchTestNode();
+
+/*
+ * The method `launched.cleanup()` will be automatically
+ * called when the variable `launched` goes out of block scope.
+ */\n```
 
 ### Configuring Typescript
 
@@ -35,4 +40,11 @@ If you don't want, or can't use [explicit resource management](https://www.types
 
 In this case, remember you must call `.cleanup()` to dispose of the node.
 
-<<< @./snippets/launching-a-test-node.ts#manual-cleanup{ts:line-numbers}
+```ts\nconst launchedTestNode = await launchTestNode();
+
+/*
+  Do your things, run your tests, and then call
+  `launchedTestNode.cleanup()` to dispose of everything.
+*/
+
+launchedTestNode.cleanup();\n```

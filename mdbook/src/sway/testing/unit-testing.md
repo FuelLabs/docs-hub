@@ -119,52 +119,13 @@ fn test_fail() {
 Unit tests can call methods of external contracts if those contracts are added as contract dependencies, i.e. in the [`contract-dependencies`](../forc/manifest_reference.md#the-contract-dependencies-section) section of the manifest file. An example of such calls is shown below:
 
 ```sway
-// ANCHOR: multi_contract_calls 
-contract;
-
-abi CallerContract {
-    fn test_false() -> bool;
-}
-
-impl CallerContract for Contract {
-    fn test_false() -> bool {
-        false
-    }
-}
-
-abi CalleeContract {
-    fn test_true() -> bool;
-}
-
-#[test]
-fn test_multi_contract_calls() {
-    let caller = abi(CallerContract, CONTRACT_ID);
-    let callee = abi(CalleeContract, callee::CONTRACT_ID);
-
-    let should_be_false = caller.test_false();
-    let should_be_true = callee.test_true();
-    assert(!should_be_false);
-    assert(should_be_true);
-}
-// ANCHOR: multi_contract_calls
+<!-- MDBOOK-ANCHOR-ERROR: Anchor 'multi_contract_calls' not found in '../../../../examples/multi_contract_calls/caller/src/main.sw' -->
 ```
 
 Example `Forc.toml` for contract above:
 
 ```toml
-# ANCHOR: multi_contract_call_toml
-[project]
-authors = ["Fuel Labs <contact@fuel.sh>"]
-entry = "main.sw"
-license = "Apache-2.0"
-name = "caller"
-
-[dependencies]
-std = { path = "../../../sway-lib-std/" }
-
-[contract-dependencies]
-callee = { path = "../callee" }
-# ANCHOR: multi_contract_call_toml
+<!-- MDBOOK-ANCHOR-ERROR: Anchor 'multi_contract_call_toml' not found in '../../../../examples/multi_contract_calls/caller/Forc.toml' -->
 ```
 
 ## Running Tests in Parallel or Serially

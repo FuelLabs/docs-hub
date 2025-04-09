@@ -53,83 +53,11 @@ To accomplish this, use the [Ownership Library](https://fuellabs.github.io/sway-
 - The following is an example of how to properly lock a function such that only the owner may call a function:
 
 ```sway
-contract;
-
-// SRC-5 Ownership Standard `State` enum
-pub enum State {
-    Uninitialized: (),
-    Initialized: Identity,
-    Revoked: (),
-}
-
-// SRC-5 Ownership Standard `Ownership` struct
-pub struct Ownership {
-    state: State,
-}
-
-// Skeleton implementation of the Ownership Library.
-// The library can be found here https://github.com/FuelLabs/sway-libs/tree/master/libs/ownership
-impl StorageKey<Ownership> {
-    fn renounce_ownership(self) {}
-    fn set_ownership(self, identity: Identity) {}
-    fn owner(self) -> State {
-        State::Uninitialized
-    }
-    fn only_owner(self) {}
-}
-
-impl Ownership {
-    fn initialized(identity: Identity) -> Self {
-        Self {
-            state: State::Initialized(identity),
-        }
-    }
-}
-
-abi OwnershipExample {
-    #[storage(write)]
-    fn revoke_ownership();
-    #[storage(write)]
-    fn set_owner(identity: Identity);
-    #[storage(read)]
-    fn owner() -> State;
-    #[storage(read)]
-    fn only_owner();
-}
-
-// ANCHOR: set_owner_example_storage
-storage {
-    owner: Ownership = Ownership::initialized(Identity::Address(Address::zero())),
-}
-// ANCHOR_END: set_owner_example_storage
-
-impl OwnershipExample for Contract {
-    // ANCHOR: revoke_owner_example
-    #[storage(write)]
-    fn revoke_ownership() {
-        storage.owner.renounce_ownership();
-    }
-    // ANCHOR_END: revoke_owner_example
-    // ANCHOR: set_owner_example_function
-    #[storage(write)]
-    fn set_owner(identity: Identity) {
-        storage.owner.set_ownership(identity);
-    }
-    // ANCHOR_END: set_owner_example_function
-    // ANCHOR: get_owner_example
-    #[storage(read)]
-    fn owner() -> State {
-        storage.owner.owner()
-    }
-    // ANCHOR_END: get_owner_example
-    // ANCHOR: only_owner_example
-    #[storage(read)]
+#[storage(read)]
     fn only_owner() {
         storage.owner.only_owner();
         // Do stuff here
     }
-    // ANCHOR_END: only_owner_example
-}
 ```
 
 Setting ownership can be done in one of two ways; During compile time or run time.
@@ -137,329 +65,36 @@ Setting ownership can be done in one of two ways; During compile time or run tim
 - The following is an example of how to properly set ownership of a contract during compile time:
 
 ```sway
-contract;
-
-// SRC-5 Ownership Standard `State` enum
-pub enum State {
-    Uninitialized: (),
-    Initialized: Identity,
-    Revoked: (),
-}
-
-// SRC-5 Ownership Standard `Ownership` struct
-pub struct Ownership {
-    state: State,
-}
-
-// Skeleton implementation of the Ownership Library.
-// The library can be found here https://github.com/FuelLabs/sway-libs/tree/master/libs/ownership
-impl StorageKey<Ownership> {
-    fn renounce_ownership(self) {}
-    fn set_ownership(self, identity: Identity) {}
-    fn owner(self) -> State {
-        State::Uninitialized
-    }
-    fn only_owner(self) {}
-}
-
-impl Ownership {
-    fn initialized(identity: Identity) -> Self {
-        Self {
-            state: State::Initialized(identity),
-        }
-    }
-}
-
-abi OwnershipExample {
-    #[storage(write)]
-    fn revoke_ownership();
-    #[storage(write)]
-    fn set_owner(identity: Identity);
-    #[storage(read)]
-    fn owner() -> State;
-    #[storage(read)]
-    fn only_owner();
-}
-
-// ANCHOR: set_owner_example_storage
 storage {
     owner: Ownership = Ownership::initialized(Identity::Address(Address::zero())),
-}
-// ANCHOR_END: set_owner_example_storage
-
-impl OwnershipExample for Contract {
-    // ANCHOR: revoke_owner_example
-    #[storage(write)]
-    fn revoke_ownership() {
-        storage.owner.renounce_ownership();
-    }
-    // ANCHOR_END: revoke_owner_example
-    // ANCHOR: set_owner_example_function
-    #[storage(write)]
-    fn set_owner(identity: Identity) {
-        storage.owner.set_ownership(identity);
-    }
-    // ANCHOR_END: set_owner_example_function
-    // ANCHOR: get_owner_example
-    #[storage(read)]
-    fn owner() -> State {
-        storage.owner.owner()
-    }
-    // ANCHOR_END: get_owner_example
-    // ANCHOR: only_owner_example
-    #[storage(read)]
-    fn only_owner() {
-        storage.owner.only_owner();
-        // Do stuff here
-    }
-    // ANCHOR_END: only_owner_example
 }
 ```
 
 - The following is an example of how to properly set ownership of a contract during run time:
 
 ```sway
-contract;
-
-// SRC-5 Ownership Standard `State` enum
-pub enum State {
-    Uninitialized: (),
-    Initialized: Identity,
-    Revoked: (),
-}
-
-// SRC-5 Ownership Standard `Ownership` struct
-pub struct Ownership {
-    state: State,
-}
-
-// Skeleton implementation of the Ownership Library.
-// The library can be found here https://github.com/FuelLabs/sway-libs/tree/master/libs/ownership
-impl StorageKey<Ownership> {
-    fn renounce_ownership(self) {}
-    fn set_ownership(self, identity: Identity) {}
-    fn owner(self) -> State {
-        State::Uninitialized
-    }
-    fn only_owner(self) {}
-}
-
-impl Ownership {
-    fn initialized(identity: Identity) -> Self {
-        Self {
-            state: State::Initialized(identity),
-        }
-    }
-}
-
-abi OwnershipExample {
-    #[storage(write)]
-    fn revoke_ownership();
-    #[storage(write)]
-    fn set_owner(identity: Identity);
-    #[storage(read)]
-    fn owner() -> State;
-    #[storage(read)]
-    fn only_owner();
-}
-
-// ANCHOR: set_owner_example_storage
-storage {
-    owner: Ownership = Ownership::initialized(Identity::Address(Address::zero())),
-}
-// ANCHOR_END: set_owner_example_storage
-
-impl OwnershipExample for Contract {
-    // ANCHOR: revoke_owner_example
-    #[storage(write)]
-    fn revoke_ownership() {
-        storage.owner.renounce_ownership();
-    }
-    // ANCHOR_END: revoke_owner_example
-    // ANCHOR: set_owner_example_function
-    #[storage(write)]
+#[storage(write)]
     fn set_owner(identity: Identity) {
         storage.owner.set_ownership(identity);
     }
-    // ANCHOR_END: set_owner_example_function
-    // ANCHOR: get_owner_example
-    #[storage(read)]
-    fn owner() -> State {
-        storage.owner.owner()
-    }
-    // ANCHOR_END: get_owner_example
-    // ANCHOR: only_owner_example
-    #[storage(read)]
-    fn only_owner() {
-        storage.owner.only_owner();
-        // Do stuff here
-    }
-    // ANCHOR_END: only_owner_example
-}
 ```
 
 - The following is an example of how to properly revoke ownership of a contract:
 
 ```sway
-contract;
-
-// SRC-5 Ownership Standard `State` enum
-pub enum State {
-    Uninitialized: (),
-    Initialized: Identity,
-    Revoked: (),
-}
-
-// SRC-5 Ownership Standard `Ownership` struct
-pub struct Ownership {
-    state: State,
-}
-
-// Skeleton implementation of the Ownership Library.
-// The library can be found here https://github.com/FuelLabs/sway-libs/tree/master/libs/ownership
-impl StorageKey<Ownership> {
-    fn renounce_ownership(self) {}
-    fn set_ownership(self, identity: Identity) {}
-    fn owner(self) -> State {
-        State::Uninitialized
-    }
-    fn only_owner(self) {}
-}
-
-impl Ownership {
-    fn initialized(identity: Identity) -> Self {
-        Self {
-            state: State::Initialized(identity),
-        }
-    }
-}
-
-abi OwnershipExample {
-    #[storage(write)]
-    fn revoke_ownership();
-    #[storage(write)]
-    fn set_owner(identity: Identity);
-    #[storage(read)]
-    fn owner() -> State;
-    #[storage(read)]
-    fn only_owner();
-}
-
-// ANCHOR: set_owner_example_storage
-storage {
-    owner: Ownership = Ownership::initialized(Identity::Address(Address::zero())),
-}
-// ANCHOR_END: set_owner_example_storage
-
-impl OwnershipExample for Contract {
-    // ANCHOR: revoke_owner_example
-    #[storage(write)]
+#[storage(write)]
     fn revoke_ownership() {
         storage.owner.renounce_ownership();
     }
-    // ANCHOR_END: revoke_owner_example
-    // ANCHOR: set_owner_example_function
-    #[storage(write)]
-    fn set_owner(identity: Identity) {
-        storage.owner.set_ownership(identity);
-    }
-    // ANCHOR_END: set_owner_example_function
-    // ANCHOR: get_owner_example
-    #[storage(read)]
-    fn owner() -> State {
-        storage.owner.owner()
-    }
-    // ANCHOR_END: get_owner_example
-    // ANCHOR: only_owner_example
-    #[storage(read)]
-    fn only_owner() {
-        storage.owner.only_owner();
-        // Do stuff here
-    }
-    // ANCHOR_END: only_owner_example
-}
 ```
 
 - The following is an example of how to properly retrieve the state of ownership:
 
 ```sway
-contract;
-
-// SRC-5 Ownership Standard `State` enum
-pub enum State {
-    Uninitialized: (),
-    Initialized: Identity,
-    Revoked: (),
-}
-
-// SRC-5 Ownership Standard `Ownership` struct
-pub struct Ownership {
-    state: State,
-}
-
-// Skeleton implementation of the Ownership Library.
-// The library can be found here https://github.com/FuelLabs/sway-libs/tree/master/libs/ownership
-impl StorageKey<Ownership> {
-    fn renounce_ownership(self) {}
-    fn set_ownership(self, identity: Identity) {}
-    fn owner(self) -> State {
-        State::Uninitialized
-    }
-    fn only_owner(self) {}
-}
-
-impl Ownership {
-    fn initialized(identity: Identity) -> Self {
-        Self {
-            state: State::Initialized(identity),
-        }
-    }
-}
-
-abi OwnershipExample {
-    #[storage(write)]
-    fn revoke_ownership();
-    #[storage(write)]
-    fn set_owner(identity: Identity);
-    #[storage(read)]
-    fn owner() -> State;
-    #[storage(read)]
-    fn only_owner();
-}
-
-// ANCHOR: set_owner_example_storage
-storage {
-    owner: Ownership = Ownership::initialized(Identity::Address(Address::zero())),
-}
-// ANCHOR_END: set_owner_example_storage
-
-impl OwnershipExample for Contract {
-    // ANCHOR: revoke_owner_example
-    #[storage(write)]
-    fn revoke_ownership() {
-        storage.owner.renounce_ownership();
-    }
-    // ANCHOR_END: revoke_owner_example
-    // ANCHOR: set_owner_example_function
-    #[storage(write)]
-    fn set_owner(identity: Identity) {
-        storage.owner.set_ownership(identity);
-    }
-    // ANCHOR_END: set_owner_example_function
-    // ANCHOR: get_owner_example
-    #[storage(read)]
+#[storage(read)]
     fn owner() -> State {
         storage.owner.owner()
     }
-    // ANCHOR_END: get_owner_example
-    // ANCHOR: only_owner_example
-    #[storage(read)]
-    fn only_owner() {
-        storage.owner.only_owner();
-        // Do stuff here
-    }
-    // ANCHOR_END: only_owner_example
-}
 ```
 
 ## Access Control Libraries

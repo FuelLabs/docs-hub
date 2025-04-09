@@ -13,7 +13,7 @@ When interacting with contracts, you can configure specific parameters for contr
 
 The contract in use in this section has the following implementation:
 
-<<< @/../../docs/sway/return-context/src/main.sw#return-context-contract{rust:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../docs/sway/return-context/src/main.sw' -->
 
 ## Forward Parameter
 
@@ -24,7 +24,19 @@ The `forward` parameter allows the sending of a specific amount of coins to a co
 
 <!-- forward:example:end -->
 
-<<< @./snippets/call-parameters/forward.ts#forward{ts:line-numbers}
+```ts\nconst amountToForward = 10;
+
+const { waitForResult } = await contract.functions
+  .return_context_amount()
+  .callParams({
+    forward: [amountToForward, await provider.getBaseAssetId()],
+  })
+  .call();
+
+const { value } = await waitForResult();
+
+console.log('forwarded amount:', value.toNumber());
+// forwarded amount: 10\n```
 
 ## Gas Limit Parameter
 
@@ -35,7 +47,18 @@ The `gasLimit` refers to the maximum amount of gas that can be consumed specific
 
 <!-- gas_limit:example:end -->
 
-<<< @./snippets/call-parameters/gas-fee.ts#gas-fee{ts:line-numbers}
+```ts\ntry {
+  await contract.functions
+    .return_context_amount()
+    .callParams({
+      forward: [10, await provider.getBaseAssetId()],
+      gasLimit: 1,
+    })
+    .call();
+} catch (e) {
+  console.log('error', e);
+  // error _FuelError: The transaction reverted with reason: "OutOfGas"
+}\n```
 
 ## Call Parameter `gasLimit` vs Transaction Parameter `gasLimit`
 
@@ -47,4 +70,16 @@ If you don't set the `gasLimit` for the call, the transaction `gasLimit` will be
 
 You can set both call parameters and transaction parameters within the same contract function call.
 
-<<< @./snippets/call-parameters/setting-both-parameters.ts#setting-both-parameters{ts:line-numbers}
+```ts\nconst contractCallGasLimit = 4_000;
+const transactionGasLimit = 100_000;
+
+const call = await contract.functions
+  .return_context_amount()
+  .callParams({
+    forward: [10, await provider.getBaseAssetId()],
+    gasLimit: contractCallGasLimit,
+  })
+  .txParams({
+    gasLimit: transactionGasLimit,
+  })
+  .call();\n```

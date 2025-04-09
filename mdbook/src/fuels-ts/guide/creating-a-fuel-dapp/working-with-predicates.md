@@ -16,7 +16,7 @@ The current predicate functionality we have is a simple one that checks if the u
 
 The first step is to modify the predicate contract to accept a configurable pin. We will use the [`configurable`](https://docs.fuel.network/guides/intro-to-predicates/configurables/#configurables) keyword to create an updatable constant to store the pin. We will also modify the main function to check this constant instead of a hardcoded pin.
 
-<<< @/../../docs/sway/configurable-pin/src/main.sw#full{rust:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../docs/sway/configurable-pin/src/main.sw' -->
 
 2. Modifying the Frontend
 
@@ -24,7 +24,7 @@ We will now add new button to the frontend that will update the `pin` in the pre
 
 We will add a function called `changePin`, which will use the current pin in state to update the pin in the predicate as well as transfer 1000 to the predicate.
 
-<<< @/../../create-fuels-counter-guide/src/components/Predicate.tsx#change-pin-react-function{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../create-fuels-counter-guide/src/components/Predicate.tsx' -->
 
 It would also be useful to change the placeholder text.
 

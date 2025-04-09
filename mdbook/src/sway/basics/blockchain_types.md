@@ -72,346 +72,33 @@ The `Identity` type is an enum that allows for the handling of both `Address` an
 An `Identity` is implemented as follows.
 
 ```sway
-//! A wrapper type with two variants, `Address` and `ContractId`.
-//! The use of this type allows for handling interactions with contracts and addresses in a unified manner.
-library;
-
-use ::codec::*;
-use ::assert::assert;
-use ::address::Address;
-use ::alias::SubId;
-use ::asset_id::AssetId;
-use ::contract_id::ContractId;
-use ::hash::{Hash, Hasher};
-use ::option::Option::{self, *};
-use ::ops::*;
-
-/// The `Identity` type: either an `Address` or a `ContractId`.
-// ANCHOR: docs_identity
 pub enum Identity {
     Address: Address,
     ContractId: ContractId,
-}
-// ANCHOR_END: docs_identity
-
-impl PartialEq for Identity {
-    fn eq(self, other: Self) -> bool {
-        match (self, other) {
-            (Identity::Address(addr1), Identity::Address(addr2)) => addr1 == addr2,
-            (Identity::ContractId(id1), Identity::ContractId(id2)) => id1 == id2,
-            _ => false,
-        }
-    }
-}
-impl Eq for Identity {}
-
-impl Identity {
-    /// Returns the `Address` of the `Identity`.
-    ///
-    /// # Returns
-    ///
-    /// * [Option<Address>] - `Some(Address)` if the underlying type is an `Address`, otherwise `None`.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// fn foo() {
-    ///     let identity = Identity::Address(Address::zero());
-    ///     let address = identity.as_address();
-    ///     assert(address == Address::zero());
-    /// }
-    /// ```
-    pub fn as_address(self) -> Option<Address> {
-        match self {
-            Self::Address(addr) => Some(addr),
-            Self::ContractId(_) => None,
-        }
-    }
-
-    /// Returns the `ContractId` of the `Identity`.
-    ///
-    /// # Returns
-    ///
-    /// * [Option<ContractId>] - `Some(Contract)` if the underlying type is an `ContractId`, otherwise `None`.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// fn foo() {
-    ///     let identity = Identity::ContractId(ContractId::zero());
-    ///     let contract_id = identity.as_contract_id();
-    ///     assert(contract_id == ContractId::zero());
-    /// }
-    /// ```
-    pub fn as_contract_id(self) -> Option<ContractId> {
-        match self {
-            Self::Address(_) => None,
-            Self::ContractId(id) => Some(id),
-        }
-    }
-
-    /// Returns whether the `Identity` represents an `Address`.
-    ///
-    /// # Returns
-    ///
-    /// * [bool] - Indicates whether the `Identity` holds an `Address`.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// fn foo() {
-    ///     let identity = Identity::Address(Address::zero());
-    ///     assert(identity.is_address());
-    /// }
-    /// ```
-    pub fn is_address(self) -> bool {
-        match self {
-            Self::Address(_) => true,
-            Self::ContractId(_) => false,
-        }
-    }
-
-    /// Returns whether the `Identity` represents a `ContractId`.
-    ///
-    /// # Returns
-    ///
-    /// * [bool] - Indicates whether the `Identity` holds a `ContractId`.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// fn foo() {
-    ///     let identity = Identity::ContractId(ContractId::zero());
-    ///     assert(identity.is_contract_id());
-    /// }
-    /// ```
-    pub fn is_contract_id(self) -> bool {
-        match self {
-            Self::Address(_) => false,
-            Self::ContractId(_) => true,
-        }
-    }
-
-    /// Returns the underlying raw `b256` data of the identity.
-    ///
-    /// # Returns
-    ///
-    /// * [b256] - The raw data of the identity.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// fn foo() -> {
-    ///     let my_identity = Identity::Address(Address::zero());
-    ///     assert(my_identity.bits() == b256::zero());
-    /// }
-    /// ```
-    pub fn bits(self) -> b256 {
-        match self {
-            Self::Address(address) => address.bits(),
-            Self::ContractId(contract_id) => contract_id.bits(),
-        }
-    }
-}
-
-impl Hash for Identity {
-    fn hash(self, ref mut state: Hasher) {
-        match self {
-            Identity::Address(address) => {
-                0_u8.hash(state);
-                address.hash(state);
-            },
-            Identity::ContractId(id) => {
-                1_u8.hash(state);
-                id.hash(state);
-            },
-        }
-    }
 }
 ```
 
 Casting to an `Identity` must be done explicitly:
 
 ```sway
-contract;
-
-mod r#abi;
-mod errors;
-
-use abi::IdentityExample;
-use errors::MyError;
-
-use std::asset::transfer;
-
-storage {
-    owner: Identity = Identity::ContractId(ContractId::zero()),
-}
-
-impl IdentityExample for Contract {
-    fn cast_to_identity() {
-        // ANCHOR: cast_to_identity
-        let raw_address: b256 = 0xddec0e7e6a9a4a4e3e57d08d080d71a299c628a46bc609aab4627695679421ca;
+let raw_address: b256 = 0xddec0e7e6a9a4a4e3e57d08d080d71a299c628a46bc609aab4627695679421ca;
         let my_identity: Identity = Identity::Address(Address::from(raw_address));
-        // ANCHOR_END: cast_to_identity
-    }
-
-    fn identity_to_contract_id(my_identity: Identity) {
-        // ANCHOR: identity_to_contract_id
-        let my_contract_id: ContractId = match my_identity {
-            Identity::ContractId(identity) => identity,
-            _ => revert(0),
-        };
-        // ANCHOR_END: identity_to_contract_id
-    }
-
-    fn different_executions(my_identity: Identity) {
-        // ANCHOR: different_executions
-        match my_identity {
-            Identity::Address(address) => takes_address(address),
-            Identity::ContractId(contract_id) => takes_contract_id(contract_id),
-        };
-        // ANCHOR_END: different_executions
-    }
-
-    #[storage(read)]
-    fn access_control_with_identity() {
-        // ANCHOR: access_control_with_identity
-        let sender = msg_sender().unwrap();
-        require(
-            sender == storage
-                .owner
-                .read(),
-            MyError::UnauthorizedUser(sender),
-        );
-        // ANCHOR_END: access_control_with_identity
-    }
-}
-
-fn takes_address(address: Address) {}
-
-fn takes_contract_id(contract_id: ContractId) {}
 ```
 
 A `match` statement can be used to return to an `Address` or `ContractId` as well as handle cases in which their execution differs.
 
 ```sway
-contract;
-
-mod r#abi;
-mod errors;
-
-use abi::IdentityExample;
-use errors::MyError;
-
-use std::asset::transfer;
-
-storage {
-    owner: Identity = Identity::ContractId(ContractId::zero()),
-}
-
-impl IdentityExample for Contract {
-    fn cast_to_identity() {
-        // ANCHOR: cast_to_identity
-        let raw_address: b256 = 0xddec0e7e6a9a4a4e3e57d08d080d71a299c628a46bc609aab4627695679421ca;
-        let my_identity: Identity = Identity::Address(Address::from(raw_address));
-        // ANCHOR_END: cast_to_identity
-    }
-
-    fn identity_to_contract_id(my_identity: Identity) {
-        // ANCHOR: identity_to_contract_id
-        let my_contract_id: ContractId = match my_identity {
+let my_contract_id: ContractId = match my_identity {
             Identity::ContractId(identity) => identity,
             _ => revert(0),
         };
-        // ANCHOR_END: identity_to_contract_id
-    }
-
-    fn different_executions(my_identity: Identity) {
-        // ANCHOR: different_executions
-        match my_identity {
-            Identity::Address(address) => takes_address(address),
-            Identity::ContractId(contract_id) => takes_contract_id(contract_id),
-        };
-        // ANCHOR_END: different_executions
-    }
-
-    #[storage(read)]
-    fn access_control_with_identity() {
-        // ANCHOR: access_control_with_identity
-        let sender = msg_sender().unwrap();
-        require(
-            sender == storage
-                .owner
-                .read(),
-            MyError::UnauthorizedUser(sender),
-        );
-        // ANCHOR_END: access_control_with_identity
-    }
-}
-
-fn takes_address(address: Address) {}
-
-fn takes_contract_id(contract_id: ContractId) {}
 ```
 
 ```sway
-contract;
-
-mod r#abi;
-mod errors;
-
-use abi::IdentityExample;
-use errors::MyError;
-
-use std::asset::transfer;
-
-storage {
-    owner: Identity = Identity::ContractId(ContractId::zero()),
-}
-
-impl IdentityExample for Contract {
-    fn cast_to_identity() {
-        // ANCHOR: cast_to_identity
-        let raw_address: b256 = 0xddec0e7e6a9a4a4e3e57d08d080d71a299c628a46bc609aab4627695679421ca;
-        let my_identity: Identity = Identity::Address(Address::from(raw_address));
-        // ANCHOR_END: cast_to_identity
-    }
-
-    fn identity_to_contract_id(my_identity: Identity) {
-        // ANCHOR: identity_to_contract_id
-        let my_contract_id: ContractId = match my_identity {
-            Identity::ContractId(identity) => identity,
-            _ => revert(0),
-        };
-        // ANCHOR_END: identity_to_contract_id
-    }
-
-    fn different_executions(my_identity: Identity) {
-        // ANCHOR: different_executions
-        match my_identity {
+match my_identity {
             Identity::Address(address) => takes_address(address),
             Identity::ContractId(contract_id) => takes_contract_id(contract_id),
         };
-        // ANCHOR_END: different_executions
-    }
-
-    #[storage(read)]
-    fn access_control_with_identity() {
-        // ANCHOR: access_control_with_identity
-        let sender = msg_sender().unwrap();
-        require(
-            sender == storage
-                .owner
-                .read(),
-            MyError::UnauthorizedUser(sender),
-        );
-        // ANCHOR_END: access_control_with_identity
-    }
-}
-
-fn takes_address(address: Address) {}
-
-fn takes_contract_id(contract_id: ContractId) {}
 ```
 <!-- This section should explain the use case for the `Identity` type -->
 <!-- use_identity:example:start -->
@@ -419,61 +106,11 @@ A common use case for `Identity` is for access control. The use of `Identity` un
 <!-- use_identity:example:end -->
 
 ```sway
-contract;
-
-mod r#abi;
-mod errors;
-
-use abi::IdentityExample;
-use errors::MyError;
-
-use std::asset::transfer;
-
-storage {
-    owner: Identity = Identity::ContractId(ContractId::zero()),
-}
-
-impl IdentityExample for Contract {
-    fn cast_to_identity() {
-        // ANCHOR: cast_to_identity
-        let raw_address: b256 = 0xddec0e7e6a9a4a4e3e57d08d080d71a299c628a46bc609aab4627695679421ca;
-        let my_identity: Identity = Identity::Address(Address::from(raw_address));
-        // ANCHOR_END: cast_to_identity
-    }
-
-    fn identity_to_contract_id(my_identity: Identity) {
-        // ANCHOR: identity_to_contract_id
-        let my_contract_id: ContractId = match my_identity {
-            Identity::ContractId(identity) => identity,
-            _ => revert(0),
-        };
-        // ANCHOR_END: identity_to_contract_id
-    }
-
-    fn different_executions(my_identity: Identity) {
-        // ANCHOR: different_executions
-        match my_identity {
-            Identity::Address(address) => takes_address(address),
-            Identity::ContractId(contract_id) => takes_contract_id(contract_id),
-        };
-        // ANCHOR_END: different_executions
-    }
-
-    #[storage(read)]
-    fn access_control_with_identity() {
-        // ANCHOR: access_control_with_identity
-        let sender = msg_sender().unwrap();
+let sender = msg_sender().unwrap();
         require(
             sender == storage
                 .owner
                 .read(),
             MyError::UnauthorizedUser(sender),
         );
-        // ANCHOR_END: access_control_with_identity
-    }
-}
-
-fn takes_address(address: Address) {}
-
-fn takes_contract_id(contract_id: ContractId) {}
 ```

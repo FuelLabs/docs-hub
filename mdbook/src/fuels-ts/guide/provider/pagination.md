@@ -11,7 +11,12 @@ The pagination arguments object is used to specify the range of data you want to
 - `before`: A cursor pointing to a position before which you want to retrieve items.
 - `last`: The number of items to retrieve before the specified cursor. This is used in conjunction with the `before` argument.
 
-<<< @./snippets/pagination.ts#pagination-args{ts:line-numbers}
+```ts\nconst paginationArgsExample: CursorPaginationArgs = {
+  after: 'cursor',
+  first: 10,
+  before: 'cursor',
+  last: 10,
+};\n```
 
 ## Page Info
 
@@ -22,7 +27,12 @@ The `pageInfo` object is included in the GraphQL response for requests that supp
 - `startCursor`: A cursor representing the first item in the current set of results. It should be used as the `before` argument in subsequent queries to fetch the previous set of items.
 - `hasPreviousPage`: A boolean indicating whether there are more items available before the current set.
 
-<<< @./snippets/pagination.ts#pagination-page-info{ts:line-numbers}
+```ts\nconst pageInfoExample: PageInfo = {
+  endCursor: 'cursor',
+  hasNextPage: true,
+  startCursor: 'cursor',
+  hasPreviousPage: true,
+};\n```
 
 ## Using Pagination
 
@@ -36,13 +46,41 @@ One of the methods that supports pagination is the `getCoins` method. This metho
 
 Here is how you can use the `getCoins` method with pagination:
 
-<<< @./snippets/pagination.ts#pagination-next-page{ts:line-numbers}
+```ts\nconst provider = new Provider(LOCAL_NETWORK_URL);
+const baseAssetId = await provider.getBaseAssetId();
+
+let paginationArgs: CursorPaginationArgs = {
+  first: 10, // It will return only the first 10 coins
+};
+
+const { coins, pageInfo } = await provider.getCoins(
+  WALLET_ADDRESS,
+  baseAssetId,
+  paginationArgs
+);
+
+if (pageInfo.hasNextPage) {
+  paginationArgs = {
+    after: pageInfo.endCursor,
+    first: 10,
+  };
+  // The coins array will include the next 10 coins after the last one in the previous array
+  await provider.getCoins(WALLET_ADDRESS, baseAssetId, paginationArgs);
+}\n```
 
 ### Navigating to the Previous Page
 
 You can also use the `paginationArgs` to navigate to the previous page of results:
 
-<<< @./snippets/pagination.ts#pagination-previous-page{ts:line-numbers}
+```ts\nif (pageInfo.hasPreviousPage) {
+  paginationArgs = {
+    before: pageInfo.startCursor,
+    last: 10,
+  };
+
+  // It will includes the previous 10 coins before the first one in the previous array
+  await provider.getCoins(WALLET_ADDRESS, baseAssetId, paginationArgs);
+}\n```
 
 ## Valid Combinations
 
@@ -50,16 +88,23 @@ You can also use the `paginationArgs` to navigate to the previous page of result
 
   Use `after` with `first` to retrieve items following a cursor.
 
-<<< @./snippets/pagination.ts#pagination-forward-pagination{ts}
+```ts\nconst paginationArgsForward: CursorPaginationArgs = {
+  after: 'cursor',
+  first: 10,
+};\n```
 
 - Backward Pagination:
 
   Use `before` with `last` to retrieve items preceding a cursor.
 
-<<< @./snippets/pagination.ts#pagination-backward-pagination{ts}
+```ts\nconst paginationArgsBackwards: CursorPaginationArgs = {
+  before: 'cursor',
+  last: 10,
+};\n```
 
 ## Default Behavior
 
 If neither `assetId` nor `paginationArgs` are provided, the `getCoins` method will default to the base asset ID and return the first 100 items:
 
-<<< @./snippets/pagination.ts#pagination-default-args{ts:line-numbers}
+```ts\n// It will return the first 100 coins for a given wallet
+await provider.getCoins(WALLET_ADDRESS);\n```

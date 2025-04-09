@@ -20,7 +20,12 @@ When you log the `contractId` property of an instantiated Contract using `consol
 
 If you have already an instantiated and deployed contract in hands you can create another contract instance simply by using the `contractId` property and the contract JSON ABI:
 
-<<< @./snippets/managing-deployed-contracts.ts#with-contractId{ts:line-numbers}
+```ts\nconst deployedEchoContract = new Contract(contractId, abi, wallet);
+
+const { value: echoed10 } = await deployedEchoContract.functions
+  .echo_u8(10)
+  .simulate();
+// value 10\n```
 
 The previous example assumes that you have a [`Contract`](DOCS_API_URL/classes/_fuel_ts_program.Contract.html) instance at hand. However, some Fuel tools and Sway use the [`B256`](../types/b256.md) type format, a hex-encoded string-like type, for contract IDs.
 
@@ -28,4 +33,6 @@ You might have this format instead, for example, if you have deployed your contr
 
 The process of instantiating a [`Contract`](DOCS_API_URL/classes/_fuel_ts_program.Contract.html) remains the same when using a contract ID of type `B256`:
 
-<<< @./snippets/managing-deployed-contracts.ts#with-b256{ts:line-numbers}
+```ts\nconst contract = new Contract(b256, abi, wallet);
+
+const { value: echoed50 } = await contract.functions.echo_u8(50).simulate();\n```

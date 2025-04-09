@@ -9,6 +9,10 @@ In the Fuel Network, contracts play a crucial role in facilitating interactions 
 
 For instance, consider a Sway contract with two ABI methods called `echo_str_8(str[8])` and `echo_u8(u8)`. After deploying the contract, you can call the methods as follows:
 
-<<< @./snippets/introduction.ts#method-calls{ts:line-numbers}
+```ts\nconst u8Value = 10;
+const str8Value = 'fuel-sdk';
+
+const res1 = await contract.functions.echo_u8(u8Value).simulate();
+const res2 = await contract.functions.echo_str_8(str8Value).simulate();\n```
 
 The example above demonstrates a simple contract call using default configurations. The following sections will explore how to further configure various parameters for contract calls, allowing for more advanced interactions with your deployed contracts in the Fuel Network.

@@ -20,7 +20,14 @@ If you need a different snapshot, you can specify a `DEFAULT_CHAIN_SNAPSHOT_DIR`
 
 How and where you specify the environment variable depends on your testing tool.
 
-<<< @./snippets/launching-a-test-node.ts#custom-chain-config{ts:line-numbers}
+```ts\nprocess.env.DEFAULT_CHAIN_SNAPSHOT_DIR = mySnapshotDirPath;
+
+const launchedWithCustomChainConfig = await launchTestNode();
+
+const { provider: providerWithCustomChainConfig } =
+  launchedWithCustomChainConfig;
+
+const { name } = await providerWithCustomChainConfig.fetchChain();\n```
 
 ## Fuel-Core Node Options
 
@@ -32,4 +39,11 @@ fuel-core run --help
 
 If you want _all_ your tests to run with the same arguments, consider specifying the `DEFAULT_FUEL_CORE_ARGS` environment variable.
 
-<<< @./snippets/launching-a-test-node.ts#custom-fuel-core-args{ts:line-numbers}
+```ts\nprocess.env.DEFAULT_FUEL_CORE_ARGS = `--tx-max-depth 20`;
+
+// `nodeOptions.args` will override the above values if provided.
+
+const nodeWithCustomArgs = await launchTestNode();
+const { provider: providerWithCustomArgs } = nodeWithCustomArgs;
+
+process.env.DEFAULT_FUEL_CORE_ARGS = '';\n```

@@ -16,7 +16,32 @@ Upon execution, this function returns a promise that resolves to a transaction r
 
 Here is an example of how to use the `transfer` function:
 
-<<< @./snippets/wallet-transferring/between-accounts.ts#transferring-assets-1{ts:line-numbers}
+```ts\nimport { Provider, Wallet } from 'fuels';
+
+import {
+  LOCAL_NETWORK_URL,
+  WALLET_PVT_KEY,
+  WALLET_PVT_KEY_2,
+} from '../../../../env';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+const baseAssetId = await provider.getBaseAssetId();
+
+const sender = Wallet.fromPrivateKey(WALLET_PVT_KEY, provider);
+const destination = Wallet.fromPrivateKey(WALLET_PVT_KEY_2, provider);
+
+const amountToTransfer = 500;
+
+const response = await sender.transfer(
+  destination.address,
+  amountToTransfer,
+  baseAssetId
+);
+
+await response.waitForResult();
+
+// Retrieve balances
+const balance = await destination.getBalance(baseAssetId);\n```
 
 In the previous example, we used the `transfer` method which creates a `ScriptTransactionRequest`, populates its data with the provided transfer information and submits the transaction.
 
@@ -24,17 +49,114 @@ However, there may be times when you need the Transaction ID before actually sub
 
 This method also creates a `ScriptTransactionRequest` and populates it with the provided data but returns the request object prior to submission.
 
-<<< @./snippets/wallet-transferring/create-transfer.ts#transferring-assets-2{ts:line-numbers}
+```ts\nimport { Provider, Wallet } from 'fuels';
+
+import {
+  LOCAL_NETWORK_URL,
+  WALLET_PVT_KEY,
+  WALLET_PVT_KEY_2,
+} from '../../../../env';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+const sender = Wallet.fromPrivateKey(WALLET_PVT_KEY, provider);
+const destination = Wallet.fromPrivateKey(WALLET_PVT_KEY_2, provider);
+
+const amountToTransfer = 200;
+const baseAssetId = await provider.getBaseAssetId();
+
+const transactionRequest = await sender.createTransfer(
+  destination.address,
+  amountToTransfer,
+  baseAssetId
+);
+
+const chainId = await provider.getChainId();
+
+const transactionId = transactionRequest.getTransactionId(chainId);
+
+const response = await sender.sendTransaction(transactionRequest);
+
+// The transaction id is the same one returned by the code above.
+const { id } = await response.wait();\n```
 
 > **Note**: Any changes made to a transaction request will alter the transaction ID. Therefore, you should only get the transaction ID after all modifications have been made.
 
-<<< @./snippets/wallet-transferring/create-transfer-2.ts#transferring-assets-3{ts:line-numbers}
+```ts\nimport { bn, Provider, Wallet } from 'fuels';
+
+import {
+  LOCAL_NETWORK_URL,
+  WALLET_PVT_KEY,
+  WALLET_PVT_KEY_2,
+} from '../../../../env';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+const sender = Wallet.fromPrivateKey(WALLET_PVT_KEY, provider);
+const destination = Wallet.fromPrivateKey(WALLET_PVT_KEY_2, provider);
+
+const amountToTransfer = 200;
+const baseAssetId = await provider.getBaseAssetId();
+
+const transactionRequest = await sender.createTransfer(
+  destination.address,
+  amountToTransfer,
+  baseAssetId
+);
+
+const chainId = await provider.getChainId();
+
+const transactionId = transactionRequest.getTransactionId(chainId);
+
+/**
+ * Modifying any property of the transaction request, except for the number
+ * of witnesses within the ".witnesses" array, will generate a new transaction
+ * hash, resulting in a different transaction ID.
+ */
+transactionRequest.gasLimit = bn(1000);
+
+const response = await sender.sendTransaction(transactionRequest);
+
+// The transaction id here is NOT the same one returned above.
+const { id } = await response.wait();\n```
 
 ## Transferring Assets To Multiple Wallets
 
 To transfer assets to multiple wallets, use the `Account.batchTransfer` method:
 
-<<< @./snippets/transfers/batch-transfer.ts#wallet-transferring-6{ts:line-numbers}
+```ts\nimport type { TransferParams } from 'fuels';
+import { Provider, Wallet } from 'fuels';
+
+import { LOCAL_NETWORK_URL, WALLET_PVT_KEY } from '../../../../env';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+const baseAssetId = await provider.getBaseAssetId();
+
+const sender = Wallet.fromPrivateKey(WALLET_PVT_KEY, provider);
+
+const recipient1 = Wallet.generate({ provider });
+const recipient2 = Wallet.generate({ provider });
+
+const someOtherAssetId =
+  '0x0101010101010101010101010101010101010101010101010101010101010101';
+const transfersToMake: TransferParams[] = [
+  {
+    amount: 100,
+    assetId: baseAssetId,
+    destination: recipient1.address,
+  },
+  {
+    amount: 200,
+    assetId: baseAssetId,
+    destination: recipient2.address,
+  },
+  {
+    amount: 300,
+    assetId: someOtherAssetId,
+    destination: recipient2.address,
+  },
+];
+
+const tx = await sender.batchTransfer(transfersToMake);
+await tx.waitForResult();\n```
 
 ## Transferring Assets To Contracts
 
@@ -46,7 +168,27 @@ If you have the [Contract](../contracts/) instance of the deployed contract, you
 
 Here's an example demonstrating how to use `transferToContract`:
 
-<<< @./snippets/wallet-transferring/transferring-to-contracts.ts#transferring-assets-4{ts:line-numbers}
+```ts\nimport { Provider, Wallet } from 'fuels';
+
+import { LOCAL_NETWORK_URL, WALLET_PVT_KEY } from '../../../../env';
+import { CounterFactory } from '../../../../typegend';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+const sender = Wallet.fromPrivateKey(WALLET_PVT_KEY, provider);
+const deploy = await CounterFactory.deploy(sender);
+const { contract } = await deploy.waitForResult();
+
+const amountToTransfer = 400;
+const assetId = await provider.getBaseAssetId();
+const contractId = contract.id;
+
+const tx = await sender.transferToContract(
+  contractId,
+  amountToTransfer,
+  assetId
+);
+
+await tx.waitForResult();\n```
 
 _Note: Use `transferToContract` exclusively for transfers to a contract. For transfers to an account address, use `transfer` instead._
 
@@ -54,7 +196,44 @@ _Note: Use `transferToContract` exclusively for transfers to a contract. For tra
 
 Similar to the `Account.batchTransfer` method, you can transfer multiple assets to multiple contracts using the `Account.batchTransferToContracts` method. Here's how it works:
 
-<<< @./snippets/wallet-transferring/transferring-to-multiple-contracts.ts#transferring-assets-5{ts:line-numbers}
+```ts\nimport type { ContractTransferParams } from 'fuels';
+import { Provider, Wallet } from 'fuels';
+import { TestAssetId } from 'fuels/test-utils';
+
+import { LOCAL_NETWORK_URL, WALLET_PVT_KEY } from '../../../../env';
+import { CounterFactory, EchoValuesFactory } from '../../../../typegend';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+const sender = Wallet.fromPrivateKey(WALLET_PVT_KEY, provider);
+const baseAssetId = await provider.getBaseAssetId();
+const assetA = TestAssetId.A.value;
+
+const deploy1 = await CounterFactory.deploy(sender);
+const deploy2 = await EchoValuesFactory.deploy(sender);
+
+const { contract: contract1 } = await deploy1.waitForResult();
+const { contract: contract2 } = await deploy2.waitForResult();
+
+const contractTransferParams: ContractTransferParams[] = [
+  {
+    contractId: contract1.id,
+    amount: 999,
+    assetId: baseAssetId,
+  },
+  {
+    contractId: contract1.id,
+    amount: 550,
+    assetId: assetA,
+  },
+  {
+    contractId: contract2.id,
+    amount: 200,
+    assetId: assetA,
+  },
+];
+
+const transfer = await sender.batchTransferToContracts(contractTransferParams);
+await transfer.waitForResult();\n```
 
 Always remember to call the `waitForResult()` function on the transaction response. That ensures the transaction has been mined successfully before proceeding.
 

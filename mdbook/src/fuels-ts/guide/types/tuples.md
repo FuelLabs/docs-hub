@@ -4,7 +4,9 @@ In Sway, Tuples are fixed-length collections of heterogeneous elements. Tuples c
 
 In TypeScript, you can represent Sway tuples using arrays with specified types for each element:
 
-<<< @./snippets/tuples.ts#tuples-1{ts:line-numbers}
+```ts\n// Sway let tuple2: (u8, bool, u64) = (100, false, 10000);
+// #region tuples-3
+const tuple: [number, boolean, number] = [100, false, 10000];\n```
 
 In this example, the Typescript `tuple` variable contains three elements of different types: a number, a boolean, and another number.
 
@@ -12,11 +14,17 @@ In this example, the Typescript `tuple` variable contains three elements of diff
 
 Let's consider a contract function that accepts a tuple as a parameter and returns the same Tuple:
 
-<<< @/../../docs/sway/echo-values/src/main.sw#tuples-2{rust:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../docs/sway/echo-values/src/main.sw' -->
 
 To execute and validate the contract function using the SDK, follow these steps:
 
-<<< @./snippets/tuples.ts#tuples-3{ts:line-numbers}
+```ts\nconst tuple: [number, boolean, number] = [100, false, 10000];
+// #endregion tuples-1
+
+const { value } = await contract.functions.echo_tuple(tuple).simulate();
+
+console.log('value', value);
+// [100, false, <BN 0x2710>]\n```
 
 In this example, we create a Tuple with three elements, call the `echo_tuple` contract function, and expect the returned tuple to match the original one. Note that we convert the third element of the returned tuple to a number using `new BN(value[2]).toNumber()`.
 

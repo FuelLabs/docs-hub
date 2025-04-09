@@ -162,13 +162,13 @@ There are two steps when adding a new function to a Sway program. The first step
 
 Towards the top of the file, you will find the ABI section for the contract. Let's add a new function to it:
 
-<<< @/../../create-fuels-counter-guide/sway-programs/contract/src/main.sw#create-fuels-counter-guide-abi{rust:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../create-fuels-counter-guide/sway-programs/contract/src/main.sw' -->
 
 The second step is to implement the function.
 
 We will add the implementation of the `decrement_counter` function right below the `increment_counter` function.
 
-<<< @/../../create-fuels-counter-guide/sway-programs/contract/src/main.sw#create-fuels-counter-guide-impl{rust:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../create-fuels-counter-guide/sway-programs/contract/src/main.sw' -->
 
 ### 2. Modifying the Frontend
 
@@ -176,7 +176,7 @@ We will now add a new button to the frontend that will call the `decrement_count
 
 First, we will add a function called `decrementCounter` similar to the `incrementCounter` function:
 
-<<< @/../../create-fuels-counter-guide/src/components/Contract.tsx#create-fuels-counter-guide-on-decrement-react-function{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../create-fuels-counter-guide/src/components/Contract.tsx' -->
 
 Second, we will add a new button to the UI that will call the `decrementCounter` function when clicked:
 
@@ -204,7 +204,7 @@ We write our test in the `#[test]` macro within our Sway contract, these can be 
 
 For the guide, we'll add a test for our new `decrement_counter` function in the `./sway-programs/contract/src/main.sw` file:
 
-<<< @/../../create-fuels-counter-guide/sway-programs/contract/src/main.sw#create-fuels-counter-guide-sway-contract-test{rust:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../create-fuels-counter-guide/sway-programs/contract/src/main.sw' -->
 
 After writing our test, we can run either using `forc test` or via PNPM using `pnpm test:forc`.
 
@@ -214,11 +214,60 @@ Testing the integration with your smart contract isn't essential, but it's good 
 
 We've provided some examples for each program type in the `./test` directory of your project. But let's also add a test for our new `decrement_counter` function in the `./test/contract.test.ts` file:
 
-<<< @./snippets/decrement-counter.ts#full{ts:line-numbers}
+```ts\nimport { Wallet, Provider } from 'fuels';
+
+import { LOCAL_NETWORK_URL, WALLET_PVT_KEY } from '../../../env';
+import { CounterFactory } from '../../../typegend/contracts';
+
+// Let's create our provider from the network URL.
+const provider = new Provider(LOCAL_NETWORK_URL);
+// Let's create our wallet from the private key.
+const wallet = Wallet.fromPrivateKey(WALLET_PVT_KEY, provider);
+
+// Then we can deploy the contract.
+const { waitForResult } = await CounterFactory.deploy(wallet);
+const { contract } = await waitForResult();
+
+// Lets setup some values to use in our example.
+const initialCount = 0;
+const incrementedValue = 5;
+const decrementedValue = 2;
+
+// We can now call the contract functions and test the results. Lets assert the initial value of the counter.
+const { waitForResult: getCountWaitForResult } = await contract.functions
+  .get_count()
+  .call();
+const { value: initialGetCountValue } = await getCountWaitForResult();
+
+console.log('Initial value', initialGetCountValue);
+
+// Next we'll increment the counter, so that we can decrement it.
+const { waitForResult: incWaitForResult } = await contract.functions
+  .increment_count(5)
+  .call();
+const { value: incValue } = await incWaitForResult();
+
+console.log('Incremented value', incValue);
+
+// Next, we'll decrement the counter by 3 and assert the new value.
+const { waitForResult: decWaitForResult } = await contract.functions
+  .decrement_count(3)
+  .call();
+const { value: decValue } = await decWaitForResult();
+
+console.log('Decremented value', decValue);
+
+// Finally, we'll test the get count function again to ensure parity.
+const { waitForResult: finalWaitForResult } = await contract.functions
+  .get_count()
+  .call();
+const { value: finalValue } = await finalWaitForResult();
+
+console.log('Final value', finalValue);\n```
 
 The template also comes with a UI testing setup using [Playwright](https://playwright.dev/). We can add a test for our new `decrement_counter` function in the `./test/ui/ui.test.ts` file:
 
-<<< @/../../create-fuels-counter-guide/test/ui/ui.test.ts#decrement-counter-ui-test{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../create-fuels-counter-guide/test/ui/ui.test.ts' -->
 
 ## Next Steps
 

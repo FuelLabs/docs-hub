@@ -8,7 +8,11 @@ Internally the transactions and other time/date assets are encoded using the [`T
 
 We have a host of static method for **instantiation** of our `DateTime` class.
 
-<<< @./snippets/date-conversion/instantiation.ts#create-from-multiple-sources{ts:line-numbers}
+```ts\nimport { DateTime } from 'fuels';
+
+const tai64: DateTime = DateTime.fromTai64('4611686020108779339');
+const unixSeconds: DateTime = DateTime.fromUnixSeconds(1681391398);
+const unixMilliseconds: DateTime = DateTime.fromUnixMilliseconds(1681391398000);\n```
 
 ### TAI64
 
@@ -16,7 +20,12 @@ We have a host of static method for **instantiation** of our `DateTime` class.
 
 `toTai64` is an _instance_ method, that allows the conversion of a `DateTime` class to a `TAI64` string.
 
-<<< @./snippets/date-conversion/tai64.ts#from-tai-64-and-to-tai-64{ts:line-numbers}
+```ts\nimport { DateTime } from 'fuels';
+
+const date: DateTime = DateTime.fromTai64('4611686020108779339');
+
+const tai64: string = date.toTai64();
+// "4611686020108779339"\n```
 
 ### UNIX
 
@@ -24,19 +33,39 @@ We have a host of static method for **instantiation** of our `DateTime` class.
 
 `toUnixMilliseconds` is an _instance_ method, that allows the conversion of a `DateTime` class to a `UNIX` number in milliseconds.
 
-<<< @./snippets/date-conversion/unix-milliseconds.ts#from-unix-milliseconds-and-to-unix-milliseconds{ts:line-numbers}
+```ts\nimport { DateTime } from 'fuels';
+
+const date: DateTime = DateTime.fromUnixMilliseconds(1681391398000);
+
+const unixMilliseconds: number = date.toUnixMilliseconds();
+// 1681391398000\n```
 
 `fromUnixSeconds` is a _static_ method, that allows the creation of `DateTime` class from a UNIX Seconds number.
 
 `toUnixSeconds` is an _instance_ method, that allows the conversion of a `DateTime` class to a `UNIX` number in seconds.
 
-<<< @./snippets/date-conversion/unix-seconds.ts#from-unix-seconds-and-to-unix-seconds{ts:line-numbers}
+```ts\nimport { DateTime } from 'fuels';
+
+const date: DateTime = DateTime.fromUnixSeconds(1681391398);
+
+const unixSeconds: number = date.toUnixSeconds();
+// 1681391398\n```
 
 ### Date
 
 The `DateTime` class extends the functionality of the `Date` object, so all method are available for your usages.
 
-<<< @./snippets/date-conversion/date-object.ts#date-object-methods{ts:line-numbers}
+```ts\nimport { DateTime } from 'fuels';
+
+const dateTime: DateTime = DateTime.fromUnixMilliseconds(1681391398000);
+
+// Extends the Date object
+const date: Date = dateTime;
+
+// Date object methods
+date.getTime(); // 1681391398000
+date.toISOString(); // 2023-04-13T13:09:58.000Z
+date.toDateString(); // Thu Apr 13 2023\n```
 
 ## Formats
 

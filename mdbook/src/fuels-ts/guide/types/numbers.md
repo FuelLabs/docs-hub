@@ -16,11 +16,25 @@ This guide explains how to create and interact with Sway numbers while using the
 
 When you pass in a `u64` or a `u256` to a Sway program from JavaScript, you must first convert it to a `BigNum` object. This is because these types can have extremely large maximum values (`2^64` and `2^256` respectively), and JavaScript's `Number` type can only hold up to 53 bits of precision (`2^53`).
 
-<<< @./snippets/numbers/for-u64-and-u256-1.ts#snippet-1{ts:line-numbers}
+```ts\nimport { bn } from 'fuels';
+
+const number: number | string = 20;
+
+const bigNumber = bn(number);
+
+console.log('equals', bigNumber.eqn(number));
+// true\n```
 
 You can also create a `BigNum` from a string. This is useful when you want to pass in a number that is too large to be represented as a JavaScript number. Here's how you can do that:
 
-<<< @./snippets/numbers/for-u64-and-u256-2.ts#snippet-1{ts:line-numbers}
+```ts\nimport { bn } from 'fuels';
+
+const strNumber = '9007199254740992';
+
+const bigNumber = bn(strNumber);
+
+console.log('equals', bigNumber.toString() === strNumber);
+// true\n```
 
 ### For `u8`, `u16`, and `u32`
 
@@ -30,14 +44,34 @@ You don't need to do anything special to create these numbers. You can pass in a
 
 ### For `u64` and `u256`
 
-<<< @./snippets/numbers/for-u64-and-u256-3.ts#snippet-1{ts:line-numbers}
+```ts\nconst bigNumber = bn('10000000000000000000');
+
+const { value } = await contract.functions.echo_u64(bigNumber).get();
+
+console.log('value', value.toString());
+// '10000000000000000000'\n```
 
 > Note: If a contract call returns a number that is too large to be represented as a JavaScript number, you can convert it to a string using the `.toString()` method instead of `.toNumber()`.
 
 ### For `u8`, `u16`, and `u32`
 
-<<< @./snippets/numbers/for-u8-u16-and-u32-1.ts#snippet-1{ts:line-numbers}
+```ts\nconst number = 200;
+
+const { value } = await contract.functions.echo_u8(number).get();
+
+console.log('value', Number(value));
+// 200\n```
 
 ### Using a `BigNum` from `ethers` with `fuels`
 
-<<< @./snippets/numbers/for-u8-u16-and-u32-2.ts#snippet-1{ts:line-numbers}
+```ts\nimport { toBigInt } from 'ethers';
+import { bn } from 'fuels';
+
+const number = 20;
+
+const ethersBigNum = toBigInt(number);
+
+const fuelsBigNum = bn(ethersBigNum.toString());
+
+console.log('value', fuelsBigNum.toNumber());
+// 20\n```

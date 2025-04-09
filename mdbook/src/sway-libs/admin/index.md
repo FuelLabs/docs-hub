@@ -13,53 +13,7 @@ In order to use the Admin Library, Sway Libs must be added to the `Forc.toml` fi
 To import the Admin Library, be sure to include both the Admin and Ownership Libraries in your import statements.
 
 ```sway
-library;
-
-mod owner_integration;
-
-// ANCHOR: import
 use sway_libs::{admin::*, ownership::*};
-// ANCHOR_END: import
-
-// ANCHOR: add_admin
-#[storage(read, write)]
-fn add_a_admin(new_admin: Identity) {
-    // Can only be called by contract's owner.
-    add_admin(new_admin);
-}
-// ANCHOR_END: add_admin
-
-// ANCHOR: remove_admin
-#[storage(read, write)]
-fn remove_an_admin(old_admin: Identity) {
-    // Can only be called by contract's owner.
-    revoke_admin(old_admin);
-}
-// ANCHOR_END: remove_admin
-
-// ANCHOR: only_admin
-#[storage(read)]
-fn only_owner_may_call() {
-    only_admin();
-    // Only an admin may reach this line.
-}
-// ANCHOR_END: only_admin
-
-// ANCHOR: both_admin
-#[storage(read)]
-fn both_owner_or_admin_may_call() {
-    only_owner_or_admin();
-    // Only an admin may reach this line.
-}
-// ANCHOR_END: both_admin
-
-// ANCHOR: check_admin
-#[storage(read)]
-fn check_if_admin(admin: Identity) {
-    let status = is_admin(admin);
-    assert(status);
-}
-// ANCHOR_END: check_admin
 ```
 
 ## Integrating the Admin Library into the Ownership Library
@@ -67,9 +21,6 @@ fn check_if_admin(admin: Identity) {
 To use the Admin library, be sure to set a contract owner for your contract. The following demonstrates setting a contract owner using the [Ownership Library](../ownership/).
 
 ```sway
-library;
-
-// ANCHOR: ownership_integration
 use sway_libs::{admin::add_admin, ownership::initialize_ownership};
 
 #[storage(read, write)]
@@ -82,7 +33,6 @@ fn add_a_admin(new_admin: Identity) {
     // Can only be called by contract's owner set in the constructor above.
     add_admin(new_admin);
 }
-// ANCHOR_END: ownership_integration
 ```
 
 ## Basic Functionality
@@ -92,53 +42,11 @@ fn add_a_admin(new_admin: Identity) {
 To add a new admin to a contract, call the `add_admin()` function.
 
 ```sway
-library;
-
-mod owner_integration;
-
-// ANCHOR: import
-use sway_libs::{admin::*, ownership::*};
-// ANCHOR_END: import
-
-// ANCHOR: add_admin
 #[storage(read, write)]
 fn add_a_admin(new_admin: Identity) {
     // Can only be called by contract's owner.
     add_admin(new_admin);
 }
-// ANCHOR_END: add_admin
-
-// ANCHOR: remove_admin
-#[storage(read, write)]
-fn remove_an_admin(old_admin: Identity) {
-    // Can only be called by contract's owner.
-    revoke_admin(old_admin);
-}
-// ANCHOR_END: remove_admin
-
-// ANCHOR: only_admin
-#[storage(read)]
-fn only_owner_may_call() {
-    only_admin();
-    // Only an admin may reach this line.
-}
-// ANCHOR_END: only_admin
-
-// ANCHOR: both_admin
-#[storage(read)]
-fn both_owner_or_admin_may_call() {
-    only_owner_or_admin();
-    // Only an admin may reach this line.
-}
-// ANCHOR_END: both_admin
-
-// ANCHOR: check_admin
-#[storage(read)]
-fn check_if_admin(admin: Identity) {
-    let status = is_admin(admin);
-    assert(status);
-}
-// ANCHOR_END: check_admin
 ```
 
 > **NOTE** Only the contract's owner may call this function. Please see the example above to set a contract owner.
@@ -148,53 +56,11 @@ fn check_if_admin(admin: Identity) {
 To remove an admin from a contract, call the `revoke_admin()` function.
 
 ```sway
-library;
-
-mod owner_integration;
-
-// ANCHOR: import
-use sway_libs::{admin::*, ownership::*};
-// ANCHOR_END: import
-
-// ANCHOR: add_admin
-#[storage(read, write)]
-fn add_a_admin(new_admin: Identity) {
-    // Can only be called by contract's owner.
-    add_admin(new_admin);
-}
-// ANCHOR_END: add_admin
-
-// ANCHOR: remove_admin
 #[storage(read, write)]
 fn remove_an_admin(old_admin: Identity) {
     // Can only be called by contract's owner.
     revoke_admin(old_admin);
 }
-// ANCHOR_END: remove_admin
-
-// ANCHOR: only_admin
-#[storage(read)]
-fn only_owner_may_call() {
-    only_admin();
-    // Only an admin may reach this line.
-}
-// ANCHOR_END: only_admin
-
-// ANCHOR: both_admin
-#[storage(read)]
-fn both_owner_or_admin_may_call() {
-    only_owner_or_admin();
-    // Only an admin may reach this line.
-}
-// ANCHOR_END: both_admin
-
-// ANCHOR: check_admin
-#[storage(read)]
-fn check_if_admin(admin: Identity) {
-    let status = is_admin(admin);
-    assert(status);
-}
-// ANCHOR_END: check_admin
 ```
 
 > **NOTE** Only the contract's owner may call this function. Please see the example above to set a contract owner.
@@ -204,53 +70,11 @@ fn check_if_admin(admin: Identity) {
 To restrict a function to only an admin, call the `only_admin()` function.
 
 ```sway
-library;
-
-mod owner_integration;
-
-// ANCHOR: import
-use sway_libs::{admin::*, ownership::*};
-// ANCHOR_END: import
-
-// ANCHOR: add_admin
-#[storage(read, write)]
-fn add_a_admin(new_admin: Identity) {
-    // Can only be called by contract's owner.
-    add_admin(new_admin);
-}
-// ANCHOR_END: add_admin
-
-// ANCHOR: remove_admin
-#[storage(read, write)]
-fn remove_an_admin(old_admin: Identity) {
-    // Can only be called by contract's owner.
-    revoke_admin(old_admin);
-}
-// ANCHOR_END: remove_admin
-
-// ANCHOR: only_admin
 #[storage(read)]
 fn only_owner_may_call() {
     only_admin();
     // Only an admin may reach this line.
 }
-// ANCHOR_END: only_admin
-
-// ANCHOR: both_admin
-#[storage(read)]
-fn both_owner_or_admin_may_call() {
-    only_owner_or_admin();
-    // Only an admin may reach this line.
-}
-// ANCHOR_END: both_admin
-
-// ANCHOR: check_admin
-#[storage(read)]
-fn check_if_admin(admin: Identity) {
-    let status = is_admin(admin);
-    assert(status);
-}
-// ANCHOR_END: check_admin
 ```
 
 > **NOTE:** Admins and the contract's owner are independent of one another. `only_admin()` will revert if called by the contract's owner.
@@ -258,53 +82,11 @@ fn check_if_admin(admin: Identity) {
 To restrict a function to only an admin or the contract's owner, call the `only_owner_or_admin()` function.
 
 ```sway
-library;
-
-mod owner_integration;
-
-// ANCHOR: import
-use sway_libs::{admin::*, ownership::*};
-// ANCHOR_END: import
-
-// ANCHOR: add_admin
-#[storage(read, write)]
-fn add_a_admin(new_admin: Identity) {
-    // Can only be called by contract's owner.
-    add_admin(new_admin);
-}
-// ANCHOR_END: add_admin
-
-// ANCHOR: remove_admin
-#[storage(read, write)]
-fn remove_an_admin(old_admin: Identity) {
-    // Can only be called by contract's owner.
-    revoke_admin(old_admin);
-}
-// ANCHOR_END: remove_admin
-
-// ANCHOR: only_admin
-#[storage(read)]
-fn only_owner_may_call() {
-    only_admin();
-    // Only an admin may reach this line.
-}
-// ANCHOR_END: only_admin
-
-// ANCHOR: both_admin
 #[storage(read)]
 fn both_owner_or_admin_may_call() {
     only_owner_or_admin();
     // Only an admin may reach this line.
 }
-// ANCHOR_END: both_admin
-
-// ANCHOR: check_admin
-#[storage(read)]
-fn check_if_admin(admin: Identity) {
-    let status = is_admin(admin);
-    assert(status);
-}
-// ANCHOR_END: check_admin
 ```
 
 ### Checking Admin Status
@@ -312,51 +94,9 @@ fn check_if_admin(admin: Identity) {
 To check the administrative privileges of a user, call the `is_admin()` function.
 
 ```sway
-library;
-
-mod owner_integration;
-
-// ANCHOR: import
-use sway_libs::{admin::*, ownership::*};
-// ANCHOR_END: import
-
-// ANCHOR: add_admin
-#[storage(read, write)]
-fn add_a_admin(new_admin: Identity) {
-    // Can only be called by contract's owner.
-    add_admin(new_admin);
-}
-// ANCHOR_END: add_admin
-
-// ANCHOR: remove_admin
-#[storage(read, write)]
-fn remove_an_admin(old_admin: Identity) {
-    // Can only be called by contract's owner.
-    revoke_admin(old_admin);
-}
-// ANCHOR_END: remove_admin
-
-// ANCHOR: only_admin
-#[storage(read)]
-fn only_owner_may_call() {
-    only_admin();
-    // Only an admin may reach this line.
-}
-// ANCHOR_END: only_admin
-
-// ANCHOR: both_admin
-#[storage(read)]
-fn both_owner_or_admin_may_call() {
-    only_owner_or_admin();
-    // Only an admin may reach this line.
-}
-// ANCHOR_END: both_admin
-
-// ANCHOR: check_admin
 #[storage(read)]
 fn check_if_admin(admin: Identity) {
     let status = is_admin(admin);
     assert(status);
 }
-// ANCHOR_END: check_admin
 ```

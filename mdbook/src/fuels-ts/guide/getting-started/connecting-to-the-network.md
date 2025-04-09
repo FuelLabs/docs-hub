@@ -2,7 +2,19 @@
 
 After [installing](./installation.md) the `fuels` package, it's easy to connect to the Network:
 
-<<< @./snippets/connecting-to-the-network.ts#main{ts:line-numbers}
+```ts\nimport { Provider } from 'fuels';
+
+const NETWORK_URL = 'https://mainnet.fuel.network/v1/graphql';
+
+const provider = new Provider(NETWORK_URL);
+
+const baseAssetId = await provider.getBaseAssetId();
+const chainId = await provider.getChainId();
+const gasConfig = await provider.getGasConfig();
+
+console.log('chainId', chainId);
+console.log('baseAssetId', baseAssetId);
+console.log('gasConfig', gasConfig);\n```
 
 # RPC URLs
 

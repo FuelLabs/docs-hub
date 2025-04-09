@@ -16,8 +16,16 @@ Here's how you can create wallets with both mnemonic phrases and derivation path
 
 1 - Using the default derivation path `m/44'/60'/0'/0/0`
 
-<<< @./snippets/mnemonic/from-mnemonic-phrases-1.ts#snippet-full{ts:line-numbers}
+```ts\nconst mnemonic =
+  'oblige salon price punch saddle immune slogan rare snap desert retire surprise';
+
+const wallet = Wallet.fromMnemonic(mnemonic);\n```
 
 2 - Using a Custom Derivation Path
 
-<<< @./snippets/mnemonic/from-mnemonic-phrases-2.ts#snippet-full{ts:line-numbers}
+```ts\nconst mnemonic =
+  'oblige salon price punch saddle immune slogan rare snap desert retire surprise';
+
+const path = "m/44'/60'/1'/0/0";
+
+const wallet = Wallet.fromMnemonic(mnemonic, path);\n```

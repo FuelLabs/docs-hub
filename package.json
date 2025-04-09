@@ -6,6 +6,7 @@
     "build": "next build",
     "build:ci": "run-s docs:sync docs:clean generate:* patch:wallet build",
     "build:content": "contentlayer build",
+    "build:mdbook": "cd mdbook && mdbook build | cat",
     "check": "run-s lint",
     "check:prod": "run-s lint:prod",
     "copy:icons": "cp -r ./node_modules/@fuel-ui/icons/dist/icons/sprite.svg ./public/icons",

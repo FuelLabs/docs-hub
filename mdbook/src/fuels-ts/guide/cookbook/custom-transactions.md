@@ -4,14 +4,14 @@ There may be scenarios where you need to build out transactions that involve mul
 
 Consider the following script that transfers multiple assets to a contract:
 
-<<< @/../../docs/sway/script-transfer-to-contract/src/main.sw#custom-transactions-1{rust:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../docs/sway/script-transfer-to-contract/src/main.sw' -->
 
 This script can be executed by creating a [`ScriptTransactionRequest`](DOCS_API_URL/classes/_fuel_ts_account.ScriptTransactionRequest.html), appending the resource and contract inputs/outputs and then sending the transaction, as follows:
 
-<<< @/../../docs/src/guide/scripts/snippets/script-custom-transaction.ts#custom-transactions-2{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../docs/src/guide/scripts/snippets/script-custom-transaction.ts' -->
 
 ## Full Example
 
 For a full example, see below:
 
-<<< @/../../docs/src/guide/scripts/snippets/script-custom-transaction.ts#full{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../docs/src/guide/scripts/snippets/script-custom-transaction.ts' -->

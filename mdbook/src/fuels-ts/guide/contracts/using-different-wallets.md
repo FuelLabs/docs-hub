@@ -6,7 +6,20 @@ This guide demonstrates how to make contract calls using different wallets and p
 
 To change the wallet associated with a contract instance, assign a new wallet to the instance's `account` property. This allows you to make contract calls with different wallets in a concise manner:
 
-<<< @./snippets/utilities/using-different-wallet.ts#using-different-wallet{ts:line-numbers}
+```ts\nimport { Provider, Wallet } from 'fuels';
+
+import { LOCAL_NETWORK_URL, WALLET_PVT_KEY } from '../../../../env';
+import { ReturnContextFactory } from '../../../../typegend';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+const deployer = Wallet.fromPrivateKey(WALLET_PVT_KEY, provider);
+
+const deployContract = await ReturnContextFactory.deploy(deployer);
+const { contract } = await deployContract.waitForResult();
+
+// Update the wallet
+const newWallet = Wallet.generate({ provider });
+contract.account = newWallet;\n```
 
 ## Changing Providers
 

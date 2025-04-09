@@ -6,7 +6,21 @@ Signing messages with a wallet is a fundamental security practice in a blockchai
 
 Here's how to use the `wallet.signMessage` method to sign messages (as string):
 
-<<< @./snippets/signing/sign-message.ts#signing-1{ts:line-numbers}
+```ts\nimport { hashMessage, Signer, WalletUnlocked } from 'fuels';
+
+const wallet = WalletUnlocked.generate();
+
+const message: string = 'my-message';
+const signedMessage = await wallet.signMessage(message);
+// Example output: 0x277e1461cbb2e6a3250fa8c490221595efb3f4d66d43a4618d1013ca61ca56ba
+
+const hashedMessage = hashMessage(message);
+// Example output: 0x40436501b686546b7c660bb18791ac2ae35e77fbe2ac977fc061922b9ec83766
+
+const recoveredAddress = Signer.recoverAddress(hashedMessage, signedMessage);
+// Example output: Address {
+//   b256Address: '0x6d309766c0f1c6f103d147b287fabecaedd31beb180d45cf1bf7d88397aecc6f'
+// }\n```
 
 The `signMessage` method internally:
 
@@ -24,7 +38,12 @@ The `recoverAddress` method from the `Signer` class will take the hashed message
 
 We can also sign arbitrary data, not just strings. This is possible by passing an object containing the `personalSign` property to the `hashMessage` and `signMessage` methods:
 
-<<< @./snippets/signing/sign-personal-message.ts#signing-personal-message{ts:line-numbers}
+```ts\nconst message: string | Uint8Array = Uint8Array.from([0x01, 0x02, 0x03]);
+const signedMessage = await wallet.signMessage({ personalSign: message });
+// Example output: 0x0ca4ca2a01003d076b4044e38a7ca2443640d5fb493c37e28c582e4f2b47ada7
+
+const hashedMessage = hashMessage({ personalSign: message });
+// Example output: 0x862e2d2c46b1b52fd65538c71f7ef209ee32f4647f939283b3dd2434cc5320c5\n```
 
 The primary difference between this [personal message signing](#signing-personal-message) and [message signing](#signing-messages) is the underlying hashing format.
 
@@ -48,10 +67,60 @@ Signing a transaction involves using your wallet to sign the transaction ID (als
 
 The following code snippet exemplifies how a Transaction can be signed:
 
-<<< @./snippets/signing/sign-transaction.ts#signing-2{ts:line-numbers}
+```ts\nimport {
+  Address,
+  Provider,
+  ScriptTransactionRequest,
+  Signer,
+  Wallet,
+} from 'fuels';
+
+import { LOCAL_NETWORK_URL, WALLET_PVT_KEY } from '../../../../env';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+const sender = Wallet.fromPrivateKey(WALLET_PVT_KEY, provider);
+const receiverAddress = Address.fromRandom();
+
+const request = new ScriptTransactionRequest({
+  gasLimit: 10000,
+});
+
+request.addCoinOutput(receiverAddress, 1000, await provider.getBaseAssetId());
+
+await request.estimateAndFund(sender);
+
+const signedTransaction = await sender.signTransaction(request);
+const transactionId = request.getTransactionId(await provider.getChainId());
+
+const recoveredAddress = Signer.recoverAddress(
+  transactionId,
+  signedTransaction
+);
+
+request.updateWitnessByOwner(recoveredAddress, signedTransaction);
+
+const tx = await provider.sendTransaction(request);
+await tx.waitForResult();\n```
 
 Similar to the sign message example, the previous code used `Signer.recoverAddress` to get the wallet's address from the transaction ID and the signed data.
 
 When using your wallet to submit a transaction with `wallet.sendTransaction()`, the SDK already handles these steps related to signing the transaction and adding the signature to the `witnesses` array. Because of that, you can skip this in most cases:
 
-<<< @./snippets/signing/fund-transaction.ts#signing-3{ts:line-numbers}
+```ts\nimport { Address, Provider, ScriptTransactionRequest, Wallet } from 'fuels';
+
+import { LOCAL_NETWORK_URL, WALLET_PVT_KEY } from '../../../../env';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+const sender = Wallet.fromPrivateKey(WALLET_PVT_KEY, provider);
+const receiverAddress = Address.fromRandom();
+
+const request = new ScriptTransactionRequest({
+  gasLimit: 10000,
+});
+
+request.addCoinOutput(receiverAddress, 1000, await provider.getBaseAssetId());
+
+await request.estimateAndFund(sender);
+
+const tx = await sender.sendTransaction(request);
+await tx.waitForResult();\n```

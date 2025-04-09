@@ -8,7 +8,7 @@ For instance, if a contract function calls a Sway transfer function 3 times, it 
 
 ## Example: Sway functions that requires `Output Variable`
 
-<<< @/../../docs/sway/token/src/main.sw#variable-outputs-1{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../docs/sway/token/src/main.sw' -->
 
 ## Adding Variable Outputs to the contract call
 
@@ -16,7 +16,33 @@ When your contract invokes any of these functions, or if it calls a function tha
 
 This can be done as shown in the following example:
 
-<<< @./snippets/utilities/variable-outputs.ts#variable-outputs-2{ts:line-numbers}
+```ts\nimport { Provider, Wallet, getMintedAssetId, getRandomB256 } from 'fuels';
+
+import { LOCAL_NETWORK_URL, WALLET_PVT_KEY } from '../../../../env';
+import { TokenFactory } from '../../../../typegend';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+const deployer = Wallet.fromPrivateKey(WALLET_PVT_KEY, provider);
+
+const deployContract = await TokenFactory.deploy(deployer);
+const { contract } = await deployContract.waitForResult();
+
+const subId = getRandomB256();
+
+const call1 = await contract.functions.mint_coins(subId, 100).call();
+await call1.waitForResult();
+
+const address = { bits: Wallet.generate().address.toB256() };
+const assetId = { bits: getMintedAssetId(contract.id.toB256(), subId) };
+
+const { waitForResult } = await contract.functions
+  .transfer_to_address(address, assetId, 100)
+  .txParams({
+    variableOutputs: 1,
+  })
+  .call();
+
+await waitForResult();\n```
 
 In the TypeScript SDK, the Output Variables are automatically added to the transaction's list of outputs.
 

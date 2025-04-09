@@ -10,17 +10,26 @@ The SDK handles the conversion from TypeScript to Sway in the background, allowi
 
 An `Array` in Sway is simply a typed `Array`, as demonstrated in the following example:
 
-<<< @./snippets/arrays.ts#arrays-1{ts:line-numbers}
+```ts\n// in Sway: [u8; 5]
+const numberArray: number[] = [1, 2, 3, 4, 5];
+
+// in Sway: [bool; 3]
+const boolArray: boolean[] = [true, false, true];\n```
 
 In Sway, `Arrays` are fixed in size, so the storage size is determined at the time of program compilation, not during runtime.
 
 Let's say you have a contract that takes an `Array` of type `u64` with a size length of 2 as a parameter and returns it:
 
-<<< @/../../docs/sway/echo-values/src/main.sw#arrays-2{rust:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../docs/sway/echo-values/src/main.sw' -->
 
 To execute the contract call using the SDK, you would do something like this:
 
-<<< @./snippets/arrays.ts#arrays-3{ts:line-numbers}
+```ts\nconst u64Array: [BigNumberish, BigNumberish] = [10000000, 20000000];
+
+const { value } = await contract.functions.echo_u64_array(u64Array).get();
+
+console.log('value', value);
+// [<BN: 0x989680>, <BN: 1312D00>]\n```
 
 You can easily access and validate the `Array` returned by the contract method, as demonstrated in the previous example.
 
@@ -28,11 +37,22 @@ As previously mentioned, Sway `Arrays` have a predefined type and size, so you n
 
 Passing an Array with an incorrect size, whether it has more or fewer elements than the specified length, will result in an error:
 
-<<< @./snippets/arrays.ts#arrays-4{ts:line-numbers}
+```ts\ntry {
+  // @ts-expect-error forced error
+  await contract.functions.echo_u64_array([10000000]).get();
+} catch (e) {
+  console.log('error', e);
+  // Types/values length mismatch.
+}\n```
 
 Similarly, passing an `Array` with an incorrect type will also result in an error:
 
-<<< @./snippets/arrays.ts#arrays-5{ts:line-numbers}
+```ts\ntry {
+  await contract.functions.echo_u64_array([10000000, 'a']).get();
+} catch (e) {
+  console.log('error', e);
+  // Invalid u64.
+}\n```
 
 ## Vectors
 

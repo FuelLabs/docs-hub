@@ -18,70 +18,7 @@ Similarly to `StorageVec<T>`, `StorageMap<K, V>` can only be used in a contract 
 To create a new empty storage map, we have to declare the map in a `storage` block as follows:
 
 ```sway
-contract;
-
-use std::hash::*;
-
-storage {
-    // ANCHOR: storage_map_decl
-    map: StorageMap<Address, u64> = StorageMap::<Address, u64> {},
-    // ANCHOR_END: storage_map_decl
-    // ANCHOR: storage_map_tuple_key
-    map_two_keys: StorageMap<(b256, bool), b256> = StorageMap::<(b256, bool), b256> {},
-    // ANCHOR_END: storage_map_tuple_key
-    // ANCHOR: storage_map_nested
-    nested_map: StorageMap<u64, StorageMap<u64, u64>> = StorageMap::<u64, StorageMap<u64, u64>> {},
-    // ANCHOR_END: storage_map_nested
-}
-
-abi StorageMapExample {
-    #[storage(write)]
-    fn insert_into_storage_map();
-
-    #[storage(read, write)]
-    fn get_from_storage_map();
-
-    #[storage(read, write)]
-    fn access_nested_map();
-}
-
-impl StorageMapExample for Contract {
-    // ANCHOR: storage_map_insert
-    #[storage(write)]
-    fn insert_into_storage_map() {
-        let addr1 = Address::from(0x0101010101010101010101010101010101010101010101010101010101010101);
-        let addr2 = Address::from(0x0202020202020202020202020202020202020202020202020202020202020202);
-
-        storage.map.insert(addr1, 42);
-        storage.map.insert(addr2, 77);
-    }
-    // ANCHOR_END: storage_map_insert
-    // ANCHOR: storage_map_get
-    #[storage(read, write)]
-    fn get_from_storage_map() {
-        let addr1 = Address::from(0x0101010101010101010101010101010101010101010101010101010101010101);
-        let addr2 = Address::from(0x0202020202020202020202020202020202020202020202020202020202020202);
-
-        storage.map.insert(addr1, 42);
-        storage.map.insert(addr2, 77);
-
-        let value1 = storage.map.get(addr1).try_read().unwrap_or(0);
-    }
-    // ANCHOR_END: storage_map_get
-
-    // ANCHOR: storage_map_nested_access
-    #[storage(read, write)]
-    fn access_nested_map() {
-        storage.nested_map.get(0).insert(1, 42);
-        storage.nested_map.get(2).insert(3, 24);
-
-        assert(storage.nested_map.get(0).get(1).read() == 42);
-        assert(storage.nested_map.get(0).get(0).try_read().is_none()); // Nothing inserted here
-        assert(storage.nested_map.get(2).get(3).read() == 24);
-        assert(storage.nested_map.get(2).get(2).try_read().is_none()); // Nothing inserted here
-    }
-    // ANCHOR_END: storage_map_nested_access
-}
+map: StorageMap<Address, u64> = StorageMap::<Address, u64> {},
 ```
 
 <!-- This section should explain how to implement storage maps in Sway -->
@@ -101,36 +38,7 @@ To insert key-value pairs into a storage map, we can use the `insert` method.
 For example:
 
 ```sway
-contract;
-
-use std::hash::*;
-
-storage {
-    // ANCHOR: storage_map_decl
-    map: StorageMap<Address, u64> = StorageMap::<Address, u64> {},
-    // ANCHOR_END: storage_map_decl
-    // ANCHOR: storage_map_tuple_key
-    map_two_keys: StorageMap<(b256, bool), b256> = StorageMap::<(b256, bool), b256> {},
-    // ANCHOR_END: storage_map_tuple_key
-    // ANCHOR: storage_map_nested
-    nested_map: StorageMap<u64, StorageMap<u64, u64>> = StorageMap::<u64, StorageMap<u64, u64>> {},
-    // ANCHOR_END: storage_map_nested
-}
-
-abi StorageMapExample {
-    #[storage(write)]
-    fn insert_into_storage_map();
-
-    #[storage(read, write)]
-    fn get_from_storage_map();
-
-    #[storage(read, write)]
-    fn access_nested_map();
-}
-
-impl StorageMapExample for Contract {
-    // ANCHOR: storage_map_insert
-    #[storage(write)]
+#[storage(write)]
     fn insert_into_storage_map() {
         let addr1 = Address::from(0x0101010101010101010101010101010101010101010101010101010101010101);
         let addr2 = Address::from(0x0202020202020202020202020202020202020202020202020202020202020202);
@@ -138,33 +46,6 @@ impl StorageMapExample for Contract {
         storage.map.insert(addr1, 42);
         storage.map.insert(addr2, 77);
     }
-    // ANCHOR_END: storage_map_insert
-    // ANCHOR: storage_map_get
-    #[storage(read, write)]
-    fn get_from_storage_map() {
-        let addr1 = Address::from(0x0101010101010101010101010101010101010101010101010101010101010101);
-        let addr2 = Address::from(0x0202020202020202020202020202020202020202020202020202020202020202);
-
-        storage.map.insert(addr1, 42);
-        storage.map.insert(addr2, 77);
-
-        let value1 = storage.map.get(addr1).try_read().unwrap_or(0);
-    }
-    // ANCHOR_END: storage_map_get
-
-    // ANCHOR: storage_map_nested_access
-    #[storage(read, write)]
-    fn access_nested_map() {
-        storage.nested_map.get(0).insert(1, 42);
-        storage.nested_map.get(2).insert(3, 24);
-
-        assert(storage.nested_map.get(0).get(1).read() == 42);
-        assert(storage.nested_map.get(0).get(0).try_read().is_none()); // Nothing inserted here
-        assert(storage.nested_map.get(2).get(3).read() == 24);
-        assert(storage.nested_map.get(2).get(2).try_read().is_none()); // Nothing inserted here
-    }
-    // ANCHOR_END: storage_map_nested_access
-}
 ```
 
 Note two details here. First, in order to use `insert`, we need to first access the storage map using the `storage` keyword. Second, because `insert` requires _writing_ into storage, a `#[storage(write)]` annotation is required on the ABI function that calls `insert`.
@@ -186,46 +67,7 @@ We can get a value out of the storage map by providing its `key` to the `get` me
 For example:
 
 ```sway
-contract;
-
-use std::hash::*;
-
-storage {
-    // ANCHOR: storage_map_decl
-    map: StorageMap<Address, u64> = StorageMap::<Address, u64> {},
-    // ANCHOR_END: storage_map_decl
-    // ANCHOR: storage_map_tuple_key
-    map_two_keys: StorageMap<(b256, bool), b256> = StorageMap::<(b256, bool), b256> {},
-    // ANCHOR_END: storage_map_tuple_key
-    // ANCHOR: storage_map_nested
-    nested_map: StorageMap<u64, StorageMap<u64, u64>> = StorageMap::<u64, StorageMap<u64, u64>> {},
-    // ANCHOR_END: storage_map_nested
-}
-
-abi StorageMapExample {
-    #[storage(write)]
-    fn insert_into_storage_map();
-
-    #[storage(read, write)]
-    fn get_from_storage_map();
-
-    #[storage(read, write)]
-    fn access_nested_map();
-}
-
-impl StorageMapExample for Contract {
-    // ANCHOR: storage_map_insert
-    #[storage(write)]
-    fn insert_into_storage_map() {
-        let addr1 = Address::from(0x0101010101010101010101010101010101010101010101010101010101010101);
-        let addr2 = Address::from(0x0202020202020202020202020202020202020202020202020202020202020202);
-
-        storage.map.insert(addr1, 42);
-        storage.map.insert(addr2, 77);
-    }
-    // ANCHOR_END: storage_map_insert
-    // ANCHOR: storage_map_get
-    #[storage(read, write)]
+#[storage(read, write)]
     fn get_from_storage_map() {
         let addr1 = Address::from(0x0101010101010101010101010101010101010101010101010101010101010101);
         let addr2 = Address::from(0x0202020202020202020202020202020202020202020202020202020202020202);
@@ -235,21 +77,6 @@ impl StorageMapExample for Contract {
 
         let value1 = storage.map.get(addr1).try_read().unwrap_or(0);
     }
-    // ANCHOR_END: storage_map_get
-
-    // ANCHOR: storage_map_nested_access
-    #[storage(read, write)]
-    fn access_nested_map() {
-        storage.nested_map.get(0).insert(1, 42);
-        storage.nested_map.get(2).insert(3, 24);
-
-        assert(storage.nested_map.get(0).get(1).read() == 42);
-        assert(storage.nested_map.get(0).get(0).try_read().is_none()); // Nothing inserted here
-        assert(storage.nested_map.get(2).get(3).read() == 24);
-        assert(storage.nested_map.get(2).get(2).try_read().is_none()); // Nothing inserted here
-    }
-    // ANCHOR_END: storage_map_nested_access
-}
 ```
 
 Here, `value1` will have the value that's associated with the first address, and the result will be `42`. The `get` method returns an `Option<V>`; if there’s no value for that key in the storage map, `get` will return `None`. This program handles the `Option` by calling `unwrap_or` to set `value1` to zero if `map` doesn't have an entry for the key.
@@ -259,70 +86,7 @@ Here, `value1` will have the value that's associated with the first address, and
 Maps with multiple keys can be implemented using tuples as keys. For example:
 
 ```sway
-contract;
-
-use std::hash::*;
-
-storage {
-    // ANCHOR: storage_map_decl
-    map: StorageMap<Address, u64> = StorageMap::<Address, u64> {},
-    // ANCHOR_END: storage_map_decl
-    // ANCHOR: storage_map_tuple_key
-    map_two_keys: StorageMap<(b256, bool), b256> = StorageMap::<(b256, bool), b256> {},
-    // ANCHOR_END: storage_map_tuple_key
-    // ANCHOR: storage_map_nested
-    nested_map: StorageMap<u64, StorageMap<u64, u64>> = StorageMap::<u64, StorageMap<u64, u64>> {},
-    // ANCHOR_END: storage_map_nested
-}
-
-abi StorageMapExample {
-    #[storage(write)]
-    fn insert_into_storage_map();
-
-    #[storage(read, write)]
-    fn get_from_storage_map();
-
-    #[storage(read, write)]
-    fn access_nested_map();
-}
-
-impl StorageMapExample for Contract {
-    // ANCHOR: storage_map_insert
-    #[storage(write)]
-    fn insert_into_storage_map() {
-        let addr1 = Address::from(0x0101010101010101010101010101010101010101010101010101010101010101);
-        let addr2 = Address::from(0x0202020202020202020202020202020202020202020202020202020202020202);
-
-        storage.map.insert(addr1, 42);
-        storage.map.insert(addr2, 77);
-    }
-    // ANCHOR_END: storage_map_insert
-    // ANCHOR: storage_map_get
-    #[storage(read, write)]
-    fn get_from_storage_map() {
-        let addr1 = Address::from(0x0101010101010101010101010101010101010101010101010101010101010101);
-        let addr2 = Address::from(0x0202020202020202020202020202020202020202020202020202020202020202);
-
-        storage.map.insert(addr1, 42);
-        storage.map.insert(addr2, 77);
-
-        let value1 = storage.map.get(addr1).try_read().unwrap_or(0);
-    }
-    // ANCHOR_END: storage_map_get
-
-    // ANCHOR: storage_map_nested_access
-    #[storage(read, write)]
-    fn access_nested_map() {
-        storage.nested_map.get(0).insert(1, 42);
-        storage.nested_map.get(2).insert(3, 24);
-
-        assert(storage.nested_map.get(0).get(1).read() == 42);
-        assert(storage.nested_map.get(0).get(0).try_read().is_none()); // Nothing inserted here
-        assert(storage.nested_map.get(2).get(3).read() == 24);
-        assert(storage.nested_map.get(2).get(2).try_read().is_none()); // Nothing inserted here
-    }
-    // ANCHOR_END: storage_map_nested_access
-}
+map_two_keys: StorageMap<(b256, bool), b256> = StorageMap::<(b256, bool), b256> {},
 ```
 
 ## Nested Storage Maps
@@ -330,128 +94,13 @@ impl StorageMapExample for Contract {
 It is possible to nest storage maps as follows:
 
 ```sway
-contract;
-
-use std::hash::*;
-
-storage {
-    // ANCHOR: storage_map_decl
-    map: StorageMap<Address, u64> = StorageMap::<Address, u64> {},
-    // ANCHOR_END: storage_map_decl
-    // ANCHOR: storage_map_tuple_key
-    map_two_keys: StorageMap<(b256, bool), b256> = StorageMap::<(b256, bool), b256> {},
-    // ANCHOR_END: storage_map_tuple_key
-    // ANCHOR: storage_map_nested
-    nested_map: StorageMap<u64, StorageMap<u64, u64>> = StorageMap::<u64, StorageMap<u64, u64>> {},
-    // ANCHOR_END: storage_map_nested
-}
-
-abi StorageMapExample {
-    #[storage(write)]
-    fn insert_into_storage_map();
-
-    #[storage(read, write)]
-    fn get_from_storage_map();
-
-    #[storage(read, write)]
-    fn access_nested_map();
-}
-
-impl StorageMapExample for Contract {
-    // ANCHOR: storage_map_insert
-    #[storage(write)]
-    fn insert_into_storage_map() {
-        let addr1 = Address::from(0x0101010101010101010101010101010101010101010101010101010101010101);
-        let addr2 = Address::from(0x0202020202020202020202020202020202020202020202020202020202020202);
-
-        storage.map.insert(addr1, 42);
-        storage.map.insert(addr2, 77);
-    }
-    // ANCHOR_END: storage_map_insert
-    // ANCHOR: storage_map_get
-    #[storage(read, write)]
-    fn get_from_storage_map() {
-        let addr1 = Address::from(0x0101010101010101010101010101010101010101010101010101010101010101);
-        let addr2 = Address::from(0x0202020202020202020202020202020202020202020202020202020202020202);
-
-        storage.map.insert(addr1, 42);
-        storage.map.insert(addr2, 77);
-
-        let value1 = storage.map.get(addr1).try_read().unwrap_or(0);
-    }
-    // ANCHOR_END: storage_map_get
-
-    // ANCHOR: storage_map_nested_access
-    #[storage(read, write)]
-    fn access_nested_map() {
-        storage.nested_map.get(0).insert(1, 42);
-        storage.nested_map.get(2).insert(3, 24);
-
-        assert(storage.nested_map.get(0).get(1).read() == 42);
-        assert(storage.nested_map.get(0).get(0).try_read().is_none()); // Nothing inserted here
-        assert(storage.nested_map.get(2).get(3).read() == 24);
-        assert(storage.nested_map.get(2).get(2).try_read().is_none()); // Nothing inserted here
-    }
-    // ANCHOR_END: storage_map_nested_access
-}
+nested_map: StorageMap<u64, StorageMap<u64, u64>> = StorageMap::<u64, StorageMap<u64, u64>> {},
 ```
 
 The nested map can then be accessed as follows:
 
 ```sway
-contract;
-
-use std::hash::*;
-
-storage {
-    // ANCHOR: storage_map_decl
-    map: StorageMap<Address, u64> = StorageMap::<Address, u64> {},
-    // ANCHOR_END: storage_map_decl
-    // ANCHOR: storage_map_tuple_key
-    map_two_keys: StorageMap<(b256, bool), b256> = StorageMap::<(b256, bool), b256> {},
-    // ANCHOR_END: storage_map_tuple_key
-    // ANCHOR: storage_map_nested
-    nested_map: StorageMap<u64, StorageMap<u64, u64>> = StorageMap::<u64, StorageMap<u64, u64>> {},
-    // ANCHOR_END: storage_map_nested
-}
-
-abi StorageMapExample {
-    #[storage(write)]
-    fn insert_into_storage_map();
-
-    #[storage(read, write)]
-    fn get_from_storage_map();
-
-    #[storage(read, write)]
-    fn access_nested_map();
-}
-
-impl StorageMapExample for Contract {
-    // ANCHOR: storage_map_insert
-    #[storage(write)]
-    fn insert_into_storage_map() {
-        let addr1 = Address::from(0x0101010101010101010101010101010101010101010101010101010101010101);
-        let addr2 = Address::from(0x0202020202020202020202020202020202020202020202020202020202020202);
-
-        storage.map.insert(addr1, 42);
-        storage.map.insert(addr2, 77);
-    }
-    // ANCHOR_END: storage_map_insert
-    // ANCHOR: storage_map_get
-    #[storage(read, write)]
-    fn get_from_storage_map() {
-        let addr1 = Address::from(0x0101010101010101010101010101010101010101010101010101010101010101);
-        let addr2 = Address::from(0x0202020202020202020202020202020202020202020202020202020202020202);
-
-        storage.map.insert(addr1, 42);
-        storage.map.insert(addr2, 77);
-
-        let value1 = storage.map.get(addr1).try_read().unwrap_or(0);
-    }
-    // ANCHOR_END: storage_map_get
-
-    // ANCHOR: storage_map_nested_access
-    #[storage(read, write)]
+#[storage(read, write)]
     fn access_nested_map() {
         storage.nested_map.get(0).insert(1, 42);
         storage.nested_map.get(2).insert(3, 24);
@@ -461,6 +110,4 @@ impl StorageMapExample for Contract {
         assert(storage.nested_map.get(2).get(3).read() == 24);
         assert(storage.nested_map.get(2).get(2).try_read().is_none()); // Nothing inserted here
     }
-    // ANCHOR_END: storage_map_nested_access
-}
 ```

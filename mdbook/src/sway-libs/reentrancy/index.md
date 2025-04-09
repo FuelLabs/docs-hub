@@ -15,35 +15,7 @@ In order to use the Reentrancy Guard library, Sway Libs must be added to the `Fo
 To import the Reentrancy Guard Library to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
-contract;
-
-// ANCHOR: import
 use sway_libs::reentrancy::*;
-// ANCHOR_END: import
-
-// ANCHOR: reentrancy_guard
-use sway_libs::reentrancy::reentrancy_guard;
-
-abi MyContract {
-    fn my_non_reentrant_function();
-}
-
-impl MyContract for Contract {
-    fn my_non_reentrant_function() {
-        reentrancy_guard();
-
-        // my code here
-    }
-}
-// ANCHOR_END: reentrancy_guard
-
-// ANCHOR: is_reentrant
-use sway_libs::reentrancy::is_reentrant;
-
-fn check_if_reentrant() {
-    assert(!is_reentrant());
-}
-// ANCHOR_END: is_reentrant
 ```
 
 ## Basic Functionality
@@ -58,13 +30,6 @@ Once imported, using the Reentrancy Library can be done by calling one of the tw
 Once imported, using the Reentrancy Guard Library can be used by calling the `reentrancy_guard()` in your Sway Smart Contract. The following shows a Sway Smart Contract that applies the Reentrancy Guard Library:
 
 ```sway
-contract;
-
-// ANCHOR: import
-use sway_libs::reentrancy::*;
-// ANCHOR_END: import
-
-// ANCHOR: reentrancy_guard
 use sway_libs::reentrancy::reentrancy_guard;
 
 abi MyContract {
@@ -78,15 +43,6 @@ impl MyContract for Contract {
         // my code here
     }
 }
-// ANCHOR_END: reentrancy_guard
-
-// ANCHOR: is_reentrant
-use sway_libs::reentrancy::is_reentrant;
-
-fn check_if_reentrant() {
-    assert(!is_reentrant());
-}
-// ANCHOR_END: is_reentrant
 ```
 
 ### Checking Reentrancy Status
@@ -94,35 +50,11 @@ fn check_if_reentrant() {
 To check if the current caller is a reentrant, you may call the `is_reentrant()` function.
 
 ```sway
-contract;
-
-// ANCHOR: import
-use sway_libs::reentrancy::*;
-// ANCHOR_END: import
-
-// ANCHOR: reentrancy_guard
-use sway_libs::reentrancy::reentrancy_guard;
-
-abi MyContract {
-    fn my_non_reentrant_function();
-}
-
-impl MyContract for Contract {
-    fn my_non_reentrant_function() {
-        reentrancy_guard();
-
-        // my code here
-    }
-}
-// ANCHOR_END: reentrancy_guard
-
-// ANCHOR: is_reentrant
 use sway_libs::reentrancy::is_reentrant;
 
 fn check_if_reentrant() {
     assert(!is_reentrant());
 }
-// ANCHOR_END: is_reentrant
 ```
 
 ## Cross Contract Reentrancy

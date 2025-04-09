@@ -4,7 +4,7 @@ You'll often want to create one or more test wallets when testing your contracts
 
 ## Create a single wallet
 
-<<< @/../../docs/src/guide/wallets/snippets/access.ts#wallets{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../docs/src/guide/wallets/snippets/access.ts' -->
 
 ## Setting up multiple test wallets
 
@@ -12,4 +12,15 @@ You can set up multiple test wallets using the `launchTestNode` utility via the 
 
 To understand the different configurations, check out the [walletsConfig](./test-node-options.md#walletsconfig) in the test node options guide.
 
-<<< @./snippets/launch-test-node-wallets.ts#multiple-wallets{ts:line-numbers}
+```ts\nusing launched = await launchTestNode({
+  walletsConfig: {
+    count: 3,
+    assets: [TestAssetId.A, TestAssetId.B],
+    coinsPerAsset: 5,
+    amountPerCoin: 100_000,
+  },
+});
+
+const {
+  wallets: [wallet1, wallet2, wallet3],
+} = launched;\n```

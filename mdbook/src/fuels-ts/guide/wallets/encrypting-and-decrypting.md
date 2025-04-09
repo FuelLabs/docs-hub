@@ -8,7 +8,20 @@ We will be calling `encrypt` from the [`WalletUnlocked`](DOCS_API_URL/classes/_f
 
 Here is an example of how you can accomplish this:
 
-<<< @./snippets/encrypting-and-decrypting-wallets.ts#encrypting-and-decrypting-json-wallets-1{ts:line-numbers}
+```ts\nimport { Provider, Wallet } from 'fuels';
+
+import { LOCAL_NETWORK_URL } from '../../../env';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+
+const wallet = Wallet.generate({ provider });
+
+// Encrypt the wallet
+const password = 'my-password';
+const jsonWallet = await wallet.encrypt(password);
+
+// Save the encrypted wallet to a file
+// e.g. const jsonWallet = fs.writeFileSync('secure-path/my-wallet.json', jsonWallet);\n```
 
 Please note that `encrypt` must be called within an instance of [`WalletUnlocked`](DOCS_API_URL/classes/_fuel_ts_account.WalletUnlocked.html). This instance can only be achieved through passing a private key or mnemonic phrase to a locked wallet.
 
@@ -18,7 +31,29 @@ To decrypt the JSON wallet and retrieve your private key, you can call `fromEncr
 
 Here is an example:
 
-<<< @./snippets/encrypting-and-decrypting-json-wallets-two.ts#encrypting-and-decrypting-json-wallets-2{ts:line-numbers}
+```ts\nimport { Provider, Wallet } from 'fuels';
+
+import { LOCAL_NETWORK_URL } from '../../../env';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+
+const newJsonWallet = await Wallet.generate({
+  provider,
+}).encrypt('my-password');
+
+// Load the encrypted wallet from a file
+// const jsonWallet = fs.readFileSync('secure-path/my-wallet.json', 'utf-8');
+
+// Decrypt the wallet
+const newPassword = 'my-password';
+const decryptedWallet = await Wallet.fromEncryptedJson(
+  newJsonWallet,
+  newPassword,
+  provider
+);
+
+// Use the decrypted wallet
+const myBalance = await decryptedWallet.getBalance();\n```
 
 In this example, `decryptedWallet` is an instance of [`WalletUnlocked`](DOCS_API_URL/classes/_fuel_ts_account.WalletUnlocked.html) class, now available for use.
 

@@ -10,7 +10,20 @@ Let's use `launchTestNode` with the counter contract from the [Fuel dApp tutoria
 
 _Note: you will have to change the import paths of the contract factory and bytecode to match your folder structure._
 
-<<< @./snippets/launching-a-test-node.ts#basic-example{ts:line-numbers}
+```ts\nimport { CounterFactory } from '../../../typegend/contracts/CounterFactory';
+
+using launchedContractNode = await launchTestNode({
+  contractsConfigs: [CounterFactory],
+});
+
+const {
+  contracts: [contract],
+  provider,
+  wallets,
+} = launchedContractNode;
+
+const { waitForResult } = await contract.functions.get_count().call();
+const response = await waitForResult();\n```
 
 ## Summary
 

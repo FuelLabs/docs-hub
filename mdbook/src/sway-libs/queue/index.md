@@ -11,57 +11,7 @@ In order to use the Queue Library, Sway Libs must be added to the `Forc.toml` fi
 To import the Queue Library to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
-library;
-
-// ANCHOR: import
 use sway_libs::queue::*;
-// ANCHOR_END: import
-
-fn instantiate() {
-    // ANCHOR: instantiate
-    let mut queue = Queue::new();
-    // ANCHOR_END: instantiate
-}
-
-fn enqueue() {
-    let mut queue = Queue::new();
-
-    // ANCHOR: enqueue
-    // Enqueue an element to the queue
-    queue.enqueue(10u8);
-    // ANCHOR_END: enqueue
-}
-
-fn dequeue() {
-    let mut queue = Queue::new();
-    queue.enqueue(10u8);
-
-    // ANCHOR: dequeue
-    // Dequeue the first element and unwrap the value
-    let first_item = queue.dequeue().unwrap();
-    // ANCHOR_END: dequeue
-}
-
-fn peek() {
-    let mut queue = Queue::new();
-    queue.enqueue(10u8);
-
-    // ANCHOR: peek
-    // Peek at the head of the queue
-    let head_item = queue.peek();
-    // ANCHOR_END: peek
-}
-
-fn length() {
-    let mut queue = Queue::new();
-    // ANCHOR: length
-    // Checks if queue is empty (returns True or False)
-    let is_queue_empty = queue.is_empty();
-
-    // Returns length of queue
-    let queue_length = queue.len();
-    // ANCHOR_END: length
-}
 ```
 
 ## Basic Functionality
@@ -71,57 +21,7 @@ fn length() {
 Once the `Queue` has been imported, you can create a new queue instance by calling the `new` function.
 
 ```sway
-library;
-
-// ANCHOR: import
-use sway_libs::queue::*;
-// ANCHOR_END: import
-
-fn instantiate() {
-    // ANCHOR: instantiate
-    let mut queue = Queue::new();
-    // ANCHOR_END: instantiate
-}
-
-fn enqueue() {
-    let mut queue = Queue::new();
-
-    // ANCHOR: enqueue
-    // Enqueue an element to the queue
-    queue.enqueue(10u8);
-    // ANCHOR_END: enqueue
-}
-
-fn dequeue() {
-    let mut queue = Queue::new();
-    queue.enqueue(10u8);
-
-    // ANCHOR: dequeue
-    // Dequeue the first element and unwrap the value
-    let first_item = queue.dequeue().unwrap();
-    // ANCHOR_END: dequeue
-}
-
-fn peek() {
-    let mut queue = Queue::new();
-    queue.enqueue(10u8);
-
-    // ANCHOR: peek
-    // Peek at the head of the queue
-    let head_item = queue.peek();
-    // ANCHOR_END: peek
-}
-
-fn length() {
-    let mut queue = Queue::new();
-    // ANCHOR: length
-    // Checks if queue is empty (returns True or False)
-    let is_queue_empty = queue.is_empty();
-
-    // Returns length of queue
-    let queue_length = queue.len();
-    // ANCHOR_END: length
-}
+let mut queue = Queue::new();
 ```
 
 ## Enqueuing elements
@@ -129,57 +29,8 @@ fn length() {
 Adding elements to the `Queue` can be done using the `enqueue` function.
 
 ```sway
-library;
-
-// ANCHOR: import
-use sway_libs::queue::*;
-// ANCHOR_END: import
-
-fn instantiate() {
-    // ANCHOR: instantiate
-    let mut queue = Queue::new();
-    // ANCHOR_END: instantiate
-}
-
-fn enqueue() {
-    let mut queue = Queue::new();
-
-    // ANCHOR: enqueue
-    // Enqueue an element to the queue
+// Enqueue an element to the queue
     queue.enqueue(10u8);
-    // ANCHOR_END: enqueue
-}
-
-fn dequeue() {
-    let mut queue = Queue::new();
-    queue.enqueue(10u8);
-
-    // ANCHOR: dequeue
-    // Dequeue the first element and unwrap the value
-    let first_item = queue.dequeue().unwrap();
-    // ANCHOR_END: dequeue
-}
-
-fn peek() {
-    let mut queue = Queue::new();
-    queue.enqueue(10u8);
-
-    // ANCHOR: peek
-    // Peek at the head of the queue
-    let head_item = queue.peek();
-    // ANCHOR_END: peek
-}
-
-fn length() {
-    let mut queue = Queue::new();
-    // ANCHOR: length
-    // Checks if queue is empty (returns True or False)
-    let is_queue_empty = queue.is_empty();
-
-    // Returns length of queue
-    let queue_length = queue.len();
-    // ANCHOR_END: length
-}
 ```
 
 ### Dequeuing Elements
@@ -187,57 +38,8 @@ fn length() {
 To remove elements from the `Queue`, the `dequeue` function is used. This function follows the FIFO principle.
 
 ```sway
-library;
-
-// ANCHOR: import
-use sway_libs::queue::*;
-// ANCHOR_END: import
-
-fn instantiate() {
-    // ANCHOR: instantiate
-    let mut queue = Queue::new();
-    // ANCHOR_END: instantiate
-}
-
-fn enqueue() {
-    let mut queue = Queue::new();
-
-    // ANCHOR: enqueue
-    // Enqueue an element to the queue
-    queue.enqueue(10u8);
-    // ANCHOR_END: enqueue
-}
-
-fn dequeue() {
-    let mut queue = Queue::new();
-    queue.enqueue(10u8);
-
-    // ANCHOR: dequeue
-    // Dequeue the first element and unwrap the value
+// Dequeue the first element and unwrap the value
     let first_item = queue.dequeue().unwrap();
-    // ANCHOR_END: dequeue
-}
-
-fn peek() {
-    let mut queue = Queue::new();
-    queue.enqueue(10u8);
-
-    // ANCHOR: peek
-    // Peek at the head of the queue
-    let head_item = queue.peek();
-    // ANCHOR_END: peek
-}
-
-fn length() {
-    let mut queue = Queue::new();
-    // ANCHOR: length
-    // Checks if queue is empty (returns True or False)
-    let is_queue_empty = queue.is_empty();
-
-    // Returns length of queue
-    let queue_length = queue.len();
-    // ANCHOR_END: length
-}
 ```
 
 ### Fetching the Head Element
@@ -245,57 +47,8 @@ fn length() {
 To retrieve the element at the head of the `Queue` without removing it, you can use the `peek` function.
 
 ```sway
-library;
-
-// ANCHOR: import
-use sway_libs::queue::*;
-// ANCHOR_END: import
-
-fn instantiate() {
-    // ANCHOR: instantiate
-    let mut queue = Queue::new();
-    // ANCHOR_END: instantiate
-}
-
-fn enqueue() {
-    let mut queue = Queue::new();
-
-    // ANCHOR: enqueue
-    // Enqueue an element to the queue
-    queue.enqueue(10u8);
-    // ANCHOR_END: enqueue
-}
-
-fn dequeue() {
-    let mut queue = Queue::new();
-    queue.enqueue(10u8);
-
-    // ANCHOR: dequeue
-    // Dequeue the first element and unwrap the value
-    let first_item = queue.dequeue().unwrap();
-    // ANCHOR_END: dequeue
-}
-
-fn peek() {
-    let mut queue = Queue::new();
-    queue.enqueue(10u8);
-
-    // ANCHOR: peek
-    // Peek at the head of the queue
+// Peek at the head of the queue
     let head_item = queue.peek();
-    // ANCHOR_END: peek
-}
-
-fn length() {
-    let mut queue = Queue::new();
-    // ANCHOR: length
-    // Checks if queue is empty (returns True or False)
-    let is_queue_empty = queue.is_empty();
-
-    // Returns length of queue
-    let queue_length = queue.len();
-    // ANCHOR_END: length
-}
 ```
 
 ### Checking the Queue's Length
@@ -303,55 +56,9 @@ fn length() {
 The `is_empty` and `len` functions can be used to check if the queue is empty and to get the number of elements in the queue respectively.
 
 ```sway
-library;
-
-// ANCHOR: import
-use sway_libs::queue::*;
-// ANCHOR_END: import
-
-fn instantiate() {
-    // ANCHOR: instantiate
-    let mut queue = Queue::new();
-    // ANCHOR_END: instantiate
-}
-
-fn enqueue() {
-    let mut queue = Queue::new();
-
-    // ANCHOR: enqueue
-    // Enqueue an element to the queue
-    queue.enqueue(10u8);
-    // ANCHOR_END: enqueue
-}
-
-fn dequeue() {
-    let mut queue = Queue::new();
-    queue.enqueue(10u8);
-
-    // ANCHOR: dequeue
-    // Dequeue the first element and unwrap the value
-    let first_item = queue.dequeue().unwrap();
-    // ANCHOR_END: dequeue
-}
-
-fn peek() {
-    let mut queue = Queue::new();
-    queue.enqueue(10u8);
-
-    // ANCHOR: peek
-    // Peek at the head of the queue
-    let head_item = queue.peek();
-    // ANCHOR_END: peek
-}
-
-fn length() {
-    let mut queue = Queue::new();
-    // ANCHOR: length
-    // Checks if queue is empty (returns True or False)
+// Checks if queue is empty (returns True or False)
     let is_queue_empty = queue.is_empty();
 
     // Returns length of queue
     let queue_length = queue.len();
-    // ANCHOR_END: length
-}
 ```

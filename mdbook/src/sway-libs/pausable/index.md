@@ -13,52 +13,7 @@ In order to use the Pausable library, Sway Libs must be added to the `Forc.toml`
 To import the Pausable Library to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
-contract;
-
-// ANCHOR: import
 use sway_libs::pausable::*;
-// ANCHOR_END: import
-
-// ANCHOR: pausable_impl
-use sway_libs::pausable::{_is_paused, _pause, _unpause, Pausable};
-
-impl Pausable for Contract {
-    #[storage(write)]
-    fn pause() {
-        _pause();
-    }
-
-    #[storage(write)]
-    fn unpause() {
-        _unpause();
-    }
-
-    #[storage(read)]
-    fn is_paused() -> bool {
-        _is_paused()
-    }
-}
-// ANCHOR_END: pausable_impl
-
-// ANCHOR: require_paused
-use sway_libs::pausable::require_paused;
-
-#[storage(read)]
-fn require_paused_state() {
-    require_paused();
-    // This comment will only ever be reached if the contract is in the paused state
-}
-// ANCHOR_END: require_paused
-
-// ANCHOR: require_not_paused
-use sway_libs::pausable::require_not_paused;
-
-#[storage(read)]
-fn require_not_paused_state() {
-    require_not_paused();
-    // This comment will only ever be reached if the contract is in the unpaused state
-}
-// ANCHOR_END: require_not_paused
 ```
 
 ## Basic Functionality
@@ -73,13 +28,6 @@ The Pausable Library has two states:
 By default, your contract will start in the `Unpaused` state. To pause your contract, you may call the `_pause()` function. The example below provides a basic pausable contract using the Pausable Library's `Pausable` abi without any restrictions such as an administrator.
 
 ```sway
-contract;
-
-// ANCHOR: import
-use sway_libs::pausable::*;
-// ANCHOR_END: import
-
-// ANCHOR: pausable_impl
 use sway_libs::pausable::{_is_paused, _pause, _unpause, Pausable};
 
 impl Pausable for Contract {
@@ -98,27 +46,6 @@ impl Pausable for Contract {
         _is_paused()
     }
 }
-// ANCHOR_END: pausable_impl
-
-// ANCHOR: require_paused
-use sway_libs::pausable::require_paused;
-
-#[storage(read)]
-fn require_paused_state() {
-    require_paused();
-    // This comment will only ever be reached if the contract is in the paused state
-}
-// ANCHOR_END: require_paused
-
-// ANCHOR: require_not_paused
-use sway_libs::pausable::require_not_paused;
-
-#[storage(read)]
-fn require_not_paused_state() {
-    require_not_paused();
-    // This comment will only ever be reached if the contract is in the unpaused state
-}
-// ANCHOR_END: require_not_paused
 ```
 
 ## Applying Paused Restrictions
@@ -126,34 +53,6 @@ fn require_not_paused_state() {
 When developing a contract, you may want to lock functions down to a specific state. To do this, you may call either of the `require_paused()` or `require_not_paused()` functions. The example below shows these functions in use.
 
 ```sway
-contract;
-
-// ANCHOR: import
-use sway_libs::pausable::*;
-// ANCHOR_END: import
-
-// ANCHOR: pausable_impl
-use sway_libs::pausable::{_is_paused, _pause, _unpause, Pausable};
-
-impl Pausable for Contract {
-    #[storage(write)]
-    fn pause() {
-        _pause();
-    }
-
-    #[storage(write)]
-    fn unpause() {
-        _unpause();
-    }
-
-    #[storage(read)]
-    fn is_paused() -> bool {
-        _is_paused()
-    }
-}
-// ANCHOR_END: pausable_impl
-
-// ANCHOR: require_paused
 use sway_libs::pausable::require_paused;
 
 #[storage(read)]
@@ -161,58 +60,9 @@ fn require_paused_state() {
     require_paused();
     // This comment will only ever be reached if the contract is in the paused state
 }
-// ANCHOR_END: require_paused
-
-// ANCHOR: require_not_paused
-use sway_libs::pausable::require_not_paused;
-
-#[storage(read)]
-fn require_not_paused_state() {
-    require_not_paused();
-    // This comment will only ever be reached if the contract is in the unpaused state
-}
-// ANCHOR_END: require_not_paused
 ```
 
 ```sway
-contract;
-
-// ANCHOR: import
-use sway_libs::pausable::*;
-// ANCHOR_END: import
-
-// ANCHOR: pausable_impl
-use sway_libs::pausable::{_is_paused, _pause, _unpause, Pausable};
-
-impl Pausable for Contract {
-    #[storage(write)]
-    fn pause() {
-        _pause();
-    }
-
-    #[storage(write)]
-    fn unpause() {
-        _unpause();
-    }
-
-    #[storage(read)]
-    fn is_paused() -> bool {
-        _is_paused()
-    }
-}
-// ANCHOR_END: pausable_impl
-
-// ANCHOR: require_paused
-use sway_libs::pausable::require_paused;
-
-#[storage(read)]
-fn require_paused_state() {
-    require_paused();
-    // This comment will only ever be reached if the contract is in the paused state
-}
-// ANCHOR_END: require_paused
-
-// ANCHOR: require_not_paused
 use sway_libs::pausable::require_not_paused;
 
 #[storage(read)]
@@ -220,7 +70,6 @@ fn require_not_paused_state() {
     require_not_paused();
     // This comment will only ever be reached if the contract is in the unpaused state
 }
-// ANCHOR_END: require_not_paused
 ```
 
 ## Using the Ownership Library with the Pausable Library
@@ -230,9 +79,6 @@ It is highly recommended to integrate the [Ownership Library](../ownership/index
 The follow example implements the `Pausable` abi and applies restrictions to it's pause/unpause functions. The owner of the contract must be set in a constructor defined by `MyConstructor` in this example.
 
 ```sway
-contract;
-
-// ANCHOR: impl_with_ownership
 use sway_libs::{
     ownership::{
         initialize_ownership,
@@ -278,5 +124,4 @@ impl Pausable for Contract {
         _is_paused()
     }
 }
-// ANCHOR_END: impl_with_ownership
 ```

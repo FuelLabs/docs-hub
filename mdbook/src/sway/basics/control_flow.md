@@ -153,9 +153,6 @@ for element in vector.iter() {
 `break` and `continue` keywords are available to use inside the body of a `while` or `for` loop. The purpose of the `break` statement is to break out of a loop early:
 
 ```sway
-script;
-
-// ANCHOR: break_example
 fn break_example() -> u64 {
     let mut counter = 1;
     let mut sum = 0;
@@ -168,49 +165,12 @@ fn break_example() -> u64 {
         counter += 1;
     }
     sum // 1 + 2 + .. + 10 = 55
-}
-// ANCHOR_END: break_example
-// ANCHOR: continue_example
-fn continue_example() -> u64 {
-    let mut counter = 0;
-    let mut sum = 0;
-    let num = 10;
-    while counter < num {
-        counter += 1;
-        if counter % 2 == 0 {
-            continue;
-        }
-        sum += counter;
-    }
-    sum // 1 + 3 + .. + 9 = 25
-}
-// ANCHOR_END: continue_example
-fn main() -> u64 {
-    break_example() + continue_example() // 55 + 25 = 80
 }
 ```
 
 The purpose of the `continue` statement is to skip a portion of a loop in an iteration and jump directly into the next iteration:
 
 ```sway
-script;
-
-// ANCHOR: break_example
-fn break_example() -> u64 {
-    let mut counter = 1;
-    let mut sum = 0;
-    let num = 10;
-    while true {
-        if counter > num {
-            break;
-        }
-        sum += counter;
-        counter += 1;
-    }
-    sum // 1 + 2 + .. + 10 = 55
-}
-// ANCHOR_END: break_example
-// ANCHOR: continue_example
 fn continue_example() -> u64 {
     let mut counter = 0;
     let mut sum = 0;
@@ -223,10 +183,6 @@ fn continue_example() -> u64 {
         sum += counter;
     }
     sum // 1 + 3 + .. + 9 = 25
-}
-// ANCHOR_END: continue_example
-fn main() -> u64 {
-    break_example() + continue_example() // 55 + 25 = 80
 }
 ```
 

@@ -6,8 +6,13 @@ A dynamic string of variable length can be represented using the `StdString` typ
 
 The `StdString` type can be integrated with your contract calls. Consider the following contract that can compare and return a String:
 
-<<< @/../../docs/sway/echo-std-string/src/main.sw#std-string-1{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../docs/sway/echo-std-string/src/main.sw' -->
 
 A string can be created using a native JavaScript string, and sent to a Sway contract:
 
-<<< @./snippets/std-string.ts#std-string-2{ts:line-numbers}
+```ts\nconst stdString: StdString = 'Hello Fuel';
+
+const { value } = await contract.functions.echo_string(stdString).get();
+
+console.log('value', value);
+// 'Hello Fuel'\n```

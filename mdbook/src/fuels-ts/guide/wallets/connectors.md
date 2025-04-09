@@ -8,7 +8,7 @@ Fuel Wallet Connectors offer a standardized interface to integrate multiple wall
 
 To build your own wallet integration, you can create a custom connector that extends the abstract [`FuelConnector`](DOCS_API_URL/classes/_fuel_ts_account.FuelConnector.html) class. This interface provides a set of methods and events that allow you to interact with the wallet and handle various operations such as connecting, disconnecting, signing messages, and sending transactions.
 
-<<< @./snippets/connectors.ts#fuel-connector-extends{ts:line-numbers}
+```ts\nclass MyWalletConnector extends FuelConnector\n```
 
 ### Properties
 
@@ -18,7 +18,7 @@ The `FuelConnector` abstract class provides several properties that should be im
 
 The `name` property is simply a `string` on the connector that serves as an identifier and will be displayed to the end-user when selecting a connector.
 
-<<< @./snippets/connectors.ts#fuel-connector-name{ts:line-numbers}
+```ts\npublic override name: string = 'My Wallet Connector';\n```
 
 ### `external`
 
@@ -29,7 +29,7 @@ Connectors are considered external, or non-native, when they do not support the 
 
 The `metadata` property on the connector provides additional information about the connector. This information will be displayed to the end-user when selecting a connector. The following is the structure of the `metadata` object:
 
-<<< @/../../../packages/account/src/connectors/types/connector-metadata.ts#fuel-connector-metadata{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/types/connector-metadata.ts' -->
 
 ##### `install`
 
@@ -43,17 +43,24 @@ The `install` object requires three properties:
 
 - `description` (_required_) - a `string` that will contain a description of the installation process.
 
-<<< @./snippets/connectors.ts#fuel-connector-metadata-install{ts:line-numbers}
+```ts\ninstall: {
+    action: 'Install',
+    description: 'Install the My Wallet Connector',
+    link: 'https://example.com/install',
+  },\n```
 
 ##### `image`
 
 The `metadata.image` property (_optional_) provides an image that will be displayed to the end-user when selecting a connector. The image will be a URL to the image to be displayed (this can be an inline data URI, encoded in base64).
 
-<<< @./snippets/connectors.ts#fuel-connector-metadata-image{ts:line-numbers}
+```ts\nimage: 'https://example.com/image.png',\n```
 
 You can even define a `light` and `dark` theme for the image by providing an object with the `light` and `dark` keys (these will take a similar URI as above).
 
-<<< @./snippets/connectors.ts#fuel-connector-metadata-image-theme{ts:line-numbers}
+```ts\nimage: {
+    light: 'https://example.com/light.png',
+    dark: 'https://example.com/dark.png',
+  },\n```
 
 ### Events
 
@@ -63,55 +70,105 @@ The `FuelConnector` class provides a number of events that enable developers to 
 
 The `accounts` event is emitted every time a connector's accounts change. The event data is an array of `string` addresses available on the network.
 
-<<< @./snippets/connectors.ts#fuel-connector-events-accounts{ts:line-numbers}
+```ts\nconst accounts: Array<string> = ['0x1234567890abcdef'];
+
+    this.emit(this.events.accounts, accounts);\n```
 
 #### `connectors`
 
 The `connectors` event is emitted when the connectors are initialized. The event data is an array of [`FuelConnector`](DOCS_API_URL/classes/_fuel_ts_account.FuelConnector.html) objects available on the network.
 
-<<< @./snippets/connectors.ts#fuel-connector-events-connectors{ts:line-numbers}
+```ts\nconst connectors: Array<FuelConnector> = [new MyWalletConnector()];
+
+    this.emit(this.events.connectors, connectors);\n```
 
 #### `currentConnector`
 
 The `currentConnector` event is emitted every time the current connector changes. The event data is a [`FuelConnector`](DOCS_API_URL/classes/_fuel_ts_account.FuelConnector.html) object that is currently connected.
 
-<<< @./snippets/connectors.ts#fuel-connector-events-currentConnector{ts:line-numbers}
+```ts\nconst currentConnector: FuelConnector = new MyWalletConnector();
+
+    this.emit(this.events.currentConnector, currentConnector);\n```
 
 #### `currentAccount`
 
 The `currentAccount` event is emitted every time the current account changes. The event data is a string containing the current account address.
 
-<<< @./snippets/connectors.ts#fuel-connector-events-currentAccount{ts:line-numbers}
+```ts\nconst currentAccount: string = '0x1234567890abcdef';
+
+    this.emit(this.events.currentAccount, currentAccount);\n```
 
 #### `connection`
 
 The `connection` event is emitted every time the connection status changes. The event data is a `boolean` value that is `true` if the connection is established and `false` otherwise.
 
-<<< @./snippets/connectors.ts#fuel-connector-events-connection{ts:line-numbers}
+```ts\nconst connection: boolean = true;
+
+    this.emit(this.events.connection, connection);\n```
 
 #### `networks`
 
 The `networks` event is emitted every time the network changes. The event data will be a [`Network`](DOCS_API_URL/types/_fuel_ts_account.Network.html) object containing the current network information.
 
-<<< @./snippets/connectors.ts#fuel-connector-events-networks{ts:line-numbers}
+```ts\nconst network: Network = {
+      chainId: 1,
+      url: 'https://example.com/rpc',
+    };
+
+    this.emit(this.events.networks, network);\n```
 
 #### `currentNetwork`
 
 The `currentNetwork` event is emitted every time the current network changes. The event data will be a [`Network`](DOCS_API_URL/types/_fuel_ts_account.Network.html) object containing the current network information.
 
-<<< @./snippets/connectors.ts#fuel-connector-events-currentNetwork{ts:line-numbers}
+```ts\nconst currentNetwork: Network = {
+      chainId: 1,
+      url: 'https://example.com/rpc',
+    };
+
+    this.emit(this.events.currentNetwork, currentNetwork);\n```
 
 #### `assets`
 
 The `assets` event is emitted every time the assets change. The event data will be an array of [`Asset`](DOCS_API_URL/types/_fuel_ts_account.Asset.html) objects available on the network.
 
-<<< @./snippets/connectors.ts#fuel-connector-events-assets{ts:line-numbers}
+```ts\nconst assets: Array<Asset> = [
+      {
+        name: 'Ethereum',
+        symbol: 'ETH',
+        icon: 'https://assets.fuel.network/providers/eth.svg',
+        networks: [
+          {
+            type: 'ethereum',
+            chainId: 11155111,
+            decimals: 18,
+          },
+        ],
+      },
+    ];
+
+    this.emit(this.events.assets, assets);\n```
 
 #### `abis`
 
 The `abis` event is emitted every time an ABI is added to a connector. The event data will be an array of [`FuelABI`](DOCS_API_URL/types/_fuel_ts_account.FuelABI.html) object.
 
-<<< @./snippets/connectors.ts#fuel-connector-events-assets{ts:line-numbers}
+```ts\nconst assets: Array<Asset> = [
+      {
+        name: 'Ethereum',
+        symbol: 'ETH',
+        icon: 'https://assets.fuel.network/providers/eth.svg',
+        networks: [
+          {
+            type: 'ethereum',
+            chainId: 11155111,
+            decimals: 18,
+          },
+        ],
+      },
+    ];
+
+    this.emit(this.events.assets, assets);\n```
 
 ### Methods
 
@@ -123,7 +180,7 @@ The `ping` method is used to check if the connector is available and connected.
 
 It will return a promise that resolves to `true` if the connector is available and connected; otherwise, it will resolve to `false`.
 
-<<< @/../../../packages/account/src/connectors/fuel-connector.ts#fuel-connector-method-ping{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel-connector.ts' -->
 
 #### `version`
 
@@ -135,7 +192,7 @@ The returned version strings can be in a range of formats:
 - Tilde Ranges (e.g. `~1.2.3`)
 - Exact Versions (e.g. `1.2.3`)
 
-<<< @/../../../packages/account/src/connectors/fuel-connector.ts#fuel-connector-method-version{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel-connector.ts' -->
 
 #### `isConnected`
 
@@ -143,7 +200,7 @@ The `isConnected` method informs if the connector is currently connected.
 
 It will return a promise that resolves to `true` if the connector is established and currently connected; otherwise, it will return `false`.
 
-<<< @/../../../packages/account/src/connectors/fuel-connector.ts#fuel-connector-method-isConnected{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel-connector.ts' -->
 
 #### `connect`
 
@@ -151,7 +208,7 @@ The `connect` method initiates the current connectors authorization flow if a co
 
 It will return a promise that resolves to `true` if the connection has been established successfully, or `false` if the user has rejected it.
 
-<<< @/../../../packages/account/src/connectors/fuel-connector.ts#fuel-connector-method-connect{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel-connector.ts' -->
 
 #### `disconnect`
 
@@ -159,7 +216,7 @@ The `disconnect` method revokes the authorization of the current connector (prov
 
 It will return a promise that resolves to `true` if the disconnection is successful; otherwise, it will resolve to `false`.
 
-<<< @/../../../packages/account/src/connectors/fuel-connector.ts#fuel-connector-method-connect{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel-connector.ts' -->
 
 #### `accounts`
 
@@ -167,7 +224,7 @@ The `accounts` method should return a list of all the accounts for the current c
 
 It returns a promise that resolves to an array of addresses, pointing to the accounts currently available on the network.
 
-<<< @/../../../packages/account/src/connectors/fuel-connector.ts#fuel-connector-method-accounts{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel-connector.ts' -->
 
 #### `currentAccount`
 
@@ -175,7 +232,7 @@ The `currentAccount` method will return the default account address if it's auth
 
 It will return a promise to resolve the issue to an address, or if the account is not authorized for the connection, it will return `null`.
 
-<<< @/../../../packages/account/src/connectors/fuel-connector.ts#fuel-connector-method-currentAccount{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel-connector.ts' -->
 
 #### `signMessage`
 
@@ -188,7 +245,7 @@ It requires two arguments:
 
 Providing the message signing flow is successful, it will return the message signature (as a `string`).
 
-<<< @/../../../packages/account/src/connectors/fuel-connector.ts#fuel-connector-method-signMessage{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel-connector.ts' -->
 
 #### `sendTransaction`
 
@@ -201,7 +258,7 @@ It requires two arguments:
 
 It will return the transaction signature (as a `string`) if it is successfully signed.
 
-<<< @/../../../packages/account/src/connectors/fuel-connector.ts#fuel-connector-method-sendTransaction{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel-connector.ts' -->
 
 #### `assets`
 
@@ -209,7 +266,7 @@ The `assets` method returns a list of all the assets available for the current c
 
 It will return a promise that will resolve to an array of assets (see [`Asset`](DOCS_API_URL/types/_fuel_ts_account.Asset.html)) that are available on the network.
 
-<<< @/../../../packages/account/src/connectors/fuel-connector.ts#fuel-connector-method-assets{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel-connector.ts' -->
 
 #### `addAsset`
 
@@ -221,7 +278,7 @@ It requires a single argument:
 
 It returns a promise that resolves to `true` if the asset is successfully added; otherwise, it resolves to `false`.
 
-<<< @/../../../packages/account/src/connectors/fuel-connector.ts#fuel-connector-method-addAsset{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel-connector.ts' -->
 
 #### `addAssets`
 
@@ -233,7 +290,7 @@ It requires a single argument:
 
 Returns a promise that resolves to `true` if the assets are successfully added; otherwise, resolves to `false`.
 
-<<< @/../../../packages/account/src/connectors/fuel-connector.ts#fuel-connector-method-addAssets{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel-connector.ts' -->
 
 #### `addNetwork`
 
@@ -247,7 +304,7 @@ Returns a promise that resolves to `true` if the network is successfully added; 
 
 It should throw an error if the network is not available or the network already exists.
 
-<<< @/../../../packages/account/src/connectors/fuel-connector.ts#fuel-connector-method-addNetwork{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel-connector.ts' -->
 
 #### `networks`
 
@@ -255,7 +312,7 @@ The `networks` method returns a list of all the networks available for the curre
 
 Returns a promise that resolves to an array of available networks (see [`Network`](DOCS_API_URL/types/_fuel_ts_account.Network.html)).
 
-<<< @/../../../packages/account/src/connectors/fuel-connector.ts#fuel-connector-method-networks{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel-connector.ts' -->
 
 #### `currentNetwork`
 
@@ -263,7 +320,7 @@ The `currentNetwork` method will return the current network that is connected.
 
 It will return a promise that will resolve to the current network (see [`Network`](DOCS_API_URL/types/_fuel_ts_account.Network.html)).
 
-<<< @/../../../packages/account/src/connectors/fuel-connector.ts#fuel-connector-method-currentNetwork{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel-connector.ts' -->
 
 #### `selectNetwork`
 
@@ -279,7 +336,7 @@ It will return a promise that resolves to `true` if the network is successfully 
 
 It should throw an error if the network is not available or the network does _not_ exist.
 
-<<< @/../../../packages/account/src/connectors/fuel-connector.ts#fuel-connector-method-selectNetwork{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel-connector.ts' -->
 
 #### `addABI`
 
@@ -292,7 +349,7 @@ It requires two arguments:
 
 It will return a promise that will resolve to `true` if the ABI is successfully added; otherwise `false`.
 
-<<< @/../../../packages/account/src/connectors/fuel-connector.ts#fuel-connector-method-addABI{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel-connector.ts' -->
 
 #### `getABI`
 
@@ -304,7 +361,7 @@ It requires a single argument:
 
 Returns a promise that resolves to the ABI information (as a [`FuelABI`](DOCS_API_URL/types/_fuel_ts_account.FuelABI.html)) or `null` if the data is unavailable.
 
-<<< @/../../../packages/account/src/connectors/fuel-connector.ts#fuel-connector-method-getABI{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel-connector.ts' -->
 
 #### `hasABI`
 
@@ -316,7 +373,7 @@ It requires a single argument:
 
 Returns a promise that resolves to `true` if the ABI information is available; otherwise `false`.
 
-<<< @/../../../packages/account/src/connectors/fuel-connector.ts#fuel-connector-method-hasABI{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel-connector.ts' -->
 
 ## Connectors Manager
 
@@ -324,7 +381,13 @@ The TS SDK exports the `Fuel` class, which serves as the connectors manager. Thi
 
 It can be instantiated as follows:
 
-<<< @./snippets/fuel-instantiation-one.ts#fuel-instantiation-1{ts:line-numbers}
+```ts\nconst sdk = new Fuel();
+
+/*
+	Awaits for initialization to mitigate potential race conditions
+	derived from the async nature of instantiating a connector.
+*/
+await sdk.init();\n```
 
 > [!NOTE] Note
 > We recommend initializing the Fuel class with the `init` method to avoid any potential race conditions that may arise from the async nature of instantiating a connector.
@@ -343,23 +406,63 @@ The `connectors` option provides a list of connectors with which the `Fuel` conn
 
 Below, we initialize the manager using the `defaultConnectors` method which provides an array of all the default connectors available in the `fuel-connectors` package. It's being mocked here for the purposes of this example, but you can provide your own custom connectors. Supplying the `devMode` flag as `true` will enable the development wallet for the connectors (to install visit our [wallet documentation](https://docs.fuel.network/docs/wallet/install/)).
 
-<<< @./snippets/fuel-instantiation-options.ts#fuel-options-connectors{ts:line-numbers}
+```ts\nimport { Fuel, FuelConnector } from 'fuels';
+
+class WalletConnector extends FuelConnector {
+  public override name: string = 'My Wallet Connector';
+}
+
+const defaultConnectors = (_opts: {
+  devMode: boolean;
+}): Array<FuelConnector> => [new WalletConnector()];
+
+const sdkDevMode = await new Fuel({
+  connectors: defaultConnectors({
+    devMode: true,
+  }),
+}).init();\n```
 
 #### `storage`
 
 The `storage` is used internally to store the current connector state. It can be overridden by passing an instance that extends the `StorageAbstract` class.
 
-<<< @./snippets/fuel-options-storage-memory.ts#fuel-options-storage-memory{ts:line-numbers}
+```ts\nimport { Fuel, MemoryStorage } from 'fuels';
+
+const sdkWithMemoryStorage = await new Fuel({
+  storage: new MemoryStorage(),
+}).init();\n```
 
 The default behavior will use `LocalStorage` if the `window` is available:
 
-<<< @./snippets/fuel-options-storage-local.ts#fuel-options-storage-local{ts:line-numbers}
+```ts\nimport { Fuel, LocalStorage } from 'fuels';
+
+const window = {
+  localStorage: {
+    setItem: vi.fn(),
+    getItem: vi.fn(),
+    removeItem: vi.fn(),
+    clear: vi.fn(),
+  } as unknown as Storage,
+};
+
+const sdkWithLocalStorage = await new Fuel({
+  storage: new LocalStorage(window.localStorage),
+}).init();\n```
 
 #### `targetObject`
 
 The `targetObject` provides a target with which the `Fuel` manager can interact. Used for registering events and can be overridden as follows:
 
-<<< @./snippets/fuel-options-target-object.ts#fuel-options-target-object{ts:line-numbers}
+```ts\nimport { Fuel } from 'fuels';
+import type { TargetObject } from 'fuels';
+
+const emptyWindow = {} as unknown as TargetObject;
+
+const targetObject: TargetObject = emptyWindow || document;
+
+const sdkWithTargetObject = await new Fuel({
+  targetObject,
+}).init();\n```
 
 ### Methods
 
@@ -375,13 +478,13 @@ If no current connector is available or connected, it will throw an error.
 
 The `connectors` method gets the current list of _installed_ and _connected_ connectors.
 
-<<< @/../../../packages/account/src/connectors/fuel.ts#connector-manager-method-connectors{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel.ts' -->
 
 #### `getConnector`
 
 The `getConnector` method resolves a connector by its name. This is useful for finding a specific connector with which to interact. If the connector is not found, it will return `null`.
 
-<<< @/../../../packages/account/src/connectors/fuel.ts#connector-manager-method-getConnector{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel.ts' -->
 
 #### `hasConnector`
 
@@ -390,19 +493,19 @@ The `hasConnector` method will return `true` under the following conditions:
 - There is a current connector that is connected.
 - A connector is connected within two seconds of calling the method.
 
-<<< @/../../../packages/account/src/connectors/fuel.ts#connector-manager-method-hasConnector{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel.ts' -->
 
 #### `selectConnector`
 
 The `selectConnector` method accepts a connector name and will return `true` when it is _available_ and _connected_. Otherwise, if not found or unavailable, it will return `false`.
 
-<<< @/../../../packages/account/src/connectors/fuel.ts#connector-manager-method-selectConnector{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel.ts' -->
 
 #### `currentConnector`
 
 The `currentConnector` method will return the current connector that is connected or if one is available and connected, otherwise it'll return `null` or `undefined`.
 
-<<< @/../../../packages/account/src/connectors/fuel.ts#connector-manager-method-currentConnector{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel.ts' -->
 
 #### `getWallet`
 
@@ -410,25 +513,25 @@ The `getWallet` method accepts an address (string or instance) as the first para
 
 The provider or network will default to the current network if not provided. When a provider cannot be resolved, it will throw an [`INVALID_PROVIDER`](../errors/index.md) error.
 
-<<< @/../../../packages/account/src/connectors/fuel.ts#connector-manager-method-getWallet{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel.ts' -->
 
 #### `clean`
 
 The `clean` method removes all the data currently stored in the [`storage`](#storage) instance.
 
-<<< @/../../../packages/account/src/connectors/fuel.ts#connector-manager-method-clean{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel.ts' -->
 
 #### `unsubscribe`
 
 The `unsubscribe` method removes all currently registered event listeners.
 
-<<< @/../../../packages/account/src/connectors/fuel.ts#connector-manager-method-unsubscribe{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel.ts' -->
 
 #### `destroy`
 
 The `destroy` method unsubscribes from all the event listeners and clears the storage.
 
-<<< @/../../../packages/account/src/connectors/fuel.ts#connector-manager-method-destroy{ts:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../../packages/account/src/connectors/fuel.ts' -->
 
 ## Learning Resources
 

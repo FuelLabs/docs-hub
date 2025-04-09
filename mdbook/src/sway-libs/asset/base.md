@@ -9,50 +9,8 @@ In order to use the Asset Library, Sway Libs and [Sway Standards](https://docs.f
 To import the Asset Library Base Functionality and [SRC-20](https://docs.fuel.network/docs/sway-standards/src-20-native-asset/) Standard to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
-contract;
-
-use std::{hash::*, storage::storage_string::*, string::String};
-
-// ANCHOR: import
 use sway_libs::asset::base::*;
 use standards::src20::*;
-// ANCHOR_END: import
-
-// ANCHOR: src20_abi
-abi SRC20 {
-    #[storage(read)]
-    fn total_assets() -> u64;
-    #[storage(read)]
-    fn total_supply(asset: AssetId) -> Option<u64>;
-    #[storage(read)]
-    fn name(asset: AssetId) -> Option<String>;
-    #[storage(read)]
-    fn symbol(asset: AssetId) -> Option<String>;
-    #[storage(read)]
-    fn decimals(asset: AssetId) -> Option<u8>;
-}
-// ANCHOR_END: src20_abi
-
-// ANCHOR: set_attributes
-abi SetAssetAttributes {
-    #[storage(write)]
-    fn set_name(asset: AssetId, name: String);
-    #[storage(write)]
-    fn set_symbol(asset: AssetId, symbol: String);
-    #[storage(write)]
-    fn set_decimals(asset: AssetId, decimals: u8);
-}
-// ANCHOR_END: set_attributes
-
-// ANCHOR: src20_storage
-storage {
-    total_assets: u64 = 0,
-    total_supply: StorageMap<AssetId, u64> = StorageMap {},
-    name: StorageMap<AssetId, StorageString> = StorageMap {},
-    symbol: StorageMap<AssetId, StorageString> = StorageMap {},
-    decimals: StorageMap<AssetId, u8> = StorageMap {},
-}
-// ANCHOR_END: src20_storage
 ```
 
 ## Integration with the SRC-20 Standard
@@ -60,16 +18,6 @@ storage {
 The [SRC-20](https://docs.fuel.network/docs/sway-standards/src-20-native-asset/) definition states that the following abi implementation is required for any Native Asset on Fuel:
 
 ```sway
-contract;
-
-use std::{hash::*, storage::storage_string::*, string::String};
-
-// ANCHOR: import
-use sway_libs::asset::base::*;
-use standards::src20::*;
-// ANCHOR_END: import
-
-// ANCHOR: src20_abi
 abi SRC20 {
     #[storage(read)]
     fn total_assets() -> u64;
@@ -82,28 +30,6 @@ abi SRC20 {
     #[storage(read)]
     fn decimals(asset: AssetId) -> Option<u8>;
 }
-// ANCHOR_END: src20_abi
-
-// ANCHOR: set_attributes
-abi SetAssetAttributes {
-    #[storage(write)]
-    fn set_name(asset: AssetId, name: String);
-    #[storage(write)]
-    fn set_symbol(asset: AssetId, symbol: String);
-    #[storage(write)]
-    fn set_decimals(asset: AssetId, decimals: u8);
-}
-// ANCHOR_END: set_attributes
-
-// ANCHOR: src20_storage
-storage {
-    total_assets: u64 = 0,
-    total_supply: StorageMap<AssetId, u64> = StorageMap {},
-    name: StorageMap<AssetId, StorageString> = StorageMap {},
-    symbol: StorageMap<AssetId, StorageString> = StorageMap {},
-    decimals: StorageMap<AssetId, u8> = StorageMap {},
-}
-// ANCHOR_END: src20_storage
 ```
 
 The Asset Library has the following complimentary functions for each function in the `SRC20` abi:
@@ -117,31 +43,6 @@ The Asset Library has the following complimentary functions for each function in
 The following ABI and functions are also provided to set your [SRC-20](https://docs.fuel.network/docs/sway-standards/src-20-native-asset/) standard storage values:
 
 ```sway
-contract;
-
-use std::{hash::*, storage::storage_string::*, string::String};
-
-// ANCHOR: import
-use sway_libs::asset::base::*;
-use standards::src20::*;
-// ANCHOR_END: import
-
-// ANCHOR: src20_abi
-abi SRC20 {
-    #[storage(read)]
-    fn total_assets() -> u64;
-    #[storage(read)]
-    fn total_supply(asset: AssetId) -> Option<u64>;
-    #[storage(read)]
-    fn name(asset: AssetId) -> Option<String>;
-    #[storage(read)]
-    fn symbol(asset: AssetId) -> Option<String>;
-    #[storage(read)]
-    fn decimals(asset: AssetId) -> Option<u8>;
-}
-// ANCHOR_END: src20_abi
-
-// ANCHOR: set_attributes
 abi SetAssetAttributes {
     #[storage(write)]
     fn set_name(asset: AssetId, name: String);
@@ -150,17 +51,6 @@ abi SetAssetAttributes {
     #[storage(write)]
     fn set_decimals(asset: AssetId, decimals: u8);
 }
-// ANCHOR_END: set_attributes
-
-// ANCHOR: src20_storage
-storage {
-    total_assets: u64 = 0,
-    total_supply: StorageMap<AssetId, u64> = StorageMap {},
-    name: StorageMap<AssetId, StorageString> = StorageMap {},
-    symbol: StorageMap<AssetId, StorageString> = StorageMap {},
-    decimals: StorageMap<AssetId, u8> = StorageMap {},
-}
-// ANCHOR_END: src20_storage
 ```
 
 - `_set_name()`
@@ -174,42 +64,6 @@ storage {
 Once imported, the Asset Library's base functionality should be available. To use them, be sure to add the storage block below to your contract which enables the [SRC-20](https://docs.fuel.network/docs/sway-standards/src-20-native-asset/) standard.
 
 ```sway
-contract;
-
-use std::{hash::*, storage::storage_string::*, string::String};
-
-// ANCHOR: import
-use sway_libs::asset::base::*;
-use standards::src20::*;
-// ANCHOR_END: import
-
-// ANCHOR: src20_abi
-abi SRC20 {
-    #[storage(read)]
-    fn total_assets() -> u64;
-    #[storage(read)]
-    fn total_supply(asset: AssetId) -> Option<u64>;
-    #[storage(read)]
-    fn name(asset: AssetId) -> Option<String>;
-    #[storage(read)]
-    fn symbol(asset: AssetId) -> Option<String>;
-    #[storage(read)]
-    fn decimals(asset: AssetId) -> Option<u8>;
-}
-// ANCHOR_END: src20_abi
-
-// ANCHOR: set_attributes
-abi SetAssetAttributes {
-    #[storage(write)]
-    fn set_name(asset: AssetId, name: String);
-    #[storage(write)]
-    fn set_symbol(asset: AssetId, symbol: String);
-    #[storage(write)]
-    fn set_decimals(asset: AssetId, decimals: u8);
-}
-// ANCHOR_END: set_attributes
-
-// ANCHOR: src20_storage
 storage {
     total_assets: u64 = 0,
     total_supply: StorageMap<AssetId, u64> = StorageMap {},
@@ -217,7 +71,6 @@ storage {
     symbol: StorageMap<AssetId, StorageString> = StorageMap {},
     decimals: StorageMap<AssetId, u8> = StorageMap {},
 }
-// ANCHOR_END: src20_storage
 ```
 
 ## Implementing the SRC-20 Standard with the Asset Library
@@ -225,9 +78,6 @@ storage {
 To use the Asset Library's base functionly, simply pass the `StorageKey` from the prescribed storage block. The example below shows the implementation of the [SRC-20](https://docs.fuel.network/docs/sway-standards/src-20-native-asset/) standard in combination with the Asset Library with no user defined restrictions or custom functionality.
 
 ```sway
-contract;
-
-// ANCHOR: basic_src20
 use sway_libs::asset::base::{_decimals, _name, _symbol, _total_assets, _total_supply};
 use standards::src20::SRC20;
 use std::{hash::Hash, storage::storage_string::*, string::String};
@@ -273,7 +123,6 @@ impl SRC20 for Contract {
         _decimals(storage.decimals, asset)
     }
 }
-// ANCHOR_END: basic_src20
 ```
 
 ## Setting an Asset's SRC-20 Attributes
@@ -283,9 +132,6 @@ To set some the asset attributes for an Asset, use the `SetAssetAttributes` ABI 
 The `_set_name()`, `_set_symbol()`, and `_set_decimals()` functions follows the SRC-20 standard for logging and will emit their respective log when called.
 
 ```sway
-contract;
-
-// ANCHOR: setting_src20_attributes
 use sway_libs::asset::base::*;
 use std::{hash::Hash, storage::storage_string::*, string::String};
 
@@ -311,7 +157,6 @@ impl SetAssetAttributes for Contract {
         _set_decimals(storage.decimals, asset, decimals);
     }
 }
-// ANCHOR_END: setting_src20_attributes
 ```
 
 > **NOTE** The `_set_name()`, `_set_symbol()`, and `_set_decimals()` functions will set the attributes of an asset *unconditionally*. External checks should be applied to restrict the setting of attributes.

@@ -16,63 +16,8 @@ For implementation details, visit the [Sway Libs Docs](https://fuellabs.github.i
    To import the Ownership Library and the [SRC-5](https://docs.fuel.network/docs/sway-standards/src-5-ownership/) standard, include the following in your Sway file:
 
    ```sway
-   library;
-
-// ANCHOR: import
-use sway_libs::ownership::*;
+   use sway_libs::ownership::*;
 use standards::src5::*;
-// ANCHOR_END: import
-
-// ANCHOR: integrate_with_src5
-use sway_libs::ownership::_owner;
-use standards::src5::{SRC5, State};
-
-impl SRC5 for Contract {
-    #[storage(read)]
-    fn owner() -> State {
-        _owner()
-    }
-}
-// ANCHOR_END: integrate_with_src5
-
-// ANCHOR: initialize
-#[storage(read, write)]
-fn my_constructor(new_owner: Identity) {
-    initialize_ownership(new_owner);
-}
-// ANCHOR_END: initialize
-
-// ANCHOR: only_owner
-#[storage(read)]
-fn only_owner_may_call() {
-    only_owner();
-    // Only the contract's owner may reach this line.
-}
-// ANCHOR_END: only_owner
-
-// ANCHOR: state
-#[storage(read)]
-fn get_owner_state() {
-    let owner: State = _owner();
-}
-// ANCHOR_END: state
-
-// ANCHOR: transfer_ownership
-#[storage(read, write)]
-fn transfer_contract_ownership(new_owner: Identity) {
-    // The caller must be the current owner.
-    transfer_ownership(new_owner);
-}
-// ANCHOR: transfer_ownership
-
-// ANCHOR: renouncing_ownership
-#[storage(read, write)]
-fn renounce_contract_owner() {
-    // The caller must be the current owner.
-    renounce_ownership();
-    // Now no one owns the contract.
-}
-// ANCHOR: renouncing_ownership
    ```
 
 ## Integrating the Ownership Library into the SRC-5 Standard
@@ -80,14 +25,6 @@ fn renounce_contract_owner() {
 When integrating the Ownership Library with [SRC-5](https://docs.fuel.network/docs/sway-standards/src-5-ownership/), ensure that the `SRC5` trait from **Sway Standards** is implemented in your contract, as shown below. The `_owner()` function from this library is used to fulfill the SRC-5 requirement of exposing the ownership state.
 
 ```sway
-library;
-
-// ANCHOR: import
-use sway_libs::ownership::*;
-use standards::src5::*;
-// ANCHOR_END: import
-
-// ANCHOR: integrate_with_src5
 use sway_libs::ownership::_owner;
 use standards::src5::{SRC5, State};
 
@@ -97,46 +34,6 @@ impl SRC5 for Contract {
         _owner()
     }
 }
-// ANCHOR_END: integrate_with_src5
-
-// ANCHOR: initialize
-#[storage(read, write)]
-fn my_constructor(new_owner: Identity) {
-    initialize_ownership(new_owner);
-}
-// ANCHOR_END: initialize
-
-// ANCHOR: only_owner
-#[storage(read)]
-fn only_owner_may_call() {
-    only_owner();
-    // Only the contract's owner may reach this line.
-}
-// ANCHOR_END: only_owner
-
-// ANCHOR: state
-#[storage(read)]
-fn get_owner_state() {
-    let owner: State = _owner();
-}
-// ANCHOR_END: state
-
-// ANCHOR: transfer_ownership
-#[storage(read, write)]
-fn transfer_contract_ownership(new_owner: Identity) {
-    // The caller must be the current owner.
-    transfer_ownership(new_owner);
-}
-// ANCHOR: transfer_ownership
-
-// ANCHOR: renouncing_ownership
-#[storage(read, write)]
-fn renounce_contract_owner() {
-    // The caller must be the current owner.
-    renounce_ownership();
-    // Now no one owns the contract.
-}
-// ANCHOR: renouncing_ownership
 ```
 
 ## Basic Usage
@@ -146,63 +43,10 @@ fn renounce_contract_owner() {
 Establishes the initial ownership state by calling `initialize_ownership(new_owner)`. This can only be done once, typically in your contract's constructor.
 
 ```sway
-library;
-
-// ANCHOR: import
-use sway_libs::ownership::*;
-use standards::src5::*;
-// ANCHOR_END: import
-
-// ANCHOR: integrate_with_src5
-use sway_libs::ownership::_owner;
-use standards::src5::{SRC5, State};
-
-impl SRC5 for Contract {
-    #[storage(read)]
-    fn owner() -> State {
-        _owner()
-    }
-}
-// ANCHOR_END: integrate_with_src5
-
-// ANCHOR: initialize
 #[storage(read, write)]
 fn my_constructor(new_owner: Identity) {
     initialize_ownership(new_owner);
 }
-// ANCHOR_END: initialize
-
-// ANCHOR: only_owner
-#[storage(read)]
-fn only_owner_may_call() {
-    only_owner();
-    // Only the contract's owner may reach this line.
-}
-// ANCHOR_END: only_owner
-
-// ANCHOR: state
-#[storage(read)]
-fn get_owner_state() {
-    let owner: State = _owner();
-}
-// ANCHOR_END: state
-
-// ANCHOR: transfer_ownership
-#[storage(read, write)]
-fn transfer_contract_ownership(new_owner: Identity) {
-    // The caller must be the current owner.
-    transfer_ownership(new_owner);
-}
-// ANCHOR: transfer_ownership
-
-// ANCHOR: renouncing_ownership
-#[storage(read, write)]
-fn renounce_contract_owner() {
-    // The caller must be the current owner.
-    renounce_ownership();
-    // Now no one owns the contract.
-}
-// ANCHOR: renouncing_ownership
 ```
 
 ### Applying Restrictions
@@ -210,63 +54,11 @@ fn renounce_contract_owner() {
 Protect functions so only the owner can call them by invoking `only_owner()` at the start of those functions.
 
 ```sway
-library;
-
-// ANCHOR: import
-use sway_libs::ownership::*;
-use standards::src5::*;
-// ANCHOR_END: import
-
-// ANCHOR: integrate_with_src5
-use sway_libs::ownership::_owner;
-use standards::src5::{SRC5, State};
-
-impl SRC5 for Contract {
-    #[storage(read)]
-    fn owner() -> State {
-        _owner()
-    }
-}
-// ANCHOR_END: integrate_with_src5
-
-// ANCHOR: initialize
-#[storage(read, write)]
-fn my_constructor(new_owner: Identity) {
-    initialize_ownership(new_owner);
-}
-// ANCHOR_END: initialize
-
-// ANCHOR: only_owner
 #[storage(read)]
 fn only_owner_may_call() {
     only_owner();
     // Only the contract's owner may reach this line.
 }
-// ANCHOR_END: only_owner
-
-// ANCHOR: state
-#[storage(read)]
-fn get_owner_state() {
-    let owner: State = _owner();
-}
-// ANCHOR_END: state
-
-// ANCHOR: transfer_ownership
-#[storage(read, write)]
-fn transfer_contract_ownership(new_owner: Identity) {
-    // The caller must be the current owner.
-    transfer_ownership(new_owner);
-}
-// ANCHOR: transfer_ownership
-
-// ANCHOR: renouncing_ownership
-#[storage(read, write)]
-fn renounce_contract_owner() {
-    // The caller must be the current owner.
-    renounce_ownership();
-    // Now no one owns the contract.
-}
-// ANCHOR: renouncing_ownership
 ```
 
 ### Checking the Ownership Status
@@ -274,63 +66,10 @@ fn renounce_contract_owner() {
 To retrieve the current ownership state, call `_owner()`.
 
 ```sway
-library;
-
-// ANCHOR: import
-use sway_libs::ownership::*;
-use standards::src5::*;
-// ANCHOR_END: import
-
-// ANCHOR: integrate_with_src5
-use sway_libs::ownership::_owner;
-use standards::src5::{SRC5, State};
-
-impl SRC5 for Contract {
-    #[storage(read)]
-    fn owner() -> State {
-        _owner()
-    }
-}
-// ANCHOR_END: integrate_with_src5
-
-// ANCHOR: initialize
-#[storage(read, write)]
-fn my_constructor(new_owner: Identity) {
-    initialize_ownership(new_owner);
-}
-// ANCHOR_END: initialize
-
-// ANCHOR: only_owner
-#[storage(read)]
-fn only_owner_may_call() {
-    only_owner();
-    // Only the contract's owner may reach this line.
-}
-// ANCHOR_END: only_owner
-
-// ANCHOR: state
 #[storage(read)]
 fn get_owner_state() {
     let owner: State = _owner();
 }
-// ANCHOR_END: state
-
-// ANCHOR: transfer_ownership
-#[storage(read, write)]
-fn transfer_contract_ownership(new_owner: Identity) {
-    // The caller must be the current owner.
-    transfer_ownership(new_owner);
-}
-// ANCHOR: transfer_ownership
-
-// ANCHOR: renouncing_ownership
-#[storage(read, write)]
-fn renounce_contract_owner() {
-    // The caller must be the current owner.
-    renounce_ownership();
-    // Now no one owns the contract.
-}
-// ANCHOR: renouncing_ownership
 ```
 
 ### Transferring Ownership
@@ -338,63 +77,7 @@ fn renounce_contract_owner() {
 To transfer ownership from the current owner to a new owner, call `transfer_ownership(new_owner)`.
 
 ```sway
-library;
-
-// ANCHOR: import
-use sway_libs::ownership::*;
-use standards::src5::*;
-// ANCHOR_END: import
-
-// ANCHOR: integrate_with_src5
-use sway_libs::ownership::_owner;
-use standards::src5::{SRC5, State};
-
-impl SRC5 for Contract {
-    #[storage(read)]
-    fn owner() -> State {
-        _owner()
-    }
-}
-// ANCHOR_END: integrate_with_src5
-
-// ANCHOR: initialize
-#[storage(read, write)]
-fn my_constructor(new_owner: Identity) {
-    initialize_ownership(new_owner);
-}
-// ANCHOR_END: initialize
-
-// ANCHOR: only_owner
-#[storage(read)]
-fn only_owner_may_call() {
-    only_owner();
-    // Only the contract's owner may reach this line.
-}
-// ANCHOR_END: only_owner
-
-// ANCHOR: state
-#[storage(read)]
-fn get_owner_state() {
-    let owner: State = _owner();
-}
-// ANCHOR_END: state
-
-// ANCHOR: transfer_ownership
-#[storage(read, write)]
-fn transfer_contract_ownership(new_owner: Identity) {
-    // The caller must be the current owner.
-    transfer_ownership(new_owner);
-}
-// ANCHOR: transfer_ownership
-
-// ANCHOR: renouncing_ownership
-#[storage(read, write)]
-fn renounce_contract_owner() {
-    // The caller must be the current owner.
-    renounce_ownership();
-    // Now no one owns the contract.
-}
-// ANCHOR: renouncing_ownership
+<!-- MDBOOK-ANCHOR-ERROR: Anchor 'transfer_ownership' not found in '../../../../examples/ownership/src/lib.sw' -->
 ```
 
 ### Renouncing Ownership
@@ -402,63 +85,7 @@ fn renounce_contract_owner() {
 To revoke ownership entirely and disallow the assignment of a new owner, call `renounce_ownership()`.
 
 ```sway
-library;
-
-// ANCHOR: import
-use sway_libs::ownership::*;
-use standards::src5::*;
-// ANCHOR_END: import
-
-// ANCHOR: integrate_with_src5
-use sway_libs::ownership::_owner;
-use standards::src5::{SRC5, State};
-
-impl SRC5 for Contract {
-    #[storage(read)]
-    fn owner() -> State {
-        _owner()
-    }
-}
-// ANCHOR_END: integrate_with_src5
-
-// ANCHOR: initialize
-#[storage(read, write)]
-fn my_constructor(new_owner: Identity) {
-    initialize_ownership(new_owner);
-}
-// ANCHOR_END: initialize
-
-// ANCHOR: only_owner
-#[storage(read)]
-fn only_owner_may_call() {
-    only_owner();
-    // Only the contract's owner may reach this line.
-}
-// ANCHOR_END: only_owner
-
-// ANCHOR: state
-#[storage(read)]
-fn get_owner_state() {
-    let owner: State = _owner();
-}
-// ANCHOR_END: state
-
-// ANCHOR: transfer_ownership
-#[storage(read, write)]
-fn transfer_contract_ownership(new_owner: Identity) {
-    // The caller must be the current owner.
-    transfer_ownership(new_owner);
-}
-// ANCHOR: transfer_ownership
-
-// ANCHOR: renouncing_ownership
-#[storage(read, write)]
-fn renounce_contract_owner() {
-    // The caller must be the current owner.
-    renounce_ownership();
-    // Now no one owns the contract.
-}
-// ANCHOR: renouncing_ownership
+<!-- MDBOOK-ANCHOR-ERROR: Anchor 'renouncing_ownership' not found in '../../../../examples/ownership/src/lib.sw' -->
 ```
 
 ## Events
@@ -502,70 +129,7 @@ Emitted when ownership is transferred from one owner to another.
 Below is a example illustrating how to use this library within a Sway contract:
 
 ```sway
-// ANCHOR: example_contract
-contract;
-
-use sway_libs::ownership::{
-    _owner,
-    initialize_ownership,
-    only_owner,
-    renounce_ownership,
-    transfer_ownership,
-};
-use standards::src5::{SRC5, State};
-
-impl SRC5 for Contract {
-    #[storage(read)]
-    fn owner() -> State {
-        _owner()
-    }
-}
-
-abi MyContract {
-    #[storage(read, write)]
-    fn constructor(new_owner: Identity);
-    #[storage(read)]
-    fn restricted_action();
-    #[storage(read, write)]
-    fn change_owner(new_owner: Identity);
-    #[storage(read, write)]
-    fn revoke_ownership();
-    #[storage(read)]
-    fn get_current_owner() -> State;
-}
-
-impl MyContract for Contract {
-    #[storage(read, write)]
-    fn constructor(new_owner: Identity) {
-        initialize_ownership(new_owner);
-    }
-
-    // A function restricted to the owner
-    #[storage(read)]
-    fn restricted_action() {
-        only_owner();
-        // Protected action
-    }
-
-    // Transfer ownership
-    #[storage(read, write)]
-    fn change_owner(new_owner: Identity) {
-        transfer_ownership(new_owner);
-    }
-
-    // Renounce ownership
-    #[storage(read, write)]
-    fn revoke_ownership() {
-        renounce_ownership();
-    }
-
-    // Get current owner state
-    #[storage(read)]
-    fn get_current_owner() -> State {
-        _owner()
-    }
-}
-// ANCHOR: example_contract
+<!-- MDBOOK-ANCHOR-ERROR: Anchor 'example_contract' not found in '../../../../examples/ownership/src/main.sw' -->
 ```
 
 1. **Initialization:** Call `constructor(new_owner)` once to set the initial owner.  

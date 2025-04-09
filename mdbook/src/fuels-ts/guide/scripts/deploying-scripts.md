@@ -17,4 +17,19 @@ This will perform the following actions:
 
 We can then utilize the above generated types like so:
 
-<<< @./snippets/deploying-scripts.ts#deploying-scripts{ts:line-numbers}
+```ts\nconst provider = new Provider(providerUrl);
+const wallet = Wallet.fromPrivateKey(WALLET_PVT_KEY, provider);
+
+// First, we will need to instantiate the script via it's loader bytecode. This can be imported from the typegen outputs
+// that were created on `fuels deploy`
+const script = new TypegenScriptLoader(wallet);
+
+// Now we are free to interact with the script as we would normally, such as overriding the configurables
+const configurable = {
+  AMOUNT: 20,
+};
+script.setConfigurableConstants(configurable);
+
+const { waitForResult } = await script.functions.main(10).call();
+const { value, gasUsed } = await waitForResult();
+console.log('value', value);\n```

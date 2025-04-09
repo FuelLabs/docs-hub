@@ -13,18 +13,40 @@ For more information about the API, please refer to the [Wiki](https://github.co
 
 We can request information about an asset by its asset ID, using the `getAssetById` function. This will leverage the endpoint `/assets/<assetId>` to fetch the asset information.
 
-<<< @./snippets/asset-api/asset-by-id.ts#full{ts:line-numbers}
+```ts\nimport type { AssetInfo } from 'fuels';
+import { getAssetById } from 'fuels';
+
+const asset: AssetInfo | null = await getAssetById({
+  assetId: '0xf8f8b6283d7fa5b672b530cbb84fcccb4ff8dc40f8176ef4544ddb1f1952ad07',
+});
+
+console.log('AssetInfo', asset);
+// AssetInfo { ... }\n```
 
 By default, we will request the asset information for `mainnet`. If you want to request the asset information from other networks, you can pass the `network` parameter (this is the same for the [`getAssetsByOwner`](#assets-by-owner) function).
 
-<<< @./snippets/asset-api/asset-by-id.ts#testnet{ts:line-numbers}
+```ts\nawait getAssetById({
+  assetId: '0xf8f8b6283d7fa5b672b530cbb84fcccb4ff8dc40f8176ef4544ddb1f1952ad07',
+  network: 'testnet',
+});\n```
 
 ## Assets by Owner
 
 We can request information about an asset by its owner, using the `getAssetsByOwner` function. This will leverage the endpoint `/accounts/<owner>/assets` to fetch the asset information.
 
-<<< @./snippets/asset-api/assets-by-owner.ts#full{ts:line-numbers}
+```ts\nimport type { AssetsByOwner } from 'fuels';
+import { getAssetsByOwner } from 'fuels';
+
+const assets: AssetsByOwner = await getAssetsByOwner({
+  owner: '0x0000000000000000000000000000000000000000000000000000000000000000',
+});
+
+console.log('AssetsByOwner', assets);
+// AssetsByOwner { data: [], pageInfo: { count: 0 } }\n```
 
 You can change the pagination parameters to fetch more assets (up to 100 assets per request).
 
-<<< @./snippets/asset-api/assets-by-owner.ts#pagination{ts:line-numbers}
+```ts\nawait getAssetsByOwner({
+  owner: '0x0000000000000000000000000000000000000000000000000000000000000000',
+  pagination: { last: 100 },
+});\n```

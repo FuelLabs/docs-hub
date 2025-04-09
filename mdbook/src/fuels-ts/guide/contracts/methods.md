@@ -6,13 +6,38 @@ There are 4 ways to interact with contracts: `get`, `dryRun`, `simulate`, `call`
 
 The `get` method should be used to read data from the blockchain without using resources. It can be used with an unfunded wallet or even without a wallet at all:
 
-<<< @./snippets/methods/get.ts#interacting-with-contracts-1{ts:line-numbers}
+```ts\nimport { Provider, Wallet } from 'fuels';
+
+import { LOCAL_NETWORK_URL, WALLET_PVT_KEY } from '../../../../env';
+import { CounterFactory } from '../../../../typegend';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+const deployer = Wallet.fromPrivateKey(WALLET_PVT_KEY, provider);
+
+const deployContract = await CounterFactory.deploy(deployer);
+const { contract } = await deployContract.waitForResult();
+
+// Read from the blockchain
+const { value } = await contract.functions.get_count().get();
+// 0\n```
 
 ## `dryRun`
 
 The `dryRun` method should be used to dry-run a contract call. It does not spend resources and can be used with an unfunded wallet or even without a wallet at all:
 
-<<< @./snippets/methods/dry-run.ts#interacting-with-contracts-2{ts:line-numbers}
+```ts\nimport { Provider, Wallet } from 'fuels';
+
+import { LOCAL_NETWORK_URL, WALLET_PVT_KEY } from '../../../../env';
+import { CounterFactory } from '../../../../typegend';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+const deployer = Wallet.fromPrivateKey(WALLET_PVT_KEY, provider);
+
+const deployContract = await CounterFactory.deploy(deployer);
+const { contract } = await deployContract.waitForResult();
+
+// Perform a dry-run of the transaction
+const { value } = await contract.functions.increment_count(1).dryRun();\n```
 
 ## `simulate`
 
@@ -20,7 +45,19 @@ The `simulate` method should be used to dry-run a contract call, ensuring that t
 
 A funded wallet it's required:
 
-<<< @./snippets/methods/simulate.ts#interacting-with-contracts-3{ts:line-numbers}
+```ts\nimport { Provider, Wallet } from 'fuels';
+
+import { LOCAL_NETWORK_URL, WALLET_PVT_KEY } from '../../../../env';
+import { CounterFactory } from '../../../../typegend';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+const deployer = Wallet.fromPrivateKey(WALLET_PVT_KEY, provider);
+
+const deployContract = await CounterFactory.deploy(deployer);
+const { contract } = await deployContract.waitForResult();
+
+// Simulate the transaction
+const { value } = await contract.functions.increment_count(10).simulate();\n```
 
 ## `call`
 
@@ -28,13 +65,45 @@ The `call` method submits a real contract call transaction to the node, resolvin
 
 Real resources are consumed, and any operations executed by the contract function will be processed on the blockchain.
 
-<<< @./snippets/methods/call.ts#interacting-with-contracts-4{ts:line-numbers}
+```ts\nimport { Provider, Wallet } from 'fuels';
+
+import { LOCAL_NETWORK_URL, WALLET_PVT_KEY } from '../../../../env';
+import { CounterFactory } from '../../../../typegend';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+const deployer = Wallet.fromPrivateKey(WALLET_PVT_KEY, provider);
+
+const deployContract = await CounterFactory.deploy(deployer);
+const { contract } = await deployContract.waitForResult();
+
+// Perform the transaction
+const { waitForResult } = await contract.functions.increment_count(10).call();
+
+const { value } = await waitForResult();\n```
 
 ## `isReadOnly` (utility)
 
 If you want to figure out whether a function is read-only, you can use the `isReadOnly` method:
 
-<<< @./snippets/methods/is-read-only.ts#is-function-readonly-1{ts:line-numbers}
+```ts\nimport { Provider, Wallet } from 'fuels';
+
+import { LOCAL_NETWORK_URL, WALLET_PVT_KEY } from '../../../../env';
+import { CounterFactory } from '../../../../typegend';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+const deployer = Wallet.fromPrivateKey(WALLET_PVT_KEY, provider);
+
+const deployContract = await CounterFactory.deploy(deployer);
+const { contract } = await deployContract.waitForResult();
+
+const isReadOnly = contract.functions.get_count.isReadOnly();
+
+if (isReadOnly) {
+  await contract.functions.get_count().get();
+} else {
+  const { waitForResult } = await contract.functions.get_count().call();
+  await waitForResult();
+}\n```
 
 If the function is read-only, you can use the `get` method to retrieve onchain data without spending gas.
 

@@ -6,11 +6,27 @@ In Sway, a `struct` serves a similar purpose as an `Object` in TypeScript. It de
 
 Here is an example of a `struct` in Sway:
 
-<<< @/../../docs/sway/employee-data/src/lib.sw#struct-1{rust:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../docs/sway/employee-data/src/lib.sw' -->
 
 And here is the equivalent structure represented in TypeScript:
 
-<<< @./snippets/structs.ts#struct-2{ts:line-numbers}
+```ts\ntype EmployeeDataStruct = {
+  name: string;
+  age: number;
+  salary: number;
+  idHash: string;
+  ratings: number[];
+  isActive: boolean;
+};
+
+const data: EmployeeDataStruct = {
+  name: 'John Doe',
+  age: 30,
+  salary: 100_000,
+  idHash: '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef',
+  ratings: [4, 5, 5],
+  isActive: true,
+};\n```
 
 ## Handling Different Data Types
 

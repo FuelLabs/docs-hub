@@ -18,19 +18,45 @@ You can provide the following settings:
   - `fixed`: Uses a constant delay between attempts.
 - `baseDelay` _(default 150ms)_ - Base time in milliseconds for the backoff strategy.
 
-<<< @./snippets/provider-options.ts#retryOptions{ts:line-numbers}
+```ts\nnew Provider(NETWORK_URL, {
+  retryOptions: {
+    maxRetries: 5,
+    baseDelay: 100,
+    backoff: 'linear',
+  },
+});\n```
 
 ### `requestMiddleware`
 
 Allows you to modify the request object to add additional headers, modify the request's body, and much more.
 
-<<< @./snippets/provider-options.ts#requestMiddleware{ts:line-numbers}
+```ts\n// synchronous request middleware
+new Provider(NETWORK_URL, {
+  requestMiddleware: (request: RequestInit) => {
+    request.credentials = 'omit';
+
+    return request;
+  },
+});
+
+// asynchronous request middleware
+new Provider(NETWORK_URL, {
+  requestMiddleware: async (request: RequestInit) => {
+    const credentials = await fetchSomeExternalCredentials();
+    request.headers ??= {};
+    (request.headers as Record<string, string>).auth = credentials;
+
+    return request;
+  },
+});\n```
 
 ### `timeout`
 
 Specify the timeout in milliseconds after which every request will be aborted.
 
-<<< @./snippets/provider-options.ts#timeout{ts:line-numbers}
+```ts\nnew Provider(NETWORK_URL, {
+  timeout: 3000, // will abort if request takes 30 seconds to complete
+});\n```
 
 ### `fetch`
 
@@ -38,7 +64,16 @@ Provide a custom `fetch` function that'll replace the default fetch call.
 
 _Note: If defined, `requestMiddleware`, `timeout` and `retryOptions` are applied to this custom `fetch` function as well._
 
-<<< @./snippets/provider-options.ts#fetch{ts:line-numbers}
+```ts\nnew Provider(NETWORK_URL, {
+  fetch: async (url: string, requestInit: RequestInit | undefined) => {
+    // native fetch
+    const response = await fetch(url, requestInit);
+
+    const updatedResponse = decorateResponseWithCustomLogic(response);
+
+    return updatedResponse;
+  },
+});\n```
 
 ### `resourceCacheTTL`
 
@@ -60,7 +95,10 @@ This error indicates that the resources used by the second transaction no longer
 
 To prevent this issue, the SDK sets a default cache for resources to 20 seconds. This default caching mechanism ensures that resources used in a submitted transaction are not reused in subsequent transactions within the specified time. You can control the duration of this cache using the `resourceCacheTTL` flag. If you would like to disable caching, you can pass a value of `-1` to the `resourceCacheTTL` parameter.
 
-<<< @./snippets/provider-options.ts#cache-utxo{ts:line-numbers}
+```ts\nnew Provider(NETWORK_URL, {
+  // Cache resources (Coin's and Message's) for 5 seconds
+  resourceCacheTTL: 5000,
+});\n```
 
 **Note:**
 

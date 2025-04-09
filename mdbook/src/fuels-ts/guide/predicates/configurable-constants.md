@@ -8,7 +8,7 @@ Let's consider an example where a predicate is used to validate an asset transfe
 
 The following snippet illustrates how this could be implemented:
 
-<<< @/../../docs/sway/whitelisted-address-predicate/src/main.sw#full{rust:line-numbers}
+<!-- SNIPPET FILE ERROR: File not found '../../docs/sway/whitelisted-address-predicate/src/main.sw' -->
 
 In this example, you'll notice the use of a configurable constant named `WHITELISTED`. This constant has a default value that represents the default approved address.
 
@@ -16,7 +16,51 @@ In this example, you'll notice the use of a configurable constant named `WHITELI
 
 If there is a need to whitelist another address, the `WHITELISTED` constant can be easily updated. The following snippet demonstrates how to set a new value for the `WHITELISTED` constant and to make the predicate execute the transfer:
 
-<<< @./snippets/configurables/configurable-set-data.ts#full{ts:line-numbers}
+```ts\nimport { Wallet, Provider } from 'fuels';
+
+import {
+  LOCAL_NETWORK_URL,
+  WALLET_ADDRESS,
+  WALLET_PVT_KEY_2,
+} from '../../../../env';
+import { WhitelistedAddressPredicate } from '../../../../typegend/predicates/WhitelistedAddressPredicate';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+const baseAssetId = await provider.getBaseAssetId();
+
+const whitelisted = Wallet.fromAddress(WALLET_ADDRESS, provider);
+const sender = Wallet.fromPrivateKey(WALLET_PVT_KEY_2, provider);
+const recipient = Wallet.generate({ provider });
+
+const configurable = { WHITELISTED: whitelisted.address.toB256() };
+
+// Instantiate predicate with configurable constants
+const predicate = new WhitelistedAddressPredicate({
+  provider,
+  data: [configurable.WHITELISTED],
+  configurableConstants: configurable,
+});
+
+// Transferring funds to the predicate
+const tx1 = await sender.transfer(predicate.address, 200_000, baseAssetId, {
+  gasLimit: 1000,
+});
+
+await tx1.waitForResult();
+
+const amountToTransfer = 100;
+
+// Transferring funds from the predicate to destination if predicate returns true
+const tx2 = await predicate.transfer(
+  recipient.address,
+  amountToTransfer,
+  baseAssetId,
+  {
+    gasLimit: 1000,
+  }
+);
+
+await tx2.waitForResult();\n```
 
 By ensuring that the updated `WHITELISTED` address matches the intended recipient's address, the predicate will validate the transfer successfully.
 
@@ -24,7 +68,43 @@ By ensuring that the updated `WHITELISTED` address matches the intended recipien
 
 In scenarios where the default whitelisted address is already the intended recipient, there's no need to update the `WHITELISTED` constant. The predicate will validate the transfer based on the default value. Here's how this scenario might look:
 
-<<< @./snippets/configurables/configurable-default.ts#full{ts:line-numbers}
+```ts\nimport { Wallet, Provider } from 'fuels';
+
+import { LOCAL_NETWORK_URL, WALLET_PVT_KEY } from '../../../../env';
+import { WhitelistedAddressPredicate } from '../../../../typegend/predicates/WhitelistedAddressPredicate';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+const baseAssetId = await provider.getBaseAssetId();
+
+const sender = Wallet.fromPrivateKey(WALLET_PVT_KEY, provider);
+const recipient = Wallet.generate({ provider });
+
+// Instantiate predicate without configurable constants (will use the address defined in Sway)
+const predicate = new WhitelistedAddressPredicate({
+  provider,
+  data: ['0xa703b26833939dabc41d3fcaefa00e62cee8e1ac46db37e0fa5d4c9fe30b4132'],
+});
+
+// Transferring funds to the predicate
+const tx1 = await sender.transfer(predicate.address, 200_000, baseAssetId, {
+  gasLimit: 1000,
+});
+
+await tx1.waitForResult();
+
+const amountToTransfer = 100;
+
+// Transferring funds from the predicate to destination if predicate returns true
+const tx2 = await predicate.transfer(
+  recipient.address,
+  amountToTransfer,
+  baseAssetId,
+  {
+    gasLimit: 1000,
+  }
+);
+
+await tx2.waitForResult();\n```
 
 This ability to configure constants within predicates provides a flexible mechanism for customizing their behavior, thereby enhancing the robustness and versatility of our asset transfer process.
 

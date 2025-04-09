@@ -16,17 +16,88 @@ Use the `multiCall` method to call multiple functions on the same contract in a 
 
 <!-- multicall:example:end -->
 
-<<< @./snippets/multi-call/same-contract.ts#multicall-1{ts:line-numbers}
+```ts\nimport { Provider, Wallet } from 'fuels';
+
+import { LOCAL_NETWORK_URL, WALLET_PVT_KEY } from '../../../../env';
+import { CounterFactory } from '../../../../typegend';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+const deployer = Wallet.fromPrivateKey(WALLET_PVT_KEY, provider);
+
+const counterContractTx = await CounterFactory.deploy(deployer);
+const { contract: counterContract } = await counterContractTx.waitForResult();
+
+const { waitForResult } = await counterContract
+  .multiCall([
+    counterContract.functions.get_count(),
+    counterContract.functions.increment_count(2),
+    counterContract.functions.increment_count(4),
+  ])
+  .call();
+
+const { value: results } = await waitForResult();
+// results[0] == 0
+// results[1] == 2
+// results[2] == 6\n```
 
 ## Different Contracts Multi Calls
 
 The `multiCall` method also allows you to execute multiple contract calls to distinct contracts within a single transaction:
 
-<<< @./snippets/multi-call/different-contracts.ts#multicall-2{ts:line-numbers}
+```ts\nimport { Provider, Wallet } from 'fuels';
+
+import { LOCAL_NETWORK_URL, WALLET_PVT_KEY } from '../../../../env';
+import { CounterFactory, EchoValuesFactory } from '../../../../typegend';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+const deployer = Wallet.fromPrivateKey(WALLET_PVT_KEY, provider);
+
+const counterContractTx = await CounterFactory.deploy(deployer);
+const { contract: counterContract } = await counterContractTx.waitForResult();
+const echoContractTx = await EchoValuesFactory.deploy(deployer);
+const { contract: echoContract } = await echoContractTx.waitForResult();
+
+const { waitForResult } = await echoContract
+  .multiCall([
+    echoContract.functions.echo_u8(17),
+    counterContract.functions.get_count(),
+    counterContract.functions.increment_count(5),
+  ])
+  .call();
+
+const { value: results } = await waitForResult();
+// results[0] == 17
+// results[1] == BN <0>
+// results[2] == BN <5>\n```
 
 You can also chain supported contract call methods, like `callParams`, for each contract call:
 
-<<< @./snippets/multi-call/different-contracts-chain-methods.ts#multicall-3{ts:line-numbers}
+```ts\nimport { Provider, Wallet } from 'fuels';
+
+import { LOCAL_NETWORK_URL, WALLET_PVT_KEY } from '../../../../env';
+import { EchoValuesFactory, ReturnContextFactory } from '../../../../typegend';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+const deployer = Wallet.fromPrivateKey(WALLET_PVT_KEY, provider);
+
+const echoContractTx = await EchoValuesFactory.deploy(deployer);
+const { contract: echoContract } = await echoContractTx.waitForResult();
+const returnContextTx = await ReturnContextFactory.deploy(deployer);
+const { contract: returnContextContract } =
+  await returnContextTx.waitForResult();
+
+const { waitForResult } = await echoContract
+  .multiCall([
+    echoContract.functions.echo_u8(10),
+    returnContextContract.functions.return_context_amount().callParams({
+      forward: [100, await provider.getBaseAssetId()],
+    }),
+  ])
+  .call();
+
+const { value: results } = await waitForResult();
+// results[0] == 10
+// results[1] == BN <100>\n```
 
 When using `multiCall`, the contract calls are queued and executed only after invoking one of the following methods: `.get`, `.simulate`, or `.call`.
 
@@ -34,4 +105,28 @@ When using `multiCall`, the contract calls are queued and executed only after in
 
 When you need to read data from multiple contracts, the `multiCall` method can perform multiple [read-only](./methods.md#get) calls in a single transaction. This minimizes the number of requests sent to the network and consolidates data retrieval, making your dApp interactions more efficient.
 
-<<< @./snippets/multi-call/different-contracts-readonly.ts#multicall-4{ts:line-numbers}
+```ts\nimport { Provider, Wallet } from 'fuels';
+
+import { LOCAL_NETWORK_URL, WALLET_PVT_KEY } from '../../../../env';
+import { CounterFactory, EchoValuesFactory } from '../../../../typegend';
+
+const provider = new Provider(LOCAL_NETWORK_URL);
+const deployer = Wallet.fromPrivateKey(WALLET_PVT_KEY, provider);
+
+const counterContractTx = await CounterFactory.deploy(deployer);
+const { contract: counterContract } = await counterContractTx.waitForResult();
+const echoContractTx = await EchoValuesFactory.deploy(deployer);
+const { contract: echoContract } = await echoContractTx.waitForResult();
+
+const { waitForResult } = await echoContract
+  .multiCall([
+    counterContract.functions.get_count(),
+    echoContract.functions.echo_u8(10),
+    echoContract.functions.echo_str('Fuel'),
+  ])
+  .call();
+
+const { value: results } = await waitForResult();
+// results[0] == BN <0>
+// results[1] == 10
+// results[2] == 'Fuel'\n```

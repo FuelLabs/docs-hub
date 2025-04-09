@@ -512,7 +512,6 @@ async function processDocument(docPath, submodule) {
     const relativeToSourceBase = path.relative(config.sourceBaseDir, docPath);
 
     // 2. Construct the new path relative to mdbook/src
-    //    Combine submodule key + path relative to its source base
     let newPath = path
       .join(submodule, relativeToSourceBase)
       .replace(/\\/g, '/'); // Ensure forward slashes
@@ -520,7 +519,7 @@ async function processDocument(docPath, submodule) {
     // 3. Handle file extension (.mdx -> .md)
     newPath = newPath.replace(/\.mdx$/, '.md');
 
-    // 4. Remove any potential leading slash if join added one unexpectedly
+    // 4. Remove any potential leading slash
     if (newPath.startsWith('/')) {
       newPath = newPath.substring(1);
     }
@@ -529,42 +528,283 @@ async function processDocument(docPath, submodule) {
     // Read the document
     const content = await fs.promises.readFile(docPath, 'utf8');
 
-    // Parse front matter if it exists
+    // Parse front matter
     const { data, content: documentContent } = matter(content);
 
-    // Process cross-references - TODO: Implement cross-reference fixing here
     let processedContent = documentContent;
 
-    // Convert MDX if needed (basic)
+    // Convert MDX if needed
     if (docPath.endsWith('.mdx')) {
       processedContent = convertMdxToMd(processedContent);
     }
 
-    // Process {{#include ...}} directives
-    const includeRegex = /\{\{#include\s+([^}]+?)(?::([^}]+))?\}\}/g;
-    const replacements = [];
+    // --- START: Handle code snippets (<<< @...#region) for fuels-ts ---
+    if (submodule === 'fuels-ts') {
+      // Regex to find snippet lines: <<< @(./ or /)path#region{optional_lang}
+      const snippetRegex =
+        /<<< @(?:\/|\.\/)(.+?)#(?:([a-zA-Z0-9_-]+))\s*(?:\{(?:(\w+).*?)?\})?$/gm;
+      const snippetReplacements = [];
+      let snippetMatch;
 
-    let match;
+      const contentToSearch = processedContent;
+
+      while (true) {
+        snippetMatch = snippetRegex.exec(contentToSearch);
+        if (snippetMatch === null) break;
+
+        const fullMatch = snippetMatch[0];
+        const relativePath = snippetMatch[1];
+        const regionName = snippetMatch[2];
+        const langHint = snippetMatch[3];
+
+        try {
+          const docDir = path.dirname(docPath);
+          const snippetFilePath = path.resolve(docDir, relativePath);
+
+          if (fs.existsSync(snippetFilePath)) {
+            const snippetFileContent = await fs.promises.readFile(
+              snippetFilePath,
+              'utf8'
+            );
+            const lines = snippetFileContent.split('\n');
+
+            const startMarker = new RegExp(
+              `^\\s*//\\s*#region\\s+${regionName}\\s*$`
+            );
+            const endMarker = new RegExp(
+              `^\\s*//\\s*#endregion\\s+${regionName}\\s*$`
+            );
+
+            const startIndex = lines.findIndex((line) =>
+              startMarker.test(line)
+            );
+            let endIndex = -1;
+            if (startIndex !== -1) {
+              endIndex = lines.findIndex(
+                (line, i) => i > startIndex && endMarker.test(line)
+              );
+            }
+
+            if (startIndex !== -1 && endIndex !== -1) {
+              let extractedSnippet = lines
+                .slice(startIndex + 1, endIndex)
+                .join('\n');
+
+              const snippetLines = extractedSnippet.split('\n');
+              if (snippetLines.length > 0) {
+                let minIndent = Number.Infinity; // Use Number.Infinity
+                snippetLines.forEach((line) => {
+                  if (line.trim().length > 0) {
+                    const indentMatch = line.match(/^\s*/);
+                    minIndent = Math.min(
+                      minIndent,
+                      indentMatch ? indentMatch[0].length : 0
+                    );
+                  }
+                });
+
+                if (minIndent > 0 && minIndent !== Number.Infinity) {
+                  // Use Number.Infinity
+                  extractedSnippet = snippetLines
+                    .map((line) =>
+                      line.length >= minIndent
+                        ? line.substring(minIndent)
+                        : line
+                    )
+                    .join('\n');
+                }
+                extractedSnippet = extractedSnippet.trim();
+              }
+
+              let lang = langHint;
+              if (!lang) {
+                const ext = path
+                  .extname(snippetFilePath)
+                  .toLowerCase()
+                  .substring(1);
+                lang =
+                  ext === 'sw'
+                    ? 'sway'
+                    : ext === 'rs'
+                      ? 'rust'
+                      : ext === 'ts'
+                        ? 'typescript'
+                        : ext === 'js'
+                          ? 'javascript'
+                          : ext === 'py'
+                            ? 'python'
+                            : ext === 'sh'
+                              ? 'bash'
+                              : ext === 'tsx'
+                                ? 'tsx'
+                                : ext === 'jsonc'
+                                  ? 'json'
+                                  : ext === 'md'
+                                    ? 'markdown'
+                                    : '';
+              }
+
+              const replacementCodeBlock = `\`\`\`${
+                lang ? lang + '\\n' : ''
+              }${extractedSnippet}\n\`\`\``;
+              snippetReplacements.push({
+                fullMatch,
+                replacement: replacementCodeBlock,
+              });
+              console.log(
+                `  -> Queued snippet: ${regionName} from ${relativePath}`
+              );
+            } else {
+              console.warn(
+                `Snippet region ('${regionName}') not found in ${relativePath}`
+              );
+              const placeholder = `<!-- SNIPPET REGION ERROR: Region '${regionName}' not found in '${relativePath}' -->`;
+              snippetReplacements.push({ fullMatch, replacement: placeholder });
+            }
+          } else {
+            console.warn(
+              `Snippet file not found: ${snippetFilePath} (referenced in ${docPath})`
+            );
+            const placeholder = `<!-- SNIPPET FILE ERROR: File not found '${relativePath}' -->`;
+            snippetReplacements.push({ fullMatch, replacement: placeholder });
+          }
+        } catch (snippetError) {
+          console.error(
+            `Error processing snippet ${fullMatch} in ${docPath}:`,
+            snippetError
+          );
+          const placeholder = `<!-- SNIPPET PROCESSING ERROR for '${relativePath}#${regionName}' -->`;
+          snippetReplacements.push({ fullMatch, replacement: placeholder });
+        }
+      }
+
+      if (snippetReplacements.length > 0) {
+        console.log(
+          `Applying ${snippetReplacements.length} snippet replacements for ${docPath}...`
+        );
+        for (let i = snippetReplacements.length - 1; i >= 0; i--) {
+          const { fullMatch, replacement } = snippetReplacements[i];
+          processedContent = processedContent
+            .split('\n')
+            .map((line) =>
+              line.trim() === fullMatch.trim() ? replacement : line
+            )
+            .join('\n');
+        }
+      }
+    }
+    // --- END: Handle code snippets ---
+
+    // --- START: Handle {{#include ...}} directives ---
+    const includeRegex = /\{\{#include\s+([^}]+?)(?::([^}]+))?\}\}/g;
+    const includeReplacements = [];
+    let includeMatch;
+
+    // Need to work on a mutable copy for replacements within the loop
+    let currentContentForInclude = processedContent;
+
     while (true) {
-      match = includeRegex.exec(processedContent);
-      if (match === null) {
+      includeMatch = includeRegex.exec(currentContentForInclude);
+      if (includeMatch === null) {
         break;
       }
-      const fullMatch = match[0];
-      const includePath = match[1];
-      const anchor = match[2]; // Anchor handling might be needed later
+
+      const fullMatch = includeMatch[0];
+      const includePath = includeMatch[1].trim();
+      const anchor = includeMatch[2]; // Capture anchor
+
+      let replacement = fullMatch; // Default to original if error occurs
+      let resolvedIncludePath = includePath;
+
+      // Path correction for specific submodules
+      if (
+        submodule === 'sway-by-example-lib' ||
+        submodule === 'sway-standards'
+      ) {
+        if (resolvedIncludePath.startsWith('../examples')) {
+          resolvedIncludePath = resolvedIncludePath.substring(3);
+          console.log(
+            `  -> Corrected include path for ${submodule}: ${resolvedIncludePath}`
+          );
+        }
+      }
 
       try {
-        // Resolve the absolute path of the include file based on the *original* document
         const docDir = path.dirname(docPath);
-        const includeFullPath = path.resolve(docDir, includePath.trim());
+        let includeFullPath;
 
-        // --- Restore original include logic --- START
+        // Resolve path correctly based on whether it was corrected
+        if (
+          (submodule === 'sway-by-example-lib' ||
+            submodule === 'sway-standards') &&
+          includePath !== resolvedIncludePath // Check if correction happened
+        ) {
+          includeFullPath = path.resolve(docDir, '../..', resolvedIncludePath);
+        } else {
+          includeFullPath = path.resolve(docDir, includePath);
+        }
+
         if (fs.existsSync(includeFullPath)) {
-          // Read the included file content
-          const snippet = await fs.promises.readFile(includeFullPath, 'utf8');
+          let snippet = await fs.promises.readFile(includeFullPath, 'utf8');
+          let anchorProcessed = false;
 
-          // Determine language for syntax highlighting (simplified)
+          // Anchor processing
+          if (anchor) {
+            anchorProcessed = true;
+            const lines = snippet.split('\n');
+            const startMarker = `// ANCHOR: ${anchor}`;
+            const endMarker = `// ANCHOR_END: ${anchor}`;
+            const startIndex = lines.findIndex((line) =>
+              line.trim().endsWith(startMarker)
+            );
+            let endIndex = -1;
+            if (startIndex !== -1) {
+              endIndex = lines.findIndex(
+                (line, i) => i > startIndex && line.trim().endsWith(endMarker)
+              );
+            }
+
+            if (startIndex !== -1 && endIndex !== -1) {
+              let extractedLines = lines.slice(startIndex + 1, endIndex);
+              // Adjust indentation
+              if (extractedLines.length > 0) {
+                let minIndent = Number.Infinity; // Use Number.Infinity
+                extractedLines.forEach((line) => {
+                  if (line.trim().length > 0) {
+                    const indentMatch = line.match(/^\s*/);
+                    minIndent = Math.min(
+                      minIndent,
+                      indentMatch ? indentMatch[0].length : 0
+                    );
+                  }
+                });
+                if (minIndent > 0 && minIndent !== Number.Infinity) {
+                  // Use Number.Infinity
+                  extractedLines = extractedLines.map((line) =>
+                    line.length >= minIndent ? line.substring(minIndent) : line
+                  );
+                }
+              }
+              snippet = extractedLines.join('\n'); // Update snippet
+              console.log(
+                `  -> Extracted anchor '${anchor}' from ${includePath}`
+              );
+            } else {
+              // Anchor not found - create error comment, skip normal replace
+              console.warn(
+                `Anchor '${anchor}' start/end markers not found in ${includeFullPath} (referenced in ${docPath})`
+              );
+              replacement = `<!-- MDBOOK-ANCHOR-ERROR: Anchor '${anchor}' not found in '${includePath}' -->`;
+              includeReplacements.push({ fullMatch, replacement });
+              currentContentForInclude = currentContentForInclude.replace(
+                fullMatch,
+                replacement
+              ); // Apply error immediately
+              continue; // Skip to next match
+            }
+          }
+
+          // Determine language and create code block
           const ext = path.extname(includeFullPath).toLowerCase();
           const lang =
             ext === '.sw'
@@ -581,89 +821,113 @@ async function processDocument(docPath, submodule) {
                         ? 'bash'
                         : ext === '.md'
                           ? 'markdown'
-                          : 'text';
+                          : '';
+          replacement = `${snippet.trim()}`;
 
-          // Create a markdown code block with the snippet
-          // TODO: Add anchor processing if needed
-          const replacementCodeBlock = `${snippet.trim()}`;
-
-          // Use a temporary unique object to ensure correct replacement order later
-          replacements.push({
-            key: Symbol(),
-            fullMatch: fullMatch,
-            replacement: replacementCodeBlock,
-          });
-          console.log(`Included content from: ${includePath} in ${docPath}`);
+          if (!anchorProcessed) {
+            console.log(`Included content from: ${includePath} in ${docPath}`);
+          }
         } else {
+          // File not found
           console.warn(
             `Include file not found: ${includeFullPath} (referenced in ${docPath})`
           );
-          // Replace with a warning comment if file not found
-          const placeholderComment = `<!-- MDBOOK-INCLUDE-ERROR: File not found '${includePath.trim()}' -->`;
-          replacements.push({
-            key: Symbol(),
-            fullMatch: fullMatch,
-            replacement: placeholderComment,
-          });
+          replacement = `<!-- MDBOOK-INCLUDE-ERROR: File not found '${includePath}' (Resolved: ${includeFullPath}) -->`;
         }
-        // --- Restore original include logic --- END
-
-        /* --- TEMPORARY FIX: Comment out the include directive (Now Removed) --- START
-        const placeholderComment = `<!-- MDBOOK-INCLUDE: ${includePath.trim()} -->`;
-        replacements.push({
-          key: Symbol(),
-          fullMatch: fullMatch,
-          replacement: placeholderComment,
-        });
-        console.log(
-          `Temporarily commenting out include: ${includePath} in ${docPath}`
-        );
-        --- TEMPORARY FIX: Comment out the include directive (Now Removed) --- END */
       } catch (includeError) {
         console.error(
           `Error processing include directive ${fullMatch} in ${docPath}:`,
           includeError
         );
-        // Create placeholder even on error to avoid mdbook failure
-        const placeholderComment = `<!-- MDBOOK-INCLUDE-ERROR: Processing error for '${includePath.trim()}' -->`;
-        replacements.push({
-          key: Symbol(),
-          fullMatch: fullMatch,
-          replacement: placeholderComment,
-        });
+        replacement = `<!-- MDBOOK-INCLUDE-ERROR: Processing error for '${includePath}' -->`;
       }
-    }
 
-    // Apply all replacements in a single pass (to avoid overlap issues)
-    for (const replacement of replacements) {
-      processedContent = processedContent.replace(
-        replacement.fullMatch,
-        replacement.replacement
+      // Queue the successful replacement or error comment (unless anchor error already queued)
+      includeReplacements.push({ fullMatch, replacement });
+      // Apply replacement immediately to the string being searched to handle potential overlaps
+      currentContentForInclude = currentContentForInclude.replace(
+        fullMatch,
+        replacement
       );
-    }
+    } // End while loop
 
-    // Extract title, category, order
+    // Assign the fully processed content back
+    processedContent = currentContentForInclude;
+
+    // --- END: Handle {{#include ...}} directives ---
+
+    // Extract title, category, order from front matter
     const extractedTitle =
       data.title ||
       path.basename(docPath, path.extname(docPath)).replace(/[-_]/g, ' ');
-    const extractedCategory = data.category || submodule;
-    const extractedOrder = data.order || 999;
+    const extractedCategory = data.category || submodule; // Fallback to submodule key
+    const extractedOrder = typeof data.order === 'number' ? data.order : 999; // Default order
 
-    // Return the collected data - file writing and cross-ref processing happen later
+    // Return the collected data
     return {
-      originalPath: docPath, // Original path relative to project root
-      path: newPath, // The relative path within mdbook/src
-      content: processedContent, // Content *before* cross-reference processing
+      originalPath: docPath,
+      path: newPath,
+      content: processedContent, // Content *after* all include processing
       title: extractedTitle,
       category: extractedCategory,
       order: extractedOrder,
-      submoduleKey: submodule, // Added the submodule key here
+      submoduleKey: submodule,
     };
   } catch (error) {
     console.error(`Error during initial processing of ${docPath}:`, error);
-    // Return null or throw, depending on desired error handling for the main loop
-    return null;
+    return null; // Return null on error
   }
+}
+
+/**
+ * Generate a README.md file for the mdbook
+ */
+function generateReadme() {
+  const includedReposList = Array.from(
+    Object.entries(SUBMODULE_NAMES).map(([key, name]) => `- ${name}`)
+  ).join('\n');
+  const readmeContent = `# Fuel Docs Hub
+
+This mdbook contains documentation from multiple repositories in the Fuel ecosystem.
+
+## Included Repositories
+
+${includedReposList}
+`;
+
+  console.log(`Writing README.md to ${README_PATH}...`);
+  fs.writeFileSync(README_PATH, readmeContent);
+  console.log(`Generated README.md at ${README_PATH}`);
+}
+
+/**
+ * Generate book.toml configuration file for mdbook
+ */
+function generateBookToml() {
+  const bookTomlContent = `[book]
+authors = ["Fuel Labs"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Fuel Docs Hub"
+
+[output.html]
+default-theme = "fuel-dark"
+preferred-dark-theme = "fuel-dark"
+
+[output.html.search]
+limit-results = 30
+use-boolean-and = true
+boost-title = 2
+boost-hierarchy = 1
+boost-paragraph = 1
+expand = true
+heading-split-level = 3
+`;
+
+  console.log(`Writing book.toml to ${BOOK_TOML_PATH}...`);
+  fs.writeFileSync(BOOK_TOML_PATH, bookTomlContent);
+  console.log(`Generated book.toml at ${BOOK_TOML_PATH}`);
 }
 
 /**
@@ -894,57 +1158,6 @@ function generateStructuredSummary(
 }
 
 /**
- * Generate a README.md file for the mdbook
- */
-function generateReadme() {
-  const includedReposList = Array.from(
-    Object.entries(SUBMODULE_NAMES).map(([key, name]) => `- ${name}`)
-  ).join('\n');
-  const readmeContent = `# Fuel Docs Hub
-
-This mdbook contains documentation from multiple repositories in the Fuel ecosystem.
-
-## Included Repositories
-
-${includedReposList}
-`;
-
-  console.log(`Writing README.md to ${README_PATH}...`);
-  fs.writeFileSync(README_PATH, readmeContent);
-  console.log(`Generated README.md at ${README_PATH}`);
-}
-
-/**
- * Generate book.toml configuration file for mdbook
- */
-function generateBookToml() {
-  const bookTomlContent = `[book]
-authors = ["Fuel Labs"]
-language = "en"
-multilingual = false
-src = "src"
-title = "Fuel Docs Hub"
-
-[output.html]
-default-theme = "fuel-dark"
-preferred-dark-theme = "fuel-dark"
-
-[output.html.search]
-limit-results = 30
-use-boolean-and = true
-boost-title = 2
-boost-hierarchy = 1
-boost-paragraph = 1
-expand = true
-heading-split-level = 3
-`;
-
-  console.log(`Writing book.toml to ${BOOK_TOML_PATH}...`);
-  fs.writeFileSync(BOOK_TOML_PATH, bookTomlContent);
-  console.log(`Generated book.toml at ${BOOK_TOML_PATH}`);
-}
-
-/**
  * Main function to generate the mdbook
  */
 async function generateMdBook() {
@@ -1123,7 +1336,7 @@ async function parseVitePressConfig(configPath) {
           continue; // Skip items without text
         }
 
-        let title = item.text;
+        const title = item.text;
         let link = '#'; // Default for items without a link (like categories)
 
         if (item.link) {
@@ -1189,10 +1402,6 @@ async function parseVitePressConfig(configPath) {
     return []; // Return empty array on error
   }
 }
-
-/**
- * Parses the structure definition (SUMMARY.md or config.ts) for each relevant submodule.
- */
 
 // Execute the main function (ensure this is outside any function definition)
 generateMdBook().catch((error) => {

@@ -7,7 +7,7 @@ This reference describes all the options of the [`launchTestNode`](./launching-a
 - [`nodeOptions`](./test-node-options.md#nodeoptions)
 - [`providerOptions`](./test-node-options.md#provideroptions)
 
-<<< @./snippets/launching-a-test-node.ts#options{ts:line-numbers}
+```ts\nconst customLaunchTestNode = await launchTestNode(/* options */);\n```
 
 Check out the [API reference](DOCS_API_URL/interfaces/_fuel_ts_contract.test_utils.LaunchTestNodeOptions.html) for usage information on the Test Node Options.
 
@@ -26,17 +26,68 @@ Used to set the node's genesis block state (coins and messages).
 
 The `TestAssetId` utility integrates with [`walletsConfig`](./test-node-options.md#walletsconfig) and gives you an easy way to generate multiple random asset ids via the `TestAssetId.random` static method.
 
-<<< @./snippets/launching-a-test-node.ts#asset-ids{ts:line-numbers}
+```ts\nconst randomAssetIds = TestAssetId.random();
+
+const nodeWithCustomAssetIds = await launchTestNode({
+  walletsConfig: {
+    assets: randomAssetIds,
+  },
+});
+
+const {
+  wallets: [walletWithCustomAssetIds],
+} = nodeWithCustomAssetIds;
+
+const { coins } = await walletWithCustomAssetIds.getCoins(
+  randomAssetIds[0].value
+);\n```
 
 ### `walletsConfig.messages`
 
 The `TestMessage` helper class is used to create messages for testing purposes. When passed via `walletsConfig.messages`, the `recipient` field of the message is overriden to be the wallet's address.
 
-<<< @./snippets/launching-a-test-node.ts#test-messages{ts:line-numbers}
+```ts\nconst testMessage = new TestMessage({ amount: 1000 });
+
+const nodeWithTestMessages = await launchTestNode({
+  walletsConfig: {
+    messages: [testMessage],
+  },
+});
+
+const {
+  wallets: [walletWithTestMessages],
+} = nodeWithTestMessages;
+
+const {
+  messages: [messageWithTestMessages],
+} = await walletWithTestMessages.getMessages();\n```
 
 It can also be used standalone and passed into the initial state of the chain via the `TestMessage.toChainMessage` instance method.
 
-<<< @./snippets/launching-a-test-node.ts#test-messages-chain{ts:line-numbers}
+```ts\nconst recipient = WalletUnlocked.generate();
+const testMessageOnChain = new TestMessage({
+  amount: 1000,
+  recipient: recipient.address,
+});
+
+using launchedWithTestMessagesOnChain = await launchTestNode({
+  nodeOptions: {
+    snapshotConfig: {
+      stateConfig: {
+        messages: [testMessageOnChain.toChainMessage()],
+      },
+    },
+  },
+});
+
+const { provider: providerWithTestMessagesOnChain } =
+  launchedWithTestMessagesOnChain;
+
+recipient.provider = providerWithTestMessagesOnChain;
+
+const {
+  messages: [messageOnChain],
+} = await recipient.getMessages();\n```
 
 ## `contractsConfigs`
 
@@ -54,7 +105,21 @@ Options to modify the behavior of the node.
 
 For example, you can specify your own base asset id of the chain like below:
 
-<<< @./snippets/launching-a-test-node.ts#custom-node-options{ts:line-numbers}
+```ts\nconst [baseAssetId] = TestAssetId.random();
+
+const nodeWithCustomBaseAssetId = await launchTestNode({
+  nodeOptions: {
+    snapshotConfig: {
+      chainConfig: {
+        consensus_parameters: {
+          V2: {
+            base_asset_id: baseAssetId.value,
+          },
+        },
+      },
+    },
+  },
+});\n```
 
 _Note: The API for these options is still not fully complete and better documentation will come in the future._
 

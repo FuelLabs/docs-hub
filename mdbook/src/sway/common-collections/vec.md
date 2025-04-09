@@ -9,73 +9,7 @@ The first collection type we’ll look at is `Vec<T>`, also known as a vector. V
 To create a new empty vector, we call the `Vec::new` function, as shown below:
 
 ```sway
-script;
-
-fn main() {
-    // ANCHOR: vec_new
-    let v: Vec<u64> = Vec::new();
-    // ANCHOR_END: vec_new
-    // ANCHOR: vec_push
-    let mut v = Vec::new();
-
-    v.push(5);
-    v.push(6);
-    v.push(7);
-    v.push(8);
-    // ANCHOR_END: vec_push
-    // ANCHOR: vec_get
-    let third = v.get(2);
-    match third {
-        Some(third) => log(third),
-        None => revert(42),
-    }
-    // ANCHOR_END: vec_get
-    // ANCHOR: vec_get_oob
-    let does_not_exist = v.get(100);
-    // ...decide here how to handle an out-of-bounds access
-    // ANCHOR_END: vec_get_oob
-    // ANCHOR: vec_iterate_while
-    let mut i = 0;
-    while i < v.len() {
-        log(v.get(i).unwrap());
-        i += 1;
-    }
-    // ANCHOR_END: vec_iterate_while
-    // ANCHOR: vec_iterate_for
-    for elem in v.iter() {
-        log(elem);
-    }
-    // ANCHOR_END: vec_iterate_for
-    // ANCHOR: vec_iterate_for_undefined
-    for elem in v.iter() {
-        log(elem);
-        if elem == 3 {
-            v.push(6); // Modification causes undefined behavior!
-        }
-    }
-    // ANCHOR_END: vec_iterate_for_undefined
-    // ANCHOR: vec_iterate_custom
-    // Start from the end
-    let mut i = v.len() - 1;
-    while 0 <= i {
-        log(v.get(i).unwrap());
-        // Access every second element
-        i -= 2;
-    }
-    // ANCHOR_END: vec_iterate_custom
-    // ANCHOR: vec_multiple_data_types
-    enum TableCell {
-        Int: u64,
-        B256: b256,
-        Boolean: bool,
-    }
-
-    let mut row = Vec::new();
-    row.push(TableCell::Int(3));
-    row.push(TableCell::B256(0x0101010101010101010101010101010101010101010101010101010101010101));
-    row.push(TableCell::Boolean(true));
-    // ANCHOR_END: vec_multiple_data_types
-}
+let v: Vec<u64> = Vec::new();
 ```
 
 Note that we added a type annotation here. Because we aren’t inserting any values into this vector, the Sway compiler doesn’t know what kind of elements we intend to store. Vectors are implemented using generics which means that the `Vec<T>` type provided by the standard library can hold any type. When we create a vector to hold a specific type, we can specify the type within angle brackets. In the example above, we’ve told the Sway compiler that the `Vec<T>` in `v` will hold elements of the `u64` type.
@@ -85,73 +19,12 @@ Note that we added a type annotation here. Because we aren’t inserting any val
 To create a vector and then add elements to it, we can use the `push` method, as shown below:
 
 ```sway
-script;
-
-fn main() {
-    // ANCHOR: vec_new
-    let v: Vec<u64> = Vec::new();
-    // ANCHOR_END: vec_new
-    // ANCHOR: vec_push
-    let mut v = Vec::new();
+let mut v = Vec::new();
 
     v.push(5);
     v.push(6);
     v.push(7);
     v.push(8);
-    // ANCHOR_END: vec_push
-    // ANCHOR: vec_get
-    let third = v.get(2);
-    match third {
-        Some(third) => log(third),
-        None => revert(42),
-    }
-    // ANCHOR_END: vec_get
-    // ANCHOR: vec_get_oob
-    let does_not_exist = v.get(100);
-    // ...decide here how to handle an out-of-bounds access
-    // ANCHOR_END: vec_get_oob
-    // ANCHOR: vec_iterate_while
-    let mut i = 0;
-    while i < v.len() {
-        log(v.get(i).unwrap());
-        i += 1;
-    }
-    // ANCHOR_END: vec_iterate_while
-    // ANCHOR: vec_iterate_for
-    for elem in v.iter() {
-        log(elem);
-    }
-    // ANCHOR_END: vec_iterate_for
-    // ANCHOR: vec_iterate_for_undefined
-    for elem in v.iter() {
-        log(elem);
-        if elem == 3 {
-            v.push(6); // Modification causes undefined behavior!
-        }
-    }
-    // ANCHOR_END: vec_iterate_for_undefined
-    // ANCHOR: vec_iterate_custom
-    // Start from the end
-    let mut i = v.len() - 1;
-    while 0 <= i {
-        log(v.get(i).unwrap());
-        // Access every second element
-        i -= 2;
-    }
-    // ANCHOR_END: vec_iterate_custom
-    // ANCHOR: vec_multiple_data_types
-    enum TableCell {
-        Int: u64,
-        B256: b256,
-        Boolean: bool,
-    }
-
-    let mut row = Vec::new();
-    row.push(TableCell::Int(3));
-    row.push(TableCell::B256(0x0101010101010101010101010101010101010101010101010101010101010101));
-    row.push(TableCell::Boolean(true));
-    // ANCHOR_END: vec_multiple_data_types
-}
 ```
 
 As with any variable, if we want to be able to change its value, we need to make it mutable using the `mut` keyword, as discussed in the section [Declaring a Variable](../basics/variables.md#declaring-a-variable). The numbers we place inside are all of type `u64`, and the Sway compiler infers this from the data, so we don’t need the `Vec<u64>` annotation.
@@ -161,73 +34,11 @@ As with any variable, if we want to be able to change its value, we need to make
 To read a value stored in a vector at a particular index, you can use the `get` method as shown below:
 
 ```sway
-script;
-
-fn main() {
-    // ANCHOR: vec_new
-    let v: Vec<u64> = Vec::new();
-    // ANCHOR_END: vec_new
-    // ANCHOR: vec_push
-    let mut v = Vec::new();
-
-    v.push(5);
-    v.push(6);
-    v.push(7);
-    v.push(8);
-    // ANCHOR_END: vec_push
-    // ANCHOR: vec_get
-    let third = v.get(2);
+let third = v.get(2);
     match third {
         Some(third) => log(third),
         None => revert(42),
     }
-    // ANCHOR_END: vec_get
-    // ANCHOR: vec_get_oob
-    let does_not_exist = v.get(100);
-    // ...decide here how to handle an out-of-bounds access
-    // ANCHOR_END: vec_get_oob
-    // ANCHOR: vec_iterate_while
-    let mut i = 0;
-    while i < v.len() {
-        log(v.get(i).unwrap());
-        i += 1;
-    }
-    // ANCHOR_END: vec_iterate_while
-    // ANCHOR: vec_iterate_for
-    for elem in v.iter() {
-        log(elem);
-    }
-    // ANCHOR_END: vec_iterate_for
-    // ANCHOR: vec_iterate_for_undefined
-    for elem in v.iter() {
-        log(elem);
-        if elem == 3 {
-            v.push(6); // Modification causes undefined behavior!
-        }
-    }
-    // ANCHOR_END: vec_iterate_for_undefined
-    // ANCHOR: vec_iterate_custom
-    // Start from the end
-    let mut i = v.len() - 1;
-    while 0 <= i {
-        log(v.get(i).unwrap());
-        // Access every second element
-        i -= 2;
-    }
-    // ANCHOR_END: vec_iterate_custom
-    // ANCHOR: vec_multiple_data_types
-    enum TableCell {
-        Int: u64,
-        B256: b256,
-        Boolean: bool,
-    }
-
-    let mut row = Vec::new();
-    row.push(TableCell::Int(3));
-    row.push(TableCell::B256(0x0101010101010101010101010101010101010101010101010101010101010101));
-    row.push(TableCell::Boolean(true));
-    // ANCHOR_END: vec_multiple_data_types
-}
 ```
 
 Note two details here. First, we use the index value of `2` to get the third element because vectors are indexed by number, starting at zero. Second, we get the third element by using the `get` method with the index passed as an argument, which gives us an `Option<T>`.
@@ -239,73 +50,11 @@ When the `get` method is passed an index that is outside the vector, it returns 
 To access elements of a vector, we can iterate through the valid indices using a `while` loop and the `len` method as shown below:
 
 ```sway
-script;
-
-fn main() {
-    // ANCHOR: vec_new
-    let v: Vec<u64> = Vec::new();
-    // ANCHOR_END: vec_new
-    // ANCHOR: vec_push
-    let mut v = Vec::new();
-
-    v.push(5);
-    v.push(6);
-    v.push(7);
-    v.push(8);
-    // ANCHOR_END: vec_push
-    // ANCHOR: vec_get
-    let third = v.get(2);
-    match third {
-        Some(third) => log(third),
-        None => revert(42),
-    }
-    // ANCHOR_END: vec_get
-    // ANCHOR: vec_get_oob
-    let does_not_exist = v.get(100);
-    // ...decide here how to handle an out-of-bounds access
-    // ANCHOR_END: vec_get_oob
-    // ANCHOR: vec_iterate_while
-    let mut i = 0;
+let mut i = 0;
     while i < v.len() {
         log(v.get(i).unwrap());
         i += 1;
     }
-    // ANCHOR_END: vec_iterate_while
-    // ANCHOR: vec_iterate_for
-    for elem in v.iter() {
-        log(elem);
-    }
-    // ANCHOR_END: vec_iterate_for
-    // ANCHOR: vec_iterate_for_undefined
-    for elem in v.iter() {
-        log(elem);
-        if elem == 3 {
-            v.push(6); // Modification causes undefined behavior!
-        }
-    }
-    // ANCHOR_END: vec_iterate_for_undefined
-    // ANCHOR: vec_iterate_custom
-    // Start from the end
-    let mut i = v.len() - 1;
-    while 0 <= i {
-        log(v.get(i).unwrap());
-        // Access every second element
-        i -= 2;
-    }
-    // ANCHOR_END: vec_iterate_custom
-    // ANCHOR: vec_multiple_data_types
-    enum TableCell {
-        Int: u64,
-        B256: b256,
-        Boolean: bool,
-    }
-
-    let mut row = Vec::new();
-    row.push(TableCell::Int(3));
-    row.push(TableCell::B256(0x0101010101010101010101010101010101010101010101010101010101010101));
-    row.push(TableCell::Boolean(true));
-    // ANCHOR_END: vec_multiple_data_types
-}
 ```
 
 Note two details here. First, we use the method `len` which returns the length of the vector. Second, we call the method `unwrap` to extract the `Option` returned by `get`. We know that `unwrap` will not fail (i.e. will not cause a revert) because each index `i` passed to `get` is known to be smaller than the length of the vector.
@@ -313,217 +62,32 @@ Note two details here. First, we use the method `len` which returns the length o
 The idiomatic and convenient way to access each element in a vector in turn, is to use the `for` loop in the combination with the `iter` method. The `iter` method returns an iterator that iterates over all the elements of the vector sequentially.
 
 ```sway
-script;
-
-fn main() {
-    // ANCHOR: vec_new
-    let v: Vec<u64> = Vec::new();
-    // ANCHOR_END: vec_new
-    // ANCHOR: vec_push
-    let mut v = Vec::new();
-
-    v.push(5);
-    v.push(6);
-    v.push(7);
-    v.push(8);
-    // ANCHOR_END: vec_push
-    // ANCHOR: vec_get
-    let third = v.get(2);
-    match third {
-        Some(third) => log(third),
-        None => revert(42),
-    }
-    // ANCHOR_END: vec_get
-    // ANCHOR: vec_get_oob
-    let does_not_exist = v.get(100);
-    // ...decide here how to handle an out-of-bounds access
-    // ANCHOR_END: vec_get_oob
-    // ANCHOR: vec_iterate_while
-    let mut i = 0;
-    while i < v.len() {
-        log(v.get(i).unwrap());
-        i += 1;
-    }
-    // ANCHOR_END: vec_iterate_while
-    // ANCHOR: vec_iterate_for
-    for elem in v.iter() {
+for elem in v.iter() {
         log(elem);
     }
-    // ANCHOR_END: vec_iterate_for
-    // ANCHOR: vec_iterate_for_undefined
-    for elem in v.iter() {
-        log(elem);
-        if elem == 3 {
-            v.push(6); // Modification causes undefined behavior!
-        }
-    }
-    // ANCHOR_END: vec_iterate_for_undefined
-    // ANCHOR: vec_iterate_custom
-    // Start from the end
-    let mut i = v.len() - 1;
-    while 0 <= i {
-        log(v.get(i).unwrap());
-        // Access every second element
-        i -= 2;
-    }
-    // ANCHOR_END: vec_iterate_custom
-    // ANCHOR: vec_multiple_data_types
-    enum TableCell {
-        Int: u64,
-        B256: b256,
-        Boolean: bool,
-    }
-
-    let mut row = Vec::new();
-    row.push(TableCell::Int(3));
-    row.push(TableCell::B256(0x0101010101010101010101010101010101010101010101010101010101010101));
-    row.push(TableCell::Boolean(true));
-    // ANCHOR_END: vec_multiple_data_types
-}
 ```
 
 Note that **modifying a vector during iteration, by e.g. adding or removing elements, is a logical error and results in an [undefined behavior](../reference/undefined_behavior.md)**:
 
 ```sway
-script;
-
-fn main() {
-    // ANCHOR: vec_new
-    let v: Vec<u64> = Vec::new();
-    // ANCHOR_END: vec_new
-    // ANCHOR: vec_push
-    let mut v = Vec::new();
-
-    v.push(5);
-    v.push(6);
-    v.push(7);
-    v.push(8);
-    // ANCHOR_END: vec_push
-    // ANCHOR: vec_get
-    let third = v.get(2);
-    match third {
-        Some(third) => log(third),
-        None => revert(42),
-    }
-    // ANCHOR_END: vec_get
-    // ANCHOR: vec_get_oob
-    let does_not_exist = v.get(100);
-    // ...decide here how to handle an out-of-bounds access
-    // ANCHOR_END: vec_get_oob
-    // ANCHOR: vec_iterate_while
-    let mut i = 0;
-    while i < v.len() {
-        log(v.get(i).unwrap());
-        i += 1;
-    }
-    // ANCHOR_END: vec_iterate_while
-    // ANCHOR: vec_iterate_for
-    for elem in v.iter() {
-        log(elem);
-    }
-    // ANCHOR_END: vec_iterate_for
-    // ANCHOR: vec_iterate_for_undefined
-    for elem in v.iter() {
+for elem in v.iter() {
         log(elem);
         if elem == 3 {
             v.push(6); // Modification causes undefined behavior!
         }
     }
-    // ANCHOR_END: vec_iterate_for_undefined
-    // ANCHOR: vec_iterate_custom
-    // Start from the end
-    let mut i = v.len() - 1;
-    while 0 <= i {
-        log(v.get(i).unwrap());
-        // Access every second element
-        i -= 2;
-    }
-    // ANCHOR_END: vec_iterate_custom
-    // ANCHOR: vec_multiple_data_types
-    enum TableCell {
-        Int: u64,
-        B256: b256,
-        Boolean: bool,
-    }
-
-    let mut row = Vec::new();
-    row.push(TableCell::Int(3));
-    row.push(TableCell::B256(0x0101010101010101010101010101010101010101010101010101010101010101));
-    row.push(TableCell::Boolean(true));
-    // ANCHOR_END: vec_multiple_data_types
-}
 ```
 
 Accessing vector elements via `while` loop should be used only when more control over traversal is needed. E.g., in the below example we iterate the vector backwards, accessing only every second element.
 
 ```sway
-script;
-
-fn main() {
-    // ANCHOR: vec_new
-    let v: Vec<u64> = Vec::new();
-    // ANCHOR_END: vec_new
-    // ANCHOR: vec_push
-    let mut v = Vec::new();
-
-    v.push(5);
-    v.push(6);
-    v.push(7);
-    v.push(8);
-    // ANCHOR_END: vec_push
-    // ANCHOR: vec_get
-    let third = v.get(2);
-    match third {
-        Some(third) => log(third),
-        None => revert(42),
-    }
-    // ANCHOR_END: vec_get
-    // ANCHOR: vec_get_oob
-    let does_not_exist = v.get(100);
-    // ...decide here how to handle an out-of-bounds access
-    // ANCHOR_END: vec_get_oob
-    // ANCHOR: vec_iterate_while
-    let mut i = 0;
-    while i < v.len() {
-        log(v.get(i).unwrap());
-        i += 1;
-    }
-    // ANCHOR_END: vec_iterate_while
-    // ANCHOR: vec_iterate_for
-    for elem in v.iter() {
-        log(elem);
-    }
-    // ANCHOR_END: vec_iterate_for
-    // ANCHOR: vec_iterate_for_undefined
-    for elem in v.iter() {
-        log(elem);
-        if elem == 3 {
-            v.push(6); // Modification causes undefined behavior!
-        }
-    }
-    // ANCHOR_END: vec_iterate_for_undefined
-    // ANCHOR: vec_iterate_custom
-    // Start from the end
+// Start from the end
     let mut i = v.len() - 1;
     while 0 <= i {
         log(v.get(i).unwrap());
         // Access every second element
         i -= 2;
     }
-    // ANCHOR_END: vec_iterate_custom
-    // ANCHOR: vec_multiple_data_types
-    enum TableCell {
-        Int: u64,
-        B256: b256,
-        Boolean: bool,
-    }
-
-    let mut row = Vec::new();
-    row.push(TableCell::Int(3));
-    row.push(TableCell::B256(0x0101010101010101010101010101010101010101010101010101010101010101));
-    row.push(TableCell::Boolean(true));
-    // ANCHOR_END: vec_multiple_data_types
-}
 ```
 
 ## Using an Enum to store Multiple Types
@@ -533,62 +97,7 @@ Vectors can only store values that are the same type. This can be inconvenient; 
 For example, say we want to get values from a row in a table in which some of the columns in the row contain integers, some `b256` values, and some Booleans. We can define an enum whose variants will hold the different value types, and all the enum variants will be considered the same type: that of the enum. Then we can create a vector to hold that enum and so, ultimately, holds different types. We’ve demonstrated this below:
 
 ```sway
-script;
-
-fn main() {
-    // ANCHOR: vec_new
-    let v: Vec<u64> = Vec::new();
-    // ANCHOR_END: vec_new
-    // ANCHOR: vec_push
-    let mut v = Vec::new();
-
-    v.push(5);
-    v.push(6);
-    v.push(7);
-    v.push(8);
-    // ANCHOR_END: vec_push
-    // ANCHOR: vec_get
-    let third = v.get(2);
-    match third {
-        Some(third) => log(third),
-        None => revert(42),
-    }
-    // ANCHOR_END: vec_get
-    // ANCHOR: vec_get_oob
-    let does_not_exist = v.get(100);
-    // ...decide here how to handle an out-of-bounds access
-    // ANCHOR_END: vec_get_oob
-    // ANCHOR: vec_iterate_while
-    let mut i = 0;
-    while i < v.len() {
-        log(v.get(i).unwrap());
-        i += 1;
-    }
-    // ANCHOR_END: vec_iterate_while
-    // ANCHOR: vec_iterate_for
-    for elem in v.iter() {
-        log(elem);
-    }
-    // ANCHOR_END: vec_iterate_for
-    // ANCHOR: vec_iterate_for_undefined
-    for elem in v.iter() {
-        log(elem);
-        if elem == 3 {
-            v.push(6); // Modification causes undefined behavior!
-        }
-    }
-    // ANCHOR_END: vec_iterate_for_undefined
-    // ANCHOR: vec_iterate_custom
-    // Start from the end
-    let mut i = v.len() - 1;
-    while 0 <= i {
-        log(v.get(i).unwrap());
-        // Access every second element
-        i -= 2;
-    }
-    // ANCHOR_END: vec_iterate_custom
-    // ANCHOR: vec_multiple_data_types
-    enum TableCell {
+enum TableCell {
         Int: u64,
         B256: b256,
         Boolean: bool,
@@ -598,8 +107,6 @@ fn main() {
     row.push(TableCell::Int(3));
     row.push(TableCell::B256(0x0101010101010101010101010101010101010101010101010101010101010101));
     row.push(TableCell::Boolean(true));
-    // ANCHOR_END: vec_multiple_data_types
-}
 ```
 
 Now that we’ve discussed some of the most common ways to use vectors, be sure to review the API documentation for all the many useful methods defined on `Vec<T>` by the standard library. For now, these can be found in the [source code for `Vec<T>`](https://github.com/FuelLabs/sway/blob/master/sway-lib-std/src/vec.sw). For example, in addition to `push`, a `pop` method removes and returns the last element, a `remove` method removes and returns the element at some chosen index within the vector, an `insert` method inserts an element at some chosen index within the vector, etc.
