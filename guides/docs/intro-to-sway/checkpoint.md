@@ -1,0 +1,72 @@
+---
+title: Checkpoint
+category: Intro to Sway
+order: 999
+---
+
+
+# Checkpoint
+
+## Sway Contract Checkpoint
+
+If you have followed the previous steps correctly your `main.sw` marketplace contract should look like this:
+
+<CodeImport
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
+  comment="all"
+  commentType="//"
+  lang="sway"
+/>
+
+## Building the contract
+
+Here's a polished version of your instructions:
+
+To format your contract, execute the command:
+
+<TestAction
+id="format-contract"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/sway-store/sway-programs/contract'
+}}
+/>
+
+```sh
+forc fmt
+```
+
+To compile your contract, navigate to the contract folder and run:
+
+<TestAction
+id="build-contract"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/sway-store/sway-programs/contract'
+}}
+/>
+
+```sh
+forc build
+```
+
+Congratulations! You've successfully written a full contract in Sway!
+
+Post-compilation, the system will automatically generate `abi.json`, `storage_slots.json`, and `contract.bin`. You can locate these files in the following directory:
+
+```sh
+contract/out/debug/*
+```
+
+## Deploying the contract
+
+For detailed steps on deploying this contract, refer to the official Fuel developer counter dapp guide:
+[Deploy the Contract](/guides/counter-dapp/building-a-smart-contract/#deploy-the-contract)
+
+To deploy, use the following command if you've already set up the forc-wallet and have testnet funds in your account. If not, follow the instructions above.
+
+```sh
+forc deploy --testnet
+```
+
+After deploying, you'll be able to find your contract ID in the `contract/out/deployments` folder. You'll need this for frontend integration.

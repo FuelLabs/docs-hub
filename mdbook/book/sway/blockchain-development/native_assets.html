@@ -1,0 +1,2077 @@
+<!DOCTYPE HTML>
+<html lang="en" class="fuel-dark" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Native Assets - Fuel Docs Hub</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "fuel-dark" : "fuel-dark";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('fuel-dark')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Sway Language</li><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="../../sway/introduction/index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/introduction/getting_started.html"><strong aria-hidden="true">1.1.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="../../sway/introduction/fuel_toolchain.html"><strong aria-hidden="true">1.2.</strong> The Fuel Toolchain</a></li><li class="chapter-item expanded "><a href="../../sway/introduction/forc_project.html"><strong aria-hidden="true">1.3.</strong> A Forc Project</a></li><li class="chapter-item expanded "><a href="../../sway/introduction/standard_library.html"><strong aria-hidden="true">1.4.</strong> Standard Library</a></li><li class="chapter-item expanded "><a href="../../sway/introduction/sway_standards.html"><strong aria-hidden="true">1.5.</strong> Sway Language Standards</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/examples/index.html"><strong aria-hidden="true">2.</strong> Examples</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/examples/counter.html"><strong aria-hidden="true">2.1.</strong> Counter</a></li><li class="chapter-item expanded "><a href="../../sway/examples/fizzbuzz.html"><strong aria-hidden="true">2.2.</strong> FizzBuzz</a></li><li class="chapter-item expanded "><a href="../../sway/examples/wallet_smart_contract.html"><strong aria-hidden="true">2.3.</strong> Wallet Smart Contract</a></li><li class="chapter-item expanded "><a href="../../sway/examples/liquidity_pool.html"><strong aria-hidden="true">2.4.</strong> Liquidity Pool</a></li><li class="chapter-item expanded "><a href="../../sway/examples/sway_applications.html"><strong aria-hidden="true">2.5.</strong> Sway Applications</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/sway-program-types/index.html"><strong aria-hidden="true">3.</strong> Program Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/sway-program-types/smart_contracts.html"><strong aria-hidden="true">3.1.</strong> Contracts</a></li><li class="chapter-item expanded "><a href="../../sway/sway-program-types/libraries.html"><strong aria-hidden="true">3.2.</strong> Libraries</a></li><li class="chapter-item expanded "><a href="../../sway/sway-program-types/scripts.html"><strong aria-hidden="true">3.3.</strong> Scripts</a></li><li class="chapter-item expanded "><a href="../../sway/sway-program-types/predicates.html"><strong aria-hidden="true">3.4.</strong> Predicates</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/basics/index.html"><strong aria-hidden="true">4.</strong> Sway Language Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/basics/variables.html"><strong aria-hidden="true">4.1.</strong> Variables</a></li><li class="chapter-item expanded "><a href="../../sway/basics/built_in_types.html"><strong aria-hidden="true">4.2.</strong> Built-in Types</a></li><li class="chapter-item expanded "><a href="../../sway/basics/commonly_used_library_types.html"><strong aria-hidden="true">4.3.</strong> Commonly Used Library Types</a></li><li class="chapter-item expanded "><a href="../../sway/basics/blockchain_types.html"><strong aria-hidden="true">4.4.</strong> Blockchain Types</a></li><li class="chapter-item expanded "><a href="../../sway/basics/converting_types.html"><strong aria-hidden="true">4.5.</strong> Converting Types</a></li><li class="chapter-item expanded "><a href="../../sway/basics/functions.html"><strong aria-hidden="true">4.6.</strong> Functions</a></li><li class="chapter-item expanded "><a href="../../sway/basics/structs_tuples_and_enums.html"><strong aria-hidden="true">4.7.</strong> Structs, Tuples, and Enums</a></li><li class="chapter-item expanded "><a href="../../sway/basics/methods_and_associated_functions.html"><strong aria-hidden="true">4.8.</strong> Methods and Associated Functions</a></li><li class="chapter-item expanded "><a href="../../sway/basics/constants.html"><strong aria-hidden="true">4.9.</strong> Constants</a></li><li class="chapter-item expanded "><a href="../../sway/basics/comments_and_logging.html"><strong aria-hidden="true">4.10.</strong> Comments and Logging</a></li><li class="chapter-item expanded "><a href="../../sway/basics/control_flow.html"><strong aria-hidden="true">4.11.</strong> Control Flow</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/blockchain-development/index.html"><strong aria-hidden="true">5.</strong> Blockchain Development with Sway</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/blockchain-development/hashing_and_cryptography.html"><strong aria-hidden="true">5.1.</strong> Hashing and Cryptography</a></li><li class="chapter-item expanded "><a href="../../sway/blockchain-development/storage.html"><strong aria-hidden="true">5.2.</strong> Contract Storage</a></li><li class="chapter-item expanded "><a href="../../sway/blockchain-development/purity.html"><strong aria-hidden="true">5.3.</strong> Function Purity</a></li><li class="chapter-item expanded "><a href="../../sway/blockchain-development/identifiers.html"><strong aria-hidden="true">5.4.</strong> Identifiers</a></li><li class="chapter-item expanded "><a href="../../sway/blockchain-development/native_assets.html" class="active"><strong aria-hidden="true">5.5.</strong> Native Assets</a></li><li class="chapter-item expanded "><a href="../../sway/blockchain-development/access_control.html"><strong aria-hidden="true">5.6.</strong> Access Control</a></li><li class="chapter-item expanded "><a href="../../sway/blockchain-development/calling_contracts.html"><strong aria-hidden="true">5.7.</strong> Calling Contracts</a></li><li class="chapter-item expanded "><a href="../../sway/blockchain-development/external_code.html"><strong aria-hidden="true">5.8.</strong> External Code</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/advanced/index.html"><strong aria-hidden="true">6.</strong> Advanced Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/advanced/advanced_types.html"><strong aria-hidden="true">6.1.</strong> Advanced Types</a></li><li class="chapter-item expanded "><a href="../../sway/advanced/advanced_storage.html"><strong aria-hidden="true">6.2.</strong> Advanced Storage</a></li><li class="chapter-item expanded "><a href="../../sway/advanced/generic_types.html"><strong aria-hidden="true">6.3.</strong> Generic Types</a></li><li class="chapter-item expanded "><a href="../../sway/advanced/traits.html"><strong aria-hidden="true">6.4.</strong> Traits</a></li><li class="chapter-item expanded "><a href="../../sway/advanced/associated_types.html"><strong aria-hidden="true">6.5.</strong> Associated Types</a></li><li class="chapter-item expanded "><a href="../../sway/advanced/generics_and_trait_constraints.html"><strong aria-hidden="true">6.6.</strong> Generics and Trait Constraints</a></li><li class="chapter-item expanded "><a href="../../sway/advanced/assembly.html"><strong aria-hidden="true">6.7.</strong> Assembly</a></li><li class="chapter-item expanded "><a href="../../sway/advanced/never_type.html"><strong aria-hidden="true">6.8.</strong> Never Type</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/common-collections/index.html"><strong aria-hidden="true">7.</strong> Common Collections</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/common-collections/vec.html"><strong aria-hidden="true">7.1.</strong> Vectors on the Heap</a></li><li class="chapter-item expanded "><a href="../../sway/common-collections/storage_vec.html"><strong aria-hidden="true">7.2.</strong> Storage Vectors</a></li><li class="chapter-item expanded "><a href="../../sway/common-collections/storage_map.html"><strong aria-hidden="true">7.3.</strong> Storage Maps</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/testing/index.html"><strong aria-hidden="true">8.</strong> Testing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/testing/unit-testing.html"><strong aria-hidden="true">8.1.</strong> Unit Testing</a></li><li class="chapter-item expanded "><a href="../../sway/testing/testing-with-rust.html"><strong aria-hidden="true">8.2.</strong> Testing with Rust</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/debugging/index.html"><strong aria-hidden="true">9.</strong> Debugging</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/debugging/debugging_with_cli.html"><strong aria-hidden="true">9.1.</strong> Debugging with CLI</a></li><li class="chapter-item expanded "><a href="../../sway/debugging/debugging_with_ide.html"><strong aria-hidden="true">9.2.</strong> Debugging with IDE</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/lsp/index.html"><strong aria-hidden="true">10.</strong> Sway LSP</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/lsp/installation.html"><strong aria-hidden="true">10.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../../sway/lsp/features.html"><strong aria-hidden="true">10.2.</strong> Features</a></li><li class="chapter-item expanded "><a href="../../sway/lsp/troubleshooting.html"><strong aria-hidden="true">10.3.</strong> Troubleshooting</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/reference/index.html"><strong aria-hidden="true">11.</strong> Sway Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/reference/sway_libs.html"><strong aria-hidden="true">11.1.</strong> Sway Libraries</a></li><li class="chapter-item expanded "><a href="../../sway/reference/compiler_intrinsics.html"><strong aria-hidden="true">11.2.</strong> Compiler Intrinsics</a></li><li class="chapter-item expanded "><a href="../../sway/reference/attributes.html"><strong aria-hidden="true">11.3.</strong> Attributes</a></li><li class="chapter-item expanded "><a href="../../sway/reference/style_guide.html"><strong aria-hidden="true">11.4.</strong> Style Guide</a></li><li class="chapter-item expanded "><a href="../../sway/reference/known_issues_and_workarounds.html"><strong aria-hidden="true">11.5.</strong> Known Issues and Workarounds</a></li><li class="chapter-item expanded "><a href="../../sway/reference/undefined_behavior.html"><strong aria-hidden="true">11.6.</strong> Behavior Considered Undefined</a></li><li class="chapter-item expanded "><a href="../../sway/reference/solidity_differences.html"><strong aria-hidden="true">11.7.</strong> Differences From Solidity</a></li><li class="chapter-item expanded "><a href="../../sway/reference/rust_differences.html"><strong aria-hidden="true">11.8.</strong> Differences From Rust</a></li><li class="chapter-item expanded "><a href="../../sway/reference/contributing_to_sway.html"><strong aria-hidden="true">11.9.</strong> Contributing To Sway</a></li><li class="chapter-item expanded "><a href="../../sway/reference/keywords.html"><strong aria-hidden="true">11.10.</strong> Keywords</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/forc/index.html"><strong aria-hidden="true">12.</strong> Forc Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/forc/manifest_reference.html"><strong aria-hidden="true">12.1.</strong> Manifest Reference</a></li><li class="chapter-item expanded "><a href="../../sway/forc/workspaces.html"><strong aria-hidden="true">12.2.</strong> Workspaces</a></li><li class="chapter-item expanded "><a href="../../sway/forc/dependencies.html"><strong aria-hidden="true">12.3.</strong> Dependencies</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/index.html"><strong aria-hidden="true">12.4.</strong> Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_addr2line.html"><strong aria-hidden="true">12.4.1.</strong> forc addr2line</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_build.html"><strong aria-hidden="true">12.4.2.</strong> forc build</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_check.html"><strong aria-hidden="true">12.4.3.</strong> forc check</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_clean.html"><strong aria-hidden="true">12.4.4.</strong> forc clean</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_completions.html"><strong aria-hidden="true">12.4.5.</strong> forc completions</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_contract-id.html"><strong aria-hidden="true">12.4.6.</strong> forc contract-id</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_init.html"><strong aria-hidden="true">12.4.7.</strong> forc init</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_new.html"><strong aria-hidden="true">12.4.8.</strong> forc new</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_parse-bytecode.html"><strong aria-hidden="true">12.4.9.</strong> forc parse-bytecode</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_plugins.html"><strong aria-hidden="true">12.4.10.</strong> forc plugins</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_predicate-root.html"><strong aria-hidden="true">12.4.11.</strong> forc predicate-root</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_test.html"><strong aria-hidden="true">12.4.12.</strong> forc test</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_update.html"><strong aria-hidden="true">12.4.13.</strong> forc update</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_template.html"><strong aria-hidden="true">12.4.14.</strong> forc template</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/index.html"><strong aria-hidden="true">12.5.</strong> Plugins</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_client/index.html"><strong aria-hidden="true">12.5.1.</strong> forc client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_client/forc_deploy.html"><strong aria-hidden="true">12.5.1.1.</strong> forc deploy</a></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_client/forc_run.html"><strong aria-hidden="true">12.5.1.2.</strong> forc run</a></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_client/forc_submit.html"><strong aria-hidden="true">12.5.1.3.</strong> forc submit</a></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_client/forc_call.html"><strong aria-hidden="true">12.5.1.4.</strong> forc call</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_crypto.html"><strong aria-hidden="true">12.5.2.</strong> forc crypto</a></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_debug.html"><strong aria-hidden="true">12.5.3.</strong> forc debug</a></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_doc.html"><strong aria-hidden="true">12.5.4.</strong> forc doc</a></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_explore.html"><strong aria-hidden="true">12.5.5.</strong> forc explore</a></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_fmt.html"><strong aria-hidden="true">12.5.6.</strong> forc fmt</a></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_lsp.html"><strong aria-hidden="true">12.5.7.</strong> forc lsp</a></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_migrate.html"><strong aria-hidden="true">12.5.8.</strong> forc migrate</a></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_node.html"><strong aria-hidden="true">12.5.9.</strong> forc node</a></li></ol></li></ol></li><li class="chapter-item expanded "><li class="part-title">Sway Libraries</li><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="../../sway-libs/getting_started/index.html"><strong aria-hidden="true">13.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway-libs/getting_started/running_tests.html"><strong aria-hidden="true">13.1.</strong> Running Tests</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway-libs/asset/index.html"><strong aria-hidden="true">14.</strong> Asset Library</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway-libs/asset/base.html"><strong aria-hidden="true">14.1.</strong> Base</a></li><li class="chapter-item expanded "><a href="../../sway-libs/asset/supply.html"><strong aria-hidden="true">14.2.</strong> Supply</a></li><li class="chapter-item expanded "><a href="../../sway-libs/asset/metadata.html"><strong aria-hidden="true">14.3.</strong> Metadata</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway-libs/admin/index.html"><strong aria-hidden="true">15.</strong> Admin Library</a></li><li class="chapter-item expanded "><a href="../../sway-libs/ownership/index.html"><strong aria-hidden="true">16.</strong> Ownership Library</a></li><li class="chapter-item expanded "><a href="../../sway-libs/pausable/index.html"><strong aria-hidden="true">17.</strong> Pausable Library</a></li><li class="chapter-item expanded "><a href="../../sway-libs/reentrancy/index.html"><strong aria-hidden="true">18.</strong> Reentrancy Guard Library</a></li><li class="chapter-item expanded "><a href="../../sway-libs/bytecode/index.html"><strong aria-hidden="true">19.</strong> Bytecode Library</a></li><li class="chapter-item expanded "><a href="../../sway-libs/merkle/index.html"><strong aria-hidden="true">20.</strong> Merkle Library</a></li><li class="chapter-item expanded "><a href="../../sway-libs/signed_integers/index.html"><strong aria-hidden="true">21.</strong> Signed Integers Library</a></li><li class="chapter-item expanded "><a href="../../sway-libs/queue/index.html"><strong aria-hidden="true">22.</strong> Queue Library</a></li><li class="chapter-item expanded "><a href="../../sway-libs/upgradability/index.html"><strong aria-hidden="true">23.</strong> Upgradability</a></li><li class="chapter-item expanded affix "><li class="part-title">Sway Standards</li><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="../../sway-standards/src-2-inline-documentation.html"><strong aria-hidden="true">24.</strong> SRC-2: Inline Documentation</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-3-minting-and-burning.html"><strong aria-hidden="true">25.</strong> SRC-3: Minting and Burning</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-5-ownership.html"><strong aria-hidden="true">26.</strong> SRC-5: Ownership</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-6-vault.html"><strong aria-hidden="true">27.</strong> SRC-6: Vault</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-7-asset-metadata.html"><strong aria-hidden="true">28.</strong> SRC-7: Onchain Asset Metadata</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-8-bridged-asset.html"><strong aria-hidden="true">29.</strong> SRC-8: Bridged Asset</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-9-metadata-keys.html"><strong aria-hidden="true">30.</strong> SRC-9: Metadata Keys</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-10-native-bridge.html"><strong aria-hidden="true">31.</strong> SRC-10: Native Bridge</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-11-security-information.html"><strong aria-hidden="true">32.</strong> SRC-11: Security Information</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-12-contract-factory.html"><strong aria-hidden="true">33.</strong> SRC-12: Contract Factory</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-13-soulbound-address.html"><strong aria-hidden="true">34.</strong> SRC-13: Soulbound Address</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-14-simple-upgradeable-proxies.html"><strong aria-hidden="true">35.</strong> SRC-14: Simple Upgradeable Contract</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-15-offchain-asset-metadata.html"><strong aria-hidden="true">36.</strong> SRC-15: Offchain Asset Metadata</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-16-typed-structured-data.html"><strong aria-hidden="true">37.</strong> SRC-16: Typed Structured Data</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-20-native-asset.html"><strong aria-hidden="true">38.</strong> SRC-20: Native Asset</a></li><li class="chapter-item expanded affix "><li class="part-title">Sway by Example</li><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/solidity.html"><strong aria-hidden="true">39.</strong> Solidity</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/hello-sway.html"><strong aria-hidden="true">40.</strong> Hello Sway</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/variables.html"><strong aria-hidden="true">41.</strong> Variables</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/primitive-types.html"><strong aria-hidden="true">42.</strong> Primitive Types</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/compound-types.html"><strong aria-hidden="true">43.</strong> Compound Types</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/blockchain-types.html"><strong aria-hidden="true">44.</strong> Blockchain Types</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/functions.html"><strong aria-hidden="true">45.</strong> Functions</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/imports.html"><strong aria-hidden="true">46.</strong> Imports</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/structs.html"><strong aria-hidden="true">47.</strong> Structs</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/tuples.html"><strong aria-hidden="true">48.</strong> Tuples</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/enums.html"><strong aria-hidden="true">49.</strong> Enums</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/constants.html"><strong aria-hidden="true">50.</strong> Constants</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/configurable-constants.html"><strong aria-hidden="true">51.</strong> Configurable Constants</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/options.html"><strong aria-hidden="true">52.</strong> Options</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/results.html"><strong aria-hidden="true">53.</strong> Results</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/if.html"><strong aria-hidden="true">54.</strong> Ifs</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/match.html"><strong aria-hidden="true">55.</strong> Matches</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/while-loop.html"><strong aria-hidden="true">56.</strong> While Loops</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/logging.html"><strong aria-hidden="true">57.</strong> Logging</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/storage-map.html"><strong aria-hidden="true">58.</strong> Storage Map</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/vector.html"><strong aria-hidden="true">59.</strong> Vector</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/base-asset.html"><strong aria-hidden="true">60.</strong> Base Asset</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/library.html"><strong aria-hidden="true">61.</strong> Library</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/predicate.html"><strong aria-hidden="true">62.</strong> Predicate</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/script.html"><strong aria-hidden="true">63.</strong> Script</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/big-numbers.html"><strong aria-hidden="true">64.</strong> Big Numbers</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/src20.html"><strong aria-hidden="true">65.</strong> SRC20</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/hashing.html"><strong aria-hidden="true">66.</strong> Hashing</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/verify-signature.html"><strong aria-hidden="true">67.</strong> Verify-Signature</a></li><li class="chapter-item expanded affix "><li class="part-title">Migrations and Disclosures</li><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="../../migrations-and-disclosures/migrations/index.html"><strong aria-hidden="true">68.</strong> Migrations</a></li><li class="chapter-item expanded "><a href="../../migrations-and-disclosures/migrations/sway.html"><strong aria-hidden="true">69.</strong> Sway</a></li><li class="chapter-item expanded "><a href="../../migrations-and-disclosures/migrations/rust-sdk.html"><strong aria-hidden="true">70.</strong> Rust SDK</a></li><li class="chapter-item expanded "><a href="../../migrations-and-disclosures/migrations/typescript-sdk.html"><strong aria-hidden="true">71.</strong> Typescript SDK</a></li><li class="chapter-item expanded "><a href="../../migrations-and-disclosures/breaking-changes-archive.html"><strong aria-hidden="true">72.</strong> Betas Migrations Archive</a></li><li class="chapter-item expanded affix "><li class="part-title">Verified Addresses</li><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="../../verified-addresses/assets.html"><strong aria-hidden="true">73.</strong> Assets</a></li><li class="chapter-item expanded "><a href="../../verified-addresses/contracts.html"><strong aria-hidden="true">74.</strong> Contracts</a></li><li class="chapter-item expanded "><a href="../../verified-addresses/security-council.html"><strong aria-hidden="true">75.</strong> Security Council</a></li><li class="chapter-item expanded affix "><li class="part-title">Fuel Token Overview</li><li class="chapter-item expanded affix "><li class="part-title">Fuel Token Overview</li><li class="chapter-item expanded "><a href="../../fuel-token-overview/tokenomics.html"><strong aria-hidden="true">76.</strong> Tokenomics</a></li><li class="chapter-item expanded "><a href="../../fuel-token-overview/fuel-v1-upgrade.html"><strong aria-hidden="true">77.</strong> Fuel V1 to FUEL Upgrade</a></li><li class="chapter-item expanded "><a href="../../fuel-token-overview/claim-genesis-drop.html"><strong aria-hidden="true">78.</strong> Claim Genesis Drop</a></li><li class="chapter-item expanded "><a href="../../fuel-token-overview/stake-on-fuel.html"><strong aria-hidden="true">79.</strong> Stake on Fuel Ignition</a></li><li class="chapter-item expanded "><a href="../../fuel-token-overview/stake-on-ethereum.html"><strong aria-hidden="true">80.</strong> Stake on Ethereum</a></li><li class="chapter-item expanded affix "><li class="part-title">Fuel Book</li><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="../../fuel-book/why-fuel/index.html"><strong aria-hidden="true">81.</strong> Chapter 1: Why Fuel</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuel-book/why-fuel/beginnings.html"><strong aria-hidden="true">81.1.</strong> 1.1 - Beginnings</a></li><li class="chapter-item expanded "><a href="../../fuel-book/why-fuel/the-problem.html"><strong aria-hidden="true">81.2.</strong> 1.2 - The Problem</a></li><li class="chapter-item expanded "><a href="../../fuel-book/why-fuel/the-fuel-way.html"><strong aria-hidden="true">81.3.</strong> 1.3 - The Fuel Way</a></li><li class="chapter-item expanded "><a href="../../fuel-book/why-fuel/what-is-fuel.html"><strong aria-hidden="true">81.4.</strong> 1.4 - So What is Fuel?</a></li><li class="chapter-item expanded "><a href="../../fuel-book/why-fuel/building-on-fuel-an-overview.html"><strong aria-hidden="true">81.5.</strong> 1.5 - Building on Fuel: An Overview</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuel-book/the-architecture/index.html"><strong aria-hidden="true">82.</strong> Chapter 2: The Architecture</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuel-book/the-architecture/the-fuelvm.html"><strong aria-hidden="true">82.1.</strong> 2.1 - The FuelVM</a></li><li class="chapter-item expanded "><a href="../../fuel-book/the-architecture/transactions-on-fuel.html"><strong aria-hidden="true">82.2.</strong> 2.2 - Transactions on Fuel</a></li><li class="chapter-item expanded "><a href="../../fuel-book/the-architecture/fuel-blocks.html"><strong aria-hidden="true">82.3.</strong> 2.3 - Fuel Blocks</a></li><li class="chapter-item expanded "><a href="../../fuel-book/the-architecture/block-building-in-fuel.html"><strong aria-hidden="true">82.4.</strong> 2.4 - Block Building in Fuel</a></li><li class="chapter-item expanded "><a href="../../fuel-book/the-architecture/fuel-and-ethereum.html"><strong aria-hidden="true">82.5.</strong> 2.5 - Fuel and Ethereum</a></li><li class="chapter-item expanded "><a href="../../fuel-book/the-architecture/security-on-fuel.html"><strong aria-hidden="true">82.6.</strong> 2.6 - Security on Fuel</a></li><li class="chapter-item expanded "><a href="../../fuel-book/the-architecture/fees-on-fuel.html"><strong aria-hidden="true">82.7.</strong> 2.7 - Fees on Fuel</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuel-book/fuels-future/index.html"><strong aria-hidden="true">83.</strong> Chapter 3: Fuel's Future</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuel-book/fuels-future/network-of-interconnection.html"><strong aria-hidden="true">83.1.</strong> 3.1 - A Network of Interconnected L2s & L3s</a></li><li class="chapter-item expanded "><a href="../../fuel-book/fuels-future/decentralized-block-building.html"><strong aria-hidden="true">83.2.</strong> 3.2 - Decentralized Block Building</a></li><li class="chapter-item expanded "><a href="../../fuel-book/fuels-future/snap-fast-finality-gadget.html"><strong aria-hidden="true">83.3.</strong> 3.3 - SNAP Fast Finality Gadget</a></li><li class="chapter-item expanded "><a href="../../fuel-book/fuels-future/state-rehydration.html"><strong aria-hidden="true">83.4.</strong> 3.4 - State Rehydration</a></li><li class="chapter-item expanded "><a href="../../fuel-book/fuels-future/data-streaming.html"><strong aria-hidden="true">83.5.</strong> 3.5 - Data Streaming</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuel-book/conclusion/index.html"><strong aria-hidden="true">84.</strong> Conclusion</a></li><li class="chapter-item expanded "><a href="../../fuel-book/glossary/index.html"><strong aria-hidden="true">85.</strong> Glossary</a></li><li class="chapter-item expanded affix "><li class="part-title">Integration Docs</li><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded affix "><li class="part-title">Node Operator</li><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="../../node-operator/fuel-ignition/index.html"><strong aria-hidden="true">86.</strong> Fuel Ignition</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../node-operator/fuel-ignition/local-node.html"><strong aria-hidden="true">86.1.</strong> Local Node</a></li><li class="chapter-item expanded "><a href="../../node-operator/fuel-ignition/testnet-node.html"><strong aria-hidden="true">86.2.</strong> Testnet Node</a></li><li class="chapter-item expanded "><a href="../../node-operator/fuel-ignition/mainnet-node.html"><strong aria-hidden="true">86.3.</strong> Mainnet Node</a></li></ol></li><li class="chapter-item expanded "><a href="../../node-operator/fuel-sequencer/index.html"><strong aria-hidden="true">87.</strong> Fuel Sequencer</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../node-operator/fuel-sequencer/testnet-node.html"><strong aria-hidden="true">87.1.</strong> Testnet Node</a></li><li class="chapter-item expanded "><a href="../../node-operator/fuel-sequencer/testnet-validator.html"><strong aria-hidden="true">87.2.</strong> Testnet Validator</a></li><li class="chapter-item expanded "><a href="../../node-operator/fuel-sequencer/mainnet-node.html"><strong aria-hidden="true">87.3.</strong> Mainnet Node</a></li><li class="chapter-item expanded "><a href="../../node-operator/fuel-sequencer/mainnet-validator.html"><strong aria-hidden="true">87.4.</strong> Mainnet Validator</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Fuels-rs (Rust SDK)</li><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="../../fuels-rs/getting-started.html"><strong aria-hidden="true">88.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/connecting/index.html"><strong aria-hidden="true">89.</strong> Connecting to a Fuel node</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/connecting/external-node.html"><strong aria-hidden="true">89.1.</strong> Connecting to the Testnet or an external node</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/connecting/short-lived.html"><strong aria-hidden="true">89.2.</strong> Running a short-lived Fuel node with the SDK</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/connecting/rocksdb.html"><strong aria-hidden="true">89.3.</strong> RocksDB</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/connecting/querying.html"><strong aria-hidden="true">89.4.</strong> Querying the blockchain</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/connecting/retrying.html"><strong aria-hidden="true">89.5.</strong> Retrying upon errors</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/accounts.html"><strong aria-hidden="true">90.</strong> Accounts</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/wallets/index.html"><strong aria-hidden="true">91.</strong> Managing wallets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/wallets/private-keys.html"><strong aria-hidden="true">91.1.</strong> Creating a wallet from a private key</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/wallets/mnemonic-wallet.html"><strong aria-hidden="true">91.2.</strong> Creating a wallet from mnemonic phrases</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/wallets/access.html"><strong aria-hidden="true">91.3.</strong> Wallet Access</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/wallets/encrypting-and-storing.html"><strong aria-hidden="true">91.4.</strong> Encrypting and storing wallets</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/wallets/checking-balances-and-coins.html"><strong aria-hidden="true">91.5.</strong> Checking balances and coins</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/wallets/test-wallets.html"><strong aria-hidden="true">91.6.</strong> Setting up test wallets</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/wallets/signing.html"><strong aria-hidden="true">91.7.</strong> Signing</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/abigen/index.html"><strong aria-hidden="true">92.</strong> Generating bindings with abigen!</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/abigen/the-json-abi-file.html"><strong aria-hidden="true">92.1.</strong> The JSON ABI file</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/abigen/the-abigen-macro.html"><strong aria-hidden="true">92.2.</strong> The abigen! macro</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/deploying/index.html"><strong aria-hidden="true">93.</strong> Deploying contracts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/deploying/configurable-constants.html"><strong aria-hidden="true">93.1.</strong> Configurable constants</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/deploying/storage-slots.html"><strong aria-hidden="true">93.2.</strong> Storage slots</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/deploying/interacting-with-contracts.html"><strong aria-hidden="true">93.3.</strong> Interacting with contracts</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/deploying/the-fuelvm-binary-file.html"><strong aria-hidden="true">93.4.</strong> The FuelVM Binary file</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/deploying/large_contracts.html"><strong aria-hidden="true">93.5.</strong> Large contracts</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/index.html"><strong aria-hidden="true">94.</strong> Calling contracts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/calls-with-different-wallets.html"><strong aria-hidden="true">94.1.</strong> Connecting wallets</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/tx-policies.html"><strong aria-hidden="true">94.2.</strong> Transaction policies</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/call-params.html"><strong aria-hidden="true">94.3.</strong> Call parameters</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/custom-asset-transfer.html"><strong aria-hidden="true">94.4.</strong> Custom asset transfer</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/call-response.html"><strong aria-hidden="true">94.5.</strong> Call response</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/logs.html"><strong aria-hidden="true">94.6.</strong> Logs</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/variable-outputs.html"><strong aria-hidden="true">94.7.</strong> Variable outputs and messages</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/simulation.html"><strong aria-hidden="true">94.8.</strong> Simulating calls</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/other-contracts.html"><strong aria-hidden="true">94.9.</strong> Calling other contracts</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/multicalls.html"><strong aria-hidden="true">94.10.</strong> Multiple contract calls</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/tx-dependency-estimation.html"><strong aria-hidden="true">94.11.</strong> Transaction dependency estimation</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/cost-estimation.html"><strong aria-hidden="true">94.12.</strong> Estimating cost</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/low-level-calls.html"><strong aria-hidden="true">94.13.</strong> Low-level calls</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/running-scripts.html"><strong aria-hidden="true">95.</strong> Running scripts</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/predicates/index.html"><strong aria-hidden="true">96.</strong> Predicates</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/predicates/send-spend-predicate.html"><strong aria-hidden="true">96.1.</strong> Signatures example</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/preuploading-code.html"><strong aria-hidden="true">97.</strong> Pre-uploading code</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/custom-transactions/index.html"><strong aria-hidden="true">98.</strong> Custom transactions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/custom-transactions/transaction-builders.html"><strong aria-hidden="true">98.1.</strong> Transaction builders</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/custom-transactions/custom-calls.html"><strong aria-hidden="true">98.2.</strong> Custom contract and script calls</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/index.html"><strong aria-hidden="true">99.</strong> Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/types/bytes32.html"><strong aria-hidden="true">99.1.</strong> Bytes32</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/address.html"><strong aria-hidden="true">99.2.</strong> Address</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/contract-id.html"><strong aria-hidden="true">99.3.</strong> ContractId</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/asset-id.html"><strong aria-hidden="true">99.4.</strong> AssetId</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/bech32.html"><strong aria-hidden="true">99.5.</strong> Bech32</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/custom_types.html"><strong aria-hidden="true">99.6.</strong> Structs and enums</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/string.html"><strong aria-hidden="true">99.7.</strong> String</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/bits256.html"><strong aria-hidden="true">99.8.</strong> Bits256</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/bytes.html"><strong aria-hidden="true">99.9.</strong> Bytes</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/B512.html"><strong aria-hidden="true">99.10.</strong> B512</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/evm_address.html"><strong aria-hidden="true">99.11.</strong> EvmAddress</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/vectors.html"><strong aria-hidden="true">99.12.</strong> Vectors</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/conversion.html"><strong aria-hidden="true">99.13.</strong> Converting types</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/codec/index.html"><strong aria-hidden="true">100.</strong> Codec</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/codec/encoding.html"><strong aria-hidden="true">100.1.</strong> Encoding</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/codec/decoding.html"><strong aria-hidden="true">100.2.</strong> Decoding</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/reference.html"><strong aria-hidden="true">101.</strong> API Reference</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/testing/index.html"><strong aria-hidden="true">102.</strong> Testing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/testing/basics.html"><strong aria-hidden="true">102.1.</strong> Testing basics</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/testing/the-setup-program-test-macro.html"><strong aria-hidden="true">102.2.</strong> The setup_program_test! macro</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/testing/chains.html"><strong aria-hidden="true">102.3.</strong> Tweaking the blockchain</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/cookbook/index.html"><strong aria-hidden="true">103.</strong> Cookbook</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/cookbook/custom-chain.html"><strong aria-hidden="true">103.1.</strong> Custom consensus parameters</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/cookbook/deposit-and-withdraw.html"><strong aria-hidden="true">103.2.</strong> Deposit and Withdraw</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/cookbook/transfer-all-assets.html"><strong aria-hidden="true">103.3.</strong> Transfer all assets</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/debugging/index.html"><strong aria-hidden="true">104.</strong> Debugging</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/debugging/function-selector.html"><strong aria-hidden="true">104.1.</strong> The Function selector</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/debugging/decoding-script-transactions.html"><strong aria-hidden="true">104.2.</strong> Decoding script transactions</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/glossary.html"><strong aria-hidden="true">105.</strong> Glossary</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/contributing/CONTRIBUTING.html"><strong aria-hidden="true">106.</strong> Contributing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/contributing/tests-structure.html"><strong aria-hidden="true">106.1.</strong> Integration tests structure</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/cli/index.html"><strong aria-hidden="true">107.</strong> Command Line Interfaces</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/cli/fuels-abi-cli.html"><strong aria-hidden="true">107.1.</strong> fuels-abi-cli</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Specs</li><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="../../specs/tx-format/index.html"><strong aria-hidden="true">108.</strong> Transaction Format</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/tx-format/consensus_parameters.html"><strong aria-hidden="true">108.1.</strong> Consensus Parameters</a></li><li class="chapter-item expanded "><a href="../../specs/tx-format/transaction.html"><strong aria-hidden="true">108.2.</strong> Transaction</a></li><li class="chapter-item expanded "><a href="../../specs/tx-format/upgrade_purpose.html"><strong aria-hidden="true">108.3.</strong> UpgradePurpose</a></li><li class="chapter-item expanded "><a href="../../specs/tx-format/policy.html"><strong aria-hidden="true">108.4.</strong> Policy</a></li><li class="chapter-item expanded "><a href="../../specs/tx-format/input.html"><strong aria-hidden="true">108.5.</strong> Input</a></li><li class="chapter-item expanded "><a href="../../specs/tx-format/output.html"><strong aria-hidden="true">108.6.</strong> Output</a></li><li class="chapter-item expanded "><a href="../../specs/tx-format/witness.html"><strong aria-hidden="true">108.7.</strong> Witness</a></li><li class="chapter-item expanded "><a href="../../specs/tx-format/tx-pointer.html"><strong aria-hidden="true">108.8.</strong> Transaction Pointer</a></li></ol></li><li class="chapter-item expanded "><a href="../../specs/identifiers/index.html"><strong aria-hidden="true">109.</strong> Computing Identifiers</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/identifiers/asset.html"><strong aria-hidden="true">109.1.</strong> Asset ID</a></li><li class="chapter-item expanded "><a href="../../specs/identifiers/blob-id.html"><strong aria-hidden="true">109.2.</strong> Blob ID</a></li><li class="chapter-item expanded "><a href="../../specs/identifiers/contract-id.html"><strong aria-hidden="true">109.3.</strong> Contract ID</a></li><li class="chapter-item expanded "><a href="../../specs/identifiers/predicate-id.html"><strong aria-hidden="true">109.4.</strong> Predicate ID</a></li><li class="chapter-item expanded "><a href="../../specs/identifiers/transaction-id.html"><strong aria-hidden="true">109.5.</strong> Transaction ID</a></li><li class="chapter-item expanded "><a href="../../specs/identifiers/utxo-id.html"><strong aria-hidden="true">109.6.</strong> UTXO ID</a></li></ol></li><li class="chapter-item expanded "><a href="../../specs/protocol/index.html"><strong aria-hidden="true">110.</strong> Protocol</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/protocol/tx-validity.html"><strong aria-hidden="true">110.1.</strong> Transaction Validity Rules</a></li><li class="chapter-item expanded "><a href="../../specs/protocol/cryptographic-primitives.html"><strong aria-hidden="true">110.2.</strong> Cryptographic Primitives</a></li><li class="chapter-item expanded "><a href="../../specs/protocol/storage-initialization.html"><strong aria-hidden="true">110.3.</strong> Storage Slot Initialization</a></li><li class="chapter-item expanded "><a href="../../specs/protocol/block-header.html"><strong aria-hidden="true">110.4.</strong> Block Header Format</a></li><li class="chapter-item expanded "><a href="../../specs/protocol/relayer.html"><strong aria-hidden="true">110.5.</strong> Layer 1 Relayer/Bridge Protocol</a></li></ol></li><li class="chapter-item expanded "><a href="../../specs/abi/index.html"><strong aria-hidden="true">111.</strong> Application Binary Interface (ABI)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/abi/json-abi-format.html"><strong aria-hidden="true">111.1.</strong> JSON ABI Format</a></li><li class="chapter-item expanded "><a href="../../specs/abi/receipts.html"><strong aria-hidden="true">111.2.</strong> Receipts</a></li><li class="chapter-item expanded "><a href="../../specs/abi/fn-selector-encoding.html"><strong aria-hidden="true">111.3.</strong> Function Selector Encoding</a></li><li class="chapter-item expanded "><a href="../../specs/abi/argument-encoding.html"><strong aria-hidden="true">111.4.</strong> Argument Encoding</a></li><li class="chapter-item expanded "><a href="../../specs/abi/hash-based-ids.html"><strong aria-hidden="true">111.5.</strong> Hash Based Ids</a></li></ol></li><li class="chapter-item expanded "><a href="../../specs/fuel-vm/index.html"><strong aria-hidden="true">112.</strong> FuelVM</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/fuel-vm/instruction-set.html"><strong aria-hidden="true">112.1.</strong> Instruction Set</a></li></ol></li><li class="chapter-item expanded "><a href="../../specs/networks/index.html"><strong aria-hidden="true">113.</strong> Networks</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/networks/poa.html"><strong aria-hidden="true">113.1.</strong> Proof of Authority (PoA)</a></li></ol></li><li class="chapter-item expanded "><a href="../../specs/tests/index.html"><strong aria-hidden="true">114.</strong> Testing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/tests/sparse-merkle-tree-tests.html"><strong aria-hidden="true">114.1.</strong> Sparse Merkle Tree</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Guides</li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/contract-abi.html"><strong aria-hidden="true">115.</strong> ABI</a></li><li class="chapter-item expanded "><a href="../../guides/counter-dapp/building-a-frontend.html"><strong aria-hidden="true">116.</strong> Building a Frontend</a></li><li class="chapter-item expanded "><a href="../../guides/counter-dapp/building-a-smart-contract.html"><strong aria-hidden="true">117.</strong> Building a Smart Contract</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/checkpoint.html"><strong aria-hidden="true">118.</strong> Checkpoint</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/checkpoint.html"><strong aria-hidden="true">119.</strong> Checkpoint</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/configurables.html"><strong aria-hidden="true">120.</strong> Configurables</a></li><li class="chapter-item expanded "><a href="../../guides/contract-quickstart/index.html"><strong aria-hidden="true">121.</strong> Contract Quickstart</a></li><li class="chapter-item expanded "><a href="../../guides/counter-dapp/index.html"><strong aria-hidden="true">122.</strong> Counter Dapp</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/debugging-with-scripts.html"><strong aria-hidden="true">123.</strong> Debugging with Scripts</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/contract-errors.html"><strong aria-hidden="true">124.</strong> Errors</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/explore-fuel.html"><strong aria-hidden="true">125.</strong> Explore Fuel</a></li><li class="chapter-item expanded "><a href="../../guides/frontend-quickstart/index.html"><strong aria-hidden="true">126.</strong> Frontend Quickstart</a></li><li class="chapter-item expanded "><a href="../../guides/fuel-connectors/index.html"><strong aria-hidden="true">127.</strong> Fuel Connectors</a></li><li class="chapter-item expanded "><a href="../../guides/installation/codespace.html"><strong aria-hidden="true">128.</strong> Fuel Github Codespace</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/contract-functions.html"><strong aria-hidden="true">129.</strong> Functions</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/imports.html"><strong aria-hidden="true">130.</strong> Imports</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/contract-imports.html"><strong aria-hidden="true">131.</strong> Imports</a></li><li class="chapter-item expanded "><a href="../../guides/installation/index.html"><strong aria-hidden="true">132.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/index.html"><strong aria-hidden="true">133.</strong> Intro to Predicates</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/index.html"><strong aria-hidden="true">134.</strong> Intro to Sway</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/debugging-with-scripts-rust.html"><strong aria-hidden="true">135.</strong> Logging in Rust tests</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/main.html"><strong aria-hidden="true">136.</strong> Main</a></li><li class="chapter-item expanded "><a href="../../guides/fuel-connectors/non-technical-guide.html"><strong aria-hidden="true">137.</strong> Non-technical Guide</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/predicate-limitations.html"><strong aria-hidden="true">138.</strong> Predicate Limitations</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/predicate-root.html"><strong aria-hidden="true">139.</strong> Predicate Root</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/prerequisites.html"><strong aria-hidden="true">140.</strong> Prerequisites</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/prerequisites.html"><strong aria-hidden="true">141.</strong> Prerequisites</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/rust-sdk.html"><strong aria-hidden="true">142.</strong> Rust Testing</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/rust-sdk.html"><strong aria-hidden="true">143.</strong> Rust Testing</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/signature-verification.html"><strong aria-hidden="true">144.</strong> Signature Verification</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/contract-storage.html"><strong aria-hidden="true">145.</strong> Storage</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/contract-structs.html"><strong aria-hidden="true">146.</strong> Structs</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/typescript-sdk.html"><strong aria-hidden="true">147.</strong> Typescript Frontend</a></li><li class="chapter-item expanded affix "><li class="part-title">Introduction</li><li class="chapter-item expanded "><a href="../../intro/glossary.html"><strong aria-hidden="true">148.</strong> glossary</a></li><li class="chapter-item expanded "><a href="../../intro/quickstart.html"><strong aria-hidden="true">149.</strong> quickstart</a></li><li class="chapter-item expanded "><a href="../../intro/what-is-fuel.html"><strong aria-hidden="true">150.</strong> what is fuel</a></li><li class="chapter-item expanded affix "><li class="part-title">Contributing</li><li class="chapter-item expanded "><a href="../../contributing/index.html"><strong aria-hidden="true">151.</strong> Contributing</a></li><li class="chapter-item expanded "><a href="../../contributing/documentation.html"><strong aria-hidden="true">152.</strong> Documentation</a></li><li class="chapter-item expanded "><a href="../../contributing/general.html"><strong aria-hidden="true">153.</strong> General</a></li><li class="chapter-item expanded "><a href="../../contributing/github-workflows.html"><strong aria-hidden="true">154.</strong> GitHub Workflows</a></li><li class="chapter-item expanded "><a href="../../contributing/guides.html"><strong aria-hidden="true">155.</strong> Guides</a></li><li class="chapter-item expanded "><a href="../../contributing/style-guide.html"><strong aria-hidden="true">156.</strong> Style Guide</a></li><li class="chapter-item expanded "><a href="../../contributing/versions.html"><strong aria-hidden="true">157.</strong> Versions</a></li><li class="chapter-item expanded affix "><li class="part-title">Fuels-ts (TypeScript SDK)</li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/index.html"><strong aria-hidden="true">158.</strong> Guide</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/getting-started/index.html"><strong aria-hidden="true">158.1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/getting-started/installation.html"><strong aria-hidden="true">158.1.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/getting-started/connecting-to-the-network.html"><strong aria-hidden="true">158.1.2.</strong> Connecting to the Network</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/getting-started/running-a-local-fuel-node.html"><strong aria-hidden="true">158.1.3.</strong> Running a local Fuel node</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/getting-started/react-example.html"><strong aria-hidden="true">158.1.4.</strong> React Example</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/getting-started/cdn-usage.html"><strong aria-hidden="true">158.1.5.</strong> CDN Usage</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/getting-started/next-steps.html"><strong aria-hidden="true">158.1.6.</strong> Next Steps</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/the-utxo-model/index.html"><strong aria-hidden="true">158.2.</strong> The UTXO Model</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/creating-a-fuel-dapp/index.html"><strong aria-hidden="true">158.3.</strong> Creating a Fuel dApp</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/creating-a-fuel-dapp/options.html"><strong aria-hidden="true">158.3.1.</strong> Options</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/creating-a-fuel-dapp/deploying-a-dapp-to-testnet.html"><strong aria-hidden="true">158.3.2.</strong> Deploying a dApp to Testnet</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/creating-a-fuel-dapp/working-with-predicates.html"><strong aria-hidden="true">158.3.3.</strong> Working with Predicates</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/fuels-cli/index.html"><strong aria-hidden="true">158.4.</strong> fuels CLI</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/fuels-cli/config-file.html"><strong aria-hidden="true">158.4.1.</strong> Config File</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/fuels-cli/commands.html"><strong aria-hidden="true">158.4.2.</strong> Commands</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/fuels-cli/abi-typegen.html"><strong aria-hidden="true">158.4.3.</strong> ABI Typegen</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/fuels-cli/generating-types.html"><strong aria-hidden="true">158.4.4.</strong> Generating Types</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/fuels-cli/using-generated-types.html"><strong aria-hidden="true">158.4.5.</strong> Using Generated Types</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/provider/index.html"><strong aria-hidden="true">158.5.</strong> Provider</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/provider/provider-options.html"><strong aria-hidden="true">158.5.1.</strong> Provider Options</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/provider/pagination.html"><strong aria-hidden="true">158.5.2.</strong> Pagination</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/provider/querying-the-chain.html"><strong aria-hidden="true">158.5.3.</strong> Querying the Chain</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/wallets/index.html"><strong aria-hidden="true">158.6.</strong> Wallets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/wallets/instantiating-wallets.html"><strong aria-hidden="true">158.6.1.</strong> Instantiating Wallets</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/wallets/private-keys.html"><strong aria-hidden="true">158.6.2.</strong> Private Keys</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/wallets/mnemonic-wallet.html"><strong aria-hidden="true">158.6.3.</strong> Mnemonic Wallet</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/wallets/encrypting-and-decrypting.html"><strong aria-hidden="true">158.6.4.</strong> Encrypting and Decrypting</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/wallets/checking-balances.html"><strong aria-hidden="true">158.6.5.</strong> Checking Balances</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/wallets/wallet-transferring.html"><strong aria-hidden="true">158.6.6.</strong> Wallet Transferring</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/wallets/signing.html"><strong aria-hidden="true">158.6.7.</strong> Signing</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/wallets/connectors.html"><strong aria-hidden="true">158.6.8.</strong> Connectors</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/wallets/wallet-manager.html"><strong aria-hidden="true">158.6.9.</strong> Wallet Manager</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/wallets/locking-and-unlocking.html"><strong aria-hidden="true">158.6.10.</strong> Locking and Unlocking</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/index.html"><strong aria-hidden="true">158.7.</strong> Contracts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/methods.html"><strong aria-hidden="true">158.7.1.</strong> Methods</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/call-parameters.html"><strong aria-hidden="true">158.7.2.</strong> Call Parameters</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/contract-balance.html"><strong aria-hidden="true">158.7.3.</strong> Contract Balance</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/cost-estimation.html"><strong aria-hidden="true">158.7.4.</strong> Cost Estimation</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/dependency-estimation.html"><strong aria-hidden="true">158.7.5.</strong> Dependency Estimation</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/variable-outputs.html"><strong aria-hidden="true">158.7.6.</strong> Variable Outputs</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/logs.html"><strong aria-hidden="true">158.7.7.</strong> Logs</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/inter-contract-calls.html"><strong aria-hidden="true">158.7.8.</strong> Inter-contract Calls</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/multi-contract-calls.html"><strong aria-hidden="true">158.7.9.</strong> Multi-contract calls</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/using-different-wallets.html"><strong aria-hidden="true">158.7.10.</strong> Using different Wallets</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/transferring-assets.html"><strong aria-hidden="true">158.7.11.</strong> Transferring Assets</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/deploying-contracts.html"><strong aria-hidden="true">158.7.12.</strong> Deploying Contracts</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/storage-slots.html"><strong aria-hidden="true">158.7.13.</strong> Storage Slots</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/configurable-constants.html"><strong aria-hidden="true">158.7.14.</strong> Configurable Constants</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/minted-token-asset-id.html"><strong aria-hidden="true">158.7.15.</strong> Minted Token Asset ID</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/managing-deployed-contracts.html"><strong aria-hidden="true">158.7.16.</strong> Managing Deployed Contracts</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/proxy-contracts.html"><strong aria-hidden="true">158.7.17.</strong> Proxy Contracts</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/understanding-the-fuelvm-binary-file.html"><strong aria-hidden="true">158.7.18.</strong> Understanding the FuelVM Binary File</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/scripts/index.html"><strong aria-hidden="true">158.8.</strong> Scripts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/scripts/instantiating-a-script.html"><strong aria-hidden="true">158.8.1.</strong> Instantiating A Script</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/scripts/deploying-scripts.html"><strong aria-hidden="true">158.8.2.</strong> Deploying Scripts</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/scripts/configurable-constants.html"><strong aria-hidden="true">158.8.3.</strong> Configurable Constants</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/scripts/running-scripts.html"><strong aria-hidden="true">158.8.4.</strong> Running scripts</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/scripts/custom-script-call.html"><strong aria-hidden="true">158.8.5.</strong> Custom script Call</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/predicates/index.html"><strong aria-hidden="true">158.9.</strong> Predicates</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/predicates/instantiating-a-predicate.html"><strong aria-hidden="true">158.9.1.</strong> Instantiating A Predicate</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/predicates/deploying-predicates.html"><strong aria-hidden="true">158.9.2.</strong> Deploying Predicates</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/predicates/configurable-constants.html"><strong aria-hidden="true">158.9.3.</strong> Configurable Constants</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/predicates/send-and-spend-funds-from-predicates.html"><strong aria-hidden="true">158.9.4.</strong> Send And Spend Funds From Predicates</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/predicates/methods.html"><strong aria-hidden="true">158.9.5.</strong> Methods</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/predicates/custom-transactions.html"><strong aria-hidden="true">158.9.6.</strong> Custom Transactions</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/transactions/index.html"><strong aria-hidden="true">158.10.</strong> Transactions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/transactions/modifying-the-request.html"><strong aria-hidden="true">158.10.1.</strong> Modifying the Request</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/transactions/adding-parameters.html"><strong aria-hidden="true">158.10.2.</strong> Adding Parameters</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/transactions/adding-policies.html"><strong aria-hidden="true">158.10.3.</strong> Adding Policies</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/transactions/getting-the-response.html"><strong aria-hidden="true">158.10.4.</strong> Getting the Response</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/transactions/optimizing-frontend-apps.html"><strong aria-hidden="true">158.10.5.</strong> Optimizing Frontend Apps</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/encoding/index.html"><strong aria-hidden="true">158.11.</strong> Encoding</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/encoding/encode-and-decode.html"><strong aria-hidden="true">158.11.1.</strong> Encode and Decode</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/encoding/working-with-bytes.html"><strong aria-hidden="true">158.11.2.</strong> Working with Bytes</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/utilities/index.html"><strong aria-hidden="true">158.12.</strong> Utilities</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/utilities/date-conversion.html"><strong aria-hidden="true">158.12.1.</strong> Date conversion</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/utilities/address-conversion.html"><strong aria-hidden="true">158.12.2.</strong> Address conversion</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/utilities/unit-conversion.html"><strong aria-hidden="true">158.12.3.</strong> Unit conversion</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/utilities/using-assets.html"><strong aria-hidden="true">158.12.4.</strong> Using assets</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/utilities/asset-api.html"><strong aria-hidden="true">158.12.5.</strong> Asset API</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/index.html"><strong aria-hidden="true">158.13.</strong> Cookbook</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/deposit-and-withdraw.html"><strong aria-hidden="true">158.13.1.</strong> Deposit And Withdraw</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/wallet-sdk-and-react-hooks.html"><strong aria-hidden="true">158.13.2.</strong> Wallet SDK and React Hooks</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/custom-transactions.html"><strong aria-hidden="true">158.13.3.</strong> Custom Transactions</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/custom-transactions-from-contract-calls.html"><strong aria-hidden="true">158.13.4.</strong> Custom Transactions from Contract Calls</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/generate-fake-resources.html"><strong aria-hidden="true">158.13.5.</strong> Generate Fake Resources</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/transactions-with-multiple-signers.html"><strong aria-hidden="true">158.13.6.</strong> Transactions with Multiple Signers</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/graphql-integration.html"><strong aria-hidden="true">158.13.7.</strong> GraphQL Integration</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/resubmitting-failed-transactions.html"><strong aria-hidden="true">158.13.8.</strong> Resubmitting Failed Transactions</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/combining-utxos.html"><strong aria-hidden="true">158.13.9.</strong> Combining UTXOs</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/splitting-utxos.html"><strong aria-hidden="true">158.13.10.</strong> Splitting UTXOs</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/optimized-react-example.html"><strong aria-hidden="true">158.13.11.</strong> Optimized React Example</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/testing/index.html"><strong aria-hidden="true">158.14.</strong> Testing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/testing/launching-a-test-node.html"><strong aria-hidden="true">158.14.1.</strong> Launching a Test Node</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/testing/test-node-options.html"><strong aria-hidden="true">158.14.2.</strong> Test Node Options</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/testing/fuel-core-options.html"><strong aria-hidden="true">158.14.3.</strong> Fuel Core Options</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/testing/basic-example.html"><strong aria-hidden="true">158.14.4.</strong> Basic Example</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/testing/advanced-example.html"><strong aria-hidden="true">158.14.5.</strong> Advanced Example</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/testing/custom-blocks.html"><strong aria-hidden="true">158.14.6.</strong> Custom Blocks</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/testing/setting-up-test-wallets.html"><strong aria-hidden="true">158.14.7.</strong> Setting up test wallets</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/index.html"><strong aria-hidden="true">158.15.</strong> Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/address.html"><strong aria-hidden="true">158.15.1.</strong> Address</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/arrays.html"><strong aria-hidden="true">158.15.2.</strong> Arrays</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/asset-id.html"><strong aria-hidden="true">158.15.3.</strong> Asset Id</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/b256.html"><strong aria-hidden="true">158.15.4.</strong> B256</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/b512.html"><strong aria-hidden="true">158.15.5.</strong> B512</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/bytes.html"><strong aria-hidden="true">158.15.6.</strong> Bytes</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/bytes32.html"><strong aria-hidden="true">158.15.7.</strong> Bytes32</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/enums.html"><strong aria-hidden="true">158.15.8.</strong> Enums</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/evm-address.html"><strong aria-hidden="true">158.15.9.</strong> Evm Address</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/native-parameters.html"><strong aria-hidden="true">158.15.10.</strong> Native Parameters</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/numbers.html"><strong aria-hidden="true">158.15.11.</strong> Numbers</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/options.html"><strong aria-hidden="true">158.15.12.</strong> Options</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/raw-slice.html"><strong aria-hidden="true">158.15.13.</strong> Raw Slice</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/std-string.html"><strong aria-hidden="true">158.15.14.</strong> Std String</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/string.html"><strong aria-hidden="true">158.15.15.</strong> String</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/structs.html"><strong aria-hidden="true">158.15.16.</strong> Structs</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/tuples.html"><strong aria-hidden="true">158.15.17.</strong> Tuples</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/vectors.html"><strong aria-hidden="true">158.15.18.</strong> Vectors</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/errors/index.html"><strong aria-hidden="true">158.16.</strong> Errors</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Fuel Docs Hub</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="native-assets"><a class="header" href="#native-assets">Native Assets</a></h1>
+<!-- This section should explain native assets in Sway -->
+<!-- native_assets:example:start -->
+<p>The FuelVM has built-in support for working with multiple assets.</p>
+<h2 id="key-differences-between-evm-and-fuelvm-assets"><a class="header" href="#key-differences-between-evm-and-fuelvm-assets">Key Differences Between EVM and FuelVM Assets</a></h2>
+<h3 id="erc-20-vs-native-asset"><a class="header" href="#erc-20-vs-native-asset">ERC-20 vs Native Asset</a></h3>
+<p>On the EVM, Ether is the native asset. As such, sending ETH to an address or contract is an operation built into the EVM, meaning it doesn't rely on the existence of a smart contract to update balances to track ownership as with ERC-20 tokens.</p>
+<p>On the FuelVM, <em>all</em> assets are native and the process for sending <em>any</em> native asset is the same.</p>
+<p>While you would still need a smart contract to handle the minting and burning of assets, the sending and receiving of these assets can be done independently of the asset contract.</p>
+<p>Just like the EVM however, Fuel has a standard that describes a standard API for Native Assets using the Sway Language. The ERC-20 equivalent for the Sway Language is the <a href="https://github.com/FuelLabs/sway-standards/blob/master/docs/src/src-20-native-asset.md">SRC-20; Native Asset Standard</a>.</p>
+<blockquote>
+<p><strong>NOTE</strong> It is important to note that Fuel does not have tokens.</p>
+</blockquote>
+<h3 id="erc-721-vs-native-asset"><a class="header" href="#erc-721-vs-native-asset">ERC-721 vs Native Asset</a></h3>
+<p>On the EVM, an ERC-721 token or NFT is a contract that contains multiple tokens which are non-fungible with one another.</p>
+<p>On the FuelVM, the ERC-721 equivalent is a Native Asset where each asset has a supply of one. This is defined in the <a href="https://github.com/FuelLabs/sway-standards/blob/master/docs/src/src-20-native-asset.md#non-fungible-asset-restrictions">SRC-20; Native Asset Standard</a> under the Non-Fungible Asset Restrictions.</p>
+<p>In practice, this means all NFTs are treated the same as any other Native Asset on Fuel. When writing Sway code, no additional cases for handling non-fungible and fungible assets are required.</p>
+<h3 id="no-token-approvals"><a class="header" href="#no-token-approvals">No Token Approvals</a></h3>
+<p>An advantage Native Assets bring is that there is no need for token approvals; as with Ether on the EVM. With millions of dollars hacked every year due to misused token approvals, the FuelVM eliminates this attack vector.</p>
+<h3 id="asset-vs-coin-vs-token"><a class="header" href="#asset-vs-coin-vs-token">Asset vs Coin vs Token</a></h3>
+<p>An "Asset" is a Native Asset on Fuel and has the associated <code>AssetId</code> type. Assets are distinguishable from one another. A "Coin" represents a singular unit of an Asset. Coins of the same Asset are not distinguishable from one another.</p>
+<p>Fuel does not use tokens like other ecosystems such as Ethereum and uses Native Assets with a UTXO design instead.</p>
+<h2 id="the-assetid-type"><a class="header" href="#the-assetid-type">The <code>AssetId</code> type</a></h2>
+<p>The <code>AssetId</code> type represents any Native Asset on Fuel. An <code>AssetId</code> is used for interacting with an asset on the network.</p>
+<p>The <code>AssetId</code> of any Native Asset on Fuel is calculated by taking the SHA256 hash digest of the originating <code>ContractId</code> that minted the asset and a <code>SubId</code> i.e. <code>sha256((contract_id, sub_id))</code>.</p>
+<h3 id="creating-a-new-assetid"><a class="header" href="#creating-a-new-assetid">Creating a New <code>AssetId</code></a></h3>
+<p>There are 3 ways to instantiate a new <code>AssetId</code>:</p>
+<h4 id="default"><a class="header" href="#default">Default</a></h4>
+<p>When a contract will only ever mint a single asset, it is recommended to use the <code>DEFAULT_ASSET_ID</code> sub id. This is referred to as the default asset of a contract.</p>
+<p>To get the default asset from an internal contract call, call the <code>default()</code> function:</p>
+<pre><code class="language-sway">```sway\ncontract;
+
+use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
+
+abi NativeAsset {
+    fn mint_coins(mint_amount: u64);
+    fn burn_coins(burn_amount: u64);
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity);
+    #[payable]
+    fn deposit();
+    fn get_balance(target: ContractId, asset_id: AssetId) -&gt; u64;
+    fn get_msg_amount();
+    fn this_balance(asset_id: AssetId) -&gt; u64;
+    fn get_msg_asset_id();
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64);
+}
+
+impl NativeAsset for Contract {
+    /// Mint an amount of this contracts native asset to the contracts balance.
+    fn mint_coins(mint_amount: u64) {
+        // ANCHOR: mint_asset
+        mint(DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_asset
+    }
+
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64) {
+        // ANCHOR: mint_to_asset
+        mint_to(target_identity, DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_to_asset
+    }
+
+    /// Burn an amount of this contracts native asset.
+    fn burn_coins(burn_amount: u64) {
+        // ANCHOR: burn_asset
+        burn(DEFAULT_SUB_ID, burn_amount);
+        // ANCHOR_END: burn_asset
+    }
+
+    /// Transfer coins to a target contract.
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity) {
+        // ANCHOR: transfer_asset
+        transfer(target, asset_id, coins);
+        // ANCHOR_END: transfer_asset
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn get_balance(target_contract: ContractId, asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: balance_of
+        balance_of(target_contract, asset_id)
+        // ANCHOR_END: balance_of
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn this_balance(asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: this_balance
+        this_balance(asset_id)
+        // ANCHOR_END: this_balance
+    }
+
+    /// Deposit coins back into the contract.
+    // ANCHOR: payable
+    #[payable]
+    fn deposit() {
+        assert(msg_amount() &gt; 0);
+    }
+    // ANCHOR_END: payable
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_amount() {
+        // ANCHOR: msg_amount
+        let amount = msg_amount();
+        // ANCHOR_END: msg_amount
+    }
+
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_asset_id() {
+        // ANCHOR: msg_asset_id
+        let amount = msg_asset_id();
+        // ANCHOR_END: msg_asset_id
+    }
+}
+
+fn get_base_asset() {
+    // ANCHOR: base_asset
+    let base_asset: AssetId = AssetId::base();
+    // ANCHOR_END: base_asset
+}
+
+fn default_asset_id() {
+    // ANCHOR: default_asset_id
+    let asset_id: AssetId = AssetId::default();
+    // ANCHOR_END: default_asset_id
+}
+
+fn new_asset_id(my_contract_id: ContractId, my_sub_id: SubId) {
+    // ANCHOR: new_asset_id
+    let my_contract_id: ContractId = ContractId::from(0x1000000000000000000000000000000000000000000000000000000000000000);
+    let my_sub_id: SubId = 0x2000000000000000000000000000000000000000000000000000000000000000;
+
+    let asset_id: AssetId = AssetId::new(my_contract_id, my_sub_id);
+    // ANCHOR_END: new_asset_id
+}
+
+fn from_asset_id() {
+    // ANCHOR: from_asset_id
+    let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
+    // ANCHOR_END: from_asset_id
+}\n```
+</code></pre>
+<h4 id="new"><a class="header" href="#new">New</a></h4>
+<p>If a contract mints multiple assets or if the asset has been minted by an external contract, the <code>new()</code> function will be needed. The <code>new()</code> function takes the <code>ContractId</code> of the contract which minted the token as well as a <code>SubId</code>.</p>
+<p>To create a new <code>AssetId</code> using a <code>ContractId</code> and <code>SubId</code>, call the <code>new()</code> function:</p>
+<pre><code class="language-sway">```sway\ncontract;
+
+use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
+
+abi NativeAsset {
+    fn mint_coins(mint_amount: u64);
+    fn burn_coins(burn_amount: u64);
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity);
+    #[payable]
+    fn deposit();
+    fn get_balance(target: ContractId, asset_id: AssetId) -&gt; u64;
+    fn get_msg_amount();
+    fn this_balance(asset_id: AssetId) -&gt; u64;
+    fn get_msg_asset_id();
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64);
+}
+
+impl NativeAsset for Contract {
+    /// Mint an amount of this contracts native asset to the contracts balance.
+    fn mint_coins(mint_amount: u64) {
+        // ANCHOR: mint_asset
+        mint(DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_asset
+    }
+
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64) {
+        // ANCHOR: mint_to_asset
+        mint_to(target_identity, DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_to_asset
+    }
+
+    /// Burn an amount of this contracts native asset.
+    fn burn_coins(burn_amount: u64) {
+        // ANCHOR: burn_asset
+        burn(DEFAULT_SUB_ID, burn_amount);
+        // ANCHOR_END: burn_asset
+    }
+
+    /// Transfer coins to a target contract.
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity) {
+        // ANCHOR: transfer_asset
+        transfer(target, asset_id, coins);
+        // ANCHOR_END: transfer_asset
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn get_balance(target_contract: ContractId, asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: balance_of
+        balance_of(target_contract, asset_id)
+        // ANCHOR_END: balance_of
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn this_balance(asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: this_balance
+        this_balance(asset_id)
+        // ANCHOR_END: this_balance
+    }
+
+    /// Deposit coins back into the contract.
+    // ANCHOR: payable
+    #[payable]
+    fn deposit() {
+        assert(msg_amount() &gt; 0);
+    }
+    // ANCHOR_END: payable
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_amount() {
+        // ANCHOR: msg_amount
+        let amount = msg_amount();
+        // ANCHOR_END: msg_amount
+    }
+
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_asset_id() {
+        // ANCHOR: msg_asset_id
+        let amount = msg_asset_id();
+        // ANCHOR_END: msg_asset_id
+    }
+}
+
+fn get_base_asset() {
+    // ANCHOR: base_asset
+    let base_asset: AssetId = AssetId::base();
+    // ANCHOR_END: base_asset
+}
+
+fn default_asset_id() {
+    // ANCHOR: default_asset_id
+    let asset_id: AssetId = AssetId::default();
+    // ANCHOR_END: default_asset_id
+}
+
+fn new_asset_id(my_contract_id: ContractId, my_sub_id: SubId) {
+    // ANCHOR: new_asset_id
+    let my_contract_id: ContractId = ContractId::from(0x1000000000000000000000000000000000000000000000000000000000000000);
+    let my_sub_id: SubId = 0x2000000000000000000000000000000000000000000000000000000000000000;
+
+    let asset_id: AssetId = AssetId::new(my_contract_id, my_sub_id);
+    // ANCHOR_END: new_asset_id
+}
+
+fn from_asset_id() {
+    // ANCHOR: from_asset_id
+    let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
+    // ANCHOR_END: from_asset_id
+}\n```
+</code></pre>
+<h4 id="from"><a class="header" href="#from">From</a></h4>
+<p>In the case where the <code>b256</code> value of an asset is already known, you may call the <code>from()</code> function with the <code>b256</code> value.</p>
+<pre><code class="language-sway">```sway\ncontract;
+
+use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
+
+abi NativeAsset {
+    fn mint_coins(mint_amount: u64);
+    fn burn_coins(burn_amount: u64);
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity);
+    #[payable]
+    fn deposit();
+    fn get_balance(target: ContractId, asset_id: AssetId) -&gt; u64;
+    fn get_msg_amount();
+    fn this_balance(asset_id: AssetId) -&gt; u64;
+    fn get_msg_asset_id();
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64);
+}
+
+impl NativeAsset for Contract {
+    /// Mint an amount of this contracts native asset to the contracts balance.
+    fn mint_coins(mint_amount: u64) {
+        // ANCHOR: mint_asset
+        mint(DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_asset
+    }
+
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64) {
+        // ANCHOR: mint_to_asset
+        mint_to(target_identity, DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_to_asset
+    }
+
+    /// Burn an amount of this contracts native asset.
+    fn burn_coins(burn_amount: u64) {
+        // ANCHOR: burn_asset
+        burn(DEFAULT_SUB_ID, burn_amount);
+        // ANCHOR_END: burn_asset
+    }
+
+    /// Transfer coins to a target contract.
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity) {
+        // ANCHOR: transfer_asset
+        transfer(target, asset_id, coins);
+        // ANCHOR_END: transfer_asset
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn get_balance(target_contract: ContractId, asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: balance_of
+        balance_of(target_contract, asset_id)
+        // ANCHOR_END: balance_of
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn this_balance(asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: this_balance
+        this_balance(asset_id)
+        // ANCHOR_END: this_balance
+    }
+
+    /// Deposit coins back into the contract.
+    // ANCHOR: payable
+    #[payable]
+    fn deposit() {
+        assert(msg_amount() &gt; 0);
+    }
+    // ANCHOR_END: payable
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_amount() {
+        // ANCHOR: msg_amount
+        let amount = msg_amount();
+        // ANCHOR_END: msg_amount
+    }
+
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_asset_id() {
+        // ANCHOR: msg_asset_id
+        let amount = msg_asset_id();
+        // ANCHOR_END: msg_asset_id
+    }
+}
+
+fn get_base_asset() {
+    // ANCHOR: base_asset
+    let base_asset: AssetId = AssetId::base();
+    // ANCHOR_END: base_asset
+}
+
+fn default_asset_id() {
+    // ANCHOR: default_asset_id
+    let asset_id: AssetId = AssetId::default();
+    // ANCHOR_END: default_asset_id
+}
+
+fn new_asset_id(my_contract_id: ContractId, my_sub_id: SubId) {
+    // ANCHOR: new_asset_id
+    let my_contract_id: ContractId = ContractId::from(0x1000000000000000000000000000000000000000000000000000000000000000);
+    let my_sub_id: SubId = 0x2000000000000000000000000000000000000000000000000000000000000000;
+
+    let asset_id: AssetId = AssetId::new(my_contract_id, my_sub_id);
+    // ANCHOR_END: new_asset_id
+}
+
+fn from_asset_id() {
+    // ANCHOR: from_asset_id
+    let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
+    // ANCHOR_END: from_asset_id
+}\n```
+</code></pre>
+<h2 id="the-subid-type"><a class="header" href="#the-subid-type">The <code>SubId</code> type</a></h2>
+<p>The SubId is used to differentiate between different assets that are created by the same contract. The <code>SubId</code> is a <code>b256</code> value.</p>
+<p>When creating a single new asset on Fuel, we recommend using the <code>DEFAULT_SUB_ID</code> or <code>SubId::zero()</code>.</p>
+<h2 id="the-base-asset"><a class="header" href="#the-base-asset">The Base Asset</a></h2>
+<p>On the Fuel Network, the base asset is Ether. This is the only asset on the Fuel Network that does not have a <code>SubId</code>.</p>
+<p>The Base Asset can be returned anytime by calling the <code>base()</code> function of the <code>AssetId</code> type.</p>
+<pre><code class="language-sway">```sway\ncontract;
+
+use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
+
+abi NativeAsset {
+    fn mint_coins(mint_amount: u64);
+    fn burn_coins(burn_amount: u64);
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity);
+    #[payable]
+    fn deposit();
+    fn get_balance(target: ContractId, asset_id: AssetId) -&gt; u64;
+    fn get_msg_amount();
+    fn this_balance(asset_id: AssetId) -&gt; u64;
+    fn get_msg_asset_id();
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64);
+}
+
+impl NativeAsset for Contract {
+    /// Mint an amount of this contracts native asset to the contracts balance.
+    fn mint_coins(mint_amount: u64) {
+        // ANCHOR: mint_asset
+        mint(DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_asset
+    }
+
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64) {
+        // ANCHOR: mint_to_asset
+        mint_to(target_identity, DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_to_asset
+    }
+
+    /// Burn an amount of this contracts native asset.
+    fn burn_coins(burn_amount: u64) {
+        // ANCHOR: burn_asset
+        burn(DEFAULT_SUB_ID, burn_amount);
+        // ANCHOR_END: burn_asset
+    }
+
+    /// Transfer coins to a target contract.
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity) {
+        // ANCHOR: transfer_asset
+        transfer(target, asset_id, coins);
+        // ANCHOR_END: transfer_asset
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn get_balance(target_contract: ContractId, asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: balance_of
+        balance_of(target_contract, asset_id)
+        // ANCHOR_END: balance_of
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn this_balance(asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: this_balance
+        this_balance(asset_id)
+        // ANCHOR_END: this_balance
+    }
+
+    /// Deposit coins back into the contract.
+    // ANCHOR: payable
+    #[payable]
+    fn deposit() {
+        assert(msg_amount() &gt; 0);
+    }
+    // ANCHOR_END: payable
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_amount() {
+        // ANCHOR: msg_amount
+        let amount = msg_amount();
+        // ANCHOR_END: msg_amount
+    }
+
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_asset_id() {
+        // ANCHOR: msg_asset_id
+        let amount = msg_asset_id();
+        // ANCHOR_END: msg_asset_id
+    }
+}
+
+fn get_base_asset() {
+    // ANCHOR: base_asset
+    let base_asset: AssetId = AssetId::base();
+    // ANCHOR_END: base_asset
+}
+
+fn default_asset_id() {
+    // ANCHOR: default_asset_id
+    let asset_id: AssetId = AssetId::default();
+    // ANCHOR_END: default_asset_id
+}
+
+fn new_asset_id(my_contract_id: ContractId, my_sub_id: SubId) {
+    // ANCHOR: new_asset_id
+    let my_contract_id: ContractId = ContractId::from(0x1000000000000000000000000000000000000000000000000000000000000000);
+    let my_sub_id: SubId = 0x2000000000000000000000000000000000000000000000000000000000000000;
+
+    let asset_id: AssetId = AssetId::new(my_contract_id, my_sub_id);
+    // ANCHOR_END: new_asset_id
+}
+
+fn from_asset_id() {
+    // ANCHOR: from_asset_id
+    let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
+    // ANCHOR_END: from_asset_id
+}\n```
+</code></pre>
+<h2 id="basic-native-asset-functionality"><a class="header" href="#basic-native-asset-functionality">Basic Native Asset Functionality</a></h2>
+<h3 id="minting-a-native-asset"><a class="header" href="#minting-a-native-asset">Minting A Native Asset</a></h3>
+<p>To mint a new asset, the <code>std::asset::mint()</code> function must be called internally within a contract. A <code>SubId</code> and amount of coins must be provided. These newly minted coins will be owned by the contract which minted them. To mint another asset from the same contract, replace the <code>DEFAULT_SUB_ID</code> with your desired <code>SubId</code>.</p>
+<pre><code class="language-sway">```sway\ncontract;
+
+use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
+
+abi NativeAsset {
+    fn mint_coins(mint_amount: u64);
+    fn burn_coins(burn_amount: u64);
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity);
+    #[payable]
+    fn deposit();
+    fn get_balance(target: ContractId, asset_id: AssetId) -&gt; u64;
+    fn get_msg_amount();
+    fn this_balance(asset_id: AssetId) -&gt; u64;
+    fn get_msg_asset_id();
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64);
+}
+
+impl NativeAsset for Contract {
+    /// Mint an amount of this contracts native asset to the contracts balance.
+    fn mint_coins(mint_amount: u64) {
+        // ANCHOR: mint_asset
+        mint(DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_asset
+    }
+
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64) {
+        // ANCHOR: mint_to_asset
+        mint_to(target_identity, DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_to_asset
+    }
+
+    /// Burn an amount of this contracts native asset.
+    fn burn_coins(burn_amount: u64) {
+        // ANCHOR: burn_asset
+        burn(DEFAULT_SUB_ID, burn_amount);
+        // ANCHOR_END: burn_asset
+    }
+
+    /// Transfer coins to a target contract.
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity) {
+        // ANCHOR: transfer_asset
+        transfer(target, asset_id, coins);
+        // ANCHOR_END: transfer_asset
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn get_balance(target_contract: ContractId, asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: balance_of
+        balance_of(target_contract, asset_id)
+        // ANCHOR_END: balance_of
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn this_balance(asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: this_balance
+        this_balance(asset_id)
+        // ANCHOR_END: this_balance
+    }
+
+    /// Deposit coins back into the contract.
+    // ANCHOR: payable
+    #[payable]
+    fn deposit() {
+        assert(msg_amount() &gt; 0);
+    }
+    // ANCHOR_END: payable
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_amount() {
+        // ANCHOR: msg_amount
+        let amount = msg_amount();
+        // ANCHOR_END: msg_amount
+    }
+
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_asset_id() {
+        // ANCHOR: msg_asset_id
+        let amount = msg_asset_id();
+        // ANCHOR_END: msg_asset_id
+    }
+}
+
+fn get_base_asset() {
+    // ANCHOR: base_asset
+    let base_asset: AssetId = AssetId::base();
+    // ANCHOR_END: base_asset
+}
+
+fn default_asset_id() {
+    // ANCHOR: default_asset_id
+    let asset_id: AssetId = AssetId::default();
+    // ANCHOR_END: default_asset_id
+}
+
+fn new_asset_id(my_contract_id: ContractId, my_sub_id: SubId) {
+    // ANCHOR: new_asset_id
+    let my_contract_id: ContractId = ContractId::from(0x1000000000000000000000000000000000000000000000000000000000000000);
+    let my_sub_id: SubId = 0x2000000000000000000000000000000000000000000000000000000000000000;
+
+    let asset_id: AssetId = AssetId::new(my_contract_id, my_sub_id);
+    // ANCHOR_END: new_asset_id
+}
+
+fn from_asset_id() {
+    // ANCHOR: from_asset_id
+    let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
+    // ANCHOR_END: from_asset_id
+}\n```
+</code></pre>
+<p>You may also mint an asset to a specific entity with the <code>std::asset::mint_to()</code> function. Be sure to provide a target <code>Identity</code> that will own the newly minted coins.</p>
+<pre><code class="language-sway">```sway\ncontract;
+
+use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
+
+abi NativeAsset {
+    fn mint_coins(mint_amount: u64);
+    fn burn_coins(burn_amount: u64);
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity);
+    #[payable]
+    fn deposit();
+    fn get_balance(target: ContractId, asset_id: AssetId) -&gt; u64;
+    fn get_msg_amount();
+    fn this_balance(asset_id: AssetId) -&gt; u64;
+    fn get_msg_asset_id();
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64);
+}
+
+impl NativeAsset for Contract {
+    /// Mint an amount of this contracts native asset to the contracts balance.
+    fn mint_coins(mint_amount: u64) {
+        // ANCHOR: mint_asset
+        mint(DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_asset
+    }
+
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64) {
+        // ANCHOR: mint_to_asset
+        mint_to(target_identity, DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_to_asset
+    }
+
+    /// Burn an amount of this contracts native asset.
+    fn burn_coins(burn_amount: u64) {
+        // ANCHOR: burn_asset
+        burn(DEFAULT_SUB_ID, burn_amount);
+        // ANCHOR_END: burn_asset
+    }
+
+    /// Transfer coins to a target contract.
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity) {
+        // ANCHOR: transfer_asset
+        transfer(target, asset_id, coins);
+        // ANCHOR_END: transfer_asset
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn get_balance(target_contract: ContractId, asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: balance_of
+        balance_of(target_contract, asset_id)
+        // ANCHOR_END: balance_of
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn this_balance(asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: this_balance
+        this_balance(asset_id)
+        // ANCHOR_END: this_balance
+    }
+
+    /// Deposit coins back into the contract.
+    // ANCHOR: payable
+    #[payable]
+    fn deposit() {
+        assert(msg_amount() &gt; 0);
+    }
+    // ANCHOR_END: payable
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_amount() {
+        // ANCHOR: msg_amount
+        let amount = msg_amount();
+        // ANCHOR_END: msg_amount
+    }
+
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_asset_id() {
+        // ANCHOR: msg_asset_id
+        let amount = msg_asset_id();
+        // ANCHOR_END: msg_asset_id
+    }
+}
+
+fn get_base_asset() {
+    // ANCHOR: base_asset
+    let base_asset: AssetId = AssetId::base();
+    // ANCHOR_END: base_asset
+}
+
+fn default_asset_id() {
+    // ANCHOR: default_asset_id
+    let asset_id: AssetId = AssetId::default();
+    // ANCHOR_END: default_asset_id
+}
+
+fn new_asset_id(my_contract_id: ContractId, my_sub_id: SubId) {
+    // ANCHOR: new_asset_id
+    let my_contract_id: ContractId = ContractId::from(0x1000000000000000000000000000000000000000000000000000000000000000);
+    let my_sub_id: SubId = 0x2000000000000000000000000000000000000000000000000000000000000000;
+
+    let asset_id: AssetId = AssetId::new(my_contract_id, my_sub_id);
+    // ANCHOR_END: new_asset_id
+}
+
+fn from_asset_id() {
+    // ANCHOR: from_asset_id
+    let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
+    // ANCHOR_END: from_asset_id
+}\n```
+</code></pre>
+<p>If you intend to allow external users to mint assets using your contract, the <a href="https://github.com/FuelLabs/sway-standards/blob/master/docs/src/src-3-minting-and-burning.md#fn-mintrecipient-identity-vault_sub_id-subid-amount-u64">SRC-3; Mint and Burn Standard</a> defines a standard API for minting assets. The <a href="https://fuellabs.github.io/sway-libs/book/asset/supply.html">Sway-Libs Asset Library</a> also provides an additional library to support implementations of the SRC-3 Standard into your contract.</p>
+<h3 id="burning-a-native-asset"><a class="header" href="#burning-a-native-asset">Burning a Native Asset</a></h3>
+<p>To burn an asset, the <code>std::asset::burn()</code> function must be called internally from the contract which minted them. The <code>SubId</code> used to mint the coins and amount must be provided. The burned coins must be owned by the contract. When an asset is burned it doesn't exist anymore.</p>
+<pre><code class="language-sway">```sway\ncontract;
+
+use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
+
+abi NativeAsset {
+    fn mint_coins(mint_amount: u64);
+    fn burn_coins(burn_amount: u64);
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity);
+    #[payable]
+    fn deposit();
+    fn get_balance(target: ContractId, asset_id: AssetId) -&gt; u64;
+    fn get_msg_amount();
+    fn this_balance(asset_id: AssetId) -&gt; u64;
+    fn get_msg_asset_id();
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64);
+}
+
+impl NativeAsset for Contract {
+    /// Mint an amount of this contracts native asset to the contracts balance.
+    fn mint_coins(mint_amount: u64) {
+        // ANCHOR: mint_asset
+        mint(DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_asset
+    }
+
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64) {
+        // ANCHOR: mint_to_asset
+        mint_to(target_identity, DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_to_asset
+    }
+
+    /// Burn an amount of this contracts native asset.
+    fn burn_coins(burn_amount: u64) {
+        // ANCHOR: burn_asset
+        burn(DEFAULT_SUB_ID, burn_amount);
+        // ANCHOR_END: burn_asset
+    }
+
+    /// Transfer coins to a target contract.
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity) {
+        // ANCHOR: transfer_asset
+        transfer(target, asset_id, coins);
+        // ANCHOR_END: transfer_asset
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn get_balance(target_contract: ContractId, asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: balance_of
+        balance_of(target_contract, asset_id)
+        // ANCHOR_END: balance_of
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn this_balance(asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: this_balance
+        this_balance(asset_id)
+        // ANCHOR_END: this_balance
+    }
+
+    /// Deposit coins back into the contract.
+    // ANCHOR: payable
+    #[payable]
+    fn deposit() {
+        assert(msg_amount() &gt; 0);
+    }
+    // ANCHOR_END: payable
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_amount() {
+        // ANCHOR: msg_amount
+        let amount = msg_amount();
+        // ANCHOR_END: msg_amount
+    }
+
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_asset_id() {
+        // ANCHOR: msg_asset_id
+        let amount = msg_asset_id();
+        // ANCHOR_END: msg_asset_id
+    }
+}
+
+fn get_base_asset() {
+    // ANCHOR: base_asset
+    let base_asset: AssetId = AssetId::base();
+    // ANCHOR_END: base_asset
+}
+
+fn default_asset_id() {
+    // ANCHOR: default_asset_id
+    let asset_id: AssetId = AssetId::default();
+    // ANCHOR_END: default_asset_id
+}
+
+fn new_asset_id(my_contract_id: ContractId, my_sub_id: SubId) {
+    // ANCHOR: new_asset_id
+    let my_contract_id: ContractId = ContractId::from(0x1000000000000000000000000000000000000000000000000000000000000000);
+    let my_sub_id: SubId = 0x2000000000000000000000000000000000000000000000000000000000000000;
+
+    let asset_id: AssetId = AssetId::new(my_contract_id, my_sub_id);
+    // ANCHOR_END: new_asset_id
+}
+
+fn from_asset_id() {
+    // ANCHOR: from_asset_id
+    let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
+    // ANCHOR_END: from_asset_id
+}\n```
+</code></pre>
+<p>If you intend to allow external users to burn assets using your contract, the <a href="https://github.com/FuelLabs/sway-standards/blob/master/docs/src/src-3-minting-and-burning.md#fn-mintrecipient-identity-vault_sub_id-subid-amount-u64">SRC-3; Mint and Burn Standard</a> defines a standard API for burning assets. The <a href="https://fuellabs.github.io/sway-libs/book/asset/supply.html">Sway-Libs Asset Library</a> also provides an additional library to support implementations of the SRC-3 Standard into your contract.</p>
+<h3 id="transfer-a-native-asset"><a class="header" href="#transfer-a-native-asset">Transfer a Native Asset</a></h3>
+<p>To internally transfer a Native Asset, the <code>std::asset::transfer()</code> function must be called. A target <code>Identity</code> or user must be provided as well as the <code>AssetId</code> of the asset and an amount.</p>
+<pre><code class="language-sway">```sway\ncontract;
+
+use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
+
+abi NativeAsset {
+    fn mint_coins(mint_amount: u64);
+    fn burn_coins(burn_amount: u64);
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity);
+    #[payable]
+    fn deposit();
+    fn get_balance(target: ContractId, asset_id: AssetId) -&gt; u64;
+    fn get_msg_amount();
+    fn this_balance(asset_id: AssetId) -&gt; u64;
+    fn get_msg_asset_id();
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64);
+}
+
+impl NativeAsset for Contract {
+    /// Mint an amount of this contracts native asset to the contracts balance.
+    fn mint_coins(mint_amount: u64) {
+        // ANCHOR: mint_asset
+        mint(DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_asset
+    }
+
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64) {
+        // ANCHOR: mint_to_asset
+        mint_to(target_identity, DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_to_asset
+    }
+
+    /// Burn an amount of this contracts native asset.
+    fn burn_coins(burn_amount: u64) {
+        // ANCHOR: burn_asset
+        burn(DEFAULT_SUB_ID, burn_amount);
+        // ANCHOR_END: burn_asset
+    }
+
+    /// Transfer coins to a target contract.
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity) {
+        // ANCHOR: transfer_asset
+        transfer(target, asset_id, coins);
+        // ANCHOR_END: transfer_asset
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn get_balance(target_contract: ContractId, asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: balance_of
+        balance_of(target_contract, asset_id)
+        // ANCHOR_END: balance_of
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn this_balance(asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: this_balance
+        this_balance(asset_id)
+        // ANCHOR_END: this_balance
+    }
+
+    /// Deposit coins back into the contract.
+    // ANCHOR: payable
+    #[payable]
+    fn deposit() {
+        assert(msg_amount() &gt; 0);
+    }
+    // ANCHOR_END: payable
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_amount() {
+        // ANCHOR: msg_amount
+        let amount = msg_amount();
+        // ANCHOR_END: msg_amount
+    }
+
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_asset_id() {
+        // ANCHOR: msg_asset_id
+        let amount = msg_asset_id();
+        // ANCHOR_END: msg_asset_id
+    }
+}
+
+fn get_base_asset() {
+    // ANCHOR: base_asset
+    let base_asset: AssetId = AssetId::base();
+    // ANCHOR_END: base_asset
+}
+
+fn default_asset_id() {
+    // ANCHOR: default_asset_id
+    let asset_id: AssetId = AssetId::default();
+    // ANCHOR_END: default_asset_id
+}
+
+fn new_asset_id(my_contract_id: ContractId, my_sub_id: SubId) {
+    // ANCHOR: new_asset_id
+    let my_contract_id: ContractId = ContractId::from(0x1000000000000000000000000000000000000000000000000000000000000000);
+    let my_sub_id: SubId = 0x2000000000000000000000000000000000000000000000000000000000000000;
+
+    let asset_id: AssetId = AssetId::new(my_contract_id, my_sub_id);
+    // ANCHOR_END: new_asset_id
+}
+
+fn from_asset_id() {
+    // ANCHOR: from_asset_id
+    let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
+    // ANCHOR_END: from_asset_id
+}\n```
+</code></pre>
+<h3 id="native-asset-and-transactions"><a class="header" href="#native-asset-and-transactions">Native Asset And Transactions</a></h3>
+<h4 id="getting-the-transaction-asset"><a class="header" href="#getting-the-transaction-asset">Getting The Transaction Asset</a></h4>
+<p>To query for the Native Asset sent in a transaction, you may call the <code>std::call_frames::msg_asset_id()</code> function.</p>
+<pre><code class="language-sway">```sway\ncontract;
+
+use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
+
+abi NativeAsset {
+    fn mint_coins(mint_amount: u64);
+    fn burn_coins(burn_amount: u64);
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity);
+    #[payable]
+    fn deposit();
+    fn get_balance(target: ContractId, asset_id: AssetId) -&gt; u64;
+    fn get_msg_amount();
+    fn this_balance(asset_id: AssetId) -&gt; u64;
+    fn get_msg_asset_id();
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64);
+}
+
+impl NativeAsset for Contract {
+    /// Mint an amount of this contracts native asset to the contracts balance.
+    fn mint_coins(mint_amount: u64) {
+        // ANCHOR: mint_asset
+        mint(DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_asset
+    }
+
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64) {
+        // ANCHOR: mint_to_asset
+        mint_to(target_identity, DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_to_asset
+    }
+
+    /// Burn an amount of this contracts native asset.
+    fn burn_coins(burn_amount: u64) {
+        // ANCHOR: burn_asset
+        burn(DEFAULT_SUB_ID, burn_amount);
+        // ANCHOR_END: burn_asset
+    }
+
+    /// Transfer coins to a target contract.
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity) {
+        // ANCHOR: transfer_asset
+        transfer(target, asset_id, coins);
+        // ANCHOR_END: transfer_asset
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn get_balance(target_contract: ContractId, asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: balance_of
+        balance_of(target_contract, asset_id)
+        // ANCHOR_END: balance_of
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn this_balance(asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: this_balance
+        this_balance(asset_id)
+        // ANCHOR_END: this_balance
+    }
+
+    /// Deposit coins back into the contract.
+    // ANCHOR: payable
+    #[payable]
+    fn deposit() {
+        assert(msg_amount() &gt; 0);
+    }
+    // ANCHOR_END: payable
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_amount() {
+        // ANCHOR: msg_amount
+        let amount = msg_amount();
+        // ANCHOR_END: msg_amount
+    }
+
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_asset_id() {
+        // ANCHOR: msg_asset_id
+        let amount = msg_asset_id();
+        // ANCHOR_END: msg_asset_id
+    }
+}
+
+fn get_base_asset() {
+    // ANCHOR: base_asset
+    let base_asset: AssetId = AssetId::base();
+    // ANCHOR_END: base_asset
+}
+
+fn default_asset_id() {
+    // ANCHOR: default_asset_id
+    let asset_id: AssetId = AssetId::default();
+    // ANCHOR_END: default_asset_id
+}
+
+fn new_asset_id(my_contract_id: ContractId, my_sub_id: SubId) {
+    // ANCHOR: new_asset_id
+    let my_contract_id: ContractId = ContractId::from(0x1000000000000000000000000000000000000000000000000000000000000000);
+    let my_sub_id: SubId = 0x2000000000000000000000000000000000000000000000000000000000000000;
+
+    let asset_id: AssetId = AssetId::new(my_contract_id, my_sub_id);
+    // ANCHOR_END: new_asset_id
+}
+
+fn from_asset_id() {
+    // ANCHOR: from_asset_id
+    let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
+    // ANCHOR_END: from_asset_id
+}\n```
+</code></pre>
+<h4 id="getting-the-transaction-amount"><a class="header" href="#getting-the-transaction-amount">Getting The Transaction Amount</a></h4>
+<p>To query for the amount of coins sent in a transaction, you may call the <code>std::context::msg_amount()</code> function.</p>
+<pre><code class="language-sway">```sway\ncontract;
+
+use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
+
+abi NativeAsset {
+    fn mint_coins(mint_amount: u64);
+    fn burn_coins(burn_amount: u64);
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity);
+    #[payable]
+    fn deposit();
+    fn get_balance(target: ContractId, asset_id: AssetId) -&gt; u64;
+    fn get_msg_amount();
+    fn this_balance(asset_id: AssetId) -&gt; u64;
+    fn get_msg_asset_id();
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64);
+}
+
+impl NativeAsset for Contract {
+    /// Mint an amount of this contracts native asset to the contracts balance.
+    fn mint_coins(mint_amount: u64) {
+        // ANCHOR: mint_asset
+        mint(DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_asset
+    }
+
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64) {
+        // ANCHOR: mint_to_asset
+        mint_to(target_identity, DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_to_asset
+    }
+
+    /// Burn an amount of this contracts native asset.
+    fn burn_coins(burn_amount: u64) {
+        // ANCHOR: burn_asset
+        burn(DEFAULT_SUB_ID, burn_amount);
+        // ANCHOR_END: burn_asset
+    }
+
+    /// Transfer coins to a target contract.
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity) {
+        // ANCHOR: transfer_asset
+        transfer(target, asset_id, coins);
+        // ANCHOR_END: transfer_asset
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn get_balance(target_contract: ContractId, asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: balance_of
+        balance_of(target_contract, asset_id)
+        // ANCHOR_END: balance_of
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn this_balance(asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: this_balance
+        this_balance(asset_id)
+        // ANCHOR_END: this_balance
+    }
+
+    /// Deposit coins back into the contract.
+    // ANCHOR: payable
+    #[payable]
+    fn deposit() {
+        assert(msg_amount() &gt; 0);
+    }
+    // ANCHOR_END: payable
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_amount() {
+        // ANCHOR: msg_amount
+        let amount = msg_amount();
+        // ANCHOR_END: msg_amount
+    }
+
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_asset_id() {
+        // ANCHOR: msg_asset_id
+        let amount = msg_asset_id();
+        // ANCHOR_END: msg_asset_id
+    }
+}
+
+fn get_base_asset() {
+    // ANCHOR: base_asset
+    let base_asset: AssetId = AssetId::base();
+    // ANCHOR_END: base_asset
+}
+
+fn default_asset_id() {
+    // ANCHOR: default_asset_id
+    let asset_id: AssetId = AssetId::default();
+    // ANCHOR_END: default_asset_id
+}
+
+fn new_asset_id(my_contract_id: ContractId, my_sub_id: SubId) {
+    // ANCHOR: new_asset_id
+    let my_contract_id: ContractId = ContractId::from(0x1000000000000000000000000000000000000000000000000000000000000000);
+    let my_sub_id: SubId = 0x2000000000000000000000000000000000000000000000000000000000000000;
+
+    let asset_id: AssetId = AssetId::new(my_contract_id, my_sub_id);
+    // ANCHOR_END: new_asset_id
+}
+
+fn from_asset_id() {
+    // ANCHOR: from_asset_id
+    let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
+    // ANCHOR_END: from_asset_id
+}\n```
+</code></pre>
+<h3 id="native-assets-and-contracts"><a class="header" href="#native-assets-and-contracts">Native Assets and Contracts</a></h3>
+<h4 id="checking-a-contracts-balance"><a class="header" href="#checking-a-contracts-balance">Checking A Contract's Balance</a></h4>
+<p>To internally check a contract's balance, call the <code>std::context::this_balance()</code> function with the corresponding <code>AssetId</code>.</p>
+<pre><code class="language-sway">```sway\ncontract;
+
+use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
+
+abi NativeAsset {
+    fn mint_coins(mint_amount: u64);
+    fn burn_coins(burn_amount: u64);
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity);
+    #[payable]
+    fn deposit();
+    fn get_balance(target: ContractId, asset_id: AssetId) -&gt; u64;
+    fn get_msg_amount();
+    fn this_balance(asset_id: AssetId) -&gt; u64;
+    fn get_msg_asset_id();
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64);
+}
+
+impl NativeAsset for Contract {
+    /// Mint an amount of this contracts native asset to the contracts balance.
+    fn mint_coins(mint_amount: u64) {
+        // ANCHOR: mint_asset
+        mint(DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_asset
+    }
+
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64) {
+        // ANCHOR: mint_to_asset
+        mint_to(target_identity, DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_to_asset
+    }
+
+    /// Burn an amount of this contracts native asset.
+    fn burn_coins(burn_amount: u64) {
+        // ANCHOR: burn_asset
+        burn(DEFAULT_SUB_ID, burn_amount);
+        // ANCHOR_END: burn_asset
+    }
+
+    /// Transfer coins to a target contract.
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity) {
+        // ANCHOR: transfer_asset
+        transfer(target, asset_id, coins);
+        // ANCHOR_END: transfer_asset
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn get_balance(target_contract: ContractId, asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: balance_of
+        balance_of(target_contract, asset_id)
+        // ANCHOR_END: balance_of
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn this_balance(asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: this_balance
+        this_balance(asset_id)
+        // ANCHOR_END: this_balance
+    }
+
+    /// Deposit coins back into the contract.
+    // ANCHOR: payable
+    #[payable]
+    fn deposit() {
+        assert(msg_amount() &gt; 0);
+    }
+    // ANCHOR_END: payable
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_amount() {
+        // ANCHOR: msg_amount
+        let amount = msg_amount();
+        // ANCHOR_END: msg_amount
+    }
+
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_asset_id() {
+        // ANCHOR: msg_asset_id
+        let amount = msg_asset_id();
+        // ANCHOR_END: msg_asset_id
+    }
+}
+
+fn get_base_asset() {
+    // ANCHOR: base_asset
+    let base_asset: AssetId = AssetId::base();
+    // ANCHOR_END: base_asset
+}
+
+fn default_asset_id() {
+    // ANCHOR: default_asset_id
+    let asset_id: AssetId = AssetId::default();
+    // ANCHOR_END: default_asset_id
+}
+
+fn new_asset_id(my_contract_id: ContractId, my_sub_id: SubId) {
+    // ANCHOR: new_asset_id
+    let my_contract_id: ContractId = ContractId::from(0x1000000000000000000000000000000000000000000000000000000000000000);
+    let my_sub_id: SubId = 0x2000000000000000000000000000000000000000000000000000000000000000;
+
+    let asset_id: AssetId = AssetId::new(my_contract_id, my_sub_id);
+    // ANCHOR_END: new_asset_id
+}
+
+fn from_asset_id() {
+    // ANCHOR: from_asset_id
+    let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
+    // ANCHOR_END: from_asset_id
+}\n```
+</code></pre>
+<p>To check the balance of an external contract, call the <code>std::context::balance_of()</code> function with the corresponding <code>AssetId</code>.</p>
+<pre><code class="language-sway">```sway\ncontract;
+
+use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
+
+abi NativeAsset {
+    fn mint_coins(mint_amount: u64);
+    fn burn_coins(burn_amount: u64);
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity);
+    #[payable]
+    fn deposit();
+    fn get_balance(target: ContractId, asset_id: AssetId) -&gt; u64;
+    fn get_msg_amount();
+    fn this_balance(asset_id: AssetId) -&gt; u64;
+    fn get_msg_asset_id();
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64);
+}
+
+impl NativeAsset for Contract {
+    /// Mint an amount of this contracts native asset to the contracts balance.
+    fn mint_coins(mint_amount: u64) {
+        // ANCHOR: mint_asset
+        mint(DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_asset
+    }
+
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64) {
+        // ANCHOR: mint_to_asset
+        mint_to(target_identity, DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_to_asset
+    }
+
+    /// Burn an amount of this contracts native asset.
+    fn burn_coins(burn_amount: u64) {
+        // ANCHOR: burn_asset
+        burn(DEFAULT_SUB_ID, burn_amount);
+        // ANCHOR_END: burn_asset
+    }
+
+    /// Transfer coins to a target contract.
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity) {
+        // ANCHOR: transfer_asset
+        transfer(target, asset_id, coins);
+        // ANCHOR_END: transfer_asset
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn get_balance(target_contract: ContractId, asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: balance_of
+        balance_of(target_contract, asset_id)
+        // ANCHOR_END: balance_of
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn this_balance(asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: this_balance
+        this_balance(asset_id)
+        // ANCHOR_END: this_balance
+    }
+
+    /// Deposit coins back into the contract.
+    // ANCHOR: payable
+    #[payable]
+    fn deposit() {
+        assert(msg_amount() &gt; 0);
+    }
+    // ANCHOR_END: payable
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_amount() {
+        // ANCHOR: msg_amount
+        let amount = msg_amount();
+        // ANCHOR_END: msg_amount
+    }
+
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_asset_id() {
+        // ANCHOR: msg_asset_id
+        let amount = msg_asset_id();
+        // ANCHOR_END: msg_asset_id
+    }
+}
+
+fn get_base_asset() {
+    // ANCHOR: base_asset
+    let base_asset: AssetId = AssetId::base();
+    // ANCHOR_END: base_asset
+}
+
+fn default_asset_id() {
+    // ANCHOR: default_asset_id
+    let asset_id: AssetId = AssetId::default();
+    // ANCHOR_END: default_asset_id
+}
+
+fn new_asset_id(my_contract_id: ContractId, my_sub_id: SubId) {
+    // ANCHOR: new_asset_id
+    let my_contract_id: ContractId = ContractId::from(0x1000000000000000000000000000000000000000000000000000000000000000);
+    let my_sub_id: SubId = 0x2000000000000000000000000000000000000000000000000000000000000000;
+
+    let asset_id: AssetId = AssetId::new(my_contract_id, my_sub_id);
+    // ANCHOR_END: new_asset_id
+}
+
+fn from_asset_id() {
+    // ANCHOR: from_asset_id
+    let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
+    // ANCHOR_END: from_asset_id
+}\n```
+</code></pre>
+<blockquote>
+<p><strong>NOTE</strong> Due to the FuelVM's UTXO design, balances of <code>Address</code>'s cannot be returned in the Sway Language. This must be done off-chain using the SDK.</p>
+</blockquote>
+<h4 id="receiving-native-assets-in-a-contract"><a class="header" href="#receiving-native-assets-in-a-contract">Receiving Native Assets In A Contract</a></h4>
+<p>By default, a contract may not receive a Native Asset in a contract call. To allow transferring of assets to the contract, add the <code>#[payable]</code> attribute to the function.</p>
+<pre><code class="language-sway">```sway\ncontract;
+
+use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
+
+abi NativeAsset {
+    fn mint_coins(mint_amount: u64);
+    fn burn_coins(burn_amount: u64);
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity);
+    #[payable]
+    fn deposit();
+    fn get_balance(target: ContractId, asset_id: AssetId) -&gt; u64;
+    fn get_msg_amount();
+    fn this_balance(asset_id: AssetId) -&gt; u64;
+    fn get_msg_asset_id();
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64);
+}
+
+impl NativeAsset for Contract {
+    /// Mint an amount of this contracts native asset to the contracts balance.
+    fn mint_coins(mint_amount: u64) {
+        // ANCHOR: mint_asset
+        mint(DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_asset
+    }
+
+    fn mint_coins_to(target_identity: Identity, mint_amount: u64) {
+        // ANCHOR: mint_to_asset
+        mint_to(target_identity, DEFAULT_SUB_ID, mint_amount);
+        // ANCHOR_END: mint_to_asset
+    }
+
+    /// Burn an amount of this contracts native asset.
+    fn burn_coins(burn_amount: u64) {
+        // ANCHOR: burn_asset
+        burn(DEFAULT_SUB_ID, burn_amount);
+        // ANCHOR_END: burn_asset
+    }
+
+    /// Transfer coins to a target contract.
+    fn transfer_coins(coins: u64, asset_id: AssetId, target: Identity) {
+        // ANCHOR: transfer_asset
+        transfer(target, asset_id, coins);
+        // ANCHOR_END: transfer_asset
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn get_balance(target_contract: ContractId, asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: balance_of
+        balance_of(target_contract, asset_id)
+        // ANCHOR_END: balance_of
+    }
+
+    /// Get the internal balance of a specific coin at a specific contract.
+    fn this_balance(asset_id: AssetId) -&gt; u64 {
+        // ANCHOR: this_balance
+        this_balance(asset_id)
+        // ANCHOR_END: this_balance
+    }
+
+    /// Deposit coins back into the contract.
+    // ANCHOR: payable
+    #[payable]
+    fn deposit() {
+        assert(msg_amount() &gt; 0);
+    }
+    // ANCHOR_END: payable
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_amount() {
+        // ANCHOR: msg_amount
+        let amount = msg_amount();
+        // ANCHOR_END: msg_amount
+    }
+
+    /// Mint and send this contracts native asset to a destination contract.
+    fn get_msg_asset_id() {
+        // ANCHOR: msg_asset_id
+        let amount = msg_asset_id();
+        // ANCHOR_END: msg_asset_id
+    }
+}
+
+fn get_base_asset() {
+    // ANCHOR: base_asset
+    let base_asset: AssetId = AssetId::base();
+    // ANCHOR_END: base_asset
+}
+
+fn default_asset_id() {
+    // ANCHOR: default_asset_id
+    let asset_id: AssetId = AssetId::default();
+    // ANCHOR_END: default_asset_id
+}
+
+fn new_asset_id(my_contract_id: ContractId, my_sub_id: SubId) {
+    // ANCHOR: new_asset_id
+    let my_contract_id: ContractId = ContractId::from(0x1000000000000000000000000000000000000000000000000000000000000000);
+    let my_sub_id: SubId = 0x2000000000000000000000000000000000000000000000000000000000000000;
+
+    let asset_id: AssetId = AssetId::new(my_contract_id, my_sub_id);
+    // ANCHOR_END: new_asset_id
+}
+
+fn from_asset_id() {
+    // ANCHOR: from_asset_id
+    let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
+    // ANCHOR_END: from_asset_id
+}\n```
+</code></pre>
+<h2 id="native-asset-standards"><a class="header" href="#native-asset-standards">Native Asset Standards</a></h2>
+<p>There are a number of standards developed to enable further functionality for Native Assets and help cross contract functionality. Information on standards can be found in the <a href="https://github.com/FuelLabs/sway-standards">Sway Standards Repo</a>.</p>
+<p>We currently have the following standards for Native Assets:</p>
+<ul>
+<li><a href="https://github.com/FuelLabs/sway-standards/blob/master/docs/src/src-20-native-asset.md">SRC-20; Native Asset Standard</a> defines the implementation of a standard API for Native Assets using the Sway Language.</li>
+<li><a href="https://github.com/FuelLabs/sway-standards/blob/master/docs/src/src-3-minting-and-burning.md">SRC-3; Mint and Burn Standard</a> is used to enable mint and burn functionality for Native Assets.</li>
+<li><a href="https://github.com/FuelLabs/sway-standards/blob/master/docs/src/src-7-asset-metadata.md">SRC-7; Arbitrary Asset Metadata Standard</a> is used to store metadata for Native Assets.</li>
+<li><a href="https://github.com/FuelLabs/sway-standards/blob/master/docs/src/src-6-vault.md">SRC-6; Vault Standard</a> defines the implementation of a standard API for asset vaults developed in Sway.</li>
+</ul>
+<h2 id="native-asset-libraries"><a class="header" href="#native-asset-libraries">Native Asset Libraries</a></h2>
+<p>Additional Libraries have been developed to allow you to quickly create an deploy dApps that follow the <a href="https://github.com/FuelLabs/sway-standards">Sway Standards</a>.</p>
+<ul>
+<li><a href="https://fuellabs.github.io/sway-libs/book/asset/index.html">Asset Library</a> provides functionality to implement the <a href="https://github.com/FuelLabs/sway-standards/blob/master/docs/src/src-20-native-asset.md">SRC-20; Native Asset Standard</a>, <a href="https://github.com/FuelLabs/sway-standards/blob/master/docs/src/src-3-minting-and-burning.md">SRC-3; Mint and Burn Standard</a>, and <a href="https://github.com/FuelLabs/sway-standards/blob/master/docs/src/src-7-asset-metadata.md">SRC-7; Arbitrary Asset Metadata Standard</a> standards.</li>
+</ul>
+<!-- native_assets:example:end -->
+<h2 id="single-native-asset-example"><a class="header" href="#single-native-asset-example">Single Native Asset Example</a></h2>
+<p>In this fully fleshed out example, we show a native asset contract which mints a single asset. This is the equivalent to the ERC-20 Standard use in Ethereum. Note there are no token approval functions.</p>
+<p>It implements the <a href="https://github.com/FuelLabs/sway-standards/blob/master/docs/src/src-20-native-asset.md">SRC-20; Native Asset</a>, <a href="https://github.com/FuelLabs/sway-standards/blob/master/docs/src/src-3-minting-and-burning.md">SRC-3; Mint and Burn</a>, and <a href="https://github.com/FuelLabs/sway-standards/blob/master/docs/src/src-5-ownership.md">SRC-5; Ownership</a> standards. It does not use any external libraries.</p>
+<pre><code class="language-sway">// ERC20 equivalent in Sway.
+contract;
+
+use standards::{
+    src3::SRC3,
+    src5::{
+        SRC5, 
+        State, 
+        AccessError,
+    },
+    src20::{
+        SetDecimalsEvent, 
+        SetNameEvent, 
+        SetSymbolEvent, 
+        SRC20, 
+        TotalSupplyEvent,
+    },
+};
+use std::{
+    asset::{
+        burn,
+        mint_to,
+    },
+    call_frames::msg_asset_id,
+    constants::DEFAULT_SUB_ID,
+    context::msg_amount,
+    string::String,
+    contract_id::ContractId
+};
+
+configurable {
+    DECIMALS: u8 = 9u8,
+    NAME: str[7] = __to_str_array("MyAsset"),
+    SYMBOL: str[5] = __to_str_array("MYTKN"),
+}
+
+storage {
+    total_supply: u64 = 0,
+    owner: State = State::Uninitialized,
+}
+
+// Native Asset Standard
+impl SRC20 for Contract {
+    #[storage(read)]
+    fn total_assets() -&gt; u64 {
+        1
+    }
+
+    #[storage(read)]
+    fn total_supply(asset: AssetId) -&gt; Option&lt;u64&gt; {
+        if asset == AssetId::default() {
+            Some(storage.total_supply.read())
+        } else {
+            None
+        }
+    }
+
+    #[storage(read)]
+    fn name(asset: AssetId) -&gt; Option&lt;String&gt; {
+        if asset == AssetId::default() {
+            Some(String::from_ascii_str(from_str_array(NAME)))
+        } else {
+            None
+        }
+    }
+
+    #[storage(read)]
+    fn symbol(asset: AssetId) -&gt; Option&lt;String&gt; {
+        if asset == AssetId::default() {
+            Some(String::from_ascii_str(from_str_array(SYMBOL)))
+        } else {
+            None
+        }
+    }
+
+    #[storage(read)]
+    fn decimals(asset: AssetId) -&gt; Option&lt;u8&gt; {
+        if asset == AssetId::default() {
+            Some(DECIMALS)
+        } else {
+            None
+        }
+    }
+}
+
+// Ownership Standard
+impl SRC5 for Contract {
+    #[storage(read)]
+    fn owner() -&gt; State {
+        storage.owner.read()
+    }
+}
+
+// Mint and Burn Standard
+impl SRC3 for Contract {
+    #[storage(read, write)]
+    fn mint(recipient: Identity, sub_id: Option&lt;SubId&gt;, amount: u64) {
+        require(sub_id.is_some() &amp;&amp; sub_id.unwrap() == DEFAULT_SUB_ID, "incorrect-sub-id");
+        require_access_owner();
+
+        let new_supply = storage.total_supply.read() + amount;
+        storage
+            .total_supply
+            .write(new_supply);
+        mint_to(recipient, DEFAULT_SUB_ID, amount);
+        
+        TotalSupplyEvent::new(
+            AssetId::default(), 
+            new_supply, 
+            msg_sender().unwrap()
+        ).log();
+    }
+
+    #[storage(read, write)]
+    fn burn(sub_id: SubId, amount: u64) {
+        require(sub_id == DEFAULT_SUB_ID, "incorrect-sub-id");
+        require(msg_amount() &gt;= amount, "incorrect-amount-provided");
+        require(
+            msg_asset_id() == AssetId::default(),
+            "incorrect-asset-provided",
+        );
+        require_access_owner();
+
+        let new_supply = storage.total_supply.read() - amount;
+        storage
+            .total_supply
+            .write(new_supply);
+        burn(DEFAULT_SUB_ID, amount);
+        
+        TotalSupplyEvent::new(
+            AssetId::default(), 
+            new_supply, 
+            msg_sender().unwrap()
+        ).log();
+    }
+}
+
+abi SingleAsset {
+    #[storage(read, write)]
+    fn constructor(owner_: Identity);
+}
+
+impl SingleAsset for Contract {
+    #[storage(read, write)]
+    fn constructor(owner_: Identity) {
+        require(storage.owner.read() == State::Uninitialized, "owner-initialized");
+        storage.owner.write(State::Initialized(owner_));
+    }
+}
+
+#[storage(read)]
+fn require_access_owner() {
+    require(
+        storage.owner.read() == State::Initialized(msg_sender().unwrap()),
+        AccessError::NotOwner,
+    );
+}
+
+abi EmitSRC20Events {
+    fn emit_src20_events();
+}
+
+impl EmitSRC20Events for Contract {
+    fn emit_src20_events() {
+        // Metadata that is stored as a configurable should only be emitted once.
+        let asset = AssetId::default();
+        let sender = msg_sender().unwrap();
+        let name = Some(String::from_ascii_str(from_str_array(NAME)));
+        let symbol = Some(String::from_ascii_str(from_str_array(SYMBOL)));
+
+        SetNameEvent::new(asset, name, sender).log();
+        SetSymbolEvent::new(asset, symbol, sender).log();
+        SetDecimalsEvent::new(asset, DECIMALS, sender).log();
+    }
+}
+</code></pre>
+<h2 id="multi-native-asset-example"><a class="header" href="#multi-native-asset-example">Multi Native Asset Example</a></h2>
+<p>In this fully fleshed out example, we show a native asset contract which mints multiple assets. This is the equivalent to the ERC-1155 Standard use in Ethereum. Note there are no token approval functions.</p>
+<p>It implements the <a href="https://github.com/FuelLabs/sway-standards/blob/master/docs/src/src-20-native-asset.md">SRC-20; Native Asset</a>, <a href="https://github.com/FuelLabs/sway-standards/blob/master/docs/src/src-3-minting-and-burning.md">SRC-3; Mint and Burn</a>, and <a href="https://github.com/FuelLabs/sway-standards/blob/master/docs/src/src-5-ownership.md">SRC-5; Ownership</a> standards. It does not use any external libraries.</p>
+<pre><code class="language-sway">// ERC1155 equivalent in Sway.
+contract;
+
+use standards::{
+    src5::{
+        SRC5, 
+        State, 
+        AccessError
+    },
+    src20::{
+        SetDecimalsEvent, 
+        SetNameEvent, 
+        SetSymbolEvent, 
+        SRC20, 
+        TotalSupplyEvent,
+    }
+    src3::SRC3,
+};
+use std::{
+    asset::{
+        burn,
+        mint_to,
+    },
+    call_frames::msg_asset_id,
+    hash::{
+        Hash,
+    },
+    context::this_balance,
+    storage::storage_string::*,
+    string::String,
+    contract_id::ContractId
+};
+
+storage {
+    total_assets: u64 = 0,
+    total_supply: StorageMap&lt;AssetId, u64&gt; = StorageMap {},
+    name: StorageMap&lt;AssetId, StorageString&gt; = StorageMap {},
+    symbol: StorageMap&lt;AssetId, StorageString&gt; = StorageMap {},
+    decimals: StorageMap&lt;AssetId, u8&gt; = StorageMap {},
+    owner: State = State::Uninitialized,
+}
+
+// Native Asset Standard
+impl SRC20 for Contract {
+    #[storage(read)]
+    fn total_assets() -&gt; u64 {
+        storage.total_assets.read()
+    }
+
+    #[storage(read)]
+    fn total_supply(asset: AssetId) -&gt; Option&lt;u64&gt; {
+        storage.total_supply.get(asset).try_read()
+    }
+
+    #[storage(read)]
+    fn name(asset: AssetId) -&gt; Option&lt;String&gt; {
+        storage.name.get(asset).read_slice()
+    }
+    
+    #[storage(read)]
+    fn symbol(asset: AssetId) -&gt; Option&lt;String&gt; {
+        storage.symbol.get(asset).read_slice()
+    }
+
+    #[storage(read)]
+    fn decimals(asset: AssetId) -&gt; Option&lt;u8&gt; {
+        storage.decimals.get(asset).try_read()
+    }
+}
+
+// Mint and Burn Standard
+impl SRC3 for Contract {
+    #[storage(read, write)]
+    fn mint(recipient: Identity, sub_id: Option&lt;SubId&gt;, amount: u64) {
+        require(sub_id.is_some(), "Error: SubId is None");
+        require_access_owner();
+
+        let asset_id = AssetId::new(ContractId::this(), sub_id.unwrap());
+        let supply = storage.total_supply.get(asset_id).try_read();
+        if supply.is_none() {
+            storage.total_assets.write(storage.total_assets.try_read().unwrap_or(0) + 1);
+        }
+        let new_supply = supply.unwrap_or(0) + amount;
+        storage.total_supply.insert(asset_id, new_supply);
+        mint_to(recipient, sub_id, amount);
+        
+        TotalSupplyEvent::new(
+            asset_id, 
+            new_supply, 
+            msg_sender().unwrap()
+        ).log();
+    }
+    
+    #[storage(read, write)]
+    fn burn(sub_id: SubId, amount: u64) {
+        require_access_owner();
+        let asset_id = AssetId::new(ContractId::this(), sub_id);
+        require(this_balance(asset_id) &gt;= amount, "not-enough-coins");
+        
+        let supply = storage.total_supply.get(asset_id).try_read();
+        let new_supply = supply.unwrap_or(0) - amount;
+        storage.total_supply.insert(asset_id, new_supply);
+        burn(sub_id, amount);
+
+        TotalSupplyEvent::new(
+            asset_id, 
+            new_supply, 
+            msg_sender().unwrap()
+        ).log();
+    }
+}
+
+abi MultiAsset {
+    #[storage(read, write)]
+    fn constructor(owner_: Identity);
+    
+    #[storage(read, write)]
+    fn set_name(asset: AssetId, name: Option&lt;String&gt;);
+
+    #[storage(read, write)]
+    fn set_symbol(asset: AssetId, symbol: Option&lt;String&gt;);
+
+    #[storage(read, write)]
+    fn set_decimals(asset: AssetId, decimals: u8);
+}
+
+impl MultiAsset for Contract {
+    #[storage(read, write)]
+    fn constructor(owner_: Identity) {
+        require(storage.owner.read() == State::Uninitialized, "owner-initialized");
+        storage.owner.write(State::Initialized(owner_));
+    }
+    
+    #[storage(read, write)]
+    fn set_name(asset: AssetId, name: Option&lt;String&gt;) {
+        require_access_owner();
+        storage.name.insert(asset, StorageString {});
+        storage.name.get(asset).write_slice(name);
+
+        SetNameEvent::new(asset, name, msg_sender().unwrap()).log();
+    }
+
+    #[storage(read, write)]
+    fn set_symbol(asset: AssetId, symbol: Option&lt;String&gt;) {
+        require_access_owner();
+        storage.symbol.insert(asset, StorageString {});
+        storage.symbol.get(asset).write_slice(symbol);
+
+        SetSymbolEvent::new(asset, symbol, msg_sender().unwrap()).log();
+    }
+
+    #[storage(read, write)]
+    fn set_decimals(asset: AssetId, decimals: u8) {
+        require_access_owner();
+        storage.decimals.insert(asset, decimals);
+
+        SetDecimalsEvent::new(asset, decimals, msg_sender().unwrap()).log();
+    }
+}
+
+#[storage(read)]
+fn require_access_owner() {
+    require(
+        storage.owner.read() == State::Initialized(msg_sender().unwrap()),
+        AccessError::NotOwner,
+    );
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../sway/blockchain-development/identifiers.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../sway/blockchain-development/access_control.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../sway/blockchain-development/identifiers.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../sway/blockchain-development/access_control.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

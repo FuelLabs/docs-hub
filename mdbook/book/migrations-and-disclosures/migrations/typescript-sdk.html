@@ -1,0 +1,1212 @@
+<!DOCTYPE HTML>
+<html lang="en" class="fuel-dark" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Typescript SDK - Fuel Docs Hub</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "fuel-dark" : "fuel-dark";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('fuel-dark')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Sway Language</li><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="../../sway/introduction/index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/introduction/getting_started.html"><strong aria-hidden="true">1.1.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="../../sway/introduction/fuel_toolchain.html"><strong aria-hidden="true">1.2.</strong> The Fuel Toolchain</a></li><li class="chapter-item expanded "><a href="../../sway/introduction/forc_project.html"><strong aria-hidden="true">1.3.</strong> A Forc Project</a></li><li class="chapter-item expanded "><a href="../../sway/introduction/standard_library.html"><strong aria-hidden="true">1.4.</strong> Standard Library</a></li><li class="chapter-item expanded "><a href="../../sway/introduction/sway_standards.html"><strong aria-hidden="true">1.5.</strong> Sway Language Standards</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/examples/index.html"><strong aria-hidden="true">2.</strong> Examples</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/examples/counter.html"><strong aria-hidden="true">2.1.</strong> Counter</a></li><li class="chapter-item expanded "><a href="../../sway/examples/fizzbuzz.html"><strong aria-hidden="true">2.2.</strong> FizzBuzz</a></li><li class="chapter-item expanded "><a href="../../sway/examples/wallet_smart_contract.html"><strong aria-hidden="true">2.3.</strong> Wallet Smart Contract</a></li><li class="chapter-item expanded "><a href="../../sway/examples/liquidity_pool.html"><strong aria-hidden="true">2.4.</strong> Liquidity Pool</a></li><li class="chapter-item expanded "><a href="../../sway/examples/sway_applications.html"><strong aria-hidden="true">2.5.</strong> Sway Applications</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/sway-program-types/index.html"><strong aria-hidden="true">3.</strong> Program Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/sway-program-types/smart_contracts.html"><strong aria-hidden="true">3.1.</strong> Contracts</a></li><li class="chapter-item expanded "><a href="../../sway/sway-program-types/libraries.html"><strong aria-hidden="true">3.2.</strong> Libraries</a></li><li class="chapter-item expanded "><a href="../../sway/sway-program-types/scripts.html"><strong aria-hidden="true">3.3.</strong> Scripts</a></li><li class="chapter-item expanded "><a href="../../sway/sway-program-types/predicates.html"><strong aria-hidden="true">3.4.</strong> Predicates</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/basics/index.html"><strong aria-hidden="true">4.</strong> Sway Language Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/basics/variables.html"><strong aria-hidden="true">4.1.</strong> Variables</a></li><li class="chapter-item expanded "><a href="../../sway/basics/built_in_types.html"><strong aria-hidden="true">4.2.</strong> Built-in Types</a></li><li class="chapter-item expanded "><a href="../../sway/basics/commonly_used_library_types.html"><strong aria-hidden="true">4.3.</strong> Commonly Used Library Types</a></li><li class="chapter-item expanded "><a href="../../sway/basics/blockchain_types.html"><strong aria-hidden="true">4.4.</strong> Blockchain Types</a></li><li class="chapter-item expanded "><a href="../../sway/basics/converting_types.html"><strong aria-hidden="true">4.5.</strong> Converting Types</a></li><li class="chapter-item expanded "><a href="../../sway/basics/functions.html"><strong aria-hidden="true">4.6.</strong> Functions</a></li><li class="chapter-item expanded "><a href="../../sway/basics/structs_tuples_and_enums.html"><strong aria-hidden="true">4.7.</strong> Structs, Tuples, and Enums</a></li><li class="chapter-item expanded "><a href="../../sway/basics/methods_and_associated_functions.html"><strong aria-hidden="true">4.8.</strong> Methods and Associated Functions</a></li><li class="chapter-item expanded "><a href="../../sway/basics/constants.html"><strong aria-hidden="true">4.9.</strong> Constants</a></li><li class="chapter-item expanded "><a href="../../sway/basics/comments_and_logging.html"><strong aria-hidden="true">4.10.</strong> Comments and Logging</a></li><li class="chapter-item expanded "><a href="../../sway/basics/control_flow.html"><strong aria-hidden="true">4.11.</strong> Control Flow</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/blockchain-development/index.html"><strong aria-hidden="true">5.</strong> Blockchain Development with Sway</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/blockchain-development/hashing_and_cryptography.html"><strong aria-hidden="true">5.1.</strong> Hashing and Cryptography</a></li><li class="chapter-item expanded "><a href="../../sway/blockchain-development/storage.html"><strong aria-hidden="true">5.2.</strong> Contract Storage</a></li><li class="chapter-item expanded "><a href="../../sway/blockchain-development/purity.html"><strong aria-hidden="true">5.3.</strong> Function Purity</a></li><li class="chapter-item expanded "><a href="../../sway/blockchain-development/identifiers.html"><strong aria-hidden="true">5.4.</strong> Identifiers</a></li><li class="chapter-item expanded "><a href="../../sway/blockchain-development/native_assets.html"><strong aria-hidden="true">5.5.</strong> Native Assets</a></li><li class="chapter-item expanded "><a href="../../sway/blockchain-development/access_control.html"><strong aria-hidden="true">5.6.</strong> Access Control</a></li><li class="chapter-item expanded "><a href="../../sway/blockchain-development/calling_contracts.html"><strong aria-hidden="true">5.7.</strong> Calling Contracts</a></li><li class="chapter-item expanded "><a href="../../sway/blockchain-development/external_code.html"><strong aria-hidden="true">5.8.</strong> External Code</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/advanced/index.html"><strong aria-hidden="true">6.</strong> Advanced Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/advanced/advanced_types.html"><strong aria-hidden="true">6.1.</strong> Advanced Types</a></li><li class="chapter-item expanded "><a href="../../sway/advanced/advanced_storage.html"><strong aria-hidden="true">6.2.</strong> Advanced Storage</a></li><li class="chapter-item expanded "><a href="../../sway/advanced/generic_types.html"><strong aria-hidden="true">6.3.</strong> Generic Types</a></li><li class="chapter-item expanded "><a href="../../sway/advanced/traits.html"><strong aria-hidden="true">6.4.</strong> Traits</a></li><li class="chapter-item expanded "><a href="../../sway/advanced/associated_types.html"><strong aria-hidden="true">6.5.</strong> Associated Types</a></li><li class="chapter-item expanded "><a href="../../sway/advanced/generics_and_trait_constraints.html"><strong aria-hidden="true">6.6.</strong> Generics and Trait Constraints</a></li><li class="chapter-item expanded "><a href="../../sway/advanced/assembly.html"><strong aria-hidden="true">6.7.</strong> Assembly</a></li><li class="chapter-item expanded "><a href="../../sway/advanced/never_type.html"><strong aria-hidden="true">6.8.</strong> Never Type</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/common-collections/index.html"><strong aria-hidden="true">7.</strong> Common Collections</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/common-collections/vec.html"><strong aria-hidden="true">7.1.</strong> Vectors on the Heap</a></li><li class="chapter-item expanded "><a href="../../sway/common-collections/storage_vec.html"><strong aria-hidden="true">7.2.</strong> Storage Vectors</a></li><li class="chapter-item expanded "><a href="../../sway/common-collections/storage_map.html"><strong aria-hidden="true">7.3.</strong> Storage Maps</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/testing/index.html"><strong aria-hidden="true">8.</strong> Testing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/testing/unit-testing.html"><strong aria-hidden="true">8.1.</strong> Unit Testing</a></li><li class="chapter-item expanded "><a href="../../sway/testing/testing-with-rust.html"><strong aria-hidden="true">8.2.</strong> Testing with Rust</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/debugging/index.html"><strong aria-hidden="true">9.</strong> Debugging</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/debugging/debugging_with_cli.html"><strong aria-hidden="true">9.1.</strong> Debugging with CLI</a></li><li class="chapter-item expanded "><a href="../../sway/debugging/debugging_with_ide.html"><strong aria-hidden="true">9.2.</strong> Debugging with IDE</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/lsp/index.html"><strong aria-hidden="true">10.</strong> Sway LSP</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/lsp/installation.html"><strong aria-hidden="true">10.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../../sway/lsp/features.html"><strong aria-hidden="true">10.2.</strong> Features</a></li><li class="chapter-item expanded "><a href="../../sway/lsp/troubleshooting.html"><strong aria-hidden="true">10.3.</strong> Troubleshooting</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/reference/index.html"><strong aria-hidden="true">11.</strong> Sway Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/reference/sway_libs.html"><strong aria-hidden="true">11.1.</strong> Sway Libraries</a></li><li class="chapter-item expanded "><a href="../../sway/reference/compiler_intrinsics.html"><strong aria-hidden="true">11.2.</strong> Compiler Intrinsics</a></li><li class="chapter-item expanded "><a href="../../sway/reference/attributes.html"><strong aria-hidden="true">11.3.</strong> Attributes</a></li><li class="chapter-item expanded "><a href="../../sway/reference/style_guide.html"><strong aria-hidden="true">11.4.</strong> Style Guide</a></li><li class="chapter-item expanded "><a href="../../sway/reference/known_issues_and_workarounds.html"><strong aria-hidden="true">11.5.</strong> Known Issues and Workarounds</a></li><li class="chapter-item expanded "><a href="../../sway/reference/undefined_behavior.html"><strong aria-hidden="true">11.6.</strong> Behavior Considered Undefined</a></li><li class="chapter-item expanded "><a href="../../sway/reference/solidity_differences.html"><strong aria-hidden="true">11.7.</strong> Differences From Solidity</a></li><li class="chapter-item expanded "><a href="../../sway/reference/rust_differences.html"><strong aria-hidden="true">11.8.</strong> Differences From Rust</a></li><li class="chapter-item expanded "><a href="../../sway/reference/contributing_to_sway.html"><strong aria-hidden="true">11.9.</strong> Contributing To Sway</a></li><li class="chapter-item expanded "><a href="../../sway/reference/keywords.html"><strong aria-hidden="true">11.10.</strong> Keywords</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/forc/index.html"><strong aria-hidden="true">12.</strong> Forc Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/forc/manifest_reference.html"><strong aria-hidden="true">12.1.</strong> Manifest Reference</a></li><li class="chapter-item expanded "><a href="../../sway/forc/workspaces.html"><strong aria-hidden="true">12.2.</strong> Workspaces</a></li><li class="chapter-item expanded "><a href="../../sway/forc/dependencies.html"><strong aria-hidden="true">12.3.</strong> Dependencies</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/index.html"><strong aria-hidden="true">12.4.</strong> Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_addr2line.html"><strong aria-hidden="true">12.4.1.</strong> forc addr2line</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_build.html"><strong aria-hidden="true">12.4.2.</strong> forc build</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_check.html"><strong aria-hidden="true">12.4.3.</strong> forc check</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_clean.html"><strong aria-hidden="true">12.4.4.</strong> forc clean</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_completions.html"><strong aria-hidden="true">12.4.5.</strong> forc completions</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_contract-id.html"><strong aria-hidden="true">12.4.6.</strong> forc contract-id</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_init.html"><strong aria-hidden="true">12.4.7.</strong> forc init</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_new.html"><strong aria-hidden="true">12.4.8.</strong> forc new</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_parse-bytecode.html"><strong aria-hidden="true">12.4.9.</strong> forc parse-bytecode</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_plugins.html"><strong aria-hidden="true">12.4.10.</strong> forc plugins</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_predicate-root.html"><strong aria-hidden="true">12.4.11.</strong> forc predicate-root</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_test.html"><strong aria-hidden="true">12.4.12.</strong> forc test</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_update.html"><strong aria-hidden="true">12.4.13.</strong> forc update</a></li><li class="chapter-item expanded "><a href="../../sway/forc/commands/forc_template.html"><strong aria-hidden="true">12.4.14.</strong> forc template</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/index.html"><strong aria-hidden="true">12.5.</strong> Plugins</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_client/index.html"><strong aria-hidden="true">12.5.1.</strong> forc client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_client/forc_deploy.html"><strong aria-hidden="true">12.5.1.1.</strong> forc deploy</a></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_client/forc_run.html"><strong aria-hidden="true">12.5.1.2.</strong> forc run</a></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_client/forc_submit.html"><strong aria-hidden="true">12.5.1.3.</strong> forc submit</a></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_client/forc_call.html"><strong aria-hidden="true">12.5.1.4.</strong> forc call</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_crypto.html"><strong aria-hidden="true">12.5.2.</strong> forc crypto</a></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_debug.html"><strong aria-hidden="true">12.5.3.</strong> forc debug</a></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_doc.html"><strong aria-hidden="true">12.5.4.</strong> forc doc</a></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_explore.html"><strong aria-hidden="true">12.5.5.</strong> forc explore</a></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_fmt.html"><strong aria-hidden="true">12.5.6.</strong> forc fmt</a></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_lsp.html"><strong aria-hidden="true">12.5.7.</strong> forc lsp</a></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_migrate.html"><strong aria-hidden="true">12.5.8.</strong> forc migrate</a></li><li class="chapter-item expanded "><a href="../../sway/forc/plugins/forc_node.html"><strong aria-hidden="true">12.5.9.</strong> forc node</a></li></ol></li></ol></li><li class="chapter-item expanded "><li class="part-title">Sway Libraries</li><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="../../sway-libs/getting_started/index.html"><strong aria-hidden="true">13.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway-libs/getting_started/running_tests.html"><strong aria-hidden="true">13.1.</strong> Running Tests</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway-libs/asset/index.html"><strong aria-hidden="true">14.</strong> Asset Library</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../sway-libs/asset/base.html"><strong aria-hidden="true">14.1.</strong> Base</a></li><li class="chapter-item expanded "><a href="../../sway-libs/asset/supply.html"><strong aria-hidden="true">14.2.</strong> Supply</a></li><li class="chapter-item expanded "><a href="../../sway-libs/asset/metadata.html"><strong aria-hidden="true">14.3.</strong> Metadata</a></li></ol></li><li class="chapter-item expanded "><a href="../../sway-libs/admin/index.html"><strong aria-hidden="true">15.</strong> Admin Library</a></li><li class="chapter-item expanded "><a href="../../sway-libs/ownership/index.html"><strong aria-hidden="true">16.</strong> Ownership Library</a></li><li class="chapter-item expanded "><a href="../../sway-libs/pausable/index.html"><strong aria-hidden="true">17.</strong> Pausable Library</a></li><li class="chapter-item expanded "><a href="../../sway-libs/reentrancy/index.html"><strong aria-hidden="true">18.</strong> Reentrancy Guard Library</a></li><li class="chapter-item expanded "><a href="../../sway-libs/bytecode/index.html"><strong aria-hidden="true">19.</strong> Bytecode Library</a></li><li class="chapter-item expanded "><a href="../../sway-libs/merkle/index.html"><strong aria-hidden="true">20.</strong> Merkle Library</a></li><li class="chapter-item expanded "><a href="../../sway-libs/signed_integers/index.html"><strong aria-hidden="true">21.</strong> Signed Integers Library</a></li><li class="chapter-item expanded "><a href="../../sway-libs/queue/index.html"><strong aria-hidden="true">22.</strong> Queue Library</a></li><li class="chapter-item expanded "><a href="../../sway-libs/upgradability/index.html"><strong aria-hidden="true">23.</strong> Upgradability</a></li><li class="chapter-item expanded affix "><li class="part-title">Sway Standards</li><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="../../sway-standards/src-2-inline-documentation.html"><strong aria-hidden="true">24.</strong> SRC-2: Inline Documentation</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-3-minting-and-burning.html"><strong aria-hidden="true">25.</strong> SRC-3: Minting and Burning</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-5-ownership.html"><strong aria-hidden="true">26.</strong> SRC-5: Ownership</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-6-vault.html"><strong aria-hidden="true">27.</strong> SRC-6: Vault</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-7-asset-metadata.html"><strong aria-hidden="true">28.</strong> SRC-7: Onchain Asset Metadata</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-8-bridged-asset.html"><strong aria-hidden="true">29.</strong> SRC-8: Bridged Asset</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-9-metadata-keys.html"><strong aria-hidden="true">30.</strong> SRC-9: Metadata Keys</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-10-native-bridge.html"><strong aria-hidden="true">31.</strong> SRC-10: Native Bridge</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-11-security-information.html"><strong aria-hidden="true">32.</strong> SRC-11: Security Information</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-12-contract-factory.html"><strong aria-hidden="true">33.</strong> SRC-12: Contract Factory</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-13-soulbound-address.html"><strong aria-hidden="true">34.</strong> SRC-13: Soulbound Address</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-14-simple-upgradeable-proxies.html"><strong aria-hidden="true">35.</strong> SRC-14: Simple Upgradeable Contract</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-15-offchain-asset-metadata.html"><strong aria-hidden="true">36.</strong> SRC-15: Offchain Asset Metadata</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-16-typed-structured-data.html"><strong aria-hidden="true">37.</strong> SRC-16: Typed Structured Data</a></li><li class="chapter-item expanded "><a href="../../sway-standards/src-20-native-asset.html"><strong aria-hidden="true">38.</strong> SRC-20: Native Asset</a></li><li class="chapter-item expanded affix "><li class="part-title">Sway by Example</li><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/solidity.html"><strong aria-hidden="true">39.</strong> Solidity</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/hello-sway.html"><strong aria-hidden="true">40.</strong> Hello Sway</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/variables.html"><strong aria-hidden="true">41.</strong> Variables</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/primitive-types.html"><strong aria-hidden="true">42.</strong> Primitive Types</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/compound-types.html"><strong aria-hidden="true">43.</strong> Compound Types</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/blockchain-types.html"><strong aria-hidden="true">44.</strong> Blockchain Types</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/functions.html"><strong aria-hidden="true">45.</strong> Functions</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/imports.html"><strong aria-hidden="true">46.</strong> Imports</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/structs.html"><strong aria-hidden="true">47.</strong> Structs</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/tuples.html"><strong aria-hidden="true">48.</strong> Tuples</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/enums.html"><strong aria-hidden="true">49.</strong> Enums</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/constants.html"><strong aria-hidden="true">50.</strong> Constants</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/configurable-constants.html"><strong aria-hidden="true">51.</strong> Configurable Constants</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/options.html"><strong aria-hidden="true">52.</strong> Options</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/results.html"><strong aria-hidden="true">53.</strong> Results</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/if.html"><strong aria-hidden="true">54.</strong> Ifs</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/match.html"><strong aria-hidden="true">55.</strong> Matches</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/while-loop.html"><strong aria-hidden="true">56.</strong> While Loops</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/logging.html"><strong aria-hidden="true">57.</strong> Logging</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/storage-map.html"><strong aria-hidden="true">58.</strong> Storage Map</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/vector.html"><strong aria-hidden="true">59.</strong> Vector</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/base-asset.html"><strong aria-hidden="true">60.</strong> Base Asset</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/library.html"><strong aria-hidden="true">61.</strong> Library</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/predicate.html"><strong aria-hidden="true">62.</strong> Predicate</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/script.html"><strong aria-hidden="true">63.</strong> Script</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/big-numbers.html"><strong aria-hidden="true">64.</strong> Big Numbers</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/src20.html"><strong aria-hidden="true">65.</strong> SRC20</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/hashing.html"><strong aria-hidden="true">66.</strong> Hashing</a></li><li class="chapter-item expanded "><a href="../../sway-by-example-lib/verify-signature.html"><strong aria-hidden="true">67.</strong> Verify-Signature</a></li><li class="chapter-item expanded affix "><li class="part-title">Migrations and Disclosures</li><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="../../migrations-and-disclosures/migrations/index.html"><strong aria-hidden="true">68.</strong> Migrations</a></li><li class="chapter-item expanded "><a href="../../migrations-and-disclosures/migrations/sway.html"><strong aria-hidden="true">69.</strong> Sway</a></li><li class="chapter-item expanded "><a href="../../migrations-and-disclosures/migrations/rust-sdk.html"><strong aria-hidden="true">70.</strong> Rust SDK</a></li><li class="chapter-item expanded "><a href="../../migrations-and-disclosures/migrations/typescript-sdk.html" class="active"><strong aria-hidden="true">71.</strong> Typescript SDK</a></li><li class="chapter-item expanded "><a href="../../migrations-and-disclosures/breaking-changes-archive.html"><strong aria-hidden="true">72.</strong> Betas Migrations Archive</a></li><li class="chapter-item expanded affix "><li class="part-title">Verified Addresses</li><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="../../verified-addresses/assets.html"><strong aria-hidden="true">73.</strong> Assets</a></li><li class="chapter-item expanded "><a href="../../verified-addresses/contracts.html"><strong aria-hidden="true">74.</strong> Contracts</a></li><li class="chapter-item expanded "><a href="../../verified-addresses/security-council.html"><strong aria-hidden="true">75.</strong> Security Council</a></li><li class="chapter-item expanded affix "><li class="part-title">Fuel Token Overview</li><li class="chapter-item expanded affix "><li class="part-title">Fuel Token Overview</li><li class="chapter-item expanded "><a href="../../fuel-token-overview/tokenomics.html"><strong aria-hidden="true">76.</strong> Tokenomics</a></li><li class="chapter-item expanded "><a href="../../fuel-token-overview/fuel-v1-upgrade.html"><strong aria-hidden="true">77.</strong> Fuel V1 to FUEL Upgrade</a></li><li class="chapter-item expanded "><a href="../../fuel-token-overview/claim-genesis-drop.html"><strong aria-hidden="true">78.</strong> Claim Genesis Drop</a></li><li class="chapter-item expanded "><a href="../../fuel-token-overview/stake-on-fuel.html"><strong aria-hidden="true">79.</strong> Stake on Fuel Ignition</a></li><li class="chapter-item expanded "><a href="../../fuel-token-overview/stake-on-ethereum.html"><strong aria-hidden="true">80.</strong> Stake on Ethereum</a></li><li class="chapter-item expanded affix "><li class="part-title">Fuel Book</li><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="../../fuel-book/why-fuel/index.html"><strong aria-hidden="true">81.</strong> Chapter 1: Why Fuel</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuel-book/why-fuel/beginnings.html"><strong aria-hidden="true">81.1.</strong> 1.1 - Beginnings</a></li><li class="chapter-item expanded "><a href="../../fuel-book/why-fuel/the-problem.html"><strong aria-hidden="true">81.2.</strong> 1.2 - The Problem</a></li><li class="chapter-item expanded "><a href="../../fuel-book/why-fuel/the-fuel-way.html"><strong aria-hidden="true">81.3.</strong> 1.3 - The Fuel Way</a></li><li class="chapter-item expanded "><a href="../../fuel-book/why-fuel/what-is-fuel.html"><strong aria-hidden="true">81.4.</strong> 1.4 - So What is Fuel?</a></li><li class="chapter-item expanded "><a href="../../fuel-book/why-fuel/building-on-fuel-an-overview.html"><strong aria-hidden="true">81.5.</strong> 1.5 - Building on Fuel: An Overview</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuel-book/the-architecture/index.html"><strong aria-hidden="true">82.</strong> Chapter 2: The Architecture</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuel-book/the-architecture/the-fuelvm.html"><strong aria-hidden="true">82.1.</strong> 2.1 - The FuelVM</a></li><li class="chapter-item expanded "><a href="../../fuel-book/the-architecture/transactions-on-fuel.html"><strong aria-hidden="true">82.2.</strong> 2.2 - Transactions on Fuel</a></li><li class="chapter-item expanded "><a href="../../fuel-book/the-architecture/fuel-blocks.html"><strong aria-hidden="true">82.3.</strong> 2.3 - Fuel Blocks</a></li><li class="chapter-item expanded "><a href="../../fuel-book/the-architecture/block-building-in-fuel.html"><strong aria-hidden="true">82.4.</strong> 2.4 - Block Building in Fuel</a></li><li class="chapter-item expanded "><a href="../../fuel-book/the-architecture/fuel-and-ethereum.html"><strong aria-hidden="true">82.5.</strong> 2.5 - Fuel and Ethereum</a></li><li class="chapter-item expanded "><a href="../../fuel-book/the-architecture/security-on-fuel.html"><strong aria-hidden="true">82.6.</strong> 2.6 - Security on Fuel</a></li><li class="chapter-item expanded "><a href="../../fuel-book/the-architecture/fees-on-fuel.html"><strong aria-hidden="true">82.7.</strong> 2.7 - Fees on Fuel</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuel-book/fuels-future/index.html"><strong aria-hidden="true">83.</strong> Chapter 3: Fuel's Future</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuel-book/fuels-future/network-of-interconnection.html"><strong aria-hidden="true">83.1.</strong> 3.1 - A Network of Interconnected L2s & L3s</a></li><li class="chapter-item expanded "><a href="../../fuel-book/fuels-future/decentralized-block-building.html"><strong aria-hidden="true">83.2.</strong> 3.2 - Decentralized Block Building</a></li><li class="chapter-item expanded "><a href="../../fuel-book/fuels-future/snap-fast-finality-gadget.html"><strong aria-hidden="true">83.3.</strong> 3.3 - SNAP Fast Finality Gadget</a></li><li class="chapter-item expanded "><a href="../../fuel-book/fuels-future/state-rehydration.html"><strong aria-hidden="true">83.4.</strong> 3.4 - State Rehydration</a></li><li class="chapter-item expanded "><a href="../../fuel-book/fuels-future/data-streaming.html"><strong aria-hidden="true">83.5.</strong> 3.5 - Data Streaming</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuel-book/conclusion/index.html"><strong aria-hidden="true">84.</strong> Conclusion</a></li><li class="chapter-item expanded "><a href="../../fuel-book/glossary/index.html"><strong aria-hidden="true">85.</strong> Glossary</a></li><li class="chapter-item expanded affix "><li class="part-title">Integration Docs</li><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded affix "><li class="part-title">Node Operator</li><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="../../node-operator/fuel-ignition/index.html"><strong aria-hidden="true">86.</strong> Fuel Ignition</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../node-operator/fuel-ignition/local-node.html"><strong aria-hidden="true">86.1.</strong> Local Node</a></li><li class="chapter-item expanded "><a href="../../node-operator/fuel-ignition/testnet-node.html"><strong aria-hidden="true">86.2.</strong> Testnet Node</a></li><li class="chapter-item expanded "><a href="../../node-operator/fuel-ignition/mainnet-node.html"><strong aria-hidden="true">86.3.</strong> Mainnet Node</a></li></ol></li><li class="chapter-item expanded "><a href="../../node-operator/fuel-sequencer/index.html"><strong aria-hidden="true">87.</strong> Fuel Sequencer</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../node-operator/fuel-sequencer/testnet-node.html"><strong aria-hidden="true">87.1.</strong> Testnet Node</a></li><li class="chapter-item expanded "><a href="../../node-operator/fuel-sequencer/testnet-validator.html"><strong aria-hidden="true">87.2.</strong> Testnet Validator</a></li><li class="chapter-item expanded "><a href="../../node-operator/fuel-sequencer/mainnet-node.html"><strong aria-hidden="true">87.3.</strong> Mainnet Node</a></li><li class="chapter-item expanded "><a href="../../node-operator/fuel-sequencer/mainnet-validator.html"><strong aria-hidden="true">87.4.</strong> Mainnet Validator</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Fuels-rs (Rust SDK)</li><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="../../fuels-rs/getting-started.html"><strong aria-hidden="true">88.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/connecting/index.html"><strong aria-hidden="true">89.</strong> Connecting to a Fuel node</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/connecting/external-node.html"><strong aria-hidden="true">89.1.</strong> Connecting to the Testnet or an external node</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/connecting/short-lived.html"><strong aria-hidden="true">89.2.</strong> Running a short-lived Fuel node with the SDK</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/connecting/rocksdb.html"><strong aria-hidden="true">89.3.</strong> RocksDB</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/connecting/querying.html"><strong aria-hidden="true">89.4.</strong> Querying the blockchain</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/connecting/retrying.html"><strong aria-hidden="true">89.5.</strong> Retrying upon errors</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/accounts.html"><strong aria-hidden="true">90.</strong> Accounts</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/wallets/index.html"><strong aria-hidden="true">91.</strong> Managing wallets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/wallets/private-keys.html"><strong aria-hidden="true">91.1.</strong> Creating a wallet from a private key</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/wallets/mnemonic-wallet.html"><strong aria-hidden="true">91.2.</strong> Creating a wallet from mnemonic phrases</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/wallets/access.html"><strong aria-hidden="true">91.3.</strong> Wallet Access</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/wallets/encrypting-and-storing.html"><strong aria-hidden="true">91.4.</strong> Encrypting and storing wallets</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/wallets/checking-balances-and-coins.html"><strong aria-hidden="true">91.5.</strong> Checking balances and coins</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/wallets/test-wallets.html"><strong aria-hidden="true">91.6.</strong> Setting up test wallets</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/wallets/signing.html"><strong aria-hidden="true">91.7.</strong> Signing</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/abigen/index.html"><strong aria-hidden="true">92.</strong> Generating bindings with abigen!</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/abigen/the-json-abi-file.html"><strong aria-hidden="true">92.1.</strong> The JSON ABI file</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/abigen/the-abigen-macro.html"><strong aria-hidden="true">92.2.</strong> The abigen! macro</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/deploying/index.html"><strong aria-hidden="true">93.</strong> Deploying contracts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/deploying/configurable-constants.html"><strong aria-hidden="true">93.1.</strong> Configurable constants</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/deploying/storage-slots.html"><strong aria-hidden="true">93.2.</strong> Storage slots</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/deploying/interacting-with-contracts.html"><strong aria-hidden="true">93.3.</strong> Interacting with contracts</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/deploying/the-fuelvm-binary-file.html"><strong aria-hidden="true">93.4.</strong> The FuelVM Binary file</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/deploying/large_contracts.html"><strong aria-hidden="true">93.5.</strong> Large contracts</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/index.html"><strong aria-hidden="true">94.</strong> Calling contracts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/calls-with-different-wallets.html"><strong aria-hidden="true">94.1.</strong> Connecting wallets</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/tx-policies.html"><strong aria-hidden="true">94.2.</strong> Transaction policies</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/call-params.html"><strong aria-hidden="true">94.3.</strong> Call parameters</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/custom-asset-transfer.html"><strong aria-hidden="true">94.4.</strong> Custom asset transfer</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/call-response.html"><strong aria-hidden="true">94.5.</strong> Call response</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/logs.html"><strong aria-hidden="true">94.6.</strong> Logs</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/variable-outputs.html"><strong aria-hidden="true">94.7.</strong> Variable outputs and messages</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/simulation.html"><strong aria-hidden="true">94.8.</strong> Simulating calls</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/other-contracts.html"><strong aria-hidden="true">94.9.</strong> Calling other contracts</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/multicalls.html"><strong aria-hidden="true">94.10.</strong> Multiple contract calls</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/tx-dependency-estimation.html"><strong aria-hidden="true">94.11.</strong> Transaction dependency estimation</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/cost-estimation.html"><strong aria-hidden="true">94.12.</strong> Estimating cost</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/calling-contracts/low-level-calls.html"><strong aria-hidden="true">94.13.</strong> Low-level calls</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/running-scripts.html"><strong aria-hidden="true">95.</strong> Running scripts</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/predicates/index.html"><strong aria-hidden="true">96.</strong> Predicates</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/predicates/send-spend-predicate.html"><strong aria-hidden="true">96.1.</strong> Signatures example</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/preuploading-code.html"><strong aria-hidden="true">97.</strong> Pre-uploading code</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/custom-transactions/index.html"><strong aria-hidden="true">98.</strong> Custom transactions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/custom-transactions/transaction-builders.html"><strong aria-hidden="true">98.1.</strong> Transaction builders</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/custom-transactions/custom-calls.html"><strong aria-hidden="true">98.2.</strong> Custom contract and script calls</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/index.html"><strong aria-hidden="true">99.</strong> Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/types/bytes32.html"><strong aria-hidden="true">99.1.</strong> Bytes32</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/address.html"><strong aria-hidden="true">99.2.</strong> Address</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/contract-id.html"><strong aria-hidden="true">99.3.</strong> ContractId</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/asset-id.html"><strong aria-hidden="true">99.4.</strong> AssetId</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/bech32.html"><strong aria-hidden="true">99.5.</strong> Bech32</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/custom_types.html"><strong aria-hidden="true">99.6.</strong> Structs and enums</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/string.html"><strong aria-hidden="true">99.7.</strong> String</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/bits256.html"><strong aria-hidden="true">99.8.</strong> Bits256</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/bytes.html"><strong aria-hidden="true">99.9.</strong> Bytes</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/B512.html"><strong aria-hidden="true">99.10.</strong> B512</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/evm_address.html"><strong aria-hidden="true">99.11.</strong> EvmAddress</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/vectors.html"><strong aria-hidden="true">99.12.</strong> Vectors</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/types/conversion.html"><strong aria-hidden="true">99.13.</strong> Converting types</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/codec/index.html"><strong aria-hidden="true">100.</strong> Codec</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/codec/encoding.html"><strong aria-hidden="true">100.1.</strong> Encoding</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/codec/decoding.html"><strong aria-hidden="true">100.2.</strong> Decoding</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/reference.html"><strong aria-hidden="true">101.</strong> API Reference</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/testing/index.html"><strong aria-hidden="true">102.</strong> Testing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/testing/basics.html"><strong aria-hidden="true">102.1.</strong> Testing basics</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/testing/the-setup-program-test-macro.html"><strong aria-hidden="true">102.2.</strong> The setup_program_test! macro</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/testing/chains.html"><strong aria-hidden="true">102.3.</strong> Tweaking the blockchain</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/cookbook/index.html"><strong aria-hidden="true">103.</strong> Cookbook</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/cookbook/custom-chain.html"><strong aria-hidden="true">103.1.</strong> Custom consensus parameters</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/cookbook/deposit-and-withdraw.html"><strong aria-hidden="true">103.2.</strong> Deposit and Withdraw</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/cookbook/transfer-all-assets.html"><strong aria-hidden="true">103.3.</strong> Transfer all assets</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/debugging/index.html"><strong aria-hidden="true">104.</strong> Debugging</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/debugging/function-selector.html"><strong aria-hidden="true">104.1.</strong> The Function selector</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/debugging/decoding-script-transactions.html"><strong aria-hidden="true">104.2.</strong> Decoding script transactions</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/glossary.html"><strong aria-hidden="true">105.</strong> Glossary</a></li><li class="chapter-item expanded "><a href="../../fuels-rs/contributing/CONTRIBUTING.html"><strong aria-hidden="true">106.</strong> Contributing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/contributing/tests-structure.html"><strong aria-hidden="true">106.1.</strong> Integration tests structure</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-rs/cli/index.html"><strong aria-hidden="true">107.</strong> Command Line Interfaces</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-rs/cli/fuels-abi-cli.html"><strong aria-hidden="true">107.1.</strong> fuels-abi-cli</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Specs</li><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="../../specs/tx-format/index.html"><strong aria-hidden="true">108.</strong> Transaction Format</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/tx-format/consensus_parameters.html"><strong aria-hidden="true">108.1.</strong> Consensus Parameters</a></li><li class="chapter-item expanded "><a href="../../specs/tx-format/transaction.html"><strong aria-hidden="true">108.2.</strong> Transaction</a></li><li class="chapter-item expanded "><a href="../../specs/tx-format/upgrade_purpose.html"><strong aria-hidden="true">108.3.</strong> UpgradePurpose</a></li><li class="chapter-item expanded "><a href="../../specs/tx-format/policy.html"><strong aria-hidden="true">108.4.</strong> Policy</a></li><li class="chapter-item expanded "><a href="../../specs/tx-format/input.html"><strong aria-hidden="true">108.5.</strong> Input</a></li><li class="chapter-item expanded "><a href="../../specs/tx-format/output.html"><strong aria-hidden="true">108.6.</strong> Output</a></li><li class="chapter-item expanded "><a href="../../specs/tx-format/witness.html"><strong aria-hidden="true">108.7.</strong> Witness</a></li><li class="chapter-item expanded "><a href="../../specs/tx-format/tx-pointer.html"><strong aria-hidden="true">108.8.</strong> Transaction Pointer</a></li></ol></li><li class="chapter-item expanded "><a href="../../specs/identifiers/index.html"><strong aria-hidden="true">109.</strong> Computing Identifiers</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/identifiers/asset.html"><strong aria-hidden="true">109.1.</strong> Asset ID</a></li><li class="chapter-item expanded "><a href="../../specs/identifiers/blob-id.html"><strong aria-hidden="true">109.2.</strong> Blob ID</a></li><li class="chapter-item expanded "><a href="../../specs/identifiers/contract-id.html"><strong aria-hidden="true">109.3.</strong> Contract ID</a></li><li class="chapter-item expanded "><a href="../../specs/identifiers/predicate-id.html"><strong aria-hidden="true">109.4.</strong> Predicate ID</a></li><li class="chapter-item expanded "><a href="../../specs/identifiers/transaction-id.html"><strong aria-hidden="true">109.5.</strong> Transaction ID</a></li><li class="chapter-item expanded "><a href="../../specs/identifiers/utxo-id.html"><strong aria-hidden="true">109.6.</strong> UTXO ID</a></li></ol></li><li class="chapter-item expanded "><a href="../../specs/protocol/index.html"><strong aria-hidden="true">110.</strong> Protocol</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/protocol/tx-validity.html"><strong aria-hidden="true">110.1.</strong> Transaction Validity Rules</a></li><li class="chapter-item expanded "><a href="../../specs/protocol/cryptographic-primitives.html"><strong aria-hidden="true">110.2.</strong> Cryptographic Primitives</a></li><li class="chapter-item expanded "><a href="../../specs/protocol/storage-initialization.html"><strong aria-hidden="true">110.3.</strong> Storage Slot Initialization</a></li><li class="chapter-item expanded "><a href="../../specs/protocol/block-header.html"><strong aria-hidden="true">110.4.</strong> Block Header Format</a></li><li class="chapter-item expanded "><a href="../../specs/protocol/relayer.html"><strong aria-hidden="true">110.5.</strong> Layer 1 Relayer/Bridge Protocol</a></li></ol></li><li class="chapter-item expanded "><a href="../../specs/abi/index.html"><strong aria-hidden="true">111.</strong> Application Binary Interface (ABI)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/abi/json-abi-format.html"><strong aria-hidden="true">111.1.</strong> JSON ABI Format</a></li><li class="chapter-item expanded "><a href="../../specs/abi/receipts.html"><strong aria-hidden="true">111.2.</strong> Receipts</a></li><li class="chapter-item expanded "><a href="../../specs/abi/fn-selector-encoding.html"><strong aria-hidden="true">111.3.</strong> Function Selector Encoding</a></li><li class="chapter-item expanded "><a href="../../specs/abi/argument-encoding.html"><strong aria-hidden="true">111.4.</strong> Argument Encoding</a></li><li class="chapter-item expanded "><a href="../../specs/abi/hash-based-ids.html"><strong aria-hidden="true">111.5.</strong> Hash Based Ids</a></li></ol></li><li class="chapter-item expanded "><a href="../../specs/fuel-vm/index.html"><strong aria-hidden="true">112.</strong> FuelVM</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/fuel-vm/instruction-set.html"><strong aria-hidden="true">112.1.</strong> Instruction Set</a></li></ol></li><li class="chapter-item expanded "><a href="../../specs/networks/index.html"><strong aria-hidden="true">113.</strong> Networks</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/networks/poa.html"><strong aria-hidden="true">113.1.</strong> Proof of Authority (PoA)</a></li></ol></li><li class="chapter-item expanded "><a href="../../specs/tests/index.html"><strong aria-hidden="true">114.</strong> Testing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/tests/sparse-merkle-tree-tests.html"><strong aria-hidden="true">114.1.</strong> Sparse Merkle Tree</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Guides</li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/contract-abi.html"><strong aria-hidden="true">115.</strong> ABI</a></li><li class="chapter-item expanded "><a href="../../guides/counter-dapp/building-a-frontend.html"><strong aria-hidden="true">116.</strong> Building a Frontend</a></li><li class="chapter-item expanded "><a href="../../guides/counter-dapp/building-a-smart-contract.html"><strong aria-hidden="true">117.</strong> Building a Smart Contract</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/checkpoint.html"><strong aria-hidden="true">118.</strong> Checkpoint</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/checkpoint.html"><strong aria-hidden="true">119.</strong> Checkpoint</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/configurables.html"><strong aria-hidden="true">120.</strong> Configurables</a></li><li class="chapter-item expanded "><a href="../../guides/contract-quickstart/index.html"><strong aria-hidden="true">121.</strong> Contract Quickstart</a></li><li class="chapter-item expanded "><a href="../../guides/counter-dapp/index.html"><strong aria-hidden="true">122.</strong> Counter Dapp</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/debugging-with-scripts.html"><strong aria-hidden="true">123.</strong> Debugging with Scripts</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/contract-errors.html"><strong aria-hidden="true">124.</strong> Errors</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/explore-fuel.html"><strong aria-hidden="true">125.</strong> Explore Fuel</a></li><li class="chapter-item expanded "><a href="../../guides/frontend-quickstart/index.html"><strong aria-hidden="true">126.</strong> Frontend Quickstart</a></li><li class="chapter-item expanded "><a href="../../guides/fuel-connectors/index.html"><strong aria-hidden="true">127.</strong> Fuel Connectors</a></li><li class="chapter-item expanded "><a href="../../guides/installation/codespace.html"><strong aria-hidden="true">128.</strong> Fuel Github Codespace</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/contract-functions.html"><strong aria-hidden="true">129.</strong> Functions</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/imports.html"><strong aria-hidden="true">130.</strong> Imports</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/contract-imports.html"><strong aria-hidden="true">131.</strong> Imports</a></li><li class="chapter-item expanded "><a href="../../guides/installation/index.html"><strong aria-hidden="true">132.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/index.html"><strong aria-hidden="true">133.</strong> Intro to Predicates</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/index.html"><strong aria-hidden="true">134.</strong> Intro to Sway</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/debugging-with-scripts-rust.html"><strong aria-hidden="true">135.</strong> Logging in Rust tests</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/main.html"><strong aria-hidden="true">136.</strong> Main</a></li><li class="chapter-item expanded "><a href="../../guides/fuel-connectors/non-technical-guide.html"><strong aria-hidden="true">137.</strong> Non-technical Guide</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/predicate-limitations.html"><strong aria-hidden="true">138.</strong> Predicate Limitations</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/predicate-root.html"><strong aria-hidden="true">139.</strong> Predicate Root</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/prerequisites.html"><strong aria-hidden="true">140.</strong> Prerequisites</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/prerequisites.html"><strong aria-hidden="true">141.</strong> Prerequisites</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/rust-sdk.html"><strong aria-hidden="true">142.</strong> Rust Testing</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/rust-sdk.html"><strong aria-hidden="true">143.</strong> Rust Testing</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-predicates/signature-verification.html"><strong aria-hidden="true">144.</strong> Signature Verification</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/contract-storage.html"><strong aria-hidden="true">145.</strong> Storage</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/contract-structs.html"><strong aria-hidden="true">146.</strong> Structs</a></li><li class="chapter-item expanded "><a href="../../guides/intro-to-sway/typescript-sdk.html"><strong aria-hidden="true">147.</strong> Typescript Frontend</a></li><li class="chapter-item expanded affix "><li class="part-title">Introduction</li><li class="chapter-item expanded "><a href="../../intro/glossary.html"><strong aria-hidden="true">148.</strong> glossary</a></li><li class="chapter-item expanded "><a href="../../intro/quickstart.html"><strong aria-hidden="true">149.</strong> quickstart</a></li><li class="chapter-item expanded "><a href="../../intro/what-is-fuel.html"><strong aria-hidden="true">150.</strong> what is fuel</a></li><li class="chapter-item expanded affix "><li class="part-title">Contributing</li><li class="chapter-item expanded "><a href="../../contributing/index.html"><strong aria-hidden="true">151.</strong> Contributing</a></li><li class="chapter-item expanded "><a href="../../contributing/documentation.html"><strong aria-hidden="true">152.</strong> Documentation</a></li><li class="chapter-item expanded "><a href="../../contributing/general.html"><strong aria-hidden="true">153.</strong> General</a></li><li class="chapter-item expanded "><a href="../../contributing/github-workflows.html"><strong aria-hidden="true">154.</strong> GitHub Workflows</a></li><li class="chapter-item expanded "><a href="../../contributing/guides.html"><strong aria-hidden="true">155.</strong> Guides</a></li><li class="chapter-item expanded "><a href="../../contributing/style-guide.html"><strong aria-hidden="true">156.</strong> Style Guide</a></li><li class="chapter-item expanded "><a href="../../contributing/versions.html"><strong aria-hidden="true">157.</strong> Versions</a></li><li class="chapter-item expanded affix "><li class="part-title">Fuels-ts (TypeScript SDK)</li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/index.html"><strong aria-hidden="true">158.</strong> Guide</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/getting-started/index.html"><strong aria-hidden="true">158.1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/getting-started/installation.html"><strong aria-hidden="true">158.1.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/getting-started/connecting-to-the-network.html"><strong aria-hidden="true">158.1.2.</strong> Connecting to the Network</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/getting-started/running-a-local-fuel-node.html"><strong aria-hidden="true">158.1.3.</strong> Running a local Fuel node</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/getting-started/react-example.html"><strong aria-hidden="true">158.1.4.</strong> React Example</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/getting-started/cdn-usage.html"><strong aria-hidden="true">158.1.5.</strong> CDN Usage</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/getting-started/next-steps.html"><strong aria-hidden="true">158.1.6.</strong> Next Steps</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/the-utxo-model/index.html"><strong aria-hidden="true">158.2.</strong> The UTXO Model</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/creating-a-fuel-dapp/index.html"><strong aria-hidden="true">158.3.</strong> Creating a Fuel dApp</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/creating-a-fuel-dapp/options.html"><strong aria-hidden="true">158.3.1.</strong> Options</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/creating-a-fuel-dapp/deploying-a-dapp-to-testnet.html"><strong aria-hidden="true">158.3.2.</strong> Deploying a dApp to Testnet</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/creating-a-fuel-dapp/working-with-predicates.html"><strong aria-hidden="true">158.3.3.</strong> Working with Predicates</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/fuels-cli/index.html"><strong aria-hidden="true">158.4.</strong> fuels CLI</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/fuels-cli/config-file.html"><strong aria-hidden="true">158.4.1.</strong> Config File</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/fuels-cli/commands.html"><strong aria-hidden="true">158.4.2.</strong> Commands</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/fuels-cli/abi-typegen.html"><strong aria-hidden="true">158.4.3.</strong> ABI Typegen</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/fuels-cli/generating-types.html"><strong aria-hidden="true">158.4.4.</strong> Generating Types</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/fuels-cli/using-generated-types.html"><strong aria-hidden="true">158.4.5.</strong> Using Generated Types</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/provider/index.html"><strong aria-hidden="true">158.5.</strong> Provider</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/provider/provider-options.html"><strong aria-hidden="true">158.5.1.</strong> Provider Options</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/provider/pagination.html"><strong aria-hidden="true">158.5.2.</strong> Pagination</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/provider/querying-the-chain.html"><strong aria-hidden="true">158.5.3.</strong> Querying the Chain</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/wallets/index.html"><strong aria-hidden="true">158.6.</strong> Wallets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/wallets/instantiating-wallets.html"><strong aria-hidden="true">158.6.1.</strong> Instantiating Wallets</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/wallets/private-keys.html"><strong aria-hidden="true">158.6.2.</strong> Private Keys</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/wallets/mnemonic-wallet.html"><strong aria-hidden="true">158.6.3.</strong> Mnemonic Wallet</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/wallets/encrypting-and-decrypting.html"><strong aria-hidden="true">158.6.4.</strong> Encrypting and Decrypting</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/wallets/checking-balances.html"><strong aria-hidden="true">158.6.5.</strong> Checking Balances</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/wallets/wallet-transferring.html"><strong aria-hidden="true">158.6.6.</strong> Wallet Transferring</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/wallets/signing.html"><strong aria-hidden="true">158.6.7.</strong> Signing</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/wallets/connectors.html"><strong aria-hidden="true">158.6.8.</strong> Connectors</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/wallets/wallet-manager.html"><strong aria-hidden="true">158.6.9.</strong> Wallet Manager</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/wallets/locking-and-unlocking.html"><strong aria-hidden="true">158.6.10.</strong> Locking and Unlocking</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/index.html"><strong aria-hidden="true">158.7.</strong> Contracts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/methods.html"><strong aria-hidden="true">158.7.1.</strong> Methods</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/call-parameters.html"><strong aria-hidden="true">158.7.2.</strong> Call Parameters</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/contract-balance.html"><strong aria-hidden="true">158.7.3.</strong> Contract Balance</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/cost-estimation.html"><strong aria-hidden="true">158.7.4.</strong> Cost Estimation</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/dependency-estimation.html"><strong aria-hidden="true">158.7.5.</strong> Dependency Estimation</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/variable-outputs.html"><strong aria-hidden="true">158.7.6.</strong> Variable Outputs</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/logs.html"><strong aria-hidden="true">158.7.7.</strong> Logs</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/inter-contract-calls.html"><strong aria-hidden="true">158.7.8.</strong> Inter-contract Calls</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/multi-contract-calls.html"><strong aria-hidden="true">158.7.9.</strong> Multi-contract calls</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/using-different-wallets.html"><strong aria-hidden="true">158.7.10.</strong> Using different Wallets</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/transferring-assets.html"><strong aria-hidden="true">158.7.11.</strong> Transferring Assets</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/deploying-contracts.html"><strong aria-hidden="true">158.7.12.</strong> Deploying Contracts</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/storage-slots.html"><strong aria-hidden="true">158.7.13.</strong> Storage Slots</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/configurable-constants.html"><strong aria-hidden="true">158.7.14.</strong> Configurable Constants</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/minted-token-asset-id.html"><strong aria-hidden="true">158.7.15.</strong> Minted Token Asset ID</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/managing-deployed-contracts.html"><strong aria-hidden="true">158.7.16.</strong> Managing Deployed Contracts</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/proxy-contracts.html"><strong aria-hidden="true">158.7.17.</strong> Proxy Contracts</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/contracts/understanding-the-fuelvm-binary-file.html"><strong aria-hidden="true">158.7.18.</strong> Understanding the FuelVM Binary File</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/scripts/index.html"><strong aria-hidden="true">158.8.</strong> Scripts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/scripts/instantiating-a-script.html"><strong aria-hidden="true">158.8.1.</strong> Instantiating A Script</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/scripts/deploying-scripts.html"><strong aria-hidden="true">158.8.2.</strong> Deploying Scripts</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/scripts/configurable-constants.html"><strong aria-hidden="true">158.8.3.</strong> Configurable Constants</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/scripts/running-scripts.html"><strong aria-hidden="true">158.8.4.</strong> Running scripts</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/scripts/custom-script-call.html"><strong aria-hidden="true">158.8.5.</strong> Custom script Call</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/predicates/index.html"><strong aria-hidden="true">158.9.</strong> Predicates</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/predicates/instantiating-a-predicate.html"><strong aria-hidden="true">158.9.1.</strong> Instantiating A Predicate</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/predicates/deploying-predicates.html"><strong aria-hidden="true">158.9.2.</strong> Deploying Predicates</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/predicates/configurable-constants.html"><strong aria-hidden="true">158.9.3.</strong> Configurable Constants</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/predicates/send-and-spend-funds-from-predicates.html"><strong aria-hidden="true">158.9.4.</strong> Send And Spend Funds From Predicates</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/predicates/methods.html"><strong aria-hidden="true">158.9.5.</strong> Methods</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/predicates/custom-transactions.html"><strong aria-hidden="true">158.9.6.</strong> Custom Transactions</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/transactions/index.html"><strong aria-hidden="true">158.10.</strong> Transactions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/transactions/modifying-the-request.html"><strong aria-hidden="true">158.10.1.</strong> Modifying the Request</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/transactions/adding-parameters.html"><strong aria-hidden="true">158.10.2.</strong> Adding Parameters</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/transactions/adding-policies.html"><strong aria-hidden="true">158.10.3.</strong> Adding Policies</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/transactions/getting-the-response.html"><strong aria-hidden="true">158.10.4.</strong> Getting the Response</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/transactions/optimizing-frontend-apps.html"><strong aria-hidden="true">158.10.5.</strong> Optimizing Frontend Apps</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/encoding/index.html"><strong aria-hidden="true">158.11.</strong> Encoding</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/encoding/encode-and-decode.html"><strong aria-hidden="true">158.11.1.</strong> Encode and Decode</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/encoding/working-with-bytes.html"><strong aria-hidden="true">158.11.2.</strong> Working with Bytes</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/utilities/index.html"><strong aria-hidden="true">158.12.</strong> Utilities</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/utilities/date-conversion.html"><strong aria-hidden="true">158.12.1.</strong> Date conversion</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/utilities/address-conversion.html"><strong aria-hidden="true">158.12.2.</strong> Address conversion</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/utilities/unit-conversion.html"><strong aria-hidden="true">158.12.3.</strong> Unit conversion</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/utilities/using-assets.html"><strong aria-hidden="true">158.12.4.</strong> Using assets</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/utilities/asset-api.html"><strong aria-hidden="true">158.12.5.</strong> Asset API</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/index.html"><strong aria-hidden="true">158.13.</strong> Cookbook</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/deposit-and-withdraw.html"><strong aria-hidden="true">158.13.1.</strong> Deposit And Withdraw</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/wallet-sdk-and-react-hooks.html"><strong aria-hidden="true">158.13.2.</strong> Wallet SDK and React Hooks</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/custom-transactions.html"><strong aria-hidden="true">158.13.3.</strong> Custom Transactions</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/custom-transactions-from-contract-calls.html"><strong aria-hidden="true">158.13.4.</strong> Custom Transactions from Contract Calls</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/generate-fake-resources.html"><strong aria-hidden="true">158.13.5.</strong> Generate Fake Resources</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/transactions-with-multiple-signers.html"><strong aria-hidden="true">158.13.6.</strong> Transactions with Multiple Signers</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/graphql-integration.html"><strong aria-hidden="true">158.13.7.</strong> GraphQL Integration</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/resubmitting-failed-transactions.html"><strong aria-hidden="true">158.13.8.</strong> Resubmitting Failed Transactions</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/combining-utxos.html"><strong aria-hidden="true">158.13.9.</strong> Combining UTXOs</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/splitting-utxos.html"><strong aria-hidden="true">158.13.10.</strong> Splitting UTXOs</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/cookbook/optimized-react-example.html"><strong aria-hidden="true">158.13.11.</strong> Optimized React Example</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/testing/index.html"><strong aria-hidden="true">158.14.</strong> Testing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/testing/launching-a-test-node.html"><strong aria-hidden="true">158.14.1.</strong> Launching a Test Node</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/testing/test-node-options.html"><strong aria-hidden="true">158.14.2.</strong> Test Node Options</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/testing/fuel-core-options.html"><strong aria-hidden="true">158.14.3.</strong> Fuel Core Options</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/testing/basic-example.html"><strong aria-hidden="true">158.14.4.</strong> Basic Example</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/testing/advanced-example.html"><strong aria-hidden="true">158.14.5.</strong> Advanced Example</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/testing/custom-blocks.html"><strong aria-hidden="true">158.14.6.</strong> Custom Blocks</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/testing/setting-up-test-wallets.html"><strong aria-hidden="true">158.14.7.</strong> Setting up test wallets</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/index.html"><strong aria-hidden="true">158.15.</strong> Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/address.html"><strong aria-hidden="true">158.15.1.</strong> Address</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/arrays.html"><strong aria-hidden="true">158.15.2.</strong> Arrays</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/asset-id.html"><strong aria-hidden="true">158.15.3.</strong> Asset Id</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/b256.html"><strong aria-hidden="true">158.15.4.</strong> B256</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/b512.html"><strong aria-hidden="true">158.15.5.</strong> B512</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/bytes.html"><strong aria-hidden="true">158.15.6.</strong> Bytes</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/bytes32.html"><strong aria-hidden="true">158.15.7.</strong> Bytes32</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/enums.html"><strong aria-hidden="true">158.15.8.</strong> Enums</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/evm-address.html"><strong aria-hidden="true">158.15.9.</strong> Evm Address</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/native-parameters.html"><strong aria-hidden="true">158.15.10.</strong> Native Parameters</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/numbers.html"><strong aria-hidden="true">158.15.11.</strong> Numbers</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/options.html"><strong aria-hidden="true">158.15.12.</strong> Options</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/raw-slice.html"><strong aria-hidden="true">158.15.13.</strong> Raw Slice</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/std-string.html"><strong aria-hidden="true">158.15.14.</strong> Std String</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/string.html"><strong aria-hidden="true">158.15.15.</strong> String</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/structs.html"><strong aria-hidden="true">158.15.16.</strong> Structs</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/tuples.html"><strong aria-hidden="true">158.15.17.</strong> Tuples</a></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/types/vectors.html"><strong aria-hidden="true">158.15.18.</strong> Vectors</a></li></ol></li><li class="chapter-item expanded "><a href="../../fuels-ts/guide/errors/index.html"><strong aria-hidden="true">158.16.</strong> Errors</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Fuel Docs Hub</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="typescript-sdk-migrations-guide"><a class="header" href="#typescript-sdk-migrations-guide">TypeScript SDK Migrations Guide</a></h1>
+<h2 id="march-17-2025"><a class="header" href="#march-17-2025">March 17, 2025</a></h2>
+<p><a href="https://github.com/FuelLabs/fuels-ts/releases/tag/v0.100.0">Release v0.100.0</a></p>
+<h3 id="made-resourcecache-consider-resource-owner---3697"><a class="header" href="#made-resourcecache-consider-resource-owner---3697">Made <code>ResourceCache</code> consider resource owner - <a href="https://github.com/FuelLabs/fuels-ts/pull/3697">#3697</a></a></h3>
+<pre><code class="language-ts">//before
+provider.cache?.getActiveData();
+provider.cache?.isCached(key);
+</code></pre>
+<pre><code class="language-ts">//after
+const owner = wallet.address.toB256();
+
+provider.cache?.getActiveData(owner)
+provider.cache?.isCached(owner, key);
+</code></pre>
+<h3 id="upgrade-fuel-core-to-0417---3590"><a class="header" href="#upgrade-fuel-core-to-0417---3590">Upgrade <code>fuel-core</code> to <code>0.41.7</code> - <a href="https://github.com/FuelLabs/fuels-ts/pull/3590">#3590</a></a></h3>
+<p>Because of the latest <code>fuel-core</code> changes, TS SDK does not throw the following error codes and messages anymore:</p>
+<h4 id="1-not_enough_funds"><a class="header" href="#1-not_enough_funds">1. <strong>NOT_ENOUGH_FUNDS</strong></a></h4>
+<pre><code class="language-ts">// before
+"The account(s) sending the transaction don't have enough funds to cover the transaction."
+</code></pre>
+<pre><code class="language-ts">// after
+"Insufficient funds or too many small value coins. Consider combining UTXOs."
+</code></pre>
+<h4 id="2-max_coins_reached"><a class="header" href="#2-max_coins_reached">2. <strong>MAX_COINS_REACHED</strong></a></h4>
+<pre><code class="language-ts">// before
+"The account retrieving coins has exceeded the maximum number of coins per asset. Please consider combining your coins into a single UTXO."
+</code></pre>
+<pre><code class="language-ts">// after
+"Insufficient funds or too many small value coins. Consider combining UTXOs."
+</code></pre>
+<p>Both error codes were removed in favor of <code>INSUFFICIENT_FUNDS_OR_MAX_COINS</code></p>
+<h2 id="february-4-2025"><a class="header" href="#february-4-2025">February 4, 2025</a></h2>
+<p><a href="https://github.com/FuelLabs/fuels-ts/releases/tag/v0.99.0">Release v0.99.0</a></p>
+<h3 id="remove-pageinfo-from-getbalances-graphql-operations---3652"><a class="header" href="#remove-pageinfo-from-getbalances-graphql-operations---3652">Remove <code>pageInfo</code> from <code>getBalances</code> GraphQL operations - <a href="https://github.com/FuelLabs/fuels-ts/pull/3652">#3652</a></a></h3>
+<ul>
+<li>The <code>pageInfo</code> field has been removed from the response of the <code>provider.operations.getBalances</code> query.</li>
+</ul>
+<pre><code class="language-ts">// before
+const { balances, pageInfo } = await provider.operations.getBalances({
+  first: 100,
+  filter: { owner: wallet.address.toB256() },
+});
+</code></pre>
+<pre><code class="language-ts">// after
+const { balances } = await provider.operations.getBalances({
+  first: 100,
+  filter: { owner: wallet.address.toB256() },
+});
+</code></pre>
+<p>The <code>getBalances</code> method of the Provider class remains unchanged, as it never returned pageInfo:</p>
+<pre><code class="language-ts">// not affected
+const { balances } = await provider.getBalances();
+</code></pre>
+<h3 id="remove-contractutils-namespaced-export---3570"><a class="header" href="#remove-contractutils-namespaced-export---3570">Remove <code>ContractUtils</code> namespaced export - <a href="https://github.com/FuelLabs/fuels-ts/pull/3570">#3570</a></a></h3>
+<ul>
+<li><code>ContractUtils</code> was removed and the underlying functions <code>getContractRoot()</code>, <code>getContractStorageRoot()</code>, <code>getContractId()</code>, <code>hexlifyWithPrefix()</code> are now exported directly from <code>fuels</code>.</li>
+</ul>
+<pre><code class="language-ts">// before
+import { ContractUtils } from 'fuels';
+</code></pre>
+<pre><code class="language-ts">// after
+import { getContractRoot, getContractStorageRoot, getContractId, hexlifyWithPrefix } from 'fuels';
+</code></pre>
+<h2 id="january-10-2025"><a class="header" href="#january-10-2025">January 10, 2025</a></h2>
+<p><a href="https://github.com/FuelLabs/fuels-ts/releases/tag/v0.98.0">Release v0.98.0</a></p>
+<h3 id="making-provider-initialization-sync-again---3514"><a class="header" href="#making-provider-initialization-sync-again---3514">Making <code>provider</code> initialization <code>sync</code> again - <a href="https://github.com/FuelLabs/fuels-ts/pull/3514">#3514</a></a></h3>
+<h4 id="1-provider-instantiation"><a class="header" href="#1-provider-instantiation">1. <code>Provider</code> Instantiation</a></h4>
+<ul>
+<li>Going from <code>async</code> to <code>sync</code></li>
+</ul>
+<pre><code class="language-ts">// before
+const provider = await Provider.create(NETWORK_URL);
+</code></pre>
+<pre><code class="language-ts">// after
+const provider = new Provider(NETWORK_URL);
+</code></pre>
+<h4 id="2-provider-methods"><a class="header" href="#2-provider-methods">2. <code>Provider</code> methods</a></h4>
+<ul>
+<li>The following methods are now <code>async</code></li>
+</ul>
+<pre><code class="language-ts">// before
+provider.getNode();
+provider.getChain();
+provider.getChainId();
+provider.getBaseAssetId();
+provider.getGasConfig();
+provider.validateTransaction();
+</code></pre>
+<pre><code class="language-ts">// after
+await provider.getNode();
+await provider.getChain();
+await provider.getChainId();
+await provider.getBaseAssetId();
+await provider.getGasConfig();
+await provider.validateTransaction();
+</code></pre>
+<h4 id="3-transferparams-and-contracttransferparams"><a class="header" href="#3-transferparams-and-contracttransferparams">3. <code>TransferParams</code> and <code>ContractTransferParams</code></a></h4>
+<ul>
+<li>Property <code>assetId</code> is now required by <a href="https://github.com/FuelLabs/fuels-ts/blob/5d96eb6748e4210029bcbca0490172de81487e05/packages/account/src/account.ts#L56-L60"><code>TransferParams</code></a> and <a href="https://github.com/FuelLabs/fuels-ts/blob/5d96eb6748e4210029bcbca0490172de81487e05/packages/account/src/account.ts#L62-L66"><code>ContractTransferParams</code></a></li>
+</ul>
+<pre><code class="language-diff">export type TransferParams = {
+  destination: string | AbstractAddress;
+  amount: BigNumberish;
+-  assetId?: BytesLike;
++  assetId: BytesLike;
+};
+
+export type ContractTransferParams = {
+  contractId: string | AbstractAddress;
+  amount: BigNumberish;
+-  assetId?: BytesLike;
++  assetId: BytesLike;
+};
+</code></pre>
+<h4 id="4-transaction-response"><a class="header" href="#4-transaction-response">4. Transaction Response</a></h4>
+<ul>
+<li>The constructor now requires a <code>chainId</code></li>
+</ul>
+<pre><code class="language-ts">// before
+new TransactionResponse('0x..', provider);
+</code></pre>
+<pre><code class="language-ts">// after
+new TransactionResponse('0x..', provider, chainId);
+</code></pre>
+<h3 id="autocost-for-transaction-estimation-and-funding---3539"><a class="header" href="#autocost-for-transaction-estimation-and-funding---3539"><code>autoCost</code> for transaction estimation and funding - <a href="https://github.com/FuelLabs/fuels-ts/pull/3539">#3539</a></a></h3>
+<p>To be brought inline with <code>autoCost</code>, funding a contract and script call has been migrated from <code>fundWithRequiredCoins</code> to <code>autoCost</code>:</p>
+<pre><code class="language-ts">// before
+const request: ScriptTransactionRequest = contract.functions.add(1).fundWithRequiredCoins();
+</code></pre>
+<pre><code class="language-ts">// after
+const request: ScriptTransactionRequest = contract.functions.add(1).autoCost();
+</code></pre>
+<h3 id="remove-redundant-gas-price-call-for-tx-summary---3559"><a class="header" href="#remove-redundant-gas-price-call-for-tx-summary---3559">Remove redundant gas price call for tx summary - <a href="https://github.com/FuelLabs/fuels-ts/pull/3559">#3559</a></a></h3>
+<ul>
+<li><code>calculateTXFeeForSummary</code> and subsequently the <code>CalculateTXFeeForSummaryParams</code> no longer accept a <code>totalFee</code> property. If you have the <code>totalFee</code>, then there is no need to call the <code>calculateTxFeeForSummary()</code> function.</li>
+</ul>
+<pre><code class="language-ts">// before
+const totalFee = bn(..):
+calculateTXFeeForSummary({ ..., totalFee } as CalculateTXFeeForSummaryParams);
+</code></pre>
+<pre><code class="language-ts">// after
+calculateTXFeeForSummary({ ... } as CalculateTXFeeForSummaryParams);
+</code></pre>
+<h3 id="prevent-implicit-asset-burn---3540"><a class="header" href="#prevent-implicit-asset-burn---3540">Prevent implicit asset burn - <a href="https://github.com/FuelLabs/fuels-ts/pull/3540">#3540</a></a></h3>
+<pre><code class="language-ts">// before
+const transactionRequest = new ScriptTransactionRequest();
+transactionRequest.inputs.push({ ... });
+
+// since outputs weren't added, assets would be burned
+await sender.sendTransaction(transactionRequest);
+</code></pre>
+<pre><code class="language-ts">// after
+const transactionRequest = new ScriptTransactionRequest();
+transactionRequest.inputs.push({ ... });
+
+// now, an error will be thrown unless `enableAssetBurn`is true,
+// in which case, assets can still be burned
+await sender.sendTransaction(transactionRequest, {
+  enableAssetBurn: true,
+});
+</code></pre>
+<h3 id="remove-unused-operations---3553"><a class="header" href="#remove-unused-operations---3553">Remove unused operations - <a href="https://github.com/FuelLabs/fuels-ts/pull/3553">#3553</a></a></h3>
+<p>The following operations have been removed from the <code>OperationName</code> enum, as they were never used to assemble operations:</p>
+<ul>
+<li><code>OperationName.mint</code></li>
+<li><code>OperationName.predicatecall</code></li>
+<li><code>OperationName.script</code></li>
+<li><code>OperationName.sent</code></li>
+</ul>
+<h3 id="remove-receipts-deprecated-properties---3552"><a class="header" href="#remove-receipts-deprecated-properties---3552">Remove receipts deprecated properties - <a href="https://github.com/FuelLabs/fuels-ts/pull/3552">#3552</a></a></h3>
+<p>All receipts deprecated properties were removed:</p>
+<pre><code class="language-ts">// before
+ReceiptCall.from
+
+ReceiptLog.val0
+ReceiptLog.val1
+ReceiptLog.val2
+ReceiptLog.val3
+
+ReceiptLogData.val0
+ReceiptLogData.val1
+
+ReceiptTransfer.from
+
+ReceiptTransferOut.from
+</code></pre>
+<pre><code class="language-ts">// after
+ReceiptCall.id
+
+ReceiptLog.ra
+ReceiptLog.rb
+ReceiptLog.rc
+ReceiptLog.rd
+
+ReceiptLogData.ra
+ReceiptLogData.rb
+
+ReceiptTransfer.id
+
+ReceiptTransferOut.id
+</code></pre>
+<h3 id="remove-receipt-coders---3551"><a class="header" href="#remove-receipt-coders---3551">Remove receipt coders - <a href="https://github.com/FuelLabs/fuels-ts/pull/3551">#3551</a></a></h3>
+<p>All previously deprecated receipt coders have been removed. These classes were barely used aside from a few internal helpers, which were converted to utility functions.</p>
+<pre><code class="language-ts">// before
+const messageId = ReceiptMessageOutCoder.getMessageId({
+  sender,
+  recipient,
+  nonce,
+  amount,
+  data,
+});
+
+const assetId = ReceiptMintCoder.getAssetId(contractId, subId);
+
+const assetId = ReceiptBurnCoder.getAssetId(contractId, subId);
+</code></pre>
+<pre><code class="language-ts">// after
+import { getMessageId, getAssetId } from 'fuels'
+
+const messageId = getMessageId({
+  sender,
+  recipient,
+  nonce,
+  amount,
+  data,
+});
+
+const assetId = getAssetId(contractId, subId);
+</code></pre>
+<h3 id="remove-deprecated-submitandawait-operation---3548"><a class="header" href="#remove-deprecated-submitandawait-operation---3548">Remove deprecated <code>submitAndAwait</code> operation - <a href="https://github.com/FuelLabs/fuels-ts/pull/3548">#3548</a></a></h3>
+<ul>
+<li><code>submitAndAwait</code> operation was removed</li>
+</ul>
+<p>After being deprecated since #3101, we have removed this operation altogether. Please use the <code>submitAndAwaitStatus</code> method instead which gives the same results as <code>submitAndAwait</code>. If you are interested in the deprecation/removal reasons, please refer to https://github.com/FuelLabs/fuel-core/issues/2108.</p>
+<pre><code class="language-ts">// before
+const response = await provider.operations.submitAndAwait(txRequest);
+</code></pre>
+<pre><code class="language-ts">// after
+const response = await provider.operations.submitAndAwaitStatus(txRequest);
+</code></pre>
+<h3 id="remove-bech32-address---3493"><a class="header" href="#remove-bech32-address---3493">Remove Bech32 address - <a href="https://github.com/FuelLabs/fuels-ts/pull/3493">#3493</a></a></h3>
+<ul>
+<li>We no longer support Bech32 addresses</li>
+</ul>
+<pre><code class="language-ts">// before
+import { Address, Bech32Address } from "fuels";
+
+const bech32Address: Bech32Address = "fuel1234";
+const address = new Address(bech32Address);
+</code></pre>
+<pre><code class="language-ts">// after
+import { Address, B256Address } from "fuels";
+
+const b256Address: B256Address = "0x1234";
+const address = new Address(b256Address);
+</code></pre>
+<ul>
+<li>
+<p>Removed <code>INVALID_BECH32_ADDRESS</code> error code.</p>
+</li>
+<li>
+<p>Removed associated Bech32 helper functions.</p>
+<ul>
+<li><code>normalizeBech32</code></li>
+<li><code>isBech32</code></li>
+<li><code>toB256</code></li>
+<li><code>getBytesFromBech32</code></li>
+<li><code>toBech32</code></li>
+<li><code>clearFirst12BytesFromB256</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="redistributed-the-fuel-tsinterfaces-package---3492"><a class="header" href="#redistributed-the-fuel-tsinterfaces-package---3492">Redistributed the <code>@fuel-ts/interfaces</code> package - <a href="https://github.com/FuelLabs/fuels-ts/pull/3492">#3492</a></a></h3>
+<ul>
+<li>Removed the <code>AbstractAddress</code> class; use the <code>Address</code> class instead.</li>
+</ul>
+<pre><code class="language-ts">// before
+import { AbstractAddress } from 'fuels';
+</code></pre>
+<pre><code class="language-ts">// after
+import { Address } from 'fuels';
+</code></pre>
+<ul>
+<li>Removed the <code>@fuel-ts/interfaces</code> package; use the <code>fuels</code> package instead.</li>
+</ul>
+<pre><code class="language-ts">// before
+import { BytesLike } from '@fuel-ts/interfaces'
+</code></pre>
+<pre><code class="language-ts">// after
+import { BytesLike } from 'fuels'
+</code></pre>
+<h3 id="optimizing-frontend-apps---3573"><a class="header" href="#optimizing-frontend-apps---3573">Optimizing frontend apps - <a href="https://github.com/FuelLabs/fuels-ts/pull/3573">#3573</a></a></h3>
+<ul>
+<li><code>ScriptTransactionRequest.autoCost()</code> has been renamed to <code>ScriptTransactionRequest.estimateAndFund()</code>, initially introduced by #3535</li>
+</ul>
+<pre><code class="language-ts">// before
+await request.autoCost(wallet);
+</code></pre>
+<pre><code class="language-ts">// after
+await request.estimateAndFund(wallet);
+</code></pre>
+<ul>
+<li><code>BaseInvocationScope.autoCost()</code> has been renamed back to <code>BaseInvocationScope.fundWithRequiredCoins()</code>, initially introduced by #3535</li>
+</ul>
+<pre><code class="language-ts">// before
+const request = await contract.functions.increment().autoCost();
+</code></pre>
+<pre><code class="language-ts">// after
+const request = await contract.functions.increment().fundWithRequiredCoins();
+</code></pre>
+<h2 id="november-15-2024"><a class="header" href="#november-15-2024">November 15, 2024</a></h2>
+<p><a href="https://github.com/FuelLabs/fuels-ts/releases/tag/v0.97.0">Release v0.97.0</a></p>
+<h3 id="ondeploy-fuels-config-supports-all-sway-program-types---3383"><a class="header" href="#ondeploy-fuels-config-supports-all-sway-program-types---3383"><code>onDeploy</code> fuels config supports all Sway program types - <a href="https://github.com/FuelLabs/fuels-ts/pull/3383">#3383</a></a></h3>
+<ul>
+<li>Changed the outputted data from the <code>onDeploy</code> callback method for the <code>fuels.config.ts</code>. Instead of just emitting the deployed contracts (as an array), it will now emit an object with <code>contracts</code>, <code>predicates</code> and <code>scripts</code>.</li>
+</ul>
+<pre><code class="language-ts">// Before (fuels.config.ts)
+import { createConfig, FuelsConfig, DeployedContract } from 'fuels';
+
+export default createConfig({
+  output: 'dir/out',
+  onDeploy: (config: FuelsConfig, deployedContracts: DeployedContract[]) =&gt; {
+    console.log('contracts', deployedContracts);
+  }
+});
+</code></pre>
+<pre><code class="language-ts">// After (fuels.config.ts)
+import { createConfig, FuelsConfig, DeployedData } from 'fuels';
+
+export default createConfig({
+  output: 'dir/out',
+  onDeploy: (config: FuelsConfig, deployed: DeployedData[]) =&gt; {
+    console.log('contracts', deployed.contracts);
+    console.log('predicates', deployed.predicates);
+    console.log('scripts', deployed.scripts);
+  }
+});
+</code></pre>
+<h3 id="remove-unnecessary-nonce-from-message-gql-queries---3298"><a class="header" href="#remove-unnecessary-nonce-from-message-gql-queries---3298">Remove unnecessary nonce from message gql queries - <a href="https://github.com/FuelLabs/fuels-ts/pull/3298">#3298</a></a></h3>
+<ul>
+<li>Removed the <code>nonce</code> property from <code>Provider.operations.getMessageByNonce()</code>. This can still be retrieved by <code>Provider.getMessageByNonce()</code>.</li>
+</ul>
+<h3 id="refactor-predicate-and-script-deployment---3389"><a class="header" href="#refactor-predicate-and-script-deployment---3389">Refactor predicate and script deployment - <a href="https://github.com/FuelLabs/fuels-ts/pull/3389">#3389</a></a></h3>
+<p><code>ContractFactory.deployAsBlobTxForScript</code> has been removed in favor of <code>Predicate.deploy</code> and <code>Script.deploy</code>:</p>
+<pre><code class="language-ts">// before
+const factory = new ContractFactory(scriptBytecode, scriptAbi, wallet);
+const { waitForResult } = await factory.deployAsBlobTxForScript();
+const { loaderBytecode, configurableOffsetDiff } = await waitForResult();
+
+// after
+const script = new Script(scriptBytecode, scriptAbi, wallet);
+const { blobId, waitForResult } = await script.deploy(deployerWallet);
+const loaderScript = await waitForResult();
+
+const predicate = new Predicate({ bytecode, abi, provider });
+const { blobId, waitForResult } = await predicate.deploy(deployerWallet);
+const loaderPredicate = await waitForResult();
+</code></pre>
+<h3 id="mandate-abi-in-predicate-constructor---3387"><a class="header" href="#mandate-abi-in-predicate-constructor---3387">Mandate <code>abi</code> in <code>Predicate</code> constructor - <a href="https://github.com/FuelLabs/fuels-ts/pull/3387">#3387</a></a></h3>
+<ul>
+<li>Instantiating a <code>Predicate</code> now requires providing its <code>abi</code>. If you want to use the <code>Predicate</code> as an <code>Account</code>, please instantiate it via the <code>Account</code> class</li>
+</ul>
+<pre><code class="language-ts">// before
+const predicate = new Predicate({ provider, bytecode }); // worked even though abi is missing
+
+// after
+const predicate = new Predicate({ abi, provider, bytecode }); // abi is now mandatory
+
+// predicate as account
+const account = new Account(predicateAddress, provider);
+</code></pre>
+<h3 id="optimize-gettransactions-query---3336"><a class="header" href="#optimize-gettransactions-query---3336">Optimize <code>getTransactions</code> query - <a href="https://github.com/FuelLabs/fuels-ts/pull/3336">#3336</a></a></h3>
+<ul>
+<li>The response format for <code>Provider.getTransactions</code> remains the same. However, the response format for the query <code>Provider.operations.getTransactions</code> has been modified.</li>
+</ul>
+<pre><code class="language-graphql">// before
+query getTransactions {
+  id
+  rawPayload
+  status {
+    ...
+  }
+}
+</code></pre>
+<pre><code class="language-graphql">// after
+query getTransactions {
+  rawPayload
+}
+</code></pre>
+<h3 id="limit-tx-pagination-number-for-gettransactionssummaries---3400"><a class="header" href="#limit-tx-pagination-number-for-gettransactionssummaries---3400">Limit TX pagination number for <code>getTransactionsSummaries</code> - <a href="https://github.com/FuelLabs/fuels-ts/pull/3400">#3400</a></a></h3>
+<ul>
+<li>The pagination number for <code>getTransactionsSummaries</code> is limited to <code>60</code> now</li>
+</ul>
+<pre><code class="language-ts">// before
+const { transactions } = await getTransactionsSummaries({
+  provider,
+  filters: {
+    owner: account.address.toB256(),
+    first: 200,
+  },
+});
+</code></pre>
+<pre><code class="language-ts">// after
+const { transactions } = await getTransactionsSummaries({
+  provider,
+  filters: {
+    owner: account.address.toB256(),
+    first: 60, // Limit is 60 now. A higher value will result in an error
+  },
+});
+</code></pre>
+<h3 id="remove-blockid-in-transaction-list-responses---3379"><a class="header" href="#remove-blockid-in-transaction-list-responses---3379">Remove <code>blockId</code> in transaction list responses - <a href="https://github.com/FuelLabs/fuels-ts/pull/3379">#3379</a></a></h3>
+<ul>
+<li>The <code>blockId</code> property has been removed from the following GraphQL queries used to list past transactions:</li>
+</ul>
+<pre><code class="language-ts">const { transactions } = await getTransactionsSummaries({ ... });
+
+const { transactionsByOwner } = await provider.operations.getTransactionsByOwner({ ... });
+</code></pre>
+<p>If the <code>blockId</code> is required for a given transaction, it needs to be queried separately with <code>getTransactionSummary</code> helper:</p>
+<pre><code class="language-ts">import { getTransactionSummary } from 'fuels';
+
+const transaction = await getTransactionSummary({
+  id,
+  provider,
+});
+</code></pre>
+<p><em>Note: The <code>blockId</code> is still available in the result for a submitted transaction.</em></p>
+<h3 id="optimize-coin-gql-queries---3301"><a class="header" href="#optimize-coin-gql-queries---3301">Optimize coin gql queries - <a href="https://github.com/FuelLabs/fuels-ts/pull/3301">#3301</a></a></h3>
+<ul>
+<li>
+<p>The <code>Provider.operations.getCoins()</code> and  <code>Provider.operations.getCoinsToSpend</code> function no longer return the owner. These methods shouldn't be called directly but are used internally to formulate responses from the SDK.</p>
+</li>
+<li>
+<p>Removed the property <code>owner</code> from the <code>Provider.operations.getCoinsToSpend()</code> function. Suggest to use the owner from the input parameters.</p>
+</li>
+</ul>
+<h2 id="october-13-2024"><a class="header" href="#october-13-2024">October 13, 2024</a></h2>
+<p><a href="https://github.com/FuelLabs/fuels-ts/releases/tag/v0.96.0">Release v0.96.0</a></p>
+<h3 id="checksum-method-to-remove-0x-before-hashing---3313"><a class="header" href="#checksum-method-to-remove-0x-before-hashing---3313">Checksum method to remove <code>0x</code> before hashing - <a href="https://github.com/FuelLabs/fuels-ts/pull/3313">#3313</a></a></h3>
+<p>We fixed the checksum utilities:</p>
+<ul>
+<li><code>Address.toChecksum()</code></li>
+<li><code>Address.isChecksumValid()</code></li>
+</ul>
+<p>Now, we correctly remove the leading <code>0x</code> before hashing the address.</p>
+<p>Because of this, previous values were invalid, and the update is required.</p>
+<h2 id="october-10-2024"><a class="header" href="#october-10-2024">October 10, 2024</a></h2>
+<p><a href="https://github.com/FuelLabs/fuels-ts/releases/tag/v0.95.0">Release v0.95.0</a></p>
+<h3 id="bump-transaction-pagination-limit-to-60---3306"><a class="header" href="#bump-transaction-pagination-limit-to-60---3306">Bump transaction pagination limit to 60 - <a href="https://github.com/FuelLabs/fuels-ts/pull/3306">#3306</a></a></h3>
+<ul>
+<li>A limit was added of 60 transactions to the <code>provider.getTransactions()</code> method.</li>
+</ul>
+<h3 id="made-address-tostring-and-valueof-returns-checksum---3310"><a class="header" href="#made-address-tostring-and-valueof-returns-checksum---3310">Made Address <code>toString</code> and <code>valueOf</code> returns checksum - <a href="https://github.com/FuelLabs/fuels-ts/pull/3310">#3310</a></a></h3>
+<p>The return of both <code>Address.toString()</code> and <code>Address.valueOf</code> was modified to return the address checksum instead of the Bech32 string</p>
+<pre><code class="language-ts">// before
+const address = new Address('fuel1elnmzsav56dqnp95sx4e2pckq36cvae9ser44m5zlvgtwxw49fmqd7e42e');
+
+address.toString()
+// fuel1elnmzsav56dqnp95sx4e2pckq36cvae9ser44m5zlvgtwxw49fmqd7e42e
+
+address.valueOf()
+// fuel1elnmzsav56dqnp95sx4e2pckq36cvae9ser44m5zlvgtwxw49fmqd7e42e
+</code></pre>
+<pre><code class="language-ts">// after
+const address = new Address('fuel1elnmzsav56dqnp95sx4e2pckq36cvae9ser44m5zlvgtwxw49fmqd7e42e');
+
+address.toString()
+// 0xEf86aFa9696Cf0dc6385e2C407A6e159A1103cEfB7E2Ae0636FB33d3cb2A9E4A
+
+address.valueOf()
+// 0xEf86aFa9696Cf0dc6385e2C407A6e159A1103cEfB7E2Ae0636FB33d3cb2A9E4A
+</code></pre>
+<h3 id="slim-down-chaininfofragment-and-gascostsfragment---3286"><a class="header" href="#slim-down-chaininfofragment-and-gascostsfragment---3286">Slim down <code>chainInfoFragment</code> and <code>GasCostsFragment</code> - <a href="https://github.com/FuelLabs/fuels-ts/pull/3286">#3286</a></a></h3>
+<ul>
+<li><code>latestBlock</code> is no longer part of the <code>ChainInfo</code> return of <code>provider.getChain()</code>. You can fetch it via <code>provider.getBlock('latest')</code>.</li>
+<li><code>ChainInfo['consensusParameters']['gasCosts']</code> has been slimmed down to only contain data necessary for the operation of the SDK. Up until now, the SDK was fetching more than it needed. If this change affects you, you will have to create a custom graphql query for <code>gasCosts</code> for the additional data you need.</li>
+</ul>
+<h3 id="optimize-balance-queries---3296"><a class="header" href="#optimize-balance-queries---3296">Optimize balance queries - <a href="https://github.com/FuelLabs/fuels-ts/pull/3296">#3296</a></a></h3>
+<ul>
+<li>Removed the <code>owner</code> and <code>assetId</code> properties from the response of <code>Provider.operations.getBalance()</code>. These properties are also required arguments to execute the function so are redundant in the response. Should you require these values, you should take them from the values that you passed to the function.</li>
+<li>Removed the <code>owner</code> property from the response of <code>Provider.operations.getBalances()</code>. This property is a required argument to execute the function so is redundant in the response. Should you require this value, you should take it from the value that you passed to the function.</li>
+</ul>
+<h2 id="august-30-2024"><a class="header" href="#august-30-2024">August 30, 2024</a></h2>
+<p><a href="https://github.com/FuelLabs/fuels-ts/releases/tag/v0.94.0">Release v0.94.0</a></p>
+<h3 id="consider-message-on-resources-cache---2872"><a class="header" href="#consider-message-on-resources-cache---2872">Consider message on resources cache - <a href="https://github.com/FuelLabs/fuels-ts/pull/2872">#2872</a></a></h3>
+<p>The provider option flag <code>cacheUtxo</code> was renamed to <code>resourceCacheTTL</code></p>
+<pre><code class="language-ts">// before
+const provider = await Provider.create(FUEL_NETWORK_URL, {
+  cacheUtxo: 5000,
+});
+
+
+using launched = await launchTestNode({
+  providerOptions: {
+    cacheUtxo: 5000,
+  },
+});
+</code></pre>
+<pre><code class="language-ts">// after
+const provider = await Provider.create(FUEL_NETWORK_URL, {
+  resourceCacheTTL: 5000,
+});
+
+using launched = await launchTestNode({
+  providerOptions: {
+    resourceCacheTTL: 5000,
+  },
+});
+</code></pre>
+<h3 id="prettify-typegen-api---2824"><a class="header" href="#prettify-typegen-api---2824">Prettify <code>typegen</code> api - <a href="https://github.com/FuelLabs/fuels-ts/pull/2824">#2824</a></a></h3>
+<h3 id="predicate-class"><a class="header" href="#predicate-class"><code>Predicate</code> class</a></h3>
+<ul>
+<li><code>Predicate</code> class constructor parameters renamed: <code>inputData</code> &gt; <code>data</code></li>
+</ul>
+<pre><code class="language-ts">// before
+import { Predicate } from 'fuels';
+
+const predicate = new Predicate({
+  ...unchangedParameters,
+  inputData,
+});
+</code></pre>
+<pre><code class="language-ts">// after
+import { Predicate } from 'fuels';
+
+const predicate = new Predicate({
+  ...unchangedParameters,
+  data,
+});
+</code></pre>
+<ul>
+<li>Typegen extended/generated <code>Predicate</code> now accepts a single parameter for initialization</li>
+</ul>
+<pre><code class="language-ts">// before
+import { TestPredicateAbi__factory } from './typegend';
+
+TestPredicateAbi__factory.createInstance(provider, data, configurableConstants);
+</code></pre>
+<pre><code class="language-ts">// after
+import { TestPredicate } from './typegen';
+
+new TestPredicate({
+  provider,
+  data,
+  configurableConstants
+});
+</code></pre>
+<h3 id="launchtestnode-utility"><a class="header" href="#launchtestnode-utility"><code>launchTestNode</code> utility</a></h3>
+<ul>
+<li>Renamed <code>contractsConfigs[].deployer</code> to  <code>contractsConfigs[].factory</code></li>
+<li>Removed <code>contractsConfigs[].bytecode</code> and <code>.hex.ts</code> file</li>
+</ul>
+<p>The bytecode is now saved within the factory class, so you don't have to deal with it.</p>
+<pre><code class="language-ts">// before
+import { TokenAbi__factory } from './typegend';
+import TokenAbiHex from './typegend/contracts/TokenAbi.hex';
+
+using launched = await launchTestNode({
+  contractsConfigs: [{
+    deployer: TokenAbi__factory,
+    bytecode: TokenAbiHex
+  }],
+});
+</code></pre>
+<pre><code class="language-ts">// after
+import { TokenFactory } from './typegend';
+
+using launched = await launchTestNode({
+  contractsConfigs: [{
+    factory: TokenFactory,
+  }],
+})
+</code></pre>
+<h3 id="renamed-method-deploycontract-to-deploy"><a class="header" href="#renamed-method-deploycontract-to-deploy">Renamed method <code>deployContract</code> to <code>deploy</code></a></h3>
+<p>Removed the redundant suffix on the <code>ContractFactory</code> class method name.</p>
+<pre><code class="language-ts">// before
+import { ContractFactory } from 'fuels';
+
+const factory = new ContractFactory(wallet);
+
+factory.deployContract();
+</code></pre>
+<pre><code class="language-ts">// after
+import { ContractFactory } from 'fuels';
+
+const factory = new ContractFactory(wallet);
+
+factory.deploy();
+</code></pre>
+<h3 id="typegen-contract-template"><a class="header" href="#typegen-contract-template">Typegen <code>Contract</code> template</a></h3>
+<ul>
+<li>Removed <code>Abi__factory</code> suffix from class names</li>
+<li>The file <code>&lt;name&gt;.hex</code> was removed (access it via <code>&lt;Name&gt;.bytecode</code>)</li>
+<li>The files <code>&lt;name&gt;__factory.ts</code> and <code>&lt;name&gt;.d.dts</code> were merged into <code>&lt;name&gt;.ts</code></li>
+<li>The class <code>&lt;Name&gt;</code> and the interface <code>&lt;Name&gt;Abi</code> are now just <code>&lt;Name&gt;</code></li>
+<li>Method <code>&lt;Name&gt;Factory.deployContract()</code> renamed to <code>&lt;Name&gt;Factory.deploy()</code></li>
+<li>You may need to remove the previously generated <code>&lt;typegenDir&gt;/contracts/factories</code> directory</li>
+</ul>
+<pre><code class="language-ts">// before
+import { TestContractAbi, TestContract__factory } from './typegen'
+import testContractBytecode from './typegen/contracts/TestContract.hex'
+
+const instance = await TestContract__factory.connect(id, wallet);
+
+const deploy = await TestContract__factory.deployContract(testContractBytecode, wallet);
+const { contract } = await deploy.waitForResult();
+</code></pre>
+<pre><code class="language-ts">// after
+import { TestContract, TestContractFactory } from './typegen'
+
+const instance = new TestContract(id, wallet);
+
+const deploy = await TestContractFactory.deploy(wallet);
+const { contract } = await deploy.waitForResult();
+</code></pre>
+<h3 id="typegen-predicate-template"><a class="header" href="#typegen-predicate-template">Typegen <code>Predicate</code> template</a></h3>
+<ul>
+<li>Removed <code>Abi__factory</code> suffix from class names</li>
+<li>Started accepting a single parameter object in constructor</li>
+<li>You may need to remove the previously generated <code>&lt;typegenDir&gt;/predicates/factories</code> directory</li>
+</ul>
+<pre><code class="language-ts">// before
+import { TestPredicateAbi__factory } from './typegen'
+
+const predicate = TestPredicateAbi__factory.createInstance(provider);
+</code></pre>
+<pre><code class="language-ts">// after
+import { TestPredicate } from './typegen'
+
+const predicate = new TestPredicate({ provider });
+</code></pre>
+<h3 id="typegen-script-template"><a class="header" href="#typegen-script-template">Typegen <code>Script</code> template</a></h3>
+<ul>
+<li>Removed <code>Abi__factory</code> suffix from class names</li>
+<li>You may need to remove the previously generated <code>&lt;typegenDir&gt;/scripts/factories</code> directory</li>
+</ul>
+<pre><code class="language-ts">// before
+import { TestPredicateAbi__factory } from './typegen'
+
+const script = TestScriptAbi__factory.createInstance(wallet);
+</code></pre>
+<pre><code class="language-ts">// after
+import { TestPredicate } from './typegen'
+
+const script = new TestScript(wallet);
+</code></pre>
+<h3 id="non-blocking-blob-deployment---2929"><a class="header" href="#non-blocking-blob-deployment---2929">Non-blocking blob deployment - <a href="https://github.com/FuelLabs/fuels-ts/pull/2929">#2929</a></a></h3>
+<p>The transaction ID from a contract deployment is now returned as a promise.</p>
+<pre><code class="language-ts">// before
+import { ContractFactory } from 'fuels';
+
+const factory = new ContractFactory(bytecode, abi, wallet);
+const { waitForResult, contractId, transactionId } = await factory.deploy();
+console.log(transactionId); // 0x123....
+</code></pre>
+<pre><code class="language-ts">// after
+import { ContractFactory } from 'fuels';
+
+const factory = new ContractFactory(bytecode, abi, wallet);
+const { waitForResult, contractId, waitForTransactionId } = await factory.deploy();
+const transactionId = await waitForTransactionId();
+console.log(transactionId); // 0x123....
+</code></pre>
+<h3 id="improve--and-optiont-type-handling---2777"><a class="header" href="#improve--and-optiont-type-handling---2777">Improve <code>()</code> and <code>Option&lt;T&gt;</code> type handling - <a href="https://github.com/FuelLabs/fuels-ts/pull/2777">#2777</a></a></h3>
+<ul>
+<li><code>()</code> and <code>Option&lt;T&gt;</code> Sway types are now either required or optional, dependent on where the argument appears in the function arguments.</li>
+</ul>
+<p>Given these Sway functions:</p>
+<pre><code class="language-sway">fn type_then_void_then_type(x: u8, y: (), z: u8) -&gt; ()
+fn type_then_void_then_void(x: u8, y: (), z: ()) -&gt; ()
+
+fn type_then_option_then_type(x: u8, y: Option&lt;u8&gt;, z: u8) -&gt; ()
+fn type_then_option_then_option(x: u8, y: Option&lt;u8&gt;, z: Option&lt;u8&gt;) -&gt; ()
+</code></pre>
+<p>This is what changes:</p>
+<pre><code class="language-ts">// before
+contract.functions.type_then_void_then_type(42, 43)
+contract.functions.type_then_void_then_void(42) // Unchanged
+
+contract.functions.type_then_option_then_type(42, undefined, 43)
+contract.functions.type_then_option_then_option(42, undefined, undefined)
+</code></pre>
+<pre><code class="language-ts">// after
+contract.functions.type_then_void_then_type(42, undefined, 43)
+contract.functions.type_then_void_then_void(42) // Unchanged
+
+contract.functions.type_then_option_then_type(42, undefined, 43)
+contract.functions.type_then_option_then_option(42)
+</code></pre>
+<h3 id="fuel-core0321-and-large-contract-deployments---2827"><a class="header" href="#fuel-core0321-and-large-contract-deployments---2827"><code>fuel-core@0.32.1</code> and large contract deployments - <a href="https://github.com/FuelLabs/fuels-ts/pull/2827">#2827</a></a></h3>
+<p><code>MAX_CONTRACT_SIZE</code> is no longer exported, it should now be fetched from the chain.</p>
+<pre><code class="language-ts">// before
+import { MAX_CONTRACT_SIZE } from 'fuels';
+</code></pre>
+<pre><code class="language-ts">// after
+import { Provider, FUEL_NETWORK_URL } from 'fuels';
+
+const provider = await Provider.create(FUEL_NETWORK_URL);
+const { consensusParameters } = provider.getChain();
+const maxContractSize = consensusParameters.contractParameters.contractMaxSize.toNumber();
+</code></pre>
+<h3 id="deprecate-fuel_network_url-and-local_network_url--2915"><a class="header" href="#deprecate-fuel_network_url-and-local_network_url--2915">Deprecate <code>FUEL_NETWORK_URL</code> and <code>LOCAL_NETWORK_URL</code>- <a href="https://github.com/FuelLabs/fuels-ts/pull/2915">#2915</a></a></h3>
+<p>Removed <code>FUEL_NETWORK_URL</code> constant.</p>
+<pre><code class="language-ts">// before
+import { FUEL_NETWORK_URL } from 'fuels';
+
+const provider = await Provider.create(FUEL_NETWORK_URL);
+</code></pre>
+<pre><code class="language-ts">// after
+const provider = await Provider.create('https://127.0.0.1:4000/v1/graphql');
+</code></pre>
+<p>Removed <code>LOCAL_NETWORK_URL</code> constant.</p>
+<pre><code class="language-ts">// before
+import { LOCAL_NETWORK_URL } from 'fuels';
+
+const provider = await Provider.create(LOCAL_NETWORK_URL);
+</code></pre>
+<pre><code class="language-ts">// after
+const provider = await Provider.create('https://127.0.0.1:4000/v1/graphql');
+</code></pre>
+<h3 id="integrate-launchtestnode-in-remaining-packages---2811"><a class="header" href="#integrate-launchtestnode-in-remaining-packages---2811">Integrate <code>launchTestNode</code> in remaining packages - <a href="https://github.com/FuelLabs/fuels-ts/pull/2811">#2811</a></a></h3>
+<p>Removed <code>generateTestWallet</code> and <code>seedTestWallet</code> utilities.</p>
+<pre><code class="language-ts">// before
+import { bn } from "@fuel-ts/math";
+import {
+  seedTestWallet,
+  generateTestWallet,
+} from "@fuel-ts/account/test-utils";
+
+const provider = await Provider.create("http://127.0.0.1:4000/v1/graphql");
+
+// seeding
+const walletA = Wallet.fromPrivateKey("0x...", provider);
+const baseAssetId = provider.getBaseAssetId();
+seedTestWallet(wallet, [{ assetId: baseAssetId, amount: bn(100_000) }]);
+
+// generating
+const walletB = await generateTestWallet(provider, [[1_000, baseAssetId]]);
+</code></pre>
+<pre><code class="language-ts">// after
+import { launchTestNode } from 'fuels/test-utils';
+
+// create two wallets seeded with 100_000 units of the base asset
+using launched = await launchTestNode({
+  walletsConfig: {
+    count: 2,
+    amountPerCoin: 100_000,
+  },
+});
+
+const {
+  wallets: [walletA, walletB]
+} = launched;
+
+const balance = await walletA.getBalance() // 100_000
+</code></pre>
+<p>Removed <code>launchNodeAndGetWallets</code> utility.</p>
+<pre><code class="language-ts">// before
+import { launchNodeAndGetWallets } from 'fuels/test-utils';
+
+const { provider, wallets } = await launchNodeAndGetWallets();
+</code></pre>
+<pre><code class="language-ts">// after
+import { launchTestNode } from 'fuels/test-utils';
+
+using launched = await launchTestNode();
+
+const { provider, wallets } = launched;
+</code></pre>
+<h3 id="renamed-assetid-to-testassetid--2905"><a class="header" href="#renamed-assetid-to-testassetid--2905">Renamed <code>AssetId</code> to <code>TestAssetId</code>- <a href="https://github.com/FuelLabs/fuels-ts/pull/2905">#2905</a></a></h3>
+<p>Renamed testing class <code>AssetId</code> to <code>TestAssetId</code>.</p>
+<pre><code class="language-ts">// before
+import { AssetId } from 'fuels/test-utils';
+
+const [assetA] = AssetId.random();
+</code></pre>
+<pre><code class="language-ts">// after
+import { TestAssetId } from 'fuels/test-utils';
+
+const [assetA] = TestAssetId.random();
+</code></pre>
+<h3 id="adding-abi-transpiler---2856"><a class="header" href="#adding-abi-transpiler---2856">Adding abi transpiler - <a href="https://github.com/FuelLabs/fuels-ts/pull/2856">#2856</a></a></h3>
+<p>New ABI spec</p>
+<p>The SDK now adheres to the new specs introduced via:</p>
+<ul>
+<li>https://github.com/FuelLabs/fuel-specs/pull/596</li>
+<li>https://github.com/FuelLabs/fuel-specs/pull/599</li>
+</ul>
+<p>Check these out to understand all its changes.</p>
+<p>The class <code>AbiCoder</code> is no longer exported, and the way to do encoding and decoding of specific types is now via the <code>Interface.encodeType</code> and <code>Interface.decodeType</code> methods:</p>
+<pre><code class="language-ts">// before
+const abi = yourAbi;
+const functionArg = abi.functions.inputs[0];
+
+const encoded = AbiCoder.encode(abi, functionArg, valueToEncode);
+const decoded = AbiCoder.decode(abi, functionArg, valueToDecode, 0);
+</code></pre>
+<pre><code class="language-ts">// after
+import { Interface } from 'fuels';
+
+const abi = yourAbi;
+const functionArg = abi.functions.inputs[0];
+
+const abiInterface = new Interface(abi);
+
+const encoded = abiInterface.encodeType(functionArg.concreteTypeId, valueToEncode);
+const decoded = abiInterface.decodeType(functionArg.concreteTypeId, valueToDecode);
+</code></pre>
+<p>Previously, you could get a type from the ABI via the <code>Interface.findTypeById</code>. This method has been removed after introducing the new abi specification because the concept of a <em>type</em> has been split into concrete types and metadata types. If you want a specific type, you can get it directly from the ABI.</p>
+<pre><code class="language-ts">// before
+const abiInterface = new Interface(abi);
+
+// internally this method searched the abi types:
+// abi.types.find(t =&gt; t.typeId === id);
+const type = abiInterface.findTypeById(id);
+</code></pre>
+<pre><code class="language-ts">// after
+import { Interface } from 'fuels';
+
+// search the types on the abi directly
+const concreteType = abi.concreteTypes.find(ct =&gt; ct.concreteTypeId === id);
+const metadataType = abiInterface.jsonAbi.metadataTypes.find(mt =&gt; mt.metadataTypeId === id);
+</code></pre>
+<p>The <code>JsonAbiArgument</code> type isn't part of the new ABI spec <em>(<a href="https://github.com/FuelLabs/fuel-specs/pull/596">#596</a>, <a href="https://github.com/FuelLabs/fuel-specs/pull/599">#599</a>)</em> as such so we stopped exporting it. Its closest equivalent now would be a concrete type because it fully defines a type.</p>
+<pre><code class="language-ts">// before
+const arg: JsonAbiArgument = {...};
+</code></pre>
+<pre><code class="language-ts">// after
+import { Interface } from 'fuels';
+
+type ConcreteType = JsonAbi["concreteTypes"][number]
+const arg: ConcreteType = {...};
+</code></pre>
+<h3 id="read-malleable-fields-from-transaction-status-on-subscription---2962"><a class="header" href="#read-malleable-fields-from-transaction-status-on-subscription---2962">Read malleable fields from transaction status on subscription - <a href="https://github.com/FuelLabs/fuels-ts/pull/2962">#2962</a></a></h3>
+<p>Removed <code>TransactionResult.gqlTransaction</code>. You can use the <code>TransactionResult.transaction</code> field instead, which has all the data that <code>TransactionResult.gqlTransaction</code> has but already decoded.</p>
+<pre><code class="language-ts">// before
+const { gqlTransaction } = await new TransactionResponse('your-tx-id').waitForResult();
+</code></pre>
+<pre><code class="language-ts">// after
+const { transaction } = await new TransactionResponse('your-tx-id').waitForResult();
+</code></pre>
+<h3 id="fix-assembly-process-for-account-transfer-operation---2963"><a class="header" href="#fix-assembly-process-for-account-transfer-operation---2963">Fix assembly process for account transfer operation - <a href="https://github.com/FuelLabs/fuels-ts/pull/2963">#2963</a></a></h3>
+<p>The <code>getTransferOperations</code> helper function now requires an additional <code>baseAssetId</code> parameter.</p>
+<pre><code class="language-ts">// before
+const transferOperations = getTransferOperations({ inputs, outputs, receipts })
+</code></pre>
+<pre><code class="language-ts">// after
+const transferOperations = getTransferOperations({ inputs, outputs, receipts, baseAssetId })
+</code></pre>
+<h3 id="wrap-subscriptions-in-promise---2964"><a class="header" href="#wrap-subscriptions-in-promise---2964">Wrap subscriptions in promise - <a href="https://github.com/FuelLabs/fuels-ts/pull/2964">#2964</a></a></h3>
+<pre><code class="language-ts">// before
+const subscription = provider.operations.statusChange({ transactionId });
+for await (const response of subscription) { ... }
+</code></pre>
+<pre><code class="language-ts">// after
+const subscription = await provider.operations.statusChange({ transactionId });
+for await (const response of subscription) { ... }
+</code></pre>
+<h2 id="july-30-2024"><a class="header" href="#july-30-2024">July 30, 2024</a></h2>
+<p><a href="https://github.com/FuelLabs/fuels-ts/releases/tag/v0.93.0">Release v0.93.0</a></p>
+<h3 id="deploy-contract-validation---2796"><a class="header" href="#deploy-contract-validation---2796">Deploy contract validation - <a href="https://github.com/FuelLabs/fuels-ts/pull/2796">#2796</a></a></h3>
+<p><code>ErrorCode.INVALID_TRANSACTION_TYPE</code> was migrated to <code>ErrorCode.UNSUPPORTED_TRANSACTION_TYPE</code>.</p>
+<pre><code class="language-ts">// before
+const code = ErrorCode.INVALID_TRANSACTION_TYPE;
+</code></pre>
+<pre><code class="language-ts">// after
+const code = ErrorCode.UNSUPPORTED_TRANSACTION_TYPE;
+</code></pre>
+<h3 id="remove-awaitexecution-functionality---2820"><a class="header" href="#remove-awaitexecution-functionality---2820">Remove <code>awaitExecution</code> functionality - <a href="https://github.com/FuelLabs/fuels-ts/pull/2820">#2820</a></a></h3>
+<p>It is no longer possible to submit transactions using the <code>awaitExecution</code> flag and wait for the transaction to be processed at submission:</p>
+<pre><code class="language-ts">// before
+const response = await account.sendTransaction(transactionRequest, { awaitExecution: true });
+</code></pre>
+<pre><code class="language-ts">// after
+const submit = await account.sendTransaction(transactionRequest);
+
+const response = await submit.waitForResult();
+</code></pre>
+<h3 id="refactored-the-gettransactioncost-method---2643"><a class="header" href="#refactored-the-gettransactioncost-method---2643">Refactored the <code>getTransactionCost</code> method - <a href="https://github.com/FuelLabs/fuels-ts/pull/2643">#2643</a></a></h3>
+<p>Refactored functionality for <code>Provider.getTransactionCost</code> to <code>Account.getTransactionCost</code> <strong>and</strong> changed estimation parameter from <code>quantitiesToContract</code> to <code>quantities</code>.</p>
+<pre><code class="language-ts">// before
+const provider = Provider.create(...);
+const account = Wallet.generate({ ... }) || new Predicate(...);
+const quantities: Array&lt;CoinQuantityLike&gt; = [
+  { amount: 1000, assetId: provider.getBaseAssetId() }
+];
+
+const cost = provider.getTransactionCost(txRequest, {
+  resourceOwner: account,
+  quantitiesToContract: quantities,
+})
+</code></pre>
+<pre><code class="language-ts">// after
+const provider = Provider.create(...);
+const account = Wallet.generate({ ... }) || new Predicate(...);
+const quantities: Array&lt;CoinQuantityLike&gt; = [
+  { amount: 1000, assetId: provider.getBaseAssetId() }
+];
+
+const cost = account.getTransactionCost(txRequest, { quantities });
+</code></pre>
+<h2 id="july-11-2024"><a class="header" href="#july-11-2024">July 11, 2024</a></h2>
+<p>Release <a href="https://github.com/FuelLabs/fuels-ts/releases/tag/v0.92.0">v0.92.0</a></p>
+<h3 id="implement-non-blocking-contract-call---2692"><a class="header" href="#implement-non-blocking-contract-call---2692">Implement non-blocking contract call - <a href="https://github.com/FuelLabs/fuels-ts/pull/2692">#2692</a></a></h3>
+<p>The <code>call</code> method in the <code>BaseInvocationScope</code> class no longer waits for transaction execution, making it non-blocking. This change affects how transaction responses are handled.</p>
+<pre><code class="language-ts">// before
+const { logs, value, transactionResult } = await contract.functions.xyz().call()
+</code></pre>
+<pre><code class="language-ts">// after
+const { transactionId, waitForResult } = await contract.functions.xyz().call();
+
+const { logs, value, transactionResult } = await waitForResult();
+</code></pre>
+<h3 id="made-deploycontract-a-non-blocking-call---2597"><a class="header" href="#made-deploycontract-a-non-blocking-call---2597">Made <code>deployContract</code> a non-blocking call - <a href="https://github.com/FuelLabs/fuels-ts/pull/2597">#2597</a></a></h3>
+<p>The <code>deployContract</code> method no longer returns the contract instance directly. Instead, it returns an object containing the <code>transactionId</code> , the <code>contractId</code>, and a <code>waitForResult</code> function.</p>
+<pre><code class="language-ts">// before
+const factory = new ContractFactory(contractByteCode, contractAbi, wallet);
+
+const contract = await factory.deployContract();
+
+const { value } = await contract.functions.xyz().call();
+
+// after
+const factory = new ContractFactory(contractByteCode, contractAbi, wallet);
+
+const { waitForResult, transactionId, contractId } = await factory.deployContract();
+
+const { contract, transactionResult } = await waitForResult();
+
+const { value } = await contract.functions.xyz().call();
+</code></pre>
+<h3 id="implement-pagination-for-account-methods---2408"><a class="header" href="#implement-pagination-for-account-methods---2408">Implement pagination for <code>Account</code> methods - <a href="https://github.com/FuelLabs/fuels-ts/pull/2408">#2408</a></a></h3>
+<pre><code class="language-ts">// before
+const coins = await myWallet.getCoins(baseAssetId);
+const messages = await myWallet.getMessages();
+const balances = await myWallet.getBalances();
+const blocks = await provider.getBlocks();
+
+// after
+const { coins, pageInfo } = await myWallet.getCoins(baseAssetId);
+const { messages, pageInfo } = await myWallet.getMessages();
+const { balances } = await myWallet.getBalances();
+const { blocks, pageInfo } = await provider.getBlocks();
+
+/*
+  The `pageInfo` object contains cursor pagination information one
+  can use to fetch subsequent pages selectively and on demand.
+*/
+</code></pre>
+<h3 id="launchnodecleanup-not-killing-node-in-last-test-of-test-group---2718"><a class="header" href="#launchnodecleanup-not-killing-node-in-last-test-of-test-group---2718"><code>launchNode.cleanup</code> not killing node in last test of test group - <a href="https://github.com/FuelLabs/fuels-ts/pull/2718">#2718</a></a></h3>
+<p>The <code>killNode</code> and <code>KillNodeParams</code> functionality has been internalized and the method and interface have been deleted so they're no longer exported.  It's marked as a breaking change for pedantic reasons and there shouldn't really be any affected users given that they kill nodes via <code>cleanup</code> which is unchanged, so no migration notes are necessary.</p>
+<h3 id="remove-invocationresult-from-program-package---2652"><a class="header" href="#remove-invocationresult-from-program-package---2652">Remove <code>InvocationResult</code> from <code>program</code> package - <a href="https://github.com/FuelLabs/fuels-ts/pull/2652">#2652</a></a></h3>
+<p>The classes <code>FunctionInvocationResult</code>, <code>InvocationCallResult</code>, and <code>InvocationResult</code> have been removed. This change will not affect most users as the response for a contract call or script call remains the same; only the type name has changed.</p>
+<pre><code class="language-ts">// before
+const callResult: FunctionInvocationResult = await contract.functions.xyz().call()
+
+const dryRunResult: InvocationCallResult = await contract.functions.xyz().get()
+const dryRunResult: InvocationCallResult = await contract.functions.xyz().dryRun()
+const dryRunResult: InvocationCallResult = await contract.functions.xyz().simulate()
+
+
+// after
+const callResult: FunctionResult = await contract.functions.xyz().call()
+
+const dryRunResult: DryRunResult = await contract.functions.xyz().get()
+const dryRunResult: DryRunResult = await contract.functions.xyz().dryRun()
+const dryRunResult: DryRunResult = await contract.functions.xyz().simulate()
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../migrations-and-disclosures/migrations/rust-sdk.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../migrations-and-disclosures/breaking-changes-archive.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../migrations-and-disclosures/migrations/rust-sdk.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../migrations-and-disclosures/breaking-changes-archive.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

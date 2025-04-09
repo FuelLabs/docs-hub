@@ -1,0 +1,57 @@
+---
+title: Storage
+category: Intro to Sway
+order: 999
+---
+
+
+# Defining The Storage Block
+
+Next, we'll introduce the storage block. This is where you store all persistent state variables in your contract.
+
+Variables declared within a function and not saved in the storage block will be discarded once the function completes its execution. Add the storage block below to your `main.sw` file:
+
+<TestAction
+id="sway-storage"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/sway-store/sway-programs/contract/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
+  comment="storage"
+  commentType="//"
+  lang="sway"
+/>
+
+The first variable we've stored is `item_counter`, a number initialized to 0. This counter can be used to track the total number of items listed.
+
+## StorageMap
+
+A `StorageMap` is a unique type that permits the saving of key-value pairs within a storage block.
+
+To define a storage map, you need to specify the types for both the key and the value. For instance, in the example below, the key type is `u64`, and the value type is an `Item` struct.
+
+<CodeImport
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
+  comment="storage_map"
+  commentType="//"
+  lang="sway"
+/>
+
+Here, we are creating a mapping from the item's ID to the `Item` struct. Using this, we can retrieve information about an item using its ID.
+
+## Options
+
+Here, we are defining the `owner` variable as one that can either be `None` or hold an `Identity`.
+
+<CodeImport
+  file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"
+  comment="storage_option"
+  commentType="//"
+  lang="sway"
+/>
+
+If you want a value to be potentially null or undefined under specific conditions, you can employ the `Option` type. It's an enum that can take on either `Some(value)` or `None`. The keyword `None` indicates the absence of a value, while `Some` signifies the presence of a stored value.

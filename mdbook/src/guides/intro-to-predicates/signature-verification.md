@@ -1,0 +1,44 @@
+
+## Signature Verification
+
+Let's define a helper function called `verify_signatures()` that checks the validity of each signature provided and rejects any that are invalid, ensuring all signatures are unique.
+
+Copy the signature verification helper function in your main.sw below:
+
+<TestAction
+id="sway-function"
+action={{
+  name: 'modifyFile',
+  filepath: 'guides-testing/multisig-predicate/predicate/src/main.sw'
+}}
+/>
+
+<CodeImport
+  file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"
+  comment="signature_verification_parent"
+  commentType="//"
+  lang="sway"
+/>
+
+As mentioned earlier, we will utilize the transaction witnesses and the transaction hash to verify each signature, matching them to the wallets that were previously configured.
+
+1. Parameter `i`: This parameter represents the index of a signer in a predefined list of signers defined in the configurable. It's used to identify which signer's signature the function is currently attempting to verify.
+
+2. Signature Verification Loop: The function then enters a loop, iterating up to three times. This loop represents an attempt to verify the signature against up to three pieces of witness data (signatures) attached to the transaction.
+
+   - Signature Recovery: Inside the loop, for each iteration defined by `j`, it retrieves the current signature (`current_signature`) from the transaction's witness data using `tx_witness_data::<B512>(j)`. It then attempts to recover the address that generated this signature (`current_address`) by using the `ec_recover_address` function, which takes the current signature and the transaction hash as inputs.
+
+   - Address Matching: After recovering the address, the function checks if this address matches the address of the `i`th signer in the `SIGNERS` list. If a match is found, it means the signature from one of the signers has been successfully verified, and the function returns `1`.
+
+  <CodeImport
+    file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"
+    comment="verification_loop"
+    commentType="//"
+    lang="sway"
+  />
+
+{/*markdownlint-disable*/}
+3. Return Value: The function returns `1` if a matching signature is found for the `i`th signer, indicating successful verification. If no matching signature is found after checking up to three signatures, the function returns `0`, indicating that the signature for the `i`th signer could not be verified.
+{/*markdownlint-disable*/}
+
+This allows for flexible signature verification, accommodating scenarios where signatures from the required signers can be presented in any order and ensuring that each signature is uniquely accounted for without allowing duplicates from the same wallet.
