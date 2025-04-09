@@ -7,13 +7,7 @@ The core of our program is the ability to list, sell, and get `items`.
 
 Let's define the Item type as shown below to write into your `main.sw` file:
 
-<TestAction
-id="sway-struct"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/sway-store/sway-programs/contract/src/main.sw'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"

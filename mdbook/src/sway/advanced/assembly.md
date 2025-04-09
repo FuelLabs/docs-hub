@@ -31,7 +31,7 @@ The return register itself is optional. If it is not specified, similar to funct
 An `asm` block can only return a single register. If you really need to return more than one value, you can modify a tuple. Here's an example showing how you can implement this for `(u64, u64)`:
 
 ```sway
-```sway\nscript;
+script;
 
 fn adder(a: u64, b: u64, c: u64) -> (u64, u64) {
     let empty_tuple = (0u64, 0u64);
@@ -49,7 +49,7 @@ fn main() -> bool {
     assert(first == 3);
     assert(second == 5);
     true
-}\n```
+}
 ```
 
 Note that this is contrived example meant to demonstrate the syntax; there's absolutely no need to use assembly to add integers!

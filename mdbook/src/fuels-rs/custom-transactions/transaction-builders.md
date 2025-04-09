@@ -23,7 +23,7 @@ Here is an example outlining some of the features of the transaction builders.
 In this scenario, we have a predicate that holds some bridged asset with ID **bridged_asset_id**. It releases it's locked assets if the transaction sends **ask_amount** of the base asset to the **receiver** address:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{str::FromStr, time::Duration};
 
@@ -357,7 +357,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Our goal is to create a transaction that will use our hot wallet to transfer the **ask_amount** to the **receiver** and then send the unlocked predicate assets to a second wallet that acts as our cold storage.
@@ -365,7 +365,7 @@ Our goal is to create a transaction that will use our hot wallet to transfer the
 Let's start by instantiating a builder. Since we don't plan to deploy a contract, the `ScriptTransactionBuilder` is the appropriate choice:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{str::FromStr, time::Duration};
 
@@ -699,13 +699,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Next, we need to define transaction inputs of the base asset that sum up to **ask_amount**. We also need transaction outputs that will assign those assets to the predicate address and thereby unlock it. The methods `get_asset_inputs_for_amount` and `get_asset_outputs_for_amount` can help with that. We need to specify the asset ID, the target amount, and the target address:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{str::FromStr, time::Duration};
 
@@ -1039,13 +1039,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Let's repeat the same process but this time for transferring the assets held by the predicate to our cold storage:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{str::FromStr, time::Duration};
 
@@ -1379,13 +1379,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 We combine all of the inputs and outputs and set them on the builder:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{str::FromStr, time::Duration};
 
@@ -1719,13 +1719,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 As we have used coins that require a signature, we have to add the signer to the transaction builder with:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{str::FromStr, time::Duration};
 
@@ -2059,7 +2059,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 > **Note** The signature is not created until the transaction is finalized with `build(&provider)`
@@ -2067,7 +2067,7 @@ mod tests {
 We need to do one more thing before we stop thinking about transaction inputs. Executing the transaction also incurs a fee that is paid with the base asset. Our base asset inputs need to be large enough so that the total amount covers the transaction fee and any other operations we are doing. The `ViewOnlyAccount` trait lets us use `adjust_for_fee()` for adjusting the transaction inputs if needed to cover the fee. The second argument to `adjust_for_fee()` is the total amount of the base asset that we expect our transaction to spend regardless of fees. In our case, this is the **ask_amount** we are transferring to the predicate.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{str::FromStr, time::Duration};
 
@@ -2401,7 +2401,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 > **Note** It is recommended to add signers before calling `adjust_for_fee()` as the estimation will include the size of the witnesses.
@@ -2409,7 +2409,7 @@ mod tests {
 We can also define transaction policies. For example, we can limit the gas price by doing the following:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{str::FromStr, time::Duration};
 
@@ -2743,13 +2743,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Our builder needs a signature from the hot wallet to unlock its coins before we call `build()` and submit the resulting transaction through the provider:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{str::FromStr, time::Duration};
 
@@ -3083,13 +3083,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Finally, we verify the transaction succeeded and that the cold storage indeed holds the bridged asset now:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{str::FromStr, time::Duration};
 
@@ -3423,7 +3423,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 ## Building a transaction without signatures
@@ -3431,7 +3431,7 @@ mod tests {
 If you need to build the transaction without signatures, which is useful when estimating transaction costs or simulations, you can change the build strategy used:
 
 ```rust,ignore
-```rust\nuse std::time::Duration;
+use std::time::Duration;
 
 use fuel_tx::{
     consensus_parameters::{ConsensusParametersV1, FeeParametersV1},
@@ -5923,7 +5923,7 @@ async fn loader_storage_works_via_proxy() -> Result<()> {
     assert_eq!(response, 36);
 
     Ok(())
-}\n```
+}
 ```
 
 > **Note** In contrast to adding signers to a transaction builder, when signing a built transaction, you must ensure that the order of signatures matches the order of signed inputs. Multiple signed inputs with the same owner will have the same witness index.

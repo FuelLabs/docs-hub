@@ -9,7 +9,7 @@ In order to use the Asset Library, Sway Libs and [Sway Standards](https://docs.f
 To import the Asset Library Base Functionality and [SRC-20](https://docs.fuel.network/docs/sway-standards/src-20-native-asset/) Standard to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{hash::*, storage::storage_string::*, string::String};
 
@@ -52,7 +52,7 @@ storage {
     symbol: StorageMap<AssetId, StorageString> = StorageMap {},
     decimals: StorageMap<AssetId, u8> = StorageMap {},
 }
-// ANCHOR_END: src20_storage\n```
+// ANCHOR_END: src20_storage
 ```
 
 ## Integration with the SRC-20 Standard
@@ -60,7 +60,7 @@ storage {
 The [SRC-20](https://docs.fuel.network/docs/sway-standards/src-20-native-asset/) definition states that the following abi implementation is required for any Native Asset on Fuel:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{hash::*, storage::storage_string::*, string::String};
 
@@ -103,7 +103,7 @@ storage {
     symbol: StorageMap<AssetId, StorageString> = StorageMap {},
     decimals: StorageMap<AssetId, u8> = StorageMap {},
 }
-// ANCHOR_END: src20_storage\n```
+// ANCHOR_END: src20_storage
 ```
 
 The Asset Library has the following complimentary functions for each function in the `SRC20` abi:
@@ -117,7 +117,7 @@ The Asset Library has the following complimentary functions for each function in
 The following ABI and functions are also provided to set your [SRC-20](https://docs.fuel.network/docs/sway-standards/src-20-native-asset/) standard storage values:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{hash::*, storage::storage_string::*, string::String};
 
@@ -160,7 +160,7 @@ storage {
     symbol: StorageMap<AssetId, StorageString> = StorageMap {},
     decimals: StorageMap<AssetId, u8> = StorageMap {},
 }
-// ANCHOR_END: src20_storage\n```
+// ANCHOR_END: src20_storage
 ```
 
 - `_set_name()`
@@ -174,7 +174,7 @@ storage {
 Once imported, the Asset Library's base functionality should be available. To use them, be sure to add the storage block below to your contract which enables the [SRC-20](https://docs.fuel.network/docs/sway-standards/src-20-native-asset/) standard.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{hash::*, storage::storage_string::*, string::String};
 
@@ -217,7 +217,7 @@ storage {
     symbol: StorageMap<AssetId, StorageString> = StorageMap {},
     decimals: StorageMap<AssetId, u8> = StorageMap {},
 }
-// ANCHOR_END: src20_storage\n```
+// ANCHOR_END: src20_storage
 ```
 
 ## Implementing the SRC-20 Standard with the Asset Library
@@ -225,7 +225,7 @@ storage {
 To use the Asset Library's base functionly, simply pass the `StorageKey` from the prescribed storage block. The example below shows the implementation of the [SRC-20](https://docs.fuel.network/docs/sway-standards/src-20-native-asset/) standard in combination with the Asset Library with no user defined restrictions or custom functionality.
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: basic_src20
 use sway_libs::asset::base::{_decimals, _name, _symbol, _total_assets, _total_supply};
@@ -273,7 +273,7 @@ impl SRC20 for Contract {
         _decimals(storage.decimals, asset)
     }
 }
-// ANCHOR_END: basic_src20\n```
+// ANCHOR_END: basic_src20
 ```
 
 ## Setting an Asset's SRC-20 Attributes
@@ -283,7 +283,7 @@ To set some the asset attributes for an Asset, use the `SetAssetAttributes` ABI 
 The `_set_name()`, `_set_symbol()`, and `_set_decimals()` functions follows the SRC-20 standard for logging and will emit their respective log when called.
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: setting_src20_attributes
 use sway_libs::asset::base::*;
@@ -311,7 +311,7 @@ impl SetAssetAttributes for Contract {
         _set_decimals(storage.decimals, asset, decimals);
     }
 }
-// ANCHOR_END: setting_src20_attributes\n```
+// ANCHOR_END: setting_src20_attributes
 ```
 
 > **NOTE** The `_set_name()`, `_set_symbol()`, and `_set_decimals()` functions will set the attributes of an asset *unconditionally*. External checks should be applied to restrict the setting of attributes.

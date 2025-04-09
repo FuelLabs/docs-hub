@@ -12,7 +12,7 @@ Below are some common type conversions in Sway:
 ### Convert to `Identity`
 
 ```sway
-```sway\nlibrary;
+library;
 
 pub fn convert_to_identity() {
     let b256_address: b256 = 0x000000000000000000000000000000000000000000000000000000000000002A;
@@ -48,13 +48,13 @@ pub fn convert_to_b256() {
     let b256_from_address: b256 = address.into();
     let b256_from_contract_id: b256 = contract_id.into();
     // ANCHOR_END: convert_to_b256
-}\n```
+}
 ```
 
 ### Convert `Identity` to `ContractId` or `Address`
 
 ```sway
-```sway\nlibrary;
+library;
 
 pub fn convert_to_identity() {
     let b256_address: b256 = 0x000000000000000000000000000000000000000000000000000000000000002A;
@@ -90,13 +90,13 @@ pub fn convert_to_b256() {
     let b256_from_address: b256 = address.into();
     let b256_from_contract_id: b256 = contract_id.into();
     // ANCHOR_END: convert_to_b256
-}\n```
+}
 ```
 
 ### Convert `ContractId` or `Address` to `b256`
 
 ```sway
-```sway\nlibrary;
+library;
 
 pub fn convert_to_identity() {
     let b256_address: b256 = 0x000000000000000000000000000000000000000000000000000000000000002A;
@@ -132,13 +132,13 @@ pub fn convert_to_b256() {
     let b256_from_address: b256 = address.into();
     let b256_from_contract_id: b256 = contract_id.into();
     // ANCHOR_END: convert_to_b256
-}\n```
+}
 ```
 
 ### Convert `b256` to `ContractId` or `Address`
 
 ```sway
-```sway\nlibrary;
+library;
 
 pub fn convert_to_identity() {
     let b256_address: b256 = 0x000000000000000000000000000000000000000000000000000000000000002A;
@@ -174,7 +174,7 @@ pub fn convert_to_b256() {
     let b256_from_address: b256 = address.into();
     let b256_from_contract_id: b256 = contract_id.into();
     // ANCHOR_END: convert_to_b256
-}\n```
+}
 ```
 
 ## String Conversions
@@ -182,7 +182,7 @@ pub fn convert_to_b256() {
 ### Convert `str` to `str[]`
 
 ```sway
-```sway\nlibrary;
+library;
 
 pub fn convert_str_to_str_array() {
     // ANCHOR: str_to_str_array
@@ -196,13 +196,13 @@ pub fn convert_str_array_to_str() {
     let fuel_str_array: str[4] = __to_str_array("fuel");
     let fuel_str: str = from_str_array(fuel_str_array);
     // ANCHOR_END: str_array_to_str
-}\n```
+}
 ```
 
 ### Convert `str[]` to `str`
 
 ```sway
-```sway\nlibrary;
+library;
 
 pub fn convert_str_to_str_array() {
     // ANCHOR: str_to_str_array
@@ -216,7 +216,7 @@ pub fn convert_str_array_to_str() {
     let fuel_str_array: str[4] = __to_str_array("fuel");
     let fuel_str: str = from_str_array(fuel_str_array);
     // ANCHOR_END: str_array_to_str
-}\n```
+}
 ```
 
 ## Number Conversions
@@ -224,7 +224,7 @@ pub fn convert_str_array_to_str() {
 ### Convert to `u256`
 
 ```sway
-```sway\nlibrary;
+library;
 
 pub fn convert_to_u256() {
     // Convert any unsigned integer to `u256`
@@ -241,13 +241,13 @@ pub fn convert_to_u256() {
     let u256_from_u64: u256 = u64_1.as_u256();
     let u256_from_b256: u256 = b256_1.as_u256();
     // ANCHOR_END: to_u256
-}\n```
+}
 ```
 
 ### Convert to `u64`
 
 ```sway
-```sway\nlibrary;
+library;
 
 pub fn convert_uint_to_u64() {
     // Convert any unsigned integer to `u64`
@@ -265,13 +265,13 @@ pub fn convert_uint_to_u64() {
 
     let u64_from_u256: Option<u64> = <u64 as TryFrom<u256>>::try_from(u256_1);
     // ANCHOR_END: to_u64
-}\n```
+}
 ```
 
 ### Convert to `u32`
 
 ```sway
-```sway\nlibrary;
+library;
 
 pub fn convert_uint_to_u32() {
     // Convert any unsigned integer to `u32`
@@ -290,13 +290,13 @@ pub fn convert_uint_to_u32() {
 
     let u32_from_u256: Option<u32> = <u32 as TryFrom<u256>>::try_from(u256_1);
     // ANCHOR_END: to_u32
-}\n```
+}
 ```
 
 ### Convert to `u16`
 
 ```sway
-```sway\nlibrary;
+library;
 
 pub fn convert_uint_to_u16() {
     // Convert any unsigned integer to `u16`
@@ -316,13 +316,13 @@ pub fn convert_uint_to_u16() {
 
     let u16_from_u256: Option<u16> = <u16 as TryFrom<u256>>::try_from(u256_1);
     // ANCHOR_END: to_u16
-}\n```
+}
 ```
 
 ### Convert to `u8`
 
 ```sway
-```sway\nlibrary;
+library;
 
 pub fn convert_uint_to_u8() {
     // Convert any unsigned integer to `u8`
@@ -350,13 +350,13 @@ pub fn convert_uint_to_u8() {
     assert(u8_from_u64_1.unwrap() == 2u8);
     assert(u8_from_u64_2.unwrap() == 2u8);
     assert(u8_from_u256.unwrap() == 2u8);
-}\n```
+}
 ```
 
 ### Convert to `Bytes`
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: to_bytes_import
 use std::{bytes::Bytes, bytes_conversions::{b256::*, u16::*, u256::*, u32::*, u64::*}};
@@ -393,11 +393,11 @@ pub fn convert_from_bytes() {
     let b256_from_le_bytes = b256::from_le_bytes(little_endian_bytes);
     let b256_from_be_bytes = b256::from_be_bytes(big_endian_bytes);
     // ANCHOR_END: from_bytes
-}\n```
+}
 ```
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: to_bytes_import
 use std::{bytes::Bytes, bytes_conversions::{b256::*, u16::*, u256::*, u32::*, u64::*}};
@@ -434,13 +434,13 @@ pub fn convert_from_bytes() {
     let b256_from_le_bytes = b256::from_le_bytes(little_endian_bytes);
     let b256_from_be_bytes = b256::from_be_bytes(big_endian_bytes);
     // ANCHOR_END: from_bytes
-}\n```
+}
 ```
 
 ### Convert from `Bytes`
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: to_bytes_import
 use std::{bytes::Bytes, bytes_conversions::{b256::*, u16::*, u256::*, u32::*, u64::*}};
@@ -477,11 +477,11 @@ pub fn convert_from_bytes() {
     let b256_from_le_bytes = b256::from_le_bytes(little_endian_bytes);
     let b256_from_be_bytes = b256::from_be_bytes(big_endian_bytes);
     // ANCHOR_END: from_bytes
-}\n```
+}
 ```
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: to_bytes_import
 use std::{bytes::Bytes, bytes_conversions::{b256::*, u16::*, u256::*, u32::*, u64::*}};
@@ -518,7 +518,7 @@ pub fn convert_from_bytes() {
     let b256_from_le_bytes = b256::from_le_bytes(little_endian_bytes);
     let b256_from_be_bytes = b256::from_be_bytes(big_endian_bytes);
     // ANCHOR_END: from_bytes
-}\n```
+}
 ```
 
 ## Byte Array Conversions
@@ -526,7 +526,7 @@ pub fn convert_from_bytes() {
 ### Convert to a Byte Array
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: to_byte_array_import
 use std::array_conversions::{b256::*, u16::*, u256::*, u32::*, u64::*};
@@ -576,11 +576,11 @@ pub fn from_byte_array() {
     let be_u256_from_byte_array: u256 = u256::from_be_bytes(u256_byte_array);
     let be_b256_from_byte_array: b256 = b256::from_be_bytes(u256_byte_array);
     // ANCHOR_END: from_byte_array
-}\n```
+}
 ```
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: to_byte_array_import
 use std::array_conversions::{b256::*, u16::*, u256::*, u32::*, u64::*};
@@ -630,13 +630,13 @@ pub fn from_byte_array() {
     let be_u256_from_byte_array: u256 = u256::from_be_bytes(u256_byte_array);
     let be_b256_from_byte_array: b256 = b256::from_be_bytes(u256_byte_array);
     // ANCHOR_END: from_byte_array
-}\n```
+}
 ```
 
 ### Convert from a Byte Array
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: to_byte_array_import
 use std::array_conversions::{b256::*, u16::*, u256::*, u32::*, u64::*};
@@ -686,11 +686,11 @@ pub fn from_byte_array() {
     let be_u256_from_byte_array: u256 = u256::from_be_bytes(u256_byte_array);
     let be_b256_from_byte_array: b256 = b256::from_be_bytes(u256_byte_array);
     // ANCHOR_END: from_byte_array
-}\n```
+}
 ```
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: to_byte_array_import
 use std::array_conversions::{b256::*, u16::*, u256::*, u32::*, u64::*};
@@ -740,5 +740,5 @@ pub fn from_byte_array() {
     let be_u256_from_byte_array: u256 = u256::from_be_bytes(u256_byte_array);
     let be_b256_from_byte_array: b256 = b256::from_be_bytes(u256_byte_array);
     // ANCHOR_END: from_byte_array
-}\n```
+}
 ```

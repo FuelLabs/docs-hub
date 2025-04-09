@@ -15,6 +15,7 @@ This mdbook contains documentation from multiple repositories in the Fuel ecosys
 - Integration Docs
 - Node Operator
 - Fuels-rs (Rust SDK)
+- Fuels-ts (TypeScript SDK)
 - Specs
 - Guides
 - Introduction

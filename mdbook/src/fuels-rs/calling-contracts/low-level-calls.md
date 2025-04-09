@@ -12,7 +12,7 @@ Your caller contract should call `std::low_level_call::call_with_function_select
 - `std::low_level_call::CallParams`
 
 ```rust,ignore
-```sway\ncontract;
+contract;
 
 use std::{
     bytes::Bytes,
@@ -47,7 +47,7 @@ impl MyCallerContract for Contract {
         call_with_function_selector(target, function_selector, calldata, call_params);
     }
     // ANCHOR_END: low_level_call_contract
-}\n```
+}
 ```
 
 On the SDK side, you can construct an encoded function selector using `fuels::core::encode_fn_selector`, and encoded calldata using the `fuels::core::calldata!` macro.
@@ -55,7 +55,7 @@ On the SDK side, you can construct an encoded function selector using `fuels::co
 E.g. to call the following function on the target contract:
 
 ```rust,ignore
-```sway\ncontract;
+contract;
 
 use std::storage::storage_api::{read, write};
 use std::context::msg_amount;
@@ -194,13 +194,13 @@ impl TestContract for Contract {
     fn new() -> u64 {
         12345u64
     }
-}\n```
+}
 ```
 
 you would construct the function selector and the calldata as such, and provide them to the caller contract (like the one above):
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -1411,7 +1411,7 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 > Note: the `calldata!` macro uses the default `EncoderConfig` configuration under the hood.

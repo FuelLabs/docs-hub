@@ -6,30 +6,14 @@
 <TextImport
   file="../installation/index.mdx"
   comment="install_fuelup"
-  commentType="{/*"
-/>
-
-<CodeImport
-  file="../installation/index.mdx"
-  comment="install_fuelup_command"
-  commentType="{/*"
-  lang="sh"
-  trim="true"
-/>
-
-{/*install_help:example:start*/}
+  commentType="
 > Having problems? Visit the [installation guide](/guides/installation) or post your question in our [forum](https://forum.fuel.network/).
-{/*install_help:example:end*/}
+
 
 <TextImport
   file="../installation/index.mdx"
   comment="install_VSCode_extensions"
-  commentType="{/*"
-/>
-
-### Already have `fuelup` installed?
-
-{/*already_installed:example:start*/}
+  commentType="
 If you already have `fuelup` installed, run the commands below to make sure you are on the most up-to-date toolchain.
 
 ```sh
@@ -38,7 +22,7 @@ fuelup update
 fuelup default latest
 ```
 
-{/*already_installed:example:end*/}
+
 
 ## Your First Sway Project
 
@@ -46,13 +30,7 @@ We'll build a simple counter contract with two functions: one to increment the c
 
 **Start by creating a new, empty folder. We'll call it `fuel-project`.**
 
-<TestAction
-id="create-project-folder"
-action={{
-  name: 'runCommand',
-  commandFolder: 'guides-testing'
-}}
-/>
+
 
 ```sh
 mkdir fuel-project
@@ -68,21 +46,15 @@ cd fuel-project
 
 Then create a contract project using `forc`:
 
-<TestAction
-id="create-contract"
-action={{
-  name: 'runCommand',
-  commandFolder: 'guides-testing/fuel-project'
-}}
-/>
 
-{/*ANCHOR: new_forc_contract*/}
+
+
 
 ```sh
 forc new counter-contract
 ```
 
-{/*ANCHOR_END: new_forc_contract*/}
+
 
 You will get this output:
 
@@ -103,17 +75,11 @@ Report Bugs:
 - Sway Issues: https://github.com/FuelLabs/sway/issues/new
 ```
 
-{/*This example should include a tree for a new `forc` project and explain the boilerplate files*/}
-{/*forc_new:example:start*/}
+
+
 Here is the project that `forc` has initialized:
 
-<TestAction
-id="contract-tree"
-action={{
-  name: 'runCommand',
-  commandFolder: 'guides-testing/fuel-project'
-}}
-/>
+
 
 ```sh
 tree counter-contract
@@ -129,20 +95,14 @@ counter-contract
 ```
 
 `forc.toml` is the *manifest file* (similar to `Cargo.toml` for Cargo or `package.json` for Node) and defines project metadata such as the project name and dependencies.
-{/*forc_new:example:end*/}
+
 
 Open your project in a code editor and delete everything in `src/main.sw` apart from the first line.
 
 Every Sway file must start with a declaration of what type of program the file contains; here, we've declared that this file is a contract.
 You can learn more about Sway program types in the [Sway Book](/docs/sway/sway-program-types/).
 
-<TestAction
-id="program-type"
-action={{
-  name: 'writeToFile',
-  filepath: 'guides-testing/fuel-project/counter-contract/src/main.sw'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/counter-dapp/counter-contract/src/main.sw"
@@ -154,13 +114,7 @@ action={{
 Next, we'll define a storage value.
 In our case, we have a single counter that we'll call `counter` of type `u64` (a 64-bit unsigned integer) and initialize it to 0.
 
-<TestAction
-id="storage"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/fuel-project/counter-contract/src/main.sw'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/counter-dapp/counter-contract/src/main.sw"
@@ -180,13 +134,7 @@ This allows callers of the contract to import and use the ABI more easily.
 
 For simplicity, we will define the ABI directly in the contract file itself.
 
-<TestAction
-id="abi"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/fuel-project/counter-contract/src/main.sw'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/counter-dapp/counter-contract/src/main.sw"
@@ -199,13 +147,7 @@ action={{
 
 Below your ABI definition, you will write the implementation of the functions defined in your ABI.
 
-<TestAction
-id="impl"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/fuel-project/counter-contract/src/main.sw'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/counter-dapp/counter-contract/src/main.sw"
@@ -220,13 +162,7 @@ Here's what your code should look like so far:
 
 File: `./counter-contract/src/main.sw`
 
-<TestAction
-id="entire-contract"
-action={{
-  name: 'compareToFile',
-  filepath: 'guides-testing/fuel-project/counter-contract/src/main.sw'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/counter-dapp/counter-contract/src/main.sw"
@@ -245,13 +181,7 @@ cd counter-contract
 
 Then run the following command to build your contract:
 
-<TestAction
-id="build-contract"
-action={{
-  name: 'runCommand',
-  commandFolder: 'guides-testing/fuel-project/counter-contract'
-}}
-/>
+
 
 ```sh
 forc build
@@ -266,13 +196,7 @@ forc build
 
 Let's have a look at the content of the `counter-contract` folder after building:
 
-<TestAction
-id="built-contract-tree"
-action={{
-  name: 'runCommand',
-  commandFolder: 'guides-testing/fuel-project/counter-contract'
-}}
-/>
+
 
 ```sh
 tree .
@@ -305,73 +229,7 @@ If you don't already have `Rust` installed, you can install it by running this c
 <CodeImport
   file="../installation/index.mdx"
   comment="install_rust_command"
-  commentType="{/*"
-  lang="sh"
-  trim="true"
-/>
-
-Next, if you don't already have it installed, let's install [`cargo generate`](https://github.com/cargo-generate/cargo-generate):
-
-```sh
-cargo install cargo-generate --locked
-```
-
-Now, let's generate the default test harness with the following command:
-
-<TestAction
-id="cargo-generate-test"
-action={{
-  name: 'runCommand',
-  commandFolder: 'guides-testing/fuel-project/counter-contract'
-}}
-/>
-
-```sh
-cargo generate --init fuellabs/sway templates/sway-test-rs --name counter-contract
-```
-
-```sh
-⚠️   Favorite `fuellabs/sway` not found in config, using it as a git repository: https://github.com/fuellabs/sway.git
-🔧   Destination: /home/user/path/to/counter-contract ...
-🔧   project-name: counter-contract ...
-🔧   Generating template ...
-🔧   Moving generated files into: `/home/user/path/to/counter-contract`...
-✨   Done! New project created /home/user/path/to/counter-contract
-```
-
-Let's have a look at the result:
-
-<TestAction
-id="cargo-test-tree"
-action={{
-  name: 'runCommand',
-  commandFolder: 'guides-testing/fuel-project/counter-contract'
-}}
-/>
-
-```sh
-tree .
-```
-
-```sh
-.
-├── Cargo.toml
-├── Forc.lock
-├── Forc.toml
-├── out
-│   └── debug
-│       ├── counter-contract-abi.json
-│       ├── counter-contract-storage_slots.json
-│       └── counter-contract.bin
-├── src
-│   └── main.sw
-└── tests
-    └── harness.rs
-
-4 directories, 8 files
-```
-
-{/*rust_harness:example:start*/}
+  commentType="
 We have two new files!
 
 - The `Cargo.toml` is the manifest for our new test harness and specifies the required dependencies including `fuels` (the Fuel Rust SDK).
@@ -385,20 +243,13 @@ fuels = "0.66.1"
 tokio = { version = "1.12", features = ["rt", "macros"] }
 ```
 
-{/*rust_harness:example:end*/}
+
 
 Now that we have our default test harness, let's add a useful test to it.
 
 At the bottom of `test/harness.rs` below the `can_get_contract_id()` test, add the `test_increment` test function below to verify that the value of the counter gets incremented:
 
-<TestAction
-id="test-harness"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/fuel-project/counter-contract/tests/harness.rs',
-  addSpacesBefore: 1,
-}}
-/>
+
 
 <CodeImport
   file="../../examples/counter-dapp/counter-contract/tests/harness.rs"
@@ -411,13 +262,7 @@ Here is what your file should look like:
 
 File: `./counter-contract/tests/harness.rs`
 
-<TestAction
-id="final-test-harness"
-action={{
-  name: 'compareToFile',
-  filepath: 'guides-testing/fuel-project/counter-contract/tests/harness.rs'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/counter-dapp/counter-contract/tests/harness.rs"
@@ -453,20 +298,7 @@ In order to deploy a contract, you need to have a wallet to sign the transaction
 <TextImport
   file="../installation/index.mdx"
   comment="forc_wallet_setup"
-  commentType="{/*"
-/>
-
-You can get test funds using the [faucet](https://faucet-testnet.fuel.network/).
-
-### Deploy To Testnet
-
-Now, you can deploy the contract to the latest testnet with the `forc deploy` command.
-
-```sh
-forc deploy --testnet
-```
-
-{/*forc_wallet:example:start*/}
+  commentType="
 The terminal will ask for the password of the wallet:
 
 `Please provide the password of your encrypted wallet vault at "~/.fuel/wallets/.wallet":`
@@ -486,7 +318,7 @@ Just below the list, you'll see this prompt:
 Then you'll enter the number of the account of preference and press `Y` when prompted to accept the transaction.
 
 Finally, you will get back the network endpoint where the contract was deployed, a `Contract ID` and the block where the transaction was signed.
-{/*forc_wallet:example:end*/}
+
 
 Save the `Contract ID`, as you'll need this later to connect the frontend.
 

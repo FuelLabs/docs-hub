@@ -11,7 +11,7 @@ We can configure the number of retry attempts and the retry strategy as detailed
 The retry behavior can be altered by giving a custom `RetryConfig`. It allows for configuring the maximum number of attempts and the interval strategy used.
 
 ```rust, ignore
-```rust\nuse std::{fmt::Debug, future::Future, num::NonZeroU32, time::Duration};
+use std::{fmt::Debug, future::Future, num::NonZeroU32, time::Duration};
 
 use fuels_core::types::errors::{error, Result};
 
@@ -345,11 +345,11 @@ mod tests {
             Ok(())
         }
     }
-}\n```
+}
 ```
 
 ```rust, ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::time::Duration;
 
@@ -445,7 +445,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 ## Interval strategy - `Backoff`
@@ -460,7 +460,7 @@ Each strategy allows you to customize the waiting time before a new attempt base
 - `Fixed(Duration)`: Uses a constant waiting time between attempts.
 
 ```rust, ignore
-```rust\nuse std::{fmt::Debug, future::Future, num::NonZeroU32, time::Duration};
+use std::{fmt::Debug, future::Future, num::NonZeroU32, time::Duration};
 
 use fuels_core::types::errors::{error, Result};
 
@@ -794,5 +794,5 @@ mod tests {
             Ok(())
         }
     }
-}\n```
+}
 ```

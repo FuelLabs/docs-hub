@@ -8,7 +8,7 @@ Sometimes, the contract you call might transfer funds to a specific address, dep
 Let's say you deployed a contract with the following method:
 
 ```rust,ignore
-```sway\ncontract;
+contract;
 
 use std::{
     asset::*,
@@ -68,13 +68,13 @@ impl TestFuelCoin for Contract {
 
         send_message(recipient, data, coins);
     }
-}\n```
+}
 ```
 
 When calling `transfer_coins_to_output` with the SDK, you can specify the number of variable outputs:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -1285,7 +1285,7 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 <!-- This section should explain what the `with_variable_output_policy` method does -->

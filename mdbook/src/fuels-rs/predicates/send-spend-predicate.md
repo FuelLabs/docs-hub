@@ -3,7 +3,7 @@
 This is a more involved example where the predicate accepts three signatures and matches them to three predefined public keys. The `ec_recover_address` function is used to recover the public key from the signatures. If two of the three extracted public keys match the predefined public keys, the funds can be spent. Note that the signature order has to match the order of the predefined public keys.
 
 ```rust,ignore
-```sway\npredicate;
+predicate;
 
 use std::{b512::B512, constants::ZERO_B256, ecr::ec_recover_address, inputs::input_predicate_data};
 
@@ -32,13 +32,13 @@ fn main(signatures: [B512; 3]) -> bool {
     matched_keys = matched_keys + extract_public_key_and_match(signatures[2], public_keys[2]);
 
     matched_keys > 1
-}\n```
+}
 ```
 
 Let's use the SDK to interact with the predicate. First, let's create three wallets with specific keys. Their hashed public keys are already hard-coded in the predicate. Then we create the receiver wallet, which we will use to spend the predicate funds.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::{
         accounts::{predicate::Predicate, Account},
@@ -204,13 +204,13 @@ mod tests {
         // ANCHOR_END: predicate_data_unlock
         Ok(())
     }
-}\n```
+}
 ```
 
 Next, let's add some coins, start a provider and connect it with the wallets.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::{
         accounts::{predicate::Predicate, Account},
@@ -376,13 +376,13 @@ mod tests {
         // ANCHOR_END: predicate_data_unlock
         Ok(())
     }
-}\n```
+}
 ```
 
 Now we can use the predicate abigen to create a predicate encoder instance for us. To spend the funds now locked in the predicate, we must provide two out of three signatures whose public keys match the ones we defined in the predicate. In this example, the signatures are generated from an array of zeros.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::{
         accounts::{predicate::Predicate, Account},
@@ -548,13 +548,13 @@ mod tests {
         // ANCHOR_END: predicate_data_unlock
         Ok(())
     }
-}\n```
+}
 ```
 
 Next, we transfer some assets from a wallet to the created predicate. We also confirm that the funds are indeed transferred.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::{
         accounts::{predicate::Predicate, Account},
@@ -720,13 +720,13 @@ mod tests {
         // ANCHOR_END: predicate_data_unlock
         Ok(())
     }
-}\n```
+}
 ```
 
 We can use the `transfer` method from the [Account](../accounts.md) trait to transfer the assets. If the predicate data is correct, the `receiver` wallet will get the funds, and we will verify that the amount is correct.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::{
         accounts::{predicate::Predicate, Account},
@@ -892,5 +892,5 @@ mod tests {
         // ANCHOR_END: predicate_data_unlock
         Ok(())
     }
-}\n```
+}
 ```

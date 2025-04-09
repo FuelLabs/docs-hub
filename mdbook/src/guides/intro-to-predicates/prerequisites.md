@@ -41,13 +41,7 @@
 
 Start with a new empty folder and name it `multisig-predicate`.
 
-<TestAction
-id="create-project-folder"
-action={{
-  name: 'runCommand',
-  commandFolder: 'guides-testing'
-}}
-/>
+
 
 ```sh
 mkdir multisig-predicate
@@ -61,13 +55,7 @@ cd multisig-predicate
 
 Within your terminal start by creating a new sway project called `predicate`:
 
-<TestAction
-id="create-predicate"
-action={{
-  name: 'runCommand',
-  commandFolder: 'guides-testing/multisig-predicate'
-}}
-/>
+
 
 ```sh
 forc new --predicate predicate
@@ -77,13 +65,7 @@ forc new --predicate predicate
 
 Your project structure generated from the `forc` command should like this:
 
-<TestAction
-id="predicate-tree"
-action={{
-  name: 'runCommand',
-  commandFolder: 'guides-testing/multisig-predicate'
-}}
-/>
+
 
 ```sh
 tree predicate

@@ -3,7 +3,7 @@
 In the Rust SDK, Ethereum Virtual Machine (EVM) addresses can be represented with the `EvmAddress` type. Its definition matches with the Sway standard library type with the same name and will be converted accordingly when interacting with contracts:
 
 ```rust,ignore
-```rust\nuse fuel_types::AssetId;
+use fuel_types::AssetId;
 use fuels_macros::{Parameterize, Tokenizable, TryFrom};
 
 use crate::types::errors::Result;
@@ -166,13 +166,13 @@ mod tests {
 
         assert_eq!(token, Token::Struct(vec![Token::B256(expected_data)]));
     }
-}\n```
+}
 ```
 
 Here's an example:
 
 ```rust,ignore
-```rust\nuse std::str::FromStr;
+use std::str::FromStr;
 
 use fuels::{
     prelude::*,
@@ -2184,7 +2184,7 @@ async fn nested_heap_types() -> Result<()> {
     assert_eq!(result.value, expected);
 
     Ok(())
-}\n```
+}
 ```
 
 > **Note:** when creating an `EvmAddress` from `Bits256`, the first 12 bytes will be cleared because an EVM address is only 20 bytes long.

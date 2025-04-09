@@ -13,7 +13,7 @@ In order to use the Bytecode Library, Sway Libs must be added to the `Forc.toml`
 To import the Bytecode Library to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
-```sway\nlibrary;
+library;
 
 use std::alloc::alloc_bytes;
 
@@ -113,7 +113,7 @@ fn verify_predicate_configurables(
     verify_predicate_address_with_configurables(my_predicate, my_bytecode, my_configurables);
     // By reaching this line the predicate bytecode matches the address provided.
 }
-// ANCHOR_END: verify_predicate_address\n```
+// ANCHOR_END: verify_predicate_address
 ```
 
 ## Using the Bytecode Library In Sway
@@ -136,7 +136,7 @@ Once imported, using the Bytecode Library is as simple as calling the desired fu
 Please note that if you are passing the bytecode from the SDK and are including configurable values, the `Vec<u8>` bytecode provided must be copied to be mutable. The following can be added to make your bytecode mutable:
 
 ```sway
-```sway\nlibrary;
+library;
 
 use std::alloc::alloc_bytes;
 
@@ -236,7 +236,7 @@ fn verify_predicate_configurables(
     verify_predicate_address_with_configurables(my_predicate, my_bytecode, my_configurables);
     // By reaching this line the predicate bytecode matches the address provided.
 }
-// ANCHOR_END: verify_predicate_address\n```
+// ANCHOR_END: verify_predicate_address
 ```
 
 ## Basic Functionality
@@ -248,7 +248,7 @@ The examples below are intended for internal contract calls. If you are passing 
 Given some bytecode, you may swap the configurables of both Contracts and Predicates by calling the `swap_configurables()` function.
 
 ```sway
-```sway\nlibrary;
+library;
 
 use std::alloc::alloc_bytes;
 
@@ -348,7 +348,7 @@ fn verify_predicate_configurables(
     verify_predicate_address_with_configurables(my_predicate, my_bytecode, my_configurables);
     // By reaching this line the predicate bytecode matches the address provided.
 }
-// ANCHOR_END: verify_predicate_address\n```
+// ANCHOR_END: verify_predicate_address
 ```
 
 ## Contracts
@@ -358,7 +358,7 @@ fn verify_predicate_configurables(
 To compute a contract's bytecode root you may call the `compute_bytecode_root()` or `compute_bytecode_root_with_configurables()` functions.
 
 ```sway
-```sway\nlibrary;
+library;
 
 use std::alloc::alloc_bytes;
 
@@ -458,7 +458,7 @@ fn verify_predicate_configurables(
     verify_predicate_address_with_configurables(my_predicate, my_bytecode, my_configurables);
     // By reaching this line the predicate bytecode matches the address provided.
 }
-// ANCHOR_END: verify_predicate_address\n```
+// ANCHOR_END: verify_predicate_address
 ```
 
 ### Verifying a Contract's Bytecode Root
@@ -466,7 +466,7 @@ fn verify_predicate_configurables(
 To verify a contract's bytecode root you may call `verify_bytecode_root()` or `verify_contract_bytecode_with_configurables()` functions.
 
 ```sway
-```sway\nlibrary;
+library;
 
 use std::alloc::alloc_bytes;
 
@@ -566,7 +566,7 @@ fn verify_predicate_configurables(
     verify_predicate_address_with_configurables(my_predicate, my_bytecode, my_configurables);
     // By reaching this line the predicate bytecode matches the address provided.
 }
-// ANCHOR_END: verify_predicate_address\n```
+// ANCHOR_END: verify_predicate_address
 ```
 
 ## Predicates
@@ -576,7 +576,7 @@ fn verify_predicate_configurables(
 To compute a predicate's address you may call the `compute_predicate_address()` or `compute_predicate_address_with_configurables()` functions.
 
 ```sway
-```sway\nlibrary;
+library;
 
 use std::alloc::alloc_bytes;
 
@@ -676,7 +676,7 @@ fn verify_predicate_configurables(
     verify_predicate_address_with_configurables(my_predicate, my_bytecode, my_configurables);
     // By reaching this line the predicate bytecode matches the address provided.
 }
-// ANCHOR_END: verify_predicate_address\n```
+// ANCHOR_END: verify_predicate_address
 ```
 
 ### Computing the Address from a Root
@@ -684,7 +684,7 @@ fn verify_predicate_configurables(
 If you have the root of a predicate, you may compute it's corresponding predicate address by calling the `predicate_address_from_root()` function.
 
 ```sway
-```sway\nlibrary;
+library;
 
 use std::alloc::alloc_bytes;
 
@@ -784,7 +784,7 @@ fn verify_predicate_configurables(
     verify_predicate_address_with_configurables(my_predicate, my_bytecode, my_configurables);
     // By reaching this line the predicate bytecode matches the address provided.
 }
-// ANCHOR_END: verify_predicate_address\n```
+// ANCHOR_END: verify_predicate_address
 ```
 
 ### Verifying the Address
@@ -792,7 +792,7 @@ fn verify_predicate_configurables(
 To verify a predicates's address you may call `verify_predicate_address()` or `verify_predicate_address_with_configurables()` functions.
 
 ```sway
-```sway\nlibrary;
+library;
 
 use std::alloc::alloc_bytes;
 
@@ -892,5 +892,5 @@ fn verify_predicate_configurables(
     verify_predicate_address_with_configurables(my_predicate, my_bytecode, my_configurables);
     // By reaching this line the predicate bytecode matches the address provided.
 }
-// ANCHOR_END: verify_predicate_address\n```
+// ANCHOR_END: verify_predicate_address
 ```

@@ -6,7 +6,7 @@ The SDK provides the option to transfer assets within the same transaction, when
 <!-- transfer:example:end -->
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -1217,5 +1217,5 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```

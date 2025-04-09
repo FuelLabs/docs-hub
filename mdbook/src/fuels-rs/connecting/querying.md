@@ -12,7 +12,7 @@ Once you set up a provider, you can interact with the Fuel blockchain. Here are 
 You might need to set up a test blockchain first. You can skip this step if you're connecting to an external blockchain.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::time::Duration;
 
@@ -108,7 +108,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 ## Get all coins from an address
@@ -116,7 +116,7 @@ mod tests {
 This method returns all unspent coins (of a given asset ID) from a wallet.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::time::Duration;
 
@@ -212,7 +212,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 ## Get spendable resources owned by an address
@@ -220,7 +220,7 @@ mod tests {
 The following example shows how to fetch resources owned by an address. First, you create a  `ResourceFilter` which specifies the target address, asset ID, and amount. You can also define UTXO IDs and message IDs that should be excluded when retrieving the resources:
 
 ```rust,ignore
-```rust\n#[cfg(feature = "coin-cache")]
+#[cfg(feature = "coin-cache")]
 use std::sync::Arc;
 use std::{collections::HashMap, fmt::Debug, net::SocketAddr};
 
@@ -1119,13 +1119,13 @@ impl DryRunner for Provider {
     async fn consensus_parameters(&self) -> Result<ConsensusParameters> {
         Provider::consensus_parameters(self).await
     }
-}\n```
+}
 ```
 
 The example uses default values for the asset ID and the exclusion lists. This resolves to the base asset ID and empty vectors for the ID lists respectively:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::time::Duration;
 
@@ -1221,7 +1221,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 ## Get balances from an address
@@ -1229,7 +1229,7 @@ mod tests {
 Get all the spendable balances of all assets for an address. This is different from getting the coins because we only return the numbers (the sum of UTXOs coins amount for each asset ID) and not the UTXOs coins themselves.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::time::Duration;
 
@@ -1325,5 +1325,5 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```

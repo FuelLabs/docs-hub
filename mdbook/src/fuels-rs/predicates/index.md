@@ -7,11 +7,11 @@ Predicates, in Sway, are programs that return a Boolean value and do not have an
 Let's consider the following predicate example:
 
 ```rust,ignore
-```sway\npredicate;
+predicate;
 
 fn main(a: u32, b: u64) -> bool {
     b == a.as_u64()
-}\n```
+}
 ```
 
 We will look at a complete example of using the SDK to send and receive funds from a predicate.
@@ -24,7 +24,7 @@ First, we set up the wallets and a node instance. The call to the `abigen!` macr
 > Note: The `abigen!` macro will append `Encoder` and `Configurables` to the predicate's `name` field. Fox example, `name="MyPredicate"` will result in two structs called `MyPredicateEncoder` and `MyPredicateConfigurables`.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::{
         accounts::{predicate::Predicate, Account},
@@ -190,13 +190,13 @@ mod tests {
         // ANCHOR_END: predicate_data_unlock
         Ok(())
     }
-}\n```
+}
 ```
 
 Once we've compiled our predicate with `forc build`, we can create a `Predicate` instance via `Predicate::load_from`. The resulting data from `encode_data` can then be set on the loaded predicate.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::{
         accounts::{predicate::Predicate, Account},
@@ -362,13 +362,13 @@ mod tests {
         // ANCHOR_END: predicate_data_unlock
         Ok(())
     }
-}\n```
+}
 ```
 
 Next, we lock some assets in this predicate using the first wallet:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::{
         accounts::{predicate::Predicate, Account},
@@ -534,13 +534,13 @@ mod tests {
         // ANCHOR_END: predicate_data_unlock
         Ok(())
     }
-}\n```
+}
 ```
 
 Then we can transfer assets owned by the predicate via the [Account](../accounts.md) trait:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::{
         accounts::{predicate::Predicate, Account},
@@ -706,7 +706,7 @@ mod tests {
         // ANCHOR_END: predicate_data_unlock
         Ok(())
     }
-}\n```
+}
 ```
 
 ## Configurable constants
@@ -714,7 +714,7 @@ mod tests {
 Same as contracts and scripts, you can define configurable constants in `predicates`, which can be changed during the predicate execution. Here is an example of how the constants are defined.
 
 ```rust,ignore
-```sway\npredicate;
+predicate;
 
 impl Eq for StructWithGeneric<u8> {
     fn eq(self, other: Self) -> bool {
@@ -766,13 +766,13 @@ fn main(
 ) -> bool {
     switch == BOOL && u_8 == U8 && some_tuple.0 == TUPLE.0 && some_tuple.1 == TUPLE.1 && some_array[0] == ARRAY[0] && some_array[1] == ARRAY[1] && some_array[2] == ARRAY[2] && some_struct == STRUCT && some_enum == ENUM
 }
-// ANCHOR_END: predicate_configurables\n```
+// ANCHOR_END: predicate_configurables
 ```
 
 Each configurable constant will get a dedicated `with` method in the SDK. For example, the constant `U8` will get the `with_U8` method which accepts the same type defined in sway. Below is an example where we chain several `with` methods and update the predicate with the new constants.
 
 ```rust,ignore
-```rust\nuse std::default::Default;
+use std::default::Default;
 
 use fuels::{
     core::{
@@ -2018,5 +2018,5 @@ async fn predicate_configurables_in_blobs() -> Result<()> {
     .await;
 
     Ok(())
-}\n```
+}
 ```

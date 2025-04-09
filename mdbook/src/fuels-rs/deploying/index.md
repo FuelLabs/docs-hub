@@ -18,7 +18,7 @@ First, the `Contract::load_from` function is used to load a contract binary with
 <!-- deploy:example:end -->
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -1229,7 +1229,7 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 Alternatively, you can use `LoadConfiguration` to configure how the contract is loaded. `LoadConfiguration` let's you:
@@ -1243,7 +1243,7 @@ Alternatively, you can use `LoadConfiguration` to configure how the contract is 
 Additionally, you can set custom `TxParameters` when deploying the loaded contract.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -2454,13 +2454,13 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 After the contract is deployed, you can use the contract's methods like this:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -3671,7 +3671,7 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 > Note: When redeploying an existing `Contract`, ensure that you initialize it with a unique salt to prevent deployment failures caused by a contract ID collision. To accomplish this, utilize the `with_salt` method to clone the existing `Contract` with a new salt.

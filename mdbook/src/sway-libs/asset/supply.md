@@ -9,7 +9,7 @@ In order to use the Asset Library, Sway Libs and [Sway Standards](https://docs.f
 To import the Asset Library Supply Functionality and [SRC-3](https://docs.fuel.network/docs/sway-standards/src-3-minting-and-burning/) Standard to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::hash::Hash;
 
@@ -33,7 +33,7 @@ storage {
     total_assets: u64 = 0,
     total_supply: StorageMap<AssetId, u64> = StorageMap {},
 }
-// ANCHOR_END: src3_storage\n```
+// ANCHOR_END: src3_storage
 ```
 
 ## Integration with the SRC-3 Standard
@@ -41,7 +41,7 @@ storage {
 The [SRC-3](https://docs.fuel.network/docs/sway-standards/src-3-minting-and-burning/) definition states that the following abi implementation is required for any Native Asset on Fuel which mints and burns tokens:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::hash::Hash;
 
@@ -65,7 +65,7 @@ storage {
     total_assets: u64 = 0,
     total_supply: StorageMap<AssetId, u64> = StorageMap {},
 }
-// ANCHOR_END: src3_storage\n```
+// ANCHOR_END: src3_storage
 ```
 
 The Asset Library has the following complimentary functions for each function in the `SRC3` abi:
@@ -80,7 +80,7 @@ The Asset Library has the following complimentary functions for each function in
 Once imported, the Asset Library's supply functionality should be available. To use them, be sure to add the storage block below to your contract which enables the [SRC-3](https://docs.fuel.network/docs/sway-standards/src-3-minting-and-burning/) standard.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::hash::Hash;
 
@@ -104,7 +104,7 @@ storage {
     total_assets: u64 = 0,
     total_supply: StorageMap<AssetId, u64> = StorageMap {},
 }
-// ANCHOR_END: src3_storage\n```
+// ANCHOR_END: src3_storage
 ```
 
 ## Implementing the SRC-3 Standard with the Asset Library
@@ -114,7 +114,7 @@ To use either function, simply pass the `StorageKey` from the prescribed storage
 The `_mint()` and `_burn()` functions follows the SRC-20 standard for logging and will emit the `TotalSupplyEvent` when called.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::hash::*;
 
@@ -151,7 +151,7 @@ impl SRC3 for Contract {
         _burn(storage.total_supply, sub_id, amount);
     }
 }
-// ANCHOR_END: basic_src3\n```
+// ANCHOR_END: basic_src3
 ```
 
 > **NOTE** The `_mint()` and `_burn()` functions will mint and burn assets *unconditionally*. External checks should be applied to restrict the minting and burning of assets.

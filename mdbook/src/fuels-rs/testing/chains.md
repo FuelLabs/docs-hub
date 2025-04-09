@@ -5,7 +5,7 @@ You can use `produce_blocks` to help achieve an arbitrary block height; this is 
 > **Note**: For the `produce_blocks` API to work, it is imperative to have `manual_blocks_enabled = true` in the config for the running node. See example below.
 
 ```rust,ignore
-```rust\nuse std::{ops::Add, path::Path};
+use std::{ops::Add, path::Path};
 
 use chrono::{DateTime, Duration, TimeZone, Utc};
 use fuel_asm::RegId;
@@ -1337,13 +1337,13 @@ async fn is_account_query_test() -> Result<()> {
     }
 
     Ok(())
-}\n```
+}
 ```
 
 You can also set a custom block time as the second, optional argument. Here is an example:
 
 ```rust,ignore
-```rust\nuse std::{ops::Add, path::Path};
+use std::{ops::Add, path::Path};
 
 use chrono::{DateTime, Duration, TimeZone, Utc};
 use fuel_asm::RegId;
@@ -2675,5 +2675,5 @@ async fn is_account_query_test() -> Result<()> {
     }
 
     Ok(())
-}\n```
+}
 ```

@@ -5,7 +5,7 @@ Be sure to read the [prerequisites](./index.md#prerequisites-for-decodingencodin
 Decoding is done via the [`ABIDecoder`](https://docs.rs/fuels/latest/fuels/core/codec/struct.ABIDecoder.html):
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::{
         core::codec::{DecoderConfig, EncoderConfig},
@@ -119,7 +119,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 First into a [`Token`](https://docs.rs/fuels/latest/fuels/types/enum.Token.html), then via the [`Tokenizable`](https://docs.rs/fuels/latest/fuels/core/traits/trait.Tokenizable.html) trait, into the desired type.
@@ -127,7 +127,7 @@ First into a [`Token`](https://docs.rs/fuels/latest/fuels/types/enum.Token.html)
 If the type came from [`abigen!`](../abigen/index.md) (or uses the [`::fuels::macros::TryFrom`](https://docs.rs/fuels/latest/fuels/macros/derive.TryFrom.html) derivation) then you can also use `try_into` to convert bytes into a type that implements both [`Parameterize`](https://docs.rs/fuels/latest/fuels/core/traits/trait.Parameterize.html) and [`Tokenizable`](https://docs.rs/fuels/latest/fuels/core/traits/trait.Tokenizable.html):
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::{
         core::codec::{DecoderConfig, EncoderConfig},
@@ -241,7 +241,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Under the hood, [`try_from_bytes`](https://docs.rs/fuels/latest/fuels/core/codec/fn.try_from_bytes.html) is being called, which does what the preceding example did.
@@ -251,7 +251,7 @@ Under the hood, [`try_from_bytes`](https://docs.rs/fuels/latest/fuels/core/codec
 The decoder can be configured to limit its resource expenditure:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::{
         core::codec::{DecoderConfig, EncoderConfig},
@@ -365,7 +365,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 <!-- TODO: Add a link once a release is made -->
@@ -377,7 +377,7 @@ For an explanation of each configuration value visit the `DecoderConfig`.
 The default values for the `DecoderConfig` are:
 
 ```rust,ignore
-```rust\nmod bounded_decoder;
+mod bounded_decoder;
 mod decode_as_debug_str;
 
 use std::io::Read;
@@ -1164,7 +1164,7 @@ mod tests {
 
         ParamType::Tuple(fields)
     }
-}\n```
+}
 ```
 
 ## Configuring the decoder for contract/script calls
@@ -1172,7 +1172,7 @@ mod tests {
 You can also configure the decoder used to decode the return value of the contract method:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -2383,7 +2383,7 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 The same method is available for script calls.

@@ -5,7 +5,7 @@
 Transaction policies are defined as follows:
 
 ```rust,ignore
-```rust\nuse std::{collections::HashMap, fmt::Debug};
+use std::{collections::HashMap, fmt::Debug};
 
 use async_trait::async_trait;
 use fuel_crypto::{Message, Signature};
@@ -745,7 +745,7 @@ mod test {
 
         assert_eq!(&err.to_string(), expected_err_str);
     }
-}\n```
+}
 ```
 
 Where:
@@ -764,7 +764,7 @@ You can configure these parameters by creating an instance of `TxPolicies` and p
 <!-- tx_policies:example:end-->
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -1975,7 +1975,7 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 <!-- This section should explain how to use the default tx policy -->
@@ -1986,7 +1986,7 @@ You can also use `TxPolicies::default()` to use the default values.
 This way:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -3197,7 +3197,7 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 As you might have noticed, `TxPolicies` can also be specified when deploying contracts or transferring assets by passing it to the respective methods.

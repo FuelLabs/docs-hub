@@ -7,7 +7,7 @@ forc template --template-name counter my_counter_project
 ```
 
 ```sway
-```sway\ncontract;
+contract;
 
 abi TestContract {
     #[storage(write)]
@@ -34,7 +34,7 @@ impl TestContract for Contract {
         storage.counter.write(incremented);
         incremented
     }
-}\n```
+}
 ```
 
 ## Build and deploy

@@ -22,7 +22,7 @@ different types. This would be similar to Rust's `Into` and `From` traits. In
 Sway your conversion trait would look something like:
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: trait_definition
 trait Convert<T> {
@@ -64,7 +64,7 @@ where
 {
     Rectangle::from(t)
 }
-// ANCHOR_END: trait_constraint\n```
+// ANCHOR_END: trait_constraint
 ```
 
 The trait `Convert` takes a generic type `T`. `Convert` has one method
@@ -74,7 +74,7 @@ of that data type but will take as input the type that you define as `T`. Here
 is an example:
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: trait_definition
 trait Convert<T> {
@@ -116,7 +116,7 @@ where
 {
     Rectangle::from(t)
 }
-// ANCHOR_END: trait_constraint\n```
+// ANCHOR_END: trait_constraint
 ```
 
 In this example, you have two different data types, `Square` and `Rectangle`.
@@ -126,7 +126,7 @@ versa) and thus you can implement the conversion trait for those types.
 If we want to call these methods we can do so by:
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: trait_definition
 trait Convert<T> {
@@ -168,7 +168,7 @@ where
 {
     Rectangle::from(t)
 }
-// ANCHOR_END: trait_constraint\n```
+// ANCHOR_END: trait_constraint
 ```
 
 ## Trait Constraints
@@ -181,7 +181,7 @@ If we wanted to use trait constraints with our `Convert` trait from the previous
 section we could do so like so:
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: trait_definition
 trait Convert<T> {
@@ -223,7 +223,7 @@ where
 {
     Rectangle::from(t)
 }
-// ANCHOR_END: trait_constraint\n```
+// ANCHOR_END: trait_constraint
 ```
 
 This function allows you to take any generic data type `T` and convert it to the

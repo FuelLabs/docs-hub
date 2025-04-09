@@ -13,7 +13,7 @@ In order to use the Admin Library, Sway Libs must be added to the `Forc.toml` fi
 To import the Admin Library, be sure to include both the Admin and Ownership Libraries in your import statements.
 
 ```sway
-```sway\nlibrary;
+library;
 
 mod owner_integration;
 
@@ -59,7 +59,7 @@ fn check_if_admin(admin: Identity) {
     let status = is_admin(admin);
     assert(status);
 }
-// ANCHOR_END: check_admin\n```
+// ANCHOR_END: check_admin
 ```
 
 ## Integrating the Admin Library into the Ownership Library
@@ -67,7 +67,7 @@ fn check_if_admin(admin: Identity) {
 To use the Admin library, be sure to set a contract owner for your contract. The following demonstrates setting a contract owner using the [Ownership Library](../ownership/).
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: ownership_integration
 use sway_libs::{admin::add_admin, ownership::initialize_ownership};
@@ -82,7 +82,7 @@ fn add_a_admin(new_admin: Identity) {
     // Can only be called by contract's owner set in the constructor above.
     add_admin(new_admin);
 }
-// ANCHOR_END: ownership_integration\n```
+// ANCHOR_END: ownership_integration
 ```
 
 ## Basic Functionality
@@ -92,7 +92,7 @@ fn add_a_admin(new_admin: Identity) {
 To add a new admin to a contract, call the `add_admin()` function.
 
 ```sway
-```sway\nlibrary;
+library;
 
 mod owner_integration;
 
@@ -138,7 +138,7 @@ fn check_if_admin(admin: Identity) {
     let status = is_admin(admin);
     assert(status);
 }
-// ANCHOR_END: check_admin\n```
+// ANCHOR_END: check_admin
 ```
 
 > **NOTE** Only the contract's owner may call this function. Please see the example above to set a contract owner.
@@ -148,7 +148,7 @@ fn check_if_admin(admin: Identity) {
 To remove an admin from a contract, call the `revoke_admin()` function.
 
 ```sway
-```sway\nlibrary;
+library;
 
 mod owner_integration;
 
@@ -194,7 +194,7 @@ fn check_if_admin(admin: Identity) {
     let status = is_admin(admin);
     assert(status);
 }
-// ANCHOR_END: check_admin\n```
+// ANCHOR_END: check_admin
 ```
 
 > **NOTE** Only the contract's owner may call this function. Please see the example above to set a contract owner.
@@ -204,7 +204,7 @@ fn check_if_admin(admin: Identity) {
 To restrict a function to only an admin, call the `only_admin()` function.
 
 ```sway
-```sway\nlibrary;
+library;
 
 mod owner_integration;
 
@@ -250,7 +250,7 @@ fn check_if_admin(admin: Identity) {
     let status = is_admin(admin);
     assert(status);
 }
-// ANCHOR_END: check_admin\n```
+// ANCHOR_END: check_admin
 ```
 
 > **NOTE:** Admins and the contract's owner are independent of one another. `only_admin()` will revert if called by the contract's owner.
@@ -258,7 +258,7 @@ fn check_if_admin(admin: Identity) {
 To restrict a function to only an admin or the contract's owner, call the `only_owner_or_admin()` function.
 
 ```sway
-```sway\nlibrary;
+library;
 
 mod owner_integration;
 
@@ -304,7 +304,7 @@ fn check_if_admin(admin: Identity) {
     let status = is_admin(admin);
     assert(status);
 }
-// ANCHOR_END: check_admin\n```
+// ANCHOR_END: check_admin
 ```
 
 ### Checking Admin Status
@@ -312,7 +312,7 @@ fn check_if_admin(admin: Identity) {
 To check the administrative privileges of a user, call the `is_admin()` function.
 
 ```sway
-```sway\nlibrary;
+library;
 
 mod owner_integration;
 
@@ -358,5 +358,5 @@ fn check_if_admin(admin: Identity) {
     let status = is_admin(admin);
     assert(status);
 }
-// ANCHOR_END: check_admin\n```
+// ANCHOR_END: check_admin
 ```

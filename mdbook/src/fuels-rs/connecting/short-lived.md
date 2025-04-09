@@ -3,7 +3,7 @@
 You can use the SDK to spin up a local, ideally short-lived Fuel node. Then, you can instantiate a Fuel client, pointing to this node.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -1214,7 +1214,7 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 This approach is ideal for contract testing.
@@ -1222,7 +1222,7 @@ This approach is ideal for contract testing.
 You can also use the test helper `setup_test_provider()` for this:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::prelude::*;
 
@@ -1612,7 +1612,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 You can also use `launch_provider_and_get_wallet()`, which abstracts away the `setup_test_provider()` and the wallet creation, all in one single method:

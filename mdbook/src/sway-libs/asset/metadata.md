@@ -9,7 +9,7 @@ In order to use the Asset Library, Sway Libs and [Sway Standards](https://docs.f
 To import the Asset Library Base Functionality and [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) Standard to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{bytes::Bytes, string::String};
 
@@ -92,7 +92,7 @@ fn get_metadata(asset: AssetId, key: String) {
         // do something with string
     }
     // ANCHOR_END: get_metadata_as
-}\n```
+}
 ```
 
 ## Integration with the SRC-7 Standard
@@ -100,7 +100,7 @@ fn get_metadata(asset: AssetId, key: String) {
 The [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) definition states that the following abi implementation is required for any Native Asset on Fuel which uses stateful metadata:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{bytes::Bytes, string::String};
 
@@ -183,7 +183,7 @@ fn get_metadata(asset: AssetId, key: String) {
         // do something with string
     }
     // ANCHOR_END: get_metadata_as
-}\n```
+}
 ```
 
 The Asset Library has the following complimentary data type for the [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) standard:
@@ -195,7 +195,7 @@ The Asset Library has the following complimentary data type for the [SRC-7](http
 Once imported, the Asset Library's metadata functionality should be available. To use them, be sure to add the storage block below to your contract which enables the [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) standard.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{bytes::Bytes, string::String};
 
@@ -278,7 +278,7 @@ fn get_metadata(asset: AssetId, key: String) {
         // do something with string
     }
     // ANCHOR_END: get_metadata_as
-}\n```
+}
 ```
 
 ## Using the `StorageMetadata` Type
@@ -297,7 +297,7 @@ To set some metadata of any of the above types for an Asset, you can use the `Se
 The `_set_metadata()` function follows the SRC-7 standard for logging and will emit the `SetMetadataEvent` when called.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::string::String;
 use std::bytes::Bytes;
@@ -354,7 +354,7 @@ impl CustomSetAssetMetadata for Contract {
         storage.metadata.insert(asset, key, string_metadata);
     }
 }
-// ANCHOR_END: setting_src7_attributes_custom_abi\n```
+// ANCHOR_END: setting_src7_attributes_custom_abi
 ```
 
 > **NOTE** The `_set_metadata()` function will set the metadata of an asset *unconditionally*. External checks should be applied to restrict the setting of metadata.
@@ -362,7 +362,7 @@ impl CustomSetAssetMetadata for Contract {
 To set the metadata of an Asset, using only one of the above types, you can define a custom ABI and use it as such:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::string::String;
 use std::bytes::Bytes;
@@ -419,7 +419,7 @@ impl CustomSetAssetMetadata for Contract {
         storage.metadata.insert(asset, key, string_metadata);
     }
 }
-// ANCHOR_END: setting_src7_attributes_custom_abi\n```
+// ANCHOR_END: setting_src7_attributes_custom_abi
 ```
 
 > **NOTE** The `_set_metadata()` function will set the metadata of an asset *unconditionally*. External checks should be applied to restrict the setting of metadata.
@@ -429,7 +429,7 @@ impl CustomSetAssetMetadata for Contract {
 To use the `StorageMetadata` type, simply get the stored metadata with the associated `key` and `AssetId` using the provided `_metadata()` convenience function. The example below shows the implementation of the [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) standard in combination with the Asset Library's `StorageMetadata` type and the `_metadata()` function with no user defined restrictions or custom functionality.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::string::String;
 
@@ -449,7 +449,7 @@ impl SRC7 for Contract {
         storage.metadata.get(asset, key)
     }
 }
-// ANCHOR_END: basic_src7\n```
+// ANCHOR_END: basic_src7
 ```
 
 ### Getting Metadata
@@ -457,7 +457,7 @@ impl SRC7 for Contract {
 To get the metadata for an asset, apart from the above mentioned `_metadata()` convenience function, you can also use the `get()` method on the `StorageMetadata` type, which returns the `Metadata` type.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{bytes::Bytes, string::String};
 
@@ -540,7 +540,7 @@ fn get_metadata(asset: AssetId, key: String) {
         // do something with string
     }
     // ANCHOR_END: get_metadata_as
-}\n```
+}
 ```
 
 This results an `Option` type as the metadata may not be set for the asset and key combination.
@@ -548,7 +548,7 @@ This results an `Option` type as the metadata may not be set for the asset and k
 If you know that the metadata is set, but you don't know the type, you can use a match statement to access the metadata.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{bytes::Bytes, string::String};
 
@@ -631,13 +631,13 @@ fn get_metadata(asset: AssetId, key: String) {
         // do something with string
     }
     // ANCHOR_END: get_metadata_as
-}\n```
+}
 ```
 
 If you know that the metadata is set and you know the type, you can use the `as_*` methods to access the metadata. We also provide `is_*` methods to check if the metadata is of a specific type.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{bytes::Bytes, string::String};
 
@@ -720,5 +720,5 @@ fn get_metadata(asset: AssetId, key: String) {
         // do something with string
     }
     // ANCHOR_END: get_metadata_as
-}\n```
+}
 ```

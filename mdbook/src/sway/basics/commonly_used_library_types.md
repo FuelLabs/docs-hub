@@ -10,7 +10,7 @@ Type `Result` is the type used for returning and propagating errors. It is an `e
 <!-- result:example:end -->
 
 ```sway
-```sway\n//! Error handling with the `Result` type.
+//! Error handling with the `Result` type.
 //!
 //! `Result<T, E>` `Result` is the type used for returning and propagating
 //! errors. It is an enum with the variants, `Ok(T)`, representing
@@ -301,7 +301,7 @@ impl<T, E> Eq for Result<T, E>
 where
     T: Eq,
     E: Eq,
-{}\n```
+{}
 ```
 
 <!-- This section should explain when to use the `Result` type -->
@@ -312,7 +312,7 @@ Functions return `Result` whenever errors are expected and recoverable.
 Take the following example:
 
 ```sway
-```sway\nscript;
+script;
 
 enum MyContractError {
     DivisionByZero: (),
@@ -332,7 +332,7 @@ fn main() -> Result<u64, str[4]> {
         Ok(value) => Ok(value),
         Err(MyContractError::DivisionByZero) => Err(__to_str_array("Fail")),
     }
-}\n```
+}
 ```
 
 ## `Option<T>`
@@ -348,7 +348,7 @@ The implementation of `Option` matches on the variant: if it's `Ok` it returns t
 <!-- option:example:end -->
 
 ```sway
-```sway\n//! A type for optional values.
+//! A type for optional values.
 //!
 //! Type `Option` represents an optional value: every `Option`
 //! is either `Some` and contains a value, or `None`, and
@@ -673,7 +673,7 @@ impl<T> Option<T> {
             },
         }
     }
-}\n```
+}
 ```
 
 <!-- This section should explain when to use the `Option` type -->
@@ -684,7 +684,7 @@ impl<T> Option<T> {
 Below is an example that uses pattern matching to handle invalid divisions by 0 by returning an `Option`:
 
 ```sway
-```sway\nscript;
+script;
 
 fn divide(numerator: u64, denominator: u64) -> Option<u64> {
     if denominator == 0 {
@@ -703,5 +703,5 @@ fn main() {
         // The division was invalid
         None => std::logging::log("Cannot divide by 0"),
     }
-}\n```
+}
 ```

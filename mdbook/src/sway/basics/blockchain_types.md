@@ -72,7 +72,7 @@ The `Identity` type is an enum that allows for the handling of both `Address` an
 An `Identity` is implemented as follows.
 
 ```sway
-```sway\n//! A wrapper type with two variants, `Address` and `ContractId`.
+//! A wrapper type with two variants, `Address` and `ContractId`.
 //! The use of this type allows for handling interactions with contracts and addresses in a unified manner.
 library;
 
@@ -227,13 +227,13 @@ impl Hash for Identity {
             },
         }
     }
-}\n```
+}
 ```
 
 Casting to an `Identity` must be done explicitly:
 
 ```sway
-```sway\ncontract;
+contract;
 
 mod r#abi;
 mod errors;
@@ -289,13 +289,13 @@ impl IdentityExample for Contract {
 
 fn takes_address(address: Address) {}
 
-fn takes_contract_id(contract_id: ContractId) {}\n```
+fn takes_contract_id(contract_id: ContractId) {}
 ```
 
 A `match` statement can be used to return to an `Address` or `ContractId` as well as handle cases in which their execution differs.
 
 ```sway
-```sway\ncontract;
+contract;
 
 mod r#abi;
 mod errors;
@@ -351,11 +351,11 @@ impl IdentityExample for Contract {
 
 fn takes_address(address: Address) {}
 
-fn takes_contract_id(contract_id: ContractId) {}\n```
+fn takes_contract_id(contract_id: ContractId) {}
 ```
 
 ```sway
-```sway\ncontract;
+contract;
 
 mod r#abi;
 mod errors;
@@ -411,7 +411,7 @@ impl IdentityExample for Contract {
 
 fn takes_address(address: Address) {}
 
-fn takes_contract_id(contract_id: ContractId) {}\n```
+fn takes_contract_id(contract_id: ContractId) {}
 ```
 <!-- This section should explain the use case for the `Identity` type -->
 <!-- use_identity:example:start -->
@@ -419,7 +419,7 @@ A common use case for `Identity` is for access control. The use of `Identity` un
 <!-- use_identity:example:end -->
 
 ```sway
-```sway\ncontract;
+contract;
 
 mod r#abi;
 mod errors;
@@ -475,5 +475,5 @@ impl IdentityExample for Contract {
 
 fn takes_address(address: Address) {}
 
-fn takes_contract_id(contract_id: ContractId) {}\n```
+fn takes_contract_id(contract_id: ContractId) {}
 ```

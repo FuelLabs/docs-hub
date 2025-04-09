@@ -6,7 +6,7 @@ used by the node to identify which method we wish to execute.
 If, for whatever reason, you wish to generate the function selector yourself you can do so:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::collections::HashMap;
 
@@ -131,5 +131,5 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```

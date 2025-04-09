@@ -3,7 +3,7 @@
 In Fuel, a type called `Bytes` represents a collection of tightly-packed bytes. The Rust SDK represents `Bytes` as `Bytes(Vec<u8>)`. Here's an example of using `Bytes` in a contract call:
 
 ```rust,ignore
-```rust\nuse std::str::FromStr;
+use std::str::FromStr;
 
 use fuels::{
     prelude::*,
@@ -2015,13 +2015,13 @@ async fn nested_heap_types() -> Result<()> {
     assert_eq!(result.value, expected);
 
     Ok(())
-}\n```
+}
 ```
 
 If you have a hexadecimal value as a string and wish to convert it to `Bytes`, you may do so with `from_hex_str`:
 
 ```rust,ignore
-```rust\nuse crate::types::errors::Result;
+use crate::types::errors::Result;
 
 #[derive(Debug, PartialEq, Clone, Eq)]
 pub struct Bytes(pub Vec<u8>);
@@ -2084,5 +2084,5 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```

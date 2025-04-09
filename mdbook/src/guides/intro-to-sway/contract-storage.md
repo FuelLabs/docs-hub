@@ -5,13 +5,7 @@ Next, we'll introduce the storage block. This is where you store all persistent 
 
 Variables declared within a function and not saved in the storage block will be discarded once the function completes its execution. Add the storage block below to your `main.sw` file:
 
-<TestAction
-id="sway-storage"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/sway-store/sway-programs/contract/src/main.sw'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"

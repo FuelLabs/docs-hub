@@ -24,7 +24,7 @@ wallet_abi = { path = "../wallet_abi/" }
 ## ABI Declaration
 
 ```sway
-```sway\n// ANCHOR: abi_library
+// ANCHOR: abi_library
 library;
 
 // ANCHOR: abi
@@ -40,13 +40,13 @@ abi Wallet {
     // ANCHOR_END: send_funds
 }
 // ANCHOR: abi
-// ANCHOR_END: abi_library\n```
+// ANCHOR_END: abi_library
 ```
 
 ## ABI Implementation
 
 ```sway
-```sway\n// ANCHOR: full_wallet
+// ANCHOR: full_wallet
 contract;
 
 use std::{asset::transfer, call_frames::msg_asset_id, context::msg_amount};
@@ -96,5 +96,5 @@ impl Wallet for Contract {
     }
 }
 // ANCHOR_END: abi_impl
-// ANCHOR_END: full_wallet\n```
+// ANCHOR_END: full_wallet
 ```

@@ -205,7 +205,7 @@ x[0] = 0;
 ```
 
 ```sway
-```sway\nscript;
+script;
 
 struct Foo {
     f1: u32,
@@ -238,5 +238,5 @@ fn main() {
     // Mutating the element of an array
     array_of_bools[1] = true;
     assert(array_of_bools[1]);
-}\n```
+}
 ```

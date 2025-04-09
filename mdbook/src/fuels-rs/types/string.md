@@ -5,7 +5,7 @@ The Rust SDK represents Fuel's `String`s as `SizedAsciiString<LEN>`, where the g
 Here's how you can create a simple string using `SizedAsciiString`:
 
 ```rust,ignore
-```rust\nuse std::fmt::{Debug, Display, Formatter};
+use std::fmt::{Debug, Display, Formatter};
 
 use serde::{Deserialize, Serialize};
 
@@ -306,13 +306,13 @@ mod tests {
         let bytes: &[u8] = sized_str.as_ref().as_bytes();
         assert_eq!(bytes, &[97, 98, 99]);
     }
-}\n```
+}
 ```
 
 To make working with `SizedAsciiString`s easier, you can use `try_into()` to convert from Rust's `String` to `SizedAsciiString`, and you can use `into()` to convert from `SizedAsciiString` to Rust's `String`. Here are a few examples:
 
 ```rust,ignore
-```rust\nuse std::fmt::{Debug, Display, Formatter};
+use std::fmt::{Debug, Display, Formatter};
 
 use serde::{Deserialize, Serialize};
 
@@ -613,7 +613,7 @@ mod tests {
         let bytes: &[u8] = sized_str.as_ref().as_bytes();
         assert_eq!(bytes, &[97, 98, 99]);
     }
-}\n```
+}
 ```
 
 If your contract's method takes and returns, for instance, a Sway's `str[23]`. When using the SDK, this method will take and return a `SizedAsciiString<23>`.

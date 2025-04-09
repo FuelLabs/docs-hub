@@ -13,13 +13,7 @@ cd ../..
 
 and create a separate project called `predicate-script-logging`.
 
-<TestAction
-id="create-predicate-script-logging"
-action={{
-  name: 'runCommand',
-  commandFolder: 'guides-testing/'
-}}
-/>
+
 
 ```sh
 forc new --predicate predicate-script-logging
@@ -45,13 +39,7 @@ However, let's try switching the program type from a `predicate` to a `script`.
 
 Your code should now look like this:
 
-<TestAction
-id="sway-program-type"
-action={{
-  name: 'writeToFile',
-  filepath: 'guides-testing/predicate-script-logging/src/main.sw'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-predicates/predicate-script-logging/src/main.sw"
@@ -62,13 +50,7 @@ action={{
 
 Now, if we attempt to build our script, it should compile without any issues.
 
-<TestAction
-id="build-predicate"
-action={{
-  name: 'runCommand',
-  commandFolder: 'guides-testing/predicate-script-logging/'
-}}
-/>
+
 
 ```sh
 forc build

@@ -53,7 +53,7 @@ When a contract will only ever mint a single asset, it is recommended to use the
 To get the default asset from an internal contract call, call the `default()` function:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
 
@@ -159,7 +159,7 @@ fn from_asset_id() {
     // ANCHOR: from_asset_id
     let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
     // ANCHOR_END: from_asset_id
-}\n```
+}
 ```
 
 #### New
@@ -169,7 +169,7 @@ If a contract mints multiple assets or if the asset has been minted by an extern
 To create a new `AssetId` using a `ContractId` and `SubId`, call the `new()` function:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
 
@@ -275,7 +275,7 @@ fn from_asset_id() {
     // ANCHOR: from_asset_id
     let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
     // ANCHOR_END: from_asset_id
-}\n```
+}
 ```
 
 #### From
@@ -283,7 +283,7 @@ fn from_asset_id() {
 In the case where the `b256` value of an asset is already known, you may call the `from()` function with the `b256` value.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
 
@@ -389,7 +389,7 @@ fn from_asset_id() {
     // ANCHOR: from_asset_id
     let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
     // ANCHOR_END: from_asset_id
-}\n```
+}
 ```
 
 ## The `SubId` type
@@ -405,7 +405,7 @@ On the Fuel Network, the base asset is Ether. This is the only asset on the Fuel
 The Base Asset can be returned anytime by calling the `base()` function of the `AssetId` type.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
 
@@ -511,7 +511,7 @@ fn from_asset_id() {
     // ANCHOR: from_asset_id
     let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
     // ANCHOR_END: from_asset_id
-}\n```
+}
 ```
 
 ## Basic Native Asset Functionality
@@ -521,7 +521,7 @@ fn from_asset_id() {
 To mint a new asset, the `std::asset::mint()` function must be called internally within a contract. A `SubId` and amount of coins must be provided. These newly minted coins will be owned by the contract which minted them. To mint another asset from the same contract, replace the `DEFAULT_SUB_ID` with your desired `SubId`.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
 
@@ -627,13 +627,13 @@ fn from_asset_id() {
     // ANCHOR: from_asset_id
     let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
     // ANCHOR_END: from_asset_id
-}\n```
+}
 ```
 
 You may also mint an asset to a specific entity with the `std::asset::mint_to()` function. Be sure to provide a target `Identity` that will own the newly minted coins.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
 
@@ -739,7 +739,7 @@ fn from_asset_id() {
     // ANCHOR: from_asset_id
     let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
     // ANCHOR_END: from_asset_id
-}\n```
+}
 ```
 
 If you intend to allow external users to mint assets using your contract, the [SRC-3; Mint and Burn Standard](https://github.com/FuelLabs/sway-standards/blob/master/docs/src/src-3-minting-and-burning.md#fn-mintrecipient-identity-vault_sub_id-subid-amount-u64) defines a standard API for minting assets. The [Sway-Libs Asset Library](https://fuellabs.github.io/sway-libs/book/asset/supply.html) also provides an additional library to support implementations of the SRC-3 Standard into your contract.
@@ -749,7 +749,7 @@ If you intend to allow external users to mint assets using your contract, the [S
 To burn an asset, the `std::asset::burn()` function must be called internally from the contract which minted them. The `SubId` used to mint the coins and amount must be provided. The burned coins must be owned by the contract. When an asset is burned it doesn't exist anymore.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
 
@@ -855,7 +855,7 @@ fn from_asset_id() {
     // ANCHOR: from_asset_id
     let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
     // ANCHOR_END: from_asset_id
-}\n```
+}
 ```
 
 If you intend to allow external users to burn assets using your contract, the [SRC-3; Mint and Burn Standard](https://github.com/FuelLabs/sway-standards/blob/master/docs/src/src-3-minting-and-burning.md#fn-mintrecipient-identity-vault_sub_id-subid-amount-u64) defines a standard API for burning assets. The [Sway-Libs Asset Library](https://fuellabs.github.io/sway-libs/book/asset/supply.html) also provides an additional library to support implementations of the SRC-3 Standard into your contract.
@@ -865,7 +865,7 @@ If you intend to allow external users to burn assets using your contract, the [S
 To internally transfer a Native Asset, the `std::asset::transfer()` function must be called. A target `Identity` or user must be provided as well as the `AssetId` of the asset and an amount.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
 
@@ -971,7 +971,7 @@ fn from_asset_id() {
     // ANCHOR: from_asset_id
     let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
     // ANCHOR_END: from_asset_id
-}\n```
+}
 ```
 
 ### Native Asset And Transactions
@@ -981,7 +981,7 @@ fn from_asset_id() {
 To query for the Native Asset sent in a transaction, you may call the `std::call_frames::msg_asset_id()` function.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
 
@@ -1087,7 +1087,7 @@ fn from_asset_id() {
     // ANCHOR: from_asset_id
     let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
     // ANCHOR_END: from_asset_id
-}\n```
+}
 ```
 
 #### Getting The Transaction Amount
@@ -1095,7 +1095,7 @@ fn from_asset_id() {
 To query for the amount of coins sent in a transaction, you may call the `std::context::msg_amount()` function.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
 
@@ -1201,7 +1201,7 @@ fn from_asset_id() {
     // ANCHOR: from_asset_id
     let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
     // ANCHOR_END: from_asset_id
-}\n```
+}
 ```
 
 ### Native Assets and Contracts
@@ -1211,7 +1211,7 @@ fn from_asset_id() {
 To internally check a contract's balance, call the `std::context::this_balance()` function with the corresponding `AssetId`.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
 
@@ -1317,13 +1317,13 @@ fn from_asset_id() {
     // ANCHOR: from_asset_id
     let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
     // ANCHOR_END: from_asset_id
-}\n```
+}
 ```
 
 To check the balance of an external contract, call the `std::context::balance_of()` function with the corresponding `AssetId`.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
 
@@ -1429,7 +1429,7 @@ fn from_asset_id() {
     // ANCHOR: from_asset_id
     let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
     // ANCHOR_END: from_asset_id
-}\n```
+}
 ```
 
 > **NOTE** Due to the FuelVM's UTXO design, balances of `Address`'s cannot be returned in the Sway Language. This must be done off-chain using the SDK.
@@ -1439,7 +1439,7 @@ fn from_asset_id() {
 By default, a contract may not receive a Native Asset in a contract call. To allow transferring of assets to the contract, add the `#[payable]` attribute to the function.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{asset::*, call_frames::msg_asset_id, constants::DEFAULT_SUB_ID, context::*};
 
@@ -1545,7 +1545,7 @@ fn from_asset_id() {
     // ANCHOR: from_asset_id
     let asset_id: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000);
     // ANCHOR_END: from_asset_id
-}\n```
+}
 ```
 
 ## Native Asset Standards

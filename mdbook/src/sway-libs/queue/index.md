@@ -11,7 +11,7 @@ In order to use the Queue Library, Sway Libs must be added to the `Forc.toml` fi
 To import the Queue Library to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::queue::*;
@@ -61,7 +61,7 @@ fn length() {
     // Returns length of queue
     let queue_length = queue.len();
     // ANCHOR_END: length
-}\n```
+}
 ```
 
 ## Basic Functionality
@@ -71,7 +71,7 @@ fn length() {
 Once the `Queue` has been imported, you can create a new queue instance by calling the `new` function.
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::queue::*;
@@ -121,7 +121,7 @@ fn length() {
     // Returns length of queue
     let queue_length = queue.len();
     // ANCHOR_END: length
-}\n```
+}
 ```
 
 ## Enqueuing elements
@@ -129,7 +129,7 @@ fn length() {
 Adding elements to the `Queue` can be done using the `enqueue` function.
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::queue::*;
@@ -179,7 +179,7 @@ fn length() {
     // Returns length of queue
     let queue_length = queue.len();
     // ANCHOR_END: length
-}\n```
+}
 ```
 
 ### Dequeuing Elements
@@ -187,7 +187,7 @@ fn length() {
 To remove elements from the `Queue`, the `dequeue` function is used. This function follows the FIFO principle.
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::queue::*;
@@ -237,7 +237,7 @@ fn length() {
     // Returns length of queue
     let queue_length = queue.len();
     // ANCHOR_END: length
-}\n```
+}
 ```
 
 ### Fetching the Head Element
@@ -245,7 +245,7 @@ fn length() {
 To retrieve the element at the head of the `Queue` without removing it, you can use the `peek` function.
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::queue::*;
@@ -295,7 +295,7 @@ fn length() {
     // Returns length of queue
     let queue_length = queue.len();
     // ANCHOR_END: length
-}\n```
+}
 ```
 
 ### Checking the Queue's Length
@@ -303,7 +303,7 @@ fn length() {
 The `is_empty` and `len` functions can be used to check if the queue is empty and to get the number of elements in the queue respectively.
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::queue::*;
@@ -353,5 +353,5 @@ fn length() {
     // Returns length of queue
     let queue_length = queue.len();
     // ANCHOR_END: length
-}\n```
+}
 ```

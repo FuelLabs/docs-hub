@@ -20,7 +20,7 @@ To declare methods and associated functions for a struct or enum, use an `impl` 
 <!-- methods_af:example:end -->
 
 ```sway
-```sway\nscript;
+script;
 
 struct Foo {
     bar: u64,
@@ -47,7 +47,7 @@ impl Foo {
 fn main() {
     let foo = Foo::new_foo(42, true);
     assert(foo.is_baz_true());
-}\n```
+}
 ```
 
 <!-- This section should explain how to call a method -->
@@ -63,7 +63,7 @@ Similarly to [free functions](functions.md), methods and associated functions ma
 For example:
 
 ```sway
-```sway\nscript;
+script;
 
 enum Color {
     Red: (),
@@ -123,13 +123,13 @@ fn main() {
     assert(point.x == 6);
     assert(point.y == 1);
     // ANCHOR_END: call_move_right
-}\n```
+}
 ```
 
 and when called:
 
 ```sway
-```sway\nscript;
+script;
 
 enum Color {
     Red: (),
@@ -189,5 +189,5 @@ fn main() {
     assert(point.x == 6);
     assert(point.y == 1);
     // ANCHOR_END: call_move_right
-}\n```
+}
 ```

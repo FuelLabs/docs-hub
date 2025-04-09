@@ -7,7 +7,7 @@ Scripts are state-aware in that while they have no persistent storage (because t
 This example script calls a contract:
 
 ```sway
-```sway\nscript;
+script;
 
 use wallet_abi::Wallet;
 
@@ -22,7 +22,7 @@ fn main() {
             coins: 0,
             asset_id: b256::zero(),
         }(amount_to_send, recipient_address);
-}\n```
+}
 ```
 
 Scripts, similar to predicates, rely on a `main()` function as an entry point. You can call other functions defined in a script from the `main()` function or call another contract via an [ABI cast](./smart_contracts.md#calling-a-smart-contract-from-a-script).

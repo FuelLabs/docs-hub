@@ -11,7 +11,7 @@ In order to use the Upgradability library, Sway Libs and [Sway Standards](https:
 To import the Upgradability Library and [SRC-14](https://docs.fuel.network/docs/sway-standards/src-14-simple-upgradeable-proxies/) Standard to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: import
 use sway_libs::upgradability::*;
@@ -93,7 +93,7 @@ fn only_proxy_owner_may_call() {
     only_proxy_owner();
     // Only the proxy's owner may reach this line.
 }
-// ANCHOR_END: only_proxy_owner\n```
+// ANCHOR_END: only_proxy_owner
 ```
 
 ## Integrating the Upgradability Library into the SRC-14 Standard
@@ -101,7 +101,7 @@ fn only_proxy_owner_may_call() {
 To implement the [SRC-14](https://docs.fuel.network/docs/sway-standards/src-14-simple-upgradeable-proxies/) standard with the Upgradability library, be sure to add the Sway Standards dependency to your contract. The following demonstrates the integration of the Ownership library with the SRC-14 standard.
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: import
 use sway_libs::upgradability::*;
@@ -183,7 +183,7 @@ fn only_proxy_owner_may_call() {
     only_proxy_owner();
     // Only the proxy's owner may reach this line.
 }
-// ANCHOR_END: only_proxy_owner\n```
+// ANCHOR_END: only_proxy_owner
 ```
 
 > **NOTE** An initialization method must be implemented to initialize the proxy target or proxy owner.
@@ -195,7 +195,7 @@ fn only_proxy_owner_may_call() {
 Once imported, the Upgradability Library's functions will be available. Use them to change the proxy target for your contract by calling the `set_proxy_target()` function.
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: import
 use sway_libs::upgradability::*;
@@ -277,13 +277,13 @@ fn only_proxy_owner_may_call() {
     only_proxy_owner();
     // Only the proxy's owner may reach this line.
 }
-// ANCHOR_END: only_proxy_owner\n```
+// ANCHOR_END: only_proxy_owner
 ```
 
 Use the `proxy_target()` method to get the current proxy target.
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: import
 use sway_libs::upgradability::*;
@@ -365,7 +365,7 @@ fn only_proxy_owner_may_call() {
     only_proxy_owner();
     // Only the proxy's owner may reach this line.
 }
-// ANCHOR_END: only_proxy_owner\n```
+// ANCHOR_END: only_proxy_owner
 ```
 
 ### Setting and getting a Proxy Owner
@@ -373,7 +373,7 @@ fn only_proxy_owner_may_call() {
 To change the proxy target for your contract use the `set_proxy_owner()` function.
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: import
 use sway_libs::upgradability::*;
@@ -455,13 +455,13 @@ fn only_proxy_owner_may_call() {
     only_proxy_owner();
     // Only the proxy's owner may reach this line.
 }
-// ANCHOR_END: only_proxy_owner\n```
+// ANCHOR_END: only_proxy_owner
 ```
 
 Use the `proxy_owner()` method to get the current proxy owner.
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: import
 use sway_libs::upgradability::*;
@@ -543,7 +543,7 @@ fn only_proxy_owner_may_call() {
     only_proxy_owner();
     // Only the proxy's owner may reach this line.
 }
-// ANCHOR_END: only_proxy_owner\n```
+// ANCHOR_END: only_proxy_owner
 ```
 
 ### Proxy access control
@@ -551,7 +551,7 @@ fn only_proxy_owner_may_call() {
 To restrict a function to only be callable by the proxy's owner, call the `only_proxy_owner()` function.
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: import
 use sway_libs::upgradability::*;
@@ -633,5 +633,5 @@ fn only_proxy_owner_may_call() {
     only_proxy_owner();
     // Only the proxy's owner may reach this line.
 }
-// ANCHOR_END: only_proxy_owner\n```
+// ANCHOR_END: only_proxy_owner
 ```

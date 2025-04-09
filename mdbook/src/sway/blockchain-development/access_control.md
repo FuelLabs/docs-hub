@@ -13,7 +13,7 @@ To deliver an experience akin to the EVM's access control, the `std` library pro
 <!-- msg_sender:example:end -->
 
 ```sway
-```sway\ncontract;
+contract;
 
 abi MyOwnedContract {
     fn receive(field_1: u64) -> bool;
@@ -32,7 +32,7 @@ impl MyOwnedContract for Contract {
 
         true
     }
-}\n```
+}
 ```
 
 <!-- This section should explain how the `msg_sender` method works -->
@@ -53,7 +53,7 @@ To accomplish this, use the [Ownership Library](https://fuellabs.github.io/sway-
 - The following is an example of how to properly lock a function such that only the owner may call a function:
 
 ```sway
-```sway\ncontract;
+contract;
 
 // SRC-5 Ownership Standard `State` enum
 pub enum State {
@@ -129,7 +129,7 @@ impl OwnershipExample for Contract {
         // Do stuff here
     }
     // ANCHOR_END: only_owner_example
-}\n```
+}
 ```
 
 Setting ownership can be done in one of two ways; During compile time or run time.
@@ -137,7 +137,7 @@ Setting ownership can be done in one of two ways; During compile time or run tim
 - The following is an example of how to properly set ownership of a contract during compile time:
 
 ```sway
-```sway\ncontract;
+contract;
 
 // SRC-5 Ownership Standard `State` enum
 pub enum State {
@@ -213,13 +213,13 @@ impl OwnershipExample for Contract {
         // Do stuff here
     }
     // ANCHOR_END: only_owner_example
-}\n```
+}
 ```
 
 - The following is an example of how to properly set ownership of a contract during run time:
 
 ```sway
-```sway\ncontract;
+contract;
 
 // SRC-5 Ownership Standard `State` enum
 pub enum State {
@@ -295,13 +295,13 @@ impl OwnershipExample for Contract {
         // Do stuff here
     }
     // ANCHOR_END: only_owner_example
-}\n```
+}
 ```
 
 - The following is an example of how to properly revoke ownership of a contract:
 
 ```sway
-```sway\ncontract;
+contract;
 
 // SRC-5 Ownership Standard `State` enum
 pub enum State {
@@ -377,13 +377,13 @@ impl OwnershipExample for Contract {
         // Do stuff here
     }
     // ANCHOR_END: only_owner_example
-}\n```
+}
 ```
 
 - The following is an example of how to properly retrieve the state of ownership:
 
 ```sway
-```sway\ncontract;
+contract;
 
 // SRC-5 Ownership Standard `State` enum
 pub enum State {
@@ -459,7 +459,7 @@ impl OwnershipExample for Contract {
         // Do stuff here
     }
     // ANCHOR_END: only_owner_example
-}\n```
+}
 ```
 
 ## Access Control Libraries

@@ -5,7 +5,7 @@ Like `Bytes32`, `AssetId` is a wrapper on `[u8; 32]` with similar methods and im
 These are the main ways of creating an `AssetId`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -271,5 +271,5 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```

@@ -5,7 +5,7 @@
 Here are the main ways of creating a `Bech32Address`, but note that the same applies to `Bech32ContractId`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -271,7 +271,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 > **Note:** when creating a `Bech32Address` from `Address` or `Bech32ContractId` from `ContractId` the `HRP` (Human-Readable Part) is set to **"fuel"** per default.

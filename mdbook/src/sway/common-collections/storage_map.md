@@ -18,7 +18,7 @@ Similarly to `StorageVec<T>`, `StorageMap<K, V>` can only be used in a contract 
 To create a new empty storage map, we have to declare the map in a `storage` block as follows:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::hash::*;
 
@@ -81,7 +81,7 @@ impl StorageMapExample for Contract {
         assert(storage.nested_map.get(2).get(2).try_read().is_none()); // Nothing inserted here
     }
     // ANCHOR_END: storage_map_nested_access
-}\n```
+}
 ```
 
 <!-- This section should explain how to implement storage maps in Sway -->
@@ -101,7 +101,7 @@ To insert key-value pairs into a storage map, we can use the `insert` method.
 For example:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::hash::*;
 
@@ -164,7 +164,7 @@ impl StorageMapExample for Contract {
         assert(storage.nested_map.get(2).get(2).try_read().is_none()); // Nothing inserted here
     }
     // ANCHOR_END: storage_map_nested_access
-}\n```
+}
 ```
 
 Note two details here. First, in order to use `insert`, we need to first access the storage map using the `storage` keyword. Second, because `insert` requires _writing_ into storage, a `#[storage(write)]` annotation is required on the ABI function that calls `insert`.
@@ -186,7 +186,7 @@ We can get a value out of the storage map by providing its `key` to the `get` me
 For example:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::hash::*;
 
@@ -249,7 +249,7 @@ impl StorageMapExample for Contract {
         assert(storage.nested_map.get(2).get(2).try_read().is_none()); // Nothing inserted here
     }
     // ANCHOR_END: storage_map_nested_access
-}\n```
+}
 ```
 
 Here, `value1` will have the value that's associated with the first address, and the result will be `42`. The `get` method returns an `Option<V>`; if there’s no value for that key in the storage map, `get` will return `None`. This program handles the `Option` by calling `unwrap_or` to set `value1` to zero if `map` doesn't have an entry for the key.
@@ -259,7 +259,7 @@ Here, `value1` will have the value that's associated with the first address, and
 Maps with multiple keys can be implemented using tuples as keys. For example:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::hash::*;
 
@@ -322,7 +322,7 @@ impl StorageMapExample for Contract {
         assert(storage.nested_map.get(2).get(2).try_read().is_none()); // Nothing inserted here
     }
     // ANCHOR_END: storage_map_nested_access
-}\n```
+}
 ```
 
 ## Nested Storage Maps
@@ -330,7 +330,7 @@ impl StorageMapExample for Contract {
 It is possible to nest storage maps as follows:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::hash::*;
 
@@ -393,13 +393,13 @@ impl StorageMapExample for Contract {
         assert(storage.nested_map.get(2).get(2).try_read().is_none()); // Nothing inserted here
     }
     // ANCHOR_END: storage_map_nested_access
-}\n```
+}
 ```
 
 The nested map can then be accessed as follows:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::hash::*;
 
@@ -462,5 +462,5 @@ impl StorageMapExample for Contract {
         assert(storage.nested_map.get(2).get(2).try_read().is_none()); // Nothing inserted here
     }
     // ANCHOR_END: storage_map_nested_access
-}\n```
+}
 ```

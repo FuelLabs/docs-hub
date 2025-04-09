@@ -16,7 +16,7 @@ For implementation details, visit the [Sway Libs Docs](https://fuellabs.github.i
    To import the Ownership Library and the [SRC-5](https://docs.fuel.network/docs/sway-standards/src-5-ownership/) standard, include the following in your Sway file:
 
    ```sway
-   ```sway\nlibrary;
+   library;
 
 // ANCHOR: import
 use sway_libs::ownership::*;
@@ -72,7 +72,7 @@ fn renounce_contract_owner() {
     renounce_ownership();
     // Now no one owns the contract.
 }
-// ANCHOR: renouncing_ownership\n```
+// ANCHOR: renouncing_ownership
    ```
 
 ## Integrating the Ownership Library into the SRC-5 Standard
@@ -80,7 +80,7 @@ fn renounce_contract_owner() {
 When integrating the Ownership Library with [SRC-5](https://docs.fuel.network/docs/sway-standards/src-5-ownership/), ensure that the `SRC5` trait from **Sway Standards** is implemented in your contract, as shown below. The `_owner()` function from this library is used to fulfill the SRC-5 requirement of exposing the ownership state.
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::ownership::*;
@@ -136,7 +136,7 @@ fn renounce_contract_owner() {
     renounce_ownership();
     // Now no one owns the contract.
 }
-// ANCHOR: renouncing_ownership\n```
+// ANCHOR: renouncing_ownership
 ```
 
 ## Basic Usage
@@ -146,7 +146,7 @@ fn renounce_contract_owner() {
 Establishes the initial ownership state by calling `initialize_ownership(new_owner)`. This can only be done once, typically in your contract's constructor.
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::ownership::*;
@@ -202,7 +202,7 @@ fn renounce_contract_owner() {
     renounce_ownership();
     // Now no one owns the contract.
 }
-// ANCHOR: renouncing_ownership\n```
+// ANCHOR: renouncing_ownership
 ```
 
 ### Applying Restrictions
@@ -210,7 +210,7 @@ fn renounce_contract_owner() {
 Protect functions so only the owner can call them by invoking `only_owner()` at the start of those functions.
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::ownership::*;
@@ -266,7 +266,7 @@ fn renounce_contract_owner() {
     renounce_ownership();
     // Now no one owns the contract.
 }
-// ANCHOR: renouncing_ownership\n```
+// ANCHOR: renouncing_ownership
 ```
 
 ### Checking the Ownership Status
@@ -274,7 +274,7 @@ fn renounce_contract_owner() {
 To retrieve the current ownership state, call `_owner()`.
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::ownership::*;
@@ -330,7 +330,7 @@ fn renounce_contract_owner() {
     renounce_ownership();
     // Now no one owns the contract.
 }
-// ANCHOR: renouncing_ownership\n```
+// ANCHOR: renouncing_ownership
 ```
 
 ### Transferring Ownership
@@ -338,7 +338,7 @@ fn renounce_contract_owner() {
 To transfer ownership from the current owner to a new owner, call `transfer_ownership(new_owner)`.
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::ownership::*;
@@ -394,7 +394,7 @@ fn renounce_contract_owner() {
     renounce_ownership();
     // Now no one owns the contract.
 }
-// ANCHOR: renouncing_ownership\n```
+// ANCHOR: renouncing_ownership
 ```
 
 ### Renouncing Ownership
@@ -402,7 +402,7 @@ fn renounce_contract_owner() {
 To revoke ownership entirely and disallow the assignment of a new owner, call `renounce_ownership()`.
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::ownership::*;
@@ -458,7 +458,7 @@ fn renounce_contract_owner() {
     renounce_ownership();
     // Now no one owns the contract.
 }
-// ANCHOR: renouncing_ownership\n```
+// ANCHOR: renouncing_ownership
 ```
 
 ## Events
@@ -502,7 +502,7 @@ Emitted when ownership is transferred from one owner to another.
 Below is a example illustrating how to use this library within a Sway contract:
 
 ```sway
-```sway\n// ANCHOR: example_contract
+// ANCHOR: example_contract
 contract;
 
 use sway_libs::ownership::{
@@ -565,7 +565,7 @@ impl MyContract for Contract {
         _owner()
     }
 }
-// ANCHOR: example_contract\n```
+// ANCHOR: example_contract
 ```
 
 1. **Initialization:** Call `constructor(new_owner)` once to set the initial owner.  

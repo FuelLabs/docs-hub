@@ -5,7 +5,7 @@ The `transfer()` method lets you transfer a single asset, but what if you needed
 Lets quickly go over the setup:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{str::FromStr, time::Duration};
 
@@ -339,7 +339,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 We prepare two wallets with randomized addresses. Next, we want one of our wallets to have some random assets, so we set them up with `setup_multiple_assets_coins()`. Having created the coins, we can start a provider and assign it to the previously created wallets.
@@ -349,7 +349,7 @@ Transactions require us to define input and output coins. Let's assume we do not
 We transfer only a part of the base asset balance so that the rest can cover transaction fees:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{str::FromStr, time::Duration};
 
@@ -683,13 +683,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 All that is left is to build the transaction via `ScriptTransactionBuilder`, have `wallet_1` sign it, and we can send it. We confirm this by checking the number of balances present in the receiving wallet and their amount:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{str::FromStr, time::Duration};
 
@@ -1023,5 +1023,5 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```

@@ -17,7 +17,7 @@ struct CounterConfig {
 After using the `abigen!` macro, `CounterConfig` will be accessible in your Rust file! Here's an example:
 
 ```rust,ignore
-```rust\nuse std::str::FromStr;
+use std::str::FromStr;
 
 use fuels::{
     prelude::*,
@@ -2029,7 +2029,7 @@ async fn nested_heap_types() -> Result<()> {
     assert_eq!(result.value, expected);
 
     Ok(())
-}\n```
+}
 ```
 
 You can freely use your custom types (structs or enums) within this scope. That also means passing custom types to functions and receiving custom types from function calls.
@@ -2069,7 +2069,7 @@ impl MyContract for Contract {
 Your Rust code would look like this:
 
 ```rust,ignore
-```rust\nuse std::str::FromStr;
+use std::str::FromStr;
 
 use fuels::{
     prelude::*,
@@ -4081,7 +4081,7 @@ async fn nested_heap_types() -> Result<()> {
     assert_eq!(result.value, expected);
 
     Ok(())
-}\n```
+}
 ```
 
 ### Unused generic type parameters
@@ -4117,7 +4117,7 @@ enum SomeEnum<T, K> {
 To lessen the impact to developer experience you may use the `new` method to initialize a structure without bothering with the `PhantomData`s.:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -4383,13 +4383,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 If your struct doesn't have any fields we'll also derive `Default`. As for enums all `PhantomData`s are placed inside a new variant called `IgnoreMe` which you'll need to ignore in your matches:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -4655,5 +4655,5 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```

@@ -5,13 +5,7 @@ Enumerations, commonly referred to as enums, are a type that can represent one o
 
 Copy the custom error block into your `main.sw` file:
 
-<TestAction
-id="sway-errors"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/sway-store/sway-programs/contract/src/main.sw'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"

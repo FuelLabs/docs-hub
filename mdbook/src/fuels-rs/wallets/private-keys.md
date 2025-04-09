@@ -3,7 +3,7 @@
 A new wallet with a randomly generated private key can be created by supplying `Option<Provider>`.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::prelude::*;
 
@@ -393,13 +393,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Alternatively, you can create a wallet from a predefined `SecretKey`.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::prelude::*;
 
@@ -789,7 +789,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 > Note: if `None` is supplied instead of a provider, any transaction related to the wallet will result

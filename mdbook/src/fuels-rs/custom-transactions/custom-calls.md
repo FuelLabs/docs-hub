@@ -5,7 +5,7 @@ When preparing a contract call via `CallHandler`, the Rust SDK uses a transactio
 ## Custom contract call
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -1216,13 +1216,13 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 ## Custom script call
 
 ```rust,ignore
-```rust\nuse std::time::Duration;
+use std::time::Duration;
 
 use fuel_tx::Output;
 use fuels::{
@@ -1905,5 +1905,5 @@ async fn loader_can_be_presented_as_a_normal_script_with_shifted_configurables()
     response.check(None)?;
 
     Ok(())
-}\n```
+}
 ```

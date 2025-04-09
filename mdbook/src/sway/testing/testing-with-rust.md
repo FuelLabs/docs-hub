@@ -166,7 +166,7 @@ let's try to write some of our own tests!
 First, let's update our contract code with a simple counter example:
 
 ```sway
-```sway\ncontract;
+contract;
 
 abi TestContract {
     #[storage(write)]
@@ -193,7 +193,7 @@ impl TestContract for Contract {
         storage.counter.write(incremented);
         incremented
     }
-}\n```
+}
 ```
 
 To test our `initialize_counter` and `increment_counter` contract methods from

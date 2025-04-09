@@ -11,7 +11,7 @@ In order to use the Merkle Library, Sway Libs must be added to the `Forc.toml` f
 To import the Merkle Library to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: import
 use sway_libs::merkle::binary_proof::*;
@@ -67,7 +67,7 @@ fn verify(
 ) {
     assert(verify_proof(key, leaf, merkle_root, num_leaves, proof));
 }
-// ANCHOR_END: verify_proof\n```
+// ANCHOR_END: verify_proof
 ```
 
 ## Using the Merkle Proof Library In Sway
@@ -88,7 +88,7 @@ The Binary Proof currently allows for you to compute leaves and nodes of a merkl
 To compute a leaf use the `leaf_digest()` function:
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: import
 use sway_libs::merkle::binary_proof::*;
@@ -144,13 +144,13 @@ fn verify(
 ) {
     assert(verify_proof(key, leaf, merkle_root, num_leaves, proof));
 }
-// ANCHOR_END: verify_proof\n```
+// ANCHOR_END: verify_proof
 ```
 
 To compute a node given two leaves, use the `node_digest()` function:
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: import
 use sway_libs::merkle::binary_proof::*;
@@ -206,7 +206,7 @@ fn verify(
 ) {
     assert(verify_proof(key, leaf, merkle_root, num_leaves, proof));
 }
-// ANCHOR_END: verify_proof\n```
+// ANCHOR_END: verify_proof
 ```
 
 > **NOTE** Order matters when computing a node.
@@ -216,7 +216,7 @@ fn verify(
 To compute a Merkle root given a proof, use the `process_proof()` function.
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: import
 use sway_libs::merkle::binary_proof::*;
@@ -272,7 +272,7 @@ fn verify(
 ) {
     assert(verify_proof(key, leaf, merkle_root, num_leaves, proof));
 }
-// ANCHOR_END: verify_proof\n```
+// ANCHOR_END: verify_proof
 ```
 
 ### Verifying a Proof
@@ -280,7 +280,7 @@ fn verify(
 To verify a proof against a merkle root, use the `verify_proof()` function.
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: import
 use sway_libs::merkle::binary_proof::*;
@@ -336,7 +336,7 @@ fn verify(
 ) {
     assert(verify_proof(key, leaf, merkle_root, num_leaves, proof));
 }
-// ANCHOR_END: verify_proof\n```
+// ANCHOR_END: verify_proof
 ```
 
 ## Using the Merkle Proof Library with Fuels-rs
@@ -358,7 +358,7 @@ fuel-merkle = { version = "0.50.0" }
 The following should be added to your Rust file to use the Fuel-Merkle crate.
 
 ```sway
-```rust\n// ANCHOR: import
+// ANCHOR: import
 use fuel_merkle::binary::in_memory::MerkleTree;
 // ANCHOR_END: import
 use fuels::{prelude::*, types::Bits256};
@@ -468,7 +468,7 @@ pub fn leaf_sum(data: &[u8]) -> [u8; 32] {
     hash.update(data);
 
     hash.finalize().into()
-}\n```
+}
 ```
 
 ### Using Fuel-Merkle
@@ -478,7 +478,7 @@ pub fn leaf_sum(data: &[u8]) -> [u8; 32] {
 To create a merkle tree using Fuel-Merkle is as simple as pushing your leaves in increasing order.
 
 ```sway
-```rust\n// ANCHOR: import
+// ANCHOR: import
 use fuel_merkle::binary::in_memory::MerkleTree;
 // ANCHOR_END: import
 use fuels::{prelude::*, types::Bits256};
@@ -588,7 +588,7 @@ pub fn leaf_sum(data: &[u8]) -> [u8; 32] {
     hash.update(data);
 
     hash.finalize().into()
-}\n```
+}
 ```
 
 #### Generating And Verifying A Proof
@@ -596,7 +596,7 @@ pub fn leaf_sum(data: &[u8]) -> [u8; 32] {
 To generate a proof for a specific leaf, you must have the index or key of the leaf. Simply call the prove function:
 
 ```sway
-```rust\n// ANCHOR: import
+// ANCHOR: import
 use fuel_merkle::binary::in_memory::MerkleTree;
 // ANCHOR_END: import
 use fuels::{prelude::*, types::Bits256};
@@ -706,13 +706,13 @@ pub fn leaf_sum(data: &[u8]) -> [u8; 32] {
     hash.update(data);
 
     hash.finalize().into()
-}\n```
+}
 ```
 
 Once the proof has been generated, you may call the Sway Smart Contract's `verify_proof` function:
 
 ```sway
-```rust\n// ANCHOR: import
+// ANCHOR: import
 use fuel_merkle::binary::in_memory::MerkleTree;
 // ANCHOR_END: import
 use fuels::{prelude::*, types::Bits256};
@@ -822,5 +822,5 @@ pub fn leaf_sum(data: &[u8]) -> [u8; 32] {
     hash.update(data);
 
     hash.finalize().into()
-}\n```
+}
 ```

@@ -3,7 +3,7 @@
 In Sway, you can define `configurable` constants which can be changed during the contract deployment in the SDK. Here is an example how the constants are defined.
 
 ```rust,ignore
-```sway\ncontract;
+contract;
 
 #[allow(dead_code)]
 enum EnumWithGeneric<D> {
@@ -43,13 +43,13 @@ impl TestContract for Contract {
     fn return_configurables() -> (bool, u8, u16, u32, u64, u256, b256, str[4], (u8, bool), [u32; 3], StructWithGeneric<u8>, EnumWithGeneric<bool>) {
         (BOOL, U8, U16, U32, U64, U256, B256, STR_4, TUPLE, ARRAY, STRUCT, ENUM)
     }
-}\n```
+}
 ```
 
 Each of the configurable constants will get a dedicated `with` method in the SDK. For example, the constant `STR_4` will get the `with_STR_4` method which accepts the same type as defined in the contract code. Below is an example where we chain several `with` methods and deploy the contract with the new constants.
 
 ```rust,ignore
-```rust\nuse fuels::{
+use fuels::{
     core::codec::EncoderConfig,
     prelude::*,
     types::{Bits256, SizedAsciiString, U256},
@@ -374,5 +374,5 @@ async fn configurable_encoder_config_is_applied() {
             .to_string()
             .contains("token limit `1` reached while encoding. Try increasing it"),)
     }
-}\n```
+}
 ```

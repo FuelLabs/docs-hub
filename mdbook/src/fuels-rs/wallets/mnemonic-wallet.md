@@ -9,7 +9,7 @@ The SDK gives you two wallets from mnemonic instantiation methods: one that take
 Here's how you can create wallets with both mnemonic phrases and derivation paths:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::prelude::*;
 
@@ -399,5 +399,5 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```

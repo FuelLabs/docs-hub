@@ -12,7 +12,7 @@ duplication.
 A high level pre-upload:
 
 ```rust,ignore
-```rust\nuse std::time::Duration;
+use std::time::Duration;
 
 use fuel_tx::Output;
 use fuels::{
@@ -695,7 +695,7 @@ async fn loader_can_be_presented_as_a_normal_script_with_shifted_configurables()
     response.check(None)?;
 
     Ok(())
-}\n```
+}
 ```
 
 The upload of the blob is handled inside of the `convert_into_loader` method. If you
@@ -703,7 +703,7 @@ want more fine-grained control over it, you can create the script transaction
 manually:
 
 ```rust,ignore
-```rust\nuse std::time::Duration;
+use std::time::Duration;
 
 use fuel_tx::Output;
 use fuels::{
@@ -1386,7 +1386,7 @@ async fn loader_can_be_presented_as_a_normal_script_with_shifted_configurables()
     response.check(None)?;
 
     Ok(())
-}\n```
+}
 ```
 
 ## Predicates
@@ -1394,7 +1394,7 @@ async fn loader_can_be_presented_as_a_normal_script_with_shifted_configurables()
 You can prepare a predicate for pre-uploading without doing network requests:
 
 ```rust,ignore
-```rust\nuse std::default::Default;
+use std::default::Default;
 
 use fuels::{
     core::{
@@ -2640,14 +2640,14 @@ async fn predicate_configurables_in_blobs() -> Result<()> {
     .await;
 
     Ok(())
-}\n```
+}
 ```
 
 Once you want to execute the predicate, you must beforehand upload the blob
 containing its code:
 
 ```rust,ignore
-```rust\nuse std::default::Default;
+use std::default::Default;
 
 use fuels::{
     core::{
@@ -3893,7 +3893,7 @@ async fn predicate_configurables_in_blobs() -> Result<()> {
     .await;
 
     Ok(())
-}\n```
+}
 ```
 
 By pre-uploading the predicate code, you allow for cheaper calls to the predicate

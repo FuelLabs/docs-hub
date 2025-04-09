@@ -5,7 +5,7 @@ This example demonstrates how to start a short-lived Fuel node with custom conse
 First, we have to import `ConsensusParameters` and `ChainConfig`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{str::FromStr, time::Duration};
 
@@ -339,13 +339,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Next, we can define some values for the consensus parameters:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{str::FromStr, time::Duration};
 
@@ -679,13 +679,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Before we can start a node, we probably also want to define some genesis coins and assign them to an address:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{str::FromStr, time::Duration};
 
@@ -1019,14 +1019,14 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Finally, we call `setup_test_provider()`, which starts a node with the given configurations and returns a
 provider attached to that node:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{str::FromStr, time::Duration};
 
@@ -1360,5 +1360,5 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```

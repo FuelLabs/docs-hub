@@ -3,7 +3,7 @@
 With the function `estimate_transaction_cost(tolerance: Option<f64>, block_horizon: Option<u32>)` provided by `CallHandler`, you can get a cost estimation for a specific call. The return type, `TransactionCost`, is a struct that contains relevant information for the estimation:
 
 ```rust,ignore
-```rust\n#[cfg(feature = "coin-cache")]
+#[cfg(feature = "coin-cache")]
 use std::sync::Arc;
 use std::{collections::HashMap, fmt::Debug, net::SocketAddr};
 
@@ -902,13 +902,13 @@ impl DryRunner for Provider {
     async fn consensus_parameters(&self) -> Result<ConsensusParameters> {
         Provider::consensus_parameters(self).await
     }
-}\n```
+}
 ```
 
 Below are examples that show how to get the estimated transaction cost from single and multi call transactions.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -2119,11 +2119,11 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -3334,7 +3334,7 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 The transaction cost estimation can be used to set the gas limit for an actual call, or to show the user the estimated cost.

@@ -5,7 +5,7 @@ The second collection type we’ll look at is `StorageVec<T>`. Just like vectors
 In order to use `StorageVec<T>`, you must first import `StorageVec` as follows:
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: storage_vec_import
 use std::storage::storage_vec::*;
@@ -138,7 +138,7 @@ impl StorageVecContract for Contract {
         assert(inner_vec1.get(3).is_none());
     }
     // ANCHOR_END: access_nested_vec 
-}\n```
+}
 ```
 
 Another major difference between `Vec<T>` and `StorageVec<T>` is that `StorageVec<T>` can only be used in a contract because only contracts are allowed to access persistent storage.
@@ -148,7 +148,7 @@ Another major difference between `Vec<T>` and `StorageVec<T>` is that `StorageVe
 To create a new empty `StorageVec`, we have to declare the vector in a `storage` block as follows:
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: storage_vec_import
 use std::storage::storage_vec::*;
@@ -281,7 +281,7 @@ impl StorageVecContract for Contract {
         assert(inner_vec1.get(3).is_none());
     }
     // ANCHOR_END: access_nested_vec 
-}\n```
+}
 ```
 
 Just like any other storage variable, two things are required when declaring a `StorageVec`: a type annotation and an initializer. The initializer is just an empty struct of type `StorageVec` because `StorageVec<T>` itself is an empty struct! Everything that is interesting about `StorageVec<T>` is implemented in its methods.
@@ -293,7 +293,7 @@ Storage vectors, just like `Vec<T>`, are implemented using generics which means 
 To add elements to a `StorageVec`, we can use the `push` method, as shown below:
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: storage_vec_import
 use std::storage::storage_vec::*;
@@ -426,7 +426,7 @@ impl StorageVecContract for Contract {
         assert(inner_vec1.get(3).is_none());
     }
     // ANCHOR_END: access_nested_vec 
-}\n```
+}
 ```
 
 Note two details here. First, in order to use `push`, we need to first access the vector using the `storage` keyword. Second, because `push` requires accessing storage, a `storage` annotation is required on the ABI function that calls `push`. While it may seem that `#[storage(write)]` should be enough here, the `read` annotation is also required because each call to `push` requires _reading_ (and then updating) the length of the `StorageVec` which is also stored in persistent storage.
@@ -443,7 +443,7 @@ Note two details here. First, in order to use `push`, we need to first access th
 To read a value stored in a vector at a particular index, you can use the `get` method as shown below:
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: storage_vec_import
 use std::storage::storage_vec::*;
@@ -576,7 +576,7 @@ impl StorageVecContract for Contract {
         assert(inner_vec1.get(3).is_none());
     }
     // ANCHOR_END: access_nested_vec 
-}\n```
+}
 ```
 
 Note three details here. First, we use the index value of `2` to get the third element because vectors are indexed by number, starting at zero. Second, we get the third element by using the `get` method with the index passed as an argument, which gives us an `Option<StorageKey<T>>`. Third, the ABI function calling `get` only requires the annotation `#[storage(read)]` as one might expect because `get` does not write to storage.
@@ -588,7 +588,7 @@ When the `get` method is passed an index that is outside the vector, it returns 
 Iterating over a storage vector is conceptually the same as [iterating over a `Vec<T>`](./vec.md). The only difference is an additional call to `read()` to actually read the stored value.
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: storage_vec_import
 use std::storage::storage_vec::*;
@@ -721,7 +721,7 @@ impl StorageVecContract for Contract {
         assert(inner_vec1.get(3).is_none());
     }
     // ANCHOR_END: access_nested_vec 
-}\n```
+}
 ```
 
 Note that **modifying a vector during iteration, by e.g. adding or removing elements, is a logical error and results in an [undefined behavior](../reference/undefined_behavior.md)**:
@@ -731,7 +731,7 @@ Note that **modifying a vector during iteration, by e.g. adding or removing elem
 Storage vectors, just like `Vec<T>`, can only store values that are the same type. Similarly to what we did for `Vec<T>` in the section [Using an Enum to store Multiple Types](./vec.md#using-an-enum-to-store-multiple-types), we can define an enum whose variants will hold the different value types, and all the enum variants will be considered the same type: that of the enum. This is shown below:
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: storage_vec_import
 use std::storage::storage_vec::*;
@@ -864,13 +864,13 @@ impl StorageVecContract for Contract {
         assert(inner_vec1.get(3).is_none());
     }
     // ANCHOR_END: access_nested_vec 
-}\n```
+}
 ```
 
 Then we can declare a `StorageVec` in a `storage` block to hold that enum and so, ultimately, holds different types:
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: storage_vec_import
 use std::storage::storage_vec::*;
@@ -1003,13 +1003,13 @@ impl StorageVecContract for Contract {
         assert(inner_vec1.get(3).is_none());
     }
     // ANCHOR_END: access_nested_vec 
-}\n```
+}
 ```
 
 We can now push different enum variants to the `StorageVec` as follows:
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: storage_vec_import
 use std::storage::storage_vec::*;
@@ -1142,7 +1142,7 @@ impl StorageVecContract for Contract {
         assert(inner_vec1.get(3).is_none());
     }
     // ANCHOR_END: access_nested_vec 
-}\n```
+}
 ```
 
 Now that we’ve discussed some of the most common ways to use storage vectors, be sure to review the API documentation for all the many useful methods defined on `StorageVec<T>` by the standard library. For now, these can be found in the [source code for `StorageVec<T>`](https://github.com/FuelLabs/sway/blob/master/sway-lib-std/src/storage.sw). For example, in addition to `push`, a `pop` method removes and returns the last element, a `remove` method removes and returns the element at some chosen index within the vector, an `insert` method inserts an element at some chosen index within the vector, etc.
@@ -1152,7 +1152,7 @@ Now that we’ve discussed some of the most common ways to use storage vectors, 
 It is possible to nest storage vectors as follows:
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: storage_vec_import
 use std::storage::storage_vec::*;
@@ -1285,13 +1285,13 @@ impl StorageVecContract for Contract {
         assert(inner_vec1.get(3).is_none());
     }
     // ANCHOR_END: access_nested_vec 
-}\n```
+}
 ```
 
 The nested vector can then be accessed as follows:
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: storage_vec_import
 use std::storage::storage_vec::*;
@@ -1424,5 +1424,5 @@ impl StorageVecContract for Contract {
         assert(inner_vec1.get(3).is_none());
     }
     // ANCHOR_END: access_nested_vec 
-}\n```
+}
 ```

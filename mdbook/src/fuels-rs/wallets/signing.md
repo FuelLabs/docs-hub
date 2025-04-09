@@ -3,7 +3,7 @@
 Once you've instantiated your wallet in an unlocked state using one of the previously discussed methods, you can sign a message with `wallet.sign`. Below is a full example of how to sign and recover a message.
 
 ```rust,ignore
-```rust\nuse std::collections::HashMap;
+use std::collections::HashMap;
 
 use async_trait::async_trait;
 use fuel_core_client::client::pagination::{PaginatedResult, PaginationRequest};
@@ -451,7 +451,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 ## Adding `Signers` to a transaction builder
@@ -463,7 +463,7 @@ Below is a full example of how to create a transaction builder and add signers t
 > Note: When you add a `Signer` to a transaction builder, the signer is stored inside it and the transaction will not be resolved until you call `build()`!
 
 ```rust,ignore
-```rust\nuse std::collections::HashMap;
+use std::collections::HashMap;
 
 use async_trait::async_trait;
 use fuel_core_client::client::pagination::{PaginatedResult, PaginationRequest};
@@ -911,7 +911,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 ## Signing a built transaction
@@ -919,7 +919,7 @@ mod tests {
 If you have a built transaction and want to add a signature, you can use the `sign_with` method.
 
 ```rust,ignore
-```rust\nuse std::time::Duration;
+use std::time::Duration;
 
 use fuel_tx::{
     consensus_parameters::{ConsensusParametersV1, FeeParametersV1},
@@ -3411,5 +3411,5 @@ async fn loader_storage_works_via_proxy() -> Result<()> {
     assert_eq!(response, 36);
 
     Ok(())
-}\n```
+}
 ```

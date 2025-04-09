@@ -9,13 +9,7 @@ If you see the folder `sway-store/counter-contract/out` you will be able to see 
 
 Inside the `sway-store/src` directory run:
 
-<TestAction
-id="typegen"
-action={{
-  name: 'runCommand',
-  commandFolder: 'guides-testing/sway-store/'
-}}
-/>
+
 
 ```sh
 npx fuels build
@@ -38,13 +32,7 @@ In your  `main.tsx` file, wrap your `App` component with the `FuelProvider` and 
 
 This is where you can pass in custom wallet connectors to customize which wallets your users can use to connect to your app.
 
-<TestAction
-id="fe-index-all"
-action={{
-  name: 'writeToFile',
-  filepath: 'guides-testing/sway-store/src/main.tsx'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/src/main.tsx"
@@ -57,13 +45,7 @@ action={{
 
 Next, open the `src/App.tsx` file, and replace the boilerplate code with the template below:
 
-<TestAction
-id="fe-app-template"
-action={{
-  name: 'writeToFile',
-  filepath: 'guides-testing/sway-store/src/App.tsx'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/src/App.tsx"
@@ -114,13 +96,7 @@ The `useMemo` hook is used to connect to our contract with the connected wallet.
 
 Copy and paste the CSS code below in your `App.css` file to add some simple styling.
 
-<TestAction
-id="fe-css-template"
-action={{
-  name: 'writeToFile',
-  filepath: 'guides-testing/sway-store/src/App.css'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/src/App.css"
@@ -148,13 +124,7 @@ Next we can create our components to show and list items.
 
 Inside `components`, create a file inside called `ListItem.tsx`.
 
-<TestAction
-id="create-list-item-file"
-action={{
-  name: 'runCommand',
-  commandFolder: 'guides-testing/sway-store/src/components'
-}}
-/>
+
 
 ```sh
 touch ListItem.tsx
@@ -162,13 +132,7 @@ touch ListItem.tsx
 
 At the top of the file, import the `useState` hook from `react`, the generated contract ABI from the `contracts` folder, and `bn` (big number) type from `fuels`.
 
-<TestAction
-id="fe-list-item-import"
-action={{
-  name: 'writeToFile',
-  filepath: 'guides-testing/sway-store/src/components/ListItem.tsx'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/src/components/ListItem.tsx"
@@ -179,13 +143,7 @@ action={{
 
 This component will take the contract we made in `App.tsx` as a prop, so let's create an interface for the component.
 
-<TestAction
-id="fe-list-item-interface"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/sway-store/src/components/ListItem.tsx'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/src/components/ListItem.tsx"
@@ -196,13 +154,7 @@ action={{
 
 We can set up the template for the function like this.
 
-<TestAction
-id="fe-list-item-list-item"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/sway-store/src/components/ListItem.tsx'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/src/components/ListItem.tsx"
@@ -214,13 +166,7 @@ action={{
 To list an item, we'll create a form where the user can input the metadata string and price for the item they want to list.
 Let's start by adding some state variables for the `metadata` and `price`. We can also add a `status` variable to track the submit status.
 
-<TestAction
-id="fe-list-item-state-variables"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/sway-store/src/components/ListItem.tsx'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/src/components/ListItem.tsx"
@@ -232,13 +178,7 @@ action={{
 We need to add the `handleSubmit` function.
 We can use the contract prop to call the `list_item` function and pass in the `price` and `metadata` from the form.
 
-<TestAction
-id="fe-list-item-handle-submit"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/sway-store/src/components/ListItem.tsx'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/src/components/ListItem.tsx"
@@ -249,13 +189,7 @@ action={{
 
 Under the heading, add the code below for the form:
 
-<TestAction
-id="fe-list-item-return-form"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/sway-store/src/components/ListItem.tsx'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/src/components/ListItem.tsx"
@@ -271,13 +205,7 @@ You should see the message `Item successfully listed!`.
 
 Next, let's create a new file called `AllItems.tsx` in the `components` folder.
 
-<TestAction
-id="create-all-item-file"
-action={{
-  name: 'runCommand',
-  commandFolder: 'guides-testing/sway-store/src/components'
-}}
-/>
+
 
 ```sh
 touch AllItems.tsx
@@ -285,13 +213,7 @@ touch AllItems.tsx
 
 Copy and paste the template code below for this component:
 
-<TestAction
-id="fe-all-item-template"
-action={{
-  name: 'writeToFile',
-  filepath: 'guides-testing/sway-store/src/components/AllItems.tsx'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/src/components/AllItems.tsx"
@@ -304,13 +226,7 @@ Here we can get the item count to see how many items are listed, and then loop t
 
 First, let's create some state variables to store the number of items listed, an array of the item details, and the loading status.
 
-<TestAction
-id="fe-all-item-state-variables"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/sway-store/src/components/AllItems.tsx'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/src/components/AllItems.tsx"
@@ -322,13 +238,7 @@ action={{
 Next, let's fetch the items in a `useEffect` hook.
 Because these are read-only functions, we can simulate a dry-run of the transaction by using the `get` method instead of `call` so the user doesn't have to sign anything.
 
-<TestAction
-id="fe-all-item-use-effect"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/sway-store/src/components/AllItems.tsx'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/src/components/AllItems.tsx"
@@ -341,13 +251,7 @@ If the item count is greater than `0` and we are able to successfully load the i
 
 The item card will show the item details and a buy button to buy that item, so we'll need to pass the contract and the item as props.
 
-<TestAction
-id="fe-all-item-cards"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/sway-store/src/components/AllItems.tsx'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/src/components/AllItems.tsx"
@@ -361,13 +265,7 @@ action={{
 Now let's create the item card component.
 Create a new file called `ItemCard.tsx` in the components folder.
 
-<TestAction
-id="create-item-card-file"
-action={{
-  name: 'runCommand',
-  commandFolder: 'guides-testing/sway-store/src/components/'
-}}
-/>
+
 
 ```sh
 touch ItemCard.tsx
@@ -375,13 +273,7 @@ touch ItemCard.tsx
 
 After, copy and paste the template code below.
 
-<TestAction
-id="fe-item-card-template"
-action={{
-  name: 'writeToFile',
-  filepath: 'guides-testing/sway-store/src/components/ItemCard.tsx'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/src/components/ItemCard.tsx"
@@ -392,13 +284,7 @@ action={{
 
 Add a `status` variable to track the status of the buy button.
 
-<TestAction
-id="fe-item-card-status"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/sway-store/src/components/ItemCard.tsx'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/src/components/ItemCard.tsx"
@@ -414,13 +300,7 @@ Whenever we call any function that uses the transfer or mint functions in Sway, 
 
 Next, because this function is payable and the user needs to transfer the price of the item, we'll use the `callParams` method to forward the amount. With Fuel you can transfer any type of asset, so we need to specify both the amount and the asset ID.
 
-<TestAction
-id="fe-item-card-buy-item"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/sway-store/src/components/ItemCard.tsx'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/src/components/ItemCard.tsx"
@@ -431,13 +311,7 @@ action={{
 
 Then add the item details and status messages to the card.
 
-<TestAction
-id="fe-item-cards"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/sway-store/src/components/ItemCard.tsx'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/src/components/ItemCard.tsx"
@@ -492,13 +366,7 @@ Ensure that all your files are correctly configured by examining the code below.
 
 Inside the `fuel-project/frontend` directory run:
 
-<TestAction
-id="start-app"
-action={{
-  name: 'runCommand',
-  preCommand: "pnpm pm2 start 'PORT=4000 BROWSER=none <COMMAND>' --name 'react-dapp' --cwd ./guides-testing/fuel-project/frontend"
-}}
-/>
+
 
 ```sh
 npm start
@@ -518,100 +386,5 @@ To create a production build, use npm run build.
 
 And that's it for the frontend! You just created a whole dapp on Fuel!
 
-{/*TODO: MAKE THIS MORE RELIABLE*/}
-{/*
-<TestAction
-id="wait-after-start-app"
-action={{
-  name: 'wait',
-  timeout: 5000
-}}
-/>
 
-<TestAction
-id="go-to-frontend"
-action={{
-  name: 'goToUrl',
-  url: "http://localhost:4000"
-}}
-/>
 
-<TestAction
-id="click-connect-button"
-action={{
-  name: 'clickByRole',
-  role: "button",
-  elementName: "Connect"
-}}
-/>
-
-<TestAction
-id="click-fuel-wallet"
-action={{
-  name: 'clickByLabel',
-  label: 'Connect to Fuel Wallet'
-}}
-/>
-
-<TestAction
-id="approve-connect"
-action={{
-  name: 'walletApproveConnect',
-}}
-/>
-
-<TestAction
-id="wait-after-connect"
-action={{
-  name: 'wait',
-  timeout: 5000
-}}
-/>
-
-<TestAction
-id="click-buy-item-button"
-action={{
-  name: 'clickByTestId',
-  testId: "buy-button-1"
-}}
-/>
-
-<TestAction
-id="approve-txn"
-action={{
-  name: 'walletApprove',
-}}
-/>
-
-<TestAction
-id="wait-after-approve"
-action={{
-  name: 'wait',
-  timeout: 5000
-}}
-/>
-
-<TestAction
-id="check-text"
-action={{
-  name: 'getByLocator-save',
-  locator: "h3 ~ div",
-}}
-/>
-
-<TestAction
-id="wait-after-buy"
-action={{
-  name: 'wait',
-  timeout: 18000
-}}
-/>
-
-<TestAction
-id="check-if-purchased"
-action={{
-  name: 'checkValue',
-  index: 0,
-  value: 'Purchased ✅'
-}}
-/>*/}

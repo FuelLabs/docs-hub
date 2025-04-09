@@ -12,7 +12,7 @@ Upgradeable contracts are designed to allow the logic of a smart contract to be 
 Consider this example proxy contract:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::execution::run_external;
 
@@ -42,7 +42,7 @@ impl Proxy for Contract {
         run_external(target)
     }
 }
-// ANCHOR_END: proxy\n```
+// ANCHOR_END: proxy
 ```
 
 The contract has two functions:
@@ -56,7 +56,7 @@ Notice in the `Proxy` example above, the storage block has a `namespace` attribu
 Below is what an implementation contract could look like for this:
 
 ```sway
-```sway\ncontract;
+contract;
 
 abi Implementation {
     #[storage(write)]
@@ -77,7 +77,7 @@ impl Implementation for Contract {
         new_value
     }
 }
-// ANCHOR_END: target\n```
+// ANCHOR_END: target
 ```
 
 This contract has one function called `double_input`, which calculates the input value times two, updates the `value` variable in storage, and returns the new value.
@@ -106,7 +106,7 @@ You can access function parameters for fallback functions using the `call_frames
 For example, to access the `_foo` input parameter in the proxy function below, you can use the `called_args` method in the `fallback` function:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::execution::run_external;
 
@@ -134,11 +134,11 @@ impl RunExternalTest for Contract {
         run_external(TARGET)
     }
     // ANCHOR_END: does_not_exist_in_the_target
-}\n```
+}
 ```
 
 ```sway
-```sway\ncontract;
+contract;
 
 abi RunExternalTest {
     fn double_value(foo: u64) -> u64;
@@ -166,7 +166,7 @@ fn fallback() -> u64 {
     let foo = called_args::<u64>();
     foo * 3
 }
-// ANCHOR_END: fallback\n```
+// ANCHOR_END: fallback
 ```
 
 In this case, the `does_not_exist_in_the_target` function will return `_foo * 3`.

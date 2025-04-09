@@ -7,7 +7,7 @@ The `std` library provides handy methods for accessing Fuel's native asset opera
 In this example, we show a basic liquidity pool contract minting its own native asset LP asset.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{
     asset::{
@@ -50,5 +50,5 @@ impl LiquidityPool for Contract {
         // Transfer base asset to recipient.
         transfer(Identity::Address(recipient), BASE_ASSET, amount_to_transfer);
     }
-}\n```
+}
 ```

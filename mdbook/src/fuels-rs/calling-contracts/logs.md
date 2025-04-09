@@ -5,7 +5,7 @@ Whenever you log a value within a contract method, the resulting log entry is ad
 Consider the following contract method:
 
 ```rust,ignore
-```sway\ncontract;
+contract;
 
 use std::{logging::log, string::String};
 use contract_logs_abi::ContractLogs;
@@ -185,13 +185,13 @@ impl ContractLogs for Contract {
 
         log(v3);
     }
-}\n```
+}
 ```
 
 You can access the logged values in Rust by calling `decode_logs_with_type::<T>` from a `CallResponse`, where `T` is the type of the logged variables you want to retrieve. The result will be a `Vec<T>`:
 
 ```rust,ignore
-```rust\nuse fuels::{
+use fuels::{
     core::codec::DecoderConfig,
     prelude::*,
     types::{errors::transaction::Reason, AsciiString, Bits256, SizedAsciiString},
@@ -2039,13 +2039,13 @@ async fn script_heap_log() -> Result<()> {
     }
 
     Ok(())
-}\n```
+}
 ```
 
 You can use the `decode_logs()` function to retrieve a `LogResult` struct containing a `results` field that is a vector of `Result<String>` values representing the success or failure of decoding each log.
 
 ```rust, ignore
-```rust\nuse fuels::{
+use fuels::{
     core::codec::DecoderConfig,
     prelude::*,
     types::{errors::transaction::Reason, AsciiString, Bits256, SizedAsciiString},
@@ -3893,7 +3893,7 @@ async fn script_heap_log() -> Result<()> {
     }
 
     Ok(())
-}\n```
+}
 ```
 
 Due to possible performance hits, it is not recommended to use `decode_logs()` outside of a debugging scenario.

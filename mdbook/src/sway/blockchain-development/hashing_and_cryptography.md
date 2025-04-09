@@ -5,7 +5,7 @@ The Sway standard library provides easy access to a selection of cryptographic h
 ## Hashing
 
 ```sway
-```sway\nscript;
+script;
 
 use std::hash::*;
 
@@ -168,7 +168,7 @@ fn main() {
     log(keccak_hashed_array);
     log(keccak_hashed_enum);
     log(keccak_hashed_struct);
-}\n```
+}
 ```
 
 ## Cryptographic Signature Recovery and Verification
@@ -180,7 +180,7 @@ Fuel supports 3 asymmetric cryptographic signature schemes; `Secp256k1`, `Secp25
 Given a `Signature` and a sign `Message`, you can recover a `PublicKey`.
 
 ```sway
-```sway\nscript;
+script;
 
 fn main() {}
 
@@ -397,7 +397,7 @@ fn evm_address_verification() {
     let secp256r1_verified = secp256r1_signature.verify_evm_address(secp256r1_evm_address, signed_message);
     assert(secp256r1_verified.is_ok());
     // ANCHOR_END: evm_address_verification
-}\n```
+}
 ```
 
 ### Signed Message Address Recovery
@@ -405,7 +405,7 @@ fn evm_address_verification() {
 Given a `Signature` and signed `Message`, you can recover a Fuel `Address`.
 
 ```sway
-```sway\nscript;
+script;
 
 fn main() {}
 
@@ -622,7 +622,7 @@ fn evm_address_verification() {
     let secp256r1_verified = secp256r1_signature.verify_evm_address(secp256r1_evm_address, signed_message);
     assert(secp256r1_verified.is_ok());
     // ANCHOR_END: evm_address_verification
-}\n```
+}
 ```
 
 #### Signed Message EVM Address Recovery
@@ -630,7 +630,7 @@ fn evm_address_verification() {
 Recovery of EVM addresses is also supported.
 
 ```sway
-```sway\nscript;
+script;
 
 fn main() {}
 
@@ -847,7 +847,7 @@ fn evm_address_verification() {
     let secp256r1_verified = secp256r1_signature.verify_evm_address(secp256r1_evm_address, signed_message);
     assert(secp256r1_verified.is_ok());
     // ANCHOR_END: evm_address_verification
-}\n```
+}
 ```
 
 ### Public Key Signature Verification
@@ -855,7 +855,7 @@ fn evm_address_verification() {
 Given a `Signature`, `PublicKey`, and `Message`, you can verify that the message was signed using the public key.
 
 ```sway
-```sway\nscript;
+script;
 
 fn main() {}
 
@@ -1072,7 +1072,7 @@ fn evm_address_verification() {
     let secp256r1_verified = secp256r1_signature.verify_evm_address(secp256r1_evm_address, signed_message);
     assert(secp256r1_verified.is_ok());
     // ANCHOR_END: evm_address_verification
-}\n```
+}
 ```
 
 ### Address Signature Verification
@@ -1080,7 +1080,7 @@ fn evm_address_verification() {
 Given a `Signature`, `Address`, and `Message`, you can verify that the message was signed by the address.
 
 ```sway
-```sway\nscript;
+script;
 
 fn main() {}
 
@@ -1297,7 +1297,7 @@ fn evm_address_verification() {
     let secp256r1_verified = secp256r1_signature.verify_evm_address(secp256r1_evm_address, signed_message);
     assert(secp256r1_verified.is_ok());
     // ANCHOR_END: evm_address_verification
-}\n```
+}
 ```
 
 #### EVM Address Signature Verification
@@ -1305,7 +1305,7 @@ fn evm_address_verification() {
 Recovery of EVM addresses verification is also supported.
 
 ```sway
-```sway\nscript;
+script;
 
 fn main() {}
 
@@ -1522,5 +1522,5 @@ fn evm_address_verification() {
     let secp256r1_verified = secp256r1_signature.verify_evm_address(secp256r1_evm_address, signed_message);
     assert(secp256r1_verified.is_ok());
     // ANCHOR_END: evm_address_verification
-}\n```
+}
 ```

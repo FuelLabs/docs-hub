@@ -94,7 +94,7 @@ abi SRC14Extension {
 Example of a minimal SRC-14 implementation with no access control.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::execution::run_external;
 use standards::src14::{SRC14, SRC14_TARGET_STORAGE};
@@ -127,7 +127,7 @@ impl SRC14 for Contract {
 fn fallback() {
     // pass through any other method call to the target
     run_external(storage::SRC14.target.read())
-}\n```
+}
 ```
 
 ### Owned Proxy
@@ -135,7 +135,7 @@ fn fallback() {
 Example of a SRC-14 implementation that also implements `proxy_owner()`.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::execution::run_external;
 use standards::src5::{AccessError, State};
@@ -193,5 +193,5 @@ fn only_owner() {
             .read() == State::Initialized(msg_sender().unwrap()),
         AccessError::NotOwner,
     );
-}\n```
+}
 ```

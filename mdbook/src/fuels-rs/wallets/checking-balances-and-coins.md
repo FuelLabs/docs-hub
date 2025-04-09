@@ -6,7 +6,7 @@ In the Fuel network, each UTXO corresponds to a unique _coin_, and said _coin_ h
 <!-- balance:example:end -->
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::prelude::*;
 
@@ -396,7 +396,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 <!-- This section should explain getting all of the balances of a wallet -->
@@ -405,7 +405,7 @@ If you want to query all the balances (i.e., get the balance for each asset ID i
 <!-- balances:example:end -->
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::prelude::*;
 
@@ -795,7 +795,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 <!-- This section should explain the return type for `get_balances` -->
@@ -804,7 +804,7 @@ The return type is a `HashMap`, where the key is the _asset ID's_ hex string, an
 <!-- balances_return:example:end -->
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::prelude::*;
 
@@ -1194,5 +1194,5 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```

@@ -3,7 +3,7 @@
 You might have noticed this snippet in the previous sections:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -1214,7 +1214,7 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 <!-- This section should explain the purpose of the abigen -->

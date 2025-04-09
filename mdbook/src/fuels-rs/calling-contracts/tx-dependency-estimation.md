@@ -5,7 +5,7 @@ Previously, we mentioned that a contract call might require you to manually spec
 The following example uses a contract call that calls an external contract and later mints assets to a specified address. Calling it without including the dependencies will result in a revert:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -1216,13 +1216,13 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 As mentioned in previous chapters, you can specify the external contract and add an output variable to resolve this:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -2433,13 +2433,13 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 But this requires you to know the contract ID of the external contract and the needed number of output variables. Alternatively, by chaining `.estimate_tx_dependencies()` instead, the dependencies will be estimated by the SDK and set automatically. The optional parameter is the maximum number of simulation attempts:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -3650,7 +3650,7 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 The minimal number of attempts corresponds to the number of external contracts and output variables needed and defaults to 10.

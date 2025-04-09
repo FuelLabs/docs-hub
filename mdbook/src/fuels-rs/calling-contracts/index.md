@@ -10,7 +10,7 @@ Once you've deployed your contract, as seen in the previous sections, you'll lik
 Here's an example. Suppose your Sway contract has two ABI methods called `initialize_counter(u64)` and `increment_counter(u64)`. Once you've deployed it the contract, you can call these methods like this:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -1221,7 +1221,7 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 The example above uses all the default configurations and performs a simple contract call.
@@ -1229,7 +1229,7 @@ The example above uses all the default configurations and performs a simple cont
 Furthermore, if you need to separate submission from value retrieval for any reason, you can do so as follows:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -2440,7 +2440,7 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 Next, we'll see how we can further configure the many different parameters in a contract call.

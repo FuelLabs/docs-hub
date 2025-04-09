@@ -15,7 +15,7 @@ You can use these to forward coins to a contract. You can configure these parame
 For instance, suppose the following contract that uses Sway's `msg_amount()` to return the amount sent in that transaction.
 
 ```rust,ignore
-```sway\ncontract;
+contract;
 
 use std::storage::storage_api::{read, write};
 use std::context::msg_amount;
@@ -154,13 +154,13 @@ impl TestContract for Contract {
     fn new() -> u64 {
         12345u64
     }
-}\n```
+}
 ```
 
 Then, in Rust, after setting up and deploying the above contract, you can configure the amount being sent in the transaction like this:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -1371,7 +1371,7 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 <!-- This section should explain why `call_params` returns a result -->
@@ -1381,7 +1381,7 @@ mod tests {
 In the following example, we try to forward an amount of `100` of the base asset to `non_payable`. As its name suggests, `non_payable` isn't annotated with `#[payable]` in the contract code. Passing `CallParameters` with an amount other than `0` leads to an error:
 
 ```rust,ignore
-```rust\nuse std::time::Duration;
+use std::time::Duration;
 
 use fuel_tx::{
     consensus_parameters::{ConsensusParametersV1, FeeParametersV1},
@@ -3873,7 +3873,7 @@ async fn loader_storage_works_via_proxy() -> Result<()> {
     assert_eq!(response, 36);
 
     Ok(())
-}\n```
+}
 ```
 
 > **Note:** forwarding gas to a contract call is always possible, regardless of the contract method being non-payable.
@@ -3881,7 +3881,7 @@ async fn loader_storage_works_via_proxy() -> Result<()> {
 You can also use `CallParameters::default()` to use the default values:
 
 ```rust,ignore
-```rust\nuse fuel_tx::Word;
+use fuel_tx::Word;
 
 pub const ENUM_DISCRIMINANT_BYTE_WIDTH: usize = 8;
 pub const WORD_SIZE: usize = core::mem::size_of::<Word>();
@@ -3896,13 +3896,13 @@ pub const DEFAULT_GAS_ESTIMATION_BLOCK_HORIZON: u32 = 5;
 // The size of a signature inside a transaction `Witness`
 pub const WITNESS_STATIC_SIZE: usize = 8;
 const SIGNATURE_SIZE: usize = 64;
-pub const SIGNATURE_WITNESS_SIZE: usize = WITNESS_STATIC_SIZE + SIGNATURE_SIZE;\n```
+pub const SIGNATURE_WITNESS_SIZE: usize = WITNESS_STATIC_SIZE + SIGNATURE_SIZE;
 ```
 
 This way:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -5113,7 +5113,7 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 <!-- This section should explain what the `gas_forwarded` parameter does -->
@@ -5122,7 +5122,7 @@ The `gas_forwarded` parameter defines the limit for the actual contract call as 
 <!-- gas:example:end -->
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -6333,7 +6333,7 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 <!-- This section should explain the default forwarding behavior for a call -->

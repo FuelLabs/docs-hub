@@ -119,7 +119,7 @@ fn test_fail() {
 Unit tests can call methods of external contracts if those contracts are added as contract dependencies, i.e. in the [`contract-dependencies`](../forc/manifest_reference.md#the-contract-dependencies-section) section of the manifest file. An example of such calls is shown below:
 
 ```sway
-```sway\n// ANCHOR: multi_contract_calls 
+// ANCHOR: multi_contract_calls 
 contract;
 
 abi CallerContract {
@@ -146,13 +146,13 @@ fn test_multi_contract_calls() {
     assert(!should_be_false);
     assert(should_be_true);
 }
-// ANCHOR: multi_contract_calls\n```
+// ANCHOR: multi_contract_calls
 ```
 
 Example `Forc.toml` for contract above:
 
 ```toml
-```text\n# ANCHOR: multi_contract_call_toml
+# ANCHOR: multi_contract_call_toml
 [project]
 authors = ["Fuel Labs <contact@fuel.sh>"]
 entry = "main.sw"
@@ -164,7 +164,7 @@ std = { path = "../../../sway-lib-std/" }
 
 [contract-dependencies]
 callee = { path = "../callee" }
-# ANCHOR: multi_contract_call_toml\n```
+# ANCHOR: multi_contract_call_toml
 ```
 
 ## Running Tests in Parallel or Serially

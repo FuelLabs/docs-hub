@@ -10,7 +10,7 @@ If you need multiple test wallets, they can be set up using the `launch_custom_p
 <!-- test_wallets:example:end -->
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::prelude::*;
 
@@ -400,7 +400,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 <!-- This section should explain how to customize test wallets -->
@@ -409,7 +409,7 @@ You can customize your test wallets via `WalletsConfig`.
 <!-- custom_test_wallets:example:end -->
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::prelude::*;
 
@@ -799,7 +799,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 <!-- This section should explain that test wallets are deterministic -->
@@ -813,7 +813,7 @@ will have deterministic addresses.
 You can create a test wallet containing multiple assets (including the base asset to pay for gas).
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::prelude::*;
 
@@ -1203,7 +1203,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 - coins: `Vec<(UtxoId, Coin)>` has `num_assets` * `coins_per_assets` coins (UTXOs)
@@ -1214,7 +1214,7 @@ mod tests {
 You can also create assets with specific `AssetId`s, coin amounts, and number of coins.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::prelude::*;
 
@@ -1604,13 +1604,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 This can also be achieved directly with the `WalletsConfig`.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::prelude::*;
 
@@ -2000,7 +2000,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 >**Note** In this case, you need to manually add the base asset and the corresponding number of
@@ -2015,7 +2015,7 @@ You can use only one asset to pay for transaction fees and gas: the base asset, 
 For testing purposes, you can configure coins and amounts for assets. You can use `setup_multiple_assets_coins`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::prelude::*;
 
@@ -2405,7 +2405,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 >**Note** If setting up multiple assets, one of these assets will always be the base asset.
@@ -2413,7 +2413,7 @@ mod tests {
 If you want to create coins only with the base asset, then you can use:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::time::Duration;
 
@@ -2509,7 +2509,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 >**Note** Choosing a large number of coins and assets for `setup_multiple_assets_coins` or `setup_single_asset_coins` can lead to considerable runtime for these methods. This will be improved in the future but for now, we recommend using up to **1_000_000** coins, or **1000** coins and assets simultaneously.

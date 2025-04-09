@@ -11,7 +11,7 @@ In the case of contract call(s), if you have the ABI file, you can also decode
 the arguments to the function by making use of the `AbiFormatter`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -1222,7 +1222,7 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 prints:

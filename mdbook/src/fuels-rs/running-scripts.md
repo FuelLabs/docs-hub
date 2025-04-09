@@ -3,7 +3,7 @@
 You can run a script using its JSON-ABI and the path to its binary file. You can run the scripts with arguments. For this, you have to use the `abigen!` macro seen [previously](./abigen/the-abigen-macro.md).
 
 ```rust,ignore
-```rust\nuse std::time::Duration;
+use std::time::Duration;
 
 use fuel_tx::Output;
 use fuels::{
@@ -686,13 +686,13 @@ async fn loader_can_be_presented_as_a_normal_script_with_shifted_configurables()
     response.check(None)?;
 
     Ok(())
-}\n```
+}
 ```
 
 Furthermore, if you need to separate submission from value retrieval for any reason, you can do so as follows:
 
 ```rust,ignore
-```rust\nuse std::time::Duration;
+use std::time::Duration;
 
 use fuel_tx::Output;
 use fuels::{
@@ -1375,7 +1375,7 @@ async fn loader_can_be_presented_as_a_normal_script_with_shifted_configurables()
     response.check(None)?;
 
     Ok(())
-}\n```
+}
 ```
 
 ## Running scripts with transaction policies
@@ -1383,7 +1383,7 @@ async fn loader_can_be_presented_as_a_normal_script_with_shifted_configurables()
 The method for passing transaction policies is the same as [with contracts](./calling-contracts/tx-policies.md). As a reminder, the workflow would look like this:
 
 ```rust,ignore
-```rust\nuse std::time::Duration;
+use std::time::Duration;
 
 use fuel_tx::Output;
 use fuels::{
@@ -2066,7 +2066,7 @@ async fn loader_can_be_presented_as_a_normal_script_with_shifted_configurables()
     response.check(None)?;
 
     Ok(())
-}\n```
+}
 ```
 
 ## Logs
@@ -2074,7 +2074,7 @@ async fn loader_can_be_presented_as_a_normal_script_with_shifted_configurables()
 Script calls provide the same logging functions, `decode_logs()` and `decode_logs_with_type<T>()`, as contract calls. As a reminder, the workflow looks like this:
 
 ```rust,ignore
-```rust\nuse fuels::{
+use fuels::{
     core::codec::DecoderConfig,
     prelude::*,
     types::{errors::transaction::Reason, AsciiString, Bits256, SizedAsciiString},
@@ -3922,7 +3922,7 @@ async fn script_heap_log() -> Result<()> {
     }
 
     Ok(())
-}\n```
+}
 ```
 
 ## Calling contracts from scripts
@@ -3932,7 +3932,7 @@ Scripts use the same interfaces for setting external contracts as [contract meth
 Below is an example that uses `with_contracts(&[&contract_instance, ...])`.
 
 ```rust,ignore
-```rust\nuse fuels::{
+use fuels::{
     core::codec::DecoderConfig,
     prelude::*,
     types::{errors::transaction::Reason, AsciiString, Bits256, SizedAsciiString},
@@ -5780,13 +5780,13 @@ async fn script_heap_log() -> Result<()> {
     }
 
     Ok(())
-}\n```
+}
 ```
 
 And this is an example that uses `with_contract_ids(&[&contract_id, ...])`.
 
 ```rust,ignore
-```rust\nuse fuels::{
+use fuels::{
     core::codec::DecoderConfig,
     prelude::*,
     types::{errors::transaction::Reason, AsciiString, Bits256, SizedAsciiString},
@@ -7634,7 +7634,7 @@ async fn script_heap_log() -> Result<()> {
     }
 
     Ok(())
-}\n```
+}
 ```
 
 ## Configurable constants
@@ -7642,7 +7642,7 @@ async fn script_heap_log() -> Result<()> {
 Same as contracts, you can define `configurable` constants in `scripts` which can be changed during the script execution. Here is an example how the constants are defined.
 
 ```rust,ignore
-```sway\nscript;
+script;
 
 #[allow(dead_code)]
 enum EnumWithGeneric<D> {
@@ -7676,13 +7676,13 @@ configurable {
 
 fn main() -> (bool, u8, u16, u32, u64, u256, b256, str[4], (u8, bool), [u32; 3], StructWithGeneric<u8>, EnumWithGeneric<bool>) {
     (BOOL, U8, U16, U32, U64, U256, B256, STR_4, TUPLE, ARRAY, STRUCT, ENUM)
-}\n```
+}
 ```
 
 Each configurable constant will get a dedicated `with` method in the SDK. For example, the constant `STR_4` will get the `with_STR_4` method which accepts the same type defined in sway. Below is an example where we chain several `with` methods and execute the script with the new constants.
 
 ```rust,ignore
-```rust\nuse fuels::{
+use fuels::{
     core::codec::EncoderConfig,
     prelude::*,
     types::{Bits256, SizedAsciiString, U256},
@@ -8007,5 +8007,5 @@ async fn configurable_encoder_config_is_applied() {
             .to_string()
             .contains("token limit `1` reached while encoding. Try increasing it"),)
     }
-}\n```
+}
 ```

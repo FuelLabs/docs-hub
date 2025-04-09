@@ -118,7 +118,7 @@ For example, in the following contract the CEI pattern is violated, because an
 external contract call is executed before a storage write.
 
 ```sway
-```sway\ncontract;
+contract;
 
 mod other_contract;
 
@@ -151,18 +151,18 @@ impl MyContract for Contract {
         // Storage update _after_ external call
         storage.balances.insert(sender, 0);
     }
-}\n```
+}
 ```
 
 Here, `other_contract` is defined as follows:
 
 ```sway
-```sway\nlibrary;
+library;
 
 abi OtherContract {
     #[payable]
     fn external_call();
-}\n```
+}
 ```
 
 The CEI pattern analyzer issues a warning as follows, pointing to the

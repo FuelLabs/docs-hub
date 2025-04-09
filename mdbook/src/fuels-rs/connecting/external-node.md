@@ -3,7 +3,7 @@
 We can interact with the `Testnet` node by using the following example.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::time::Duration;
 
@@ -99,7 +99,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 >
 > For detailed information about various testnet networks and their optimal toolchain configurations for your project, please visit the following link:
@@ -121,7 +121,7 @@ In the code example, we connected a new provider to the Testnet node and created
 If you want to connect to another node just change the URL or IP and port. For example, to connect to a local node that was created with `fuel-core` you can use:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::time::Duration;
 
@@ -217,5 +217,5 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```

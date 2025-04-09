@@ -21,13 +21,7 @@ You can also group together imports using curly brackets:
 
 For this contract, here is what needs to be imported. Copy this to your `main.sw` file:
 
-<TestAction
-id="sway-import"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/sway-store/sway-programs/contract/src/main.sw'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/sway-programs/contract/src/main.sw"

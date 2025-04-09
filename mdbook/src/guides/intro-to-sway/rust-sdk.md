@@ -11,33 +11,21 @@ To create your own test template using Rust, follow these steps with `cargo-gene
 cargo install cargo-generate --locked
 ```
 
-{/*markdownlint-disable*/}
-2. Generate the template:
-{/*markdownlint-disable*/}
 
-<TestAction
-id="cargo-generate-test"
-action={{
-  name: 'runCommand',
-  commandFolder: 'guides-testing/sway-store/sway-programs/contract'
-}}
-/>
+2. Generate the template:
+
+
+
 
 ```bash
 cargo generate --init fuellabs/sway templates/sway-test-rs --name sway-store
 ```
 
-{/*markdownlint-disable*/}
-3. Update the Cargo.toml file
-{/*markdownlint-disable*/}
 
-<TestAction
-id="temp-update-cargo-toml-file"
-action={{
-  name: 'writeToFile',
-  filepath: 'guides-testing/sway-store/sway-programs/contract/Cargo.toml'
-}}
-/>
+3. Update the Cargo.toml file
+
+
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/sway-programs/contract/Cargo.toml"
@@ -48,13 +36,7 @@ action={{
 
 We will be changing the existing `harness.rs` test file that has been generated. Firstly we need to change the imports. By importing the Fuel Rust SDK you will get majority of the functionalities housed within the prelude.
 
-<TestAction
-id="harness-import"
-action={{
-  name: 'writeToFile',
-  filepath: 'guides-testing/sway-store/sway-programs/contract/tests/harness.rs'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/sway-programs/contract/tests/harness.rs"
@@ -67,13 +49,7 @@ Always compile your contracts after making any changes. This ensures you're work
 
 Update your contract name and ABI path in the `abigen` macro to match the name of your contract:
 
-<TestAction
-id="harness-abi"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/sway-store/sway-programs/contract/tests/harness.rs'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/sway-programs/contract/tests/harness.rs"
@@ -88,13 +64,7 @@ When writing tests for Sway, two crucial objects are required: the contract inst
 
 Replace the `get_contract_instance` function in your test harness with the function below:
 
-<TestAction
-id="harness-instance"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/sway-store/sway-programs/contract/tests/harness.rs'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/sway-programs/contract/tests/harness.rs"
@@ -112,13 +82,7 @@ Let's delete the example `can_get_contract_id` test case and start writing some 
 
 For this test case, we use the contract instance and use the SDK's `.with_account()` method. This lets us impersonate the first wallet. To check if the owner has been set correctly, we can see if the address given by the contract matches wallet 1's address. If you want to dig deeper, looking into the contract storage will show if wallet 1's address is stored properly.
 
-<TestAction
-id="harness-test-set-owner"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/sway-store/sway-programs/contract/tests/harness.rs'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/sway-programs/contract/tests/harness.rs"
@@ -132,13 +96,7 @@ action={{
 An edge case we need to be vigilant about is an attempt to set the owner twice. We certainly don't want unauthorized ownership transfer of our contract! To address this, we've included the following line in our Sway contract: `require(owner.is_none(), "owner already initialized");`
 This ensures the owner can only be set when it hasn't been previously established. To test this, we create a new contract instance: initially, we set the owner using wallet 1. Any subsequent attempt to set the owner with wallet 2 should be unsuccessful.
 
-<TestAction
-id="harness-test-set-owner-once"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/sway-store/sway-programs/contract/tests/harness.rs'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/sway-programs/contract/tests/harness.rs"
@@ -157,13 +115,7 @@ For this test, we have two wallets set up:
 
 Following these transactions, we'll assess the balances of both wallets to confirm the successful execution of the transactions.
 
-<TestAction
-id="harness-test-buy-sell"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/sway-store/sway-programs/contract/tests/harness.rs'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/sway-programs/contract/tests/harness.rs"
@@ -176,13 +128,7 @@ action={{
 
 Most importantly, as the creator of the marketplace, you need to ensure you're compensated. Similar to the previous tests, we'll invoke the relevant functions to make an exchange. This time, we'll verify if you can extract the difference in funds.
 
-<TestAction
-id="harness-test-owner-withdraw"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/sway-store/sway-programs/contract/tests/harness.rs'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/sway-programs/contract/tests/harness.rs"
@@ -204,17 +150,11 @@ If you have followed the previous steps correctly your `harness.rs` test file sh
 
 ## Running the Tests
 
-{/*markdownlint-disable*/}
-Update the shared fuel-toolchain.toml file
-{/*markdownlint-disable*/}
 
-<TestAction
-id="temp-update-fuel-toolchain-toml-file"
-action={{
-  name: 'writeToFile',
-  filepath: 'guides-testing/sway-store/fuel-toolchain.toml'
-}}
-/>
+Update the shared fuel-toolchain.toml file
+
+
+
 
 <CodeImport
   file="../../examples/intro-to-sway/sway-store/fuel-toolchain.toml"
@@ -223,13 +163,7 @@ action={{
 
 To run the test located in `tests/harness.rs`, run the command below inside your `contract` folder:
 
-<TestAction
-id="cargo-test"
-action={{
-  name: 'runCommand',
-  commandFolder: 'guides-testing/sway-store/sway-programs/contract'
-}}
-/>
+
 
 ```sh
 cargo test

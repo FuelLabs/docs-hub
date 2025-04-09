@@ -5,7 +5,7 @@ If your contract method is calling other contracts you will have to add the appr
 `with_contracts(&[&contract_instance, ...])` requires contract instances that were created using the `abigen` macro. When setting the external contracts with this method, logs and require revert errors originating from the external contract can be propagated and decoded by the calling contract.
 
 ```rust,ignore
-```rust\nuse std::time::Duration;
+use std::time::Duration;
 
 use fuel_tx::{
     consensus_parameters::{ConsensusParametersV1, FeeParametersV1},
@@ -2497,13 +2497,13 @@ async fn loader_storage_works_via_proxy() -> Result<()> {
     assert_eq!(response, 36);
 
     Ok(())
-}\n```
+}
 ```
 
  If however, you do not need to decode logs or you do not have a contract instance that was generated using the `abigen` macro you can use `with_contract_ids(&[&contract_id, ...])` and provide the required contract ids.
 
 ```rust,ignore
-```rust\nuse std::time::Duration;
+use std::time::Duration;
 
 use fuel_tx::{
     consensus_parameters::{ConsensusParametersV1, FeeParametersV1},
@@ -4995,5 +4995,5 @@ async fn loader_storage_works_via_proxy() -> Result<()> {
     assert_eq!(response, 36);
 
     Ok(())
-}\n```
+}
 ```

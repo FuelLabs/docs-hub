@@ -5,13 +5,7 @@ Configurables are special constants that can be modified at compile time. This i
 
 This information can later be configured with SDKs before building a transaction.
 
-<TestAction
-id="sway-configurable"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/multisig-predicate/predicate/src/main.sw'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"

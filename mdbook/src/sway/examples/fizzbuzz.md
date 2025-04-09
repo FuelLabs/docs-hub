@@ -5,7 +5,7 @@ This example is not the traditional [`FizzBuzz`](https://en.wikipedia.org/wiki/F
 The format for custom structs and enums such as `FizzBuzzResult` will be automatically included in the ABI JSON so that off-chain code can handle the encoded form of the returned data.
 
 ```sway
-```sway\ncontract;
+contract;
 
 enum FizzBuzzResult {
     Fizz: (),
@@ -30,5 +30,5 @@ impl FizzBuzz for Contract {
             FizzBuzzResult::Other(input)
         }
     }
-}\n```
+}
 ```

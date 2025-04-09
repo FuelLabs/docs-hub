@@ -21,7 +21,7 @@ where:
 So, an `abigen!` which generates bindings for two contracts and one script looks like this:
 
 ```rust,ignore
-```rust\nextern crate alloc;
+extern crate alloc;
 
 #[cfg(test)]
 mod tests {
@@ -97,7 +97,7 @@ mod tests {
             // ANCHOR_END: deriving_traits_nostd
         }
     }
-}\n```
+}
 ```
 
 ## How does the generated code look?
@@ -150,7 +150,7 @@ Finally, `pub use` statements are inserted, so you don't have to fully qualify t
 Let's look at a contract with two methods: `initialize_counter(arg: u64) -> u64` and `increment_counter(arg: u64) -> u64`, with the following JSON ABI:
 
 ```json,ignore
-```text\n{
+{
   "programType": "contract",
   "specVersion": "1",
   "encodingVersion": "1",
@@ -183,13 +183,13 @@ Let's look at a contract with two methods: `initialize_counter(arg: u64) -> u64`
     }
   ],
   "metadataTypes": []
-}\n```
+}
 ```
 
 By doing this:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::prelude::Result;
 
@@ -255,13 +255,13 @@ mod tests {
         }
         Ok(())
     }
-}\n```
+}
 ```
 
 or this:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::prelude::Result;
 
@@ -327,13 +327,13 @@ mod tests {
         }
         Ok(())
     }
-}\n```
+}
 ```
 
 you'll generate this (shortened for brevity's sake):
 
 ```rust,ignore
-```rust\npub mod abigen_bindings {
+pub mod abigen_bindings {
     pub mod my_contract_mod {
         #[derive(Debug, Clone)]
         pub struct MyContract<A: ::fuels::accounts::Account> {
@@ -475,7 +475,7 @@ you'll generate this (shortened for brevity's sake):
 }
 pub use abigen_bindings::my_contract_mod::MyContract;
 pub use abigen_bindings::my_contract_mod::MyContractConfigurables;
-pub use abigen_bindings::my_contract_mod::MyContractMethods;\n```
+pub use abigen_bindings::my_contract_mod::MyContractMethods;
 ```
 
 > **Note:** that is all **generated** code. No need to write any of that. Ever. The generated code might look different from one version to another, this is just an example to give you an idea of what it looks like.
@@ -483,7 +483,7 @@ pub use abigen_bindings::my_contract_mod::MyContractMethods;\n```
 Then, you're able to use it to call the actual methods on the deployed contract:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -1694,5 +1694,5 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```

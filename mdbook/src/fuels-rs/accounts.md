@@ -23,7 +23,7 @@ The following examples are provided for a `Wallet` account. A `Predicate` accoun
 With `wallet.transfer` you can initiate a transaction to transfer an asset from your account to a target address.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::prelude::*;
 
@@ -413,13 +413,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 You can transfer assets to a contract via `wallet.force_transfer_to_contract`.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::prelude::*;
 
@@ -809,13 +809,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 For transferring assets to the base layer chain, you can use `wallet.withdraw_to_base_layer`.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::prelude::*;
 
@@ -1205,7 +1205,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 The above example creates an `Address` from a string and converts it to a `Bech32Address`. Next, it calls `wallet.withdraw_to_base_layer` by providing the address, the amount to be transferred, and the transaction policies. Lastly, to verify that the transfer succeeded, the relevant message proof is retrieved with `provider.get_message_proof,` and the amount and the recipient are verified.
@@ -1215,7 +1215,7 @@ The above example creates an `Address` from a string and converts it to a `Bech3
 To facilitate account impersonation, the Rust SDK provides the `ImpersonatedAccount` struct. Since it implements `Account`, we can use it to simulate ownership of assets held by an account with a given address. This also implies that we can impersonate contract calls from that address. `ImpersonatedAccount` will only succeed in unlocking assets if the network is set up with `utxo_validation = false`.
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -2426,5 +2426,5 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```

@@ -63,7 +63,7 @@ To require a supertrait, add a `:` after the trait name and then list the traits
 ABIs can also have supertrait annotations:
 
 ```sway
-```sway\ncontract;
+contract;
 
 struct Foo {}
 impl ABIsupertrait for Foo {
@@ -91,7 +91,7 @@ impl MyAbi for Contract {
     fn bar() {
         Self::foo() // supertrait method usage
     }
-}\n```
+}
 ```
 
 The implementation of `MyAbi` for `Contract` must also implement the `ABIsupertrait` trait. Methods in `ABIsupertrait` are not available externally, i.e. they're not actually contract methods, but they can be used in the actual contract methods, as shown in the example above.
@@ -103,7 +103,7 @@ ABI supertraits are intended to make contract implementations compositional, all
 In addition to supertraits, ABIs can have _superABI_ annotations:
 
 ```sway
-```sway\ncontract;
+contract;
 
 abi MySuperAbi {
     fn foo();
@@ -120,7 +120,7 @@ impl MySuperAbi for Contract {
 // The implementation of MyAbi for Contract must also implement MySuperAbi
 impl MyAbi for Contract {
     fn bar() {}
-}\n```
+}
 ```
 
 The implementation of `MyAbi` for `Contract` must also implement the `MySuperAbi` superABI. Methods in `MySuperAbi` will be part of the `MyAbi` contract interface, i.e. will be available externally (and hence cannot be called from other `MyAbi` contract methods).

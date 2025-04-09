@@ -13,7 +13,7 @@ In order to use the Signed Integer Number Library, Sway Libs must be added to th
 To import the Signed Integer Number Library to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::signed_integers::*;
@@ -86,13 +86,13 @@ fn is_zero() {
     let i8 = I8::zero();
     assert(i8.is_zero());
 }
-// ANCHOR_END: is_zero\n```
+// ANCHOR_END: is_zero
 ```
 
 In order to use any of the Signed Integer types, import them into your Sway project like so:
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::signed_integers::*;
@@ -165,7 +165,7 @@ fn is_zero() {
     let i8 = I8::zero();
     assert(i8.is_zero());
 }
-// ANCHOR_END: is_zero\n```
+// ANCHOR_END: is_zero
 ```
 
 ## Basic Functionality
@@ -179,7 +179,7 @@ All the functionality is demonstrated with the `I8` type, but all of the same fu
 Once imported, a `Signed Integer` type can be instantiated defining a new variable and calling the `new` function.
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::signed_integers::*;
@@ -252,7 +252,7 @@ fn is_zero() {
     let i8 = I8::zero();
     assert(i8.is_zero());
 }
-// ANCHOR_END: is_zero\n```
+// ANCHOR_END: is_zero
 ```
 
 this newly initialized variable represents the value of `0`.
@@ -260,7 +260,7 @@ this newly initialized variable represents the value of `0`.
 The `new` function is functionally equivalent to the `zero` function.
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::signed_integers::*;
@@ -333,7 +333,7 @@ fn is_zero() {
     let i8 = I8::zero();
     assert(i8.is_zero());
 }
-// ANCHOR_END: is_zero\n```
+// ANCHOR_END: is_zero
 ```
 
 #### Positive and Negative Values
@@ -343,7 +343,7 @@ As the signed variants can only represent half as high a number as the unsigned 
 You can use the `try_from` function to create a new positive `Signed Integer` from a its unsigned variant.
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::signed_integers::*;
@@ -416,13 +416,13 @@ fn is_zero() {
     let i8 = I8::zero();
     assert(i8.is_zero());
 }
-// ANCHOR_END: is_zero\n```
+// ANCHOR_END: is_zero
 ```
 
 You can use the `neg_try_from` function to create a new negative `Signed Integer` from a its unsigned variant.
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::signed_integers::*;
@@ -495,7 +495,7 @@ fn is_zero() {
     let i8 = I8::zero();
     assert(i8.is_zero());
 }
-// ANCHOR_END: is_zero\n```
+// ANCHOR_END: is_zero
 ```
 
 #### With underlying value
@@ -505,7 +505,7 @@ As mentioned previously, the signed integers are internally represented by an un
 Therefore, for the lowest value representable by a i8, `-128`, the underlying value would be `0`.
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::signed_integers::*;
@@ -578,13 +578,13 @@ fn is_zero() {
     let i8 = I8::zero();
     assert(i8.is_zero());
 }
-// ANCHOR_END: is_zero\n```
+// ANCHOR_END: is_zero
 ```
 
 For the zero value, the underlying value would be `128`.
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::signed_integers::*;
@@ -657,13 +657,13 @@ fn is_zero() {
     let i8 = I8::zero();
     assert(i8.is_zero());
 }
-// ANCHOR_END: is_zero\n```
+// ANCHOR_END: is_zero
 ```
 
 And for the highest value representable by a i8, `127`, the underlying value would be `255`.
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::signed_integers::*;
@@ -736,7 +736,7 @@ fn is_zero() {
     let i8 = I8::zero();
     assert(i8.is_zero());
 }
-// ANCHOR_END: is_zero\n```
+// ANCHOR_END: is_zero
 ```
 
 #### Minimum and Maximum Values
@@ -744,7 +744,7 @@ fn is_zero() {
 To get the minimum and maximum values of a signed integer, use the `min` and `max` functions.
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::signed_integers::*;
@@ -817,11 +817,11 @@ fn is_zero() {
     let i8 = I8::zero();
     assert(i8.is_zero());
 }
-// ANCHOR_END: is_zero\n```
+// ANCHOR_END: is_zero
 ```
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::signed_integers::*;
@@ -894,7 +894,7 @@ fn is_zero() {
     let i8 = I8::zero();
     assert(i8.is_zero());
 }
-// ANCHOR_END: is_zero\n```
+// ANCHOR_END: is_zero
 ```
 
 ### Basic Mathematical Functions
@@ -902,7 +902,7 @@ fn is_zero() {
 Basic arithmetic operations are working as usual.
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::signed_integers::*;
@@ -975,7 +975,7 @@ fn is_zero() {
     let i8 = I8::zero();
     assert(i8.is_zero());
 }
-// ANCHOR_END: is_zero\n```
+// ANCHOR_END: is_zero
 ```
 
 #### Checking if a Signed Integer is Zero
@@ -983,7 +983,7 @@ fn is_zero() {
 The library also provides a helper function to easily check if a `Signed Integer` is zero.
 
 ```sway
-```sway\nlibrary;
+library;
 
 // ANCHOR: import
 use sway_libs::signed_integers::*;
@@ -1056,7 +1056,7 @@ fn is_zero() {
     let i8 = I8::zero();
     assert(i8.is_zero());
 }
-// ANCHOR_END: is_zero\n```
+// ANCHOR_END: is_zero
 ```
 
 ## Known Issues

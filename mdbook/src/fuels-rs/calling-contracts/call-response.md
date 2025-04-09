@@ -15,7 +15,7 @@ Once you unwrap the `CallResponse`, you have access to this struct:
 <!-- call_resp:example:end -->
 
 ```rust,ignore
-```rust\nuse std::fmt::Debug;
+use std::fmt::Debug;
 
 use fuel_tx::{Bytes32, Receipt};
 use fuels_core::{
@@ -71,7 +71,7 @@ impl<D> CallResponse<D> {
     pub fn decode_logs_with_type<T: Tokenizable + Parameterize + 'static>(&self) -> Result<Vec<T>> {
         self.log_decoder.decode_logs_with_type::<T>(&self.receipts)
     }
-}\n```
+}
 ```
 
 <!-- This section should explain the fields of the `CallResponse` struct -->

@@ -21,7 +21,7 @@ In a similar way, we define the structs `Point`, `Line`, and `TupleInStruct`. Si
 On the other hand, the struct `StructWithPrivateFields` can be instantiated only within the _data_structures_ module, because it contains private fields. To be able to create instances of such structs outside of the module in which they are declared, the struct must offer [constructor associated functions](methods_and_associated_functions.md#constructors).
 
 ```sway
-```sway\n// the _data_structures_ module
+// the _data_structures_ module
 library;
 
 // Declare a struct type
@@ -50,7 +50,7 @@ pub struct StructWithPrivateFields {
     pub public_field: u64,
     private_field: u64,
     other_private_field: u64,
-}\n```
+}
 ```
 
 <!-- This section should explain how to instantiate a struct in Sway -->
@@ -65,7 +65,7 @@ There are three ways to instantiate the struct.
 <!-- new_struct:example:end -->
 
 ```sway
-```sway\nlibrary;
+library;
 
 mod data_structures;
 use data_structures::{Foo, Line, Point, TupleInStruct};
@@ -145,7 +145,7 @@ fn struct_destructuring() {
 
     let struct_in_tuple = (Point { x: 2, y: 4 }, Point { x: 3, y: 6 });
     let (Point { x: x0, y: y0 }, Point { x: x1, y: y1 }) = struct_in_tuple;
-}\n```
+}
 ```
 
 > **Note**
@@ -171,7 +171,7 @@ You can access values directly by using the `.` syntax. Moreover, multiple varia
 <!-- tuples:example:end -->
 
 ```sway
-```sway\nlibrary;
+library;
 
 fn tuple() {
     // You can declare the types yourself
@@ -195,7 +195,7 @@ fn tuple() {
 
     // Or change the values all at once (must keep the same data types)
     tuple2 = (9, false, ("Fuel", 99));
-}\n```
+}
 ```
 
 ## Enums
@@ -208,7 +208,7 @@ _Enumerations_, or _enums_, are also known as _sum types_. An enum is a type tha
 Here, we have defined five potential colors. Each enum variant is just the color name. As there is no extra data associated with each variant, we say that each variant is of type `()`, or unit.
 
 ```sway
-```sway\nlibrary;
+library;
 
 // Declare the enum
 enum Color {
@@ -223,7 +223,7 @@ fn main() {
     // To instantiate a variable with the value of an enum the syntax is
     let blue = Color::Blue;
     let silver = Color::Silver;
-}\n```
+}
 ```
 
 ### Enums of Structs
@@ -231,7 +231,7 @@ fn main() {
 It is also possible to have an enum variant contain extra data. Take a look at this more substantial example, which combines struct declarations with enum variants:
 
 ```sway
-```sway\nlibrary;
+library;
 
 struct Item {
     price: u64,
@@ -249,7 +249,7 @@ fn main() {
         amount: 2,
         id: 42,
     });
-}\n```
+}
 ```
 
 ### Enums of Enums
@@ -257,7 +257,7 @@ fn main() {
 It is possible to define enums of enums:
 
 ```sway
-```sway\nlibrary;
+library;
 
 pub enum Error {
     StateError: StateError,
@@ -273,7 +273,7 @@ pub enum StateError {
 pub enum UserError {
     InsufficientPermissions: (),
     Unauthorized: (),
-}\n```
+}
 ```
 
 #### Preferred usage
@@ -281,14 +281,14 @@ pub enum UserError {
 The preferred way to use enums is to use the individual (not nested) enums directly because they are easy to follow and the lines are short:
 
 ```sway
-```sway\nlibrary;
+library;
 
 use ::enum_of_enums::{StateError, UserError};
 
 fn preferred() {
     let error1 = StateError::Void;
     let error2 = UserError::Unauthorized;
-}\n```
+}
 ```
 
 #### Inadvisable
@@ -296,14 +296,14 @@ fn preferred() {
 If you wish to use the nested form of enums via the `Error` enum from the example above, then you can instantiate them into variables using the following syntax:
 
 ```sway
-```sway\nlibrary;
+library;
 
 use ::enum_of_enums::{Error, StateError, UserError};
 
 fn avoid() {
     let error1 = Error::StateError(StateError::Void);
     let error2 = Error::UserError(UserError::Unauthorized);
-}\n```
+}
 ```
 
 Key points to note:

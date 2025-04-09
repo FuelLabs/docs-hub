@@ -20,7 +20,7 @@ Below you can find examples for common type conversions:
 You might want to convert between the native types (`Bytes32`, `Address`, `ContractId`, and `AssetId`). Because these types are wrappers on `[u8; 32]`, converting is a matter of dereferencing one and instantiating the other using the dereferenced value. Here's an example:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -286,7 +286,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 ## Convert to `Bytes32`
@@ -294,7 +294,7 @@ mod tests {
 Convert a `[u8; 32]` array to `Bytes32`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -560,13 +560,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Convert a hex string to `Bytes32`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -832,7 +832,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 ## Convert to `Address`
@@ -840,7 +840,7 @@ mod tests {
 Convert a `[u8; 32]` array to an `Address`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -1106,13 +1106,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Convert a `Bech32` address to an `Address`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -1378,13 +1378,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Convert a wallet to an `Address`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::prelude::*;
 
@@ -1774,13 +1774,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Convert a hex string to an `Address`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -2046,7 +2046,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 ## Convert to `ContractId`
@@ -2054,7 +2054,7 @@ mod tests {
 Convert a `[u8; 32]` array to `ContractId`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -2320,13 +2320,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Convert a hex string to a `ContractId`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -2592,13 +2592,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Convert a contract instance to a `ContractId`:
 
 ```rust,ignore
-```rust\nuse fuels::{
+use fuels::{
     core::codec::DecoderConfig,
     prelude::*,
     types::{errors::transaction::Reason, AsciiString, Bits256, SizedAsciiString},
@@ -4446,7 +4446,7 @@ async fn script_heap_log() -> Result<()> {
     }
 
     Ok(())
-}\n```
+}
 ```
 
 ## Convert to `Identity`
@@ -4454,7 +4454,7 @@ async fn script_heap_log() -> Result<()> {
 Convert an `Address` to an `Identity`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -4720,13 +4720,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Convert a `ContractId` to an `Identity`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -4992,7 +4992,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 ## Convert to `AssetId`
@@ -5000,7 +5000,7 @@ mod tests {
 Convert a `[u8; 32]` array to an `AssetId`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -5266,13 +5266,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Convert a hex string to an `AssetId`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -5538,7 +5538,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 ## Convert to `Bech32`
@@ -5546,7 +5546,7 @@ mod tests {
 Convert a `[u8; 32]` array to a `Bech32` address:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -5812,13 +5812,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Convert `Bytes32` to a `Bech32` address:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -6084,13 +6084,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Convert a string to a `Bech32` address:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -6356,13 +6356,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Convert an `Address` to a `Bech32` address:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -6628,7 +6628,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 ## Convert to `str`
@@ -6636,7 +6636,7 @@ mod tests {
 Convert a `ContractId` to a `str`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -6902,13 +6902,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Convert an `Address` to a `str`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -7174,13 +7174,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Convert an `AssetId` to a `str`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -7446,13 +7446,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Convert `Bytes32` to a `str`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -7718,7 +7718,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 ## Convert to `Bits256`
@@ -7726,7 +7726,7 @@ mod tests {
 Convert a hex string to `Bits256`:
 
 ```rust,ignore
-```rust\nuse fuel_types::AssetId;
+use fuel_types::AssetId;
 use fuels_macros::{Parameterize, Tokenizable, TryFrom};
 
 use crate::types::errors::Result;
@@ -7889,13 +7889,13 @@ mod tests {
 
         assert_eq!(token, Token::Struct(vec![Token::B256(expected_data)]));
     }
-}\n```
+}
 ```
 
 Convert a `ContractId` to `Bits256`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -8161,13 +8161,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Convert an `Address` to `Bits256`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -8433,13 +8433,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 Convert an `AssetId` to `Bits256`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -8705,7 +8705,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 ## Convert to `Bytes`
@@ -8713,7 +8713,7 @@ mod tests {
 Convert a string to `Bytes`:
 
 ```rust,ignore
-```rust\nuse crate::types::errors::Result;
+use crate::types::errors::Result;
 
 #[derive(Debug, PartialEq, Clone, Eq)]
 pub struct Bytes(pub Vec<u8>);
@@ -8776,7 +8776,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 ## Convert to `B512`
@@ -8784,7 +8784,7 @@ mod tests {
 Convert two hex strings to `B512`:
 
 ```rust,ignore
-```rust\nuse std::str::FromStr;
+use std::str::FromStr;
 
 use fuels::{
     prelude::*,
@@ -10796,7 +10796,7 @@ async fn nested_heap_types() -> Result<()> {
     assert_eq!(result.value, expected);
 
     Ok(())
-}\n```
+}
 ```
 
 ## Convert to `EvmAddress`
@@ -10804,7 +10804,7 @@ async fn nested_heap_types() -> Result<()> {
 Convert a `Bits256` address to an `EvmAddress`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -11070,5 +11070,5 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```

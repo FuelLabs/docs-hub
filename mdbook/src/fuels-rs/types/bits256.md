@@ -5,7 +5,7 @@ In Fuel, a type called `b256` represents hashes and holds a 256-bit value. The R
 Here's an example:
 
 ```rust,ignore
-```rust\nuse std::str::FromStr;
+use std::str::FromStr;
 
 use fuels::{
     prelude::*,
@@ -2017,13 +2017,13 @@ async fn nested_heap_types() -> Result<()> {
     assert_eq!(result.value, expected);
 
     Ok(())
-}\n```
+}
 ```
 
 If you have a hexadecimal value as a string and wish to convert it to `Bits256`, you may do so with `from_hex_str`:
 
 ```rust,ignore
-```rust\nuse fuel_types::AssetId;
+use fuel_types::AssetId;
 use fuels_macros::{Parameterize, Tokenizable, TryFrom};
 
 use crate::types::errors::Result;
@@ -2186,5 +2186,5 @@ mod tests {
 
         assert_eq!(token, Token::Struct(vec![Token::B256(expected_data)]));
     }
-}\n```
+}
 ```

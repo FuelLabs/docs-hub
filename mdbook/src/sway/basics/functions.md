@@ -29,7 +29,7 @@ We can make a function parameter mutable by adding `ref mut` before the paramete
 For example:
 
 ```sway
-```sway\nscript;
+script;
 
 enum Color {
     Red: (),
@@ -89,13 +89,13 @@ fn main() {
     assert(point.x == 6);
     assert(point.y == 1);
     // ANCHOR_END: call_move_right
-}\n```
+}
 ```
 
 This function is allowed to mutate its parameter `num` because of the `mut` keyword. In addition, the `ref` keyword instructs the function to modify the argument passed to it when the function is called, instead of modifying a local copy of it.
 
 ```sway
-```sway\nscript;
+script;
 
 enum Color {
     Red: (),
@@ -155,7 +155,7 @@ fn main() {
     assert(point.x == 6);
     assert(point.y == 1);
     // ANCHOR_END: call_move_right
-}\n```
+}
 ```
 
 Note that the variable `num` itself has to be declared as mutable for the above to compile.
@@ -166,7 +166,7 @@ Note that the variable `num` itself has to be declared as mutable for the above 
 Similarly, `ref mut` can be used with more complex data types such as:
 
 ```sway
-```sway\nscript;
+script;
 
 enum Color {
     Red: (),
@@ -226,13 +226,13 @@ fn main() {
     assert(point.x == 6);
     assert(point.y == 1);
     // ANCHOR_END: call_move_right
-}\n```
+}
 ```
 
 We can then call these functions as shown below:
 
 ```sway
-```sway\nscript;
+script;
 
 enum Color {
     Red: (),
@@ -292,7 +292,7 @@ fn main() {
     assert(point.x == 6);
     assert(point.y == 1);
     // ANCHOR_END: call_move_right
-}\n```
+}
 ```
 
 > **Note**

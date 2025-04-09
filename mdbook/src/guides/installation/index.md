@@ -20,20 +20,20 @@ toolchains and keep them updated. It makes building and maintaining Sway applica
 
 ### Running `fuelup-init`
 
-{/*install_fuelup:example:start*/}
+
 To install the Fuel toolchain, you can use the `fuelup-init` script.
 This will install `forc`, `forc-client`, `forc-fmt`, `forc-lsp`, `forc-wallet` as well as `fuel-core` in `~/.fuelup/bin`.
-{/*install_fuelup:example:end*/}
+
 
 👉 Just paste the following line in your terminal and press *Enter*.
 
-{/*ANCHOR: install_fuelup_command*/}
+
 
 ```sh
 curl https://install.fuel.network | sh
 ```
 
-{/*ANCHOR_END: install_fuelup_command*/}
+
 
 > 🚧 Be aware that currently  we do not natively support Windows. If you wish to use `fuelup` on Windows, please use Windows Subsystem for Linux.
 
@@ -82,9 +82,9 @@ fuelup 0.21.0
 
 ### VSCode extensions
 
-{/*install_VSCode_extensions:example:start*/}
+
 If you're using VSCode, we recommend installing the [Sway extension](https://marketplace.visualstudio.com/items?itemName=FuelLabs.sway-vscode-plugin).
-{/*install_VSCode_extensions:example:end*/}
+
 
 ## Changing your default toolchain
 
@@ -154,17 +154,17 @@ The Fuel toolchain is installed and up to date
 
 The toolchain was installed correctly, however is not in use yet. Next, you need to configure `fuelup` to use the `nightly` toolchain as the default.
 
-{/*set_default_testnet:example:start*/}
-👉 Set `nightly` as your default toolchain with the following command:
-{/*set_default_testnet:example:end*/}
 
-{/*ANCHOR: set_default_testnet_command*/}
+👉 Set `nightly` as your default toolchain with the following command:
+
+
+
 
 ```sh
 fuelup default nightly 
 ```
 
-{/*ANCHOR_END: set_default_testnet_command*/}
+
 
 You will get the following output indicating that you have successfully set `nightly` as your default toolchain.
 
@@ -211,7 +211,7 @@ forc-wallet : 0.45
 
 ## Setting up a local wallet
 
-{/*forc_wallet_setup:example:start*/}
+
 The `forc-wallet` plugin is packaged alongside the default distributed toolchains when installed using `fuelup`, so you should already have this installed if you've followed the instructions above.
 
 To initialize a new wallet with `forc-wallet`, you can run the command below:
@@ -236,25 +236,25 @@ If you need to list your accounts, you can run the command below:
 forc wallet accounts
 ```
 
-{/*forc_wallet_setup:example:end*/}
+
 
 ## Installing Rust
 
-{/*install_rust:example:start*/}
+
 If you want to develop with the `fuels` Rust SDK, you will need to install Rust on your machine. To install Rust, you can use the `rustup` tool.
-{/*install_rust:example:end*/}
+
 
 > You don't need to install Rust if you don't plan on using the Rust SDK.
 
 Run the following command in your shell; this downloads and runs `rustup-init.sh`, which in turn downloads and runs the correct version of the `rustup-init` executable for your platform.
 
-{/*ANCHOR: install_rust_command*/}
+
 
 ```sh
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-{/*ANCHOR: install_rust_command*/}
+
 
 Check the official Rust documentation to get more information on [installing the Rust toolchain](https://www.rust-lang.org/tools/install).
 

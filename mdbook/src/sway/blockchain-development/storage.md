@@ -14,7 +14,7 @@ Some basic use cases of storage include declaring an owner address for a contrac
 Declaring variables in storage requires a `storage` block that contains a list of all your variables, their types, and their initial values. The initial value can be any expression that can be evaluated to a constant during compilation, as follows:
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: basic_storage_declaration
 storage {
@@ -56,13 +56,13 @@ impl StorageExample for Contract {
         let var4: Option<u8> = storage.var4.try_read().unwrap_or(None);
         // ANCHOR_END: basic_storage_read
     }
-}\n```
+}
 ```
 
 To write into a storage variable, you need to use the `storage` keyword as follows:
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: basic_storage_declaration
 storage {
@@ -104,13 +104,13 @@ impl StorageExample for Contract {
         let var4: Option<u8> = storage.var4.try_read().unwrap_or(None);
         // ANCHOR_END: basic_storage_read
     }
-}\n```
+}
 ```
 
 To read a storage variable, you also need to use the `storage` keyword. You may use `read()` or `try_read()`, however we recommend using `try_read()` for additional safety.
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: basic_storage_declaration
 storage {
@@ -152,7 +152,7 @@ impl StorageExample for Contract {
         let var4: Option<u8> = storage.var4.try_read().unwrap_or(None);
         // ANCHOR_END: basic_storage_read
     }
-}\n```
+}
 ```
 
 ## Storing Structs
@@ -160,7 +160,7 @@ impl StorageExample for Contract {
 To store a struct in storage, each variable must be assigned in the `storage` block. This can be either my assigning the fields individually or using a public [constructor](../basics/methods_and_associated_functions.md#constructors) that can be evaluated to a constant during compilation.
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: struct_storage_declaration
 struct Type1 {
@@ -222,13 +222,13 @@ impl StorageExample for Contract {
         let var2: Type2 = storage.var2.try_read().unwrap_or(Type2::default());
         // ANCHOR_END: struct_storage_read
     }
-}\n```
+}
 ```
 
 You may write to both fields of a struct and the entire struct as follows:
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: struct_storage_declaration
 struct Type1 {
@@ -290,13 +290,13 @@ impl StorageExample for Contract {
         let var2: Type2 = storage.var2.try_read().unwrap_or(Type2::default());
         // ANCHOR_END: struct_storage_read
     }
-}\n```
+}
 ```
 
 The same applies to reading structs from storage, where both the individual and struct as a whole may be read as follows:
 
 ```sway
-```sway\ncontract;
+contract;
 
 // ANCHOR: struct_storage_declaration
 struct Type1 {
@@ -358,7 +358,7 @@ impl StorageExample for Contract {
         let var2: Type2 = storage.var2.try_read().unwrap_or(Type2::default());
         // ANCHOR_END: struct_storage_read
     }
-}\n```
+}
 ```
 
 ## Common Storage Collections
@@ -375,7 +375,7 @@ Please note that these types are not initialized during compilation. This means 
 Declaring these variables in storage requires a `storage` block as follows:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{bytes::Bytes, string::String};
 
@@ -518,7 +518,7 @@ impl StorageExample for Contract {
         let stored_bytes: Bytes = storage.storage_bytes.read_slice().unwrap();
         // ANCHOR_END: bytes_storage_read
     }
-}\n```
+}
 ```
 
 ### `StorageMaps<K, V>`
@@ -528,7 +528,7 @@ Generic storage maps are available in the standard library as `StorageMap<K, V>`
 **Warning** While the `StorageMap<K, V>` is currently included in the prelude, to use it the `Hash` trait must still be imported. This is a known issue and will be resolved.
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{bytes::Bytes, string::String};
 
@@ -671,13 +671,13 @@ impl StorageExample for Contract {
         let stored_bytes: Bytes = storage.storage_bytes.read_slice().unwrap();
         // ANCHOR_END: bytes_storage_read
     }
-}\n```
+}
 ```
 
 To write to a storage map, call either the `insert()` or `try_insert()` functions as follows:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{bytes::Bytes, string::String};
 
@@ -820,13 +820,13 @@ impl StorageExample for Contract {
         let stored_bytes: Bytes = storage.storage_bytes.read_slice().unwrap();
         // ANCHOR_END: bytes_storage_read
     }
-}\n```
+}
 ```
 
 The following demonstrates how to read from a storage map:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{bytes::Bytes, string::String};
 
@@ -969,7 +969,7 @@ impl StorageExample for Contract {
         let stored_bytes: Bytes = storage.storage_bytes.read_slice().unwrap();
         // ANCHOR_END: bytes_storage_read
     }
-}\n```
+}
 ```
 
 ### `StorageVec<T>`
@@ -979,7 +979,7 @@ Generic storage vectors are available in the standard library as `StorageVec<T>`
 The following demonstrates how to import `StorageVec<T>`:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{bytes::Bytes, string::String};
 
@@ -1122,7 +1122,7 @@ impl StorageExample for Contract {
         let stored_bytes: Bytes = storage.storage_bytes.read_slice().unwrap();
         // ANCHOR_END: bytes_storage_read
     }
-}\n```
+}
 ```
 
 > **NOTE**: When importing the `StorageVec<T>`, please be sure to use the glob operator: `use std::storage::storage_vec::*`.
@@ -1130,7 +1130,7 @@ impl StorageExample for Contract {
 The following demonstrates how to write to a `StorageVec<T>`:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{bytes::Bytes, string::String};
 
@@ -1273,13 +1273,13 @@ impl StorageExample for Contract {
         let stored_bytes: Bytes = storage.storage_bytes.read_slice().unwrap();
         // ANCHOR_END: bytes_storage_read
     }
-}\n```
+}
 ```
 
 The following demonstrates how to read from a `StorageVec<T>`:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{bytes::Bytes, string::String};
 
@@ -1422,7 +1422,7 @@ impl StorageExample for Contract {
         let stored_bytes: Bytes = storage.storage_bytes.read_slice().unwrap();
         // ANCHOR_END: bytes_storage_read
     }
-}\n```
+}
 ```
 
 ### `StorageBytes`
@@ -1432,7 +1432,7 @@ Storage of `Bytes` is available in the standard library as `StorageBytes` which 
 The following demonstrates how to import `StorageBytes`:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{bytes::Bytes, string::String};
 
@@ -1575,7 +1575,7 @@ impl StorageExample for Contract {
         let stored_bytes: Bytes = storage.storage_bytes.read_slice().unwrap();
         // ANCHOR_END: bytes_storage_read
     }
-}\n```
+}
 ```
 
 > **NOTE**: When importing the `StorageBytes`, please be sure to use the glob operator: `use std::storage::storage_bytes::*`.
@@ -1583,7 +1583,7 @@ impl StorageExample for Contract {
 The following demonstrates how to write to a `StorageBytes`:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{bytes::Bytes, string::String};
 
@@ -1726,13 +1726,13 @@ impl StorageExample for Contract {
         let stored_bytes: Bytes = storage.storage_bytes.read_slice().unwrap();
         // ANCHOR_END: bytes_storage_read
     }
-}\n```
+}
 ```
 
 The following demonstrates how to read from a `StorageBytes`:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{bytes::Bytes, string::String};
 
@@ -1875,7 +1875,7 @@ impl StorageExample for Contract {
         let stored_bytes: Bytes = storage.storage_bytes.read_slice().unwrap();
         // ANCHOR_END: bytes_storage_read
     }
-}\n```
+}
 ```
 
 ### `StorageString`
@@ -1885,7 +1885,7 @@ Storage of `String` is available in the standard library as `StorageString` whic
 The following demonstrates how to import `StorageString`:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{bytes::Bytes, string::String};
 
@@ -2028,7 +2028,7 @@ impl StorageExample for Contract {
         let stored_bytes: Bytes = storage.storage_bytes.read_slice().unwrap();
         // ANCHOR_END: bytes_storage_read
     }
-}\n```
+}
 ```
 
 > **NOTE**: When importing the `StorageString`, please be sure to use the glob operator: `use std::storage::storage_string::*`.
@@ -2036,7 +2036,7 @@ impl StorageExample for Contract {
 The following demonstrates how to write to a `StorageString`:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{bytes::Bytes, string::String};
 
@@ -2179,13 +2179,13 @@ impl StorageExample for Contract {
         let stored_bytes: Bytes = storage.storage_bytes.read_slice().unwrap();
         // ANCHOR_END: bytes_storage_read
     }
-}\n```
+}
 ```
 
 The following demonstrates how to read from a `StorageString`:
 
 ```sway
-```sway\ncontract;
+contract;
 
 use std::{bytes::Bytes, string::String};
 
@@ -2328,7 +2328,7 @@ impl StorageExample for Contract {
         let stored_bytes: Bytes = storage.storage_bytes.read_slice().unwrap();
         // ANCHOR_END: bytes_storage_read
     }
-}\n```
+}
 ```
 
 ## Advanced Storage

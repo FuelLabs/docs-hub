@@ -5,7 +5,7 @@ In Sway and the FuelVM, `Bytes32` represents hashes. They hold a 256-bit (32-byt
 These are the main ways of creating a `Bytes32`:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -271,13 +271,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 `Bytes32` also implements the `fmt` module's `Debug`, `Display`, `LowerHex` and `UpperHex` traits. For example, you can get the display and hex representations with:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::str::FromStr;
 
@@ -543,7 +543,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 For a full list of implemented methods and traits, see the [fuel-types documentation](https://docs.rs/fuel-types/latest/fuel_types/struct.Bytes32.html).

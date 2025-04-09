@@ -5,7 +5,7 @@ Be sure to read the [prerequisites](./index.md#prerequisites-for-decodingencodin
 Encoding is done via the [`ABIEncoder`](https://docs.rs/fuels/latest/fuels/core/codec/struct.ABIEncoder.html):
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::{
         core::codec::{DecoderConfig, EncoderConfig},
@@ -119,13 +119,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 There is also a shortcut-macro that can encode multiple types which implement [`Tokenizable`](https://docs.rs/fuels/latest/fuels/core/traits/trait.Tokenizable.html):
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::{
         core::codec::{DecoderConfig, EncoderConfig},
@@ -239,7 +239,7 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 ## Configuring the encoder
@@ -247,7 +247,7 @@ mod tests {
 The encoder can be configured to limit its resource expenditure:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use fuels::{
         core::codec::{DecoderConfig, EncoderConfig},
@@ -361,13 +361,13 @@ mod tests {
 
         Ok(())
     }
-}\n```
+}
 ```
 
 The default values for the `EncoderConfig` are:
 
 ```rust,ignore
-```rust\nmod bounded_encoder;
+mod bounded_encoder;
 
 use std::default::Default;
 
@@ -904,7 +904,7 @@ mod tests {
 
         Token::Tuple(fields)
     }
-}\n```
+}
 ```
 
 ## Configuring the encoder for contract/script calls
@@ -912,7 +912,7 @@ mod tests {
 You can also configure the encoder used to encode the arguments of the contract method:
 
 ```rust,ignore
-```rust\n#[cfg(test)]
+#[cfg(test)]
 mod tests {
     use std::{collections::HashSet, time::Duration};
 
@@ -2123,7 +2123,7 @@ mod tests {
         // ANCHOR_END: decoding_script_transactions
         Ok(())
     }
-}\n```
+}
 ```
 
 The same method is available for script calls.

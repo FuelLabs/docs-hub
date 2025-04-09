@@ -55,7 +55,7 @@ let result = match expression {
 Some examples of how you can use a `match` expression:
 
 ```sway
-```sway\nscript;
+script;
 
 // helper functions for our example
 fn on_even(num: u64) {
@@ -107,7 +107,7 @@ fn main(num: u64) -> u64 {
         Weather::Cloudy => 60,
         Weather::Snowy => 20,
     }
-}\n```
+}
 ```
 
 ## Loops
@@ -153,7 +153,7 @@ for element in vector.iter() {
 `break` and `continue` keywords are available to use inside the body of a `while` or `for` loop. The purpose of the `break` statement is to break out of a loop early:
 
 ```sway
-```sway\nscript;
+script;
 
 // ANCHOR: break_example
 fn break_example() -> u64 {
@@ -187,13 +187,13 @@ fn continue_example() -> u64 {
 // ANCHOR_END: continue_example
 fn main() -> u64 {
     break_example() + continue_example() // 55 + 25 = 80
-}\n```
+}
 ```
 
 The purpose of the `continue` statement is to skip a portion of a loop in an iteration and jump directly into the next iteration:
 
 ```sway
-```sway\nscript;
+script;
 
 // ANCHOR: break_example
 fn break_example() -> u64 {
@@ -227,7 +227,7 @@ fn continue_example() -> u64 {
 // ANCHOR_END: continue_example
 fn main() -> u64 {
     break_example() + continue_example() // 55 + 25 = 80
-}\n```
+}
 ```
 
 ### Nested loops

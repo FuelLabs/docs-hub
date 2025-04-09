@@ -19,7 +19,7 @@ It is considered good practice to define your ABI in a separate library and impo
 Let's take a look at an ABI declaration in a library:
 
 ```sway
-```sway\n// ANCHOR: abi_library
+// ANCHOR: abi_library
 library;
 
 // ANCHOR: abi
@@ -35,7 +35,7 @@ abi Wallet {
     // ANCHOR_END: send_funds
 }
 // ANCHOR: abi
-// ANCHOR_END: abi_library\n```
+// ANCHOR_END: abi_library
 ```
 
 Let's focus on the ABI declaration and inspect it line-by-line.
@@ -43,7 +43,7 @@ Let's focus on the ABI declaration and inspect it line-by-line.
 ### The ABI Declaration
 
 ```sway
-```sway\n// ANCHOR: abi_library
+// ANCHOR: abi_library
 library;
 
 // ANCHOR: abi
@@ -59,7 +59,7 @@ abi Wallet {
     // ANCHOR_END: send_funds
 }
 // ANCHOR: abi
-// ANCHOR_END: abi_library\n```
+// ANCHOR_END: abi_library
 ```
 
 ---
@@ -67,7 +67,7 @@ abi Wallet {
 In the first line, `abi Wallet {`, we declare the name of this _Application Binary Interface_, or ABI. We are naming this ABI `Wallet`. To import this ABI into either a script for calling or a contract for implementing, you would use
 
 ```sway
-```sway\n// ANCHOR: full_wallet
+// ANCHOR: full_wallet
 contract;
 
 use std::{asset::transfer, call_frames::msg_asset_id, context::msg_amount};
@@ -117,7 +117,7 @@ impl Wallet for Contract {
     }
 }
 // ANCHOR_END: abi_impl
-// ANCHOR_END: full_wallet\n```
+// ANCHOR_END: full_wallet
 ```
 
 ---
@@ -125,7 +125,7 @@ impl Wallet for Contract {
 In the second line,
 
 ```sway
-```sway\n// ANCHOR: abi_library
+// ANCHOR: abi_library
 library;
 
 // ANCHOR: abi
@@ -141,7 +141,7 @@ abi Wallet {
     // ANCHOR_END: send_funds
 }
 // ANCHOR: abi
-// ANCHOR_END: abi_library\n```
+// ANCHOR_END: abi_library
 ```
 
 we are declaring an ABI method called `receive_funds` which, when called, should receive funds into this wallet. Note that we are simply defining an interface here, so there is no _function body_ or implementation of the function. We only need to define the interface itself. In this way, ABI declarations are similar to [trait declarations](../advanced/traits.md). This particular ABI method does not take any parameters.
@@ -151,7 +151,7 @@ we are declaring an ABI method called `receive_funds` which, when called, should
 In the third line,
 
 ```sway
-```sway\n// ANCHOR: abi_library
+// ANCHOR: abi_library
 library;
 
 // ANCHOR: abi
@@ -167,7 +167,7 @@ abi Wallet {
     // ANCHOR_END: send_funds
 }
 // ANCHOR: abi
-// ANCHOR_END: abi_library\n```
+// ANCHOR_END: abi_library
 ```
 
 we are declaring another ABI method, this time called `send_funds`. It takes two parameters: the amount to send, and the address to send the funds to.
@@ -182,7 +182,7 @@ Now that we've discussed how to define the interface, let's discuss how to use i
 Implementing an ABI for a contract is accomplished with `impl <ABI name> for Contract` syntax. The `for Contract` syntax can only be used to implement an ABI for a contract; implementing methods for a struct should use `impl Foo` syntax.
 
 ```sway
-```sway\n// ANCHOR: full_wallet
+// ANCHOR: full_wallet
 contract;
 
 use std::{asset::transfer, call_frames::msg_asset_id, context::msg_amount};
@@ -232,7 +232,7 @@ impl Wallet for Contract {
     }
 }
 // ANCHOR_END: abi_impl
-// ANCHOR_END: full_wallet\n```
+// ANCHOR_END: full_wallet
 ```
 
 You may notice once again the similarities between [traits](../advanced/traits.md) and ABIs. And, indeed, as a bonus, you can define methods in addition to the interface surface of an ABI, just like a trait. These pre-implemented ABI methods automatically become available as part of the contract interface that implements the corresponding ABI.
@@ -250,7 +250,7 @@ Contracts have an associated `ContractId` type in Sway. The `ContractId` type al
 Now that we have defined our interface and implemented it for our contract, we need to know how to actually _call_ our contract. Let's take a look at a contract call:
 
 ```sway
-```sway\nscript;
+script;
 
 use wallet_abi::Wallet;
 
@@ -265,7 +265,7 @@ fn main() {
             coins: 0,
             asset_id: b256::zero(),
         }(amount_to_send, recipient_address);
-}\n```
+}
 ```
 
 The main new concept is the `abi cast`: `abi(AbiName, contract_address)`. This returns a `ContractCaller` type which can be used to call contracts. The methods of the ABI become the methods available on this contract caller: `send_funds` and `receive_funds`. We then directly call the contract ABI method as if it was just a regular method. You also have the option of specifying the following special parameters inside curly braces right before the main list of parameters:

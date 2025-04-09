@@ -5,13 +5,7 @@ Let's define a helper function called `verify_signatures()` that checks the vali
 
 Copy the signature verification helper function in your main.sw below:
 
-<TestAction
-id="sway-function"
-action={{
-  name: 'modifyFile',
-  filepath: 'guides-testing/multisig-predicate/predicate/src/main.sw'
-}}
-/>
+
 
 <CodeImport
   file="../../examples/intro-to-predicates/multisig-predicate/src/main.sw"
@@ -37,8 +31,8 @@ As mentioned earlier, we will utilize the transaction witnesses and the transact
     lang="sway"
   />
 
-{/*markdownlint-disable*/}
+
 3. Return Value: The function returns `1` if a matching signature is found for the `i`th signer, indicating successful verification. If no matching signature is found after checking up to three signatures, the function returns `0`, indicating that the signature for the `i`th signer could not be verified.
-{/*markdownlint-disable*/}
+
 
 This allows for flexible signature verification, accommodating scenarios where signatures from the required signers can be presented in any order and ensuring that each signature is uniquely accounted for without allowing duplicates from the same wallet.
