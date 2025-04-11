@@ -124,11 +124,7 @@ crypto
 AMM
 Swaylend
 stablecoin
-NFTs
-BearBros
-PFP
-pixelated
-Monkees
+RPCs
 NFT
 PFPs
 Pengus
