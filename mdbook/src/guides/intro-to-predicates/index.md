@@ -1,0 +1,27 @@
+
+# Predicates 101: Building Stateless DeFi Applications
+
+Predicates are Fuel's approach to stateless account abstraction. In the blockchain space, we are constantly faced with the exponential growth of state bloat that just isn't sustainable in the long term.
+In the Ethereum ecosystem, every contract deployed requires state storage on the blockchain indefinitely.
+To help with blockchain scalability, we need to consider different approaches to redefine state-minimized applications that are fundamental to the world of decentralized finance.
+
+This tutorial will specifically concentrate on the `predicate` program type, one of the [four program types](/docs/sway/sway-program-types/) in the Sway language and how we can solve this ever growing problem.
+
+## What are Predicates?
+
+To define Predicates into one sentence:
+
+> Predicates are **stateless** programs that return **true** or **false**.
+
+A predicate is represented by an Address type, identical to any EOA (Externally Owned Account) created by a private key. The bytecode of the program can be deterministically hashed and represented as an ordinary address, all calculated off-chain.
+Therefore, when this address contains assets, ANYONE can spend the assets locked behind the predicate if they can evaluate the predicate to be true. It might be helpful to think of the code as the private key to the wallet.
+
+If this concept is still a bit unclear don't worry!, let's explore a simple example in the next part of the project setup.
+
+📚 [Sway Standard Library](https://fuellabs.github.io/sway/master/std/): A native library equipped with useful types and methods.
+
+🧑‍🔧 [Fuelup](https://install.fuel.network/latest/): The official Fuel toolchain manager aids in installing and managing different versions.
+
+🦀 [Fuel's Rust SDK](https://docs.fuel.network/docs/fuels-rs/): Test and interact with your Sway contracts using Rust.
+
+⚡ [Fuel's TypeScript SDK](https://docs.fuel.network/docs/fuels-ts/): Test and interact with your Sway contracts using TypeScript.
