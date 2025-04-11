@@ -141,12 +141,15 @@ function sortLinks(lcOrder, links, config, isNightly) {
           if (!catOrder) {
             const regex = /\/([^/]+)\/[^/]+$/;
             const match = link.submenu[0].slug.match(regex);
-            if (match && match[1]) {
+            if (match?.[1]) {
               key = match[1];
               catOrder = config[key];
             } else {
               // If no match found, use the original key
-              key = link.label.toLowerCase().replaceAll(' ', '-').replaceAll('_', '-');
+              key = link.label
+                .toLowerCase()
+                .replaceAll(' ', '-')
+                .replaceAll('_', '-');
               catOrder = config[key];
             }
           }
