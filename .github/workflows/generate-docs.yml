@@ -1,0 +1,131 @@
+name: Generate Documentation
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:  # Allows manual triggering from the GitHub UI
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive  # Fetch all submodules recursively
+          fetch-depth: 0  # Fetch all history for .GitInfo and .Lastmod
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: 'mono-mdbook-final-generator/package.json'
+
+      - name: Install Pandoc
+        run: |
+          wget -q https://github.com/jgm/pandoc/releases/download/3.1.12/pandoc-3.1.12-1-amd64.deb
+          sudo dpkg -i pandoc-3.1.12-1-amd64.deb
+          pandoc --version
+
+      - name: Install dependencies
+        run: cd mono-mdbook-final-generator && npm install
+
+      # Run all generator scripts in sequence
+      - name: Generate fuel-book
+        run: cd mono-mdbook-final-generator && npx tsx generate-fuel-book-book.ts
+
+      - name: Generate verified-addresses
+        run: cd mono-mdbook-final-generator && npx tsx generate-verified-addresses-book.ts
+
+      - name: Generate node-operator
+        run: cd mono-mdbook-final-generator && npx tsx generate-node-operator-book.ts
+
+      - name: Generate fuel-specs
+        run: cd mono-mdbook-final-generator && npx tsx generate-fuel-specs-book.ts
+
+      - name: Generate integration-docs
+        run: cd mono-mdbook-final-generator && npx tsx generate-integration-docs-book.ts
+
+      - name: Generate fuel-graphql
+        run: cd mono-mdbook-final-generator && npx tsx generate-fuel-graphql-book.ts
+
+      - name: Generate fuels-ts
+        run: cd mono-mdbook-final-generator && npx tsx generate-fuels-ts-book.ts
+
+      - name: Generate fuels-rs
+        run: cd mono-mdbook-final-generator && npx tsx generate-fuels-rs-book.ts
+
+      - name: Generate fuel-token-overview
+        run: cd mono-mdbook-final-generator && npx tsx generate-fuel-token-overview-book.ts
+
+      - name: Generate fuels-wallet
+        run: cd mono-mdbook-final-generator && npx tsx generate-fuels-wallet-book.ts
+
+      - name: Generate intro
+        run: cd mono-mdbook-final-generator && npx tsx generate-intro-book.ts
+
+      - name: Generate migrations-and-disclosures
+        run: cd mono-mdbook-final-generator && npx tsx generate-migrations-and-disclosures-book.ts
+
+      - name: Generate sway
+        run: cd mono-mdbook-final-generator && npx tsx generate-sway-book.ts
+
+      - name: Generate sway-by-example-lib
+        run: cd mono-mdbook-final-generator && npx tsx generate-sway-by-example-lib-book.ts
+
+      - name: Generate sway-standards
+        run: cd mono-mdbook-final-generator && npx tsx generate-sway-standards-book.ts
+
+      - name: Generate sway-libs
+        run: cd mono-mdbook-final-generator && npx tsx generate-sway-libs-book.ts
+
+      - name: Generate combined docs
+        run: cd mono-mdbook-final-generator && npx tsx generate-combined-docs.ts
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Install mdBook
+        run: |
+          mkdir mdbook
+          curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.4.30/mdbook-v0.4.30-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=./mdbook
+          echo "$(pwd)/mdbook" >> $GITHUB_PATH
+
+      - name: Create mdBook structure for combined docs
+        run: |
+          mkdir -p combined-docs-book/src
+          cp mono-mdbook-final-output/combined-docs.md combined-docs-book/src/SUMMARY.md
+          cp mono-mdbook-final-output/combined-docs.md combined-docs-book/src/index.md
+          echo '[book]\ntitle = "Fuel Documentation"\nauthors = ["Fuel Labs"]\nlanguage = "en"\nsrc = "src"' > combined-docs-book/book.toml
+
+      - name: Build with mdBook
+        run: |
+          mdbook build combined-docs-book -d site
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: 'combined-docs-book/site'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: generate-docs
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2 
