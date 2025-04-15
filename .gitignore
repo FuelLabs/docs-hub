@@ -49,3 +49,7 @@ notes
 
 # Generated files
 src/generated/
+
+# Generated books
+mono-mdbook-final
+mono-mdbook-final-output
