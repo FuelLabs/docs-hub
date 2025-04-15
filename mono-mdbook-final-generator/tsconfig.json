@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2016",               // Target modern Node.js versions
+    "module": "CommonJS",             // Output CommonJS modules for Node.js
+    "outDir": "./dist",               // Output directory for compiled JS
+    "rootDir": ".",                // Root directory of source files
+    "strict": true,                  // Enable all strict type-checking options
+    "esModuleInterop": true,         // Enables compatibility with CommonJS modules
+    "skipLibCheck": true,          // Skip type checking of declaration files
+    "forceConsistentCasingInFileNames": true, // Disallow inconsistently-cased references
+    "resolveJsonModule": true,       // Allow importing JSON files
+    "moduleResolution": "node"      // Use Node.js module resolution
+  },
+  "include": [
+    "generate-sway-book.ts"       // Only include the script file
+  ],
+  "exclude": [
+    "node_modules",               // Exclude node_modules
+    "dist"                        // Exclude the output directory
+  ]
+} 

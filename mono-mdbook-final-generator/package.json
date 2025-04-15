@@ -1,0 +1,44 @@
+{
+    "name": "mono-mdbook-final-generator",
+    "version": "1.0.0",
+    "description": "Scripts to generate final mdBooks",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "ts-node generate-intro-book.ts",
+        "generate:fuel-book": "tsx generate-fuel-book-book.ts",
+        "generate:verified-addresses": "tsx generate-verified-addresses-book.ts",
+        "generate:node-operator": "tsx generate-node-operator-book.ts",
+        "generate:fuel-specs": "tsx generate-fuel-specs-book.ts",
+        "generate:integration-docs": "tsx generate-integration-docs-book.ts",
+        "generate:fuel-graphql": "tsx generate-fuel-graphql-book.ts",
+        "generate:fuels-ts": "tsx generate-fuels-ts-book.ts",
+        "generate:fuels-rs": "tsx generate-fuels-rs-book.ts",
+        "generate:fuel-token-overview": "tsx generate-fuel-token-overview-book.ts",
+        "generate:fuels-wallet": "tsx generate-fuels-wallet-book.ts",
+        "generate:intro": "tsx generate-intro-book.ts",
+        "generate:migrations-and-disclosures": "tsx generate-migrations-and-disclosures-book.ts",
+        "generate:sway": "tsx generate-sway-book.ts",
+        "generate:sway-by-example-lib": "tsx generate-sway-by-example-lib-book.ts",
+        "generate:sway-standards": "tsx generate-sway-standards-book.ts",
+        "generate:sway-libs": "tsx generate-sway-libs-book.ts",
+        "generate:combined-docs": "tsx generate-combined-docs.ts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/fs-extra": "^11.0.4",
+        "@types/glob": "^8.1.0",
+        "@types/js-yaml": "^4.0.9",
+        "@types/node": "^20.17.30",
+        "ts-node": "^10.9.2",
+        "tsx": "^4.10.5",
+        "typescript": "^5.4.5"
+    },
+    "dependencies": {
+        "fs-extra": "^11.2.0",
+        "glob": "^11.0.1",
+        "js-yaml": "^4.1.0"
+    }
+}
