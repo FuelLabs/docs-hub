@@ -28,6 +28,10 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
+      # Add step to sync external docs needed for link generation
+      - name: Sync Documentation Repositories
+        run: pnpm docs:sync
+
       # Add step to generate the required JSON files before building
       - name: Generate Sidebar Links
         run: pnpm generate:links
