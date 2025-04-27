@@ -31,7 +31,7 @@ jobs:
       - name: Build Project (Generates .contentlayer and ./out)
         # This runs 'next build' which includes 'contentlayer build'
         # The build output will be in ./out by default
-        run: pnpm build
+        run: pnpm build:ci
 
       - name: Verify .contentlayer Exists (Optional)
         run: test -d .contentlayer && echo ".contentlayer directory found." || (echo ".contentlayer directory NOT found!" && exit 1)
