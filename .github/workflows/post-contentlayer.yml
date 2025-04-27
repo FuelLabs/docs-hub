@@ -4,6 +4,14 @@ on:
   pull_request:
     types: [opened, synchronize] # Adjust trigger as needed (e.g., push to main for prod uploads)
 
+env:
+  GIT_BRANCH: ${{ github.head_ref || github.ref_name }}
+  GIT_REPO_OWNER: ${{ github.repository_owner }}
+  GIT_REPO: ${{ github.repository }}
+  AWS_ROLE_ARN: arn:aws:iam::024848458133:role/github_oidc_FuelLabs_docs-hub
+  AWS_S3_BUCKET: fuel-prod-docs-hub-origin
+  AWS_S3_REGION: us-east-1
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
