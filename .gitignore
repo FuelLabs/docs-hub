@@ -49,3 +49,7 @@ notes
 
 # Generated files
 src/generated/
+
+# Generated MD files
+extract-md-files/docs
+

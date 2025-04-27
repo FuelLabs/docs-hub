@@ -16,6 +16,7 @@
     "docs:update": "node scripts/update-nightly/index.mjs",
     "docs:update:nightly": "node scripts/update-nightly/index.mjs --nightly",
     "export": "DOCS_DIST=${DOCS_DIST:=dist} next export -o $DOCS_DIST",
+    "extract:raw-md": "node extract-md-files/extract-raw-md.mjs && node extract-md-files/extract-raw-md-custom-fuels-ts.mjs",
     "generate:links": "node scripts/generate-links/index.mjs",
     "generate:components": "node scripts/components.mjs",
     "generate:sitemap": "run-s patch:ts build:content sitemap",

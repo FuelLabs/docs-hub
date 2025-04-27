@@ -1,0 +1,65 @@
+name: Post-Contentlayer Tasks
+
+on:
+  pull_request:
+    types: [opened, synchronize] # Adjust trigger as needed (e.g., push to main for prod uploads)
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  run_after_contentlayer:
+    name: Run Tasks After Contentlayer Generation
+    runs-on: ubuntu-latest
+    # Add permissions for OIDC and reading contents
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js and PNPM
+        uses: ./.github/actions/setup-node
+        with:
+          install: false
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Project (Generates .contentlayer and ./out)
+        # This runs 'next build' which includes 'contentlayer build'
+        # The build output will be in ./out by default
+        run: pnpm build
+
+      - name: Verify .contentlayer Exists (Optional)
+        run: test -d .contentlayer && echo ".contentlayer directory found." || (echo ".contentlayer directory NOT found!" && exit 1)
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          # You need to create these secrets in your GitHub repository settings
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Upload extract-md-files/docs to S3
+        run: |
+          aws s3 cp ./extract-md-files/docs s3://${{ secrets.AWS_S3_BUCKET }}/extract-md-files/docs --recursive
+        # Note: Ensure the ./extract-md-files/docs directory exists and contains the files you expect before this step.
+        # If the build step modifies or moves these files, adjust the source path accordingly.
+
+      # You could add another step here to upload the ./out directory if needed:
+      # - name: Upload build output ./out to S3
+      #   run: |
+      #     aws s3 cp ./out s3://${{ secrets.AWS_S3_BUCKET }}/ --recursive
+
+# The following step is no longer needed and should be removed.
+#      - name: === RUN YOUR TASKS HERE ===
+#        run: |
+#          echo "The .contentlayer directory has been generated."
+#          echo "Add your specific commands below this line."
+#          # Example: List the generated content
+#          # ls -R .contentlayer
+#          # Example: Run a custom script
+#          # pnpm run your-script-that-needs-contentlayer 
