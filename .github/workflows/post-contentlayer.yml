@@ -28,6 +28,10 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
+      # Add step to generate the required JSON files before building
+      - name: Generate Sidebar Links
+        run: pnpm generate:links
+
       - name: Build Project (Generates .contentlayer and ./out)
         # This runs 'next build' which includes 'contentlayer build'
         # The build output will be in ./out by default
