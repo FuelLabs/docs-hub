@@ -52,6 +52,10 @@ jobs:
       - name: Verify .contentlayer Exists (Optional)
         run: test -d .contentlayer && echo ".contentlayer directory found." || (echo ".contentlayer directory NOT found!" && exit 1)
 
+      # Extract raw markdown files needed for S3 upload
+      - name: Extract Raw Markdown
+        run: pnpm run extract:raw-md
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
