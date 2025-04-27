@@ -57,7 +57,7 @@ jobs:
         with:
           # You need to create these secrets in your GitHub repository settings
           role-to-assume: ${{ env.AWS_ROLE_ARN }}
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: ${{ env.AWS_S3_REGION }}
 
       - name: Upload extract-md-files/docs to S3
         run: |
