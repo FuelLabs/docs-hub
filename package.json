@@ -33,7 +33,8 @@
     "ts:check": "tsc --noEmit",
     "lint:guides:check": "markdownlint --config .markdownlint.yaml --ignore-path .markdownlintignore '**/*.mdx'",
     "lint:guides:fix": "markdownlint --config .markdownlint.yaml --ignore-path .markdownlintignore '**/*.mdx' --fix",
-    "lint:fix:all": "run-s lint:fix lint:guides:fix"
+    "lint:fix:all": "run-s lint:fix lint:guides:fix",
+    "package:docs": "node extract-md-files/package-docs.mjs"
   },
   "dependencies": {
     "@actions/exec": "^1.1.1",
