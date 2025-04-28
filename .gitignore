@@ -52,4 +52,6 @@ src/generated/
 
 # Generated MD files
 extract-md-files/docs
+extract-md-files/mono-fuel-doc.md
+extract-md-files/multi-fuel-doc.md
 

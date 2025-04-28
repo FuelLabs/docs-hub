@@ -56,6 +56,10 @@ jobs:
       - name: Extract Raw Markdown
         run: pnpm run extract:raw-md
 
+      # Package the extracted markdown into mono and multi files
+      - name: Package Docs
+        run: pnpm package:docs
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -63,9 +67,9 @@ jobs:
           role-to-assume: ${{ env.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_S3_REGION }}
 
-      - name: Upload extract-md-files/docs to S3
+      - name: Upload Packaged Docs to S3
         run: |
-          aws s3 cp ./extract-md-files/docs s3://${{ env.AWS_S3_BUCKET }}/extract-md-files/docs --recursive
-        # Note: Ensure the ./extract-md-files/docs directory exists and contains the files you expect before this step.
-        # If the build step modifies or moves these files, adjust the source path accordingly.
+          aws s3 cp ./mono-fuel-doc.md s3://${{ env.AWS_S3_BUCKET }}/
+          aws s3 cp ./multi-fuel-doc.zip s3://${{ env.AWS_S3_BUCKET }}/
+
 
