@@ -106,6 +106,9 @@ function getSidebarName(key) {
     case 'verified-addresses':
       newKey = 'Verified Addresses';
       break;
+    case 'ai':
+      newKey = 'AI';
+      break;
     case 'fuel-token-overview':
       newKey = 'Fuel Token Overview';
       break;

@@ -29,6 +29,10 @@ const CONFIG = {
     type: 'mdbook',
     path: './verified-addresses/docs/src/SUMMARY.md',
   },
+  ai: {
+    type: 'mdbook',
+    path: './ai/docs/src/SUMMARY.md',
+  },
   sway: {
     type: 'mdbook',
     path: './sway/docs/book/src/SUMMARY.md',

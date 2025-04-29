@@ -109,6 +109,24 @@ export async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
+    case 'ai':
+      paths = [
+        // BREAKING CHANGE LOG DOCS
+        './ai/docs/src/*.md',
+        './ai/docs/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
+    case 'nightly-ai':
+      paths = [
+        // BREAKING CHANGE LOG DOCS
+        './nightly/ai/docs/src/*.md',
+        './nightly/ai/docs/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
     case 'fuel-token-overview':
       paths = [
         // BREAKING CHANGE LOG DOCS
