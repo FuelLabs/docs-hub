@@ -1,0 +1,109 @@
+---
+title: Solana signature issue
+category: Fuel Connectors
+parent:
+  label: All Guides
+  link: /guides
+---
+
+If you've already setup a Solana account from Ledger, you won't be able to sign messages required by Fuel. This means you can't move your funds or connect your account.
+
+To fix this issue, you'll need to import your seed phrase into a hot wallet, then use the hot wallet to sign. Here's a guide with details on how to do it.
+
+> **Warning:** Only follow these steps if you understand the risks of exposing your recovery phrase to a hot (internet-connected) environment. Never enter your seed phrase into an untrusted app, extension, or website. Proceed only if necessary and be prepared to move your funds immediately after signing.
+
+---
+
+## What You'll Need
+
+- Your **24-word recovery phrase** from your Ledger device  
+- A computer or phone with internet access  
+- Phantom or Solflare wallet app or browser extension  
+
+---
+
+## Steps to Import Your Ledger Account into a Hot Wallet
+
+### 1. Install a Solana Hot Wallet
+
+Choose one of the following:
+
+- [Phantom Wallet](https://phantom.app/download)
+- [Solflare Wallet](https://solflare.com/download)
+
+Install the browser extension or mobile app as needed.
+
+---
+
+### 2. Start Wallet Setup and Choose "Import Wallet"
+
+Open the wallet and look for an option like:
+
+- "Use Secret Recovery Phrase"
+- "I already have a wallet"
+
+Select this to proceed with importing your existing wallet.
+
+---
+
+### 3. Enter Your 24-Word Ledger Recovery Phrase
+
+When prompted, carefully enter the 24 words from your Ledger device.
+
+**Important:**
+- Ensure that you are in a secure and private environment.
+- Do not reuse this wallet for long-term storage after completing the operation.
+
+---
+
+### 4. Derive the Correct Solana Account
+
+Solana wallets use specific derivation paths.
+
+#### For Phantom Wallet:
+
+- Phantom supports multiple derivation paths, including those used by Ledger.
+- However, [Phantom will only detect Ledger derivation paths if activity (transactions or balance) is found on those paths](https://help.phantom.app/hc/en-us/articles/12988493966227-What-derivation-paths-does-Phantom-wallet-support-).
+- If your Ledger-derived Solana account has prior activity, Phantom should automatically display it after import.
+- If the correct account does not appear, consider using a wallet like Solflare that allows manual derivation path selection.
+
+#### For Solflare Wallet:
+
+- Solflare allows manual selection of derivation paths.
+- Use the path: `m/44'/501'/0'/0'`
+- If you don't see the correct address, try other account indexes or check advanced import options.
+
+---
+
+### 5. Sign the Required Message in the Fuel App
+
+Once your account is imported and visible:
+
+- Reconnect the hot wallet to the Fuel app.
+- Sign the required message to authorize your Fuel predicate account.
+
+---
+
+### 6. Immediately Move Your Funds to a Secure Wallet
+
+After signing:
+
+- Send your assets to a secure wallet (hardware wallet or trusted address).
+- Do not leave assets in the imported hot wallet.
+
+---
+
+## Important Security Notice
+
+- This method is for recovery only and is **not recommended for long-term use**.
+- Exposing your recovery phrase in a hot wallet poses serious security risks.
+- After completing the process, delete the wallet from your browser or device.
+
+---
+
+## Need Help?
+
+If you encounter issues:
+
+- Visit Phantom's [Help Center](https://help.phantom.app)
+- Or consult Solflare's [Support Page](https://solflare.com/support)
