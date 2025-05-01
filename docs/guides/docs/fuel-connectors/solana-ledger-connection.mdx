@@ -11,6 +11,7 @@ parent:
 Due to the lack of support from the Solana app for Ledger, if you've already set up a Solana account from Ledger, you won't be able to sign messages. This means you can't move your funds or connect your Solana account to Fuel through native predicates.
 
 Here are some reference links if you want to study this issue further:
+
 - 2021 – Users started reporting that Ledger couldn't sign anything. [solana-labs/solana #21366](https://github.com/solana-labs/solana/issues/21366)
 - 2022 – Solana core added off-chain message signing support via CLI. [solana-labs/solana #27456](https://github.com/solana-labs/solana/pull/27456)
 - 2023, 2024, and 2025 – Users continued reporting that Ledger couldn't sign anything: [phantom/sandbox #14](https://github.com/phantom/sandbox/issues/14)
@@ -60,6 +61,7 @@ Select this to proceed with importing your existing wallet.
 When prompted, carefully enter the 24 words from your Ledger device.
 
 **Important:**
+
 - Ensure that you are in a secure and private environment.
 - Do not reuse this wallet for long-term storage after completing the operation.
 
@@ -69,14 +71,14 @@ When prompted, carefully enter the 24 words from your Ledger device.
 
 Solana wallets use specific derivation paths.
 
-#### For Phantom Wallet:
+#### For Phantom Wallet
 
 - Phantom supports multiple derivation paths, including those used by Ledger.
 - However, [Phantom will only detect Ledger derivation paths if activity (transactions or balance) is found on those paths](https://help.phantom.app/hc/en-us/articles/12988493966227-What-derivation-paths-does-Phantom-wallet-support-).
 - If your Ledger-derived Solana account has prior activity, Phantom should automatically display it after import.
 - If the correct account does not appear, consider using a wallet like Solflare that allows manual derivation path selection.
 
-#### For Other Wallets:
+#### For Other Wallets
 
 - You may need to manually select the correct derivation path.
 - Consult your wallet's documentation for specific instructions.
