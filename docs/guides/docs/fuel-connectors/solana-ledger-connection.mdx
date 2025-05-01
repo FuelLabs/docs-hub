@@ -1,12 +1,20 @@
 ---
-title: Solana signature issue
+title: Solana/Ledger connection
 category: Fuel Connectors
 parent:
   label: All Guides
   link: /guides
 ---
 
-If you've already setup a Solana account from Ledger, you won't be able to sign messages required by Fuel. This means you can't move your funds or connect your account.
+# A Solana connection through ledger account won't work.
+
+Due to lack of support from Solana app for Ledger, if you've already setup a Solana account from Ledger, you won't be able to sign messages. This means you can't move your funds or connect your Solana account to Fuel through native predicates.
+Some reference links in case you want to study better this issue:
+- 2021 – Users start reporting that Ledger can't sign anything. [solana-labs/solana #21366](https://github.com/solana-labs/solana/issues/21366)
+- 2022 – Solana core adds off-chain message signing support via CLI. [solana-labs/solana #27456](https://github.com/solana-labs/solana/pull/27456)
+- 2023, 2024 and 2025 – Users start reporting that Ledger can't sign anything: [phantom/sandbox #14](https://github.com/phantom/sandbox/issues/14)
+- Also, Solana Foundation has an open RFP to add this functionality: [Solana Forum #367](https://forum.solana.com/t/the-solana-app-for-ledger-devices/367)
+- In the official Ledger app repo, there are recent PRs from community to fix this: [LedgerHQ/app-solana #118](https://github.com/LedgerHQ/app-solana/pull/118), [LedgerHQ/app-solana #78](https://github.com/LedgerHQ/app-solana/pull/78)
 
 To fix this issue, you'll need to import your seed phrase into a hot wallet, then use the hot wallet to sign. Here's a guide with details on how to do it.
 
@@ -67,11 +75,9 @@ Solana wallets use specific derivation paths.
 - If your Ledger-derived Solana account has prior activity, Phantom should automatically display it after import.
 - If the correct account does not appear, consider using a wallet like Solflare that allows manual derivation path selection.
 
-#### For Solflare Wallet:
+#### For other Wallets:
 
-- Solflare allows manual selection of derivation paths.
-- Use the path: `m/44'/501'/0'/0'`
-- If you don't see the correct address, try other account indexes or check advanced import options.
+- You 
 
 ---
 
