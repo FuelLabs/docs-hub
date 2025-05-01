@@ -6,15 +6,16 @@ parent:
   link: /guides
 ---
 
-# A Solana connection through ledger account won't work.
+# Solana Connection Through Ledger Account Won't Work
 
-Due to lack of support from Solana app for Ledger, if you've already setup a Solana account from Ledger, you won't be able to sign messages. This means you can't move your funds or connect your Solana account to Fuel through native predicates.
-Some reference links in case you want to study better this issue:
-- 2021 – Users start reporting that Ledger can't sign anything. [solana-labs/solana #21366](https://github.com/solana-labs/solana/issues/21366)
-- 2022 – Solana core adds off-chain message signing support via CLI. [solana-labs/solana #27456](https://github.com/solana-labs/solana/pull/27456)
-- 2023, 2024 and 2025 – Users start reporting that Ledger can't sign anything: [phantom/sandbox #14](https://github.com/phantom/sandbox/issues/14)
-- Also, Solana Foundation has an open RFP to add this functionality: [Solana Forum #367](https://forum.solana.com/t/the-solana-app-for-ledger-devices/367)
-- In the official Ledger app repo, there are recent PRs from community to fix this: [LedgerHQ/app-solana #118](https://github.com/LedgerHQ/app-solana/pull/118), [LedgerHQ/app-solana #78](https://github.com/LedgerHQ/app-solana/pull/78)
+Due to the lack of support from the Solana app for Ledger, if you've already set up a Solana account from Ledger, you won't be able to sign messages. This means you can't move your funds or connect your Solana account to Fuel through native predicates.
+
+Here are some reference links if you want to study this issue further:
+- 2021 – Users started reporting that Ledger couldn't sign anything. [solana-labs/solana #21366](https://github.com/solana-labs/solana/issues/21366)
+- 2022 – Solana core added off-chain message signing support via CLI. [solana-labs/solana #27456](https://github.com/solana-labs/solana/pull/27456)
+- 2023, 2024, and 2025 – Users continued reporting that Ledger couldn't sign anything: [phantom/sandbox #14](https://github.com/phantom/sandbox/issues/14)
+- The Solana Foundation has an open RFP to add this functionality: [Solana Forum #367](https://forum.solana.com/t/the-solana-app-for-ledger-devices/367)
+- In the official Ledger app repo, there are recent PRs from the community to fix this: [LedgerHQ/app-solana #118](https://github.com/LedgerHQ/app-solana/pull/118), [LedgerHQ/app-solana #78](https://github.com/LedgerHQ/app-solana/pull/78)
 
 To fix this issue, you'll need to import your seed phrase into a hot wallet, then use the hot wallet to sign. Here's a guide with details on how to do it.
 
@@ -75,9 +76,10 @@ Solana wallets use specific derivation paths.
 - If your Ledger-derived Solana account has prior activity, Phantom should automatically display it after import.
 - If the correct account does not appear, consider using a wallet like Solflare that allows manual derivation path selection.
 
-#### For other Wallets:
+#### For Other Wallets:
 
-- You 
+- You may need to manually select the correct derivation path.
+- Consult your wallet's documentation for specific instructions.
 
 ---
 
