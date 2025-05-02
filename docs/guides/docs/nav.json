@@ -47,6 +47,7 @@
   ],
   "fuel_connectors": [
     "Fuel Connectors",
-    "Non-technical Guide"
+    "Non-technical Guide",
+    "Solana/Ledger connection"
   ]
 }
