@@ -34,6 +34,8 @@ const targetDirs = [
   './docs/nightly/integration-docs',
   './docs/node-operator',
   './docs/nightly/node-operator',
+  './docs/ai',
+  './docs/nightly/ai',
 ];
 
 // Exclusions for each type of directory
@@ -84,6 +86,7 @@ const exclusions = {
   fuel_token_overview: ['fuel-token-overview/docs'],
   integration_docs: ['integration-docs/docs'],
   node_operator: ['node-operator/docs'],
+  ai: ['ai/docs'],
 };
 
 function main() {

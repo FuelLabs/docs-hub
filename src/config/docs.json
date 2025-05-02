@@ -62,6 +62,15 @@
       "image": ""
     }
   },
+  "ai": {
+    "title": "AI",
+    "slug": "ai",
+    "repository": "https://github.com/FuelLabs/docs-hub/tree/master/docs/ai",
+    "ogTags": {
+      "description": "AI",
+      "image": ""
+    }
+  },
   "fuel-token-overview": {
     "title": "Fuel Token Overview",
     "slug": "fuel-token-overview",

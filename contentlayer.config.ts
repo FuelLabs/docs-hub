@@ -70,6 +70,7 @@ const includeDirs = [
   'docs/fuel-token-overview/docs/src',
   'docs/integration-docs/docs/src',
   'docs/node-operator/docs/src',
+  'docs/ai/docs/src',
   // NIGHTLY DOCS
   'docs/nightly/sway/docs/book/src',
   'docs/nightly/fuels-rs/docs/src',
@@ -86,6 +87,7 @@ const includeDirs = [
   'docs/nightly/fuel-token-overview/docs/src',
   'docs/nightly/integration-docs/docs/src',
   'docs/nightly/node-operator/docs/src',
+  'docs/nightly/ai/docs/src',
 ];
 
 const excludeDirs = [
@@ -106,6 +108,7 @@ const excludeDirs = [
   'docs/fuel-token-overview/docs/src/SUMMARY.md',
   'docs/integration-docs/docs/src/SUMMARY.md',
   'docs/node-operator/docs/src/SUMMARY.md',
+  'docs/ai/docs/src/SUMMARY.md',
   // NIGHTLY DOCS
   'docs/nightly/sway/docs/book/src/SUMMARY.md',
   'docs/nightly/fuels-rs/docs/src/SUMMARY.md',
@@ -119,6 +122,7 @@ const excludeDirs = [
   'docs/nightly/fuel-token-overview/docs/src/SUMMARY.md',
   'docs/nightly/integration-docs/docs/src/SUMMARY.md',
   'docs/nightly/node-operator/docs/src/SUMMARY.md',
+  'docs/nightly/ai/docs/src/SUMMARY.md',
 ];
 
 export default makeSource({

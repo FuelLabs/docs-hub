@@ -73,6 +73,7 @@ export class Doc {
       .replace('docs/sway-by-example-lib/', '')
       .replace('docs/fuel-book/', '')
       .replace('docs/verified-addresses/', '')
+      .replace('docs/ai/', '')
       .replace('docs/fuel-token-overview/', '')
       .replace('docs/fuel-specs/', '')
       .replace('docs/node-operator/', '')}`;
