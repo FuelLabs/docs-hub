@@ -129,7 +129,8 @@ export function handleExampleImports(
           'fuels-ts/create-fuels-counter-guide',
           'fuels-ts/apps/create-fuels-counter-guide'
         )
-        .replace('fuels-ts/docs', 'fuels-ts/apps/docs');
+        .replace('fuels-ts/docs', 'fuels-ts/apps/docs')
+        .replace('fuels-ts/fuel-asm', 'fuels-ts/apps/docs/fuel-asm');
     }
 
     // If the example snippet is a relative path
