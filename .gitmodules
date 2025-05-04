@@ -10,7 +10,7 @@
 [submodule "docs/fuels-ts"]
 	path = docs/fuels-ts
 	url = https://github.com/FuelLabs/fuels-ts
-	# branch = docs
+	branch = fix/docs-v0.100.4
 [submodule "docs/builds/sway"]
 	path = docs/builds/sway
 	url = https://github.com/FuelLabs/sway.git
@@ -52,6 +52,7 @@
 [submodule "docs/nightly/fuels-ts"]
 	path = docs/nightly/fuels-ts
 	url = https://github.com/FuelLabs/fuels-ts
+	branch = fix/docs-v0.100.4
 [submodule "docs/nightly/fuels-wallet"]
 	path = docs/nightly/fuels-wallet
 	url = https://github.com/FuelLabs/fuels-wallet.git
