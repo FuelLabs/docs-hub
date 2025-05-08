@@ -1,0 +1,75 @@
+name: Post-Contentlayer Tasks
+
+on:
+  pull_request:
+    types: [opened, synchronize] # Adjust trigger as needed (e.g., push to main for prod uploads)
+
+env:
+  GIT_BRANCH: ${{ github.head_ref || github.ref_name }}
+  GIT_REPO_OWNER: ${{ github.repository_owner }}
+  GIT_REPO: ${{ github.repository }}
+  AWS_ROLE_ARN: arn:aws:iam::024848458133:role/github_oidc_FuelLabs_docs-hub
+  AWS_S3_BUCKET: fuel-prod-docs-hub-origin
+  AWS_S3_REGION: us-east-1
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  run_after_contentlayer:
+    name: Run Tasks After Contentlayer Generation
+    runs-on: ubuntu-latest
+    # Add permissions for OIDC and reading contents
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js and PNPM
+        uses: ./.github/actions/setup-node
+        with:
+          install: false
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Add step to sync external docs needed for link generation
+      - name: Sync Documentation Repositories
+        run: pnpm docs:sync
+
+      # Add step to generate the required JSON files before building
+      - name: Generate Sidebar Links
+        run: pnpm generate:links
+
+      - name: Build Project (Generates .contentlayer and ./out)
+        # This runs 'next build' which includes 'contentlayer build'
+        # The build output will be in ./out by default
+        run: pnpm build:content
+
+      - name: Verify .contentlayer Exists (Optional)
+        run: test -d .contentlayer && echo ".contentlayer directory found." || (echo ".contentlayer directory NOT found!" && exit 1)
+
+      # Extract raw markdown files needed for S3 upload
+      - name: Extract Raw Markdown
+        run: pnpm run extract:raw-md
+
+      # Package the extracted markdown into mono and multi files
+      - name: Package Docs
+        run: pnpm package:docs
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          # You need to create these secrets in your GitHub repository settings
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_S3_REGION }}
+
+      - name: Upload Packaged Docs to S3
+        run: |
+          aws s3 cp ./mono-fuel-doc.md s3://${{ env.AWS_S3_BUCKET }}/
+          aws s3 cp ./multi-fuel-doc.zip s3://${{ env.AWS_S3_BUCKET }}/
+
+
