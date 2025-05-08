@@ -1,0 +1,107 @@
+
+# Prerequisites
+
+## Installation
+
+<TextImport
+  file="../installation/index.mdx"
+  comment="install_fuelup"
+  commentType="{/*"
+/>
+
+<CodeImport
+  file="../installation/index.mdx"
+  comment="install_fuelup_command"
+  commentType="{/*"
+  lang="sh"
+  trim="true"
+/>
+
+<TextImport
+  file="../counter-dapp/building-a-smart-contract.mdx"
+  comment="install_help"
+  commentType="{/*"
+/>
+
+<TextImport
+  file="../installation/index.mdx"
+  comment="install_VSCode_extensions"
+  commentType="{/*"
+/>
+
+### Already have `fuelup` installed?
+
+<TextImport
+  file="../counter-dapp/building-a-smart-contract.mdx"
+  comment="already_installed"
+  commentType="{/*"
+/>
+
+## Project Setup
+
+Start with a new empty folder and name it `multisig-predicate`.
+
+<TestAction
+id="create-project-folder"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing'
+}}
+/>
+
+```sh
+mkdir multisig-predicate
+```
+
+Go into the `multisig-predicate` folder:
+
+```sh
+cd multisig-predicate
+```
+
+Within your terminal start by creating a new sway project called `predicate`:
+
+<TestAction
+id="create-predicate"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/multisig-predicate'
+}}
+/>
+
+```sh
+forc new --predicate predicate
+```
+
+> Tip: Notice the `--predicate` flag, which tells `forc` that you want to create a project based on a **predicate**, rather than the default **contract** program type.
+
+Your project structure generated from the `forc` command should like this:
+
+<TestAction
+id="predicate-tree"
+action={{
+  name: 'runCommand',
+  commandFolder: 'guides-testing/multisig-predicate'
+}}
+/>
+
+```sh
+tree predicate
+```
+
+```sh
+predicate
+├── Forc.toml
+└── src
+    └── main.sw
+
+1 directory, 2 files
+```
+
+Move into your predicate folder:
+
+```sh
+cd predicate
+```
+
+In VSCode, navigate to the `src` folder within the `predicate` folder, where you will find a file named `main.sw`. This is the file where your Sway predicate will be written.

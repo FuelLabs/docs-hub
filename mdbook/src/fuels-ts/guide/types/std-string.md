@@ -1,0 +1,18 @@
+# `StdString`
+
+A dynamic string of variable length can be represented using the `StdString` type, also known as a Standard Lib String or `std-lib-string`. It behaves much like a dynamic string in most languages, and is essentially an array of characters.
+
+## Using a `StdString`
+
+The `StdString` type can be integrated with your contract calls. Consider the following contract that can compare and return a String:
+
+<!-- SNIPPET FILE ERROR: File not found '../../docs/sway/echo-std-string/src/main.sw' -->
+
+A string can be created using a native JavaScript string, and sent to a Sway contract:
+
+```ts\nconst stdString: StdString = 'Hello Fuel';
+
+const { value } = await contract.functions.echo_string(stdString).get();
+
+console.log('value', value);
+// 'Hello Fuel'\n```
