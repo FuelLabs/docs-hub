@@ -45,7 +45,7 @@ export async function walletSetup(
   // Confirm password
   const confirmPassword = signupPage.locator(`[aria-label="Confirm Password"]`);
   await confirmPassword.type(FUEL_WALLET_PASSWORD);
-  const toFinish = getButtonByText(signupPage, 'Next: Finish set-up');
+  const toFinish = getButtonByText(signupPage, 'Next: Finish setup');
   await toFinish.click();
 
   await signupPage
