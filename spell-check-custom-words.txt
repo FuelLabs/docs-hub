@@ -131,3 +131,8 @@ Pengus
 Banxa
 RedStone
 Pyth
+RFP
+LedgerHQ
+PRs
+solana
+untrusted
