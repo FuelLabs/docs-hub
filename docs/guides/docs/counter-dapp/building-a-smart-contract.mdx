@@ -378,22 +378,6 @@ tree .
 4 directories, 8 files
 ```
 
-{/*rust_harness:example:start*/}
-We have two new files!
-
-- The `Cargo.toml` is the manifest for our new test harness and specifies the required dependencies including `fuels` (the Fuel Rust SDK).
-- The `tests/harness.rs` contains some boilerplate test code to get us started, though doesn't call any contract methods just yet.
-
-Open your `Cargo.toml` file and check the version of `fuels` used under `dev-dependencies`. Change the version to `0.66.1` if it's not already:
-
-```toml
-[dev-dependencies]
-fuels = "0.66.1"
-tokio = { version = "1.12", features = ["rt", "macros"] }
-```
-
-{/*rust_harness:example:end*/}
-
 Now that we have our default test harness, let's add a useful test to it.
 
 At the bottom of `test/harness.rs` below the `can_get_contract_id()` test, add the `test_increment` test function below to verify that the value of the counter gets incremented:
