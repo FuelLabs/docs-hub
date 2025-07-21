@@ -59,11 +59,11 @@
 	path = docs/sway-libs
 	url = https://github.com/FuelLabs/sway-libs.git
 	# TODO: Remove this and nightly after master syncs up with the lastest released version
-	branch = master
+	branch = release
 [submodule "docs/nightly/sway-libs"]
 	path = docs/nightly/sway-libs
 	url = https://github.com/FuelLabs/sway-libs.git
-	branch = master
+	branch = release
 [submodule "docs/sway-standards"]
 	path = docs/sway-standards
 	url = https://github.com/FuelLabs/sway-standards
