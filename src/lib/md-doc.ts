@@ -76,7 +76,9 @@ export class Doc {
       .replace('docs/ai/', '')
       .replace('docs/fuel-token-overview/', '')
       .replace('docs/fuel-specs/', '')
-      .replace('docs/node-operator/', '')}`;
+      .replace('docs/node-operator/', '')
+      .replace('docs/security-best-practices/', '')
+    }`;
 
     let pageLink = `${config.repository}${actualPath.replace(
       'tree/master/docs/sway-libs/docs',

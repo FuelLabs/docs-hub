@@ -115,3 +115,9 @@
 [submodule "docs/nightly/node-operator"]
 	path = docs/nightly/node-operator
 	url = https://github.com/FuelLabs/node-operator.git
+[submodule "docs/security-best-practices"]
+	path = docs/security-best-practices
+	url = https://github.com/FuelLabs/security-best-practices
+[submodule "docs/nightly/security-best-practices"]
+	path = docs/nightly/security-best-practices
+	url = https://github.com/FuelLabs/security-best-practices

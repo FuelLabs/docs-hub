@@ -121,6 +121,9 @@ function getSidebarName(key) {
     case 'node-operator':
       newKey = 'Node Operator';
       break;
+    case 'security-best-practices':
+      newKey = 'Security Best Practices';
+      break;
     default:
   }
 
@@ -136,6 +139,7 @@ function handleAllOrders(allOrders, folderPath, filename) {
     'fuel-token-overview',
     'verified-addresses',
     'node-operator',
+    'security-best-practices',
     'guides',
     'sway',
     'sway-libs',
