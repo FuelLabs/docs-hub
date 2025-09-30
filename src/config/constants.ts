@@ -32,12 +32,24 @@ export const EXTERNAL_NAVIGATION_LINKS: LinkObject[] = [
     link: 'https://github.com/FuelLabs/sway-examples/',
   },
   {
-    name: 'Example Applications',
-    link: 'https://github.com/FuelLabs/sway-applications/',
+    name: 'Sway Libs',
+    link: 'https://github.com/FuelLabs/sway-libs/',
+  },
+  {
+    name: 'Sway Standards',
+    link: 'https://github.com/FuelLabs/sway-standards/',
+  },
+  {
+    name: 'Sway by Example',
+    link: 'https://www.swaybyexample.com/',
   },
   {
     name: 'Sway Playground',
     link: 'https://sway-playground.org/',
+  },
+  {
+    name: 'Example Applications',
+    link: 'https://github.com/FuelLabs/sway-applications/',
   },
   {
     name: 'Faucet',
