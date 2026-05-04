@@ -27,6 +27,11 @@ const specialCapsWords = [
   { word: 'ide', newWord: 'IDE' },
   { word: 'cli', newWord: 'CLI' },
   { word: 'sdk', newWord: 'SDK' },
+  { word: 'nft', newWord: 'NFT' },
+  { word: 'utxo', newWord: 'UTXO' },
+  { word: 'dao', newWord: 'DAO' },
+  { word: 'dapp', newWord: 'dApp' },
+  { word: 'defi', newWord: 'DeFi' },
 ];
 
 export function capitalize(val) {
