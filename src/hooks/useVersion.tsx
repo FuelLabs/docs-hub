@@ -1,11 +1,11 @@
 import type { FC, ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
 
-import { FUEL_TESTNET_UPPER_CASE } from '../config/constants';
+import { FUEL_MAINNET_UPPER_CASE } from '../config/constants';
 
-export type VersionCtx = typeof FUEL_TESTNET_UPPER_CASE | 'Nightly';
+export type VersionCtx = typeof FUEL_MAINNET_UPPER_CASE | 'Nightly';
 
-const versionCtx = createContext<VersionCtx>(FUEL_TESTNET_UPPER_CASE);
+const versionCtx = createContext<VersionCtx>(FUEL_MAINNET_UPPER_CASE);
 const setVersionCtx = createContext<(value: VersionCtx) => void>(() => {});
 
 export function useVersion() {
@@ -25,10 +25,10 @@ export const VersionProvider: FC<VersionProviderProps> = ({ children }) => {
     if (typeof window !== 'undefined') {
       return (
         (sessionStorage.getItem('version') as VersionCtx) ||
-        FUEL_TESTNET_UPPER_CASE
+        FUEL_MAINNET_UPPER_CASE
       );
     }
-    return FUEL_TESTNET_UPPER_CASE;
+    return FUEL_MAINNET_UPPER_CASE;
   });
 
   const setVersionInSession = (version: VersionCtx) => {

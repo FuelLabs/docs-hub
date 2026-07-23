@@ -8,10 +8,22 @@ parent:
 
 # Versions
 
-There are two version sets of the docs available in the `docs-hub`: `testnet`(the default version), and `nightly`.
+There are two version sets of documentation in `docs-hub`: the default
+mainnet-targeted set and `nightly`.
 
-- The default version set is compatible with the `latest` toolchain and testnet.
-- The `nightly` version set reflects the latest releases on GitHub. These versions may not be compatible with each other.
+- The default set targets the named `mainnet` Fuelup channel. Fuelup's
+  undated `latest` channel is an alias for `mainnet`; it does not mean the
+  newest upstream release.
+- Testnet is a separate named Fuelup channel. It may temporarily contain the
+  same components as mainnet, but documentation must not assume that the two
+  manifests are always identical.
+- The `nightly` set follows newer upstream documentation sources. Its
+  components may be unstable or incompatible with each other and with a
+  deployed network.
+
+Every rendered section displays its exact source version in the sidebar. The
+mainnet target, testnet target, newest upstream release, and rendered source
+version are distinct facts. Do not describe all four as "latest" or "stable."
 
 ## Updating the Nightly Versions
 
@@ -23,7 +35,9 @@ You can also update the nightly versions locally by running the command below:
 pnpm docs:update:nightly
 ```
 
-The `nightly` versions should be kept at the latest release on GitHub for each tool.
+The `nightly` versions should be kept at the latest release on GitHub for each
+tool. This is a documentation freshness policy, not a network compatibility
+claim.
 
 ## Updating the Default Versions
 
@@ -37,8 +51,30 @@ This command will both update the the default versions to match the configuratio
 
 Here is how to decide what default versions to use:
 
-- The Sway & `forc` versions should match what is on the `latest` toolchain.
-- The version of the wallet SDK should match the version of the Fuel Wallet extension if it is compatible with the `latest` toolchain. If the extension is not yet compatible, use the latest release that is compatible.
-- The version of the Rust SDK should be the latest release that is compatible with the default version of `forc`.
-- The version of the TypeScript SDK should be the latest release that is compatible with the default version of `forc` and the Fuel wallet.
-- The version of the GraphQL API and Specs books should reflect the version of `fuel-core` used in the latest testnet. These books currently do not have regular releases.
+- The Sway and core `forc` versions should match the named `mainnet` channel
+  manifest. Check the `testnet` manifest separately and document any
+  difference.
+- Network-facing Forc plugins can be released from repositories other than
+  Sway and can have independent versions. Do not infer plugin compatibility
+  from the core Forc version alone.
+- The wallet SDK should match the Fuel Wallet extension when it is compatible
+  with the mainnet channel. If it is not, use the newest verified compatible
+  release and record that constraint.
+- The Rust and TypeScript SDK versions should be the newest releases verified
+  against the mainnet compiler, node, chain ID, and generated ABI.
+- The GraphQL API and Specs books should reflect the `fuel-core` version used
+  by mainnet. If testnet differs, surface the testnet version separately.
+
+Updating `src/config/versions.json` records the desired target; it does not by
+itself update the rendered docs. The stable Sway source submodule and generated
+Forc command-book submodule must both exist for the exact selected version.
+Never merge a source-only bump: `forc-gen-docs` deliberately fails when the
+matching generated artifact is absent so that older command help cannot be
+published under a newer label.
+
+After updating, run the full documentation build and verify that:
+
+1. the versions displayed in the sidebar match the checked-out submodules;
+2. the Sway and Forc source links resolve to the displayed tags;
+3. every generated Forc command page came from that same exact version; and
+4. the installation guide agrees with Fuelup's current channel reference.

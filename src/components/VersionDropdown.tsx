@@ -3,7 +3,7 @@ import { Dropdown, Icon, Text } from '@fuel-ui/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-import { FUEL_TESTNET, FUEL_TESTNET_UPPER_CASE } from '../config/constants';
+import { FUEL_MAINNET, FUEL_MAINNET_UPPER_CASE } from '../config/constants';
 import { useSetVersion } from '../hooks/useVersion';
 import type { VersionSet } from '../types';
 
@@ -14,8 +14,8 @@ export default function VersionDropdown({
 }) {
   const [opened, setOpened] = useState(false);
   const [activeVersion, setActiveVersion] = useState<
-    typeof FUEL_TESTNET_UPPER_CASE | typeof FUEL_TESTNET | 'Nightly'
-  >(versionSet === 'default' ? FUEL_TESTNET_UPPER_CASE : 'Nightly');
+    typeof FUEL_MAINNET_UPPER_CASE | 'Nightly'
+  >(versionSet === 'default' ? FUEL_MAINNET_UPPER_CASE : 'Nightly');
   const router = useRouter();
   const setVersion = useSetVersion();
   const splitPath = router.asPath.split('/');
@@ -28,7 +28,7 @@ export default function VersionDropdown({
 
   useEffect(() => {
     const newActiveVersion =
-      versionSet === 'default' ? FUEL_TESTNET_UPPER_CASE : 'Nightly';
+      versionSet === 'default' ? FUEL_MAINNET_UPPER_CASE : 'Nightly';
     setActiveVersion(newActiveVersion);
   }, [versionSet]);
 
@@ -41,17 +41,16 @@ export default function VersionDropdown({
           opened ? { ...styles.trigger, ...styles.triggerOpen } : styles.trigger
         }
       >
-        Version:{' '}
-        {activeVersion === FUEL_TESTNET_UPPER_CASE ? 'Stable' : activeVersion}
+        Docs: {activeVersion}
       </Dropdown.Trigger>
       <Dropdown.Menu
-        disabledKeys={versionSet === 'default' ? [FUEL_TESTNET] : [versionSet]}
+        disabledKeys={versionSet === 'default' ? [FUEL_MAINNET] : [versionSet]}
         css={styles.dropdownMenu}
         // biome-ignore lint/suspicious/noExplicitAny:
         onAction={(action: any) => {
           if (setVersion) {
-            if (action === FUEL_TESTNET) {
-              setVersion(FUEL_TESTNET_UPPER_CASE);
+            if (action === FUEL_MAINNET) {
+              setVersion(FUEL_MAINNET_UPPER_CASE);
             } else {
               setVersion('Nightly');
             }
@@ -63,7 +62,7 @@ export default function VersionDropdown({
                 book = 'graphql/overview';
               }
               const link = `/docs/${
-                action === FUEL_TESTNET ? '' : `${action}/`
+                action === FUEL_MAINNET ? '' : `${action}/`
               }${book}`;
               router.push(link);
             }
@@ -72,10 +71,10 @@ export default function VersionDropdown({
       >
         <Dropdown.MenuItem
           css={styles.menuItem}
-          key={FUEL_TESTNET}
-          aria-label={FUEL_TESTNET}
+          key={FUEL_MAINNET}
+          aria-label={FUEL_MAINNET}
         >
-          <Text>Stable</Text> {/* Display 'Stable' instead of raw version */}
+          <Text>Mainnet target</Text>
           {versionSet === 'default' && <Icon icon='Check' color='accent11' />}
         </Dropdown.MenuItem>
 

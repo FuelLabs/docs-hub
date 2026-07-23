@@ -6,6 +6,8 @@ export const FIELDS = ['title', 'slug', 'content', 'category'];
 
 export const FUEL_TESTNET = 'testnet';
 export const FUEL_TESTNET_UPPER_CASE = 'Testnet';
+export const FUEL_MAINNET = 'mainnet';
+export const FUEL_MAINNET_UPPER_CASE = 'Mainnet';
 export const TESTNET_VERSION = 'v1';
 export const FAUCET_LINK = `https://faucet-${FUEL_TESTNET}.fuel.network/`;
 export const PLAYGROUND_LINK = `https://${FUEL_TESTNET}.fuel.network/${TESTNET_VERSION}/playground/`;

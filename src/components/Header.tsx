@@ -55,6 +55,14 @@ export function Header({
           versions={versions}
         />
       </Box.Flex>
+      {versionSet === 'default' && (
+        <Alert css={styles.alert} direction='row' status='warning'>
+          <Alert.Description>
+            Mainnet docs are version-pinned. Check each section&apos;s exact
+            version in the sidebar; it can lag the newest upstream release.
+          </Alert.Description>
+        </Alert>
+      )}
       {isAlertVisible && (
         <Alert css={styles.alert} direction='row' status='warning'>
           <Alert.Description>
