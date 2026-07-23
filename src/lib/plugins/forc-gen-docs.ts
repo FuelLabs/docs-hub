@@ -60,9 +60,7 @@ function transformContent(node: any, rootDir: string) {
   }
 
   const swayBuildPath =
-    versionSet === 'nightly'
-      ? 'docs/nightly/builds/sway'
-      : 'docs/builds/sway';
+    versionSet === 'nightly' ? 'docs/nightly/builds/sway' : 'docs/builds/sway';
   let swayBuildFilePath = `${swayBuildPath}/master/book/forc`;
   let missingBuildMessage =
     'Missing generated Forc documentation for the nightly Sway commit.';
