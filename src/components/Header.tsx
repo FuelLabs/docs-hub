@@ -30,6 +30,8 @@ export function Header({
   isAlertVisible,
 }: HeaderProps) {
   const setShowWarning = useSetShowWarning();
+  const isForcReference =
+    active.startsWith('docs/forc') || active.startsWith('docs/nightly/forc');
 
   return (
     <Box as='header' css={styles.root}>
@@ -60,6 +62,17 @@ export function Header({
           <Alert.Description>
             Mainnet docs are version-pinned. Check each section&apos;s exact
             version in the sidebar; it can lag the newest upstream release.
+          </Alert.Description>
+        </Alert>
+      )}
+      {isForcReference && (
+        <Alert css={styles.alert} direction='row' status='warning'>
+          <Alert.Description>
+            This core Forc reference was generated for version{' '}
+            {versions?.Forc.version}. Network-facing plugins can come from
+            separate repositories and release independently. When an installed
+            version differs, check <code>fuelup show</code> and treat that
+            command&apos;s <code>--help</code> output as authoritative.
           </Alert.Description>
         </Alert>
       )}
