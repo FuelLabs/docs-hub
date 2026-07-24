@@ -25,6 +25,8 @@ version boundary prominent.
 - Made the updater fail when the matching generated artifact is unavailable.
 - Published the archived status and corrected migration instructions from
   `migrations-and-disclosures` through both documentation submodules.
+- Added concise restart, checkpoint, retry, and rollback guidance for stateful
+  migrations.
 - Corrected the documented nightly-update schedule to match automation.
 
 ## Publication dependency
