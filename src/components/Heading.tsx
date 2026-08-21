@@ -4,12 +4,16 @@ import { Heading as FuelHeading, Icon } from '@fuel-ui/react';
 // biome-ignore lint/suspicious/noExplicitAny:
 export function Heading({ children, ...props }: any) {
   const isNightly = props['data-nightly'];
+  // The sticky header height varies with the visible alert banners, so the
+  // measured value from Header takes precedence; the static values are only
+  // fallbacks for before it is published.
+  const fallbackHeight = isNightly ? '88px' : '60px';
   const paddingStyles = cssObj({
     [head([1])]: {
-      scrollMarginTop: isNightly ? '$24' : '$20',
+      scrollMarginTop: `calc(var(--fuel-sticky-header-height, ${fallbackHeight}) + 20px)`,
     },
     [head([2, 3, 4])]: {
-      scrollMarginTop: isNightly ? '108px' : '$16',
+      scrollMarginTop: `calc(var(--fuel-sticky-header-height, ${fallbackHeight}) + 8px)`,
     },
   });
   return (
