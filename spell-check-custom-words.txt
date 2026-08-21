@@ -136,3 +136,4 @@ LedgerHQ
 PRs
 solana
 untrusted
+Fuelup's
