@@ -75,7 +75,12 @@ function transformContent(node: any, rootDir: string) {
     missingBuildMessage = `Missing generated Forc documentation for v${swayVersion}. Publish the exact Sway gh-pages artifact before updating the default source submodule.`;
   }
 
-  if (!fs.existsSync(path.resolve(rootDir, swayBuildFilePath))) {
+  const forcBookIndexPath = path.resolve(
+    rootDir,
+    swayBuildFilePath,
+    'index.html'
+  );
+  if (!fs.existsSync(forcBookIndexPath)) {
     throw new Error(missingBuildMessage);
   }
 
