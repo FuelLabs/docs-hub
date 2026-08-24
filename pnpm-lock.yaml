@@ -21,6 +21,11 @@ overrides:
   rehype-pretty-code@>0.10.0: 0.10.0
   shiki@>0.14.4: 0.14.4
 
+patchedDependencies:
+  '@contentlayer/cli@0.3.4':
+    hash: wsqkogorprvpmjrdlcyumyot64
+    path: patches/@contentlayer__cli@0.3.4.patch
+
 importers:
 
   .:
@@ -11251,7 +11256,7 @@ snapshots:
       preact: 10.22.0
       sha.js: 2.4.11
 
-  '@contentlayer/cli@0.3.4(esbuild@0.25.3)':
+  '@contentlayer/cli@0.3.4(patch_hash=wsqkogorprvpmjrdlcyumyot64)(esbuild@0.25.3)':
     dependencies:
       '@contentlayer/core': 0.3.4(esbuild@0.25.3)
       '@contentlayer/utils': 0.3.4
@@ -16894,7 +16899,7 @@ snapshots:
 
   contentlayer@0.3.4(esbuild@0.25.3):
     dependencies:
-      '@contentlayer/cli': 0.3.4(esbuild@0.25.3)
+      '@contentlayer/cli': 0.3.4(patch_hash=wsqkogorprvpmjrdlcyumyot64)(esbuild@0.25.3)
       '@contentlayer/client': 0.3.4(esbuild@0.25.3)
       '@contentlayer/core': 0.3.4(esbuild@0.25.3)
       '@contentlayer/source-files': 0.3.4(esbuild@0.25.3)

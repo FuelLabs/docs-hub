@@ -1,5 +1,9 @@
 import fs from 'fs';
 import path from 'path';
+import toml from 'toml';
+
+const swayManifest = fs.readFileSync('./docs/sway/Cargo.toml', 'utf8');
+const defaultSwayVersion = toml.parse(swayManifest).workspace.package.version;
 
 // List of directories to delete unused files from
 const targetDirs = [
@@ -47,6 +51,7 @@ const exclusions = {
     'sway/docs/book/src',
     'sway/examples',
     'sway/master/book',
+    `sway/v${defaultSwayVersion}/book`,
     'sway/test/src/sdk-harness/test_projects/run_external_proxy',
     'sway/test/src/sdk-harness/test_projects/run_external_target',
   ],

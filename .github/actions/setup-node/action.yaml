@@ -2,10 +2,11 @@ name: "CI setup"
 inputs:
   node-version:
     description: "Node version"
-    default: 20.10.0
+    default: 22.13.1
   pnpm-version:
-    description: "PNPM version"
-    default: latest
+    description: "PNPM major used in the cache key"
+    # The exact installed version comes from package.json#packageManager.
+    default: 9
   install:
     description: "Should install?"
     default: true
@@ -28,5 +29,4 @@ runs:
     - name: Setup PNPM
       uses: pnpm/action-setup@v4
       with:
-        version: ${{ inputs.pnpm-version }}
         run_install: ${{ inputs.install }}

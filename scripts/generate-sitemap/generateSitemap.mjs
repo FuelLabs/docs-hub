@@ -1,4 +1,18 @@
-import { allMdDocs } from '../../.contentlayer/generated/index.mjs';
+import { readFileSync } from 'fs';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
+
+// The generated index.mjs imports its JSON with `assert { type: 'json' }`,
+// which Node.js 22+ rejects, so read the generated document list directly.
+const allMdDocs = JSON.parse(
+  readFileSync(
+    join(
+      dirname(fileURLToPath(import.meta.url)),
+      '../../.contentlayer/generated/MdDoc/_index.json'
+    ),
+    'utf8'
+  )
+);
 
 export function generateSiteMap() {
   const paths = getAllPaths(allMdDocs).map((p) => {
