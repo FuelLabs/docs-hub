@@ -3,7 +3,7 @@ import { Alert, Box, Icon, darkTheme, lightTheme } from '@fuel-ui/react';
 import dynamic from 'next/dynamic';
 import type { NavOrder, VersionSet, Versions } from '~/src/types';
 
-import { use, useEffect, useState } from 'react';
+import { use, useEffect, useRef, useState } from 'react';
 import { useSetShowWarning } from '../hooks/useShowWarning';
 import { MobileMenu } from './MobileMenu';
 import { Navigation } from './Navigation';
@@ -30,9 +30,29 @@ export function Header({
   isAlertVisible,
 }: HeaderProps) {
   const setShowWarning = useSetShowWarning();
+  const isForcReference =
+    active.startsWith('docs/forc') || active.startsWith('docs/nightly/forc');
+  const rootRef = useRef<HTMLElement | null>(null);
+
+  // The sticky header's height varies with the visible alert banners, so
+  // publish the measured height for heading scroll-margin offsets.
+  useEffect(() => {
+    const el = rootRef.current ?? document.querySelector<HTMLElement>('header');
+    if (!el) return;
+    const update = () => {
+      document.documentElement.style.setProperty(
+        '--fuel-sticky-header-height',
+        `${el.getBoundingClientRect().height}px`
+      );
+    };
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <Box as='header' css={styles.root}>
+    <Box as='header' ref={rootRef} css={styles.root}>
       <Box.Flex css={styles.header}>
         <Box css={{ ...styles.desktop, ...styles.searchContainer }}>
           {/* THIS GETS USED BY THE SEARCH INDEXER */}
@@ -55,6 +75,25 @@ export function Header({
           versions={versions}
         />
       </Box.Flex>
+      {versionSet === 'default' && (
+        <Alert css={styles.alert} direction='row' status='warning'>
+          <Alert.Description>
+            Mainnet docs are version-pinned. Check each section&apos;s exact
+            version in the sidebar; it can lag the newest upstream release.
+          </Alert.Description>
+        </Alert>
+      )}
+      {isForcReference && (
+        <Alert css={styles.alert} direction='row' status='warning'>
+          <Alert.Description>
+            This core Forc reference was generated for version{' '}
+            {versions?.Forc.version}. Network-facing plugins can come from
+            separate repositories and release independently. When an installed
+            version differs, check <code>fuelup show</code> and treat that
+            command&apos;s <code>--help</code> output as authoritative.
+          </Alert.Description>
+        </Alert>
+      )}
       {isAlertVisible && (
         <Alert css={styles.alert} direction='row' status='warning'>
           <Alert.Description>

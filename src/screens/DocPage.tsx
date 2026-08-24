@@ -17,7 +17,9 @@ import { GuidesPage } from './GuidesPage';
 export function DocScreen(props: DocPageProps) {
   const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
   const { doc, allNavs, allNightlyNavs } = props;
-  const [versionSet, setVersionSet] = useState<VersionSet>('default');
+  const [versionSet, setVersionSet] = useState<VersionSet>(
+    doc?.versionSet ?? 'default'
+  );
   const version = useVersion();
   const showWarning = useShowWarning();
 

@@ -3,6 +3,7 @@ import { EOL } from 'os';
 import path from 'path';
 import { NodeHtmlMarkdown } from 'node-html-markdown';
 import remarkParse from 'remark-parse';
+import toml from 'toml';
 import { unified } from 'unified';
 import type { VersionSet } from '~/src/types';
 
@@ -58,10 +59,29 @@ function transformContent(node: any, rootDir: string) {
     versionSet = 'nightly';
   }
 
-  // TODO: make this dynamic
-  let swayBuildFilePath = 'docs/builds/sway/master/book/forc';
-  if (versionSet === 'nightly') {
-    swayBuildFilePath = 'docs/nightly/builds/sway/master/book/forc';
+  const swayBuildPath =
+    versionSet === 'nightly' ? 'docs/nightly/builds/sway' : 'docs/builds/sway';
+  let swayBuildFilePath = `${swayBuildPath}/master/book/forc`;
+  let missingBuildMessage =
+    'Missing generated Forc documentation for the nightly Sway commit.';
+
+  if (versionSet === 'default') {
+    const swayManifest = fs.readFileSync(
+      path.resolve(rootDir, 'docs/sway/Cargo.toml'),
+      'utf8'
+    );
+    const swayVersion = toml.parse(swayManifest).workspace.package.version;
+    swayBuildFilePath = `${swayBuildPath}/v${swayVersion}/book/forc`;
+    missingBuildMessage = `Missing generated Forc documentation for v${swayVersion}. Publish the exact Sway gh-pages artifact before updating the default source submodule.`;
+  }
+
+  const forcBookIndexPath = path.resolve(
+    rootDir,
+    swayBuildFilePath,
+    'index.html'
+  );
+  if (!fs.existsSync(forcBookIndexPath)) {
+    throw new Error(missingBuildMessage);
   }
 
   const folders = thisFilePath.split('/forc/')[1].split('/');

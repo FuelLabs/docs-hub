@@ -114,9 +114,12 @@ export async function update(version, dir, branch) {
       console.log('GETTING COMMIT FROM TITLE:', title);
       let commit = null;
       commit = await getCommitFromTitle(title, dir);
-      if (commit) {
-        await checkout(commit, dir);
+      if (!commit) {
+        throw new Error(
+          `No generated documentation commit found for "${title}" in ${dir}. Publish the Sway gh-pages artifact before updating the source submodule.`
+        );
       }
+      await checkout(commit, dir);
     } else {
       await checkout(branch, dir);
     }

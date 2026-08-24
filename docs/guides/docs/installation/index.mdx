@@ -10,6 +10,8 @@ parent:
 
 This guide will help you to install the Fuel toolchain binaries and prerequisites.
 
+> **Channel semantics verified July 23, 2026.** Fuelup's `latest` channel is an alias for `mainnet`; it does not mean the newest upstream compiler and it is not the testnet channel. See the [Fuelup channel reference](https://install.fuel.network/master/concepts/channels.html) and the published [mainnet](https://github.com/FuelLabs/fuelup/blob/gh-pages/channel-fuel-mainnet.toml) and [testnet](https://github.com/FuelLabs/fuelup/blob/gh-pages/channel-fuel-testnet.toml) manifests.
+
 This guide covers the following topics:
 
 1. [Installing the Fuel toolchain using `fuelup`](#installing-the-fuel-toolchain-using-fuelup)
@@ -23,7 +25,7 @@ This guide covers the following topics:
 from the official release channels, enabling you to easily switch between different
 toolchains and keep them updated. It makes building and maintaining Sway applications simpler with [`forc`](/docs/forc) and [`fuel-core`](https://github.com/FuelLabs/fuel-core) for common platforms.
 
-> 💡 Check out the [fuelup docs](https://install.fuel.network/latest/) for more information.
+> 💡 Check out the [Fuelup docs](https://install.fuel.network/master/) for more information.
 
 ### Running `fuelup-init`
 
@@ -65,15 +67,7 @@ Would you like fuelup-init to modify your PATH variable for you? (N/y)
 
 ### Checking the installation
 
-After allowing the `fuelup-init` script to modify your `PATH` variable, you will see a lot of information about packages being downloaded and installed. If everything goes as expected you will see the following message:
-
-```sh
-The Fuel toolchain is installed and up to date
-
-fuelup 0.20.0 has been installed in /home/username/.fuelup/bin. 
-To fetch the latest toolchain containing the forc and fuel-core binaries, run 'fuelup toolchain install latest'. 
-To generate completions for your shell, run 'fuelup completions --shell=SHELL'.
-```
+After allowing the `fuelup-init` script to modify your `PATH` variable, you will see information about the packages being downloaded and installed. A successful installation reports where `fuelup` was installed. The manager and component versions change independently, so this guide does not embed a sample version number.
 
 👉 Use `fuelup --version` any time to check which version of the package you are using.
 
@@ -81,11 +75,7 @@ To generate completions for your shell, run 'fuelup completions --shell=SHELL'.
  fuelup --version
 ```
 
-That will output your current `fuelup` version:
-
-```sh
-fuelup 0.21.0
-```
+Compare the reported version with the [latest Fuelup release](https://github.com/FuelLabs/fuelup/releases/latest).
 
 ### VSCode extensions
 
@@ -99,7 +89,16 @@ Just as in [Rust](https://rust-lang.github.io/rustup/concepts/toolchains.html), 
 A toolchain is a collection of tools (such as the compiler, LSP, etc).
 By default, `fuelup` includes a series of packages tested to work with each other, providing a reliable set of tools.
 
-The default toolchain configured when you install `fuelup` is the `latest` toolchain, which is the stable toolchain compatible with the current {props.fuelTestnetInlineCode} network.
+The installer may configure the `latest` toolchain by default. `latest` is an alias for the mainnet-compatible distribution. Select `testnet` explicitly when developing against the {props.fuelTestnetInlineCode} network.
+
+| Channel | Use |
+| --- | --- |
+| `mainnet` | Toolchain distributed for Fuel mainnet |
+| `testnet` | Toolchain distributed for Fuel testnet |
+| `latest` | Alias for `mainnet`; not the newest upstream compiler |
+| `nightly` | Development tooling; not a network compatibility promise |
+
+Prefer the explicit `mainnet` or `testnet` name in project setup and CI, even when `latest` currently resolves to the same manifest as `mainnet`.
 
 ### Updating fuelup
 
@@ -111,37 +110,33 @@ Make sure you have the latest version of `fuelup` so you can access the latest f
 fuelup self update
 ```
 
-Then you will get an output like this:
+The download URL and version in the command output will vary by release and platform. Run `fuelup --version` after the update to verify the installed manager.
+
+### Selecting a network toolchain
+
+For mainnet, install and select the explicitly named channel:
 
 ```sh
-Fetching binary from https://github.com/FuelLabs/fuelup/releases/download/v0.19.5/fuelup-0.19.5-aarch64-apple-darwin.tar.gz
-Downloading component fuelup without verifying checksum
-Unpacking and moving fuelup to /var/folders/tp/0l8zdx9j4s9_n609ykwxl0qw0000gn/T/.tmpiNJQHt
-Moving /var/folders/tp/0l8zdx9j4s9_n609ykwxl0qw0000gn/T/.tmpiNJQHt/fuelup to /Users/.fuelup/bin/fuelup
+fuelup toolchain install mainnet
+fuelup default mainnet
 ```
 
-### Using the latest toolchain
+For testnet, use the separate testnet channel:
 
-To properly interact with the testnet network it is necessary to use the `latest` toolchain, which is installed by default.
+```sh
+fuelup toolchain install testnet
+fuelup default testnet
+```
 
-👉 Run the following command to verify the installation of `latest` toolchain:
+Changing the default affects subsequent commands globally. For a project or CI environment, record the intended network channel alongside the component versions and commit the project's `Forc.lock`.
+
+👉 Run the following command to verify the active toolchain and component versions:
 
 ```sh
 fuelup show
 ```
 
-If the toolchain was successfully installed, you will see this output:
-
-```sh
-installed toolchains
---------------------
-latest-x86_64-unknown-linux-gnu (default)
-
-active toolchain
------------------
-latest-x86_64-unknown-linux-gnu (default)
-...
-```
+Confirm that the active toolchain is the named channel you intended. Compare its component versions with that channel's published manifest; do not compare a network channel with the newest Sway GitHub release as though they were the same release stream.
 
 ### Installing `nightly` toolchain
 
@@ -190,31 +185,7 @@ Don't worry if you get confused about which toolchain you are using, since you c
 fuelup show
 ```
 
-This command will give you the following output
-
-```sh
-active toolchain
------------------
-beta-4-x86_64-unknown-linux-gnu (default)
-  forc : 0.45.0
-    - forc-client
-      - forc-deploy : 0.45.0
-      - forc-run : 0.45.0
-    - forc-doc : 0.45.0
-    - forc-explore : 0.28.1
-    - forc-fmt : 0.45.0
-    - forc-index : 0.20.7
-    - forc-lsp : 0.45.0
-    - forc-tx : 0.45.0
-    - forc-wallet : 0.3.0
-  fuel-core : 0.20.4
-  fuel-core-keygen : Error getting version string
-
-fuels versions
----------------
-forc : 0.45
-forc-wallet : 0.45
-```
+The output lists the active channel and the installed version of each component. These versions are generated from the channel manifest and can change when a channel is promoted. Forc plugins can also have independent release versions, so use the output from your own environment when reporting a problem.
 
 ## Setting up a local wallet
 
