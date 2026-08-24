@@ -1,5 +1,15 @@
 import fs from 'fs';
 import path from 'path';
+import toml from 'toml';
+
+const swayManifest = fs.readFileSync('./docs/sway/Cargo.toml', 'utf8');
+const nightlySwayManifest = fs.readFileSync(
+  './docs/nightly/sway/Cargo.toml',
+  'utf8'
+);
+const defaultSwayVersion = toml.parse(swayManifest).workspace.package.version;
+const nightlySwayVersion =
+  toml.parse(nightlySwayManifest).workspace.package.version;
 
 // List of directories to delete unused files from
 const targetDirs = [
@@ -100,7 +110,13 @@ function main() {
     // Change to the target directory
     process.chdir(targetDir);
     const dirBasename = path.basename(targetDir).replace(/-/g, '_');
-    const currentExclusions = exclusions[dirBasename];
+    const swayVersion = targetDir.startsWith('./docs/nightly/')
+      ? nightlySwayVersion
+      : defaultSwayVersion;
+    const currentExclusions = [
+      ...(exclusions[dirBasename] ?? []),
+      ...(dirBasename === 'sway' ? [`sway/v${swayVersion}/book`] : []),
+    ];
     cleanupFiles(currentExclusions, '.');
     // console.log(`Cleanup done for ${targetDir}!`);
     // Return to the original directory

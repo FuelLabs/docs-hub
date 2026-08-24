@@ -5,6 +5,19 @@ const HAS_LINK_DEPS = Boolean(
   (process.env.LINK_DEPS?.trim().split(' ').filter(Boolean) || []).length
 );
 
+const configureWebpack = (config, options) => {
+  if (options.isServer) {
+    config.resolve.alias['plyr-react$'] = path.resolve(
+      __dirname,
+      'src',
+      'components',
+      'PlyrServerStub.tsx'
+    );
+  }
+
+  return config;
+};
+
 const depsLinkOpts = {
   transpilePackages: [
     '@fuel-ui/react',
@@ -13,6 +26,8 @@ const depsLinkOpts = {
     '@fuel-ui/tokens',
   ],
   webpack: (config, options) => {
+    config = configureWebpack(config, options);
+
     if (options.isServer) {
       config.externals = ['react', ...config.externals];
     }
@@ -153,6 +168,7 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  webpack: configureWebpack,
   ...(HAS_LINK_DEPS ? depsLinkOpts : {}),
 };
 

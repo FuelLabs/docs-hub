@@ -1,0 +1,43 @@
+diff --git a/dist/commands/_BaseCommand.js b/dist/commands/_BaseCommand.js
+index 5f7892637c185d36d9e489b803d8df450f4f7f1b..70e473a8b3256ec00a63fd90cd9f0051bc1381e6 100644
+--- a/dist/commands/_BaseCommand.js
++++ b/dist/commands/_BaseCommand.js
+@@ -17,10 +17,12 @@ export class BaseCommand extends Command {
+         this.verbose = Option.Boolean('--verbose', false, {
+             description: 'More verbose logging and error stack traces',
+         });
+-        this.execute = () => pipe(this.executeSafe(), core.runMain({
+-            tracingServiceName: 'contentlayer-cli',
+-            verbose: this.verbose || process.env.CL_DEBUG !== undefined,
+-        }));
++        this.execute = async () => {
++            await pipe(this.executeSafe(), core.runMain({
++                tracingServiceName: 'contentlayer-cli',
++                verbose: this.verbose || process.env.CL_DEBUG !== undefined,
++            }));
++        };
+         this.clearCacheIfNeeded = () => {
+             const { clearCache } = this;
+             return T.gen(function* ($) {
+diff --git a/src/commands/_BaseCommand.ts b/src/commands/_BaseCommand.ts
+index 1e8f998f268cee2bd0ea907c7878eb5fdf0e6b47..a5876ec1fa5fa22bfb1b7fa04b527499e8289581 100644
+--- a/src/commands/_BaseCommand.ts
++++ b/src/commands/_BaseCommand.ts
+@@ -23,14 +23,15 @@ export abstract class BaseCommand extends Command {
+ 
+   abstract executeSafe: () => T.Effect<OT.HasTracer & HasClock & HasCwd & HasConsole & fs.HasFs, unknown, void>
+ 
+-  execute = (): Promise<void> =>
+-    pipe(
++  execute = async (): Promise<void> => {
++    await pipe(
+       this.executeSafe(),
+       core.runMain({
+         tracingServiceName: 'contentlayer-cli',
+         verbose: this.verbose || process.env.CL_DEBUG !== undefined,
+       }),
+     )
++  }
+ 
+   clearCacheIfNeeded = () => {
+     const { clearCache } = this
