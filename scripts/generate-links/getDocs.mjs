@@ -172,6 +172,22 @@ export async function getDocs(key, order) {
         '!**/SUMMARY.md',
       ];
       break;
+    case 'security-best-practices':
+      paths = [
+        './security-best-practices/docs/src/*.md',
+        './security-best-practices/docs/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
+    case 'nightly-security-best-practices':
+      paths = [
+        './nightly/security-best-practices/docs/src/*.md',
+        './nightly/security-best-practices/docs/src/**/*.md',
+        // IGNORE ALL SUMMARY PAGES
+        '!**/SUMMARY.md',
+      ];
+      break;
     case 'integration-docs':
       paths = [
         // INTEGRATION DOCS

@@ -17,6 +17,10 @@ const CONFIG = {
     type: 'mdbook',
     path: './node-operator/docs/src/SUMMARY.md',
   },
+  'security-best-practices': {
+    type: 'mdbook',
+    path: './security-best-practices/docs/src/SUMMARY.md',
+  },
   'integration-docs': {
     type: 'mdbook',
     path: './integration-docs/docs/src/SUMMARY.md',
