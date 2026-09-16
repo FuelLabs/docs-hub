@@ -1,0 +1,20 @@
+name: Submodule pins
+
+# Railway builds docker/Dockerfile from the GitHub app and fetches the docs
+# submodules at the commits recorded in .submodule-pins. This check fails when
+# a submodule bump forgets to regenerate that file (scripts/railway/submodule-pins.sh).
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pins match the submodule commits
+        run: |
+          scripts/railway/submodule-pins.sh
+          git diff --exit-code .submodule-pins || { echo "::error::.submodule-pins is stale, run scripts/railway/submodule-pins.sh"; exit 1; }

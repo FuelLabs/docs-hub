@@ -46,6 +46,8 @@ const depsLinkOpts = {
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
+  // Railway builds a self-contained server; Vercel keeps the default output.
+  output: process.env.NEXT_OUTPUT === 'standalone' ? 'standalone' : undefined,
   basePath: process.env.DOCS_BASE_URL || '',
   experimental: {
     esmExternals: false,
