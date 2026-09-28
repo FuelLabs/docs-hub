@@ -79,6 +79,9 @@ export function SidebarSection({
       case 'Node-Operator':
         githubLink = 'https://github.com/FuelLabs/node-operator';
         break;
+      case 'Security-best-practices':
+        githubLink = 'https://github.com/FuelLabs/security-best-practices';
+        break;
       default:
         break;
     }
