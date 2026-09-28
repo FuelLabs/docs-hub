@@ -5,13 +5,30 @@ on:
   workflow_dispatch:
   # Trigger on successful deployment status
   deployment_status:
+  # Trigger on pull request merges to master
+  pull_request:
+    types: [closed]
+    branches:
+      - master
 
 jobs:
   update-docsearch:
     name: Update DocSearch
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.ref == 'refs/heads/master')
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.ref == 'refs/heads/master') || (github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true)
     steps:
+      - name: Debug GitHub context
+        run: |
+          echo "Event name: ${{ github.event_name }}"
+          echo "Ref: ${{ github.ref }}"
+          if [ "${{ github.event_name }}" == "deployment_status" ]; then
+            echo "Deployment status: ${{ github.event.deployment_status.state }}"
+          fi
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            echo "PR action: ${{ github.event.action }}"
+            echo "PR merged: ${{ github.event.pull_request.merged }}"
+          fi
+
       - name: Checkout
         uses: actions/checkout@v3
 
